@@ -1,0 +1,14 @@
+Package: biomartr
+Title: A package for easy biomart access and annotation queries
+Version: 0.0.1
+Author: Hajk-Georg Drost
+Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
+Description: This package aims to provide an easy to use and intuitive
+    interface to the biomart database and is built upon the well established
+    biomaRt package.
+Depends:
+    R (>= 3.1.1)
+Imports:
+    biomaRt (>= 2.20.0)
+License: GPL-2
+LazyData: true
