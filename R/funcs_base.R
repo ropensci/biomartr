@@ -8,6 +8,9 @@
 #' @param filters a character vector specifying the filter (query key) for the biomart query, e.g. filter = "ensembl_gene_id"
 #' @param ... additional parameters for the biomaRt::getBM() function
 #' @author Hajk-Georg Drost
+#' @details The biomart() function is the main query function of the biomartr package.
+#' It enables to fastly access annotations of a given gene set based on the biomaRt package
+#' implemented by Steffen Durinck. 
 #' @examples 
 #' # the initial biomaRt workflow would work as follows:
 #' 
@@ -38,10 +41,10 @@
 biomart <- function(genes,mart,dataset,attributes,filters,...){
         
         m <- useMart(mart)
-        d <- useDataset(dataset,mart = m)
+        d <- useDataset(dataset = dataset,mart = m)
         
         ### establishing a biomaRt connection and retrieving the information for the given gene list
-        query <- getBM(attributes = attributes,filters = filters, values = genes, mart = d, ...)
+        query <- getBM(attributes = c(filters,attributes),filters = filters, values = genes, mart = d, uniqueRows = TRUE,...)
         
         # sometimes the query order is not returned correctly by biomart,
         # therefore the query order is being checked 
@@ -55,3 +58,10 @@ biomart <- function(genes,mart,dataset,attributes,filters,...){
         return(tbl_biomart)
         
 }
+
+
+
+
+
+
+
