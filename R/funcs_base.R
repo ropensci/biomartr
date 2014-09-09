@@ -10,7 +10,8 @@
 #' @author Hajk-Georg Drost
 #' @details The biomart() function is the main query function of the biomartr package.
 #' It enables to fastly access annotations of a given gene set based on the biomaRt package
-#' implemented by Steffen Durinck. 
+#' implemented by Steffen Durinck et al. 
+#' 
 #' @examples 
 #' # the initial biomaRt workflow would work as follows:
 #' 
@@ -44,7 +45,7 @@ biomart <- function(genes,mart,dataset,attributes,filters,...){
         d <- useDataset(dataset = dataset,mart = m)
         
         ### establishing a biomaRt connection and retrieving the information for the given gene list
-        query <- getBM(attributes = c(filters,attributes),filters = filters, values = genes, mart = d, uniqueRows = TRUE,...)
+        query <- getBM(attributes = c(filters,attributes),filters = filters, values = genes, mart = d,...)
         
         # sometimes the query order is not returned correctly by biomart,
         # therefore the query order is being checked 
@@ -59,7 +60,46 @@ biomart <- function(genes,mart,dataset,attributes,filters,...){
         
 }
 
+#' @title Helper function for geneSequence()
+#' @description This function takes a gene id as character and returns the biological sequence
+#' of the corresponding gene id.
+#' @param gene a character vector storing the gene id of a organisms of interest to be queried against the 
+#' acnucdb database.
+#' @author Hajk-Georg Drost
+#' @details Sequence information is retrieved from the acnucdb database. 
+retrieve_sequence <- function(gene){
+        
+        query_string <- paste0("AC=",gene)
+        try(query("query2",query_string))
+        gene_sequence <- seqinr::getSequence(query2$req[[1]])
+        return(gene_sequence)
+        
+}
 
+#' @title Function to retrieve biological sequences of a given set of genes
+#' @description This function takes an character vector storing gene ids of interest
+#' and returns the biological sequence of the corresponding gene ids.
+#' @param genes a character vector storing the gene id of a organisms of interest to be queried against the 
+#' acnucdb database.
+#' @param db
+#' @author Hajk-Georg Drost
+#' @details Sequence information is retrieved from the acnucdb database. 
+geneSequence <- function(genes, db){
+        
+        seqList <- vector(mode = "list", length = length(genes))	
+        
+        # open acnucdb connection: seqinr
+        seqinr::choosebank(db)
+        
+        # retrieve sequences for the corresponding gene list
+        seqList <- sapply(genes, retrieve_sequence)
+        
+        # close acnucdb connection: seqinr
+        seqinr::closebank()
+        
+        # return sequences as strings
+        return(lapply(seqList, c2s))
+}
 
 
 

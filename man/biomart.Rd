@@ -29,7 +29,7 @@ and performs a biomart query for the given set of gene ids.
 \details{
 The biomart() function is the main query function of the biomartr package.
 It enables to fastly access annotations of a given gene set based on the biomaRt package
-implemented by Steffen Durinck.
+implemented by Steffen Durinck et al.
 }
 \examples{
 # the initial biomaRt workflow would work as follows:
