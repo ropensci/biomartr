@@ -11,12 +11,21 @@ acnucdb database.}
 
 \item{db}{}
 }
+\value{
+A list of sequences for each corresponding input gene stored as string.
+}
 \description{
 This function takes an character vector storing gene ids of interest
 and returns the biological sequence of the corresponding gene ids.
 }
 \details{
 Sequence information is retrieved from the acnucdb database.
+}
+\examples{
+# retrieve amino acid sequences from the 'swissprot' database
+# for gene ids:"AT1G06090" = "Q9LND9" and "AT1G06100" = "Q9LND8"
+
+ seqs <- geneSequence(c("Q9LND9","Q9LND8"), db = "swissprot")
 }
 \author{
 Hajk-Georg Drost

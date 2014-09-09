@@ -83,8 +83,17 @@ retrieve_sequence <- function(gene){
 #' acnucdb database.
 #' @param db
 #' @author Hajk-Georg Drost
-#' @details Sequence information is retrieved from the acnucdb database. 
+#' @details Sequence information is retrieved from the acnucdb database.
+#' @return A list of sequences for each corresponding input gene stored as string.
+#' @examples # retrieve amino acid sequences from the 'swissprot' database 
+#' # for gene ids:"AT1G06090" = "Q9LND9" and "AT1G06100" = "Q9LND8"
+#' 
+#'  seqs <- geneSequence(c("Q9LND9","Q9LND8"), db = "swissprot")
+#'    
+#' @export
 geneSequence <- function(genes, db){
+        
+        n_genes <- length(genes)
         
         seqList <- vector(mode = "list", length = length(genes))	
         
@@ -92,13 +101,18 @@ geneSequence <- function(genes, db){
         seqinr::choosebank(db)
         
         # retrieve sequences for the corresponding gene list
-        seqList <- sapply(genes, retrieve_sequence)
+        seqList <- lapply(as.list(genes), retrieve_sequence)
         
         # close acnucdb connection: seqinr
         seqinr::closebank()
         
         # return sequences as strings
-        return(lapply(seqList, c2s))
+        res <- vector(mode = "list", length = n_genes)
+        res <- lapply(seqList, seqinr::c2s)
+        names(res) <- genes
+        
+        return(res)
+
 }
 
 
