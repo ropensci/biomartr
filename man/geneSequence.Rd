@@ -26,6 +26,10 @@ Sequence information is retrieved from the acnucdb database.
 # for gene ids:"AT1G06090" = "Q9LND9" and "AT1G06100" = "Q9LND8"
 
  seqs <- geneSequence(c("Q9LND9","Q9LND8"), db = "swissprot")
+
+# choose different databases available
+
+   choosebank()
 }
 \author{
 Hajk-Georg Drost

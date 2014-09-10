@@ -70,8 +70,8 @@ biomart <- function(genes,mart,dataset,attributes,filters,...){
 retrieve_sequence <- function(gene){
         
         query_string <- paste0("AC=",gene)
-        try(query("query2",query_string))
-        gene_sequence <- seqinr::getSequence(query2$req[[1]])
+        try(query("input",query_string))
+        gene_sequence <- seqinr::getSequence(input$req[[1]])
         return(gene_sequence)
         
 }
@@ -90,12 +90,16 @@ retrieve_sequence <- function(gene){
 #' 
 #'  seqs <- geneSequence(c("Q9LND9","Q9LND8"), db = "swissprot")
 #'    
+#' # choose different databases available
+#' 
+#'    choosebank()
+#'       
 #' @export
 geneSequence <- function(genes, db){
         
         n_genes <- length(genes)
         
-        seqList <- vector(mode = "list", length = length(genes))	
+        seqList <- vector(mode = "list", length = n_genes)	
         
         # open acnucdb connection: seqinr
         seqinr::choosebank(db)
