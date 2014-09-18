@@ -2,3 +2,4 @@
 
 export(biomart)
 export(geneSequence)
+export(listGenomes)
