@@ -2,4 +2,8 @@
 
 export(biomart)
 export(geneSequence)
+export(getGenome)
 export(listGenomes)
+export(read.cds)
+export(read.genome)
+export(read.proteome)

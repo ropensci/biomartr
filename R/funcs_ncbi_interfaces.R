@@ -56,17 +56,16 @@ listGenomes <- function(kingdom = "all", details = FALSE){
         }
         
         if(!file.exists("_ncbi_downloads/overview.txt")){
-                tryCatch(
-                     {    
-                        download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
-                     }, error = function(){ print(paste0("The download process did not work properly. Please check your internet
-                                                         connection or potential ftp: request problems.") ) 
+                
+                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
+                     
         }
         
-        c_Classes <- c(rep("character",4),rep("numeric",5))
+        col_classes <- vector(mode = "character",length = 9)
+        col_classes <- c(rep("character",4),rep("numeric",5))
         ncbi_overview <- read.csv("_ncbi_downloads/overview.txt",
                                   sep = "\t", header = TRUE,
-                                  colClasses = c_Classes,
+                                  colClasses = col_classes,
                                   na.strings = "-")
         
         names(ncbi_overview) <- c("organism_name","kingdoms",
@@ -97,7 +96,34 @@ listGenomes <- function(kingdom = "all", details = FALSE){
         
 }
 
-
+#' @title Function for downloading a specific genome stored on the NCBI ftp:// server.
+#' @description This function retrieves a fasta-file storing the genome of an organism of interest and stores
+#' the genome file in the folder '_ncbi_downloads/genomes'.
+#' @param db a character string specifying the database from which the genome shall be retrieved: 'refseq','genebank', or 'all'.
+#' @param kingdom a character string specifying the kingdom of the organisms of interest,
+#' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other" 
+#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis_thaliana'.
+#' @author Hajk-Georg Drost
+#' @details Internally this function loads the the overview.txt file from NCBI:
+#' 
+#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+#' 
+#'  genebank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/
+#' 
+#'  all: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/
+#' 
+#' and creates a directory '_ncbi_downloads/genomes' to store
+#' the genome of interest as fasta file for future processing.
+#' In case the corresponding fasta file already exists within the
+#' '_ncbi_downloads/genomes' folder and is accessible within the workspace,
+#' no download process will be performed.
+#' @return A data.table storing the geneids in the first column and the DNA dequence in the second column.
+#' @examples \dontrun{
+#' # download the genome of Arabidopsis thaliana
+#' 
+#' }
+#' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/
+#' @export
 getGenome <- function(db = "refseq", kingdom = "plant", organism){
         
         if(!is.element(db,c("refseq","genebank","all")))
@@ -105,33 +131,59 @@ getGenome <- function(db = "refseq", kingdom = "plant", organism){
 
         if(db == "refseq"){
                 
+                
+                if(!file.exists("_ncbi_downloads/genomes")){
+                        
+                        dir.create("_ncbi_downloads/genomes")
+                        
+                }
+                
                 subfolders <- c("archaea","bacteria", "fungi", "invertebrate", "plant",
                                 "protozoa", "vertebrate_mammalian", "vertebrate_other")
                 
                 if(!is.element(kingdom,subfolders))
                         stop(paste0("Please select a valid kingdom: ",subfolders))
                 
-#                 check_organisms <- RCurl::getURLContent(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"))
-#                         
-#                 xml_tree <- XML::htmlTreeParse(check_organisms, asText = TRUE)
-#                 xml_root_node <- XML::xmlRoot(xml_tree)
-#                 xml_root_node[[1]][1]$p[1]$text
-#                 
-#                 
-                url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
-                              organism,"latest_assembly_versions/",)
+                url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"),
+                                                  ftp.use.epsv = FALSE, dirlistonly = TRUE))
                 
+                check_organisms <- strsplit(url_organisms,"\n")
                 
+                if(!is.element(organism,unlist(check_organisms)))
+                        stop("Please choose a valid organism.")
+                           
+                url_lates_version <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                              organism,"/latest_assembly_versions/"), ftp.use.epsv = FALSE, dirlistonly = TRUE))
                 
+                url_lates_version <- unlist(strsplit(url_lates_version,"\n"))
                 
+                query_url_list_files <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                                    organism,"latest_assembly_versions/",url_lates_version)
                 
+                query_url_list_files_raw <- try(RCurl::getURL(query_url_list_files, ftp.use.epsv = FALSE, dirlistonly = TRUE))
+                query_url_list_files <- unlist(strsplit(query_url_list_files_raw,"\n"))
+                
+                organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
+                organism_file <- query_url_list_files[!is.na(organism_file_match)]
+                
+                file_path <- paste0("_ncbi_downloads/genomes/",organism,"_genome.fna")
+                
+                if(!file.exists(file_path)){
+                        
+                        # http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data
+                        temp <- tempfile()
+                        download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                                             organism,"/latest_assembly_versions/",url_lates_version,"/",
+                                             organism_file), paste0("_ncbi_downloads/genomes/",organism,"_genome.fna.gz"))
+                        unz(temp, file_path)
+                        unlink(temp)
+                }
+                
+                genome <- read.genome(file_path, format = "fasta")
+              
         }
         
-        
-
-
-
-        
+        return(genome)
 }
 
 

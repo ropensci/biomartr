@@ -53,7 +53,7 @@ table(ncbi_genomes[ , "subgroup"])
 
 # order by file size
 library(dplyr)
-arrange(ncbi_genomes, desc(file_size_MB))
+head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
 
 }
 }
