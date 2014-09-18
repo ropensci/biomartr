@@ -56,9 +56,11 @@ listGenomes <- function(kingdom = "all", details = FALSE){
         }
         
         if(!file.exists("_ncbi_downloads/overview.txt")){
-        
-                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
-        
+                tryCatch(
+                     {    
+                        download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
+                     }, error = function(){ print(paste0("The download process did not work properly. Please check your internet
+                                                         connection or potential ftp: request problems.") ) 
         }
         
         c_Classes <- c(rep("character",4),rep("numeric",5))
@@ -82,7 +84,6 @@ listGenomes <- function(kingdom = "all", details = FALSE){
                 }
         }
         
-        
         if(kingdom != "all"){
                 if(details == TRUE){
                         return( dplyr::filter(ncbi_overview, kingdoms == kingdom) )
@@ -97,6 +98,40 @@ listGenomes <- function(kingdom = "all", details = FALSE){
 }
 
 
+getGenome <- function(db = "refseq", kingdom = "plant", organism){
+        
+        if(!is.element(db,c("refseq","genebank","all")))
+                stop("Please select one of the available data bases: 'refseq','genebank' or 'all'")
 
+        if(db == "refseq"){
+                
+                subfolders <- c("archaea","bacteria", "fungi", "invertebrate", "plant",
+                                "protozoa", "vertebrate_mammalian", "vertebrate_other")
+                
+                if(!is.element(kingdom,subfolders))
+                        stop(paste0("Please select a valid kingdom: ",subfolders))
+                
+#                 check_organisms <- RCurl::getURLContent(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"))
+#                         
+#                 xml_tree <- XML::htmlTreeParse(check_organisms, asText = TRUE)
+#                 xml_root_node <- XML::xmlRoot(xml_tree)
+#                 xml_root_node[[1]][1]$p[1]$text
+#                 
+#                 
+                url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                              organism,"latest_assembly_versions/",)
+                
+                
+                
+                
+                
+        }
+        
+        
+
+
+
+        
+}
 
 
