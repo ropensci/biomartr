@@ -2,6 +2,7 @@
 
 export(biomart)
 export(geneSequence)
+export(getGO)
 export(getGenome)
 export(listGenomes)
 export(read.cds)
