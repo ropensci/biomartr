@@ -1,7 +1,8 @@
 biomartr
 ========
 
-The `biomartr` package aims to provide users of the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) packages with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) functionality and [Gene Ontology](http://geneontology.org/page/go-enrichment-analysis)/[Kegg](http://www.genome.jp/kegg/) analyses.
+The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) functionality and [Gene Ontology](http://geneontology.org/page/go-enrichment-analysis)/[Kegg](http://www.genome.jp/kegg/) analyses. Furthermore, it was specifically designed to serve as additional module to
+the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks.
 
 
 ## Fast installation guide
@@ -48,6 +49,12 @@ biocLite("biomaRt")
 
 * `getGO()` : Function to retrieve GO terms for a given set of genes
 
+
+## Tutorials
+
+The following tutorials will introduce you to the
+functionality of `biomartr` and how you can use it to extend
+analyses implemented in `myTAI` and `orthologr`.
 
 ## Discussions and Bug Reports
 
