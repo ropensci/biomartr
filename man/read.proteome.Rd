@@ -30,7 +30,8 @@ Proteomes stored in fasta files can be downloaded from http://www.ebi.ac.uk/refe
 \examples{
 \dontrun{
 # reading a proteome stored in a fasta file
-Aly.proteome <- read.proteome("example_aa.fasta", format = "fasta")
+Ath.proteome <- read.proteome(system.file('seqs/ortho_thal_aa.fasta', package = 'orthologr'),
+                               format = "fasta")
 }
 }
 \author{

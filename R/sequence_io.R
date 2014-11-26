@@ -12,7 +12,8 @@
 #'
 #' @examples \dontrun{
 #' # reading a genome stored in a fasta file
-#' Aly.genome <- read.genome("example_dna.fasta", format = "fasta")
+#' Ath.genome <- read.genome(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
+#'                            format = "fasta")
 #' }
 #'
 #' @return A data.table storing the gene id in the first column and the corresponding
@@ -22,14 +23,24 @@ read.genome <- function(file, format, ...){
         if(!is.element(format,c("fasta","gbk")))
                 stop("Please choose a file format that is supported by this function.")
         
+        geneids <- NULL
+        
         if(format == "fasta"){
                 genome <- vector(mode = "list")
-                genome <- seqinr::read.fasta(file, seqtype = "DNA", ...)
-                genome.dt <- data.table::data.table(geneids = names(genome),
-                                                    seqs = unlist(lapply(genome, seqinr::c2s)))
-                data.table::setkey(genome.dt,geneids)
+                
+                tryCatch(
+{
+        genome <- seqinr::read.fasta(file, seqtype = "DNA", ...)
+        genome_names <- unlist(lapply(names(genome), function(x){return(strsplit(x, "\t")[[1]][1])}))
+        genome.dt <- data.table::data.table(geneids = genome_names,
+                                            seqs = unlist(lapply(genome, seqinr::c2s)))
+        data.table::setkey(genome.dt,geneids)
+        
+}, error = function(){ stop(paste0("File ",file, " could not be read properly. \n",
+                                   "Please make sure that ",file," contains only DNA sequences and is in ",format," format."))}
+                )
         }
-        return(genome.dt)
+return(genome.dt)
 }
 
 
@@ -48,7 +59,8 @@ read.genome <- function(file, format, ...){
 #'
 #' @examples \dontrun{
 #' # reading a proteome stored in a fasta file
-#' Aly.proteome <- read.proteome("example_aa.fasta", format = "fasta")
+#' Ath.proteome <- read.proteome(system.file('seqs/ortho_thal_aa.fasta', package = 'orthologr'),
+#'                                format = "fasta")
 #' }
 #'
 #' @return A data.table storing the gene id in the first column and the corresponding
@@ -58,14 +70,24 @@ read.proteome <- function(file, format, ...){
         if(!is.element(format,c("fasta","gbk")))
                 stop("Please choose a file format that is supported by this function.")
         
+        geneids <- NULL 
+        
         if(format == "fasta"){
                 proteome <- vector(mode = "list")
-                proteome <- seqinr::read.fasta(file, seqtype = "AA", ...)
-                proteome.dt <- data.table::data.table(geneids = names(proteome),
-                                                      seqs = unlist(lapply(proteome, seqinr::c2s)))
-                data.table::setkey(proteome.dt,geneids)
+                
+                tryCatch(
+{
+        proteome <- seqinr::read.fasta(file, seqtype = "AA", ...)
+        proteome_names <- unlist(lapply(names(proteome), function(x){return(strsplit(x, "\t")[[1]][1])}))
+        proteome.dt <- data.table::data.table(geneids = proteome_names,
+                                              seqs = unlist(lapply(proteome, seqinr::c2s)))
+        data.table::setkey(proteome.dt,geneids)
+        
+}, error = function(){ stop(paste0("File ",file, " could not be read properly. \n",
+                                   "Please make sure that ",file," contains only amino acid sequences and is in ",format," format."))}
+                )
         }
-        return(proteome.dt)
+return(proteome.dt)
 }
 
 
@@ -84,7 +106,8 @@ read.proteome <- function(file, format, ...){
 #'
 #' @examples \dontrun{
 #' # reading a cds file stored in fasta format
-#' Aly.cds <- read.cds("example_cds.fasta", format = "fasta")
+#' Ath.cds <- read.cds(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
+#'                     format = "fasta")
 #' }
 #'
 #' @return A data.table storing the gene id in the first column and the corresponding
@@ -94,12 +117,23 @@ read.cds <- function(file, format, ...){
         if(!is.element(format,c("fasta","gbk")))
                 stop("Please choose a file format that is supported by this function.")
         
+        geneids <- NULL
+        
         if(format == "fasta"){
                 cds <- vector(mode = "list")
-                cds <- seqinr::read.fasta(file, seqtype = "DNA", ...)
-                cds.dt <- data.table::data.table(geneids = names(cds),
-                                                 seqs = unlist(lapply(cds, seqinr::c2s)))
-                data.table::setkey(cds.dt,geneids)
+                
+                tryCatch(
+{
+        cds <- seqinr::read.fasta(file, seqtype = "DNA", ...)
+        cds_names <- unlist(lapply(names(cds), function(x){return(strsplit(x, "\t")[[1]][1])}))
+        cds.dt <- data.table::data.table(geneids = cds_names ,
+                                         seqs = unlist(lapply(cds, seqinr::c2s)))
+        data.table::setkey(cds.dt,geneids)
+        
+}, error = function(){ stop(paste0("File ",file, " could not be read properly. \n",
+                                   "Please make sure that ",file," contains only CDS sequences and is in ",format," format."))}
+                )
         }
-        return(cds.dt)
+return(cds.dt)
 }
+
