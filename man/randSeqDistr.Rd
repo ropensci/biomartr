@@ -3,14 +3,21 @@
 \alias{randSeqDistr}
 \title{Function to generate a distribution of alignment scores based on random sequences}
 \usage{
-randSeqDistr(seq, sampled_strings, FUN, ...)
+randSeqDistr(seq, subject, sampled_strings, FUN, ..., comp_cores = 1)
 }
 \arguments{
-\item{seq}{}
+\item{seq}{a character vector storing a sequence as string for which random sequences shall be computed.}
 
-\item{sampled_strings}{}
+\item{subject}{a character vector storing a subject sequence as string to which \code{seq} shall be pairwise aligned.}
 
-\item{FUN}{}
+\item{sampled_strings}{an vector object returned by the \code{\link{randomSeqs}} function.}
+
+\item{FUN}{a pairwise alignment function such as \code{\link[Biostrings]{pairwiseAlignment}} or any other function
+that takes sequence arguments as first and second input.}
+
+\item{...}{additional arguments that shall be passed to \code{FUN}.}
+
+\item{comp_cores}{a numeric value specifying the number of cores you want to use for multicore processing.}
 }
 \value{
 a numeric vector storing pairwise alignment scores.
@@ -21,9 +28,19 @@ alignment function as input and computes an pairwise alignment score distributio
 and all random sequences stored in \code{sampled_strings}.
 }
 \examples{
-# pairwise alignments using Biostrings
+# pairwise alignments using Biostrings::pairwiseAlignment() function
+# you can also specify the comp_cores argument in case you
+# are working with a multicore machine
+
+seq_example <- "MEDQVGFGF"
+subject_example <- "AYAIDPTPAF"
+
+randScores <- randSeqDistr(seq_example,subject_example, randomSeqs(seq_example,10), Biostrings::pairwiseAlignment, scoreOnly=TRUE, comp_cores = 1)
 }
 \author{
 Hajk-Georg Drost
+}
+\seealso{
+\code{\link{evalAlignment}}, \code{\link{randomSeqs}}
 }
 

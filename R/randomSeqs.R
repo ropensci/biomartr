@@ -24,7 +24,7 @@
 #' 
 #' randomSeqs(seq = seq_example, sample_size = 10)
 #' 
-#' 
+#' @seealso \code{\link{evalAlignment}}, \code{\link{randSeqDistr}}
 #' @export 
 randomSeqs <- function(seq, sample_size){
         

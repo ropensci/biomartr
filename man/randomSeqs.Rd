@@ -39,4 +39,7 @@ randomSeqs(seq = seq_example, sample_size = 10)
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{evalAlignment}}, \code{\link{randSeqDistr}}
+}
 
