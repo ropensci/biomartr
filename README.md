@@ -82,11 +82,11 @@ The following tutorials will introduce you to the
 functionality of `biomartr` and how you can use it to extend
 analyses implemented in `myTAI` and `orthologr`.
 
-- [Introduction](https://github.com/HajkD/biomartr/vignettes/Introduction.Rmd)
-- [Sequence Retrieval](https://github.com/HajkD/biomartr/vignettes/Sequence_Retrieval.Rmd)
-- [Functional Annotation](https://github.com/HajkD/biomartr/vignettes/Functional_Annotation.Rmd)
-- [Genomic Sequence Analyses and Statistics](https://github.com/HajkD/biomartr/vignettes/Statistics.Rmd)
-- [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/vignettes/Phylotranscriptomics.Rmd)
+- [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
+- [Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
+- [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
+- [Genomic Sequence Analyses and Statistics](https://github.com/HajkD/biomartr/tree/master/vignettes/Statistics.Rmd)
+- [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Phylotranscriptomics.Rmd)
 
 ## Discussions and Bug Reports
 
