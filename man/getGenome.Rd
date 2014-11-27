@@ -3,15 +3,18 @@
 \alias{getGenome}
 \title{Function for downloading a specific genome stored on the NCBI ftp:// server.}
 \usage{
-getGenome(db = "refseq", kingdom = "plant", organism)
+getGenome(db = "refseq", kingdom, organism, clean_folder = TRUE)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome shall be retrieved: 'refseq','genebank', or 'all'.}
 
 \item{kingdom}{a character string specifying the kingdom of the organisms of interest,
-e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other"}
+e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".}
 
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis_thaliana'.}
+\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
+
+\item{clean_folder}{a logical value specifying whether the '_ncbi_downloads/genomes' folder the corresponding genome
+is loaded to shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.}
 }
 \value{
 A data.table storing the geneids in the first column and the DNA dequence in the second column.

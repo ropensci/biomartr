@@ -28,8 +28,6 @@ the overview.txt file for future processing. In case the overview.txt file alrea
 '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
 }
 \examples{
-\dontrun{
-
 # the simplest way to retrieve all names of genomes stored within NCBI databases
 head(listGenomes() , 5)
 
@@ -54,8 +52,6 @@ table(ncbi_genomes[ , "subgroup"])
 # order by file size
 library(dplyr)
 head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
-
-}
 }
 \author{
 Hajk-Georg Drost

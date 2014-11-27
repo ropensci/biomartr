@@ -3,8 +3,10 @@
 #' the genome file in the folder '_ncbi_downloads/genomes'.
 #' @param db a character string specifying the database from which the genome shall be retrieved: 'refseq','genebank', or 'all'.
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
-#' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other" 
-#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis_thaliana'.
+#' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
+#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
+#' @param clean_folder a logical value specifying whether the '_ncbi_downloads/genomes' folder the corresponding genome
+#' is loaded to shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -26,7 +28,7 @@
 #' }
 #' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/
 #' @export
-getGenome <- function(db = "refseq", kingdom = "plant", organism){
+getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         
         if(!is.element(db,c("refseq","genebank","all")))
                 stop("Please select one of the available data bases: 'refseq','genebank' or 'all'")
@@ -48,6 +50,11 @@ getGenome <- function(db = "refseq", kingdom = "plant", organism){
                 
                 url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"),
                                                    ftp.use.epsv = FALSE, dirlistonly = TRUE))
+                
+                # replace white space in scientific name with "_"
+                # to match the corresponding folder on the NCBI server
+                # e.g. "Arabodopsis thaliana" will become "Arabodopsis_thaliana"
+                organism <- stringr::str_replace(organism," ","_")
                 
                 check_organisms <- strsplit(url_organisms,"\n")
                 
@@ -85,5 +92,32 @@ getGenome <- function(db = "refseq", kingdom = "plant", organism){
                 
         }
         
+        
+        if(db == "genebannk"){
+                
+                
+                
+                
+         }     
+        
+        
+        if(db == "all"){
+                
+                
+                
+                
+        }    
+        
+        if(clean_folder)
+                clean_all_folders("_ncbi_downloads/genomes")
+        
+        
         return(genome)
 }
+
+
+
+
+
+
+

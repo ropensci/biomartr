@@ -37,6 +37,11 @@
 #' 
 #' @author Hajk-Georg Drost
 #' @return a p-value quantifying the statistical significance of the pairwise alignment of the input sequences.
+#' @references
+#' 
+#'  M. L. Delignette-Muller, R. Pouillot, J.-B. Denis and C. Dutang (2014), fitdistrplus: help to fit of a parametric
+#'  distribution to non-censored or censored data.
+#'
 #' @examples
 #' 
 #' seq_example <- "MEDQVGFGF"
@@ -73,7 +78,6 @@ evalAlignment <- function(seq, subject, sample_size, FUN, ... ,fit_distr = "norm
                                sampled_strings = r_seqs, 
                                FUN = align.fun, ..., 
                                comp_cores = comp_cores)
-        
         
         
         if(fit_distr == "norm"){

@@ -62,6 +62,12 @@ The following tutorials will introduce you to the
 functionality of `biomartr` and how you can use it to extend
 analyses implemented in `myTAI` and `orthologr`.
 
+- [Introduction]()
+- [Sequence Retrieval]()
+- [Functional Annotation]()
+- [Genomic Sequence Analyses and Statistics]()
+- [Phylotranscriptomics using myTAI, orthologr, and biomartr]()
+
 ## Discussions and Bug Reports
 
 I would be very happy to learn more about potential improvements of the concepts and functions

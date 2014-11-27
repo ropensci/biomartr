@@ -68,6 +68,10 @@ p_val_align <- evalAlignment(seq_example, subject_example, 10,
 \author{
 Hajk-Georg Drost
 }
+\references{
+M. L. Delignette-Muller, R. Pouillot, J.-B. Denis and C. Dutang (2014), fitdistrplus: help to fit of a parametric
+ distribution to non-censored or censored data.
+}
 \seealso{
 \code{\link{randSeqDistr}}, \code{\link{randomSeqs}}, \code{\link[fitdistrplus]{fitdist}}
 }

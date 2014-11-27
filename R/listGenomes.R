@@ -13,7 +13,7 @@
 #' '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
 #' @return A data.frame storing either the organism names (details = FALSE)
 #' or all information present on the NCBI database (details = TRUE).
-#' @examples \dontrun{
+#' @examples 
 #' 
 #' # the simplest way to retrieve all names of genomes stored within NCBI databases
 #' head(listGenomes() , 5)
@@ -40,7 +40,6 @@
 #' library(dplyr)
 #' head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
 #' 
-#' }
 #' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
 #' @export
 listGenomes <- function(kingdom = "all", details = FALSE){
