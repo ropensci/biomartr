@@ -37,9 +37,23 @@ biocLite("biomaRt")
 
 ### The following functions have been implemented for genome, proteome, and CDS retrieval
 
+#### Genome Retrieval
+
 * `getGenome()` : A function for downloading a specific genome stored on the NCBI ftp:// server
 * `listGenomes()` : Function to list all genomes available on the NCBI ftp:// server
 * `geneSequence()` : A function to retrieve biological sequences of a given set of genes
+
+#### Proteome Retrieval
+
+*
+*
+*
+
+#### CDS Retrieval
+
+*
+*
+*
 
 ### Interface to biomart
 
@@ -47,11 +61,17 @@ biocLite("biomaRt")
 
 ### Performing Gene Ontology queries
 
+#### Gene Ontology
+
 * `getGO()` : Function to retrieve GO terms for a given set of genes
 
+#### KeGG Ontology
+
+* 
 
 ### Statistics
 
+#### Alignment Statistics
 * `randomSeqs()` : Random sequence generator based on a multinomial model
 * `randSeqDistr()` : Function to generate a distribution of alignment scores based on random sequences
 * `evalAlignment()` : Function to quantify the statistical significance of a given pairwise alignment
@@ -62,11 +82,11 @@ The following tutorials will introduce you to the
 functionality of `biomartr` and how you can use it to extend
 analyses implemented in `myTAI` and `orthologr`.
 
-- [Introduction]()
-- [Sequence Retrieval]()
-- [Functional Annotation]()
-- [Genomic Sequence Analyses and Statistics]()
-- [Phylotranscriptomics using myTAI, orthologr, and biomartr]()
+- [Introduction](https://github.com/HajkD/biomartr/vignettes/Introduction.Rmd)
+- [Sequence Retrieval](https://github.com/HajkD/biomartr/vignettes/Sequence_Retrieval.Rmd)
+- [Functional Annotation](https://github.com/HajkD/biomartr/vignettes/Functional_Annotation.Rmd)
+- [Genomic Sequence Analyses and Statistics](https://github.com/HajkD/biomartr/vignettes/Statistics.Rmd)
+- [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/vignettes/Phylotranscriptomics.Rmd)
 
 ## Discussions and Bug Reports
 
