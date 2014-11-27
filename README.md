@@ -50,6 +50,12 @@ biocLite("biomaRt")
 * `getGO()` : Function to retrieve GO terms for a given set of genes
 
 
+### Statistics
+
+* `randomSeqs()` : Random sequence generator based on a multinomial model
+* `randSeqDistr()` : Function to generate a distribution of alignment scores based on random sequences
+* `evalAlignment()` : Function to quantify the statistical significance of a given pairwise alignment
+
 ## Tutorials
 
 The following tutorials will introduce you to the

@@ -4,7 +4,7 @@
 \title{Function to quantify the statistical significance of a given pairwise alignment}
 \usage{
 evalAlignment(seq, subject, sample_size, FUN, ..., fit_distr = "norm",
-  comp_cores = 1)
+  gof = FALSE, comp_cores = 1)
 }
 \arguments{
 \item{seq}{a character vector storing a sequence as string for which random sequences shall be computed.}
@@ -19,7 +19,11 @@ that takes sequence arguments as first and second input.}
 \item{...}{additional arguments that shall be passed to \code{FUN}.}
 
 \item{fit_distr}{a character string specifying the probability distribution that shall be fitted to the histogram
-of scores returned by \code{\link{randSeqDistr}}. See \code{\link[fitdistrplus]{fitdist}} when method = "mme" for details.}
+of scores returned by \code{\link{randSeqDistr}}. See \code{\link[fitdistrplus]{fitdist}} when method = "mme" for details.
+A special case is \code{fit_distr} = \code{"simple"}. This way simply the relative frequency of random scores that are greater than
+the real alignment score is returned as p-value.}
+
+\item{gof}{a logical value specifying whether or not godness of fit measures shall be printed to the console.}
 
 \item{comp_cores}{a numeric value specifying the number of cores you want to use for multicore processing.}
 }
@@ -35,6 +39,22 @@ The test statistic is developed using moment matching estimation of a given prob
 is fitted to the alignment score vector returned by \code{\link{randSeqDistr}}. The corresponding distribution
 parameters are estimated by the \code{\link[fitdistrplus]{fitdist}} and the p-value quantifying the statistical
 significance of the pairwise alignment of the input sequences is returned.
+
+The following distributions can be fitted to the alignment score distribution:
+
+\itemize{
+ \item \code{\link{pnorm}}
+ \item \code{\link{plnorm}}
+ \item \code{\link{ppois}}
+ \item \code{\link{pexp}}
+ \item \code{\link{pgamma}}
+ \item \code{\link{pnbinom}}
+ \item \code{\link{pgeom}}
+ \item \code{\link{pbeta}}
+}
+
+A special case is \code{fit_distr} = \code{"simple"}. This way simply the relative frequency of random scores that are greater than
+the real alignment score is returned as p-value.
 }
 \examples{
 seq_example <- "MEDQVGFGF"
