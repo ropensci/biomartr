@@ -6,6 +6,8 @@
 #' @param details a boolean value specifying whether only the scientific names of stored genomes shall be returned
 #' (details = FALSE) or all information such as "organism_name","kingdoms", "group","subgroup","file_size_MB",
 #' "chrs","organelles","plasmids", and "bio_projects".
+#' @param update a logical value specifying whether or not the available organism table shall be updated from the NCBI server.
+#' Default is \code{update} = \code{FALSE}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/ and creates a directory '_ncbi_downloads' to store
@@ -13,7 +15,12 @@
 #' '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
 #' @return A data.frame storing either the organism names (details = FALSE)
 #' or all information present on the NCBI database (details = TRUE).
-#' @examples 
+#' @note
+#' 
+#' Please note that the ftp:// connection relies on the NCBI server and cannot be
+#' accurately accessed via a proxy. 
+#' 
+#' @examples \dontrun{
 #' 
 #' # the simplest way to retrieve all names of genomes stored within NCBI databases
 #' head(listGenomes() , 5)
@@ -40,9 +47,15 @@
 #' library(dplyr)
 #' head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
 #' 
+#' 
+#' # you can also update the organism table using the 'update' argument
+#' head(listGenomes(details = TRUE,update = TRUE) , 5)
+#' 
+#' }
+#' 
 #' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
 #' @export
-listGenomes <- function(kingdom = "all", details = FALSE){
+listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE){
         
         
         if(!is.element(kingdom,c("all","Archaea", "Bacteria", "Eukaryota", "Viroids", "Viruses")))
@@ -59,6 +72,10 @@ listGenomes <- function(kingdom = "all", details = FALSE){
                 download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
                 
         }
+        
+        if(update)
+                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
+        
         
         col_classes <- vector(mode = "character",length = 9)
         col_classes <- c(rep("character",4),rep("numeric",5))

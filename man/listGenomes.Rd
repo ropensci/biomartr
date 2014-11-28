@@ -3,7 +3,7 @@
 \alias{listGenomes}
 \title{Function to list all genomes available on the NCBI ftp:// server.}
 \usage{
-listGenomes(kingdom = "all", details = FALSE)
+listGenomes(kingdom = "all", details = FALSE, update = FALSE)
 }
 \arguments{
 \item{kingdom}{a character string specifying a potential filter of available genomes: "all","Archaea", "Bacteria", "Eukaryota", "Viroids", "Viruses".}
@@ -11,6 +11,9 @@ listGenomes(kingdom = "all", details = FALSE)
 \item{details}{a boolean value specifying whether only the scientific names of stored genomes shall be returned
 (details = FALSE) or all information such as "organism_name","kingdoms", "group","subgroup","file_size_MB",
 "chrs","organelles","plasmids", and "bio_projects".}
+
+\item{update}{a logical value specifying whether or not the available organism table shall be updated from the NCBI server.
+Default is \code{update} = \code{FALSE}.}
 }
 \value{
 A data.frame storing either the organism names (details = FALSE)
@@ -27,7 +30,13 @@ ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/ and creates a directory '_ncb
 the overview.txt file for future processing. In case the overview.txt file already exists within the
 '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
 }
+\note{
+Please note that the ftp:// connection relies on the NCBI server and cannot be
+accurately accessed via a proxy.
+}
 \examples{
+\dontrun{
+
 # the simplest way to retrieve all names of genomes stored within NCBI databases
 head(listGenomes() , 5)
 
@@ -52,6 +61,12 @@ table(ncbi_genomes[ , "subgroup"])
 # order by file size
 library(dplyr)
 head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
+
+
+# you can also update the organism table using the 'update' argument
+head(listGenomes(details = TRUE,update = TRUE) , 5)
+
+}
 }
 \author{
 Hajk-Georg Drost

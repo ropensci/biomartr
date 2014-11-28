@@ -67,13 +67,14 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                 url_lates_version <- unlist(strsplit(url_lates_version,"\n"))
                 
                 query_url_list_files <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
-                                               organism,"latest_assembly_versions/",url_lates_version)
+                                               organism,"/latest_assembly_versions/",url_lates_version)
                 
-                query_url_list_files_raw <- try(RCurl::getURL(query_url_list_files, ftp.use.epsv = FALSE, dirlistonly = TRUE))
+                query_url_list_files_raw <- try(RCurl::getURL(query_url_list_files, ftp.use.epsv = FALSE, dirlistonly = TRUE, crlf = TRUE))
+                
                 query_url_list_files <- unlist(strsplit(query_url_list_files_raw,"\n"))
                 
-                organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
-                organism_file <- query_url_list_files[!is.na(organism_file_match)]
+#                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
+#                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
                 file_path <- paste0("_ncbi_downloads/genomes/",organism,"_genome.fna")
                 
@@ -81,9 +82,11 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                         
                         # http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data
                         temp <- tempfile()
+                        
                         download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             organism_file), paste0("_ncbi_downloads/genomes/",organism,"_genome.fna.gz"))
+                                             paste0(query_url_list_files,"_genomic.fna.gz")), paste0("_ncbi_downloads/genomes/",organism,"_genome.fna.gz"))
+                        
                         unz(temp, file_path)
                         unlink(temp)
                 }
