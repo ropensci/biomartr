@@ -1,7 +1,9 @@
 #' @title Function for downloading a specific genome stored on the NCBI ftp:// server.
 #' @description This function retrieves a fasta-file storing the genome of an organism of interest and stores
 #' the genome file in the folder '_ncbi_downloads/genomes'.
-#' @param db a character string specifying the database from which the genome shall be retrieved: 'refseq','genebank', or 'all'.
+#' @param db a character string specifying the database from which the genome shall be retrieved: 'refseq'.
+#' Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
+#' sequence retrieval from additional databases.
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
@@ -12,9 +14,6 @@
 #' 
 #'  refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
 #' 
-#'  genebank: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/}
-#' 
-#'  all: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/all/}
 #' 
 #' and creates a directory '_ncbi_downloads/genomes' to store
 #' the genome of interest as fasta file for future processing.
@@ -33,12 +32,17 @@
 #' 
 #' 
 #' }
-#' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/
+#' @references 
+#' 
+#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
+#' 
+#' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
+#' 
 #' @export
 getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         
-        if(!is.element(db,c("refseq","genebank","all")))
-                stop("Please select one of the available data bases: 'refseq','genebank' or 'all'")
+        if(!is.element(db,c("refseq")))
+                stop("Please select one of the available data bases: 'refseq'")
         
         if(!is.genome.available(organism = organism))
                 stop(paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
@@ -57,7 +61,7 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                                 "protozoa", "vertebrate_mammalian", "vertebrate_other")
                 
                 if(!is.element(kingdom,subfolders))
-                        stop(paste0("Please select a valid kingdom: ",subfolders))
+                        stop(paste0("Please select a valid kingdom: ",paste0(subfolders,collapse = ", ")))
                 
                 url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"),
                                                    ftp.use.epsv = FALSE, dirlistonly = TRUE))
@@ -91,36 +95,17 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                 
                 if(!file.exists(file_path)){
                         
-                        # http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data
-                        temp <- tempfile()
-                        
+
                         download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
                                              paste0(query_url_list_files,"_genomic.fna.gz")), paste0("_ncbi_downloads/genomes/",organism,"_genome.fna.gz"))
                         
-                        unz(temp, file_path)
-                        unlink(temp)
+
                 }
                 
-                genome <- read.genome(file_path, format = "fasta")
+                genome <- read.genome(gzfile(file_path), format = "fasta")
                 
         }
-        
-        
-        if(db == "genebannk"){
-                
-                
-                
-                
-         }     
-        
-        
-        if(db == "all"){
-                
-                
-                
-                
-        }    
         
         if(clean_folder)
                 clean_all_folders("_ncbi_downloads/genomes")

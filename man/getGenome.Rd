@@ -6,7 +6,9 @@
 getGenome(db = "refseq", kingdom, organism, clean_folder = TRUE)
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: 'refseq','genebank', or 'all'.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: 'refseq'.
+Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
+sequence retrieval from additional databases.}
 
 \item{kingdom}{a character string specifying the kingdom of the organisms of interest,
 e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".}
@@ -28,9 +30,6 @@ Internally this function loads the the overview.txt file from NCBI:
 
  refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
 
- genebank: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/}
-
- all: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/all/}
 
 and creates a directory '_ncbi_downloads/genomes' to store
 the genome of interest as fasta file for future processing.
@@ -55,6 +54,8 @@ Ath_genome <- getGenome(db = "refseq", kingdom = "plant",
 Hajk-Georg Drost
 }
 \references{
-ftp://ftp.ncbi.nlm.nih.gov/genomes/
+\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
+
+\url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 
