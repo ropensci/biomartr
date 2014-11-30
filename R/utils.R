@@ -62,3 +62,65 @@ clean_all_folders <- function(foldernames){
         }
         
 }
+
+
+
+#' @title Function to check genome availability
+#' @description This function checks the availability of a given genome on the NBCI servers specified
+#' as scientific name.
+#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
+#' @param details a logical value specifying whether or not details on genome size, kingdom, etc. shall be printed to the
+#' console intead of a boolean value.
+#' @details
+#' 
+#' Internally this function calls the \code{\link{listGenomes}} function to detect all available genomes
+#' and checks whether or not the specified organism is available for download.
+#' 
+#' @return a logical value specifing whether or not the genome of the input organism
+#' is available. In case \code{details} = \code{TRUE} only a character string specifying the
+#' genome details is being returned.
+#' @author Hajk-Georg Drost
+#' @examples \dontrun{
+#' 
+#' # checking whether the Arabidopsis thaliana genome is stored on NCBI 
+#' is.genome.available(organism = "Arabidopsis thaliana")
+#' 
+#' # and printing details
+#' is.genome.available(organism = "Arabidopsis thaliana", details = TRUE)
+#' 
+#' }
+#' @references
+#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
+#' @export
+
+is.genome.available <- function(organism, details = FALSE){
+        
+        
+        available_genome <- listGenomes("all",TRUE)
+        
+        is_available <- any(stringr::str_detect(available_genome[ , "organism_name"],organism))
+        
+        if(is_available){
+                
+                organism_index <- which(stringr::str_detect(available_genome[ , "organism_name"],organism))
+                
+                if(details){
+                        
+                        return(available_genome[organism_index, ])
+                        
+                } else {
+                        
+                        return(TRUE)
+                }
+                
+        } else {
+                
+                return(FALSE)
+                
+        }
+        
+}
+
+
+
+

@@ -10,11 +10,11 @@
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+#'  refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
 #' 
-#'  genebank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/
+#'  genebank: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/}
 #' 
-#'  all: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/
+#'  all: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/all/}
 #' 
 #' and creates a directory '_ncbi_downloads/genomes' to store
 #' the genome of interest as fasta file for future processing.
@@ -23,7 +23,14 @@
 #' no download process will be performed.
 #' @return A data.table storing the geneids in the first column and the DNA dequence in the second column.
 #' @examples \dontrun{
-#' # download the genome of Arabidopsis thaliana
+#' 
+#' # download the genome of Arabidopsis thaliana from refseq
+#' # and store the corresponding genome file in '_ncbi_downloads/genomes'
+#' Ath_genome <- getGenome(db = "refseq", kingdom = "plant", 
+#'                         organism = "Arabidopsis thaliana", 
+#'                         clean_folder = FALSE)
+#' 
+#' 
 #' 
 #' }
 #' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/
@@ -32,6 +39,10 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         
         if(!is.element(db,c("refseq","genebank","all")))
                 stop("Please select one of the available data bases: 'refseq','genebank' or 'all'")
+        
+        if(!is.genome.available(organism = organism))
+                stop(paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
+        
         
         if(db == "refseq"){
                 

@@ -26,7 +26,7 @@ is built inside the workspace.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
-ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/ and creates a directory '_ncbi_downloads' to store
+\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' to store
 the overview.txt file for future processing. In case the overview.txt file already exists within the
 '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
 }
@@ -72,6 +72,6 @@ head(listGenomes(details = TRUE,update = TRUE) , 5)
 Hajk-Georg Drost
 }
 \references{
-ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
+\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
 }
 

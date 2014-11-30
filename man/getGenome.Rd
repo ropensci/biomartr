@@ -26,11 +26,11 @@ the genome file in the folder '_ncbi_downloads/genomes'.
 \details{
 Internally this function loads the the overview.txt file from NCBI:
 
- refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+ refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
 
- genebank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/
+ genebank: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genebank/}
 
- all: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/
+ all: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/all/}
 
 and creates a directory '_ncbi_downloads/genomes' to store
 the genome of interest as fasta file for future processing.
@@ -40,7 +40,14 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-# download the genome of Arabidopsis thaliana
+
+# download the genome of Arabidopsis thaliana from refseq
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+Ath_genome <- getGenome(db = "refseq", kingdom = "plant",
+                        organism = "Arabidopsis thaliana",
+                        clean_folder = FALSE)
+
+
 
 }
 }

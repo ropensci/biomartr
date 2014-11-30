@@ -10,7 +10,7 @@
 #' Default is \code{update} = \code{FALSE}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
-#' ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/ and creates a directory '_ncbi_downloads' to store
+#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' to store
 #' the overview.txt file for future processing. In case the overview.txt file already exists within the
 #' '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
 #' @return A data.frame storing either the organism names (details = FALSE)
@@ -53,7 +53,7 @@
 #' 
 #' }
 #' 
-#' @references ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
+#' @references \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
 #' @export
 listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE){
         
