@@ -286,6 +286,66 @@ After checking for the availability of sequence information for an organism of i
 the next step is to download the corresponding genome, proteome, or CDS file in `fasta` format.
 
 
+### Genome Retrieval
+
+The easiest way to download a genome is to use the `getGenome()` function.
+
+In this example we will download the genome of `A. thaliana`.
+
+The `getGenome()` function is an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
+which corresponding genomes are downloaded.
+
+For this purpose you need to specify the kingdom in which your organism of interest is classified into,
+e.g. `"archaea"`,`"bacteria"`, `"fungi"`, `"invertebrate"`, `"plant"`, `"protozoa"`, `"vertebrate_mammalian"`, or `"vertebrate_other"`
+and then the scientific name of the organism of interest.
+
+```{r,eval=FALSE}
+
+# download the genome of Arabidopsis thaliana from refseq
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+Ath_genome <- getGenome(db = "refseq", kingdom = "plant",
+                        organism = "Arabidopsis thaliana",
+                        clean_folder = FALSE)
+
+
+```
+
+Internally, the `getGenome()` function creates a directory named `_ncbi_downloads/genomes` in which
+corresponding genomes are loaded and then sourced as data.table object into the current R session.
+When specifying `clean_folder = FALSE`, the `_ncbi_downloads/genomes` folder will not be removed and
+the corresponding genome does not need to be downloaded again when sourcing it into the current R session via 
+`getGenome()`.
+
+
+### Proteome Retrieval
+
+The `getProteome()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
+which corresponding proteomes are downloaded. It works exactly the same as `getGenome()`. 
+
+
+```{r,eval=FALSE}
+
+# download the proteome of Arabidopsis thaliana from refseq
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
+                        organism = "Arabidopsis thaliana",
+                        clean_folder = FALSE)
+
+
+```
+
+Internally, the `getProteome()` function creates a directory named `_ncbi_downloads/proteome` in which
+corresponding proteomes are loaded and then sourced as data.table object into the current R session.
+When specifying `clean_folder = FALSE`, the `_ncbi_downloads/proteomes` folder will not be removed and
+the corresponding proteome does not need to be downloaded again when sourcing it into the current R session via 
+`getProteome()`.
+
+
+
+
+
+### CDS Retrieval
+
 
 
 
