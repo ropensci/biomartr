@@ -1,7 +1,7 @@
 #' @title Visualization function for genome properties
 #' @description This function allows to visualize selected properties of input genomes such as:
 #' \itemize{
-#' \item gene length distribution
+#' \item gene length distribution: \code{type} = \code{"length_distr"}
 #' 
 #' }
 #' @param data a data.table object storing the corresponding genome as returned by \code{\link{read.genome}}, \code{\link{read.proteome}}, or 
@@ -10,6 +10,18 @@
 #' @param ... additional parameters that shall be passed to the corresponding plot function.
 #' @author Hajk-Georg Drost
 #' @return a plot object.
+#' @examples \dontrun{
+#' 
+#' # download the proteome of Arabidopsis thaliana from refseq
+#' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+#' Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
+#'                             organism = "Arabidopsis thaliana",
+#'                             clean_folder = FALSE)
+#' 
+#' # visualize the length distribution of the proteome of A. thaliana
+#' visGenome(data = Ath_proteome, type = "length_distr")
+#' 
+#' }
 #' @import data.table
 #' @export
 

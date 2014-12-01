@@ -19,7 +19,21 @@ a plot object.
 \description{
 This function allows to visualize selected properties of input genomes such as:
 \itemize{
-\item gene length distribution
+\item gene length distribution: \code{type} = \code{"length_distr"}
+
+}
+}
+\examples{
+\dontrun{
+
+# download the proteome of Arabidopsis thaliana from refseq
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
+                            organism = "Arabidopsis thaliana",
+                            clean_folder = FALSE)
+
+# visualize the length distribution of the proteome of A. thaliana
+visGenome(data = Ath_proteome, type = "length_distr")
 
 }
 }
