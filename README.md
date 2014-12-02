@@ -45,15 +45,11 @@ biocLite("biomaRt")
 
 #### Proteome Retrieval
 
-*
-*
-*
+* `getProteome()` : A function for downloading a specific proteome stored on the NCBI ftp:// server
 
 #### CDS Retrieval
 
-*
-*
-*
+* `getCDS()` : A function for downloading a specific CDS file (genome) stored on the NCBI ftp:// server
 
 ### Interface to biomart
 

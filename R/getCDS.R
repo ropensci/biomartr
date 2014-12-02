@@ -1,4 +1,4 @@
-#' @title Function for downloading a specific CDS (genome) stored on the NCBI ftp:// server.
+#' @title Function for downloading a specific CDS file (genome) stored on the NCBI ftp:// server.
 #' @description This function retrieves a fasta-file storing the CDS files of the genome of an organism of interest and stores
 #' this file in the folder '_ncbi_downloads/CDS'.
 #' @param db a character string specifying the database from which the CDS file shall be retrieved: 'refseq'.
