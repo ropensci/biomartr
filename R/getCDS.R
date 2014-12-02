@@ -105,7 +105,7 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                         
                 }
                 
-                CDS <- read.cds(gzfile(file_path), format = "fasta")
+                CDS <- read_cds(gzfile(file_path), format = "fasta")
                 
         }
         

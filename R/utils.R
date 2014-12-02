@@ -123,4 +123,5 @@ is.genome.available <- function(organism, details = FALSE){
 
 
 
+test <- function(x){ print(paste0("Test ",x," passed.","\n"))}
 

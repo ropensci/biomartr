@@ -9,6 +9,8 @@ Description: This package aims to provide an easy to use and intuitive
 Depends:
     R (>= 3.1.1)
 Imports:
-    biomaRt (>= 2.20.0)
-License: GPL-2
+    biomaRt (>= 2.20.0),
+    Biostrings (>= 2.32.1),
+    data.table (>= 1.9.4)
+License: GPL-3
 LazyData: true

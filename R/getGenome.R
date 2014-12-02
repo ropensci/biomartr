@@ -103,7 +103,7 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
 
                 }
                 
-                genome <- read.genome(gzfile(file_path), format = "fasta")
+                genome <- read_genome(gzfile(file_path), format = "fasta")
                 
         }
         
