@@ -3,6 +3,7 @@
 export(biomart)
 export(evalAlignment)
 export(geneSequence)
+export(getCDS)
 export(getGO)
 export(getGenome)
 export(getProteome)

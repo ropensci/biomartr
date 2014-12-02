@@ -19,7 +19,7 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 shall be removed after storing the corresponding proteome as data.table object. Default is \code{clean_folder} = \code{TRUE}.}
 }
 \value{
-A data.table storing the geneids in the first column and the DNA dequence in the second column.
+A data.table storing the geneids in the first column and the protein dequence in the second column.
 }
 \description{
 This function retrieves a fasta-file storing the proteome of an organism of interest and stores

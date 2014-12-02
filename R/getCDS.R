@@ -1,31 +1,33 @@
-#' @title Function for downloading a specific proteome stored on the NCBI ftp:// server.
-#' @description This function retrieves a fasta-file storing the proteome of an organism of interest and stores
-#' the proteome file in the folder '_ncbi_downloads/proteomes'.
-#' @param db a character string specifying the database from which the proteome shall be retrieved: 'refseq'.
+#' @title Function for downloading a specific CDS (genome) stored on the NCBI ftp:// server.
+#' @description This function retrieves a fasta-file storing the CDS files of the genome of an organism of interest and stores
+#' this file in the folder '_ncbi_downloads/CDS'.
+#' @param db a character string specifying the database from which the CDS file shall be retrieved: 'refseq'.
 #' Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 #' sequence retrieval from additional databases.
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
-#' @param clean_folder a logical value specifying whether the '_ncbi_downloads/proteomes' folder storing the corresponding proteome
-#' shall be removed after storing the corresponding proteome as data.table object. Default is \code{clean_folder} = \code{TRUE}.
+#' @param clean_folder a logical value specifying whether the '_ncbi_downloads/CDS' folder storing the corresponding CDS file
+#' shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
 #'  refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
 #' 
 #' 
-#' and creates a directory '_ncbi_downloads/proteomes' to store
-#' the proteome of interest as fasta file for future processing.
+#' and creates a directory '_ncbi_downloads/CDS' to store
+#' the genome of interest as CDS fasta file for future processing.
 #' In case the corresponding fasta file already exists within the
-#' '_ncbi_downloads/genomes' folder and is accessible within the workspace,
-#' no download process will be performed.
-#' @return A data.table storing the geneids in the first column and the protein dequence in the second column.
+#' '_ncbi_downloads/CDS' folder and is accessible within the workspace,
+#' no download process will be performed. So the folder can delete when the corresponding
+#' CDS file shall be downloaded again. 
+#' 
+#' @return A data.table storing the geneids in the first column and the DNA dequence in the second column.
 #' @examples \dontrun{
 #' 
-#' # download the proteome of Arabidopsis thaliana from refseq
-#' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-#' Ath_proteome <- getProteome(db = "refseq", kingdom = "plant", 
+#' # download the genome of Arabidopsis thaliana from refseq
+#' # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+#' Ath_cds <- getCDS(db = "refseq", kingdom = "plant", 
 #'                         organism = "Arabidopsis thaliana", 
 #'                         clean_folder = FALSE)
 #' 
@@ -39,8 +41,7 @@
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
 #' @export
-
-getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
+getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         
         if(!is.element(db,c("refseq")))
                 stop("Please select one of the available data bases: 'refseq'")
@@ -52,9 +53,9 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         if(db == "refseq"){
                 
                 
-                if(!file.exists("_ncbi_downloads/proteomes")){
+                if(!file.exists("_ncbi_downloads/CDS")){
                         
-                        dir.create("_ncbi_downloads/proteomes")
+                        dir.create("_ncbi_downloads/CDS")
                         
                 }
                 
@@ -92,27 +93,27 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                 #                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
                 #                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
-                file_path <- paste0("_ncbi_downloads/proteomes/",organism,"_protein.faa.gz")
+                file_path <- paste0("_ncbi_downloads/CDS/",organism,"_rna.fna.gz")
                 
                 if(!file.exists(file_path)){
                         
                         
                         download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_protein.faa.gz")), paste0("_ncbi_downloads/proteomes/",organism,"_protein.faa.gz"))
+                                             paste0(query_url_list_files,"_rna.fna.gz")), paste0("_ncbi_downloads/CDS/",organism,"_rna.fna.gz"))
                         
                         
                 }
                 
-                proteome <- read.proteome(gzfile(file_path), format = "fasta")
+                CDS <- read.cds(gzfile(file_path), format = "fasta")
                 
         }
         
         if(clean_folder)
-                clean_all_folders("_ncbi_downloads/proteomes")
+                clean_all_folders("_ncbi_downloads/CDS")
         
         
-        return(proteome)
+        return(CDS)
 }
 
 

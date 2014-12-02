@@ -346,6 +346,26 @@ the corresponding proteome does not need to be downloaded again when sourcing it
 
 ### CDS Retrieval
 
+The `getCDS()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
+which corresponding CDS files are downloaded. It works exactly the same as `getGenome()` and `getProteome()` but for CDS files. 
+
+
+```{r,eval=FALSE}
+
+# download the genome of Arabidopsis thaliana from refseq
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+Ath_cds <- getCDS(db = "refseq", kingdom = "plant",
+                        organism = "Arabidopsis thaliana",
+                        clean_folder = FALSE)
+
+
+```
+
+Internally, the `getCDS()` function creates a directory named `_ncbi_downloads/CDS` in which
+corresponding CDS files are loaded and then sourced as data.table object into the current R session.
+When specifying `clean_folder = FALSE`, the `_ncbi_downloads/CDS` folder will not be removed and
+the corresponding proteome does not need to be downloaded again when sourcing it into the current R session via 
+`getCDS()`.
 
 
 

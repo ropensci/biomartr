@@ -122,18 +122,23 @@ read.cds <- function(file, format, ...){
         if(format == "fasta"){
                 cds <- vector(mode = "list")
                 
-                tryCatch(
-{
-        cds <- seqinr::read.fasta(file, seqtype = "DNA", ...)
-        cds_names <- unlist(lapply(names(cds), function(x){return(strsplit(x, "\t")[[1]][1])}))
+                tryCatch({
+                        
+        #cds <- seqinr::read.fasta(file, seqtype = "DNA", ...)
+        cds <- Biostrings::readDNAStringSet(file, format = format)
+                                            
+        cds_names <- unlist(lapply(names(cds@ranges@NAMES), function(x){return(strsplit(x, "\t")[[1]][1])}))
+        
         cds.dt <- data.table::data.table(geneids = cds_names ,
-                                         seqs = unlist(lapply(cds, seqinr::c2s)))
+                                         seqs = tolower(as.character(cds)))
+        
         data.table::setkey(cds.dt,geneids)
         
-}, error = function(){ stop(paste0("File ",file, " could not be read properly. \n",
+        }, error = function(e){ stop(paste0("File ",file, " could not be read properly. \n",
                                    "Please make sure that ",file," contains only CDS sequences and is in ",format," format."))}
                 )
         }
+
 return(cds.dt)
 }
 
