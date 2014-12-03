@@ -1,6 +1,8 @@
 biomartr
 ========
 
+## A collection of functions for functional annotation queries, sequence retrieval, genome scale visualization, and biostatistics
+
 The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) functionality and [Gene Ontology](http://geneontology.org/page/go-enrichment-analysis)/[Kegg](http://www.genome.jp/kegg/) analyses. Furthermore, it was specifically designed to serve as additional module to
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks.
 
@@ -63,14 +65,19 @@ biocLite("biomaRt")
 
 #### KeGG Ontology
 
-* 
+* `getKegg()` : Function to retrieve Kegg annotation for a given set of genes
 
 ### Statistics
 
 #### Alignment Statistics
+
 * `randomSeqs()` : Random sequence generator based on a multinomial model
 * `randSeqDistr()` : Function to generate a distribution of alignment scores based on random sequences
 * `evalAlignment()` : Function to quantify the statistical significance of a given pairwise alignment
+
+### Visualization
+
+* `visGenome()` : Visualization function for genome properties
 
 ## Tutorials
 
