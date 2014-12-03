@@ -15,3 +15,35 @@ knitr::opts_chunk$set(
   error = FALSE,
   tidy = FALSE)
 ```
+
+## Getting Started
+
+A major problem in bioinformatics research is consistent data retrieval. 
+The `biomartr` package therefore, aims to provide users with easy to use and diverse interfaces to well curated biological databases such as:
+
+* [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/)
+* [BioMart](http://www.biomart.org/)
+* [Gene Ontology](http://geneontology.org/)
+* [Kegg](http://www.genome.jp/kegg/kegg1a.html)
+
+
+The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes or entire genomes, biological pathway analyses for a set of genes, biological sequence retrieval, test statistics for quantifying the significance of observed phenomena, and visualization functions for genome properties.
+
+Users of the [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions that will allow them to integrate `biomartr` to any workflow implemented with `myTAI` or `orthologr`.
+
+
+## Installation of prerequisite tools and databases
+
+Although most functions provide remote access to corresponding databases, some functions have been optimized to work with stand alone versions of specific databases. For this purpose corresponding databases need to be downloaded and installed.
+
+### Installing BioMart
+
+
+
+
+
+
+
+
+
+
