@@ -58,4 +58,7 @@ Hajk-Georg Drost
 
 \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
+\seealso{
+\code{\link{read_genome}}
+}
 

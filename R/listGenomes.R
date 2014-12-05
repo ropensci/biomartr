@@ -8,6 +8,8 @@
 #' "chrs","organelles","plasmids", and "bio_projects".
 #' @param update a logical value specifying whether or not the available organism table shall be updated from the NCBI server.
 #' Default is \code{update} = \code{FALSE}.
+#' @param database a character string specifying the database for which genome availability shall be checked, 
+#' e.g. \code{database} =  \code{"refseq"} or \code{database} =  \code{"all"}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' to store
@@ -43,6 +45,13 @@
 #' # for subgroup
 #' table(ncbi_genomes[ , "subgroup"])
 #' 
+#' # you can also limit your search to the refseq database
+#' head(listGenomes(database = "refseq") , 20)
+#' 
+#' head(listGenomes(details=TRUE, database = "refseq") , 5)
+#' 
+#' head(listGenomes(kingdom = "Eukaryota", details = TRUE,database = "refseq") , 5)
+#' 
 #' # order by file size
 #' library(dplyr)
 #' head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
@@ -55,11 +64,15 @@
 #' 
 #' @references \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
 #' @export
-listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE){
+listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, database = "all"){
         
         
         if(!is.element(kingdom,c("all","Archaea", "Bacteria", "Eukaryota", "Viroids", "Viruses")))
                 stop("Please use a valid kingdom.")
+        
+        if(!is.element(database, c("refseq","all")))
+                stop("Please specify a database that is supported by this function.")
+        
         
         if(!file.exists("_ncbi_downloads")){
                 
@@ -88,6 +101,21 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE){
                                   "group","subgroup","file_size_MB",
                                   "chrs","organelles","plasmids",
                                   "bio_projects")
+        
+        
+        if(database == "refseq"){
+                
+                if(!file.exists("_ncbi_downloads/refseqOrgs.txt")){
+                        file.create("_ncbi_downloads/refseqOrgs.txt")
+                        write.table(refseqOrganisms(), "_ncbi_downloads/refseqOrgs.txt", sep = "\n",
+                                    quote = FALSE, col.names = FALSE, row.names = FALSE)
+                }
+                
+                refseqOrgs <- read.table("_ncbi_downloads/refseqOrgs.txt", header = FALSE, sep = "\n",
+                                         colClasses = "character", stringsAsFactors = FALSE)
+                ncbi_overview <- ncbi_overview[na.omit(match(refseqOrgs[ , 1]
+                                                       , ncbi_overview[ , "organism_name"])), ]
+        }
         
         if(kingdom == "all"){
                 if(details == TRUE){

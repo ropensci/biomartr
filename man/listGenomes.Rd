@@ -3,7 +3,8 @@
 \alias{listGenomes}
 \title{Function to list all genomes available on the NCBI ftp:// server.}
 \usage{
-listGenomes(kingdom = "all", details = FALSE, update = FALSE)
+listGenomes(kingdom = "all", details = FALSE, update = FALSE,
+  database = "all")
 }
 \arguments{
 \item{kingdom}{a character string specifying a potential filter of available genomes: "all","Archaea", "Bacteria", "Eukaryota", "Viroids", "Viruses".}
@@ -14,6 +15,9 @@ listGenomes(kingdom = "all", details = FALSE, update = FALSE)
 
 \item{update}{a logical value specifying whether or not the available organism table shall be updated from the NCBI server.
 Default is \code{update} = \code{FALSE}.}
+
+\item{database}{a character string specifying the database for which genome availability shall be checked,
+e.g. \code{database} =  \code{"refseq"} or \code{database} =  \code{"all"}.}
 }
 \value{
 A data.frame storing either the organism names (details = FALSE)
@@ -57,6 +61,13 @@ table(ncbi_genomes[ , "group"])
 
 # for subgroup
 table(ncbi_genomes[ , "subgroup"])
+
+# you can also limit your search to the refseq database
+head(listGenomes(database = "refseq") , 20)
+
+head(listGenomes(details=TRUE, database = "refseq") , 5)
+
+head(listGenomes(kingdom = "Eukaryota", details = TRUE,database = "refseq") , 5)
 
 # order by file size
 library(dplyr)

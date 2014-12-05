@@ -71,6 +71,8 @@ clean_all_folders <- function(foldernames){
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
 #' @param details a logical value specifying whether or not details on genome size, kingdom, etc. shall be printed to the
 #' console intead of a boolean value.
+#' @param database a character string specifying the database for which genome availability shall be checked, 
+#' e.g. \code{database} =  \code{"refseq"} or \code{database} =  \code{"all"}.
 #' @details
 #' 
 #' Internally this function calls the \code{\link{listGenomes}} function to detect all available genomes
@@ -93,12 +95,13 @@ clean_all_folders <- function(foldernames){
 #' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
 #' @export
 
-is.genome.available <- function(organism, details = FALSE){
+is.genome.available <- function(organism, details = FALSE, database = "refseq"){
         
         
-        available_genome <- listGenomes("all",TRUE)
+        available_genome <- listGenomes("all",TRUE,database = database)
         
         is_available <- any(stringr::str_detect(available_genome[ , "organism_name"],organism))
+        
         
         if(is_available){
                 

@@ -38,6 +38,7 @@
 #' 
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
+#' @seealso \code{\link{read_genome}}
 #' @export
 getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         
