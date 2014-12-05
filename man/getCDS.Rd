@@ -3,7 +3,8 @@
 \alias{getCDS}
 \title{Function for downloading a specific CDS file (genome) stored on the NCBI ftp:// server.}
 \usage{
-getCDS(db = "refseq", kingdom, organism, clean_folder = TRUE)
+getCDS(db = "refseq", kingdom, organism, clean_folder = TRUE,
+  delete_corrupt = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the CDS file shall be retrieved: 'refseq'.
@@ -17,6 +18,9 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 
 \item{clean_folder}{a logical value specifying whether the '_ncbi_downloads/CDS' folder storing the corresponding CDS file
 shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.}
+
+\item{delete_corrupt}{a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
+be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
 }
 \value{
 A data.table storing the geneids in the first column and the DNA dequence in the second column.

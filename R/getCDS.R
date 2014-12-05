@@ -9,6 +9,8 @@
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
 #' @param clean_folder a logical value specifying whether the '_ncbi_downloads/CDS' folder storing the corresponding CDS file
 #' shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.
+#' @param delete_corrupt a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
+#' be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -41,7 +43,7 @@
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
 #' @export
-getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
+getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete_corrupt = FALSE){
         
         if(!is.element(db,c("refseq")))
                 stop("Please select one of the available data bases: 'refseq'")
@@ -105,7 +107,7 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                         
                 }
                 
-                CDS <- read_cds(gzfile(file_path), format = "fasta")
+                CDS <- read_cds(file_path, format = "fasta", delete_corrupt = delete_corrupt)
                 
         }
         

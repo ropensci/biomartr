@@ -104,7 +104,7 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                         
                 }
                 
-                proteome <- read_proteome(gzfile(file_path), format = "fasta")
+                proteome <- read_proteome(file_path, format = "fasta")
                 
         }
         

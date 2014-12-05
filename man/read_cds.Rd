@@ -3,12 +3,15 @@
 \alias{read_cds}
 \title{Function to read the CDS of a given organism}
 \usage{
-read_cds(file, format, ...)
+read_cds(file, format, delete_corrupt = FALSE, ...)
 }
 \arguments{
 \item{file}{a character string specifying the path to the file storing the CDS.}
 
 \item{format}{a character string specifying the file format used to store the CDS, e.g. "fasta", "gbk".}
+
+\item{delete_corrupt}{a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
+be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
 
 \item{...}{additional arguments that are used by the seqinr::read.fasta() function.}
 }
