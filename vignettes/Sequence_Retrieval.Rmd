@@ -80,6 +80,31 @@ length(listGenomes())
 Hence, currently 10470 genomes (including all kingdoms of life) are stored on [NCBI](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) servers.
 
 
+Optionally, you can also specify the database for which the availability of organisms shall be checked.
+
+```{r,eval=FALSE}
+# cheking whether A. thaliana is available in the refseq database
+is.genome.available("Arabidopsis thaliana", database = "refseq")
+
+```
+
+```
+[1] TRUE
+```
+
+You can also determien the total number of genomes stored in refseq.
+
+```{r,eval=FALSE}
+
+length(listGenomes(database = "refseq"))
+```
+
+```
+[1] 3931
+```
+
+This result shows that 3931 genomes are stored in refseq.
+
 The simplest way to work with `listGenomes()` is to print available genomes to the console.
 
 ```{r,eval=FALSE}
@@ -280,6 +305,59 @@ head(listGenomes(details = TRUE, update = TRUE) , 5)
 
 ```
 
+Again, the `listGenomes()` function can be limited to search for available genome information in refseq.
+
+```{r,eval=FALSE}
+
+# list all Eukaryota that are stored in refseq
+head(listGenomes(kingdom = "Eukaryota", database = "refseq") , 20)
+```
+
+```
+                    organism_name
+1               Agaricus bisporus
+2          Ajellomyces capsulatus
+3        Ajellomyces dermatitidis
+4           Arthroderma benhamiae
+5                Arthroderma otae
+6            Aspergillus clavatus
+7              Aspergillus flavus
+8           Aspergillus fumigatus
+9            Aspergillus nidulans
+10              Aspergillus niger
+11             Aspergillus oryzae
+12            Aspergillus terreus
+13           Auricularia delicata
+14 Batrachochytrium dendrobatidis
+15        Baudoinia compniacensis
+16               Bipolaris oryzae
+17          Bipolaris sorokiniana
+18              Bipolaris zeicola
+19               Botrytis cinerea
+20               Candida albicans
+```
+
+Or analogous:
+
+
+```{r,eval=FALSE}
+
+# the number of genomes available for each kingdom stored in refseq
+ncbi_genomes <- listGenomes(details = TRUE, database = "refseq")
+table(ncbi_genomes[ , "kingdoms"])
+
+```
+
+```
+  Archaea  Bacteria Eukaryota 
+      193      3299       439
+```
+
+__Note__: when running the `listGenomes()` function for the first time, it might take a while until
+the function returns your results, because necessary information are downloaded from databases
+and then are being stored in the `_ncbi_downloads` folder on your hard drive. All following executions of `listGenomes()`
+will then respond very fast, because they will access the corresponding files stored on your hard drive.
+
 ## Downloading Biological Sequences
 
 After checking for the availability of sequence information for an organism of interest,
@@ -366,6 +444,11 @@ corresponding CDS files are loaded and then sourced as data.table object into th
 When specifying `clean_folder = FALSE`, the `_ncbi_downloads/CDS` folder will not be removed and
 the corresponding proteome does not need to be downloaded again when sourcing it into the current R session via 
 `getCDS()`.
+
+Furthermore, the `getCDS()` function checks whether all CDS sequences can be divided by 3 (codons).
+In case sequences of particualar genes cannot be divided by 3, a warning massage is returned to quantify the
+number of correspondning genes. In case you would like to extract these sequences from your data, you can specify the
+`delete_delete_corrupt = TRUE` argument, which will then delete all corrupt CDS sequences.
 
 
 
