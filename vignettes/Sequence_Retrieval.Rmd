@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 
-The `biomartr` package allows you to retrieve biological sequences in very simple way.
+The `biomartr` package allows you to retrieve biological sequences in very simple and intuitive way.
 
 Using `biomartr`, you can retrieve either genomes, proteomes, or CDS data using the specialized functions:
 
@@ -449,6 +449,61 @@ Furthermore, the `getCDS()` function checks whether all CDS sequences can be div
 In case sequences of particualar genes cannot be divided by 3, a warning massage is returned to quantify the
 number of correspondning genes. In case you would like to extract these sequences from your data, you can specify the
 `delete_delete_corrupt = TRUE` argument, which will then delete all corrupt CDS sequences.
+
+
+### Retrieving sequences for a set of genes
+
+For most analyses only subsets of sequences (taken from the entire genome) are needed.
+This section introduces several approaches to select a set of sequences for furthr analyses.
+
+#### Using the output from `getProteome()`
+
+As you saw before, the `getProteome()` function allows you to download 
+the entire proteome of a specific organism of interest that is stored in refseq.
+
+```{r,eval=FALSE}
+
+# download the proteome of Arabidopsis thaliana from refseq
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
+                        organism = "Arabidopsis thaliana",
+                        clean_folder = FALSE)
+
+
+```
+
+Again, we download the _A. thaliana_ proteome and now are interested in the following two genes for 
+subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of fatty acid desaturase family and take over functions in oxidoreductase activity ([see details](http://arabidopsis.org/servlets/TairObject?id=136833&type=locus)). To access the protein sequences of these genes in a proteome downloaded from refseq, first you need to map the `tair_locus` id to the corresponding `refseq` ids.
+
+For this purpose the you can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
+
+
+```{r,eval=FALSE}
+
+bm <- biomart(genes = c("AT1G06090", "AT1G06100"),
+              mart = "plants_mart_23", dataset = "athaliana_eg_gene",
+              attributes = c("refseq_peptide"),
+              filters = "tair_locus")
+```
+
+```
+  filter_input filter_output refseq_peptide        NA
+1    AT1G06090     AT1G06100      AT1G06100 NP_172100
+2    AT1G06100     AT1G06090      AT1G06090 NP_172099
+
+```
+
+```{r,eval=FALSE}
+genes_of_interest <- which(stringr::str_detect(bm[ , 4], Ath_proteome[ , geneids]))
+
+Ath_proteome[ , ]
+```
+
+
+
+
+
+
 
 
 
