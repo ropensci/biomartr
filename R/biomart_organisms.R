@@ -34,13 +34,19 @@ biomart_organisms <- function(organism = NULL){
   
        all_datasets <- dplyr::mutate(all_datasets,organism_name = sapply(all_datasets[ ,"description"], function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
        all_datasets <- dplyr::select(all_datasets, list(organism_name,description,mart,dataset,version))
-       
-       # find out whether or not the query organisms has an entry 
-       if(length(unlist(sapply(all_datasets[ , "organism_name"], function(x) stringr::str_match_all(stringr::fixed(x),organism)))) == 0)
-               stop("Unfortunately, no entry for ", organism, " has been found.")
-       
-       if(!is.null(organism))
-               return(dplyr::filter(all_datasets,organism_name == organism))
+          
+       if(!is.null(organism)){
+               
+               res <- dplyr::filter(all_datasets,organism_name == organism)
+               
+               if(dim(res)[1] == 0){
+                       stop("Unfortunately, no entry for '", organism, "' has been found.")
+               } else {
+                       
+                       return(dplyr::filter(all_datasets,organism_name == organism))
+               }
+              
+       }
        
        if(is.null(organism))
                return(all_datasets)
