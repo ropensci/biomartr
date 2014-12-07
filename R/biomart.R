@@ -52,7 +52,7 @@ biomart <- function(genes,mart,dataset,attributes,filters,...){
         inter <- na.omit(match(query[ , 1], genes))
         
         # biomart output as data.frame
-        tbl_biomart <- data.frame(genes,genes[inter],query)
+        tbl_biomart <- dplyr::data_frame(genes,genes[inter],query)
         
         colnames(tbl_biomart) <- c("filter_input","filter_output",attributes)
         ### returning a data.frame storing the input gene id's and their corresponding attributes
