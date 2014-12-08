@@ -1,5 +1,5 @@
 ---
-title: "Functional Annotation with GO and KeGG"
+title: "Functional Annotation with BioMart, GO, and KeGG"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,3 +15,251 @@ knitr::opts_chunk$set(
   error = FALSE,
   tidy = FALSE)
 ```
+
+
+## Functional Annotation with BioMart
+
+The [BioMart](http://biomart.org/) project enables to retrieve a vast diversity of annotation data
+for specific organisms. Steffen Durinck and Wolfgang Huber provide an powerful interface between
+the R language and [BioMart](http://biomart.org/) by providing the R package [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html).
+The following sections will introduce you to the functionality and data retrieval using the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html)
+package and will then introduce you to the interface functions `biomart()` and `biomart_organisms()` implemented in `orthologr`
+that are based on the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) methodology but aim to introduce an more intuitive way of interacting with BioMart.
+
+### Getting Started with biomaRt
+
+The best way to get started with the methodology presented by `biomaRt` is to understand the workflow
+of data retrieval. The database provided by [BioMart](http://biomart.org/) is organized in so called:
+`marts`, `datasets`, and `attributes`. So when you want to retrieve information for a specific organism
+of interest, first you need to specify the `marts` and `datasets` in which information of the corresponding
+organism can be found and then you can specify the `attributes` that shall be returned for that
+particular organism.
+
+The availability of `marts`, `datasets`, and `attributes` can be checked by the following functions:
+
+```{r,eval=FALSE}
+library(biomaRt)
+
+head(listMarts(), 10)
+
+```
+
+```
+                 biomart                               version
+1                ensembl          ENSEMBL GENES 77 (SANGER UK)
+2                    snp      ENSEMBL VARIATION 77 (SANGER UK)
+3    functional_genomics     ENSEMBL REGULATION 77 (SANGER UK)
+4                   vega                  VEGA 57  (SANGER UK)
+5          fungi_mart_23             ENSEMBL FUNGI 23 (EBI UK)
+6    fungi_variations_23   ENSEMBL FUNGI VARIATION 23 (EBI UK)
+7        metazoa_mart_23           ENSEMBL METAZOA 23 (EBI UK)
+8  metazoa_variations_23 ENSEMBL METAZOA VARIATION 23 (EBI UK)
+9         plants_mart_23            ENSEMBL PLANTS 23 (EBI UK)
+10  plants_variations_23  ENSEMBL PLANTS VARIATION 23 (EBI UK)
+```
+As you can see, several `marts` are available that provide annotation for
+specific classes of organisms or groups of organisms.
+
+For our example, we will choose the `plants_variations_23` `mart` and list all available
+datasets that are element of this `mart`.
+
+```{r,eval=FALSE}
+
+tail(listDatasets(useMart("plants_mart_23")), 10)
+
+```
+
+```
+                dataset                                                              description
+29        zmays_eg_gene                                              Zea mays genes (AGPv3 (5b))
+30  mtruncatula_eg_gene         Medicago truncatula genes (MedtrA17_3.5 (2011-11-EnsemblPlants))
+31  atrichopoda_eg_gene                       Amborella trichopoda genes (AMTR1.0 (2014-01-AGD))
+32 creinhardtii_eg_gene                     Chlamydomonas reinhardtii genes (v3.1 (2007-11-ENA))
+33     cmerolae_eg_gene                  Cyanidioschyzon merolae genes (ASM9120v1 (2008-11-ENA))
+34  oglaberrima_eg_gene                            Oryza glaberrima genes (AGI1.1 (2011-05-AGI))
+35       tcacao_eg_gene Theobroma cacao genes (Theobroma_cacao_20110822 (2014-05-EnsemblPlants))
+36   macuminata_eg_gene                               Musa acuminata genes (MA1 (2012-08-Cirad))
+37      turartu_eg_gene                         Triticum urartu genes (ASM34745v1 (2013-04-BGI))
+38    athaliana_eg_gene                     Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))
+                                            version
+29                                       AGPv3 (5b)
+30             MedtrA17_3.5 (2011-11-EnsemblPlants)
+31                            AMTR1.0 (2014-01-AGD)
+32                               v3.1 (2007-11-ENA)
+33                          ASM9120v1 (2008-11-ENA)
+34                             AGI1.1 (2011-05-AGI)
+35 Theobroma_cacao_20110822 (2014-05-EnsemblPlants)
+36                              MA1 (2012-08-Cirad)
+37                         ASM34745v1 (2013-04-BGI)
+38                          TAIR10 (2010-09-TAIR10)
+
+```
+
+The `useMart()` function is a wrapper function provided by `biomaRt` to connect a selected BioMart
+database (`mart`) with a corresponding dataset stored within this `mart`.
+
+We select dataset `athaliana_eg_gene` and now check for available attributes (annotation data)
+that can be accessed for `Arabidopsis thaliana genes`.
+
+```{r,eval=FALSE}
+
+head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_23"))), 10)
+```
+
+```
+                    name              description
+1        ensembl_gene_id           Gene stable ID
+2  ensembl_transcript_id     Transcript stable ID
+3     ensembl_peptide_id        Protein stable ID
+4        chromosome_name Chromosome/scaffold name
+5         start_position          Gene start (bp)
+6           end_position            Gene end (bp)
+7                 strand                   Strand
+8                   band                     Band
+9       transcript_start    Transcript start (bp)
+10        transcript_end      Transcript end (bp)
+```
+
+Please notice the nested structure of this attributes query. For an attribute query procedure
+an additional wrapper function named `useDataset()` is needed in which `useMart()` and a corresponding 
+dataset needs to be specified. The result is a table storing the name of available attributes for
+_A. thaliana_ as well as a short description.
+
+Furthermore, you can retrieve all filters for _A. thaliana_ that can be specified by the actual BioMart query process.
+
+```{r,eval=FALSE}
+
+head(listFilters(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_23"))), 10)
+```
+
+```
+                               name                                         description
+1                    chromosome_name                                     Chromosome name
+2                              start                                               Start
+3                                end                                                 End
+4                             strand                                              Strand
+5                 chromosomal_region             e.g. 1:100:10000:-1, 1:100000:2000000:1
+6  with_affy_arabidopsis_ath1_121501 with Affymetrix array Arabidopsis ATH1 121501 ID(s)
+7                  with_arrayexpress                             with ArrayExpress ID(s)
+8                   with_CATMA_CATMA                  with CATMA A. thaliana probe ID(s)
+9                        with_chembl                                   with ChEMBL ID(s)
+10                         with_embl                              with ENA/GenBank ID(s)
+```
+
+Accumulating all these information, it is now possible to perform an actual BioMart query
+by using the `getBM()` function.
+
+In this example we will retrieve attributes: `start_position`,`end_position` and `description`
+for the _A. thaliana_ genes "AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", and "AT1G06200".
+Since the input genes are `tair locus ids`, we need to specify the `filters` argument `filters = "tair_locus"`.
+
+```{r,eval=FALSE}
+
+# 1) select a mart and data set
+mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_22"))
+
+# 2) run a biomart query using the getBM() function
+# and specify the attributes and filter arguments
+geneSet <- c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200")
+
+resultTable <- getBM(attributes = c("start_position","end_position","description"),
+                     filters = "tair_locus", values = geneSet, mart = mart)
+
+resultTable 
+```
+
+```
+  start_position end_position                                                             description
+1        1847883      1849693        Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06090]
+2        1851530      1853019        Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06100]
+3        1853077      1855031             SKP1/ASK-interacting protein 16 [Source:TAIR;Acc:AT1G06110]
+4        1855943      1857718        Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06120]
+5        1857767      1860730                              glyoxalase 2-4 [Source:TAIR;Acc:AT1G06130]
+6        1894336      1896935 Peptidase S24/S26A/S26B/S26C family protein [Source:TAIR;Acc:AT1G06200]
+```
+
+When using `getBM()` you can pass all attributes retrieved by `listAttributes()` to the `attributes` argument
+of the `getBM()` function.
+
+## Getting Started with biomartr
+
+This query methodology provided by BioMart and the biomaRt package is a very well defined approach
+for accurate annotation retrieval. Nevertheless, when learning this query methodology it (subjectively)
+seems non-intuitive from the user perspective. Therefore, the `biomartr` package provides another
+query methodology that aims to be more organism centric.
+
+In most cases, we work with a single or a set of model organisms and in this process mostly we are
+interested in specific annotations for this particular model organism. The `biomart_organisms()`
+function addressed this issue and provides the user with an organism centric query to `marts` and `datasets`
+that are available for a particular organism of interest.
+
+
+```{r,eval=FALSE}
+# retrieving all available datasets and biomart connections for
+# a specific query organism (scientific name)
+biomart_organisms(organism = "Arabidopsis thaliana")
+
+```
+
+```
+         organism_name                                                          description
+1 Arabidopsis thaliana                 Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))
+2 Arabidopsis thaliana            Arabidopsis thaliana variations (TAIR10 (2010-09-TAIR10))
+3 Arabidopsis thaliana Arabidopsis thaliana structural Variations (TAIR10 (2010-09-TAIR10))
+4 Arabidopsis thaliana                 Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))
+5 Arabidopsis thaliana            Arabidopsis thaliana variations (TAIR10 (2010-09-TAIR10))
+6 Arabidopsis thaliana Arabidopsis thaliana structural Variations (TAIR10 (2010-09-TAIR10))
+                    mart                dataset                 version
+1         plants_mart_23      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
+2   plants_variations_23       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
+3   plants_variations_23 athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
+4     ENSEMBL_MART_PLANT      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
+5 ENSEMBL_MART_PLANT_SNP       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
+6 ENSEMBL_MART_PLANT_SNP athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
+
+```
+
+The result is a table storing all `marts` and `datasets` from which annotations can be retrieved
+for _Arabidopsis thaliana_. Furthermore, a short description as well as the version of the dataset
+being accessed (very useful for publications) are returned.
+
+As you can see, 3 different `marts` provide 6 different `datasets` that store annotation information for
+_A. thaliana_.
+
+
+Another example using `Homo sapiens`.
+
+```{r,eval=FALSE}
+# retrieving all available datasets and biomart connections for "Homo sapiens"
+biomart_organisms(organism = "Homo sapiens")
+
+```
+
+```
+  organism_name                                                     description                mart
+1  Homo sapiens                                     Homo sapiens genes (GRCh38)             ensembl
+2  Homo sapiens         Homo sapiens Short Variation (SNPs and indels) (GRCh38)                 snp
+3  Homo sapiens                      Homo sapiens Structural Variation (GRCh38)                 snp
+4  Homo sapiens Homo sapiens Somatic Short Variation (SNPs and indels) (GRCh38)                 snp
+5  Homo sapiens              Homo sapiens Somatic Structural Variation (GRCh38)                 snp
+6  Homo sapiens                                  Homo sapiens features (GRCh38) functional_genomics
+7  Homo sapiens                                     Homo sapiens genes (GRCh38)                vega
+                 dataset version
+1  hsapiens_gene_ensembl  GRCh38
+2           hsapiens_snp  GRCh38
+3     hsapiens_structvar  GRCh38
+4       hsapiens_snp_som  GRCh38
+5 hsapiens_structvar_som  GRCh38
+6   hsapiens_feature_set  GRCh38
+7     hsapiens_gene_vega  GRCh38
+```
+
+__Note__: When you run this function for the first time, the data retrieval procedure will take some time, due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named `_biomart/listDatasets.txt` allowing subsequent queries to perform much faster.
+
+
+
+
+
+
+
+

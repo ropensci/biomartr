@@ -11,8 +11,8 @@
 #'   
 #' 
 #' @note
-#' When running the function for the first time, data retrieval will take a while,
-#' due to the remote access to biomart. The result is then saved in a *.txt file named
+#' When you run this function for the first time, the data retrieval procedure will take some time,
+#' due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named
 #' "_biomart/listDatasets.txt" allowing subsequent queries to perform much faster.
 #' 
 #' @examples \dontrun{
