@@ -39,23 +39,21 @@
 #' @return A data.frame storing the initial query gene vector in the first column, the output 
 #' gene vector in the second column, and all attributes in the following columns.
 #' @export
-biomart <- function(genes,mart,dataset,attributes,filters,...){
+biomart <- function(genes, mart, dataset, attributes, filters, ...){
         
         m <- biomaRt::useMart(mart)
         d <- biomaRt::useDataset(dataset = dataset,mart = m)
         
         ### establishing a biomaRt connection and retrieving the information for the given gene list
-        query <- biomaRt::getBM(attributes = c(filters,attributes),filters = filters, values = genes, mart = d,...)
+        query <- biomaRt::getBM(attributes = c(filters,attributes),filters = filters, values = genes, mart = d, ...)
+        colnames(query) <- c(filters,attributes)
         
-        # sometimes the query order is not returned correctly by biomart,
-        # therefore the query order is being checked 
-        inter <- na.omit(match(query[ , 1], genes))
+        genes <- dplyr::data_frame(genes)
+        colnames(genes) <- filters
         
-        # biomart output as data.frame
-        tbl_biomart <- dplyr::data_frame(genes,genes[inter],query)
+        tbl_biomart <- merge(query, genes, by = filters)
         
-        colnames(tbl_biomart) <- c("filter_input","filter_output",attributes)
-        ### returning a data.frame storing the input gene id's and their corresponding attributes
+        
         return(tbl_biomart)
         
 }

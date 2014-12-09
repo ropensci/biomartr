@@ -477,29 +477,82 @@ subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of fat
 
 For this purpose the you can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
 
+Here we can use the `organismFilter()` function to retrieve the filter argument for `tair gene ids`.
+
+```{r,eval=FALSE}
+# search for filters related to tair
+organismFilters("Arabidopsis thaliana", topic = "tair")
+```
+
+```
+Source: local data frame [6 x 4]
+
+                   name                 description           mart           dataset
+1            tair_locus            TAIR locus ID(s) plants_mart_23 athaliana_eg_gene
+2      tair_locus_model      TAIR locus model ID(s) plants_mart_23 athaliana_eg_gene
+3           tair_symbol           TAIR symbol ID(s) plants_mart_23 athaliana_eg_gene
+4       with_tair_locus       with TAIR locus ID(s) plants_mart_23 athaliana_eg_gene
+5 with_tair_locus_model with TAIR locus model ID(s) plants_mart_23 athaliana_eg_gene
+6      with_tair_symbol      with TAIR symbol ID(s) plants_mart_23 athaliana_eg_gene
+```
+
+As you can see, we need the filter argument `tair_locus` from `mart` `plants_mart_23` and `dataset` `athaliana_eg_gene`.
+
+To find the attribute argument for refseq ids we can use the `organismAttributes()` function.
+
+```{r,eval=FALSE}
+# search for attributes related to refseq
+organismAttributes("Arabidopsis thaliana", topic = "refseq")
+```
+
+```
+Source: local data frame [3 x 4]
+
+            name       description           mart           dataset
+1    refseq_mrna    RefSeq mRNA ID plants_mart_23 athaliana_eg_gene
+2   refseq_ncrna   RefSeq ncRNA ID plants_mart_23 athaliana_eg_gene
+3 refseq_peptide RefSeq protein ID plants_mart_23 athaliana_eg_gene
+```
+
+Now it is clear that we need attribute argument `refseq_peptide` to get the
+refseq id of the corresponding filter `tair_locus` ids.
 
 ```{r,eval=FALSE}
 
-bm <- biomart(genes = c("AT1G06090", "AT1G06100"),
-              mart = "plants_mart_23", dataset = "athaliana_eg_gene",
-              attributes = c("refseq_peptide"),
-              filters = "tair_locus")
+bm <- biomart(genes      = c("AT3G01360", "AT3G01540"),
+              mart       = "plants_mart_23", 
+              dataset    = "athaliana_eg_gene",
+              attributes = "refseq_peptide",
+              filters    = "tair_locus")
 ```
 
 ```
-  filter_input filter_output refseq_peptide        NA
-1    AT1G06090     AT1G06100      AT1G06100 NP_172100
-2    AT1G06100     AT1G06090      AT1G06090 NP_172099
-
+  tair_locus refseq_peptide
+1  AT3G01360   NP_001030617
+2  AT3G01360      NP_186785
+3  AT3G01540      NP_850492
+4  AT3G01540      NP_974206
+5  AT3G01540      NP_566141
+6  AT3G01540   NP_001030619
 ```
 
 ```{r,eval=FALSE}
-genes_of_interest <- which(stringr::str_detect(bm[ , 4], Ath_proteome[ , geneids]))
+genes_of_interest <- which(sapply(paste0(bm[ , "refseq_peptide"],".1"),
+                                  function(gene) stringr::str_detect(gene,Ath_proteome[ , geneids])))
 
-Ath_proteome[ , ]
+na.omit(Ath_proteome[genes_of_interest , list(geneids, seqs)])
 ```
 
+```
+          geneids
+1: NP_001030617.1
 
+seqs
+1: mgilsyavagggfavigawesldssnldpnsssgtadssspmaqirasppksvgsssipvallsslfiansffsffs
+sigsrdrvgsmiqlqivavavlflyyailtylvnsknavfvalpssittllllfgfieeflmfylqkkdvsgienryydl
+mlvpiaicvfstvfelksdssthrfaklgrgiglilqgtwflqmgvsfftglitnnctfheksrgnftikckghgdyhra
+kaiatlqfnchlalmvvvatglfsviankngylrqdhskyrplgaelenlstftldsdeedevreesnvakevglngnsshd
+```
 
 
 
