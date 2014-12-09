@@ -537,5 +537,69 @@ Source: local data frame [16 x 4]
 
 ### Performing BioMart queries with biomartr
 
+The short introduction to the functionality of
+`organismBM()`, `organismAttributes()`, and `organismFilters()`
+will allow you to perform BioMart queries in a very intuitive 
+organism centric way. The main function to perform BioMart queries
+is `biomart()`.
+
+
+For the following examples we will assume that we are interested in the annotation of specific genes from the _A. thaliana_ proteome. We want to map the corresponding refseq gene id to a set of other gene ids used in other databases. For this purpose, first we can consult the `organismAttributes()` function.
+
+```{r,eval=FALSE}
+organismAttributes("Arabidopsis thaliana", topic = "id")
+
+```
+
+```
+Source: local data frame [179 x 4]
+
+                                           name                            description           mart           dataset
+1            alyrata_eg_homolog_ensembl_peptide   Arabidopsis lyrata protein stable ID plants_mart_23 athaliana_eg_gene
+2                    alyrata_eg_homolog_perc_id                             % identity plants_mart_23 athaliana_eg_gene
+3                 alyrata_eg_homolog_perc_id_r1          Arabidopsis lyrata % identity plants_mart_23 athaliana_eg_gene
+4          atauschii_eg_homolog_ensembl_peptide    Aegilops tauschii protein stable ID plants_mart_23 athaliana_eg_gene
+5                  atauschii_eg_homolog_perc_id                             % identity plants_mart_23 athaliana_eg_gene
+6               atauschii_eg_homolog_perc_id_r1           Aegilops tauschii % identity plants_mart_23 athaliana_eg_gene
+7          athaliana_eg_paralog_ensembl_peptide       Representative protein stable ID plants_mart_23 athaliana_eg_gene
+8  athaliana_eg_paralog_paralog_ensembl_peptide              Paralog protein stable ID plants_mart_23 athaliana_eg_gene
+9        atrichopoda_eg_homolog_ensembl_peptide Amborella trichopoda protein stable ID plants_mart_23 athaliana_eg_gene
+10               atrichopoda_eg_homolog_perc_id                             % identity plants_mart_23 athaliana_eg_gene
+..                                          ...                                    ...            ...               ...
+```
+
+```{r,eval=FALSE}
+# retrieve the proteome of Arabidopsis thaliana from refseq
+Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
+                        organism = "Arabidopsis thaliana",
+                        clean_folder = FALSE)
+
+# remove splice variants from id
+gene_set <- unlist(sapply(strsplit(Ath_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
+
+biomart(genes      = gene_set,
+        mart       = "plants_mart_23", 
+        dataset    = "athaliana_eg_gene",
+        attributes = c("tair_locus","ensembl_peptide_id",
+                       "external_transcript_id","interpro_id",
+                       "nasc_gene_id"),
+        filters    = "refseq_peptide")
+
+```
+
+```
+  refseq_peptide tair_locus ensembl_peptide_id external_transcript_id interpro_id nasc_gene_id
+1   NP_001030613  AT3G01100        AT3G01100.2                   HYP1   IPR003864    AT3G01100
+2   NP_001030614  AT3G01310        AT3G01310.2                T22N4.6   IPR013651    AT3G01310
+3   NP_001030614  AT3G01310        AT3G01310.2                T22N4.6   IPR000560    AT3G01310
+4   NP_001030615  AT3G01323        AT3G01323.1                                       AT3G01323
+5   NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR020472    AT3G01340
+6   NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR017986    AT3G01340
+7   NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR001680    AT3G01340
+8   NP_001030617  AT3G01360        AT3G01360.2                T22N4.1   IPR006904    AT3G01360
+```
+
+The `biomart()` function takes as arguments a set of genes (gene ids specified in the filter argument), the corresponding mart and dataset, as well as the attributes that shall be returned.
+
 
 
