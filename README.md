@@ -44,6 +44,8 @@ biocLite("biomaRt")
 * `biomart()` : Main function to query the biomart database
 * `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 * `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
+* `organismFilters()` : Function for organism specific retrieval of available BioMart filters
+
 
 #### Genome Retrieval
 
