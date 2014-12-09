@@ -39,6 +39,12 @@ biocLite("biomaRt")
 
 ### The following functions have been implemented for genome, proteome, and CDS retrieval
 
+### Interface to biomart
+
+* `biomart()` : Main function to query the biomart database
+* `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
+* `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
+
 #### Genome Retrieval
 
 * `getGenome()` : A function for downloading a specific genome stored on the NCBI ftp:// server
@@ -52,11 +58,6 @@ biocLite("biomaRt")
 #### CDS Retrieval
 
 * `getCDS()` : A function for downloading a specific CDS file (genome) stored on the NCBI ftp:// server
-
-### Interface to biomart
-
-* `biomart()` : Main function to query the biomart database
-* `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 
 ### Performing Gene Ontology queries
 
