@@ -56,7 +56,7 @@ biocLite("biomaRt")
 ### Interface to biomart
 
 * `biomart()` : Main function to query the biomart database
-* `organismBM()` : Function to check for available biomart connections for a query organism
+* `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 
 ### Performing Gene Ontology queries
 

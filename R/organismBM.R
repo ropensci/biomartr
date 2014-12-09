@@ -1,9 +1,11 @@
-#' @title Function to check for available biomart connections for a query organism
+#' @title Function for organism specific retrieval of available BioMart marts and datasets
 #' @description This function returns either all available biomart connections for
 #' all available organisms for which biomart access is possible, or (when specified) returns all
 #' organism specific biomart connections.
 #' @param organism a character string specifying the scientific name of a query organism.
 #' Default is \code{organism} = \code{NULL}. In this case all available biomart connections are returned.
+#' @param update a logical value specifying whether or not the local listMart.txt and listDatasets.txt files shall be updated
+#' by remote access to BioMart. 
 #' @author Hajk-Georg Drost
 #' @details
 #' This function collects all available biomart connections and returns a table storing
