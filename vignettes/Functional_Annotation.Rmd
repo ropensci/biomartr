@@ -188,6 +188,8 @@ for accurate annotation retrieval. Nevertheless, when learning this query method
 seems non-intuitive from the user perspective. Therefore, the `biomartr` package provides another
 query methodology that aims to be more organism centric.
 
+### Retrieve marts, datasets, attributes, and filters with biomartr
+
 In most cases, we work with a single or a set of model organisms and in this process mostly we are
 interested in specific annotations for this particular model organism. The `organismBM()`
 function addressed this issue and provides the user with an organism centric query to `marts` and `datasets`
@@ -268,29 +270,29 @@ head(organismAttributes("Arabidopsis thaliana"), 20)
 
 ```
 ```
-Source: local data frame [20 x 3]
+Source: local data frame [20 x 4]
 
-                                   name           mart           dataset
-1                             3_utr_end plants_mart_23 athaliana_eg_gene
-2                           3_utr_start plants_mart_23 athaliana_eg_gene
-3                                  3utr plants_mart_23 athaliana_eg_gene
-4                             5_utr_end plants_mart_23 athaliana_eg_gene
-5                           5_utr_start plants_mart_23 athaliana_eg_gene
-6                                  5utr plants_mart_23 athaliana_eg_gene
-7                      affy_ath1_121501 plants_mart_23 athaliana_eg_gene
-8                                allele plants_mart_23  athaliana_eg_snp
-9                  alyrata_eg_chrom_end plants_mart_23 athaliana_eg_gene
-10               alyrata_eg_chrom_start plants_mart_23 athaliana_eg_gene
-11                alyrata_eg_chromosome plants_mart_23 athaliana_eg_gene
-12                      alyrata_eg_gene plants_mart_23 athaliana_eg_gene
-13          alyrata_eg_homolog_ancestor plants_mart_23 athaliana_eg_gene
-14                alyrata_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-15                alyrata_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-16   alyrata_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-17 alyrata_eg_homolog_is_tree_compliant plants_mart_23 athaliana_eg_gene
-18           alyrata_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-19        alyrata_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-20            alyrata_eg_orthology_type plants_mart_23 athaliana_eg_gene
+                                   name                                 description           mart           dataset
+1                             3_utr_end                                  3' UTR end plants_mart_23 athaliana_eg_gene
+2                           3_utr_start                                3' UTR start plants_mart_23 athaliana_eg_gene
+3                                  3utr                                      3' UTR plants_mart_23 athaliana_eg_gene
+4                             5_utr_end                                  5' UTR end plants_mart_23 athaliana_eg_gene
+5                           5_utr_start                                5' UTR start plants_mart_23 athaliana_eg_gene
+6                                  5utr                                      5' UTR plants_mart_23 athaliana_eg_gene
+7                      affy_ath1_121501 Affymetrix array Arabidopsis ATH1 121501 ID plants_mart_23 athaliana_eg_gene
+8                                allele                              Variant allele plants_mart_23  athaliana_eg_snp
+9                  alyrata_eg_chrom_end                 Arabidopsis lyrata end (bp) plants_mart_23 athaliana_eg_gene
+10               alyrata_eg_chrom_start               Arabidopsis lyrata start (bp) plants_mart_23 athaliana_eg_gene
+11                alyrata_eg_chromosome      Arabidopsis lyrata chromosome/scaffold plants_mart_23 athaliana_eg_gene
+12                      alyrata_eg_gene           Arabidopsis lyrata gene stable ID plants_mart_23 athaliana_eg_gene
+13          alyrata_eg_homolog_ancestor                                    Ancestor plants_mart_23 athaliana_eg_gene
+14                alyrata_eg_homolog_dn                                          dS plants_mart_23 athaliana_eg_gene
+15                alyrata_eg_homolog_ds                                          dN plants_mart_23 athaliana_eg_gene
+16   alyrata_eg_homolog_ensembl_peptide        Arabidopsis lyrata protein stable ID plants_mart_23 athaliana_eg_gene
+17 alyrata_eg_homolog_is_tree_compliant        Orthology confidence [0 low, 1 high] plants_mart_23 athaliana_eg_gene
+18           alyrata_eg_homolog_perc_id                                  % identity plants_mart_23 athaliana_eg_gene
+19        alyrata_eg_homolog_perc_id_r1               Arabidopsis lyrata % identity plants_mart_23 athaliana_eg_gene
+20            alyrata_eg_orthology_type                               Homology type plants_mart_23 athaliana_eg_gene
 ```
 
 As you can see, the `organismAttributes()` function returns a data.frame storing attribute names, datasets, and marts that
@@ -304,29 +306,29 @@ head(organismAttributes("Arabidopsis thaliana", topic = "id"), 20)
 ```
 
 ```
-Source: local data frame [20 x 3]
+Source: local data frame [20 x 4]
 
-                                           name           mart           dataset
-1            alyrata_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-2                    alyrata_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-3                 alyrata_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-4          atauschii_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-5                  atauschii_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-6               atauschii_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-7          athaliana_eg_paralog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-8  athaliana_eg_paralog_paralog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-9        atrichopoda_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-10               atrichopoda_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-11            atrichopoda_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-12       bdistachyon_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-13               bdistachyon_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-14            bdistachyon_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-15         boleracea_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-16                 boleracea_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-17              boleracea_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-18             brapa_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-19                     brapa_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-20                  brapa_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
+                                           name                               description           mart           dataset
+1            alyrata_eg_homolog_ensembl_peptide      Arabidopsis lyrata protein stable ID plants_mart_23 athaliana_eg_gene
+2                    alyrata_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
+3                 alyrata_eg_homolog_perc_id_r1             Arabidopsis lyrata % identity plants_mart_23 athaliana_eg_gene
+4          atauschii_eg_homolog_ensembl_peptide       Aegilops tauschii protein stable ID plants_mart_23 athaliana_eg_gene
+5                  atauschii_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
+6               atauschii_eg_homolog_perc_id_r1              Aegilops tauschii % identity plants_mart_23 athaliana_eg_gene
+7          athaliana_eg_paralog_ensembl_peptide          Representative protein stable ID plants_mart_23 athaliana_eg_gene
+8  athaliana_eg_paralog_paralog_ensembl_peptide                 Paralog protein stable ID plants_mart_23 athaliana_eg_gene
+9        atrichopoda_eg_homolog_ensembl_peptide    Amborella trichopoda protein stable ID plants_mart_23 athaliana_eg_gene
+10               atrichopoda_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
+11            atrichopoda_eg_homolog_perc_id_r1           Amborella trichopoda % identity plants_mart_23 athaliana_eg_gene
+12       bdistachyon_eg_homolog_ensembl_peptide Brachypodium distachyon protein stable ID plants_mart_23 athaliana_eg_gene
+13               bdistachyon_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
+14            bdistachyon_eg_homolog_perc_id_r1        Brachypodium distachyon % identity plants_mart_23 athaliana_eg_gene
+15         boleracea_eg_homolog_ensembl_peptide       Brassica oleracea protein stable ID plants_mart_23 athaliana_eg_gene
+16                 boleracea_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
+17              boleracea_eg_homolog_perc_id_r1              Brassica oleracea % identity plants_mart_23 athaliana_eg_gene
+18             brapa_eg_homolog_ensembl_peptide           Brassica rapa protein stable ID plants_mart_23 athaliana_eg_gene
+19                     brapa_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
+20                  brapa_eg_homolog_perc_id_r1                  Brassica rapa % identity plants_mart_23 athaliana_eg_gene
 ```
 
 Now, all `attribute names` having `id` as part of its `name` are being returned.
@@ -338,29 +340,29 @@ Another example is `topic = "homolog"`.
 head(organismAttributes("Arabidopsis thaliana", topic = "homolog"), 20)
 ```
 ```
-Source: local data frame [20 x 3]
+Source: local data frame [20 x 4]
 
-                                       name           mart           dataset
-1               alyrata_eg_homolog_ancestor plants_mart_23 athaliana_eg_gene
-2                     alyrata_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-3                     alyrata_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-4        alyrata_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-5      alyrata_eg_homolog_is_tree_compliant plants_mart_23 athaliana_eg_gene
-6                alyrata_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-7             alyrata_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-8             atauschii_eg_homolog_ancestor plants_mart_23 athaliana_eg_gene
-9                   atauschii_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-10                  atauschii_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-11     atauschii_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-12   atauschii_eg_homolog_is_tree_compliant plants_mart_23 athaliana_eg_gene
-13             atauschii_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
-14          atauschii_eg_homolog_perc_id_r1 plants_mart_23 athaliana_eg_gene
-15          atrichopoda_eg_homolog_ancestor plants_mart_23 athaliana_eg_gene
-16                atrichopoda_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-17                atrichopoda_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-18   atrichopoda_eg_homolog_ensembl_peptide plants_mart_23 athaliana_eg_gene
-19 atrichopoda_eg_homolog_is_tree_compliant plants_mart_23 athaliana_eg_gene
-20           atrichopoda_eg_homolog_perc_id plants_mart_23 athaliana_eg_gene
+                                       name                            description           mart           dataset
+1               alyrata_eg_homolog_ancestor                               Ancestor plants_mart_23 athaliana_eg_gene
+2                     alyrata_eg_homolog_dn                                     dS plants_mart_23 athaliana_eg_gene
+3                     alyrata_eg_homolog_ds                                     dN plants_mart_23 athaliana_eg_gene
+4        alyrata_eg_homolog_ensembl_peptide   Arabidopsis lyrata protein stable ID plants_mart_23 athaliana_eg_gene
+5      alyrata_eg_homolog_is_tree_compliant   Orthology confidence [0 low, 1 high] plants_mart_23 athaliana_eg_gene
+6                alyrata_eg_homolog_perc_id                             % identity plants_mart_23 athaliana_eg_gene
+7             alyrata_eg_homolog_perc_id_r1          Arabidopsis lyrata % identity plants_mart_23 athaliana_eg_gene
+8             atauschii_eg_homolog_ancestor                               Ancestor plants_mart_23 athaliana_eg_gene
+9                   atauschii_eg_homolog_dn                                     dS plants_mart_23 athaliana_eg_gene
+10                  atauschii_eg_homolog_ds                                     dN plants_mart_23 athaliana_eg_gene
+11     atauschii_eg_homolog_ensembl_peptide    Aegilops tauschii protein stable ID plants_mart_23 athaliana_eg_gene
+12   atauschii_eg_homolog_is_tree_compliant   Orthology confidence [0 low, 1 high] plants_mart_23 athaliana_eg_gene
+13             atauschii_eg_homolog_perc_id                             % identity plants_mart_23 athaliana_eg_gene
+14          atauschii_eg_homolog_perc_id_r1           Aegilops tauschii % identity plants_mart_23 athaliana_eg_gene
+15          atrichopoda_eg_homolog_ancestor                               Ancestor plants_mart_23 athaliana_eg_gene
+16                atrichopoda_eg_homolog_dn                                     dS plants_mart_23 athaliana_eg_gene
+17                atrichopoda_eg_homolog_ds                                     dN plants_mart_23 athaliana_eg_gene
+18   atrichopoda_eg_homolog_ensembl_peptide Amborella trichopoda protein stable ID plants_mart_23 athaliana_eg_gene
+19 atrichopoda_eg_homolog_is_tree_compliant   Orthology confidence [0 low, 1 high] plants_mart_23 athaliana_eg_gene
+20           atrichopoda_eg_homolog_perc_id                             % identity plants_mart_23 athaliana_eg_gene
 ```
 
 Or `topic = "dn"` and `topic = "ds"` for `dn` and `ds` value retrieval.
@@ -370,52 +372,52 @@ Or `topic = "dn"` and `topic = "ds"` for `dn` and `ds` value retrieval.
 organismAttributes("Arabidopsis thaliana", topic = "dn")
 ```
 ```
-Source: local data frame [43 x 3]
+Source: local data frame [43 x 4]
 
-                               name           mart           dataset
-1             alyrata_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-2           atauschii_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-3         atrichopoda_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-4         bdistachyon_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-5           boleracea_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-6               brapa_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-7                              cdna plants_mart_23 athaliana_eg_gene
-8                   cdna_coding_end plants_mart_23 athaliana_eg_gene
-9                 cdna_coding_start plants_mart_23 athaliana_eg_gene
-10                         cdna_end plants_mart_23  athaliana_eg_snp
-11                       cdna_start plants_mart_23  athaliana_eg_snp
-12           cmerolae_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-13       creinhardtii_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-14               gmax_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-15           hvulgare_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-16          lperrieri_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-17         macuminata_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-18        mtruncatula_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-19           obarthii_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-20       obrachyantha_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-21        oglaberrima_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-22      oglumaepatula_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-23            oindica_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-24       olucimarinus_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-25      omeridionalis_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-26            onivara_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-27          opunctata_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-28         orufipogon_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-29            osativa_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-30 paralog_athaliana_eg__dm_dn_4014 plants_mart_23 athaliana_eg_gene
-31            ppatens_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-32           ppersica_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-33       ptrichocarpa_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-34           sbicolor_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-35           sitalica_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-36      slycopersicum_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-37    smoellendorffii_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-38         stuberosum_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-39          taestivum_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-40             tcacao_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-41            turartu_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-42          vvinifera_eg_homolog_dn plants_mart_23 athaliana_eg_gene
-43              zmays_eg_homolog_dn plants_mart_23 athaliana_eg_gene
+                               name                  description           mart           dataset
+1             alyrata_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+2           atauschii_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+3         atrichopoda_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+4         bdistachyon_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+5           boleracea_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+6               brapa_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+7                              cdna               cDNA sequences plants_mart_23 athaliana_eg_gene
+8                   cdna_coding_end              cDNA coding end plants_mart_23 athaliana_eg_gene
+9                 cdna_coding_start            cDNA coding start plants_mart_23 athaliana_eg_gene
+10                         cdna_end   Variation end in cDNA (bp) plants_mart_23  athaliana_eg_snp
+11                       cdna_start Variation start in cDNA (bp) plants_mart_23  athaliana_eg_snp
+12           cmerolae_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+13       creinhardtii_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+14               gmax_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+15           hvulgare_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+16          lperrieri_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+17         macuminata_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+18        mtruncatula_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+19           obarthii_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+20       obrachyantha_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+21        oglaberrima_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+22      oglumaepatula_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+23            oindica_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+24       olucimarinus_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+25      omeridionalis_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+26            onivara_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+27          opunctata_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+28         orufipogon_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+29            osativa_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+30 paralog_athaliana_eg__dm_dn_4014                           dN plants_mart_23 athaliana_eg_gene
+31            ppatens_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+32           ppersica_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+33       ptrichocarpa_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+34           sbicolor_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+35           sitalica_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+36      slycopersicum_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+37    smoellendorffii_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+38         stuberosum_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+39          taestivum_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+40             tcacao_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+41            turartu_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+42          vvinifera_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
+43              zmays_eg_homolog_dn                           dS plants_mart_23 athaliana_eg_gene
 ```
 
 ```{r,eval=FALSE}
@@ -424,49 +426,116 @@ organismAttributes("Arabidopsis thaliana", topic = "ds")
 ```
 
 ```
-Source: local data frame [40 x 3]
+Source: local data frame [40 x 4]
 
-                               name           mart           dataset
-1             alyrata_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-2           atauschii_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-3         atrichopoda_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-4         bdistachyon_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-5           boleracea_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-6               brapa_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-7                           cds_end plants_mart_23 athaliana_eg_gene
-8                         cds_start plants_mart_23 athaliana_eg_gene
-9            cmerolae_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-10       creinhardtii_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-11               gmax_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-12           hvulgare_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-13          lperrieri_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-14         macuminata_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-15        mtruncatula_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-16           obarthii_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-17       obrachyantha_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-18        oglaberrima_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-19      oglumaepatula_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-20            oindica_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-21       olucimarinus_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-22      omeridionalis_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-23            onivara_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-24          opunctata_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-25         orufipogon_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-26            osativa_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-27 paralog_athaliana_eg__dm_ds_4014 plants_mart_23 athaliana_eg_gene
-28            ppatens_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-29           ppersica_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-30       ptrichocarpa_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-31           sbicolor_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-32           sitalica_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-33      slycopersicum_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-34    smoellendorffii_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-35         stuberosum_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-36          taestivum_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-37             tcacao_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-38            turartu_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-39          vvinifera_eg_homolog_ds plants_mart_23 athaliana_eg_gene
-40              zmays_eg_homolog_ds plants_mart_23 athaliana_eg_gene
+                               name             description           mart           dataset
+1             alyrata_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+2           atauschii_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+3         atrichopoda_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+4         bdistachyon_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+5           boleracea_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+6               brapa_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+7                           cds_end   CDS end (within cDNA) plants_mart_23 athaliana_eg_gene
+8                         cds_start CDS start (within cDNA) plants_mart_23 athaliana_eg_gene
+9            cmerolae_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+10       creinhardtii_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+11               gmax_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+12           hvulgare_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+13          lperrieri_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+14         macuminata_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+15        mtruncatula_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+16           obarthii_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+17       obrachyantha_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+18        oglaberrima_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+19      oglumaepatula_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+20            oindica_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+21       olucimarinus_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+22      omeridionalis_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+23            onivara_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+24          opunctata_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+25         orufipogon_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+26            osativa_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+27 paralog_athaliana_eg__dm_ds_4014                      dS plants_mart_23 athaliana_eg_gene
+28            ppatens_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+29           ppersica_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+30       ptrichocarpa_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+31           sbicolor_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+32           sitalica_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+33      slycopersicum_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+34    smoellendorffii_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+35         stuberosum_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+36          taestivum_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+37             tcacao_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+38            turartu_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+39          vvinifera_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
+40              zmays_eg_homolog_ds                      dN plants_mart_23 athaliana_eg_gene
 ```
+
+Analogous to the `organismAttributes()` function, the `organismFilters()` function returns
+all filters that are available for a query organism of interest.
+
+```{r,eval=FALSE}
+# return available filters for "Arabidopsis thaliana"
+head(organismFilters("Arabidopsis thaliana"), 20)
+```
+
+```
+Source: local data frame [20 x 4]
+
+                     name                                    description           mart                dataset
+1        affy_ath1_121501 Affymetrix array Arabidopsis ATH1 121501 ID(s) plants_mart_23      athaliana_eg_gene
+2            arrayexpress                             ArrayExpress ID(s) plants_mart_23      athaliana_eg_gene
+3                 biotype                                           Type plants_mart_23      athaliana_eg_gene
+4          blastprodom_pf                                   ProDom ID(s) plants_mart_23      athaliana_eg_gene
+5             catma_catma                  CATMA A. thaliana probe ID(s) plants_mart_23      athaliana_eg_gene
+6                  chembl                                   ChEMBL ID(s) plants_mart_23      athaliana_eg_gene
+7                chr_name                                Chromosome name plants_mart_23       athaliana_eg_snp
+8             chrom_start                                          Start plants_mart_23       athaliana_eg_snp
+9      chromosomal_region        e.g. 1:100:10000:-1, 1:100000:2000000:1 plants_mart_23      athaliana_eg_gene
+10        chromosome_name                                Chromosome name plants_mart_23      athaliana_eg_gene
+11       consequence_type                               Consequence type plants_mart_23       athaliana_eg_snp
+12   dgva_study_accession                              Study description plants_mart_23 athaliana_eg_structvar
+13 distance_to_transcript                      Distance to transcript <= plants_mart_23       athaliana_eg_snp
+14                   embl                              ENA/GenBank ID(s) plants_mart_23      athaliana_eg_gene
+15                    end                                            End plants_mart_23      athaliana_eg_gene
+16           ensembl_gene                             Gene stable ID(s): plants_mart_23       athaliana_eg_snp
+17        ensembl_gene_id                              Gene stable ID(s) plants_mart_23      athaliana_eg_gene
+18     ensembl_peptide_id                           Protein stable ID(s) plants_mart_23      athaliana_eg_gene
+19  ensembl_transcript_id                        Transcript stable ID(s) plants_mart_23      athaliana_eg_gene
+20             entrezgene                               EntrezGene ID(s) plants_mart_23      athaliana_eg_gene
+```
+
+The `organismFilters()` function also allows to search for filters that correspond to
+a specific topic or category.
+
+```{r,eval=FALSE}
+# search for filter topic "id"
+head(organismFilters("Arabidopsis thaliana", topic = "id"), 20)
+```
+
+```
+Source: local data frame [16 x 4]
+
+                                name                                         description           mart           dataset
+1                    ensembl_gene_id                                   Gene stable ID(s) plants_mart_23 athaliana_eg_gene
+2                 ensembl_peptide_id                                Protein stable ID(s) plants_mart_23 athaliana_eg_gene
+3              ensembl_transcript_id                             Transcript stable ID(s) plants_mart_23 athaliana_eg_gene
+4                   external_gene_id                                        Gene name(s) plants_mart_23 athaliana_eg_gene
+5                   go_evidence_code                                    GO evidence code plants_mart_23 athaliana_eg_gene
+6                        interpro_id                                      InterPro ID(s) plants_mart_23 athaliana_eg_gene
+7                       nasc_gene_id                                     NASC gene ID(s) plants_mart_23 athaliana_eg_gene
+8                   po_evidence_code                                    PO evidence code plants_mart_23 athaliana_eg_gene
+9                         protein_id                           ENA/GenBank protein ID(s) plants_mart_23 athaliana_eg_gene
+10                    refseq_peptide                                Refseq protein ID(s) plants_mart_23 athaliana_eg_gene
+11                       wikigene_id                                      WikiGene ID(s) plants_mart_23 athaliana_eg_gene
+12 with_affy_arabidopsis_ath1_121501 with Affymetrix array Arabidopsis ATH1 121501 ID(s) plants_mart_23 athaliana_eg_gene
+13                 with_nasc_gene_id                                with NASC gene ID(s) plants_mart_23 athaliana_eg_gene
+14     with_omeridionalis_eg_homolog                Orthologous Oryza meridionalis Genes plants_mart_23 athaliana_eg_gene
+15                   with_protein_id                      with ENA/GenBank protein ID(s) plants_mart_23 athaliana_eg_gene
+16               with_refseq_peptide                           with RefSeq protein ID(s) plants_mart_23 athaliana_eg_gene
+```
+
+### Performing BioMart queries with biomartr
+
 
 
