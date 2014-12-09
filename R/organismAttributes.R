@@ -7,7 +7,7 @@
 #' and listAttributes_organism.txt files shall be updated by remote access to BioMart.
 #' @param topic a character string specifying a topic (category) of attributes, e.g. \code{topic} = \code{"id"}.
 #' @author Hajk-Georg Drost
-#' @return a data.frame storing corresponding attribute names, datasets, and marts.
+#' @return a data.frame storing corresponding attribute names, description, datasets, and marts.
 #' @details
 #' For a given query organism, this function retrieves all available attributes that 
 #' can be accessed through different marts and datasets.
@@ -47,6 +47,8 @@
 #' microarray data analysis. Steffen Durinck, Yves Moreau, Arek Kasprzyk, Sean
 #' Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 #' 3439-3440 (2005).
+#' @seealso \code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link{biomart}},
+#' \code{\link[biomaRt]{listAttributes}}
 #' @export
 
 organismAttributes <- function(organism, update = FALSE, topic = NULL){
@@ -94,7 +96,7 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
         
         attributeTable <- read.csv(paste0("_biomart",fsep,attrTXT,".txt"), sep = "\t",header = TRUE, colClasses = rep("character",4), stringsAsFactors = FALSE)        
         
-        summ_attrTable <- dplyr::summarise(dplyr::group_by(attributeTable, name), mart = names(table((mart))), dataset = names(table((dataset))))
+        summ_attrTable <- dplyr::summarise(dplyr::group_by(attributeTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
         
         if(!is.null(topic)){
                 

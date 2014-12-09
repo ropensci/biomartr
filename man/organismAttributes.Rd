@@ -14,7 +14,7 @@ and listAttributes_organism.txt files shall be updated by remote access to BioMa
 \item{topic}{a character string specifying a topic (category) of attributes, e.g. \code{topic} = \code{"id"}.}
 }
 \value{
-a data.frame storing corresponding attribute names, datasets, and marts.
+a data.frame storing corresponding attribute names, description, datasets, and marts.
 }
 \description{
 In addition to the \code{\link{organismBM}} function, this function
@@ -66,5 +66,9 @@ BioMart and Bioconductor: a powerful link between biological databases and
 microarray data analysis. Steffen Durinck, Yves Moreau, Arek Kasprzyk, Sean
 Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 3439-3440 (2005).
+}
+\seealso{
+\code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link{biomart}},
+\code{\link[biomaRt]{listAttributes}}
 }
 

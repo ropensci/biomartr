@@ -42,7 +42,8 @@
 #' microarray data analysis. Steffen Durinck, Yves Moreau, Arek Kasprzyk, Sean
 #' Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 #' 3439-3440 (2005).
-#' @seealso \code{\link[biomaRt]{listMarts}}, \code{\link[biomaRt]{listDatasets}}, \code{\link{biomart}}
+#' @seealso \code{\link[biomaRt]{listMarts}}, \code{\link[biomaRt]{listDatasets}}, \code{\link{biomart}},
+#' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 
 organismBM <- function(organism = NULL, update = FALSE){
