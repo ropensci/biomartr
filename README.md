@@ -37,11 +37,11 @@ biocLite("biomaRt")
 
 ```
 
-### The following functions have been implemented for genome, proteome, and CDS retrieval
+### The following functions have been implemented for BioMart query, as well as genome, proteome, and CDS retrieval
 
 ### Interface to BioMart
 
-* `biomart()` : Main function to query the biomart database
+* `biomart()` : Main function to query the BioMart database
 * `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 * `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
 * `organismFilters()` : Function for organism specific retrieval of available BioMart filters
