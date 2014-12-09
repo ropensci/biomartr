@@ -189,7 +189,7 @@ seems non-intuitive from the user perspective. Therefore, the `biomartr` package
 query methodology that aims to be more organism centric.
 
 In most cases, we work with a single or a set of model organisms and in this process mostly we are
-interested in specific annotations for this particular model organism. The `biomart_organisms()`
+interested in specific annotations for this particular model organism. The `organismBM()`
 function addressed this issue and provides the user with an organism centric query to `marts` and `datasets`
 that are available for a particular organism of interest.
 
@@ -197,7 +197,7 @@ that are available for a particular organism of interest.
 ```{r,eval=FALSE}
 # retrieving all available datasets and biomart connections for
 # a specific query organism (scientific name)
-biomart_organisms(organism = "Arabidopsis thaliana")
+organismBM(organism = "Arabidopsis thaliana")
 
 ```
 
@@ -231,7 +231,7 @@ Another example using `Homo sapiens`.
 
 ```{r,eval=FALSE}
 # retrieving all available datasets and biomart connections for "Homo sapiens"
-biomart_organisms(organism = "Homo sapiens")
+organismBM(organism = "Homo sapiens")
 
 ```
 
