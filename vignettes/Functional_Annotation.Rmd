@@ -601,5 +601,51 @@ biomart(genes      = gene_set,
 
 The `biomart()` function takes as arguments a set of genes (gene ids specified in the filter argument), the corresponding mart and dataset, as well as the attributes that shall be returned.
 
+Taken together, the following workflow allows you to perform fast BioMart queries for 
+attributes you are interested in:
+
+1) get attributes, datasets, and marts via : `organismAttributes()`
+
+2) choose available filters via: `organismFilters()`
+
+3) specify a set of query genes
+
+4) specify all arguments of the `biomart()` function using steps 1) - 3) and
+perform a BioMart query
+
+
+## Gene Ontology 
+
+The `biomartr` package also enables a fast and intuitive retrieval of GO terms
+and additional information via the `getGO()` function.
+
+
+In this example we will retrieve GO information for a set of _A. thaliana_ genes
+stored as `tair locus id`.
+
+```{r,eval=FALSE}
+
+# search for GO terms of 6 Arabidopsis thaliana genes in tair locus id notation
+GO_tbl <- getGO(organism = "Arabidopsis thaliana",
+                genes    = c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
+                filters  = "tair_locus")
+
+# look at the GO information
+head(GO_tbl[ , c("tair_locus","go_accession","goslim_goa_accession","goslim_goa_description")])
+
+```
+
+```
+  tair_locus go_accession goslim_goa_accession goslim_goa_description
+1  AT1G06090   GO:0016717           GO:0005783  endoplasmic reticulum
+2  AT1G06090   GO:0006631           GO:0005783  endoplasmic reticulum
+3  AT1G06090   GO:0006636           GO:0005783  endoplasmic reticulum
+4  AT1G06090   GO:0005789           GO:0005783  endoplasmic reticulum
+5  AT1G06090   GO:0005783           GO:0005783  endoplasmic reticulum
+6  AT1G06090   GO:0005575           GO:0005783  endoplasmic reticulum
+```
+
+
+
 
 
