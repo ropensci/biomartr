@@ -1,4 +1,4 @@
-#' @title Function to read a genome of a given organism
+#' @title Read the genome of a given organism
 #' @description This function reads an organism specific genome stored in a defined file format.
 #' @param file a character string specifying the path to the file storing the genome.
 #' @param format a character string specifying the file format used to store the genome, e.g. "fasta", "gbk".
@@ -46,7 +46,7 @@ read_genome <- function(file, format, ...){
 }
 
 
-#' @title Function to read a proteome of a given organism
+#' @title Read the proteome of a given organism
 #' @description This function reads an organism specific proteome stored in a defined file format.
 #' @param file a character string specifying the path to the file storing the proteome.
 #' @param format a character string specifying the file format used to store the proteome, e.g. "fasta", "gbk".
@@ -96,7 +96,7 @@ read_proteome <- function(file, format, ...){
 }
 
 
-#' @title Function to read the CDS of a given organism
+#' @title Read the CDS of a given organism
 #' @description This function reads an organism specific CDS stored in a defined file format.
 #' @param file a character string specifying the path to the file storing the CDS.
 #' @param format a character string specifying the file format used to store the CDS, e.g. "fasta", "gbk".

@@ -1,4 +1,4 @@
-#' @title Function to retrieve GO terms for a given set of genes from a query organism
+#' @title Gene Ontology Query
 #' @description This function takes a gene id as character vector from a given query organism and returns the 
 #' corresponding GO terms and additional GO information.
 #' @param organism a character string specifying the scientific name of a query organism.

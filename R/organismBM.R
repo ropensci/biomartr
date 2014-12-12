@@ -1,4 +1,4 @@
-#' @title Function for organism specific retrieval of available BioMart marts and datasets
+#' @title Retrieve BioMart marts and datasets for an organism
 #' @description This function returns either all available biomart connections for
 #' all available organisms for which biomart access is possible, or (when specified) returns all
 #' organism specific biomart connections.

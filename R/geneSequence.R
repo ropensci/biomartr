@@ -1,4 +1,4 @@
-#' @title Function to retrieve biological sequences of a given set of genes
+#' @title Retrieve biological sequences of a given set of genes
 #' @description This function takes an character vector storing gene ids of interest
 #' and returns the biological sequence of the corresponding gene ids.
 #' @param genes a character vector storing the gene id of a organisms of interest to be queried against the 

@@ -1,4 +1,4 @@
-#' @title Function to quantify the statistical significance of a given pairwise alignment
+#' @title Statistical evaluation of a given pairwise alignment
 #' @description This function allows to quantify the statistical significance of a given pairwise alignment
 #' between a query and subject sequence based on a sampled score distribution returned by \code{\link{randSeqDistr}}.
 #' @param seq a character vector storing a sequence as string for which random sequences shall be computed.

@@ -1,4 +1,4 @@
-#' @title Function for downloading a specific proteome stored on the NCBI ftp:// server.
+#' @title Proteome Retrieval
 #' @description This function retrieves a fasta-file storing the proteome of an organism of interest and stores
 #' the proteome file in the folder '_ncbi_downloads/proteomes'.
 #' @param db a character string specifying the database from which the proteome shall be retrieved: 'refseq'.

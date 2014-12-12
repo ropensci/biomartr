@@ -1,4 +1,4 @@
-#' @title Function for downloading a specific genome stored on the NCBI ftp:// server.
+#' @title Genome Retrieval
 #' @description This function retrieves a fasta-file storing the genome of an organism of interest and stores
 #' the genome file in the folder '_ncbi_downloads/genomes'.
 #' @param db a character string specifying the database from which the genome shall be retrieved: 'refseq'.

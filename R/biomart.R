@@ -1,4 +1,4 @@
-#' @title Main function to query BioMart
+#' @title Main BioMart Query Function
 #' @description This function takes a set of gene ids and the biomart specifications
 #' and performs a biomart query for the given set of gene ids.
 #' @param genes a character vector storing the gene ids of a organisms of interest to be queried against BioMart.
