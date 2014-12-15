@@ -615,6 +615,11 @@ attributes you are interested in:
 4) specify all arguments of the `biomart()` function using steps 1) - 3) and
 perform a BioMart query
 
+__Note:__ dataset names change very frequently due to the update of dataset versions.
+So in case some query functions do not work properly, you should check with
+`organismAttributes(update = TRUE)` whether or not your dataset name has been changed.
+For example, `organismAttributes("Arabidopsis thaliana", topic = "id", update = TRUE)`
+might reveal that the dataset `plants_mart_23` has changed to `plants_mart_24`.
 
 
 ## Gene Ontology 
