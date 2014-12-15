@@ -577,13 +577,15 @@ Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
 # remove splice variants from id
 gene_set <- unlist(sapply(strsplit(Ath_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
 
-biomart(genes      = gene_set,
-        mart       = "plants_mart_23", 
-        dataset    = "athaliana_eg_gene",
-        attributes = c("tair_locus","ensembl_peptide_id",
-                       "external_transcript_id","interpro_id",
-                       "nasc_gene_id"),
-        filters    = "refseq_peptide")
+result_BM <- biomart(genes      = gene_set,
+                     mart       = "plants_mart_23", 
+                     dataset    = "athaliana_eg_gene",
+                     attributes = c("tair_locus","ensembl_peptide_id",
+                                     "external_transcript_id","interpro_id",
+                                     "nasc_gene_id"),
+                     filters    = "refseq_peptide")
+
+result_BM 
 
 ```
 
@@ -612,6 +614,17 @@ attributes you are interested in:
 
 4) specify all arguments of the `biomart()` function using steps 1) - 3) and
 perform a BioMart query
+
+
+Now that you have gene id mapping between refseq ids and tair locus ids (as filter input),
+you can select the sequences of genes for which tair locus ids were present within the
+proteome provided by refseq.
+
+
+```{r,eval=FALSE}
+
+
+```
 
 
 ## Gene Ontology 
