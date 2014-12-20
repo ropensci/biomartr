@@ -1,7 +1,7 @@
 biomartr
 ========
 
-## A collection of functions for functional annotation queries, sequence retrieval, genome scale visualization, and biostatistics
+## A Framework for Biological Data Retrieval
 
 The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) functionality and [Gene Ontology](http://geneontology.org/page/go-enrichment-analysis)/[Kegg](http://www.genome.jp/kegg/) analyses. Furthermore, it was specifically designed to serve as additional module to
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks.
