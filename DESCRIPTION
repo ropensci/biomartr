@@ -1,16 +1,16 @@
 Package: biomartr
-Title: A package for easy biomart access and annotation queries
+Title: A Framework for Biological Data Retrieval
 Version: 0.0.1
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
-Description: This package aims to provide an easy to use and intuitive
-    interface to the biomart database and is built upon the well established
-    biomaRt package.
+Description: This package aims to provide a collection of functions for functional annotation queries,
+sequence retrieval, genome scale visualization, and biostatistics.
 Depends:
     R (>= 3.1.1)
 Imports:
     biomaRt (>= 2.20.0),
     Biostrings (>= 2.32.1),
-    data.table (>= 1.9.4)
+    data.table (>= 1.9.4),
+    dplyr (>= 0.3.0)
 License: GPL-3
 LazyData: true
