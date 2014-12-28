@@ -100,7 +100,7 @@ taxonomy( organism = "Arabidopsis thaliana",
 
 ```{r, eval=FALSE}
 # retrieving the taxonomic hierarchy of "Arabidopsis thaliana"
-# from Integrated Taxonomic Information System
+# from the Integrated Taxonomic Information System
 taxonomy( organism = "Arabidopsis thaliana", 
           db       = "itis",
           output   = "classification" )
@@ -121,5 +121,76 @@ taxonomy( organism = "Arabidopsis thaliana",
 10    Brassicaceae        Family  22669
 11     Arabidopsis         Genus  23040
 ```
+
+The `output` argument allows you to directly access taxonomy ids for a query organism or species.
+
+```{r, eval=FALSE}
+# retrieving the taxonomy id of the query organism from NCBI Taxonomy
+taxonomy( organism = "Arabidopsis thaliana", 
+          db       = "ncbi", 
+          output   = "taxid" )
+```
+
+```
+    id
+1 3702
+```
+
+```{r, eval=FALSE}
+# retrieving the taxonomy id of the query organism from NCBI Taxonomy
+taxonomy( organism = "Arabidopsis", 
+          db       = "ncbi", 
+          output   = "taxid" )
+```
+
+```
+    id
+1 3701
+```
+
+```{r, eval=FALSE}
+# retrieving the taxonomy id of the query organism from the Catalogue of Life
+taxonomy( organism ="Arabidopsis thaliana", 
+          db       = "col", 
+          output   = "taxid" )
+```
+
+```
+       id
+1 7144206
+```
+
+Another `output` supported by `taxonomy()` is `children` that returns the immediate children taxa
+for a query organism.
+
+```{r, eval=FALSE}
+# retrieve children taxa of the query organism stored in the correspondning database
+taxonomy( organism = "Arabidopsis", 
+          db       = "ncbi", 
+          output   = "children" )
+```
+
+```
+   childtaxa_id                                                     childtaxa_name childtaxa_rank
+1       1547872                                              Arabidopsis umezawana        species
+2       1328956 (Arabidopsis thaliana x Arabidopsis arenosa) x Arabidopsis suecica        species
+3       1240361                         Arabidopsis thaliana x Arabidopsis arenosa        species
+4        869750                          Arabidopsis thaliana x Arabidopsis lyrata        species
+5        412662                                            Arabidopsis pedemontana        species
+6        378006                         Arabidopsis arenosa x Arabidopsis thaliana        species
+7        347883                                              Arabidopsis arenicola        species
+8        302551                                              Arabidopsis petrogena        species
+9         97980                                               Arabidopsis croatica        species
+10        97979                                            Arabidopsis cebennensis        species
+11        81970                                                Arabidopsis halleri        species
+12        59690                                             Arabidopsis kamchatica        species
+13        59689                                                 Arabidopsis lyrata        species
+14        45251                                               Arabidopsis neglecta        species
+15        45249                                                Arabidopsis suecica        species
+16        38785                                                Arabidopsis arenosa        species
+17         3702                                               Arabidopsis thaliana        species
+```
+
+Analogous to `output = "classification"` and `output = "taxid"`, databases `ncbi`, `col`, and `itis` can be selected.
 
 
