@@ -57,6 +57,10 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
         if(!is.element(output,c("classification","taxid","children")))
                 stop("The output '",output,"' is not supported by this function.")
         
+        if(!is.element(db,c("ncbi","col","itis")))
+                stop("Database '",db,"' is not supported by this function.")
+        
+        
         if(output == "classification"){
                 
                 species <- strsplit(organism," ")[[1]][1]
@@ -100,7 +104,6 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
                         return(dplyr::select(tax_query_org,id))
                 }
         }
-        
         
         if(output == "children"){
                 
