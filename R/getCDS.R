@@ -68,6 +68,7 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete
                 if(!is.element(kingdom,subfolders))
                         stop(paste0("Please select a valid kingdom: ",paste0(subfolders,collapse = ", ")))
                 
+                
                 url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"),
                                                    ftp.use.epsv = FALSE, dirlistonly = TRUE))
                 
@@ -105,6 +106,8 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
                                              paste0(query_url_list_files,"_rna.fna.gz")), paste0("_ncbi_downloads/CDS/",organism,"_rna.fna.gz"))
                         
+                        # NCBI limits requests to three per second
+                        Sys.sleep(0.33)
                         
                 }
                 

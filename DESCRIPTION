@@ -3,7 +3,8 @@ Title: A Framework for Biological Data Retrieval
 Version: 0.0.1
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
-Description: An easy to use and hands-on biological data retrieval package for large-scale data retrieval and data mining
+Description: An easy to use and hands-on biological data retrieval package for
+    large-scale data retrieval and data mining
 Depends:
     R (>= 3.1.1)
 Imports:

@@ -84,11 +84,17 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
                 
                 download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
                 
+                # NCBI limits requests to three per second
+                Sys.sleep(0.33)
         }
         
-        if(update)
+        if(update){
+                
                 download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
-        
+                
+                # NCBI limits requests to three per second
+                Sys.sleep(0.33)
+        }
         
         col_classes <- vector(mode = "character",length = 9)
         col_classes <- c(rep("character",4),rep("numeric",5))

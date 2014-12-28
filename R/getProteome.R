@@ -102,6 +102,8 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
                                              paste0(query_url_list_files,"_protein.faa.gz")), paste0("_ncbi_downloads/proteomes/",organism,"_protein.faa.gz"))
                         
+                        # NCBI limits requests to three per second
+                        Sys.sleep(0.33)
                         
                 }
                 
