@@ -48,6 +48,11 @@ taxonomy("Arabidopsis thaliana",db = "ncbi", output = "taxid")
 
 # retrieve children taxa of the query organism stored in the correspondning database
 taxonomy("Arabidopsis",db = "ncbi", output = "children")
+
+#' # the same can be applied to databases : "ncbi", "eol", and "itis"
+# taxonomy("Arabidopsis thaliana",db = "ncbi", output = "children")
+# taxonomy("Arabidopsis thaliana",db = "col", output = "children")
+# taxonomy("Arabidopsis thaliana",db = "itis", output = "children")
 }
 \author{
 Hajk-Georg Drost
