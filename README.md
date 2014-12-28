@@ -7,7 +7,7 @@ The `biomartr` package aims to provide users with an easy to use framework to ob
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks.
 
 
-## Fast installation guide
+## Fast Installation Guide
 
 ```r
 # install.packages("devtools")
@@ -41,7 +41,7 @@ biocLite("biomaRt")
 
 The following tutorials will introduce you to the
 functionality of `biomartr` and how you can use it to extend
-analyses implemented in `myTAI` and `orthologr`.
+analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr).
 
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
 - [Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
@@ -112,5 +112,7 @@ of this package, please let me know:
 hajk-georg.drost@informatik.uni-halle.de
 
 
+## Acknowledgement
 
-
+I would like to thank Ivo Grosse and Marcel Quint for providing me a place and the environment to be able to work on 
+fascinating topics in Theoretical Biology.
