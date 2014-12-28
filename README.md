@@ -71,6 +71,10 @@ biocLite("biomaRt")
 
 * `getKegg()` : Function to retrieve Kegg annotation for a given set of genes
 
+#### Taxonomic Information
+
+* `taxonomy()` : Retrieving Taxonomic Information of a Query Organism
+
 ### Statistics
 
 #### Alignment Statistics
@@ -92,6 +96,7 @@ analyses implemented in `myTAI` and `orthologr`.
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
 - [Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
+- [Taxonomic Information](https://github.com/HajkD/biomartr/tree/master/vignettes/Taxonomy.Rmd)
 - [Genomic Sequence Analyses and Statistics](https://github.com/HajkD/biomartr/tree/master/vignettes/Statistics.Rmd)
 - [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Phylotranscriptomics.Rmd)
 
