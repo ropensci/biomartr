@@ -52,9 +52,9 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         if(db == "refseq"){
                 
                 
-                if(!file.exists("_ncbi_downloads/genomes")){
+                if(!file.exists(file.path("_ncbi_downloads,genomes"))){
                         
-                        dir.create("_ncbi_downloads/genomes")
+                        dir.create(file.path("_ncbi_downloads,genomes"))
                         
                 }
                 
@@ -92,14 +92,14 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
 #                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
 #                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
-                file_path <- paste0("_ncbi_downloads/genomes/",organism,"_genome.fna.gz")
+                file_path <- paste0(file.path("_ncbi_downloads,genomes"),organism,"_genome.fna.gz")
                 
                 if(!file.exists(file_path)){
                         
 
                         download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_genomic.fna.gz")), paste0("_ncbi_downloads/genomes/",organism,"_genome.fna.gz"))
+                                             paste0(query_url_list_files,"_genomic.fna.gz")), paste0(file.path("_ncbi_downloads,genomes"),organism,"_genome.fna.gz"))
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)
@@ -111,7 +111,7 @@ getGenome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         }
         
         if(clean_folder)
-                clean_all_folders("_ncbi_downloads/genomes")
+                clean_all_folders(file.path("_ncbi_downloads,genomes"))
         
         
         return(genome)
