@@ -1,3 +1,35 @@
+#' @title Retrieve a List of Available Databases for Download  
+#' @description This function allows you to retrieve a list of database names and versions
+#' that can be downloaded from correspondning servers.
+#' @param db_name a character string specifying the name of the database that shall be searched for.
+#' @param db_format a character string specifying the database format, e.g. \code{db_format} = \code{"fasta"}.
+#' @param update a logical value specifying whether or not the local listDatabases.txt file shall be updated by remote access to NCBI.
+#' @description
+#' 
+#' Database retrieval is crucial for most biological studies and analyses.
+#' There is a vast diversity of databases that can be accessed remotely or that can be downloaded
+#' to your local machine. This function provides an interface to databases that can be downloaded 
+#' from NCBI servers and lists all available databases and their database version to be able to
+#' select an appropriate database for download with \code{\link{download_database}}.
+#' 
+#' @author Hajk-Georg Drost
+#' @references 
+#' 
+#' \url{ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA}
+#' @examples
+#' 
+#' # retrieve all versions of the NCBI 'nr' database that can be downloaded
+#' listDatabases(db_name = "nr", db_format = "fasta")
+#' 
+#' # analogous:
+#' # listDatabases(db_name = "cdd", db_format = "fasta")
+#' # listDatabases(db_name = "nt", db_format = "fasta")
+#' # listDatabases(db_name = "gss", db_format = "fasta")
+#' # listDatabases(db_name = "refseq_protein", db_format = "fasta")
+#' 
+#' @seealso \code{\link{download_database}}
+#' @export
+
 listDatabases <- function(db_name = "nr", db_format = "fasta", update = FALSE){
         
         
