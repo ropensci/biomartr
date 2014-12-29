@@ -102,9 +102,10 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete
                 if(!file.exists(file_path)){
                         
                         
-                        download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                        downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_rna.fna.gz")), paste0(file.path("_ncbi_downloads,CDS"),organism,"_rna.fna.gz"))
+                                             paste0(query_url_list_files,"_rna.fna.gz")), paste0(file.path("_ncbi_downloads,CDS"),organism,"_rna.fna.gz"),
+                                             mode = "wb")
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)
