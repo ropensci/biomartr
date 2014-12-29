@@ -11,6 +11,9 @@ Imports:
     biomaRt (>= 2.20.0),
     Biostrings (>= 2.32.1),
     data.table (>= 1.9.4),
-    dplyr (>= 0.3.0)
+    dplyr (>= 0.3.0),
+    downloader (>= 0.3),
+    taxize (>= 0.5.2),
+    RCurl (>= 1.95-4.5)
 License: GPL-3
 LazyData: true
