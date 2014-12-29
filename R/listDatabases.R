@@ -73,6 +73,9 @@ listDatabases <- function(db_name = "nr", db_format = "fasta", update = FALSE){
                 # select all database versions of 'db_name'
                 DBName <- listDBs[sapply(listDBs,function(x) stringr::str_detect(x,paste0("^",db_name)))]
                 
+                if(length(DBName) == 0)
+                        stop("No entries for db_name = '",db_name,"' could not be found.")
+                
                 # limit NCBI queries
                 if(!file.exists(file.path("_ncbi_downloads","listDatabases.txt")))
                         Sys.sleep(0.33)
