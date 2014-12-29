@@ -44,7 +44,7 @@ functionality of `biomartr` and how you can use it to extend
 analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr).
 
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
-- [Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
+- [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
 - [Taxonomic Information](https://github.com/HajkD/biomartr/tree/master/vignettes/Taxonomy.Rmd)
 - [Genomic Sequence Analyses and Statistics](https://github.com/HajkD/biomartr/tree/master/vignettes/Statistics.Rmd)
@@ -53,13 +53,15 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 
 ### The Following Functions Have Been Implemented for Biomart Query, as Well as Genome, Proteome, and CDS Retrieval
 
-### Interface to BioMart
+### BioMart Queries
 
 * `biomart()` : Main function to query the BioMart database
 * `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 * `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
 * `organismFilters()` : Function for organism specific retrieval of available BioMart filters
 
+
+### Biological Data Retrieval
 
 #### Genome Retrieval
 
@@ -75,6 +77,15 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 
 * `getCDS()` : A function for downloading a specific CDS file (genome) stored on the NCBI ftp:// server
 
+#### Database Retrieval
+
+* `listDatabases()` : Retrieve a List of Available Databases for Download
+* `download_database()` : Download a Database to Your Local Hard Drive
+
+#### Taxonomic Information
+
+* `taxonomy()` : Retrieving Taxonomic Information of a Query Organism
+
 ### Performing Gene Ontology queries
 
 #### Gene Ontology
@@ -84,10 +95,6 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 #### KeGG Ontology
 
 * `getKegg()` : Function to retrieve Kegg annotation for a given set of genes
-
-#### Taxonomic Information
-
-* `taxonomy()` : Retrieving Taxonomic Information of a Query Organism
 
 ### Statistics
 
