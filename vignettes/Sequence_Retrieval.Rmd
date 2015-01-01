@@ -381,19 +381,23 @@ and then the scientific name of the organism of interest.
 
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-Ath_genome <- getGenome(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
+getGenome( db       = "refseq", 
+           kingdom  = "plant",
+           organism = "Arabidopsis thaliana",
+           path     = file.path("_ncbi_downloads","genomes") )
 
 
 ```
 
-Internally, the `getGenome()` function creates a directory named `_ncbi_downloads/genomes` in which
-corresponding genomes are loaded and then sourced as data.table object into the current R session.
-When specifying `clean_folder = FALSE`, the `_ncbi_downloads/genomes` folder will not be removed and
-the corresponding genome does not need to be downloaded again when sourcing it into the current R session via 
-`getGenome()`.
+The `getGenome()` function creates a directory named `_ncbi_downloads/genomes` in which corresponding genome named `Arabidopsis_thaliana_genome.fna.gz` is downloaded. The `read_genome()` function enables you to work with the genome as `data.table` object.
 
+```{r,eval=FALSE}
+# path to genome: '_ncbi_downloads/genomes/Arabidopsis_thaliana_genome.fna.gz'
+file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genome.fna.gz")
+# read genome as data.table object
+Ath_genome <- read_genome(file_path, format = "fasta")
+
+```
 
 ### Proteome Retrieval
 
@@ -405,22 +409,17 @@ which corresponding proteomes are downloaded. It works exactly the same as `getG
 
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
+getProteome( db       = "refseq", 
+             kingdom  = "plant",
+             organism = "Arabidopsis thaliana",
+             path     = file.path("_ncbi_downloads","proteomes") )
 
 
 ```
 
-Internally, the `getProteome()` function creates a directory named `_ncbi_downloads/proteome` in which
-corresponding proteomes are loaded and then sourced as data.table object into the current R session.
-When specifying `clean_folder = FALSE`, the `_ncbi_downloads/proteomes` folder will not be removed and
-the corresponding proteome does not need to be downloaded again when sourcing it into the current R session via 
-`getProteome()`.
-
-
-
-
+The `getProteome()` function creates a directory named `_ncbi_downloads/proteome` in which
+corresponding proteomes are loaded. The `read_proteome()` function allows you to
+read the correspondning proteome as `data.table` object.
 
 ### CDS Retrieval
 
@@ -432,18 +431,17 @@ which corresponding CDS files are downloaded. It works exactly the same as `getG
 
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-Ath_cds <- getCDS(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
+getCDS( db       = "refseq", 
+        kingdom  = "plant",
+        organism = "Arabidopsis thaliana",
+        path     = file.path("_ncbi_downloads","CDS") )
 
 
 ```
 
-Internally, the `getCDS()` function creates a directory named `_ncbi_downloads/CDS` in which
-corresponding CDS files are loaded and then sourced as data.table object into the current R session.
-When specifying `clean_folder = FALSE`, the `_ncbi_downloads/CDS` folder will not be removed and
-the corresponding proteome does not need to be downloaded again when sourcing it into the current R session via 
-`getCDS()`.
+The `getCDS()` function creates a directory named `_ncbi_downloads/CDS` in which
+corresponding CDS are loaded. The `read_cds()` function allows you to
+read the correspondning CDS as `data.table` object.
 
 Furthermore, the `getCDS()` function checks whether all CDS sequences can be divided by 3 (codons).
 In case sequences of particualar genes cannot be divided by 3, a warning massage is returned to quantify the
@@ -465,10 +463,10 @@ the entire proteome of a specific organism of interest that is stored in refseq.
 
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
-
+getProteome( db       = "refseq", 
+             kingdom  = "plant",
+             organism = "Arabidopsis thaliana",
+             path     = file.path("_ncbi_downloads","proteomes") )
 
 ```
 
