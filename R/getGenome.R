@@ -7,8 +7,8 @@
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
-#' @param store_at a character string specifying the location (a folder) in which the corresponding
-#' genome shall be stored. Default is \code{store_at} = \code{file.path("_ncbi_downloads","genomes")}.
+#' @param path a character string specifying the location (a folder) in which the corresponding
+#' genome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -28,7 +28,7 @@
 #' getGenome( db       = "refseq", 
 #'            kingdom  = "plant", 
 #'            organism = "Arabidopsis thaliana", 
-#'            store_at = file.path("_ncbi_downloads","genomes"))
+#'            path = file.path("_ncbi_downloads","genomes"))
 #' 
 #' file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genome.fna.gz")
 #' Ath_genome <- read_genome(file_path, format = "fasta")
@@ -42,7 +42,7 @@
 #' 
 #' @seealso \code{\link{read_genome}}
 #' @export
-getGenome <- function(db = "refseq", kingdom, organism, store_at = file.path("_ncbi_downloads","genomes")){
+getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","genomes")){
         
         if(!is.element(db,c("refseq")))
                 stop("Please select one of the available data bases: 'refseq'")
@@ -54,9 +54,9 @@ getGenome <- function(db = "refseq", kingdom, organism, store_at = file.path("_n
         if(db == "refseq"){
                 
                 
-                if(!file.exists(store_at)){
+                if(!file.exists(path)){
                         
-                        dir.create(store_at)
+                        dir.create(path)
                         
                 }
                 
@@ -94,14 +94,14 @@ getGenome <- function(db = "refseq", kingdom, organism, store_at = file.path("_n
 #                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
 #                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
-                file_path <- file.path(store_at,paste0(organism,"_genome.fna.gz"))
+                file_path <- file.path(path,paste0(organism,"_genome.fna.gz"))
                 
                 if(!file.exists(file_path)){
                         
 
                         downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_genomic.fna.gz")), file.path(store_at,paste0(organism,"_genome.fna.gz")),
+                                             paste0(query_url_list_files,"_genomic.fna.gz")), file.path(path,paste0(organism,"_genome.fna.gz")),
                                              mode = "wb")
                         
                         # NCBI limits requests to three per second
@@ -111,7 +111,7 @@ getGenome <- function(db = "refseq", kingdom, organism, store_at = file.path("_n
                 
         }
 
-      print(paste0("The genome of '",organism,"' has been downloaded to '",store_at,"' and has been named '",paste0(organism,"_genome.fna.gz"),"' ."))  
+      print(paste0("The genome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_genome.fna.gz"),"' ."))  
 }
 
 

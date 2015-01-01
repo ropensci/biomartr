@@ -41,7 +41,7 @@
 #' @seealso \code{\link{read_proteome}}
 #' @export
 
-getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
+getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","proteome")){
         
         if(!is.element(db,c("refseq")))
                 stop("Please select one of the available data bases: 'refseq'")
@@ -53,9 +53,9 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
         if(db == "refseq"){
                 
                 
-                if(!file.exists(file.path("_ncbi_downloads,proteomes"))){
+                if(!file.exists(path)){
                         
-                        dir.create(file.path("_ncbi_downloads,proteomes"))
+                        dir.create(path)
                         
                 }
                 
@@ -93,14 +93,14 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                 #                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
                 #                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
-                file_path <- paste0(file.path("_ncbi_downloads,proteomes"),organism,"_protein.faa.gz")
+                file_path <- file.path(path,paste0(organism,"_protein.faa.gz")
                 
                 if(!file.exists(file_path)){
                         
                         
                         downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_protein.faa.gz")), paste0(file.path("_ncbi_downloads,proteomes"),organism,"_protein.faa.gz"),
+                                             paste0(query_url_list_files,"_protein.faa.gz")), file_path,
                                              mode = "wb")
                         
                         # NCBI limits requests to three per second
@@ -108,15 +108,11 @@ getProteome <- function(db = "refseq", kingdom, organism, clean_folder = TRUE){
                         
                 }
                 
-                proteome <- read_proteome(file_path, format = "fasta")
-                
         }
         
-        if(clean_folder)
-                clean_all_folders(file.path("_ncbi_downloads,proteomes"))
+        print(paste0("The proteome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_proteome.fna.gz"),"' ."))  
         
         
-        return(proteome)
 }
 
 
