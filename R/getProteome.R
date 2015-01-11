@@ -7,8 +7,8 @@
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
-#' @param clean_folder a logical value specifying whether the '_ncbi_downloads/proteomes' folder storing the corresponding proteome
-#' shall be removed after storing the corresponding proteome as data.table object. Default is \code{clean_folder} = \code{TRUE}.
+#' @param path a character string specifying the location (a folder) in which the corresponding
+#' proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteome")}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 

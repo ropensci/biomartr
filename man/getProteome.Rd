@@ -17,8 +17,8 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
 
-\item{clean_folder}{a logical value specifying whether the '_ncbi_downloads/proteomes' folder storing the corresponding proteome
-shall be removed after storing the corresponding proteome as data.table object. Default is \code{clean_folder} = \code{TRUE}.}
+\item{path}{a character string specifying the location (a folder) in which the corresponding
+proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteome")}.}
 }
 \value{
 A data.table storing the geneids in the first column and the protein dequence in the second column.
