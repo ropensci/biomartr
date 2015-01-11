@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{clean_all_folders}
 \alias{clean_all_folders}
-\title{Delete the internal folder hierarchy}
+\title{Delete the Internal Folder Hierarchy}
 \usage{
 clean_all_folders(foldernames)
 }

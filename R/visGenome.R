@@ -1,4 +1,4 @@
-#' @title Visualization function for genome properties
+#' @title Visualize Genome Properties
 #' @description This function allows to visualize selected properties of input genomes such as:
 #' \itemize{
 #' \item gene length distribution: \code{type} = \code{"length_distr"}

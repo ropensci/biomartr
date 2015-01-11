@@ -2,7 +2,7 @@
 % Please edit documentation in R/randSeqDistr.R
 \name{randSeqDistr}
 \alias{randSeqDistr}
-\title{Function to generate a distribution of alignment scores based on random sequences}
+\title{Generate a Distribution of Alignment Scores Based on Random Sequences}
 \usage{
 randSeqDistr(seq, subject, sampled_strings, FUN, ..., comp_cores = 1)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/geneSequence.R
 \name{geneSequence}
 \alias{geneSequence}
-\title{Retrieve biological sequences of a given set of genes}
+\title{Retrieve Biological Sequences of a given Set of Genes}
 \usage{
 geneSequence(genes, db)
 }

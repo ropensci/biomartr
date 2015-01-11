@@ -1,4 +1,4 @@
-#' @title Random sequence generator based on a multinomial model
+#' @title Random Sequence Generator Based on a Multinomial Model
 #' @description This function computes random sequences based on the alphabet and
 #' word length of an input sequence based on a multinomial model.
 #' @param seq a character vector storing a sequence as string for which random sequences shall be computed.

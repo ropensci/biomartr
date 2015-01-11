@@ -1,4 +1,4 @@
-#' @title Function to generate a distribution of alignment scores based on random sequences
+#' @title Generate a Distribution of Alignment Scores Based on Random Sequences
 #' @description This function takes a sequence, a vector of randomly sampled sequences, and a
 #' alignment function as input and computes an pairwise alignment score distribution from the input sequence
 #' and all random sequences stored in \code{sampled_strings}.

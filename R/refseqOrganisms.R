@@ -1,4 +1,4 @@
-#' @title Retrieve all organism names stored on refseq
+#' @title Retrieve All Organism Names Stored on refseq
 #' @description This function extracts all organism names (scientific names) for which genomes,
 #' proteomes, and CDS files are stored on the NCBI refseq server.
 #' @author Hajk-Georg Drost

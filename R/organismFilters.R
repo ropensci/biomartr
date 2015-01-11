@@ -1,4 +1,4 @@
-#' @title Retrieve BioMart filters for an organism
+#' @title Retrieve Biomart Filters for an Organism
 #' @description In addition to the \code{\link{organismBM}} and \code{\link{organismAttributes}} functions, this function
 #' returns all available filters that can be accessed through different marts and datasets 
 #' for a given query organism.

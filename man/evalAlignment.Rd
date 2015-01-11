@@ -2,7 +2,7 @@
 % Please edit documentation in R/evalAlignment.R
 \name{evalAlignment}
 \alias{evalAlignment}
-\title{Statistical evaluation of a given pairwise alignment}
+\title{Statistical Evaluation of a given Pairwise Alignment}
 \usage{
 evalAlignment(seq, subject, sample_size, FUN, ..., fit_distr = "norm",
   gof = FALSE, comp_cores = 1)

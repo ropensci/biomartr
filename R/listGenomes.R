@@ -1,4 +1,4 @@
-#' @title List all available genomes
+#' @title List All Available Genomes
 #' @description This function retrieves the names of all genomes available on the NCBI ftp:// server and stores
 #' the results in a file named 'overview.txt' inside the directory '_ncbi_downloads' that
 #' is built inside the workspace. 

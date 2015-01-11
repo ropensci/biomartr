@@ -2,7 +2,7 @@
 % Please edit documentation in R/organismFilters.R
 \name{organismFilters}
 \alias{organismFilters}
-\title{Retrieve BioMart filters for an organism}
+\title{Retrieve Biomart Filters for an Organism}
 \usage{
 organismFilters(organism, update = FALSE, topic = NULL)
 }

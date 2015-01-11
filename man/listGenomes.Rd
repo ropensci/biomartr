@@ -2,7 +2,7 @@
 % Please edit documentation in R/listGenomes.R
 \name{listGenomes}
 \alias{listGenomes}
-\title{List all available genomes}
+\title{List All Available Genomes}
 \usage{
 listGenomes(kingdom = "all", details = FALSE, update = FALSE,
   database = "all")

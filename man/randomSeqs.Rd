@@ -2,7 +2,7 @@
 % Please edit documentation in R/randomSeqs.R
 \name{randomSeqs}
 \alias{randomSeqs}
-\title{Random sequence generator based on a multinomial model}
+\title{Random Sequence Generator Based on a Multinomial Model}
 \usage{
 randomSeqs(seq, sample_size)
 }

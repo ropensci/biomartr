@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{is.genome.available}
 \alias{is.genome.available}
-\title{Check genome availability}
+\title{Check Genome Availability}
 \usage{
 is.genome.available(organism, details = FALSE, database = "refseq")
 }

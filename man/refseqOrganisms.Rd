@@ -2,7 +2,7 @@
 % Please edit documentation in R/refseqOrganisms.R
 \name{refseqOrganisms}
 \alias{refseqOrganisms}
-\title{Retrieve all organism names stored on refseq}
+\title{Retrieve All Organism Names Stored on refseq}
 \usage{
 refseqOrganisms()
 }

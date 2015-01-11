@@ -2,7 +2,7 @@
 % Please edit documentation in R/sequence_io.R
 \name{read_cds}
 \alias{read_cds}
-\title{Read the CDS of a given organism}
+\title{Read the CDS of a given Organism}
 \usage{
 read_cds(file, format, delete_corrupt = FALSE, ...)
 }

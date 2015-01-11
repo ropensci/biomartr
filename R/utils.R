@@ -16,7 +16,7 @@ retrieve_sequence <- function(gene){
 
 
 
-#' @title Delete the internal folder hierarchy
+#' @title Delete the Internal Folder Hierarchy
 #' @description This function deletes all internal folders that have been created
 #' during pipeline processing. Internally this function uses \code{\link{unlink}}
 #' to delete all folders created by the pipline.
@@ -65,7 +65,7 @@ clean_all_folders <- function(foldernames){
 
 
 
-#' @title Check genome availability
+#' @title Check Genome Availability
 #' @description This function checks the availability of a given genome on the NBCI servers specified
 #' as scientific name.
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.

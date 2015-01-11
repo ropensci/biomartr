@@ -2,7 +2,7 @@
 % Please edit documentation in R/sequence_io.R
 \name{read_proteome}
 \alias{read_proteome}
-\title{Read the proteome of a given organism}
+\title{Read the proteome of a given Organism}
 \usage{
 read_proteome(file, format, ...)
 }

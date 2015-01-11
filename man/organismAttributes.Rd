@@ -2,7 +2,7 @@
 % Please edit documentation in R/organismAttributes.R
 \name{organismAttributes}
 \alias{organismAttributes}
-\title{Retrieve BioMart attributes for an organism}
+\title{Retrieve Biomart Attributes for an Organism}
 \usage{
 organismAttributes(organism, update = FALSE, topic = NULL)
 }

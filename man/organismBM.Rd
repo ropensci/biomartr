@@ -2,7 +2,7 @@
 % Please edit documentation in R/organismBM.R
 \name{organismBM}
 \alias{organismBM}
-\title{Retrieve BioMart marts and datasets for an organism}
+\title{Retrieve Biomart Marts and Datasets for an Organism}
 \usage{
 organismBM(organism = NULL, update = FALSE)
 }

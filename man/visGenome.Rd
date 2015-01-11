@@ -2,7 +2,7 @@
 % Please edit documentation in R/visGenome.R
 \name{visGenome}
 \alias{visGenome}
-\title{Visualization function for genome properties}
+\title{Visualize Genome Properties}
 \usage{
 visGenome(data, type = "length_distr", ...)
 }

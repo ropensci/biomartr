@@ -2,7 +2,7 @@
 % Please edit documentation in R/sequence_io.R
 \name{read_genome}
 \alias{read_genome}
-\title{Read the genome of a given organism}
+\title{Read the genome of a given Organism}
 \usage{
 read_genome(file, format, ...)
 }
