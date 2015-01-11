@@ -399,6 +399,9 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 
 ```
 
+In case you would like to store the genome file at a different location,
+you can specify the `path = file.path("put","your","path","here")` argument.
+
 ### Proteome Retrieval
 
 The `getProteome()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
@@ -417,9 +420,19 @@ getProteome( db       = "refseq",
 
 ```
 
-The `getProteome()` function creates a directory named `_ncbi_downloads/proteome` in which
-corresponding proteomes are loaded. The `read_proteome()` function allows you to
-read the correspondning proteome as `data.table` object.
+The `getProteome()` function creates a directory named `_ncbi_downloads/proteomes` in which corresponding proteome named `Arabidopsis_thaliana_protein.faa.gz` is downloaded. The `read_proteome()` function enables you to work with the proteome as `data.table` object.
+
+```{r,eval=FALSE}
+# path to proteome: '_ncbi_downloads/proteomes/Arabidopsis_thaliana_protein.faa.gz'
+file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
+# read proteome as data.table object
+Ath_proteome <- read_proteome(file_path, format = "fasta")
+
+```
+
+In case you would like to store the proteome file at a different location,
+you can specify the `path = file.path("put","your","path","here")` argument.
+
 
 ### CDS Retrieval
 
@@ -442,6 +455,18 @@ getCDS( db       = "refseq",
 The `getCDS()` function creates a directory named `_ncbi_downloads/CDS` in which
 corresponding CDS are loaded. The `read_cds()` function allows you to
 read the correspondning CDS as `data.table` object.
+
+```{r,eval=FALSE}
+# path to CDS file: '_ncbi_downloads/CDS/Arabidopsis_thaliana_rna.fna.gz'
+file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")
+# read CDS as data.table object
+Ath_cds <- read_cds(file_path, format = "fasta")
+
+```
+
+In case you would like to store the CDS file at a different location,
+you can specify the `path = file.path("put","your","path","here")` argument.
+
 
 Furthermore, the `getCDS()` function checks whether all CDS sequences can be divided by 3 (codons).
 In case sequences of particualar genes cannot be divided by 3, a warning massage is returned to quantify the
@@ -518,7 +543,7 @@ refseq id of the corresponding filter `tair_locus` ids.
 ```{r,eval=FALSE}
 
 bm <- biomart(genes      = c("AT3G01360", "AT3G01540"),
-              mart       = "plants_mart_23", 
+              mart       = "plants_mart_24", 
               dataset    = "athaliana_eg_gene",
               attributes = "refseq_peptide",
               filters    = "tair_locus")
