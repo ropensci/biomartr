@@ -5,7 +5,7 @@
 \title{Proteome Retrieval}
 \usage{
 getProteome(db = "refseq", kingdom, organism,
-  path = file.path("_ncbi_downloads", "proteome"))
+  path = file.path("_ncbi_downloads", "proteomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the proteome shall be retrieved: 'refseq'.
@@ -18,7 +18,7 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
 
 \item{path}{a character string specifying the location (a folder) in which the corresponding
-proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteome")}.}
+proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.}
 }
 \value{
 A data.table storing the geneids in the first column and the protein dequence in the second column.
@@ -44,10 +44,14 @@ no download process will be performed.
 
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
+Ath_proteome <- getProteome( db       = "refseq",
+                             kingdom  = "plant",
+                             organism = "Arabidopsis thaliana",
+                             path     = file.path("_ncbi_downloads","proteomes"))
 
+
+file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.fna.gz")
+Ath_proteome <- read_proteome(file_path, format = "fasta")
 
 
 }
