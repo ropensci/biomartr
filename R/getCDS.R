@@ -7,8 +7,8 @@
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
-#' @param clean_folder a logical value specifying whether the '_ncbi_downloads/CDS' folder storing the corresponding CDS file
-#' shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.
+#' @param path a character string specifying the location (a folder) in which the corresponding
+#' CDS file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
 #' @param delete_corrupt a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
 #' be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.
 #' @author Hajk-Georg Drost
@@ -29,10 +29,14 @@
 #' 
 #' # download the genome of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-#' Ath_cds <- getCDS(db = "refseq", kingdom = "plant", 
-#'                         organism = "Arabidopsis thaliana", 
-#'                         clean_folder = FALSE)
+#' Ath_cds <- getCDS( db       = "refseq", 
+#'                    kingdom  = "plant", 
+#'                    organism = "Arabidopsis thaliana", 
+#'                    path     = file.path("_ncbi_downloads","CDS"))
 #' 
+#' 
+#' file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")
+#' Ath_CDS <- read_cds(file_path, format = "fasta")
 #' 
 #' 
 #' }
@@ -44,7 +48,7 @@
 #' 
 #' @seealso \code{\link{read_cds}}
 #' @export
-getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete_corrupt = FALSE){
+getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","CDS"), delete_corrupt = FALSE){
         
         if(!is.element(db,c("refseq")))
                 stop("Please select one of the available data bases: 'refseq'")
@@ -56,9 +60,9 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete
         if(db == "refseq"){
                 
                 
-                if(!file.exists(file.path("_ncbi_downloads,CDS"))){
+                if(!file.exists(path)){
                         
-                        dir.create(file.path("_ncbi_downloads,CDS"))
+                        dir.create(path)
                         
                 }
                 
@@ -97,30 +101,26 @@ getCDS <- function(db = "refseq", kingdom, organism, clean_folder = TRUE, delete
                 #                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
                 #                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
-                file_path <- paste0(file.path("_ncbi_downloads,CDS"),organism,"_rna.fna.gz")
+                file_path <- file.path(path,paste0(organism,"_rna.fna.gz"))
                 
                 if(!file.exists(file_path)){
                         
                         
                         downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                              organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_rna.fna.gz")), paste0(file.path("_ncbi_downloads,CDS"),organism,"_rna.fna.gz"),
+                                             paste0(query_url_list_files,"_rna.fna.gz")), file_path,
                                              mode = "wb")
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)
                         
                 }
-                
-                CDS <- read_cds(file_path, format = "fasta", delete_corrupt = delete_corrupt)
-                
+                                
         }
         
-        if(clean_folder)
-                clean_all_folders(file.path("_ncbi_downloads,CDS"))
+        print(paste0("The CDS file of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_rna.fna.gz"),"' ."))  
         
         
-        return(CDS)
 }
 
 

@@ -4,8 +4,8 @@
 \alias{getCDS}
 \title{Coding Sequence Retrieval}
 \usage{
-getCDS(db = "refseq", kingdom, organism, clean_folder = TRUE,
-  delete_corrupt = FALSE)
+getCDS(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads",
+  "CDS"), delete_corrupt = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the CDS file shall be retrieved: 'refseq'.
@@ -17,8 +17,8 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
 
-\item{clean_folder}{a logical value specifying whether the '_ncbi_downloads/CDS' folder storing the corresponding CDS file
-shall be removed after storing the corresponding genome as data.table object. Default is \code{clean_folder} = \code{TRUE}.}
+\item{path}{a character string specifying the location (a folder) in which the corresponding
+CDS file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.}
 
 \item{delete_corrupt}{a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
 be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
@@ -48,10 +48,14 @@ CDS file shall be downloaded again.
 
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-Ath_cds <- getCDS(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
+Ath_cds <- getCDS( db       = "refseq",
+                   kingdom  = "plant",
+                   organism = "Arabidopsis thaliana",
+                   path     = file.path("_ncbi_downloads","CDS"))
 
+
+file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")
+Ath_CDS <- read_cds(file_path, format = "fasta")
 
 
 }
