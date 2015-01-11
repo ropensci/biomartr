@@ -120,7 +120,6 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
         
         print(paste0("The CDS file of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_rna.fna.gz"),"' ."))  
         
-        
 }
 
 

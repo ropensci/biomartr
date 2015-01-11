@@ -31,7 +31,7 @@
 #'                              path     = file.path("_ncbi_downloads","proteomes"))
 #' 
 #' 
-#' file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.fna.gz")
+#' file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' 
 #' 
