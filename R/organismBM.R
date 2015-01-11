@@ -50,6 +50,13 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         fsep <- .Platform$file.sep
         
+        if(update){
+                
+                if(file.exists(paste0("_biomart",fsep,"listMarts.txt")))
+                        unlink(paste0("_biomart",fsep,"listMarts.txt"))
+                
+        }
+        
         if(!file.exists(paste0("_biomart",fsep,"listMarts.txt"))){
                 
                 if(!file.exists("_biomart"))
@@ -60,12 +67,6 @@ organismBM <- function(organism = NULL, update = FALSE){
                 
         }
         
-        if(update){
-                
-                if(file.exists(paste0("_biomart",fsep,"listMarts.txt")))
-                        unlink(paste0("_biomart",fsep,"listMarts.txt"))
-                
-        }
         
         if(file.exists(paste0("_biomart",fsep,"listMarts.txt")))
                 all_marts <- read.csv("_biomart/listMarts.txt", header = TRUE, sep = "\t", colClasses = rep("character",2),stringsAsFactors = FALSE)
