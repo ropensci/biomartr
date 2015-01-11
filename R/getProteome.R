@@ -8,7 +8,7 @@
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
 #' @param path a character string specifying the location (a folder) in which the corresponding
-#' proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteome")}.
+#' proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -25,10 +25,14 @@
 #' 
 #' # download the proteome of Arabidopsis thaliana from refseq
 #' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-#' Ath_proteome <- getProteome(db = "refseq", kingdom = "plant", 
-#'                         organism = "Arabidopsis thaliana", 
-#'                         clean_folder = FALSE)
+#' Ath_proteome <- getProteome( db       = "refseq", 
+#'                              kingdom  = "plant", 
+#'                              organism = "Arabidopsis thaliana", 
+#'                              path     = file.path("_ncbi_downloads","proteomes"))
 #' 
+#' 
+#' file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.fna.gz")
+#' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' 
 #' 
 #' }
@@ -41,7 +45,7 @@
 #' @seealso \code{\link{read_proteome}}
 #' @export
 
-getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","proteome")){
+getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","proteomes")){
         
         if(!is.element(db,c("refseq")))
                 stop("Please select one of the available data bases: 'refseq'")
@@ -110,7 +114,7 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
                 
         }
         
-        print(paste0("The proteome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_proteome.fna.gz"),"' ."))  
+        print(paste0("The proteome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_proteome.faa.gz"),"' ."))  
         
         
 }
