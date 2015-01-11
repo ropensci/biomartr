@@ -4,7 +4,8 @@
 \alias{getProteome}
 \title{Proteome Retrieval}
 \usage{
-getProteome(db = "refseq", kingdom, organism, clean_folder = TRUE)
+getProteome(db = "refseq", kingdom, organism,
+  path = file.path("_ncbi_downloads", "proteome"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the proteome shall be retrieved: 'refseq'.

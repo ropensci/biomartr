@@ -93,7 +93,7 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
                 #                 organism_file_match <- stringr::str_match(query_url_list_files, pattern = "*_genomic.fna.gz")
                 #                 organism_file <- query_url_list_files[!is.na(organism_file_match)]
                 
-                file_path <- file.path(path,paste0(organism,"_protein.faa.gz")
+                file_path <- file.path(path,paste0(organism,"_protein.faa.gz"))
                 
                 if(!file.exists(file_path)){
                         

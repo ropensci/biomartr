@@ -5,7 +5,7 @@
 \title{Genome Retrieval}
 \usage{
 getGenome(db = "refseq", kingdom, organism,
-  store_at = file.path("_ncbi_downloads", "genomes"))
+  path = file.path("_ncbi_downloads", "genomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome shall be retrieved: 'refseq'.
@@ -17,8 +17,8 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
 
-\item{store_at}{a character string specifying the location (a folder) in which the corresponding
-genome shall be stored. Default is \code{store_at} = \code{file.path("_ncbi_downloads","genomes")}.}
+\item{path}{a character string specifying the location (a folder) in which the corresponding
+genome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
 }
 \value{
 A data.table storing the geneids in the first column and the DNA dequence in the second column.
@@ -47,7 +47,7 @@ no download process will be performed.
 getGenome( db       = "refseq",
            kingdom  = "plant",
            organism = "Arabidopsis thaliana",
-           store_at = file.path("_ncbi_downloads","genomes"))
+           path = file.path("_ncbi_downloads","genomes"))
 
 file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genome.fna.gz")
 Ath_genome <- read_genome(file_path, format = "fasta")
