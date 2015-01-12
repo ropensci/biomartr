@@ -4,12 +4,15 @@
 \alias{download_database}
 \title{Download a Database to Your Local Hard Drive}
 \usage{
-download_database(name, db_format = "blastdb")
+download_database(name, db_format = "blastdb", path = "DB")
 }
 \arguments{
 \item{name}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
 
 \item{db_format}{a character string specifying database format, e.g. \code{db_format} = \code{"blastdb"}.}
+
+\item{path}{a character string specifying the location (a folder) in which the corresponding
+database shall be stored. Default is \code{path} = \code{"DB"}.}
 }
 \description{
 This function allows you to download a database selected by
@@ -17,7 +20,7 @@ This function allows you to download a database selected by
 }
 \details{
 This function downloads large databases to your hard drive. For this purpose a folder
-named \code{DB} is created and the correspondning database
+named \code{DB} (default) is created and the correspondning database then stored in this folder.
 }
 \examples{
 \dontrun{
