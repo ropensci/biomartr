@@ -1,3 +1,14 @@
+#' @title Retrieve All Available BioMart Databases
+#' @description This funcion queries the BioMart Interface and returns a table
+#' storing all available BioMart databases.
+#' 
+#' @author Hajk-Georg Drost
+#' @examples
+#' 
+#' # get a table of all available databases from BioMart
+#' getMarts()
+#' 
+#' @export
 getMarts <- function(){
         
         # connect to BioMart API
@@ -11,10 +22,10 @@ getMarts <- function(){
         doc <- XML::xmlTreeParse(xmlContentMarts, useInternal = TRUE)
         rootNode <- XML::xmlRoot(doc)
         
-        # extract databases
+        # extract available databases
         databases <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"database")))
         
-        # extract database versions
+        # extract available database versions
         displayNames <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"displayName")))
         
         return(data.frame(mart = databases[ , 1], version = displayNames[ , 1]))
