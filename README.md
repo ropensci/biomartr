@@ -59,7 +59,7 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 * `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 * `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
 * `organismFilters()` : Function for organism specific retrieval of available BioMart filters
-
+* `getMarts()` : Retrieve All Available BioMart Databases
 
 ### Biological Data Retrieval
 
