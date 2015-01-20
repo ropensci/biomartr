@@ -38,8 +38,14 @@ particular organism.
 The availability of `marts`, `datasets`, and `attributes` can be checked by the following functions:
 
 ```{r,eval=FALSE}
+# install the biomaRt package
+source("http://bioconductor.org/biocLite.R")
+biocLite("biomaRt")
+
+# load biomaRt
 library(biomaRt)
 
+# look at top 10 databases
 head(listMarts(), 10)
 
 ```
@@ -50,22 +56,22 @@ head(listMarts(), 10)
 2                    snp      ENSEMBL VARIATION 77 (SANGER UK)
 3    functional_genomics     ENSEMBL REGULATION 77 (SANGER UK)
 4                   vega                  VEGA 57  (SANGER UK)
-5          fungi_mart_23             ENSEMBL FUNGI 23 (EBI UK)
-6    fungi_variations_23   ENSEMBL FUNGI VARIATION 23 (EBI UK)
-7        metazoa_mart_23           ENSEMBL METAZOA 23 (EBI UK)
-8  metazoa_variations_23 ENSEMBL METAZOA VARIATION 23 (EBI UK)
-9         plants_mart_23            ENSEMBL PLANTS 23 (EBI UK)
-10  plants_variations_23  ENSEMBL PLANTS VARIATION 23 (EBI UK)
+5          fungi_mart_24             ENSEMBL FUNGI 23 (EBI UK)
+6    fungi_variations_24   ENSEMBL FUNGI VARIATION 23 (EBI UK)
+7        metazoa_mart_24           ENSEMBL METAZOA 23 (EBI UK)
+8  metazoa_variations_24 ENSEMBL METAZOA VARIATION 23 (EBI UK)
+9         plants_mart_24            ENSEMBL PLANTS 23 (EBI UK)
+10  plants_variations_24  ENSEMBL PLANTS VARIATION 23 (EBI UK)
 ```
 As you can see, several `marts` are available that provide annotation for
 specific classes of organisms or groups of organisms.
 
-For our example, we will choose the `plants_variations_23` `mart` and list all available
+For our example, we will choose the `plants_variations_24` `mart` and list all available
 datasets that are element of this `mart`.
 
 ```{r,eval=FALSE}
 
-tail(listDatasets(useMart("plants_mart_23")), 10)
+tail(listDatasets(useMart("plants_mart_24")), 10)
 
 ```
 
@@ -103,7 +109,7 @@ that can be accessed for `Arabidopsis thaliana genes`.
 
 ```{r,eval=FALSE}
 
-head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_23"))), 10)
+head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_24"))), 10)
 ```
 
 ```
@@ -129,7 +135,7 @@ Furthermore, you can retrieve all filters for _A. thaliana_ that can be specifie
 
 ```{r,eval=FALSE}
 
-head(listFilters(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_23"))), 10)
+head(listFilters(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_24"))), 10)
 ```
 
 ```
@@ -156,7 +162,7 @@ Since the input genes are `tair locus ids`, we need to specify the `filters` arg
 ```{r,eval=FALSE}
 
 # 1) select a mart and data set
-mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_22"))
+mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_24"))
 
 # 2) run a biomart query using the getBM() function
 # and specify the attributes and filter arguments
@@ -181,14 +187,94 @@ resultTable
 When using `getBM()` you can pass all attributes retrieved by `listAttributes()` to the `attributes` argument
 of the `getBM()` function.
 
-## Getting Started with biomartr
+# Getting Started with biomartr
 
 This query methodology provided by BioMart and the biomaRt package is a very well defined approach
 for accurate annotation retrieval. Nevertheless, when learning this query methodology it (subjectively)
 seems non-intuitive from the user perspective. Therefore, the `biomartr` package provides another
-query methodology that aims to be more organism centric.
+query methodology that aims to be more organism centric. Another aspect of useability is `package dependencies`.
+The `biomaRt` package has been stored on [Bioconductor](http://biomart.org/) and therefore, additional work has to be done to enable dependencies in [CRAN](http://cran.r-project.org/) packages that rely on [Bioconductor](http://biomart.org/) packages.
+Therefore, `biomartr` provides new BioMart interface functions that were implemented based on base R packages or packages
+stored on [CRAN](http://cran.r-project.org/).
 
-### Retrieve marts, datasets, attributes, and filters with biomartr
+## Retrieve marts, datasets, attributes, and filters with biomartr
+
+### Retrieve Available Marts
+
+The `getMarts()` function allows you to list all available databases that cann be accessed through BioMart interfaces.
+
+```{r,eval=FALSE}
+# load the biomartr package
+library(biomartr)
+
+# list all available databases (top 10)
+head(getMarts(), 10)
+
+```
+
+```
+                    mart                               version
+1                ensembl          ENSEMBL GENES 78 (SANGER UK)
+2                    snp      ENSEMBL VARIATION 78 (SANGER UK)
+3    functional_genomics     ENSEMBL REGULATION 78 (SANGER UK)
+4                   vega                  VEGA 58  (SANGER UK)
+5          fungi_mart_24             ENSEMBL FUNGI 24 (EBI UK)
+6    fungi_variations_24   ENSEMBL FUNGI VARIATION 24 (EBI UK)
+7        metazoa_mart_24           ENSEMBL METAZOA 24 (EBI UK)
+8  metazoa_variations_24 ENSEMBL METAZOA VARIATION 24 (EBI UK)
+9         plants_mart_24            ENSEMBL PLANTS 24 (EBI UK)
+10  plants_variations_24  ENSEMBL PLANTS VARIATION 24 (EBI UK)
+```
+
+### Retrieve Available Datasets from a Specific Mart
+
+Now you can select a specific database to list all available datasets
+that can be accessed trhough this database. In this example we choose
+the `plants_mart_24` database.
+
+```{r,eval=FALSE}
+head(getDatasets(mart = "plants_mart_24") , 5)
+```
+
+```
+               dataset                                                description                           version
+1    atauschii_eg_gene          Aegilops tauschii genes (ASM34733v1 (2013-12-BGI))          ASM34733v1 (2013-12-BGI)
+2 obrachyantha_eg_gene Oryza brachyantha genes (Oryza_brachyantha.v1.4b (OGEv1.4)) Oryza_brachyantha.v1.4b (OGEv1.4)
+3     ppersica_eg_gene                   Prunus persica genes (Prupe1_0 (2013-03))                Prupe1_0 (2013-03)
+4 ptrichocarpa_eg_gene            Populus trichocarpa genes (JGI2.0 (2010-01-JGI))              JGI2.0 (2010-01-JGI)
+5   stuberosum_eg_gene           Solanum tuberosum genes (SolTub_3.0 (SolTub_3.0))           SolTub_3.0 (SolTub_3.0)
+```
+
+Now you can select the dataset `athaliana_eg_gene` and list all available attributes that can be retrieved from this dataset.
+
+```{r,eval=FALSE}
+tail(getDatasets(mart = "plants_mart_24") , 3)
+```
+
+```
+              dataset                                          description                  version
+36 macuminata_eg_gene           Musa acuminata genes (MA1 (2012-08-Cirad))      MA1 (2012-08-Cirad)
+37    turartu_eg_gene     Triticum urartu genes (ASM34745v1 (2013-04-BGI)) ASM34745v1 (2013-04-BGI)
+38  athaliana_eg_gene Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))  TAIR10 (2010-09-TAIR10)
+```
+
+### Retrieve Available Datasets from a Specific Mart
+
+Now that you have selected a database (`plants_mart_24`) and a dataset (`athaliana_eg_gene`),
+you can list all available attributes for this dataset using the `getAttributes()` function.
+
+```{r,eval=FALSE}
+# list all available attributes for dataset: athaliana_eg_gene
+head( getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene"), 10 )
+```
+
+```
+
+```
+
+
+
+### Organism Specific Retrieval of Information
 
 In most cases, we work with a single or a set of model organisms and in this process mostly we are
 interested in specific annotations for this particular model organism. The `organismBM()`
