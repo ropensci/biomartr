@@ -12,9 +12,12 @@ storing all available BioMart databases.
 }
 \examples{
 # get a table of all available databases from BioMart
-getMarts()
+head(getMarts(), 10)
 }
 \author{
 Hajk-Georg Drost
+}
+\seealso{
+\code{\link{getDatasets}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 
