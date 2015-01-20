@@ -24,13 +24,15 @@ getAttributes <- function(mart, dataset){
         if((!is.character(mart)) || (!is.character(dataset)))
                 stop("Please use a character string as mart or dataset.")
         
-        attributesPage <- httr::handle(paste0("http://www.biomart.org/biomart/martservice?type=attributes&dataset=",dataset,"&requestid=biomart&mart=",mart,"&virtualSchema=default"))
+        url <- paste0("http://www.biomart.org/biomart/martservice?type=attributes&dataset=",dataset,"&requestid=biomart&mart=",mart,"&virtualSchema=default")
+        
+        attributesPage <- httr::handle(url)
         xmlContentAttributes <- httr::GET(handle = attributesPage)
         
         httr::stop_for_status(xmlContentAttributes)
         
-        # extract dataset name, description, and version, etc.
-        rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentAttributes,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t"))))
+        # extract attribute name and attribute description
+        suppressWarnings(rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentAttributes,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t")))))
         
         colnames(rawDF) <- paste0("V",1:ncol(rawDF))
         
