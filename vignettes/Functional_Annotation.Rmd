@@ -258,7 +258,7 @@ tail(getDatasets(mart = "plants_mart_24") , 3)
 38  athaliana_eg_gene Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))  TAIR10 (2010-09-TAIR10)
 ```
 
-### Retrieve Available Datasets from a Specific Mart
+### Retrieve Available Attributes from a Specific Dataset
 
 Now that you have selected a database (`plants_mart_24`) and a dataset (`athaliana_eg_gene`),
 you can list all available attributes for this dataset using the `getAttributes()` function.
@@ -269,10 +269,42 @@ head( getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene"), 10 
 ```
 
 ```
-
+                    name              description
+1        ensembl_gene_id           Gene stable ID
+2  ensembl_transcript_id     Transcript stable ID
+3     ensembl_peptide_id        Protein stable ID
+4        chromosome_name Chromosome/scaffold name
+5         start_position          Gene start (bp)
+6           end_position            Gene end (bp)
+7                 strand                   Strand
+8                   band                     Band
+9       transcript_start    Transcript start (bp)
+10        transcript_end      Transcript end (bp)
 ```
 
+### Retrieve Available Filters from a Specific Dataset
 
+Finally, the `getFilters()` function allows you to list available filters
+for a specific dataset that can be used for a `biomart()` query.
+
+```{r,eval=FALSE}
+# list all available filters for dataset: athaliana_eg_gene
+head( getFilters(mart = "plants_mart_24", dataset = "athaliana_eg_gene"), 10 )
+```
+
+```
+                                name                                         description
+1                    chromosome_name                                     Chromosome name
+2                              start                                               Start
+3                                end                                                 End
+4                             strand                                              Strand
+5                 chromosomal_region             e.g. 1:100:10000:-1, 1:100000:2000000:1
+6  with_affy_arabidopsis_ath1_121501 with Affymetrix array Arabidopsis ATH1 121501 ID(s)
+7                  with_arrayexpress                             with ArrayExpress ID(s)
+8                   with_CATMA_CATMA                  with CATMA A. thaliana probe ID(s)
+9                        with_chembl                                   with ChEMBL ID(s)
+10                         with_embl                              with ENA/GenBank ID(s)
+```
 
 ### Organism Specific Retrieval of Information
 

@@ -84,7 +84,7 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
                                                                          return(attr_tbl)
                                                                  }))
                                 
-                                martVec <-rep(mart[1  , "mart"], nrow(mart_tbl))
+                                martVec <- rep(mart[1  , "mart"], nrow(mart_tbl))
                                 mart_tbl <- dplyr::mutate(mart_tbl, mart = martVec)
                                 return(mart_tbl)
                         }
