@@ -6,8 +6,9 @@
 #' @examples
 #' 
 #' # get a table of all available databases from BioMart
-#' getMarts()
+#' head(getMarts(), 10)
 #' 
+#' @seealso \code{\link{getDatasets}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 getMarts <- function(){
         
@@ -23,11 +24,23 @@ getMarts <- function(){
         rootNode <- XML::xmlRoot(doc)
         
         # extract available databases
-        databases <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"database")))
+        databases <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"name")))
         
         # extract available database versions
         displayNames <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"displayName")))
         
-        return(data.frame(mart = databases[ , 1], version = displayNames[ , 1]))
+        # ectract information whether or not the corresponding database is visible 
+        visible <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"visible")))
+        
+        dbBioMart <- data.frame(mart = databases[ , 1], version = displayNames[ , 1], visible = visible[ , 1])
+        
+        return(dplyr::filter(dbBioMart, visible != "0")[ , c("mart","version")])
                
 }
+
+
+
+
+
+
+
