@@ -17,7 +17,7 @@
 #' # choose dataset: "athaliana_eg_gene"
 #' head(getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene") , 5)
 #' 
-#' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+#' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}},\code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 getAttributes <- function(mart, dataset){
         

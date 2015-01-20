@@ -13,7 +13,7 @@
 #' # and get a table of all available datasets from this BioMart database
 #' head(getDatasets("plants_mart_24"), 10)
 #' 
-#' @seealso \code{\link{getMarts}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+#' @seealso \code{\link{getMarts}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 getDatasets <- function(mart){
         

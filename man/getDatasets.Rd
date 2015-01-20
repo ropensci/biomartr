@@ -25,6 +25,6 @@ head(getDatasets("plants_mart_24"), 10)
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+\code{\link{getMarts}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 

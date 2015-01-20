@@ -30,6 +30,6 @@ head(getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene") , 5)
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+\code{\link{getMarts}}, \code{\link{getDatasets}},\code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 

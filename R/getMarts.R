@@ -8,7 +8,7 @@
 #' # get a table of all available databases from BioMart
 #' head(getMarts(), 10)
 #' 
-#' @seealso \code{\link{getDatasets}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+#' @seealso \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 getMarts <- function(){
         
