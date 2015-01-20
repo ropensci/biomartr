@@ -56,10 +56,13 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 ### BioMart Queries
 
 * `biomart()` : Main function to query the BioMart database
+* `getMarts()` : Retrieve All Available BioMart Databases
+* `getDatasets()` : Retrieve All Available Datasets for a BioMart Database
+* `getAttributes()` : Retrieve All Available Attributes for a Specific Dataset
 * `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 * `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
 * `organismFilters()` : Function for organism specific retrieval of available BioMart filters
-* `getMarts()` : Retrieve All Available BioMart Databases
+
 
 ### Biological Data Retrieval
 
