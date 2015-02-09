@@ -27,7 +27,7 @@ For a given query organism, this function retrieves all available filters that
 can be accessed through different marts and datasets.
 
 Sometimes the same filter names correspond to different datasets and marts causing
-problems when using \code{\link[biomaRt]{getBM}}. The approach introduced by this function
+problems when using \code{\link{getMarts}}. The approach introduced by this function
 provides (again) a organism centric way of accessing organism specific filters.
 
 The \code{topic} argument allows the user to search for specific filters topics/categories
@@ -66,6 +66,7 @@ Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 3439-3440 (2005).
 }
 \seealso{
-\code{\link{organismBM}}, \code{\link{organismAttributes}}
+\code{\link{organismBM}}, \code{\link{organismAttributes}}, \code{\link{getAttributes}},
+\code{\link{getDatasets}}, \code{\link{getMarts}}
 }
 

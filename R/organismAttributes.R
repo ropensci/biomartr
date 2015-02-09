@@ -13,7 +13,7 @@
 #' can be accessed through different marts and datasets.
 #' 
 #' Sometimes the same attribute names correspond to different datasets and marts causing
-#' problems when using \code{\link[biomaRt]{getBM}}. The approach introduced by this function
+#' problems when using \code{\link{getMarts}}. The approach introduced by this function
 #' provides (again) a organism centric way of accessing organism specific attributes.
 #' 
 #' The \code{topic} argument allows the user to search for specific attribute topics/categories
