@@ -42,7 +42,7 @@
 #' microarray data analysis. Steffen Durinck, Yves Moreau, Arek Kasprzyk, Sean
 #' Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 #' 3439-3440 (2005).
-#' @seealso \code{\link[biomaRt]{listMarts}}, \code{\link[biomaRt]{listDatasets}}, \code{\link{biomart}},
+#' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{biomart}},
 #' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 
@@ -62,7 +62,7 @@ organismBM <- function(organism = NULL, update = FALSE){
                 if(!file.exists("_biomart"))
                         dir.create("_biomart")
                 
-                all_marts <- droplevels.data.frame(biomaRt::listMarts())
+                all_marts <- droplevels.data.frame(getMarts())
                 write.table(all_marts,paste0("_biomart",fsep,"listMarts.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
                 
         }
@@ -78,9 +78,10 @@ organismBM <- function(organism = NULL, update = FALSE){
                 
         }
         
+        
         if(!file.exists(paste0("_biomart",fsep,"listDatasets.txt"))){
-                all_datasets <- do.call(rbind,lapply(as.vector(all_marts[ , "biomart"]), 
-                                       function(mart){ df <- as.data.frame(biomaRt::listDatasets(biomaRt::useMart(biomart = mart)))
+                all_datasets <- do.call(rbind,lapply(as.vector(all_marts[ , "mart"]), 
+                                       function(mart){ df <- as.data.frame(getDatasets(mart = mart))
                                                        df <- dplyr::mutate(df,mart = rep(mart,length(mart)))
                                                        return(df) } ))
                                                         
@@ -93,7 +94,7 @@ organismBM <- function(organism = NULL, update = FALSE){
         
   
        all_datasets <- dplyr::mutate(all_datasets,organism_name = sapply(all_datasets[ ,"description"], function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
-       all_datasets <- dplyr::select(all_datasets, list(organism_name,description,mart,dataset,version))
+       all_datasets <- dplyr::select(all_datasets, organism_name,description,mart,dataset,version)
           
        if(!is.null(organism)){
                

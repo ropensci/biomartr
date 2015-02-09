@@ -73,9 +73,9 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
                                 mart_tbl <- do.call(rbind,lapply(1:nrow(mart),
                                                                  function(dataset) {
                                                                          
-                                                                         attr_tbl <- biomaRt::listAttributes(
-                                                                                 biomaRt::useDataset(dataset = mart[ dataset , "dataset"], 
-                                                                                                     mart    = biomaRt::useMart(mart[ dataset , "mart"])))
+                                                                         attr_tbl <- getAttributes(
+                                                                                          dataset = mart[ dataset , "dataset"], 
+                                                                                          mart    = mart[ dataset , "mart"])
                                                                          
                                                                          datasetVec <- rep(mart[ dataset , "dataset"], nrow(attr_tbl))
                                                                          

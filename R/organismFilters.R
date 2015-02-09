@@ -13,7 +13,7 @@
 #' can be accessed through different marts and datasets.
 #' 
 #' Sometimes the same filter names correspond to different datasets and marts causing
-#' problems when using \code{\link[biomaRt]{getBM}}. The approach introduced by this function
+#' problems when using \code{\link{getMarts}}. The approach introduced by this function
 #' provides (again) a organism centric way of accessing organism specific filters.
 #' 
 #' The \code{topic} argument allows the user to search for specific filters topics/categories
@@ -44,7 +44,8 @@
 #' microarray data analysis. Steffen Durinck, Yves Moreau, Arek Kasprzyk, Sean
 #' Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 #' 3439-3440 (2005).
-#' @seealso \code{\link{organismBM}}, \code{\link{organismAttributes}}
+#' @seealso \code{\link{organismBM}}, \code{\link{organismAttributes}}, \code{\link{getAttributes}},
+#' \code{\link{getDatasets}}, \code{\link{getMarts}} 
 #' @export
 
 organismFilters <- function(organism, update = FALSE, topic = NULL){
@@ -69,9 +70,9 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                         mart_tbl <- do.call(rbind,lapply(1:nrow(mart),
                                                          function(dataset) {
                                                                  
-                                                                 filters_tbl <- biomaRt::listFilters(
-                                                                         biomaRt::useDataset(dataset = mart[ dataset , "dataset"], 
-                                                                                             mart    = biomaRt::useMart(mart[ dataset , "mart"])))
+                                                                 filters_tbl <- getFilters(
+                                                                                      dataset = mart[ dataset , "dataset"], 
+                                                                                      mart    = mart[ dataset , "mart"])
                                                                  
                                                                  datasetVec <- rep(mart[ dataset , "dataset"], nrow(filters_tbl))
                                                                  
