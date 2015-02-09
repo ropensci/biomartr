@@ -29,9 +29,14 @@ getDatasets <- function(mart){
         rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentDatasets,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t"))))
         
         colnames(rawDF) <- paste0("V",1:ncol(rawDF))
+         
+        if(dim(rawDF)[1] > 2)
+                # store available datasets
+                dsBioMart <- as.data.frame(rawDF[-seq(1,nrow(rawDF),2), c("V2","V3","V5")], stringsAsFactors = FALSE, colClasses = rep("character",3))
         
-        # store available datasets
-        dsBioMart <- as.data.frame(rawDF[-seq(1,nrow(rawDF),2), c("V2","V3","V5")], stringsAsFactors = FALSE, colClasses = rep("character",3))
+        if(dim(rawDF)[1] <= 2)
+                dsBioMart <- data.frame(V2 = "", V3 = "", V5 = "")
+        
         colnames(dsBioMart) <- c("dataset","description","version")
         
         return(dsBioMart)
