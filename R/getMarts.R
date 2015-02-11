@@ -1,5 +1,5 @@
 #' @title Retrieve All Available BioMart Databases
-#' @description This funcion queries the BioMart Interface and returns a table
+#' @description This funcion queries the BioMart API and returns a table
 #' storing all available BioMart databases.
 #' 
 #' @author Hajk-Georg Drost
