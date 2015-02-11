@@ -56,22 +56,22 @@ head(listMarts(), 10)
 2                    snp      ENSEMBL VARIATION 77 (SANGER UK)
 3    functional_genomics     ENSEMBL REGULATION 77 (SANGER UK)
 4                   vega                  VEGA 57  (SANGER UK)
-5          fungi_mart_24             ENSEMBL FUNGI 23 (EBI UK)
-6    fungi_variations_24   ENSEMBL FUNGI VARIATION 23 (EBI UK)
-7        metazoa_mart_24           ENSEMBL METAZOA 23 (EBI UK)
-8  metazoa_variations_24 ENSEMBL METAZOA VARIATION 23 (EBI UK)
-9         plants_mart_24            ENSEMBL PLANTS 23 (EBI UK)
-10  plants_variations_24  ENSEMBL PLANTS VARIATION 23 (EBI UK)
+5          fungi_mart_25             ENSEMBL FUNGI 25 (EBI UK)
+6    fungi_variations_25   ENSEMBL FUNGI VARIATION 25 (EBI UK)
+7        metazoa_mart_25           ENSEMBL METAZOA 25 (EBI UK)
+8  metazoa_variations_25 ENSEMBL METAZOA VARIATION 25 (EBI UK)
+9         plants_mart_25            ENSEMBL PLANTS 25 (EBI UK)
+10  plants_variations_25  ENSEMBL PLANTS VARIATION 25 (EBI UK)
 ```
 As you can see, several `marts` are available that provide annotation for
 specific classes of organisms or groups of organisms.
 
-For our example, we will choose the `plants_variations_24` `mart` and list all available
+For our example, we will choose the `plants_variations_25` `mart` and list all available
 datasets that are element of this `mart`.
 
 ```{r,eval=FALSE}
 
-tail(listDatasets(useMart("plants_mart_24")), 10)
+tail(listDatasets(useMart("plants_mart_25")), 10)
 
 ```
 
@@ -105,11 +105,11 @@ The `useMart()` function is a wrapper function provided by `biomaRt` to connect 
 database (`mart`) with a corresponding dataset stored within this `mart`.
 
 We select dataset `athaliana_eg_gene` and now check for available attributes (annotation data)
-that can be accessed for `Arabidopsis thaliana genes`.
+that can be accessed for `Arabidopsis thaliana` genes.
 
 ```{r,eval=FALSE}
 
-head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_24"))), 10)
+head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_25"))), 10)
 ```
 
 ```
@@ -126,7 +126,7 @@ head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("pl
 10        transcript_end      Transcript end (bp)
 ```
 
-Please notice the nested structure of this attributes query. For an attribute query procedure
+Please note the nested structure of this attribute query. For an attribute query procedure
 an additional wrapper function named `useDataset()` is needed in which `useMart()` and a corresponding 
 dataset needs to be specified. The result is a table storing the name of available attributes for
 _A. thaliana_ as well as a short description.
@@ -162,7 +162,7 @@ Since the input genes are `tair locus ids`, we need to specify the `filters` arg
 ```{r,eval=FALSE}
 
 # 1) select a mart and data set
-mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_24"))
+mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_25"))
 
 # 2) run a biomart query using the getBM() function
 # and specify the attributes and filter arguments
@@ -218,22 +218,22 @@ head(getMarts(), 10)
 2                    snp      ENSEMBL VARIATION 78 (SANGER UK)
 3    functional_genomics     ENSEMBL REGULATION 78 (SANGER UK)
 4                   vega                  VEGA 58  (SANGER UK)
-5          fungi_mart_24             ENSEMBL FUNGI 24 (EBI UK)
-6    fungi_variations_24   ENSEMBL FUNGI VARIATION 24 (EBI UK)
-7        metazoa_mart_24           ENSEMBL METAZOA 24 (EBI UK)
-8  metazoa_variations_24 ENSEMBL METAZOA VARIATION 24 (EBI UK)
-9         plants_mart_24            ENSEMBL PLANTS 24 (EBI UK)
-10  plants_variations_24  ENSEMBL PLANTS VARIATION 24 (EBI UK)
+5          fungi_mart_25             ENSEMBL FUNGI 25 (EBI UK)
+6    fungi_variations_25   ENSEMBL FUNGI VARIATION 25 (EBI UK)
+7        metazoa_mart_25           ENSEMBL METAZOA 25 (EBI UK)
+8  metazoa_variations_25 ENSEMBL METAZOA VARIATION 25 (EBI UK)
+9         plants_mart_25            ENSEMBL PLANTS 25 (EBI UK)
+10  plants_variations_25  ENSEMBL PLANTS VARIATION 25 (EBI UK)
 ```
 
 ### Retrieve Available Datasets from a Specific Mart
 
 Now you can select a specific database to list all available datasets
-that can be accessed trhough this database. In this example we choose
-the `plants_mart_24` database.
+that can be accessed through this database. In this example we choose
+the `plants_mart_25` database.
 
 ```{r,eval=FALSE}
-head(getDatasets(mart = "plants_mart_24") , 5)
+head(getDatasets(mart = "plants_mart_25") , 5)
 ```
 
 ```
@@ -248,7 +248,7 @@ head(getDatasets(mart = "plants_mart_24") , 5)
 Now you can select the dataset `athaliana_eg_gene` and list all available attributes that can be retrieved from this dataset.
 
 ```{r,eval=FALSE}
-tail(getDatasets(mart = "plants_mart_24") , 3)
+tail(getDatasets(mart = "plants_mart_25") , 3)
 ```
 
 ```
@@ -260,12 +260,12 @@ tail(getDatasets(mart = "plants_mart_24") , 3)
 
 ### Retrieve Available Attributes from a Specific Dataset
 
-Now that you have selected a database (`plants_mart_24`) and a dataset (`athaliana_eg_gene`),
+Now that you have selected a database (`plants_mart_25`) and a dataset (`athaliana_eg_gene`),
 you can list all available attributes for this dataset using the `getAttributes()` function.
 
 ```{r,eval=FALSE}
 # list all available attributes for dataset: athaliana_eg_gene
-head( getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene"), 10 )
+head( getAttributes(mart = "plants_mart_25", dataset = "athaliana_eg_gene"), 10 )
 ```
 
 ```
@@ -289,7 +289,7 @@ for a specific dataset that can be used for a `biomart()` query.
 
 ```{r,eval=FALSE}
 # list all available filters for dataset: athaliana_eg_gene
-head( getFilters(mart = "plants_mart_24", dataset = "athaliana_eg_gene"), 10 )
+head( getFilters(mart = "plants_mart_25", dataset = "athaliana_eg_gene"), 10 )
 ```
 
 ```
@@ -306,12 +306,17 @@ head( getFilters(mart = "plants_mart_24", dataset = "athaliana_eg_gene"), 10 )
 10                         with_embl                              with ENA/GenBank ID(s)
 ```
 
-### Organism Specific Retrieval of Information
+## Organism Specific Retrieval of Information
 
 In most cases, we work with a single or a set of model organisms and in this process mostly we are
 interested in specific annotations for this particular model organism. The `organismBM()`
 function addressed this issue and provides the user with an organism centric query to `marts` and `datasets`
 that are available for a particular organism of interest.
+
+
+__Note__: When you run the following functions for the first time, the data retrieval procedure will take some time, due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named `_biomart/listDatasets.txt` within the `tempdir()` folder, allowing subsequent queries to perform much faster.
+The `tempdir()` folder however, will be deleted after a new R session was established, so in this case
+the inital call of the subsequent functions, again will take time to retrieve all organism specific data from the BioMart API.
 
 
 ```{r,eval=FALSE}
@@ -330,9 +335,9 @@ organismBM(organism = "Arabidopsis thaliana")
 5 Arabidopsis thaliana            Arabidopsis thaliana variations (TAIR10 (2010-09-TAIR10))
 6 Arabidopsis thaliana Arabidopsis thaliana structural Variations (TAIR10 (2010-09-TAIR10))
                     mart                dataset                 version
-1         plants_mart_23      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
-2   plants_variations_23       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
-3   plants_variations_23 athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
+1         plants_mart_25      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
+2   plants_variations_25       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
+3   plants_variations_25 athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
 4     ENSEMBL_MART_PLANT      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
 5 ENSEMBL_MART_PLANT_SNP       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
 6 ENSEMBL_MART_PLANT_SNP athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
@@ -374,9 +379,6 @@ organismBM(organism = "Homo sapiens")
 7     hsapiens_gene_vega  GRCh38
 ```
 
-__Note__: When you run this function for the first time, the data retrieval procedure will take some time, due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named `_biomart/listDatasets.txt` allowing subsequent queries to perform much faster.
-
-
 Similar to the `biomaRt` package query methodology, we need to specify `attributes` and `filters` to be able to perform
 accurate BioMart queries. Here the functions `organismAttributes()` and `organismFilters()` provide useful and intuitive
 concepts to obtain this information.
@@ -391,26 +393,26 @@ head(organismAttributes("Arabidopsis thaliana"), 20)
 Source: local data frame [20 x 4]
 
                                    name                                 description           mart           dataset
-1                             3_utr_end                                  3' UTR end plants_mart_23 athaliana_eg_gene
-2                           3_utr_start                                3' UTR start plants_mart_23 athaliana_eg_gene
-3                                  3utr                                      3' UTR plants_mart_23 athaliana_eg_gene
-4                             5_utr_end                                  5' UTR end plants_mart_23 athaliana_eg_gene
-5                           5_utr_start                                5' UTR start plants_mart_23 athaliana_eg_gene
-6                                  5utr                                      5' UTR plants_mart_23 athaliana_eg_gene
-7                      affy_ath1_121501 Affymetrix array Arabidopsis ATH1 121501 ID plants_mart_23 athaliana_eg_gene
-8                                allele                              Variant allele plants_mart_23  athaliana_eg_snp
-9                  alyrata_eg_chrom_end                 Arabidopsis lyrata end (bp) plants_mart_23 athaliana_eg_gene
-10               alyrata_eg_chrom_start               Arabidopsis lyrata start (bp) plants_mart_23 athaliana_eg_gene
-11                alyrata_eg_chromosome      Arabidopsis lyrata chromosome/scaffold plants_mart_23 athaliana_eg_gene
-12                      alyrata_eg_gene           Arabidopsis lyrata gene stable ID plants_mart_23 athaliana_eg_gene
-13          alyrata_eg_homolog_ancestor                                    Ancestor plants_mart_23 athaliana_eg_gene
-14                alyrata_eg_homolog_dn                                          dS plants_mart_23 athaliana_eg_gene
-15                alyrata_eg_homolog_ds                                          dN plants_mart_23 athaliana_eg_gene
-16   alyrata_eg_homolog_ensembl_peptide        Arabidopsis lyrata protein stable ID plants_mart_23 athaliana_eg_gene
-17 alyrata_eg_homolog_is_tree_compliant        Orthology confidence [0 low, 1 high] plants_mart_23 athaliana_eg_gene
-18           alyrata_eg_homolog_perc_id                                  % identity plants_mart_23 athaliana_eg_gene
-19        alyrata_eg_homolog_perc_id_r1               Arabidopsis lyrata % identity plants_mart_23 athaliana_eg_gene
-20            alyrata_eg_orthology_type                               Homology type plants_mart_23 athaliana_eg_gene
+1                             3_utr_end                                  3' UTR end plants_mart_25 athaliana_eg_gene
+2                           3_utr_start                                3' UTR start plants_mart_25 athaliana_eg_gene
+3                                  3utr                                      3' UTR plants_mart_25 athaliana_eg_gene
+4                             5_utr_end                                  5' UTR end plants_mart_25 athaliana_eg_gene
+5                           5_utr_start                                5' UTR start plants_mart_25 athaliana_eg_gene
+6                                  5utr                                      5' UTR plants_mart_25 athaliana_eg_gene
+7                      affy_ath1_121501 Affymetrix array Arabidopsis ATH1 121501 ID plants_mart_25 athaliana_eg_gene
+8                                allele                              Variant allele plants_mart_25  athaliana_eg_snp
+9                  alyrata_eg_chrom_end                 Arabidopsis lyrata end (bp) plants_mart_25 athaliana_eg_gene
+10               alyrata_eg_chrom_start               Arabidopsis lyrata start (bp) plants_mart_25 athaliana_eg_gene
+11                alyrata_eg_chromosome      Arabidopsis lyrata chromosome/scaffold plants_mart_25 athaliana_eg_gene
+12                      alyrata_eg_gene           Arabidopsis lyrata gene stable ID plants_mart_25 athaliana_eg_gene
+13          alyrata_eg_homolog_ancestor                                    Ancestor plants_mart_25 athaliana_eg_gene
+14                alyrata_eg_homolog_dn                                          dS plants_mart_25 athaliana_eg_gene
+15                alyrata_eg_homolog_ds                                          dN plants_mart_25 athaliana_eg_gene
+16   alyrata_eg_homolog_ensembl_peptide        Arabidopsis lyrata protein stable ID plants_mart_25 athaliana_eg_gene
+17 alyrata_eg_homolog_is_tree_compliant        Orthology confidence [0 low, 1 high] plants_mart_25 athaliana_eg_gene
+18           alyrata_eg_homolog_perc_id                                  % identity plants_mart_25 athaliana_eg_gene
+19        alyrata_eg_homolog_perc_id_r1               Arabidopsis lyrata % identity plants_mart_25 athaliana_eg_gene
+20            alyrata_eg_orthology_type                               Homology type plants_mart_25 athaliana_eg_gene
 ```
 
 As you can see, the `organismAttributes()` function returns a data.frame storing attribute names, datasets, and marts that
@@ -427,26 +429,26 @@ head(organismAttributes("Arabidopsis thaliana", topic = "id"), 20)
 Source: local data frame [20 x 4]
 
                                            name                               description           mart           dataset
-1            alyrata_eg_homolog_ensembl_peptide      Arabidopsis lyrata protein stable ID plants_mart_23 athaliana_eg_gene
-2                    alyrata_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
-3                 alyrata_eg_homolog_perc_id_r1             Arabidopsis lyrata % identity plants_mart_23 athaliana_eg_gene
-4          atauschii_eg_homolog_ensembl_peptide       Aegilops tauschii protein stable ID plants_mart_23 athaliana_eg_gene
-5                  atauschii_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
-6               atauschii_eg_homolog_perc_id_r1              Aegilops tauschii % identity plants_mart_23 athaliana_eg_gene
-7          athaliana_eg_paralog_ensembl_peptide          Representative protein stable ID plants_mart_23 athaliana_eg_gene
-8  athaliana_eg_paralog_paralog_ensembl_peptide                 Paralog protein stable ID plants_mart_23 athaliana_eg_gene
-9        atrichopoda_eg_homolog_ensembl_peptide    Amborella trichopoda protein stable ID plants_mart_23 athaliana_eg_gene
-10               atrichopoda_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
-11            atrichopoda_eg_homolog_perc_id_r1           Amborella trichopoda % identity plants_mart_23 athaliana_eg_gene
-12       bdistachyon_eg_homolog_ensembl_peptide Brachypodium distachyon protein stable ID plants_mart_23 athaliana_eg_gene
-13               bdistachyon_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
-14            bdistachyon_eg_homolog_perc_id_r1        Brachypodium distachyon % identity plants_mart_23 athaliana_eg_gene
-15         boleracea_eg_homolog_ensembl_peptide       Brassica oleracea protein stable ID plants_mart_23 athaliana_eg_gene
-16                 boleracea_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
-17              boleracea_eg_homolog_perc_id_r1              Brassica oleracea % identity plants_mart_23 athaliana_eg_gene
-18             brapa_eg_homolog_ensembl_peptide           Brassica rapa protein stable ID plants_mart_23 athaliana_eg_gene
-19                     brapa_eg_homolog_perc_id                                % identity plants_mart_23 athaliana_eg_gene
-20                  brapa_eg_homolog_perc_id_r1                  Brassica rapa % identity plants_mart_23 athaliana_eg_gene
+1            alyrata_eg_homolog_ensembl_peptide      Arabidopsis lyrata protein stable ID plants_mart_25 athaliana_eg_gene
+2                    alyrata_eg_homolog_perc_id                                % identity plants_mart_25 athaliana_eg_gene
+3                 alyrata_eg_homolog_perc_id_r1             Arabidopsis lyrata % identity plants_mart_25 athaliana_eg_gene
+4          atauschii_eg_homolog_ensembl_peptide       Aegilops tauschii protein stable ID plants_mart_25 athaliana_eg_gene
+5                  atauschii_eg_homolog_perc_id                                % identity plants_mart_25 athaliana_eg_gene
+6               atauschii_eg_homolog_perc_id_r1              Aegilops tauschii % identity plants_mart_25 athaliana_eg_gene
+7          athaliana_eg_paralog_ensembl_peptide          Representative protein stable ID plants_mart_25 athaliana_eg_gene
+8  athaliana_eg_paralog_paralog_ensembl_peptide                 Paralog protein stable ID plants_mart_25 athaliana_eg_gene
+9        atrichopoda_eg_homolog_ensembl_peptide    Amborella trichopoda protein stable ID plants_mart_25 athaliana_eg_gene
+10               atrichopoda_eg_homolog_perc_id                                % identity plants_mart_25 athaliana_eg_gene
+11            atrichopoda_eg_homolog_perc_id_r1           Amborella trichopoda % identity plants_mart_25 athaliana_eg_gene
+12       bdistachyon_eg_homolog_ensembl_peptide Brachypodium distachyon protein stable ID plants_mart_25 athaliana_eg_gene
+13               bdistachyon_eg_homolog_perc_id                                % identity plants_mart_25 athaliana_eg_gene
+14            bdistachyon_eg_homolog_perc_id_r1        Brachypodium distachyon % identity plants_mart_25 athaliana_eg_gene
+15         boleracea_eg_homolog_ensembl_peptide       Brassica oleracea protein stable ID plants_mart_25 athaliana_eg_gene
+16                 boleracea_eg_homolog_perc_id                                % identity plants_mart_25 athaliana_eg_gene
+17              boleracea_eg_homolog_perc_id_r1              Brassica oleracea % identity plants_mart_25 athaliana_eg_gene
+18             brapa_eg_homolog_ensembl_peptide           Brassica rapa protein stable ID plants_mart_25 athaliana_eg_gene
+19                     brapa_eg_homolog_perc_id                                % identity plants_mart_25 athaliana_eg_gene
+20                  brapa_eg_homolog_perc_id_r1                  Brassica rapa % identity plants_mart_25 athaliana_eg_gene
 ```
 
 Now, all `attribute names` having `id` as part of its `name` are being returned.
@@ -653,7 +655,7 @@ Source: local data frame [16 x 4]
 16               with_refseq_peptide                           with RefSeq protein ID(s) plants_mart_23 athaliana_eg_gene
 ```
 
-### Performing BioMart queries with biomartr
+## Performing BioMart queries with biomartr
 
 The short introduction to the functionality of
 `organismBM()`, `organismAttributes()`, and `organismFilters()`
@@ -688,9 +690,10 @@ Source: local data frame [179 x 4]
 
 ```{r,eval=FALSE}
 # retrieve the proteome of Arabidopsis thaliana from refseq
-Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
-                        organism = "Arabidopsis thaliana",
-                        clean_folder = FALSE)
+getProteome( db           = "refseq", 
+             kingdom      = "plant",
+             organism     = "Arabidopsis thaliana",
+             clean_folder = FALSE )
 
 # remove splice variants from id
 gene_set <- unlist(sapply(strsplit(Ath_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
@@ -719,7 +722,7 @@ result_BM
 8   NP_001030617  AT3G01360        AT3G01360.2                T22N4.1   IPR006904    AT3G01360
 ```
 
-The `biomart()` function takes as arguments a set of genes (gene ids specified in the filter argument), the corresponding mart and dataset, as well as the attributes that shall be returned.
+The `biomart()` function takes as arguments a set of genes (gene ids specified in the `filter` argument), the corresponding `mart` and `dataset`, as well as the `attributes` that shall be returned.
 
 Taken together, the following workflow allows you to perform fast BioMart queries for 
 attributes you are interested in:
@@ -743,35 +746,45 @@ might reveal that the dataset `plants_mart_23` has changed to `plants_mart_24`.
 ## Gene Ontology 
 
 The `biomartr` package also enables a fast and intuitive retrieval of GO terms
-and additional information via the `getGO()` function.
-
+and additional information via the `getGO()` function. Several databases can be selected
+to retrieve GO annotation information for a set of query genes. So far, the `getGO()`
+function allows GO information retrieval from [BioMart](http://www.biomart.org/) and [DAVID](http://david.abcc.ncifcrf.gov) databases. 
 
 In this example we will retrieve GO information for a set of _A. thaliana_ genes
 stored as `tair locus id`.
+
+### GO Annotation Retrieval via BioMart
+
+The `getGO()` function takes several arguments as input to retrieve GO information from BioMart. 
+First, the scientific name of the `organism` of interest needs to be specified. Furthermore, a set of
+`gene ids` as well as their corresponding `filter` notation (`AT1G06090` gene ids have `filter` notation `tair_locus`; see `organismFilters()` for details)
+need to be specified. The `database` argument then defines the database from which GO information shall be retrieved.
 
 ```{r,eval=FALSE}
 
 # search for GO terms of 6 Arabidopsis thaliana genes in tair locus id notation
 GO_tbl <- getGO(organism = "Arabidopsis thaliana",
-                genes    = c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
-                filters  = "tair_locus")
+                genes    = c("AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
+                filters  = "tair_locus",
+                database = "BioMart")
 
 # look at the GO information
-head(GO_tbl[ , c("tair_locus","go_accession","goslim_goa_accession","goslim_goa_description")])
+head(GO_tbl[ , c("tair_locus","go_accession","go_name_1006")])
 
 ```
 
 ```
-  tair_locus go_accession goslim_goa_accession goslim_goa_description
-1  AT1G06090   GO:0016717           GO:0005783  endoplasmic reticulum
-2  AT1G06090   GO:0006631           GO:0005783  endoplasmic reticulum
-3  AT1G06090   GO:0006636           GO:0005783  endoplasmic reticulum
-4  AT1G06090   GO:0005789           GO:0005783  endoplasmic reticulum
-5  AT1G06090   GO:0005783           GO:0005783  endoplasmic reticulum
-6  AT1G06090   GO:0005575           GO:0005783  endoplasmic reticulum
+  tair_locus go_accession
+1  AT1G06100   GO:0016717
+2  AT1G06100   GO:0002213
+3  AT1G06100   GO:0001676
+4  AT1G06100   GO:0006631
+5  AT1G06100   GO:0006636
+6  AT1G06100   GO:0005789
+
 ```
 
-
+### GO Annotation Retrieval via DAVID
 
 
 
