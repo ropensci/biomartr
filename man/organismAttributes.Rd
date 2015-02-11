@@ -35,9 +35,9 @@ for faster filtering.
 }
 \note{
 When you run this function for the first time, the data retrieval procedure will take some time,
-due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named
-"_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listAttributes_organism.txt"
- allowing subsequent queries to perform much faster.
+due to the remote access to BioMart. The corresponding result is then saved in a *.txt file within the \code{\link{tempdir}}
+directory named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listAttributes_organism.txt",
+allowing subsequent queries to perform much faster.
 }
 \examples{
 \dontrun{

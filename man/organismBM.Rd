@@ -25,7 +25,7 @@ the organism for which biomart connections are available as well as the correspo
 \note{
 When you run this function for the first time, the data retrieval procedure will take some time,
 due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named
-"_biomart/listDatasets.txt" allowing subsequent queries to perform much faster.
+"_biomart/listDatasets.txt" in the \code{\link{tempdir}} directory, allowing subsequent queries to perform much faster.
 }
 \examples{
 \dontrun{
