@@ -20,9 +20,9 @@
 #' for faster selection.
 #' @note
 #' When you run this function for the first time, the data retrieval procedure will take some time,
-#' due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named
-#' "_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listFilters_organism.txt"
-#'  allowing subsequent queries to perform much faster.
+#' due to the remote access to BioMart. The corresponding result is then saved in a *.txt file within the \code{\link{tempdir}}
+#' directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listFilters_organism.txt",
+#' allowing subsequent queries to perform much faster.
 #' @examples \dontrun{
 #' 
 #' # return available filters for "Arabidopsis thaliana"
@@ -57,12 +57,12 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
         fsep <- .Platform$file.sep
         filtersTXT <- paste0("listFilters_",stringr::str_replace(organism," ","_"))
         
-        if(!file.exists("_biomart")){
+        if(!file.exists(file.path(tempdir(),"_biomart"))){
                 
-                dir.create("_biomart")
+                dir.create(file.path(tempdir(),"_biomart"))
         }       
         
-        if(!file.exists(paste0("_biomart",fsep,filtersTXT,".txt"))){
+        if(!file.exists(file.path("_biomart",paste0(filtersTXT,".txt")))){
                 
                 filtersList <- lapply(martList, function(mart) { 
                         
@@ -87,11 +87,11 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                 }
                 )
                 
-                write.table(do.call(rbind,filtersList), paste0("_biomart",fsep,filtersTXT,".txt"), sep = "\t", quote = FALSE, col.names = TRUE, row.names = FALSE)
+                write.table(do.call(rbind,filtersList), file.path("_biomart",paste0(filtersTXT,".txt")), sep = "\t", quote = FALSE, col.names = TRUE, row.names = FALSE)
                 
         }
         
-        filterTable <- read.csv(paste0("_biomart",fsep,filtersTXT,".txt"), sep = "\t",header = TRUE, colClasses = rep("character",4), stringsAsFactors = FALSE)        
+        filterTable <- read.csv(file.path("_biomart",paste0(filtersTXT,".txt")), sep = "\t",header = TRUE, colClasses = rep("character",4), stringsAsFactors = FALSE)        
         
         summ_filterTable <- dplyr::summarise(dplyr::group_by(filterTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
         

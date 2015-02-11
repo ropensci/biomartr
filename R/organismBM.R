@@ -15,7 +15,7 @@
 #' @note
 #' When you run this function for the first time, the data retrieval procedure will take some time,
 #' due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named
-#' "_biomart/listDatasets.txt" allowing subsequent queries to perform much faster.
+#' "_biomart/listDatasets.txt" in the \code{\link{tempdir}} directory, allowing subsequent queries to perform much faster.
 #' 
 #' @examples \dontrun{
 #' 
@@ -52,45 +52,45 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         if(update){
                 
-                if(file.exists(paste0("_biomart",fsep,"listMarts.txt")))
-                        unlink(paste0("_biomart",fsep,"listMarts.txt"))
+                if(file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
+                        unlink(getTMPFile(file.path("_biomart","listMarts.txt")))
                 
         }
         
-        if(!file.exists(paste0("_biomart",fsep,"listMarts.txt"))){
+        if(!file.exists(getTMPFile(file.path("_biomart","listMarts.txt")))){
                 
-                if(!file.exists("_biomart"))
-                        dir.create("_biomart")
+                if(!file.exists(file.path(tempdir(),"_biomart")))
+                        dir.create(file.path(tempdir(),"_biomart"))
                 
                 all_marts <- droplevels.data.frame(getMarts())
-                write.table(all_marts,paste0("_biomart",fsep,"listMarts.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+                write.table(all_marts,file.path(tempdir(),"_biomart","listMarts.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
                 
         }
         
         
-        if(file.exists(paste0("_biomart",fsep,"listMarts.txt")))
-                all_marts <- read.csv("_biomart/listMarts.txt", header = TRUE, sep = "\t", colClasses = rep("character",2),stringsAsFactors = FALSE)
+        if(file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
+                all_marts <- read.csv(file.path(tempdir(),"_biomart","listMarts.txt"), header = TRUE, sep = "\t", colClasses = rep("character",2),stringsAsFactors = FALSE)
         
         if(update){
                 
-                if(file.exists(paste0("_biomart",fsep,"listDatasets.txt")))
-                        unlink(paste0("_biomart",fsep,"listDatasets.txt"))
+                if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
+                        unlink(file.path(tempdir(),"_biomart","listDatasets.txt"))
                 
         }
         
         
-        if(!file.exists(paste0("_biomart",fsep,"listDatasets.txt"))){
+        if(!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
                 all_datasets <- do.call(rbind,lapply(as.vector(all_marts[ , "mart"]), 
                                        function(mart){ df <- as.data.frame(getDatasets(mart = mart))
                                                        df <- dplyr::mutate(df,mart = rep(mart,length(mart)))
                                                        return(df) } ))
                                                         
                 
-                write.table(all_datasets,paste0("_biomart",fsep,"listDatasets.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+                write.table(all_datasets,file.path(tempdir(),"_biomart","listDatasets.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
         }
         
-        if(file.exists(paste0("_biomart",fsep,"listDatasets.txt")))
-                all_datasets <- read.csv(paste0("_biomart",fsep,"listDatasets.txt"), header = TRUE, sep = "\t", colClasses = rep("character",3),stringsAsFactors = FALSE)
+        if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
+                all_datasets <- read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"), header = TRUE, sep = "\t", colClasses = rep("character",3),stringsAsFactors = FALSE)
         
   
        all_datasets <- dplyr::mutate(all_datasets,organism_name = sapply(all_datasets[ ,"description"], function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))

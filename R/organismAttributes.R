@@ -20,9 +20,9 @@
 #' for faster filtering.
 #' @note
 #' When you run this function for the first time, the data retrieval procedure will take some time,
-#' due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named
-#' "_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listAttributes_organism.txt"
-#'  allowing subsequent queries to perform much faster.
+#' due to the remote access to BioMart. The corresponding result is then saved in a *.txt file within the \code{\link{tempdir}}
+#' directory named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listAttributes_organism.txt",
+#' allowing subsequent queries to perform much faster.
 #' @examples \dontrun{
 #' 
 #' # return available attributes for "Arabidopsis thaliana"
@@ -60,12 +60,12 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
         fsep <- .Platform$file.sep
         attrTXT <- paste0("listAttributes_",stringr::str_replace(organism," ","_"))
         
-        if(!file.exists("_biomart")){
+        if(!file.exists(file.path(tempdir(),"_biomart"))){
                 
-                dir.create("_biomart")
+                dir.create(file.path(tempdir(),"_biomart"))
         }       
         
-        if(!file.exists(paste0("_biomart",fsep,attrTXT,".txt"))){
+        if(!file.exists(file.path("_biomart",paste0(attrTXT,".txt")))){
                         
                         attrList <- lapply(martList, function(mart) { 
                                 
@@ -90,11 +90,11 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
                         }
                         )
                         
-                        write.table(do.call(rbind,attrList), paste0("_biomart",fsep,attrTXT,".txt"), sep = "\t", quote = FALSE, col.names = TRUE, row.names = FALSE)
+                        write.table(do.call(rbind,attrList), file.path("_biomart",paste0(attrTXT,".txt")), sep = "\t", quote = FALSE, col.names = TRUE, row.names = FALSE)
                 
         }
         
-        attributeTable <- read.csv(paste0("_biomart",fsep,attrTXT,".txt"), sep = "\t",header = TRUE, colClasses = rep("character",4), stringsAsFactors = FALSE)        
+        attributeTable <- read.csv(file.path("_biomart",paste0(attrTXT,".txt")), sep = "\t",header = TRUE, colClasses = rep("character",4), stringsAsFactors = FALSE)        
         
         summ_attrTable <- dplyr::summarise(dplyr::group_by(attributeTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
         
