@@ -152,5 +152,19 @@ docFile <- function(file.name, organism, url, database, path){
 
 
 
+setTMPFile <- function(file.name){
+        
+        tempfile(pattern = file.name, tmpdir = tempdir(), fileext = "")
+}
+
+
+getTMPFile <- function(file.name){
+        
+        file.path(tempdir(),file.name)
+        
+}
+
+
+
 test <- function(x){ print(paste0("Test ",x," passed.","\n"))}
 
