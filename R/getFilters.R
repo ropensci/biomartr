@@ -1,5 +1,5 @@
 #' @title Retrieve All Available Filters for a Specific Dataset
-#' @description This funcion queries the BioMart Interface and returns a table
+#' @description This funcion queries the BioMart API and returns a table
 #' storing all available filters for a specific dataset.
 #' 
 #' @param mart a character string specifying the database (mart) for which datasets shall be listed.
@@ -10,12 +10,16 @@
 #' # search for available datasets
 #' head(getMarts(), 10)
 #' 
-#' # choose database (mart): "plants_mart_24"
+#' \dontrun{
+#' 
+#' # choose database (mart): "plants_mart_25" -> Note: mart versions change over time
 #' # and get a table of all available datasets from this BioMart database
-#' head(getDatasets(mart = "plants_mart_24"), 10)
+#' head(getDatasets(mart = "plants_mart_25"), 10)
 #' 
 #' # choose dataset: "athaliana_eg_gene"
-#' head(getFilters(mart = "plants_mart_24", dataset = "athaliana_eg_gene") , 5)
+#' head(getFilters(mart = "plants_mart_25", dataset = "athaliana_eg_gene") , 5)
+#' 
+#' }
 #' 
 #' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
@@ -31,15 +35,20 @@ getFilters <- function(mart, dataset){
         
         httr::stop_for_status(xmlContentFilters)
         
-        # extract attribute name and attribute description
-        suppressWarnings(rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentFilters,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t")))))
         
-        colnames(rawDF) <- paste0("V",1:ncol(rawDF))
+        tryCatch({
+                
+                # extract attribute name and attribute description
+                suppressWarnings(rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentFilters,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t")))))
         
-        filterBioMart <- as.data.frame(rawDF[ , c("V1","V2")], stringsAsFactors = FALSE, colClasses = rep("character",2))
-        colnames(filterBioMart) <- c("name","description")
+                colnames(rawDF) <- paste0("V",1:ncol(rawDF))
         
-        return(filterBioMart)
+                filterBioMart <- as.data.frame(rawDF[ , c("V1","V2")], stringsAsFactors = FALSE, colClasses = rep("character",2))
+                colnames(filterBioMart) <- c("name","description")
+        
+                return(filterBioMart)
+        
+        }, error = function(e) stop("Your input mart '",mart,"' or dataset '",dataset,"' could not be found. Please use getMarts() to choose from available marts."))
 }
 
 
