@@ -29,10 +29,10 @@
 #' 
 #' # download the genome of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-#' Ath_cds <- getCDS( db       = "refseq", 
-#'                    kingdom  = "plant", 
-#'                    organism = "Arabidopsis thaliana", 
-#'                    path     = file.path("_ncbi_downloads","CDS"))
+#' getCDS( db       = "refseq", 
+#'         kingdom  = "plant", 
+#'         organism = "Arabidopsis thaliana", 
+#'         path     = file.path("_ncbi_downloads","CDS"))
 #' 
 #' 
 #' file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")
@@ -105,11 +105,17 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                 
                 if(!file.exists(file_path)){
                         
+                        download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                                               organism,"/latest_assembly_versions/",url_lates_version,"/",
+                                               paste0(query_url_list_files,"_rna.fna.gz"))
                         
-                        downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
-                                             organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_rna.fna.gz")), file_path,
-                                             mode = "wb")
+                        downloader::download(download_url, file_path, mode = "wb")
+                        
+                        docFile( file.name = paste0(organism,"_rna.fna.gz"),
+                                 organism  = organism, 
+                                 url       = download_url, 
+                                 database  = db,
+                                 path      = path)
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)

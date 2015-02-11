@@ -98,11 +98,18 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                 
                 if(!file.exists(file_path)){
                         
+                        download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                                               organism,"/latest_assembly_versions/",url_lates_version,"/",
+                                               paste0(query_url_list_files,"_genomic.fna.gz"))
 
-                        downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
-                                             organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_genomic.fna.gz")), file.path(path,paste0(organism,"_genome.fna.gz")),
+                        downloader::download(download_url, file.path(path,paste0(organism,"_genome.fna.gz")),
                                              mode = "wb")
+                        
+                        docFile( file.name = paste0(organism,"_genome.fna.gz"),
+                                 organism  = organism, 
+                                 url       = download_url, 
+                                 database  = db,
+                                 path      = path)
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)

@@ -25,10 +25,10 @@
 #' 
 #' # download the proteome of Arabidopsis thaliana from refseq
 #' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-#' Ath_proteome <- getProteome( db       = "refseq", 
-#'                              kingdom  = "plant", 
-#'                              organism = "Arabidopsis thaliana", 
-#'                              path     = file.path("_ncbi_downloads","proteomes"))
+#' getProteome( db       = "refseq", 
+#'              kingdom  = "plant", 
+#'              organism = "Arabidopsis thaliana", 
+#'              path     = file.path("_ncbi_downloads","proteomes") )
 #' 
 #' 
 #' file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
@@ -101,11 +101,20 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
                 
                 if(!file.exists(file_path)){
                         
+                        download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                                               organism,"/latest_assembly_versions/",url_lates_version,"/",
+                                               paste0(query_url_list_files,"_protein.faa.gz"))
                         
-                        downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
-                                             organism,"/latest_assembly_versions/",url_lates_version,"/",
-                                             paste0(query_url_list_files,"_protein.faa.gz")), file_path,
+                        downloader::download(download_url, file_path,
                                              mode = "wb")
+                        
+                        
+                        docFile( file.name = paste0(organism,"_proteome.faa.gz"),
+                                 organism  = organism, 
+                                 url       = download_url, 
+                                 database  = db,
+                                 path      = path)
+                        
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)
