@@ -59,7 +59,7 @@ randomSeqs <- function(seq, sample_size){
         prob <- letter_freq / sum(letter_freq)
         
         randSeqs <- vector(mode = "character", length = sample_size)
-        randSeqs <- sapply(1:sample_size, function(x) seqinr::c2s(sample(alphabet, l, rep = TRUE, prob = prob)))
+        randSeqs <- sapply(1:sample_size, function(x) seqinr::c2s(base::sample(alphabet, l, rep = TRUE, prob = prob)))
         
         return(randSeqs)
 }

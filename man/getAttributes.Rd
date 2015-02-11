@@ -16,15 +16,19 @@ This funcion queries the BioMart Interface and returns a table
 storing all available attributes for a specific dataset.
 }
 \examples{
+\dontrun{
+
 # search for available datasets
 head(getMarts(), 10)
 
-# choose database (mart): "plants_mart_24"
+# choose database (mart): "plants_mart_25"
 # and get a table of all available datasets from this BioMart database
-head(getDatasets(mart = "plants_mart_24"), 10)
+head(getDatasets(mart = "plants_mart_25"), 10)
 
 # choose dataset: "athaliana_eg_gene"
-head(getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene") , 5)
+head(getAttributes(mart = "plants_mart_25", dataset = "athaliana_eg_gene") , 5)
+
+}
 }
 \author{
 Hajk-Georg Drost

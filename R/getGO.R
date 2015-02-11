@@ -18,7 +18,9 @@
 #' @examples \dontrun{
 #' 
 #' GO_tbl <- getGO(organism = "Arabidopsis thaliana", 
-#'                 genes    = c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
+#'                 genes    = c("AT1G06090", "AT1G06100", 
+#'                              "AT1G06110", "AT1G06120", 
+#'                              "AT1G06130", "AT1G06200"),
 #'                 filters  = "tair_locus")
 #' 
 #' # look at the result
@@ -30,6 +32,8 @@
 #' @export
 
 getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, ...){
+        
+        name <- dataset <- NULL
         
         if(!is.element(database,c("BioMart","DAVID")))
                 stop("A database named '",database,"' cannot be accesed via getGO().",

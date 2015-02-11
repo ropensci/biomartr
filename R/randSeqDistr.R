@@ -20,7 +20,11 @@
 #' seq_example <- "MEDQVGFGF"
 #' subject_example <- "AYAIDPTPAF"
 #' 
-#' randScores <- randSeqDistr(seq_example,subject_example, randomSeqs(seq_example,10), Biostrings::pairwiseAlignment, scoreOnly=TRUE, comp_cores = 1)
+#' randScores <- randSeqDistr(seq_example,subject_example,
+#'                            randomSeqs(seq_example,10), 
+#'                            Biostrings::pairwiseAlignment, 
+#'                            scoreOnly  = TRUE, 
+#'                            comp_cores = 1)
 #'  
 #'    
 #' @seealso \code{\link{evalAlignment}}, \code{\link{randomSeqs}}       
@@ -35,6 +39,7 @@ randSeqDistr <- function(seq, subject, sampled_strings, FUN, ... , comp_cores = 
         # get sequence length
         l <- nchar(seq)
         s <- nchar(subject)
+        i <- NULL
         
         if(length(seq) > 1)
                 stop("Please insert a string as seq argument.")

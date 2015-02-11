@@ -34,14 +34,17 @@ It enables to fastly access annotations of a given gene set based on the \pkg{bi
 implemented by Steffen Durinck et al.
 }
 \examples{
+\dontrun{
 # the initial biomaRt workflow would work as follows:
 
 # 1) select a mart and data set
-mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_23"))
+mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_25"))
 
 # 2) run a biomart query using the getBM() function
 # and specify the attributes and filter arguments
-geneSet <- c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200")
+geneSet <- c("AT1G06090", "AT1G06100",
+             "AT1G06110", "AT1G06120",
+             "AT1G06130", "AT1G06200")
 
 resultTable <- getBM(attributes = c("start_position","end_position","description"),
                      filters = "tair_locus", values = geneSet, mart = mart)
@@ -49,13 +52,20 @@ resultTable <- getBM(attributes = c("start_position","end_position","description
 # for faster query access and easier query logic the
 # biomart() function combines this workflow
 
-# using mart: 'plants_mart_23', dataset: "athaliana_eg_gene"
+# using mart: 'plants_mart_25', dataset: "athaliana_eg_gene"
 # attributes: c("start_position","end_position","description")
-# for an example gene set of Arabidopsis thaliana: c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200")
+# for an example gene set of Arabidopsis thaliana:
+# c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200")
 
-biomart(genes = c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
-        mart = "plants_mart_23", dataset = "athaliana_eg_gene",attributes = c("start_position","end_position","description"),
-        filters = "tair_locus")
+biomart(genes      = c("AT1G06090", "AT1G06100",
+                       "AT1G06110", "AT1G06120",
+                       "AT1G06130", "AT1G06200"),
+        mart       = "plants_mart_25",
+        dataset    = "athaliana_eg_gene",
+        attributes = c("start_position","end_position","description"),
+        filters    = "tair_locus")
+
+}
 }
 \author{
 Hajk-Georg Drost

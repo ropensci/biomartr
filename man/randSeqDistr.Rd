@@ -36,7 +36,11 @@ and all random sequences stored in \code{sampled_strings}.
 seq_example <- "MEDQVGFGF"
 subject_example <- "AYAIDPTPAF"
 
-randScores <- randSeqDistr(seq_example,subject_example, randomSeqs(seq_example,10), Biostrings::pairwiseAlignment, scoreOnly=TRUE, comp_cores = 1)
+randScores <- randSeqDistr(seq_example,subject_example,
+                           randomSeqs(seq_example,10),
+                           Biostrings::pairwiseAlignment,
+                           scoreOnly  = TRUE,
+                           comp_cores = 1)
 }
 \author{
 Hajk-Georg Drost

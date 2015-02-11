@@ -16,6 +16,11 @@ Imports:
     taxize (>= 0.5.2),
     RCurl (>= 1.95-4.5),
     XML (>= 3.98-1.1),
-    httr (>= 0.6.1)
+    httr (>= 0.6.1),
+    foreach (>= 1.4.2),
+    doParallel (>= 1.0.8),
+    fitdistrplus (>= 1.0-3),
+    stringr (>= 0.6.2),
+    seqinr (>= 3.1-3)
 License: GPL-3
 LazyData: true

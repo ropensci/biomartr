@@ -4,8 +4,8 @@
 #' \item gene length distribution: \code{type} = \code{"length_distr"}
 #' 
 #' }
-#' @param data a data.table object storing the corresponding genome as returned by \code{\link{read.genome}}, \code{\link{read.proteome}}, or 
-#' \code{\link{read.cds}}.
+#' @param data a data.table object storing the corresponding genome as returned by \code{\link{read_genome}}, \code{\link{read_proteome}}, or 
+#' \code{\link{read_cds}}.
 #' @param type a character string specifying the genome feature that shall be visualized: "length_distr", ... .
 #' @param ... additional parameters that shall be passed to the corresponding plot function.
 #' @author Hajk-Georg Drost
@@ -14,9 +14,10 @@
 #' 
 #' # download the proteome of Arabidopsis thaliana from refseq
 #' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-#' Ath_proteome <- getProteome(db = "refseq", kingdom = "plant",
-#'                             organism = "Arabidopsis thaliana",
-#'                             clean_folder = FALSE)
+#' 
+#' getProteome( db       = "refseq", 
+#'              kingdom  = "plant",
+#'              organism = "Arabidopsis thaliana" )
 #' 
 #' # visualize the length distribution of the proteome of A. thaliana
 #' visGenome(data = Ath_proteome, type = "length_distr")

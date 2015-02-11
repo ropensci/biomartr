@@ -7,6 +7,8 @@
 #' @details Sequence information is retrieved from the acnucdb database. 
 retrieve_sequence <- function(gene){
         
+        query <- input <- NULL 
+                
         query_string <- paste0("AC=",gene)
         try(query("input",query_string))
         gene_sequence <- seqinr::getSequence(input$req[[1]])

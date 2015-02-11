@@ -3,11 +3,15 @@
 #' and returns the biological sequence of the corresponding gene ids.
 #' @param genes a character vector storing the gene id of a organisms of interest to be queried against the 
 #' acnucdb database.
-#' @param db
+#' @param db a character string specifying the database from which the sequence shall be retrieved.
 #' @author Hajk-Georg Drost
 #' @details Sequence information is retrieved from the acnucdb database.
 #' @return A list of sequences for each corresponding input gene stored as string.
-#' @examples # retrieve amino acid sequences from the 'swissprot' database 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' # retrieve amino acid sequences from the 'swissprot' database 
 #' # for gene ids:"AT1G06090" = "Q9LND9" and "AT1G06100" = "Q9LND8"
 #' 
 #'  seqs <- geneSequence(c("Q9LND9","Q9LND8"), db = "swissprot")
@@ -15,7 +19,8 @@
 #' # choose different databases available
 #' 
 #'    choosebank()
-#'       
+#' }
+#' 
 #' @export
 geneSequence <- function(genes, db){
         

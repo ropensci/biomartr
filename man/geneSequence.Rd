@@ -10,7 +10,7 @@ geneSequence(genes, db)
 \item{genes}{a character vector storing the gene id of a organisms of interest to be queried against the
 acnucdb database.}
 
-\item{db}{}
+\item{db}{a character string specifying the database from which the sequence shall be retrieved.}
 }
 \value{
 A list of sequences for each corresponding input gene stored as string.
@@ -23,6 +23,8 @@ and returns the biological sequence of the corresponding gene ids.
 Sequence information is retrieved from the acnucdb database.
 }
 \examples{
+\dontrun{
+
 # retrieve amino acid sequences from the 'swissprot' database
 # for gene ids:"AT1G06090" = "Q9LND9" and "AT1G06100" = "Q9LND8"
 
@@ -31,6 +33,7 @@ Sequence information is retrieved from the acnucdb database.
 # choose different databases available
 
    choosebank()
+}
 }
 \author{
 Hajk-Georg Drost

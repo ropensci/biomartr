@@ -34,7 +34,9 @@ for the query genes.
 \dontrun{
 
 GO_tbl <- getGO(organism = "Arabidopsis thaliana",
-                genes    = c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
+                genes    = c("AT1G06090", "AT1G06100",
+                             "AT1G06110", "AT1G06120",
+                             "AT1G06130", "AT1G06200"),
                 filters  = "tair_locus")
 
 # look at the result

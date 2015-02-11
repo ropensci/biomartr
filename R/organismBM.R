@@ -50,6 +50,8 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         fsep <- .Platform$file.sep
         
+        organism_name <- name <- description <- mart <- dataset <- NULL
+        
         if(update){
                 
                 if(file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))

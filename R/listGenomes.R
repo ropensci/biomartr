@@ -66,6 +66,7 @@
 #' @export
 listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, database = "all"){
         
+        kingdoms <- organism_name <- NULL
         
         if(!is.element(kingdom,c("all","Archaea", "Bacteria", "Eukaryota", "Viroids", "Viruses")))
                 stop("Please use a valid kingdom.")

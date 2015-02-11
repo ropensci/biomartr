@@ -7,15 +7,19 @@
 #' @author Hajk-Georg Drost
 #' @examples
 #' 
+#' \dontrun{
+#' 
 #' # search for available datasets
 #' head(getMarts(), 10)
 #' 
-#' # choose database (mart): "plants_mart_24"
+#' # choose database (mart): "plants_mart_25"
 #' # and get a table of all available datasets from this BioMart database
-#' head(getDatasets(mart = "plants_mart_24"), 10)
+#' head(getDatasets(mart = "plants_mart_25"), 10)
 #' 
 #' # choose dataset: "athaliana_eg_gene"
-#' head(getAttributes(mart = "plants_mart_24", dataset = "athaliana_eg_gene") , 5)
+#' head(getAttributes(mart = "plants_mart_25", dataset = "athaliana_eg_gene") , 5)
+#' 
+#' }
 #' 
 #' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}},\code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export

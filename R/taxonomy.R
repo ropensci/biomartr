@@ -60,6 +60,7 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
         if(!is.element(db,c("ncbi","col","itis")))
                 stop("Database '",db,"' is not supported by this function.")
         
+        name <- id <- NULL
         
         if(output == "classification"){
                 

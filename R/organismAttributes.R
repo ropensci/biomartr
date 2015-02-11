@@ -53,6 +53,8 @@
 
 organismAttributes <- function(organism, update = FALSE, topic = NULL){
         
+        name <- description <- mart <- dataset <- NULL
+        
         orgBM <- organismBM(organism = organism, update = update)
         orgMarts <- names(table(orgBM[ , "mart"]))
         martList <- lapply(orgMarts, function(mart) dplyr::filter(orgBM,mart == mart))
