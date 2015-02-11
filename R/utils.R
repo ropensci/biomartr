@@ -126,5 +126,31 @@ is.genome.available <- function(organism, details = FALSE, database = "refseq"){
 
 
 
+docFile <- function(file.name, organism, url, database, path){
+        
+        cwd <- getwd()
+        
+        setwd(path)
+        
+        sink(paste0("doc_",organism,"_db_",database,".txt"))
+        
+        cat(paste0("File Name: ", file.name))
+        cat("\n")
+        cat(paste0("Organism Name: ", organism))
+        cat("\n")
+        cat(paste0("Database: ", database))
+        cat("\n")
+        cat(paste0("URL: ", url))
+        cat("\n")
+        cat(paste0("Date: ", date()))
+        
+        sink()
+        
+        setwd(cwd)
+        
+}
+
+
+
 test <- function(x){ print(paste0("Test ",x," passed.","\n"))}
 
