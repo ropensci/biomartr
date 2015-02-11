@@ -10,16 +10,20 @@ getDatasets(mart)
 \item{mart}{a character string specifying the database (mart) for which datasets shall be listed.}
 }
 \description{
-This funcion queries the BioMart Interface and returns a table
+This funcion queries the BioMart API and returns a table
 storing all available datasets for a selected BioMart databases.
 }
 \examples{
 # search for available datasets
 head(getMarts(), 10)
 
-# choose database: "plants_mart_24"
+\dontrun{
+
+# choose database: "plants_mart_25" -> these versions vary over time
 # and get a table of all available datasets from this BioMart database
-head(getDatasets("plants_mart_24"), 10)
+head(getDatasets("plants_mart_25"), 10)
+
+}
 }
 \author{
 Hajk-Georg Drost

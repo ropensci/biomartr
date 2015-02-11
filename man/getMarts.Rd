@@ -7,7 +7,7 @@
 getMarts()
 }
 \description{
-This funcion queries the BioMart Interface and returns a table
+This funcion queries the BioMart API and returns a table
 storing all available BioMart databases.
 }
 \examples{

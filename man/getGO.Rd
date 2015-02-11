@@ -4,7 +4,7 @@
 \alias{getGO}
 \title{Gene Ontology Query}
 \usage{
-getGO(organism, genes, filters, ...)
+getGO(organism, genes, filters, database = "BioMart", email = NULL, ...)
 }
 \arguments{
 \item{organism}{a character string specifying the scientific name of a query organism.}
@@ -13,7 +13,13 @@ getGO(organism, genes, filters, ...)
 
 \item{filters}{a character vector specifying the filter (query key) for the BioMart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.}
 
-\item{...}{additional parameters for the \code{\link{biomart}} function.}
+\item{database}{a cahracter string specifying the database from which GO information shall be retrieved.
+Possible choices are: \code{database} = \code{"BioMart"} and \code{database} = \code{"DAVID"}.}
+
+\item{email}{a character string specifying the email address for your \code{DAVID} account. This
+parameter is only used to query \code{DAVID} web services and by default is \code{email} = \code{NULL}.}
+
+\item{...}{additional parameters that can be passed to the \code{\link{biomart}} function.}
 }
 \description{
 This function takes a gene id as character vector from a given query organism and returns the
@@ -32,7 +38,7 @@ GO_tbl <- getGO(organism = "Arabidopsis thaliana",
                 filters  = "tair_locus")
 
 # look at the result
-head(GO_tbl[ , c("tair_locus","go_accession","goslim_goa_accession","goslim_goa_description")])
+head(GO_tbl[ , c("tair_locus","go_accession","go_name_1006")])
 
 }
 }
@@ -40,6 +46,7 @@ head(GO_tbl[ , c("tair_locus","go_accession","goslim_goa_accession","goslim_goa_
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{biomart}}, \code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link[biomaRt]{getBM}}
+\code{\link{biomart}}, \code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link[biomaRt]{getBM}}, \code{\link{getMarts}},
+\code{\link{getDatasets}}, \code{\link{getFilters}}
 }
 

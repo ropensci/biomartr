@@ -12,19 +12,23 @@ getFilters(mart, dataset)
 \item{dataset}{a character string specifying the dataset for which filters shall be listed.}
 }
 \description{
-This funcion queries the BioMart Interface and returns a table
+This funcion queries the BioMart API and returns a table
 storing all available filters for a specific dataset.
 }
 \examples{
 # search for available datasets
 head(getMarts(), 10)
 
-# choose database (mart): "plants_mart_24"
+\dontrun{
+
+# choose database (mart): "plants_mart_25" -> Note: mart versions change over time
 # and get a table of all available datasets from this BioMart database
-head(getDatasets(mart = "plants_mart_24"), 10)
+head(getDatasets(mart = "plants_mart_25"), 10)
 
 # choose dataset: "athaliana_eg_gene"
-head(getFilters(mart = "plants_mart_24", dataset = "athaliana_eg_gene") , 5)
+head(getFilters(mart = "plants_mart_25", dataset = "athaliana_eg_gene") , 5)
+
+}
 }
 \author{
 Hajk-Georg Drost
