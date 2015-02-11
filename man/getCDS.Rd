@@ -48,10 +48,10 @@ CDS file shall be downloaded again.
 
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-Ath_cds <- getCDS( db       = "refseq",
-                   kingdom  = "plant",
-                   organism = "Arabidopsis thaliana",
-                   path     = file.path("_ncbi_downloads","CDS"))
+getCDS( db       = "refseq",
+        kingdom  = "plant",
+        organism = "Arabidopsis thaliana",
+        path     = file.path("_ncbi_downloads","CDS"))
 
 
 file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")

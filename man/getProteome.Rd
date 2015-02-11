@@ -44,10 +44,10 @@ no download process will be performed.
 
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-Ath_proteome <- getProteome( db       = "refseq",
-                             kingdom  = "plant",
-                             organism = "Arabidopsis thaliana",
-                             path     = file.path("_ncbi_downloads","proteomes"))
+getProteome( db       = "refseq",
+             kingdom  = "plant",
+             organism = "Arabidopsis thaliana",
+             path     = file.path("_ncbi_downloads","proteomes") )
 
 
 file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
