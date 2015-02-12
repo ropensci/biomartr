@@ -12,9 +12,9 @@
 #' e.g. \code{database} =  \code{"refseq"} or \code{database} =  \code{"all"}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' to store
-#' the overview.txt file for future processing. In case the overview.txt file already exists within the
-#' '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed.
+#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' in the \code{temdir()}
+#' folder to store the overview.txt file for future processing. In case the overview.txt file already exists within the
+#' '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed again.
 #' @return A data.frame storing either the organism names (details = FALSE)
 #' or all information present on the NCBI database (details = TRUE).
 #' @note
@@ -75,15 +75,17 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
                 stop("Please specify a database that is supported by this function.")
         
         
-        if(!file.exists("_ncbi_downloads")){
+        if(!file.exists(file.path(tempdir(),"_ncbi_downloads"))){
                 
-                dir.create("_ncbi_downloads")
+                dir.create(file.path(tempdir(),"_ncbi_downloads"))
                 
         }
         
-        if(!file.exists("_ncbi_downloads/overview.txt")){
+        if(!file.exists(file.path(tempdir(),"_ncbi_downloads","overview.txt"))){
                 
-                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
+                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+                              file.path(tempdir(),"_ncbi_downloads","overview.txt"), 
+                              quiet = TRUE)
                 
                 # NCBI limits requests to three per second
                 Sys.sleep(0.33)
@@ -91,7 +93,9 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
         
         if(update){
                 
-                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt","_ncbi_downloads/overview.txt", quiet = TRUE)
+                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+                              file.path(tempdir(),"_ncbi_downloads","overview.txt"), 
+                              quiet = TRUE)
                 
                 # NCBI limits requests to three per second
                 Sys.sleep(0.33)
@@ -99,7 +103,7 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
         
         col_classes <- vector(mode = "character",length = 9)
         col_classes <- c(rep("character",4),rep("numeric",5))
-        ncbi_overview <- read.csv("_ncbi_downloads/overview.txt",
+        ncbi_overview <- read.csv(file.path(tempdir(),"_ncbi_downloads","overview.txt"),
                                   sep = "\t", header = TRUE,
                                   colClasses = col_classes,
                                   na.strings = "-")
@@ -112,14 +116,23 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
         
         if(database == "refseq"){
                 
-                if(!file.exists("_ncbi_downloads/refseqOrgs.txt")){
-                        file.create("_ncbi_downloads/refseqOrgs.txt")
-                        write.table(refseqOrganisms(), "_ncbi_downloads/refseqOrgs.txt", sep = "\n",
-                                    quote = FALSE, col.names = FALSE, row.names = FALSE)
+                if(!file.exists(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"))){
+                        file.create(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"))
+                        
+                        write.table(x         = refseqOrganisms(), 
+                                    file      = file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"), 
+                                    sep       = "\n",
+                                    quote     = FALSE, 
+                                    col.names = FALSE, 
+                                    row.names = FALSE)
                 }
                 
-                refseqOrgs <- read.table("_ncbi_downloads/refseqOrgs.txt", header = FALSE, sep = "\n",
-                                         colClasses = "character", stringsAsFactors = FALSE)
+                refseqOrgs <- read.table(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"), 
+                                         header           = FALSE, 
+                                         sep              = "\n",
+                                         colClasses       = "character", 
+                                         stringsAsFactors = FALSE)
+                
                 ncbi_overview <- ncbi_overview[na.omit(match(refseqOrgs[ , 1]
                                                        , ncbi_overview[ , "organism_name"])), ]
         }
