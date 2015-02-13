@@ -17,3 +17,43 @@ knitr::opts_chunk$set(
 ```
 
 
+# Introduction to Phylotranscriptomics
+
+`Phylotranscriptomics` is a sub-field of Evolutionary Developmental Biology research investigating the evolutionary conservation of transcriptomes during development. The term `Phylotranscriptomics` defines the combination of evolutionary information with transcriptome data. Hence, the process of performing phylotranscriptomics analyses involves two major steps:
+
+1) Generation of Evolutionary Information
+2) Generation of Transcriptome Data
+
+The following examples allows you to build your own workflow to perform phylotranscriptomics analyses for an organism of interest starting from data retrieval and pattern recognition to functional annotation of observed pattern.
+
+
+## Generation of Evolutionary Information
+
+In `Phylotranscriptomics` evolutionary information can be generated in two aspects.
+
+a) Evolutionary Information Covering the Tree of Life ([Phylostratigraphy](http://www.sciencedirect.com/science/article/pii/S0168952507002995))
+b) Evolutionary Information Covering Relationships of Closely Related Species ([Divergence Stratigraphy](http://mbe.oxfordjournals.org/content/early/2015/01/27/molbev.msv012.short))
+
+The first part `Phylostratigraphy` generates a so called `Phylostratigraphic Map` of a query organism of interest. The second part `Divergence Stratigraphy` in contrast generates a `Divergence Map` of a query organism of interest. The following chapters introduce you to the details of `Phylostratigraphy` and `Divergence Stratigraphy` and show you how to perform these analyses using the [orthologr](https://github.com/HajkD/orthologr), [myTAI](https://github.com/HajkD/myTAI), and [biomartr](https://github.com/HajkD/biomartr) packages.
+
+
+## Phylostratigraphy
+
+
+## Divergence Stratigraphy
+
+
+## Phylotranscriptomics Analyses
+
+
+
+
+
+
+
+
+
+
+
+
+
