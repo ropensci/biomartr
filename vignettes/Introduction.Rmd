@@ -58,13 +58,25 @@ The [Sequence Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes
 
 ## Functional Annotation Retrieval
 
+Most phenomena in molecular biology are based on the interaction of genes and their products (proteins). So in case patterns can be found by investigating biological sequences, in most cases it is of interest to map this pattern to a biological function. The [Gene Ontology](http://geneontology.org/) and [Kegg](http://www.genome.jp/kegg/kegg1a.html) consortia provide extensive information on gene functions and pathway memberships.
+
+The `biomartr` packages provides powerful interfaces to functional annotation for specific genes.
+Here, the [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) vignette introduces you to the process of functional information retrieval. 
+
 
 ## Enrichment Analyses
+
+Successfully mapping pattern to functions is the first analytical step in biological research. The next step is to statistically quantify the significance of the observed pattern. 
+Enrichment Analyses statistically quantify the significance of gene functions that correspond to an observed pattern.
+
+The `biomartr` package provides useful interfaces to gene enrichment analyses to enable the statistical validation of oberved pattern. 
 
 
 ## Taxonomic Information Retrieval
 
+The evolutionary relationship between species is an integral part of molecular biology research. Genes and metabolic pathways share common descent and therefore, correlating pattern observed in one species with other species from the same taxonomic order enable us to study the origin of observed pattern in a comparative manner. 
 
+The [Taxonomy](https://github.com/HajkD/biomartr/blob/master/vignettes/Taxonomy.Rmd) vignette will introduce you to the retrieval of taxonomic information for molecular biology research.
 
 
 
