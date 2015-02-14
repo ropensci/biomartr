@@ -4,7 +4,11 @@
 \alias{phytozomeOrganisms}
 \title{Retrieve All Organism Names Stored on Phytozome v10}
 \usage{
-phytozomeOrganisms()
+phytozomeOrganisms(organism = "all")
+}
+\arguments{
+\item{organism}{a character string specifying the scientific name of an organism for which data information shall be retrieved.
+Default is \code{organism} = \code{"all"}.}
 }
 \description{
 This function extracts all organism names (scientific names) for which genomes,
@@ -18,6 +22,9 @@ transparency of genome data used for omics studies.
 \examples{
 # retrieve data for all available organisms stored in Phytozome
 head(phytozomeOrganisms())
+
+# retrieve data for Arabidopsis thaliana available organisms stored in Phytozome
+phytozomeOrganisms(organism = "Arabidopsis thaliana")
 }
 \author{
 Hajk-Georg Drost
