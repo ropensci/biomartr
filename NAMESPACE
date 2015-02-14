@@ -2,6 +2,7 @@
 
 export(biomart)
 export(download_database)
+export(flymineOrganisms)
 export(getAttributes)
 export(getCDS)
 export(getDatasets)
