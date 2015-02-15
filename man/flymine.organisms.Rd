@@ -16,7 +16,7 @@ proteomes, and CDS files are stored on the FlyMine server.
 }
 \details{
 This function queries the FlyMine API and retrieves all organisms specific information
-stored on FlyMine This way annotation information can be accessed allowing a better
+stored on FlyMine. This way annotation information can be accessed allowing a better
 transparency of genome data used for omics studies.
 }
 \examples{
