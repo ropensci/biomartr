@@ -70,7 +70,7 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 
 * `getGenome()` : A function for downloading a specific genome stored on the NCBI ftp:// server
 * `listGenomes()` : Function to list all genomes available on the NCBI ftp:// server
-
+* `is.genome.available()` : Check Genome Availability
 #### Proteome Retrieval
 
 * `getProteome()` : A function for downloading a specific proteome stored on the NCBI ftp:// server
@@ -83,6 +83,10 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 
 * `listDatabases()` : Retrieve a List of Available Databases for Download
 * `download_database()` : Download a Database to Your Local Hard Drive
+* `phytomine.organisms()` : Retrieve All Organism Names Stored on Phytozome v10
+* `flymine.organisms()` : Retrieve All Organism Names Stored on FlyMine
+* `zebrafishmine.organisms()` : Retrieve All Organism Names Stored on ZebrafishMine
+
 
 #### Taxonomic Information
 
