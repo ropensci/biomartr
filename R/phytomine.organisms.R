@@ -14,14 +14,14 @@
 #' @examples
 #' 
 #' # retrieve data for all available organisms stored in Phytozome 
-#' head(phytozomeOrganisms())
+#' head(phytomine.organisms())
 #' 
 #' # retrieve data for Arabidopsis thaliana available organisms stored in Phytozome
-#' phytozomeOrganisms(organism = "Arabidopsis thaliana") 
+#' phytomine.organisms(organism = "Arabidopsis thaliana") 
 #' 
 #' @export
 
-phytozomeOrganisms <- function(organism = "all"){
+phytomine.organisms <- function(organism = "all"){
         
         
         

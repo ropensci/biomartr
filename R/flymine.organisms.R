@@ -14,14 +14,14 @@
 #' @examples
 #' 
 #' # retrieve data for all available organisms stored in FlyMine 
-#' head(flymineOrganisms())
+#' head(flymine.organisms())
 #' 
 #' # retrieve data for Arabidopsis thaliana available organisms stored in FlyMine
-#' flymineOrganisms(organism = "Drosophila melanogaster") 
+#' flymine.organisms(organism = "Drosophila melanogaster") 
 #' 
 #' @export
 
-flymineOrganisms <- function(organism = "all"){
+flymine.organisms <- function(organism = "all"){
         
         
         
