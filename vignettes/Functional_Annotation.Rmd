@@ -23,12 +23,12 @@ The [BioMart](http://biomart.org/) project enables to retrieve a vast diversity 
 for specific organisms. Steffen Durinck and Wolfgang Huber provide an powerful interface between
 the R language and [BioMart](http://biomart.org/) by providing the R package [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html).
 The following sections will introduce you to the functionality and data retrieval using the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html)
-package and will then introduce you to the interface functions `biomart()` and `biomart_organisms()` implemented in `orthologr`
+package and will then introduce you to the interface functions `biomart()` and `biomart_organisms()` implemented in `biomartr`
 that are based on the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) methodology but aim to introduce an more intuitive way of interacting with BioMart.
 
 ### Getting Started with biomaRt
 
-The best way to get started with the methodology presented by `biomaRt` is to understand the workflow
+The best way to get started with the methodology presented by [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) is to understand the workflow
 of data retrieval. The database provided by [BioMart](http://biomart.org/) is organized in so called:
 `marts`, `datasets`, and `attributes`. So when you want to retrieve information for a specific organism
 of interest, first you need to specify the `marts` and `datasets` in which information of the corresponding
@@ -196,6 +196,26 @@ query methodology that aims to be more organism centric. Another aspect of useab
 The `biomaRt` package has been stored on [Bioconductor](http://biomart.org/) and therefore, additional work has to be done to enable dependencies in [CRAN](http://cran.r-project.org/) packages that rely on [Bioconductor](http://biomart.org/) packages.
 Therefore, `biomartr` provides new BioMart interface functions that were implemented based on base R packages or packages
 stored on [CRAN](http://cran.r-project.org/).
+
+
+Taken together, the following workflow allows you to perform fast BioMart queries for 
+attributes you are interested in:
+
+1) get attributes, datasets, and marts via : `organismAttributes()`
+
+2) choose available filters via: `organismFilters()`
+
+3) specify a set of query genes
+
+4) specify all arguments of the `biomart()` function using steps 1) - 3) and
+perform a BioMart query
+
+__Note:__ dataset names change very frequently due to the update of dataset versions.
+So in case some query functions do not work properly, you should check with
+`organismAttributes(update = TRUE)` whether or not your dataset name has been changed.
+For example, `organismAttributes("Arabidopsis thaliana", topic = "id", update = TRUE)`
+might reveal that the dataset `plants_mart_23` has changed to `plants_mart_24`.
+
 
 ## Retrieve marts, datasets, attributes, and filters with biomartr
 
@@ -724,23 +744,6 @@ result_BM
 
 The `biomart()` function takes as arguments a set of genes (gene ids specified in the `filter` argument), the corresponding `mart` and `dataset`, as well as the `attributes` that shall be returned.
 
-Taken together, the following workflow allows you to perform fast BioMart queries for 
-attributes you are interested in:
-
-1) get attributes, datasets, and marts via : `organismAttributes()`
-
-2) choose available filters via: `organismFilters()`
-
-3) specify a set of query genes
-
-4) specify all arguments of the `biomart()` function using steps 1) - 3) and
-perform a BioMart query
-
-__Note:__ dataset names change very frequently due to the update of dataset versions.
-So in case some query functions do not work properly, you should check with
-`organismAttributes(update = TRUE)` whether or not your dataset name has been changed.
-For example, `organismAttributes("Arabidopsis thaliana", topic = "id", update = TRUE)`
-might reveal that the dataset `plants_mart_23` has changed to `plants_mart_24`.
 
 
 ## Gene Ontology 
