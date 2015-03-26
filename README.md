@@ -50,7 +50,7 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 - [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Phylotranscriptomics.Rmd)
 
 
-### The Following Functions Have Been Implemented for Biomart Query, as Well as Genome, Proteome, and CDS Retrieval
+## Functionality
 
 ### BioMart Queries
 
@@ -113,7 +113,3 @@ of this package, please let me know:
 hajk-georg.drost@informatik.uni-halle.de
 
 
-## Acknowledgement
-
-I would like to thank Ivo Grosse and Marcel Quint for providing me a place and the environment to be able to work on 
-fascinating topics in Theoretical Biology.
