@@ -30,7 +30,7 @@ The `biomartr` package therefore, aims to provide users with easy to use and div
 
 The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes or entire genomes, biological pathway analyses for a set of genes, biological sequence retrieval, and test statistics for quantifying the significance of enriched gene sets.
 
-Users of the [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions that will allow them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr` and therefore, allows the highest degree of reproducible phylotranscirptomics research from data retrieval to data visualization.
+Users of the [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions that will allow them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr` and therefore, allows the highest degree of reproducible phylotranscriptomics research from data retrieval to data visualization.
 
 
 ## Workflow Design
@@ -50,7 +50,7 @@ Hence, all functions implemented in `biomartr` serve to fulfill the above listed
 
 In the post-genomic era, biological sequences are used to investigate most phenomena of molecular biology. The growing number of databases and their entries allows us to design meta-studies in a new dimension and to re-investigate known phenomena from a new perspective. Neverthless, from a data science point of view this vast amount of heterogenous data, coming from very different data resources and data standards is very hard to transform from heterogenous to homogenous data. The detection of significant patterns within meta-analyses, therefore relies on high quality data analysis and data science.
 
-Another aspect is reproducibility. Even in cases where a high degree of data homogeneity is achieved, the aspect of scientific reproducibility adds up to a new layer of complexity. Much effort is now being invested to enable high standards of reprpducibility in data driven sciences (e.g. [ROpenSci](http://ropensci.org)). The `biomartr` package aims to be a part of this data science movement. It's functions implement interfaces (Application Programming Interfaces, short _APIs_) to major databases such as [NCBI](http://www.ncbi.nlm.nih.gov) allowing users to access curated data from a single data source. 
+Another aspect is reproducibility. Even in cases where a high degree of data homogeneity is achieved, the aspect of scientific reproducibility adds up to a new layer of complexity. Much effort is now being invested to enable high standards of reproducibility in data driven sciences (e.g. [ROpenSci](http://ropensci.org)). The `biomartr` package aims to be a part of this data science movement. It's functions implement interfaces (Application Programming Interfaces, short _APIs_) to major databases such as [NCBI](http://www.ncbi.nlm.nih.gov) allowing users to access curated data from a single data source. 
 
 The [Sequence Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd) vignette will introduce you to the process of biological sequence retrieval using `biomartr`. All functions were designed to allow users the highest (yet possible) degree of reproducibility and transparency for their own analyses.
 
