@@ -1,13 +1,30 @@
 biomartr
 ========
 
-## A Framework for Biological Data Retrieval
+## Biological Data Retrieval using R
 
 The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [BioMart](http://www.biomart.org/) and [DAVID](http://david.abcc.ncifcrf.gov/) to retrieve functional annotation from [Gene Ontology](http://geneontology.org/page/go-enrichment-analysis) and [Kegg](http://www.genome.jp/kegg/). Furthermore, it is specifically designed to serve as additional module to
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks, allowing the highest degree of reproducibility in phylotranscriptomics research from data retrieval to data visualization.
 
 
-## Fast Installation Guide
+## Installation Guide
+
+Before you can load and install orthologr you need to install the following packages from [Bioconductor](http://www.bioconductor.org/):
+
+```r
+# install Bioconductor base packages
+source("http://bioconductor.org/biocLite.R")
+biocLite()
+
+# load the biomaRt package
+source("http://bioconductor.org/biocLite.R")
+biocLite("biomaRt")
+
+```
+
+## On Unix Based Systems
+
+Now you can use the [devtools](http://cran.r-project.org/web/packages/devtools/index.html) package to install orthologr from GitHub.
 
 ```r
 # install.packages("devtools")
@@ -16,6 +33,11 @@ the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/H
 library(devtools)
 install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
 
+```
+
+## On Windows Systems
+
+```r
 # On Windows, this won't work - see ?build_github_devtools
 install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
 
@@ -29,12 +51,6 @@ devtools::install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies 
 
 # and then call it from the library
 library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
-
-
-# additionally load: biomaRt
-source("http://bioconductor.org/biocLite.R")
-biocLite("biomaRt")
-
 ```
 
 ## Tutorials
@@ -110,6 +126,8 @@ provided in this package.
 Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts
 of this package, please let me know:
 
-hajk-georg.drost@informatik.uni-halle.de
+[twitter: HajkDrost](https://twitter.com/hajkdrost) or  [email](hajk-georg.drost@informatik.uni-halle.de)
+
+For Bug Report: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
 
 
