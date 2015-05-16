@@ -64,20 +64,22 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
         
         if(output == "classification"){
                 
-                species <- strsplit(organism," ")[[1]][1]
+                #species <- strsplit(organism," ")[[1]][1]
         
                 # retrieve the taxonomic hierarchy for the query species
-                tax_hierarchy <- as.data.frame(taxize::classification(species, db = db)[[1]])
+                tax_hierarchy <- as.data.frame(taxize::classification(taxize::get_uid(organism), db = db)[[1]])
         
-                # retrieve the members (children/organisms) of the correspondning species
-                tax_child_organisms <- as.data.frame(taxize::children(species, db = db)[[1]])
-                colnames(tax_child_organisms) <- c("id","name","rank")
-                tax_child_organisms <- tax_child_organisms[ , c("name","rank","id")]
-                
-                # filter for the query organism
-                tax_query_org <- dplyr::filter(tax_child_organisms, name == organism)
-                
-                return(rbind(tax_hierarchy,tax_query_org))
+#                 retrieve the members (children/organisms) of the correspondning species
+#                 tax_child_organisms <- as.data.frame(taxize::children(species, db = db)[[1]])
+#                 colnames(tax_child_organisms) <- c("id","name","rank")
+#                 tax_child_organisms <- tax_child_organisms[ , c("name","rank","id")]
+#                 
+#                 # filter for the query organism
+#                 tax_query_org <- dplyr::filter(tax_child_organisms, name == organism)
+#                  
+#                 return(rbind(tax_hierarchy,tax_query_org))
+                  colnames(tax_hierarchy) <- c("id","name","rank")
+                  return(tax_hierarchy)
         }
         
         if(output == "taxid"){
