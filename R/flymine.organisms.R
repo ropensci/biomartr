@@ -23,7 +23,7 @@
 
 flymine.organisms <- function(organism = "all"){
         
-        
+        organisms <- NULL
         
         if(!file.exists(file.path(tempdir(),"flymineOrgs.tsv"))){
                 

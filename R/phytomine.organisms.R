@@ -23,7 +23,7 @@
 
 phytomine.organisms <- function(organism = "all"){
         
-        
+        organisms <- NULL
         
         if(!file.exists(file.path(tempdir(),"phytozomeOrgs.tsv"))){
                 
