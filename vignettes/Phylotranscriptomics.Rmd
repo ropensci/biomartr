@@ -1,5 +1,5 @@
 ---
-title: "Phylotranscriptomics using myTAI, orthologr, and biomartr"
+title: "Perform Phylotranscriptomics with `biomartr`"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,43 +16,41 @@ knitr::opts_chunk$set(
   tidy = FALSE)
 ```
 
+## Introduction
 
-# Introduction to Phylotranscriptomics
+`Phylotranscriptomics` is a sub-field of Evolutionary Developmental Biology research investigating the evolutionary conservation of transcriptomes during development. The term `Phylotranscriptomics` defines the combination of evolutionary information with transcriptome data to capture signals of evolutionary conservation.
 
-`Phylotranscriptomics` is a sub-field of Evolutionary Developmental Biology research investigating the evolutionary conservation of transcriptomes during development. The term `Phylotranscriptomics` defines the combination of evolutionary information with transcriptome data. Hence, the process of performing phylotranscriptomics analyses involves two major steps:
+The [Introduction to Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd) vignette provided by the [myTAI](https://github.com/HajkD/myTAI) package
+will give you a broad overwiew of phylotranscriptomics as scientific subject.
 
-1) Generation of Evolutionary Information
-2) Generation of Transcriptome Data
+The `biomartr` package aims to provide an interface for functional annotation
+queries. Hence, combining functional annotation with the detection of evolutionary signals in
+biological processes with [orthologr](https://github.com/HajkD/orthologr) and [myTAI](https://github.com/HajkD/myTAI) allows users to correlate 
+biological functions and constraints with their evolutionary origin.
 
-The following examples allows you to build your own workflow to perform phylotranscriptomics analyses for an organism of interest starting from data retrieval and pattern recognition to functional annotation of observed pattern.
-
-
-## Generation of Evolutionary Information
-
-In `Phylotranscriptomics` evolutionary information can be generated in two aspects.
-
-a) Evolutionary Information Covering the Tree of Life ([Phylostratigraphy](http://www.sciencedirect.com/science/article/pii/S0168952507002995))
-b) Evolutionary Information Covering Relationships of Closely Related Species ([Divergence Stratigraphy](http://mbe.oxfordjournals.org/content/early/2015/01/27/molbev.msv012.short))
-
-The first part `Phylostratigraphy` generates a so called `Phylostratigraphic Map` of a query organism of interest. The second part `Divergence Stratigraphy` in contrast generates a `Divergence Map` of a query organism of interest. The following chapters introduce you to the details of `Phylostratigraphy` and `Divergence Stratigraphy` and show you how to perform these analyses using the [orthologr](https://github.com/HajkD/orthologr), [myTAI](https://github.com/HajkD/myTAI), and [biomartr](https://github.com/HajkD/biomartr) packages.
+This vignette aims to provide use cases for combining functional annotation
+of genes (`biomartr`) with their role in development (`myTAI`) in an evolutionary context (`orthologr`).
 
 
-## Phylostratigraphy
+## Use Case #1: Functional Annotation of Genes Sharing a Common Evolutionary History
 
+Phylotranscriptomics aims to predict stages or periods of evolutionary conservation in
+biological processes on the transcriptome level. However, finding genes sharing a [common evolutionary history](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd) could reveal how the the biological process might have evolved in the first place.
 
-## Divergence Stratigraphy
+In this `Use Case` we will combine functional and biological annotation obtained with `biomartr` with enriched genes obtained with [PlotEnrichment()](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd). 
 
+### Step 1
 
-## Phylotranscriptomics Analyses
+Install and load the [myTAI](https://github.com/HajkD/myTAI) package:
 
+```{r, eval=FALSE}
+# install myTAI
+install.packages("myTAI")
 
+# load myTAI
+library(myTAI)
 
-
-
-
-
-
-
+```
 
 
 
