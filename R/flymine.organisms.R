@@ -12,13 +12,13 @@
 #' 
 #' @references \url{http://www.flymine.org/}
 #' @examples
-#' 
+#' \dontrun{
 #' # retrieve data for all available organisms stored in FlyMine 
 #' head(flymine.organisms())
 #' 
 #' # retrieve data for Arabidopsis thaliana available organisms stored in FlyMine
 #' flymine.organisms(organism = "Drosophila melanogaster") 
-#' 
+#' }
 #' @export
 
 flymine.organisms <- function(organism = "all"){

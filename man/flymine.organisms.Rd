@@ -20,11 +20,13 @@ stored on FlyMine. This way annotation information can be accessed allowing a be
 transparency of genome data used for omics studies.
 }
 \examples{
+\dontrun{
 # retrieve data for all available organisms stored in FlyMine
 head(flymine.organisms())
 
 # retrieve data for Arabidopsis thaliana available organisms stored in FlyMine
 flymine.organisms(organism = "Drosophila melanogaster")
+}
 }
 \author{
 Hajk-Georg Drost
