@@ -12,7 +12,6 @@ Imports:
     data.table (>= 1.9.4),
     dplyr (>= 0.3.0),
     downloader (>= 0.3),
-    taxize (>= 0.5.2),
     RCurl (>= 1.95-4.5),
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
