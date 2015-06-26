@@ -72,14 +72,6 @@ Enrichment Analyses statistically quantify the significance of gene functions th
 The `biomartr` package provides useful interfaces to gene enrichment analyses to enable the statistical validation of oberved pattern. 
 
 
-## Taxonomic Information Retrieval
-
-The evolutionary relationship between species is an integral part of molecular biology research. Genes and metabolic pathways share common descent and therefore, correlating pattern observed in one species with other species from the same taxonomic order enable us to study the origin of observed pattern in a comparative manner. 
-
-The [Taxonomy](https://github.com/HajkD/biomartr/blob/master/vignettes/Taxonomy.Rmd) vignette will introduce you to the retrieval of taxonomic information for molecular biology research.
-
-
-
 
 
 

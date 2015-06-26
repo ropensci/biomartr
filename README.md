@@ -103,11 +103,6 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 * `flymine.organisms()` : Retrieve All Organism Names Stored on FlyMine
 * `zebrafishmine.organisms()` : Retrieve All Organism Names Stored on ZebrafishMine
 
-
-#### Taxonomic Information
-
-* `taxonomy()` : Retrieving Taxonomic Information of a Query Organism
-
 ### Performing Gene Ontology queries
 
 #### Gene Ontology
