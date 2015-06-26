@@ -3,7 +3,7 @@ Title: Biological Data Retrieval with R
 Version: 0.0.1
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
-Description: Perform biological data retrieval and functional annotation queries with biomartr
+Description: Perform biological data retrieval in R.
 Depends:
     R (>= 3.1.1)
 Imports:
