@@ -16,5 +16,6 @@ Imports:
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
     stringr (>= 0.6.2),
+    taxize (>= 0.6.0)
 License: GPL-3
 LazyData: true
