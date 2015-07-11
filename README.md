@@ -68,7 +68,6 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
 - [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
-- [Taxonomic Information](https://github.com/HajkD/biomartr/tree/master/vignettes/Taxonomy.Rmd)
 - [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Phylotranscriptomics.Rmd)
 
 
