@@ -25,6 +25,9 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("Biostrings")
 ```
 
+Users might be asked during the installation process of `Biostrings` and `biomaRt` whether or not they would like to update all package dependencies of the corresponding packages.
+Please type `a` specifying that all package dependencies of the corresponding packages shall be updated. This is important for the sufficient functionality of `biomartr`.
+
 ## On Unix Based Systems
 
 Now you can use the [devtools](http://cran.r-project.org/web/packages/devtools/index.html) package to install orthologr from GitHub.
