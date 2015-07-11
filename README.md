@@ -20,6 +20,9 @@ biocLite()
 source("http://bioconductor.org/biocLite.R")
 biocLite("biomaRt")
 
+# load the Biostrings package
+source("http://bioconductor.org/biocLite.R")
+biocLite("Biostrings")
 ```
 
 ## On Unix Based Systems
