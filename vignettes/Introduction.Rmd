@@ -30,7 +30,7 @@ The `biomartr` package therefore, aims to provide users with easy to use and div
 
 The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes or entire genomes, biological pathway analyses for a set of genes, biological sequence retrieval, and test statistics for quantifying the significance of enriched gene sets.
 
-Users of the [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions that will allow them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr` and therefore, allows the highest degree of reproducible phylotranscriptomics research from data retrieval to data visualization.
+Users of the [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions allowing them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr`. The `biomartr` package is designed to achieve the highest degree of reproducible phylotranscriptomics research from data retrieval to data visualization.
 
 
 ## Workflow Design
@@ -40,7 +40,6 @@ The `bopmartr` package is designed to cover four branches of biological data ret
 - __Biological Sequence Retrieval__
 - __Functional Annotation Retrieval__
 - __Enrichment Analyses__
-- __Taxonomic Information Retrieval__
 
 Hence, all functions implemented in `biomartr` serve to fulfill the above listed tasks.
 
