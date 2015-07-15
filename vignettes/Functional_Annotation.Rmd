@@ -710,16 +710,22 @@ Source: local data frame [179 x 4]
 
 ```{r,eval=FALSE}
 # retrieve the proteome of Arabidopsis thaliana from refseq
-getProteome( db           = "refseq", 
-             kingdom      = "plant",
-             organism     = "Arabidopsis thaliana",
-             clean_folder = FALSE )
+getProteome( db       = "refseq",
+             kingdom  = "plant",
+             organism = "Arabidopsis thaliana",
+             path     = file.path("_ncbi_downloads","proteomes") )
+
+
+file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
+
+Ath_proteome <- read_proteome(file_path, format = "fasta")
+
 
 # remove splice variants from id
 gene_set <- unlist(sapply(strsplit(Ath_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
 
 result_BM <- biomart( genes      = gene_set,
-                      mart       = "plants_mart_23", 
+                      mart       = "plants_mart_26", 
                       dataset    = "athaliana_eg_gene",
                       attributes = c("tair_locus","ensembl_peptide_id",
                                      "external_transcript_id","interpro_id",
