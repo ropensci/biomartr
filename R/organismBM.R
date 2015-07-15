@@ -65,13 +65,22 @@ organismBM <- function(organism = NULL, update = FALSE){
                         dir.create(file.path(tempdir(),"_biomart"))
                 
                 all_marts <- droplevels.data.frame(getMarts())
-                write.table(all_marts,file.path(tempdir(),"_biomart","listMarts.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+                write.table(all_marts,
+                            file.path(tempdir(),"_biomart","listMarts.txt"),
+                            sep = "\t",
+                            col.names = TRUE,
+                            row.names = FALSE,
+                            quote     = FALSE)
                 
         }
         
         
         if(file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
-                all_marts <- read.csv(file.path(tempdir(),"_biomart","listMarts.txt"), header = TRUE, sep = "\t", colClasses = rep("character",2),stringsAsFactors = FALSE)
+                all_marts <- read.csv(file.path(tempdir(),"_biomart","listMarts.txt"),
+                                      header           = TRUE,
+                                      sep              = "\t",
+                                      colClasses       = rep("character", 2),
+                                      stringsAsFactors = FALSE)
         
         if(update){
                 
@@ -82,20 +91,35 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         
         if(!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
+                
+                remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("Eurexpress Biomart","Sigenae Oligo Annotation (Ensembl 59)","Sigenae Oligo Annotation (Ensembl 56)"))
+                all_marts <- all_marts[ -remove.corrupt.marts , ]
+                
                 all_datasets <- do.call(rbind,lapply(as.vector(all_marts[ , "mart"]), 
                                        function(mart){ df <- as.data.frame(getDatasets(mart = mart))
                                                        df <- dplyr::mutate(df,mart = rep(mart,length(mart)))
                                                        return(df) } ))
                                                         
                 
-                write.table(all_datasets,file.path(tempdir(),"_biomart","listDatasets.txt"),sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+                write.table(all_datasets,
+                            file.path(tempdir(),"_biomart","listDatasets.txt"),
+                            sep = "\t",
+                            col.names = TRUE,
+                            row.names = FALSE,
+                            quote     = FALSE)
         }
         
         if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
-                all_datasets <- read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"), header = TRUE, sep = "\t", colClasses = rep("character",3),stringsAsFactors = FALSE)
+                all_datasets <- read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"),
+                                         header           = TRUE,
+                                         sep              = "\t",
+                                         colClasses       = rep("character", 3),
+                                         stringsAsFactors = FALSE)
         
   
-       all_datasets <- dplyr::mutate(all_datasets,organism_name = sapply(all_datasets[ ,"description"], function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
+       all_datasets <- dplyr::mutate(all_datasets,
+                                     organism_name = sapply(all_datasets[ ,"description"], function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
+       
        all_datasets <- dplyr::select(all_datasets, organism_name,description,mart,dataset,version)
           
        if(!is.null(organism)){
@@ -108,7 +132,6 @@ organismBM <- function(organism = NULL, update = FALSE){
                        
                        return(dplyr::filter(all_datasets,organism_name == organism))
                }
-              
        }
        
        if(is.null(organism))
