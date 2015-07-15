@@ -62,7 +62,7 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                 
                 if(!file.exists(path)){
                         
-                        dir.create(path)
+                        dir.create(path, recursive = TRUE)
                         
                 }
                 
