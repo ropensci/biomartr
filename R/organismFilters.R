@@ -64,7 +64,7 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                 dir.create(file.path(tempdir(),"_biomart"))
         }       
         
-        if(!file.exists(file.path("_biomart",paste0(filtersTXT,".txt")))){
+        if(!file.exists(file.path(tempdir(),"_biomart",paste0(filtersTXT,".txt")))){
                 
                 filtersList <- lapply(martList, function(mart) { 
                         
@@ -89,11 +89,20 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                 }
                 )
                 
-                write.table(do.call(rbind,filtersList), file.path("_biomart",paste0(filtersTXT,".txt")), sep = "\t", quote = FALSE, col.names = TRUE, row.names = FALSE)
+                write.table(do.call(rbind,filtersList),
+                            file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
+                            sep       = "\t",
+                            quote     = FALSE,
+                            col.names = TRUE,
+                            row.names = FALSE)
                 
         }
         
-        filterTable <- read.csv(file.path("_biomart",paste0(filtersTXT,".txt")), sep = "\t",header = TRUE, colClasses = rep("character",4), stringsAsFactors = FALSE)        
+        filterTable <- read.csv(file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
+                                sep              = "\t",
+                                header           = TRUE,
+                                colClasses       = rep("character", 4),
+                                stringsAsFactors = FALSE)        
         
         summ_filterTable <- dplyr::summarise(dplyr::group_by(filterTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
         
@@ -111,7 +120,6 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                 return(summ_filterTable)
                 
         }
-        
 }
 
 
