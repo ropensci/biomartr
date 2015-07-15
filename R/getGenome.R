@@ -56,7 +56,7 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                 
                 if(!file.exists(path)){
                         
-                        dir.create(path)
+                        dir.create(path, recursive = TRUE)
                         
                 }
                 
