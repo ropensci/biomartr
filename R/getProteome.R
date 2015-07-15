@@ -53,13 +53,12 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
         if(!is.genome.available(organism = organism))
                 stop(paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
         
-        
         if(db == "refseq"){
                 
                 
                 if(!file.exists(path)){
                         
-                        dir.create(path)
+                        dir.create(path, recursive = TRUE)
                         
                 }
                 
