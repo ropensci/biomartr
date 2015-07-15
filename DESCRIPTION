@@ -4,9 +4,9 @@ Version: 0.0.1
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
 Description: Perform biological data retrieval in R.
-Depends:
+Depends: 
     R (>= 3.1.1)
-Imports:
+Imports: 
     biomaRt (>= 2.20.0),
     Biostrings (>= 2.32.1),
     data.table (>= 1.9.4),
@@ -18,3 +18,4 @@ Imports:
     stringr (>= 0.6.2)
 License: GPL-3
 LazyData: true
+Suggests: testthat
