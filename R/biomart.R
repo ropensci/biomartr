@@ -70,4 +70,3 @@ biomart <- function(genes, mart, dataset, attributes, filters, ...){
         return(tbl_biomart)
         
 }
-

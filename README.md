@@ -3,13 +3,13 @@ biomartr
 
 ## Biological Data Retrieval with R
 
-The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [BioMart](http://www.biomart.org/) and [DAVID](http://david.abcc.ncifcrf.gov/) to retrieve functional annotation from [Gene Ontology](http://geneontology.org/page/go-enrichment-analysis) and [Kegg](http://www.genome.jp/kegg/). Furthermore, it is specifically designed to serve as additional module to
+The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to [BioMart](http://www.biomart.org/) to retrieve functional annotation. Furthermore, it is specifically designed to serve as additional module to
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks, allowing the highest degree of reproducibility in phylotranscriptomics research from data retrieval to data visualization.
 
 
 ## Installation Guide
 
-Before you can load and install orthologr you need to install the following packages from [Bioconductor](http://www.bioconductor.org/):
+Before users can download and install orthologr they need to install the following packages from [Bioconductor](http://www.bioconductor.org/):
 
 ```r
 # install Bioconductor base packages
@@ -59,19 +59,20 @@ devtools::install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies 
 library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 ```
 
+### Troubleshooting on Windows Machines
+
+- Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
+
+
 ## Tutorials
 
-The following tutorials will introduce you to the
-functionality of `biomartr` and how you can use it to extend
-analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/index.html) and [orthologr](https://github.com/HajkD/orthologr).
+Getting Started with `biomartr`:
 
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
 - [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
 - [Phylotranscriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Phylotranscriptomics.Rmd)
 
-
-## Functionality
 
 ### BioMart Queries
 
@@ -111,9 +112,6 @@ analyses implemented in [myTAI](http://cran.r-project.org/web/packages/myTAI/ind
 
 * `getGO()` : Function to retrieve GO terms for a given set of genes
 
-#### KeGG Ontology
-
-* `getKegg()` : Function to retrieve Kegg annotation for a given set of genes
 
 ## Discussions and Bug Reports
 
