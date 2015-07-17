@@ -93,9 +93,9 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
         
         if(update){
                 
-                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
-                              file.path(tempdir(),"_ncbi_downloads","overview.txt"), 
-                              quiet = TRUE)
+                utils::download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+                                    file.path(tempdir(),"_ncbi_downloads","overview.txt"), 
+                                    quiet = TRUE)
                 
                 # NCBI limits requests to three per second
                 Sys.sleep(0.33)
@@ -103,10 +103,10 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
         
         col_classes <- vector(mode = "character",length = 9)
         col_classes <- c(rep("character",4),rep("numeric",5))
-        ncbi_overview <- read.csv(file.path(tempdir(),"_ncbi_downloads","overview.txt"),
-                                  sep = "\t", header = TRUE,
-                                  colClasses = col_classes,
-                                  na.strings = "-")
+        ncbi_overview <- utils::read.csv(file.path(tempdir(),"_ncbi_downloads","overview.txt"),
+                                         sep = "\t", header = TRUE,
+                                         colClasses = col_classes,
+                                         na.strings = "-")
         
         names(ncbi_overview) <- c("organism_name","kingdoms",
                                   "group","subgroup","file_size_MB",
@@ -119,21 +119,21 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
                 if(!file.exists(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"))){
                         file.create(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"))
                         
-                        write.table(x         = refseqOrganisms(), 
-                                    file      = file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"), 
-                                    sep       = "\n",
-                                    quote     = FALSE, 
-                                    col.names = FALSE, 
-                                    row.names = FALSE)
+                        utils::write.table(x         = refseqOrganisms(), 
+                                           file      = file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"), 
+                                           sep       = "\n",
+                                           quote     = FALSE, 
+                                           col.names = FALSE, 
+                                           row.names = FALSE)
                 }
                 
-                refseqOrgs <- read.table(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"), 
-                                         header           = FALSE, 
-                                         sep              = "\n",
-                                         colClasses       = "character", 
-                                         stringsAsFactors = FALSE)
+                refseqOrgs <- utils::read.table(file.path(tempdir(),"_ncbi_downloads","refseqOrgs.txt"), 
+                                                header           = FALSE, 
+                                                sep              = "\n",
+                                                colClasses       = "character", 
+                                                stringsAsFactors = FALSE)
                 
-                ncbi_overview <- ncbi_overview[na.omit(match(refseqOrgs[ , 1]
+                ncbi_overview <- ncbi_overview[stats::na.omit(match(refseqOrgs[ , 1]
                                                        , ncbi_overview[ , "organism_name"])), ]
         }
         
