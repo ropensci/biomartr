@@ -101,20 +101,20 @@ organismBM <- function(organism = NULL, update = FALSE){
                                                        return(df) } ))
                                                         
                 
-                write.table(all_datasets,
-                            file.path(tempdir(),"_biomart","listDatasets.txt"),
-                            sep = "\t",
-                            col.names = TRUE,
-                            row.names = FALSE,
-                            quote     = FALSE)
+                utils::write.table(all_datasets,
+                                   file.path(tempdir(),"_biomart","listDatasets.txt"),
+                                   sep = "\t",
+                                   col.names = TRUE,
+                                   row.names = FALSE,
+                                   quote     = FALSE)
         }
         
         if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
-                all_datasets <- read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"),
-                                         header           = TRUE,
-                                         sep              = "\t",
-                                         colClasses       = rep("character", 3),
-                                         stringsAsFactors = FALSE)
+                all_datasets <- utils::read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"),
+                                                header           = TRUE,
+                                                sep              = "\t",
+                                                colClasses       = rep("character", 3),
+                                                stringsAsFactors = FALSE)
         
   
        all_datasets <- dplyr::mutate(all_datasets,
