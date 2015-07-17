@@ -92,20 +92,19 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
                         }
                         )
                         
-                        write.table(do.call(rbind,attrList),
-                                    file.path(tempdir(),"_biomart",paste0(attrTXT,".txt")),
-                                    sep       = "\t",
-                                    quote     = FALSE,
-                                    col.names = TRUE,
-                                    row.names = FALSE)
-                
+                        utils::write.table(do.call(rbind,attrList),
+                                           file.path(tempdir(),"_biomart",paste0(attrTXT,".txt")),
+                                           sep       = "\t",
+                                           quote     = FALSE,
+                                           col.names = TRUE,
+                                           row.names = FALSE)
         }
         
-        attributeTable <- read.csv(file.path(tempdir(),"_biomart",paste0(attrTXT,".txt")),
-                                   sep              = "\t",
-                                   header           = TRUE,
-                                   colClasses       = rep("character", 4),
-                                   stringsAsFactors = FALSE)        
+        attributeTable <- utils::read.csv(file.path(tempdir(),"_biomart",paste0(attrTXT,".txt")),
+                                          sep              = "\t",
+                                          header           = TRUE,
+                                          colClasses       = rep("character", 4),
+                                          stringsAsFactors = FALSE)        
         
         summ_attrTable <- dplyr::summarise(dplyr::group_by(attributeTable, name),
                                            description = names(table(description)),
