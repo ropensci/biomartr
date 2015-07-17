@@ -51,7 +51,7 @@ listDatabases <- function(db_name = "nr", db_format = "fasta", update = FALSE){
                 
                 if(file.exists(file.path(tempdir(),"_ncbi_downloads","listDatabases.txt"))){
                         
-                        listDBs <- read.csv(file.path(tempdir(),"_ncbi_downloads","listDatabases.txt"), sep = ";", header = FALSE)
+                        listDBs <- utils::read.csv(file.path(tempdir(),"_ncbi_downloads","listDatabases.txt"), sep = ";", header = FALSE)
                         
                 } else {
                         
@@ -60,12 +60,12 @@ listDatabases <- function(db_name = "nr", db_format = "fasta", update = FALSE){
                                                             ftp.use.epsv = FALSE, 
                                                             dirlistonly  = TRUE ), "\n" )
                         
-                        write.table( x         = listDBs[[1]],
-                                     file      = file.path(tempdir(),"_ncbi_downloads","listDatabases.txt"), 
-                                     quote     = FALSE, 
-                                     col.names = FALSE, 
-                                     row.names = FALSE,
-                                     sep       = ";" )
+                        utils::write.table( x         = listDBs[[1]],
+                                            file      = file.path(tempdir(),"_ncbi_downloads","listDatabases.txt"), 
+                                            quote     = FALSE, 
+                                            col.names = FALSE, 
+                                            row.names = FALSE,
+                                            sep       = ";" )
                         
                         listDBs <- listDBs[[1]]
                 }
