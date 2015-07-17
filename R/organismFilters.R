@@ -89,7 +89,7 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                 }
                 )
                 
-                write.table(do.call(rbind,filtersList),
+                utils::write.table(do.call(rbind,filtersList),
                             file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
                             sep       = "\t",
                             quote     = FALSE,
@@ -98,7 +98,7 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                 
         }
         
-        filterTable <- read.csv(file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
+        filterTable <- utils::read.csv(file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
                                 sep              = "\t",
                                 header           = TRUE,
                                 colClasses       = rep("character", 4),
