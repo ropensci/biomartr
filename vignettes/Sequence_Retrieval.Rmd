@@ -446,16 +446,15 @@ read the correspondning CDS as `data.table` object.
 file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")
 # read CDS as data.table object
 Ath_cds <- read_cds(file_path, format = "fasta")
-
 ```
 
-In case you would like to store the CDS file at a different location,
-you can specify the `path = file.path("put","your","path","here")` argument.
+In case users would like to store the CDS file at a different location,
+they can specify the `path = file.path("put","your","path","here")` argument.
 
 
 Furthermore, the `getCDS()` function checks whether all CDS sequences can be divided by 3 (codons).
 In case sequences of particualar genes cannot be divided by 3, a warning massage is returned to quantify the
-number of correspondning genes. In case you would like to extract these sequences from your data, you can specify the
+number of corresponding genes. In case users would like to extract these sequences from their data, they can specify the
 `delete_delete_corrupt = TRUE` argument, which will then delete all corrupt CDS sequences.
 
 
@@ -466,24 +465,22 @@ This section introduces several approaches to select a set of sequences for furt
 
 #### Using the output from `getProteome()`
 
-As you saw before, the `getProteome()` function allows you to download 
+As seen before, the `getProteome()` function allows users to download 
 the entire proteome of a specific organism of interest that is stored in refseq.
 
 ```{r,eval=FALSE}
-
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
 getProteome( db       = "refseq", 
              kingdom  = "plant",
              organism = "Arabidopsis thaliana",
              path     = file.path("_ncbi_downloads","proteomes") )
-
 ```
 
-Again, we download the _A. thaliana_ proteome and now are interested in the following two genes for 
-subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of fatty acid desaturase family and take over functions in oxidoreductase activity ([see details](http://arabidopsis.org/servlets/TairObject?id=136833&type=locus)). To access the protein sequences of these genes in a proteome downloaded from refseq, first you need to map the `tair_locus` id to the corresponding `refseq` ids.
+Again, first we download the _A. thaliana_ proteome and furthermore are interested in the following two genes for 
+subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of the fatty acid desaturase family and take over functions in oxidoreductase activity ([see details](http://arabidopsis.org/servlets/TairObject?id=136833&type=locus)). To access the protein sequences of these genes in a proteome downloaded from refseq, first users need to map the `tair_locus` id to the corresponding `refseq` ids.
 
-For this purpose the you can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
+For this purpose users can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
 
 Here we can use the `organismFilter()` function to retrieve the filter argument for `tair gene ids`.
 
@@ -496,15 +493,15 @@ organismFilters("Arabidopsis thaliana", topic = "tair")
 Source: local data frame [6 x 4]
 
                    name                 description           mart           dataset
-1            tair_locus            TAIR locus ID(s) plants_mart_25 athaliana_eg_gene
-2      tair_locus_model      TAIR locus model ID(s) plants_mart_25 athaliana_eg_gene
-3           tair_symbol           TAIR symbol ID(s) plants_mart_25 athaliana_eg_gene
-4       with_tair_locus       with TAIR locus ID(s) plants_mart_25 athaliana_eg_gene
-5 with_tair_locus_model with TAIR locus model ID(s) plants_mart_25 athaliana_eg_gene
-6      with_tair_symbol      with TAIR symbol ID(s) plants_mart_25 athaliana_eg_gene
+1            tair_locus            TAIR locus ID(s) plants_mart_26 athaliana_eg_gene
+2      tair_locus_model      TAIR locus model ID(s) plants_mart_26 athaliana_eg_gene
+3           tair_symbol           TAIR symbol ID(s) plants_mart_26 athaliana_eg_gene
+4       with_tair_locus       with TAIR locus ID(s) plants_mart_26 athaliana_eg_gene
+5 with_tair_locus_model with TAIR locus model ID(s) plants_mart_26 athaliana_eg_gene
+6      with_tair_symbol      with TAIR symbol ID(s) plants_mart_26 athaliana_eg_gene
 ```
 
-As you can see, we need the filter argument `tair_locus` from `mart` `plants_mart_25` and `dataset` `athaliana_eg_gene`.
+Users will observe that we need the filter argument `tair_locus` from `mart` `plants_mart_26` and `dataset` `athaliana_eg_gene`.
 
 To find the attribute argument for refseq ids we can use the `organismAttributes()` function.
 
@@ -517,21 +514,22 @@ organismAttributes("Arabidopsis thaliana", topic = "refseq")
 Source: local data frame [3 x 4]
 
             name       description           mart           dataset
-1    refseq_mrna    RefSeq mRNA ID plants_mart_25 athaliana_eg_gene
-2   refseq_ncrna   RefSeq ncRNA ID plants_mart_25 athaliana_eg_gene
-3 refseq_peptide RefSeq protein ID plants_mart_25 athaliana_eg_gene
+1    refseq_mrna    RefSeq mRNA ID plants_mart_26 athaliana_eg_gene
+2   refseq_ncrna   RefSeq ncRNA ID plants_mart_26 athaliana_eg_gene
+3 refseq_peptide RefSeq protein ID plants_mart_26 athaliana_eg_gene
 ```
 
-Now it is clear that we need attribute argument `refseq_peptide` to get the
-refseq id of the corresponding filter `tair_locus` ids.
+Now it is clear that we need the attribute argument `refseq_peptide` to get the
+refseq id of the corresponding filter `tair_locus` ids. __Please notice that BioMart frequently updates their `mart` names, so in case of `plants_mart_26` a new mart version might have to be specified to receive a proper result from `biomart()`__.
 
 ```{r,eval=FALSE}
-
 bm <- biomart(genes      = c("AT3G01360", "AT3G01540"),
-              mart       = "plants_mart_25", 
+              mart       = "plants_mart_26", 
               dataset    = "athaliana_eg_gene",
               attributes = "refseq_peptide",
               filters    = "tair_locus")
+
+bm
 ```
 
 ```
