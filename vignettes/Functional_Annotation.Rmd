@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 The [BioMart](http://biomart.org/) project enables users to retrieve a vast diversity of annotation data
 for specific organisms. Steffen Durinck and Wolfgang Huber provide an powerful interface between
 the R language and [BioMart](http://biomart.org/) by providing the R package [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html).
-The following sections will introduce users to the functionality and data retrieval precedures using the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html)
+The following sections will introduce users to the functionality and data retrieval precedures using the `biomaRt`
 package and will then introduce them to the interface functions `biomart()` and `biomart_organisms()` implemented in `biomartr`
 that are based on the `biomaRt` methodology but aim to introduce an more intuitive way of interacting with BioMart.
 
@@ -213,7 +213,7 @@ might reveal that the dataset `plants_mart_26` has changed to `plants_mart_27`__
 
 ### Retrieve Available Marts
 
-The `getMarts()` function allows you to list all available databases that cann be accessed through BioMart interfaces.
+The `getMarts()` function allows users to list all available databases that can be accessed through BioMart interfaces.
 
 ```{r,eval=FALSE}
 # load the biomartr package
