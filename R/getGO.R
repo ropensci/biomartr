@@ -51,7 +51,6 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
         
         if(database == "BioMart"){
                 
-                
                 orgAttr <- organismAttributes(organism = organism, topic = "go")
                 
                 GOattributes <- c("go_accession",
@@ -63,7 +62,6 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 
                 if(dim(GOattr_df)[1] == 0)
                         stop("Unfortunately for '",organism,"' no GO attributes could be found.")
-        
         
                 m <- names(table(GOattr_df[ , "mart"]))
                 d <- names(table(GOattr_df[ , "dataset"]))
