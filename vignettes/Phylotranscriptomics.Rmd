@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 `Phylotranscriptomics` is a sub-field of Evolutionary Developmental Biology research investigating the evolutionary conservation of transcriptomes during development. The term `Phylotranscriptomics` defines the combination of evolutionary information with transcriptome data to capture signals of evolutionary conservation.
 
 The [Introduction to Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd) vignette provided by the [myTAI](https://github.com/HajkD/myTAI) package
-will give you a broad overwiew of phylotranscriptomics as scientific subject.
+will give users a broad overwiew of phylotranscriptomics as scientific discipline.
 
 The `biomartr` package aims to provide an interface for functional annotation
 queries. Hence, combining functional annotation with the detection of evolutionary signals in
@@ -41,6 +41,8 @@ In this `Use Case` we will combine functional and biological annotation obtained
 
 ### Step 1
 
+For the following example we will use the dataset an enrichment analyses found in [PlotEnrichment()](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd).
+
 Install and load the [myTAI](https://github.com/HajkD/myTAI) package:
 
 ```{r, eval=FALSE}
@@ -52,6 +54,99 @@ library(myTAI)
 
 ```
 
+Download the `Phylostratigraphic Map` of _D. rerio_:
+
+```r
+# download the Phylostratigraphic Map of Danio rerio
+# from Sestak and Domazet-Loso, 2015
+download.file( url      = "http://mbe.oxfordjournals.org/content/suppl/2014/11/17/msu319.DC1/TableS3-2.xlsx", 
+               destfile = "MBE_2015a_Drerio_PhyloMap.xlsx" )
+               
+```
+
+Read the `*.xlsx` file storing the `Phylostratigraphic Map` of _D. rerio_ and format it for the use with `myTAI`:
+
+```r
+# install the readxl package
+install.packages("readxl")
+
+# load package readxl
+library(readxl)
+
+# read the excel file
+DrerioPhyloMap.MBEa <- read_excel("MBE_2015a_Drerio_PhyloMap.xlsx", sheet = 1, skip = 4)
+
+# format Phylostratigraphic Map for use with myTAI
+Drerio.PhyloMap <- DrerioPhyloMap.MBEa[ , 1:2]
+
+# have a look at the final format
+head(Drerio.PhyloMap)
+```
+
+```
+  Phylostrata            ZFIN_ID
+1           1 ZDB-GENE-000208-13
+2           1 ZDB-GENE-000208-17
+3           1 ZDB-GENE-000208-18
+4           1 ZDB-GENE-000208-23
+5           1  ZDB-GENE-000209-3
+6           1  ZDB-GENE-000209-4
+```
+
+Now, `Drerio.PhyloMap` stores the `Phylostratigraphic Map` of _D. rerio_ which is used
+as background set to perform enrichment analyses with `PlotEnrichment()` from `myTAI`.
+
+### Enrichment Analyses
+
+Now, the `PlotEnrichment()` function visualizes the over- and underrepresented `Phylostrata` of brain specific genes when compared with the total number of genes stored in the `Phylostratigraphic Map` of _D. rerio_.
+
+
+```{r,eval=FALSE}
+library(readxl)
+
+# read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015
+Drerio.OrganSpecificExpression <- read_excel("MBE_2015a_Drerio_PhyloMap.xlsx", sheet = 2, skip = 3)
+
+# select only brain specific genes
+Drerio.Brain.Genes <- unique(na.omit(Drerio.OrganSpecificExpression[ , "brain"]))
+
+# visualize enriched Phylostrata of genes annotated as brain specific
+PlotEnrichment(Drerio.PhyloMap,
+               test.set     = Drerio.Brain.Genes,
+               measure      = "foldchange",
+               use.only.map = TRUE,
+               legendName   = "PS")
+
+```
+
+Users will observe that for example brain genes deriving from PS5 are significantly enriched. 
+
+
+Now we can select all brain genes originating in PS5 using the `SelectGeneSet()` function from `myTAI`. Please notice that `SelectGeneSet()` can only be used with phylostratigraphic maps only (`use.map.only = TRUE` argument) since myTAI version > 0.3.0.
+
+```{r,eval=FALSE}
+BrainGenes <- SelectGeneSet(ExpressionSet = Drerio.PhyloMap,
+                            gene.set      = Drerio.Brain.Genes,
+                            use.only.map  = TRUE)
+
+# select only brain genes originating in PS5
+BrainGenes.PS5 <- BrainGenes[which(BrainGenes[ , "Phylostrata"] == 5), ]
+
+# look at the results
+head(BrainGenes.PS5)
+```
+
+```
+      Phylostrata           ZFIN_ID
+14851           5 ZDB-GENE-000210-6
+14852           5 ZDB-GENE-000210-7
+14853           5 ZDB-GENE-000328-4
+14856           5 ZDB-GENE-000411-1
+14857           5 ZDB-GENE-000427-4
+14860           5 ZDB-GENE-000526-1
+```
+
+Now users can perform the `biomart()` function to obtain the functional annotation of brain genes originating in PS5.
 
 
 
