@@ -55,7 +55,7 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 
                 GOattributes <- c("go_accession",
                                   "go_definition_1006",
-                                  "go_name_1006", "go_id")
+                                  "go_name_1006")
                 
                 GOattr_df <- dplyr::filter(orgAttr, name %in% GOattributes)
                 
@@ -71,7 +71,7 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 return( biomart(genes      = genes,
                                 mart       = m, 
                                 dataset    = d,
-                                attributes = GOattributes[GOattr_df[ , "name"] == GOattributes],
+                                attributes = GOattributes,
                                 filters    = filters, ...) )
         
         }
