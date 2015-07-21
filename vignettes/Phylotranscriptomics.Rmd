@@ -1,5 +1,5 @@
 ---
-title: "Perform Phylotranscriptomics with `biomartr`"
+title: "Combine Phylotranscriptomics with `biomartr`"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -51,7 +51,6 @@ install.packages("myTAI")
 
 # load myTAI
 library(myTAI)
-
 ```
 
 Download the `Phylostratigraphic Map` of _D. rerio_:
@@ -61,7 +60,6 @@ Download the `Phylostratigraphic Map` of _D. rerio_:
 # from Sestak and Domazet-Loso, 2015
 download.file( url      = "http://mbe.oxfordjournals.org/content/suppl/2014/11/17/msu319.DC1/TableS3-2.xlsx", 
                destfile = "MBE_2015a_Drerio_PhyloMap.xlsx" )
-               
 ```
 
 Read the `*.xlsx` file storing the `Phylostratigraphic Map` of _D. rerio_ and format it for the use with `myTAI`:
@@ -116,7 +114,6 @@ PlotEnrichment(Drerio.PhyloMap,
                measure      = "foldchange",
                use.only.map = TRUE,
                legendName   = "PS")
-
 ```
 
 Users will observe that for example brain genes deriving from PS5 are significantly enriched. 
@@ -147,6 +144,71 @@ head(BrainGenes.PS5)
 ```
 
 Now users can perform the `biomart()` function to obtain the functional annotation of brain genes originating in PS5.
+
+For this purpose, first we need to find the filter name of the corresponding gene ids such as `ZDB-GENE-000210-6`.
+
+```{r, eval=FALSE}
+# find filter for zfin.org ids
+organismFilters("Danio rerio", topic = "zfin_id")
+```
+
+```
+Source: local data frame [3 x 4]
+
+                          name                           description    mart             dataset
+1                 with_zfin_id                       with ZFIN ID(s) ensembl drerio_gene_ensembl
+2 with_zfin_id_transcript_name          with ZFIN transcript name(s) ensembl drerio_gene_ensembl
+3                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] ensembl drerio_gene_ensembl
+```
+
+Now users can retrieve the corresponding GO attribute of _D. rerio_ with `organismAttributes`.
+
+```{r,eval=FALSE}
+# find go attribute term for D. rerio
+organismAttributes("Danio rerio", topic = "go")
+```
+
+```
+Source: local data frame [18 x 4]
+
+                                            name                             description    mart
+1  ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID ensembl
+2                     ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp) ensembl
+3                   ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp) ensembl
+4                    ggorilla_homolog_chromosome                 Gorilla Chromosome Name ensembl
+5                            ggorilla_homolog_dn                                      dN ensembl
+6                            ggorilla_homolog_ds                                      dS ensembl
+7                  ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID ensembl
+8               ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID ensembl
+9          ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high] ensembl
+10               ggorilla_homolog_orthology_type                           Homology Type ensembl
+11                      ggorilla_homolog_perc_id   % Identity with respect to query gene ensembl
+12                   ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene ensembl
+13                      ggorilla_homolog_subtype                                Ancestor ensembl
+14                                         go_id                                   GO ID ensembl
+15                               go_linkage_type                   GO Term Evidence Code ensembl
+16                          goslim_goa_accession                 GOSlim GOA Accession(s) ensembl
+17                        goslim_goa_description                  GOSlim GOA Description ensembl
+18                                      quick_go                             Quick GO ID ensembl
+Variables not shown: dataset (chr)
+```
+
+Now users can specify the filter `zfin_id` and attribute `go_id` to retrieve the GO terms of corresponding gene ids (__Please note that this will take some time__).
+
+```{r, eval=FALSE}
+# retrieve GO terms of D. rerio brain genes originating in PS5
+GO_tbl.BrainGenes <- biomart(genes      = BrainGenes.PS5[ , "ZFIN_ID"]),
+                             mart       = "ensembl",
+                             dataset    = "drerio_gene_ensembl",
+                             attributes = "go_id",
+                             filters    = "zfin_id")
+
+head(GO_tbl.BrainGenes)
+```
+
+
+
+
 
 
 
