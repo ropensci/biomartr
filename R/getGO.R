@@ -59,7 +59,6 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 
                 GOattr_df <- dplyr::filter(orgAttr, name %in% GOattributes)
                 
-                print(GOattr_df)
                 if(dim(GOattr_df)[1] == 0)
                         stop("Unfortunately for '",organism,"' no GO attributes could be found.")
         
@@ -72,7 +71,7 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 return( biomart(genes      = genes,
                                 mart       = m, 
                                 dataset    = d,
-                                attributes = as.character(GOattr_df[ , "name"]),
+                                attributes = GOattributes[GOattr_df[ , "name"] == GOattributes],
                                 filters    = filters, ...) )
         
         }
