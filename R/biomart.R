@@ -59,15 +59,15 @@ biomart <- function(genes, mart, dataset, attributes, filters, ...){
         d <- biomaRt::useDataset(dataset = dataset, mart = m)
         
         ### establishing a biomaRt connection and retrieving the information for the given gene list
-        query <- biomaRt::getBM(attributes = c(filters,attributes),
-                                filters    = filters,
-                                values     = genes,
+        query <- biomaRt::getBM(attributes = as.character(c(filters,attributes)),
+                                filters    = as.character(filters),
+                                values     = as.character(genes),
                                 mart       = d, ...)
         
         colnames(query) <- c(filters,attributes)
         
-        genes <- dplyr::data_frame(genes)
-        colnames(genes) <- filters
+        genes <- dplyr::data_frame(as.character(genes))
+        colnames(genes) <- as.character(filters)
         
         tbl_biomart <- merge(query, genes, by = filters, incomparables = NA)
         
