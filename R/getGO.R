@@ -55,11 +55,11 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 
                 GOattributes <- c("go_accession",
                                   "go_definition_1006",
-                                  "go_name_1006")
+                                  "go_name_1006", "go_id")
                 
                 GOattr_df <- dplyr::filter(orgAttr, name %in% GOattributes)
                 
-                
+                print(GOattr_df)
                 if(dim(GOattr_df)[1] == 0)
                         stop("Unfortunately for '",organism,"' no GO attributes could be found.")
         
@@ -68,11 +68,11 @@ getGO <- function(organism, genes, filters, database = "BioMart", email = NULL, 
                 
                 if((length(m) > 1) | (length(d) > 1))
                         stop("GO related attributes have been found in more than one mart or dataset: mart = ",m," ; dataset = ",dataset)
-        
+
                 return( biomart(genes      = genes,
                                 mart       = m, 
                                 dataset    = d,
-                                attributes = GOattributes,
+                                attributes = as.character(GOattr_df[ , "name"]),
                                 filters    = filters, ...) )
         
         }
