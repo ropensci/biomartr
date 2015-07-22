@@ -1,7 +1,8 @@
 language: r
 bioc_required: true
 bioc_packages: 
-   - edgeR
+   - biomaRt
+   - Biostrings
 warnings_are_errors: true
 sudo: required
 r_check_revdep: false
