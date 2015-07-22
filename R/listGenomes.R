@@ -83,9 +83,9 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, databa
         
         if(!file.exists(file.path(tempdir(),"_ncbi_downloads","overview.txt"))){
                 
-                download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
-                              file.path(tempdir(),"_ncbi_downloads","overview.txt"), 
-                              quiet = TRUE)
+                utils::download.file("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+                                     file.path(tempdir(),"_ncbi_downloads","overview.txt"), 
+                                     quiet = TRUE)
                 
                 # NCBI limits requests to three per second
                 Sys.sleep(0.33)
