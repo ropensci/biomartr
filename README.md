@@ -28,7 +28,22 @@ biocLite("Biostrings")
 Users might be asked during the installation process of `Biostrings` and `biomaRt` whether or not they would like to update all package dependencies of the corresponding packages.
 Please type `a` specifying that all package dependencies of the corresponding packages shall be updated. This is important for the sufficient functionality of `biomartr`.
 
-## On Unix Based Systems
+Now users can download `biomartr` from [CRAN](https://cran.r-project.org/web/packages/biomartr/) :
+
+```r
+# install biomartr from CRAN
+install.packages("biomartr",
+                 repos        = "https://cran.rstudio.com/",
+                 dependencies = TRUE,
+                 type         = "source")
+```
+
+
+## Download Developer Version
+
+The developer version of `biomartr` might include more functionality than the stable version on CRAN.
+
+### On Unix Based Systems
 
 Now you can use the [devtools](http://cran.r-project.org/web/packages/devtools/index.html) package to install orthologr from GitHub.
 
@@ -41,7 +56,7 @@ install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
 
 ```
 
-## On Windows Systems
+### On Windows Systems
 
 ```r
 # On Windows, this won't work - see ?build_github_devtools
