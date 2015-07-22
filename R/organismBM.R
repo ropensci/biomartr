@@ -52,45 +52,44 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         organism_name <- name <- description <- mart <- dataset <- NULL
         
-        if(update){
+        if (update){
                 
-                if(file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
+                if (file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
                         unlink(getTMPFile(file.path("_biomart","listMarts.txt")))
                 
         }
         
-        if(!file.exists(getTMPFile(file.path("_biomart","listMarts.txt")))){
+        if (!file.exists(getTMPFile(file.path("_biomart","listMarts.txt")))){
                 
                 if(!file.exists(file.path(tempdir(),"_biomart")))
                         dir.create(file.path(tempdir(),"_biomart"))
                 
                 all_marts <- droplevels.data.frame(getMarts())
-                write.table(all_marts,
-                            file.path(tempdir(),"_biomart","listMarts.txt"),
-                            sep = "\t",
-                            col.names = TRUE,
-                            row.names = FALSE,
-                            quote     = FALSE)
+                utils::write.table(all_marts,
+                                   file.path(tempdir(),"_biomart","listMarts.txt"),
+                                   sep = "\t",
+                                   col.names = TRUE,
+                                   row.names = FALSE,
+                                   quote     = FALSE)
                 
         }
         
         
-        if(file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
-                all_marts <- read.csv(file.path(tempdir(),"_biomart","listMarts.txt"),
-                                      header           = TRUE,
-                                      sep              = "\t",
-                                      colClasses       = rep("character", 2),
-                                      stringsAsFactors = FALSE)
+        if (file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
+                all_marts <- utils::read.csv(file.path(tempdir(),"_biomart","listMarts.txt"),
+                                             header           = TRUE,
+                                             sep              = "\t",
+                                             colClasses       = rep("character", 2),
+                                             stringsAsFactors = FALSE)
         
-        if(update){
+        if (update){
                 
                 if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
                         unlink(file.path(tempdir(),"_biomart","listDatasets.txt"))
                 
         }
         
-        
-        if(!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
+        if (!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
                 
                 remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("Eurexpress Biomart","Sigenae Oligo Annotation (Ensembl 59)","Sigenae Oligo Annotation (Ensembl 56)"))
                 all_marts <- all_marts[ -remove.corrupt.marts , ]
@@ -109,7 +108,7 @@ organismBM <- function(organism = NULL, update = FALSE){
                                    quote     = FALSE)
         }
         
-        if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
+        if (file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
                 all_datasets <- utils::read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"),
                                                 header           = TRUE,
                                                 sep              = "\t",
@@ -122,20 +121,20 @@ organismBM <- function(organism = NULL, update = FALSE){
        
        all_datasets <- dplyr::select(all_datasets, organism_name,description,mart,dataset,version)
           
-       if(!is.null(organism)){
+       if (!is.null(organism)){
                
                res <- dplyr::filter(all_datasets,organism_name == organism)
                
-               if(dim(res)[1] == 0){
-                       stop("Unfortunately, no entry for '", organism, "' has been found.")
+               if (dim(res)[1] == 0){
+                       stop ("Unfortunately, no entry for '", organism, "' has been found.")
                } else {
                        
-                       return(dplyr::filter(all_datasets,organism_name == organism))
+                       return (dplyr::filter(all_datasets,organism_name == organism))
                }
        }
        
-       if(is.null(organism))
-               return(all_datasets)
+       if (is.null(organism))
+               return (all_datasets)
              
 }
 
