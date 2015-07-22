@@ -1,0 +1,9 @@
+language: r
+bioc_required: true
+bioc_packages: 
+   - edgeR
+warnings_are_errors: true
+sudo: required
+r_check_revdep: false
+r_check_args: "--no-build-vignettes --no-manual --as-cran"
+cran: http://cran.rstudio.com/
