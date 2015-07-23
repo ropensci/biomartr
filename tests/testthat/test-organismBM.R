@@ -7,6 +7,8 @@ equal_lists <- function(df1, df2) {
 
 test_that("The organismBM() interface works properly..",{
         
+        skip_on_cran()
+        
         oBM <- organismBM("Arabidopsis thaliana")
         expect_identical(as.character(oBM[1, 4]),"athaliana_eg_gene")
 })

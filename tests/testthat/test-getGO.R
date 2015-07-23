@@ -1,12 +1,13 @@
 context("Test: getGO()")
 
-
 equal_lists <- function(df1, df2) {
         isTRUE(all.equal(df1, df2))
 }
 
 
 test_that("The getGO() interface works properly..",{
+        
+        skip_on_cran()
         
         GO_tbl <- getGO(organism = "Arabidopsis thaliana",
                         genes    = c("AT1G06090", "AT1G06100",

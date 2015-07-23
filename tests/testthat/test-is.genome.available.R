@@ -8,6 +8,8 @@ equal_lists <- function(df1, df2) {
 
 test_that("The is.genome.available() interface works properly..",{
         
+        skip_on_cran()
+        
         g <- is.genome.available(organism = "Arabidopsis thaliana", details = TRUE)
         expect_identical(as.character(g[1, 1]),"Arabidopsis thaliana")
 })

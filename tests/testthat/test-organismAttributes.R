@@ -7,6 +7,8 @@ equal_lists <- function(df1, df2) {
 
 test_that("The organismAttributes() interface works properly..",{
         
+        skip_on_cran()
+        
         oattr <- organismAttributes("Arabidopsis thaliana")
         expect_identical(as.character(oattr[1, 1]),"3_utr_end")
 })

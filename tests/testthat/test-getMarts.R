@@ -8,6 +8,8 @@ equal_lists <- function(df1, df2) {
 
 test_that("The getMarts() interface works properly..",{
         
+        skip_on_cran()
+        
         m <- getMarts()
         expect_identical(as.character(getMarts()[1, 1]),"ensembl")
 })

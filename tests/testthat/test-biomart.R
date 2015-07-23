@@ -7,6 +7,8 @@ equal_lists <- function(df1, df2) {
 
 test_that("The biomart() interface works properly..",{
         
+        skip_on_cran()
+        
         marts <- getMarts()[ , "mart"]
         plant_mart <- which(stringr::str_match(marts, "plants_mart_") != "NA")
         
