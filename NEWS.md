@@ -1,4 +1,4 @@
-myTAI 0.0.2
+biomartr 0.0.2
 ===========
 
 ### Vignettes
