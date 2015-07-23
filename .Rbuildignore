@@ -1,3 +1,10 @@
-^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^cran-comments\.md$
+.Rprofile
+man-roxygen
+NEWS\.md
+README.html
+README.Rmd
+^\.httr-oauth$
+^\.travis\.yml$
