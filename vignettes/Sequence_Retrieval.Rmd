@@ -409,7 +409,7 @@ getProteome( db       = "refseq",
              path     = file.path("_ncbi_downloads","proteomes") )
 ```
 
-The `getProteome()` function creates a directory named `_ncbi_downloads/proteomes` into which cthe orresponding proteome named `Arabidopsis_thaliana_protein.faa.gz` is downloaded. The `read_proteome()` function enables users to work with the proteome as `data.table` object.
+The `getProteome()` function creates a directory named `_ncbi_downloads/proteomes` into which the orresponding proteome named `Arabidopsis_thaliana_protein.faa.gz` is downloaded. The `read_proteome()` function enables users to work with the proteome as `data.table` object.
 
 ```{r,eval=FALSE}
 # path to proteome: '_ncbi_downloads/proteomes/Arabidopsis_thaliana_protein.faa.gz'
