@@ -478,7 +478,7 @@ getProteome( db       = "refseq",
 ```
 
 Again, first we download the _A. thaliana_ proteome and furthermore are interested in the following two genes for 
-subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of the fatty acid desaturase family and take over functions in oxidoreductase activity ([see details](http://arabidopsis.org/servlets/TairObject?id=136833&type=locus)). To access the protein sequences of these genes in a proteome downloaded from refseq, first users need to map the `tair_locus` id to the corresponding `refseq` ids.
+subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of the fatty acid desaturase family and take over functions in oxidoreductase activity. To access the protein sequences of these genes in a proteome downloaded from refseq, first users need to map the `tair_locus` id to the corresponding `refseq` ids.
 
 For this purpose users can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
 
