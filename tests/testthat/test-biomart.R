@@ -18,9 +18,8 @@ test_that("The biomart() interface works properly..",{
                 mart       = as.character(marts[plant_mart]),
                 dataset    = "athaliana_eg_gene",
                 attributes = c("start_position","end_position","description"),
-                filters    = "tair_locus")[1, ]), list(tair_locus = "AT1G06090",
+                filters    = "tair_locus")[1, 1:3]), list(tair_locus = "AT1G06090",
                                                        start_position = 1847883,
-                                                       end_position = 1849693,
-                                                       description = "Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06090]")))
+                                                       end_position = 1849693)))
         
 })
