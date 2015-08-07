@@ -2,14 +2,7 @@ biomartr 0.0.2
 ===========
 
 ### Vignettes
-
-
-### New Functions
-
-
-### Updates
-
-
+- adding vignettes: Introduction, Functional Annotation, Phylotranscriptomics, and Sequence Retrieval
 
 biomartr 0.0.1
 ===========
