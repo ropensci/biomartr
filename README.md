@@ -1,9 +1,6 @@
 biomartr
 ========
 
-[![Travis-CI Build Status](https://travis-ci.org/HajkD/biomartr.svg?branch=master)](https://travis-ci.org/HajkD/biomartr)
-
-
 ## Biological Data Retrieval with R
 
 The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to [BioMart](http://www.biomart.org/) to retrieve functional annotation. Furthermore, it is specifically designed to serve as additional module to
