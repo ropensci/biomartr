@@ -19,7 +19,7 @@ that can be downloaded from correspondning servers.
 }
 \examples{
 # retrieve all versions of the NCBI 'nr' database that can be downloaded
-listDatabases(db_name = "nr", db_format = "fasta")
+# listDatabases(db_name = "nr", db_format = "fasta")
 
 # analogous:
 # listDatabases(db_name = "cdd", db_format = "fasta")
