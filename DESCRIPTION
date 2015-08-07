@@ -1,6 +1,6 @@
 Package: biomartr
-Title: Biological Data Retrieval with R
-Version: 0.0.2.9000
+Title: Functional Annotation and Biological Data Retrieval with R
+Version: 0.0.2
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
 Description: Performing biological data retrieval and functional annotation with R.
@@ -9,8 +9,8 @@ NeedsCompilation: yes
 Depends: 
     R (>= 3.1.1)
 Imports: 
-    biomaRt (>= 2.24.0),
-    Biostrings (>= 2.32.1),
+    biomaRt,
+    Biostrings,
     data.table (>= 1.9.4),
     dplyr (>= 0.3.0),
     downloader (>= 0.3),
