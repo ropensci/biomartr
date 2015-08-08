@@ -31,11 +31,10 @@ Please type `a` specifying that all package dependencies of the corresponding pa
 Now users can download `biomartr` from [CRAN](https://cran.r-project.org/web/packages/biomartr/) :
 
 ```r
-# install biomartr from CRAN
+# install biomartr 0.0.2 from CRAN
 install.packages("biomartr",
                  repos        = "https://cran.rstudio.com/",
-                 dependencies = TRUE,
-                 type         = "source")
+                 dependencies = TRUE)
 ```
 
 
