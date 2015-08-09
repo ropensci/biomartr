@@ -1,7 +1,7 @@
 biomartr
 ========
 
-## Biological Data Retrieval with R
+## Functional Annotation and Biological Data Retrieval with R
 
 The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to [BioMart](http://www.biomart.org/) to retrieve functional annotation. Furthermore, it is specifically designed to serve as additional module to
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks, allowing the highest degree of reproducibility in phylotranscriptomics research from data retrieval to data visualization.
