@@ -7,7 +7,7 @@ The `biomartr` package aims to provide users with an easy to use framework to ob
 the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) frameworks, allowing the highest degree of reproducibility in phylotranscriptomics research from data retrieval to data visualization.
 
 
-## Installation Guide
+## Installation
 
 Before users can download and install orthologr they need to install the following packages from [Bioconductor](http://www.bioconductor.org/):
 
@@ -37,6 +37,8 @@ install.packages("biomartr",
                  dependencies = TRUE)
 ```
 
+## NEWS
+The current status of the package as well as a detailed history of the functionality of each version of `biomartr` can be found in the [NEWS](https://github.com/HajkD/biomartr/blob/master/NEWS.md) section.
 
 ## Download Developer Version
 
