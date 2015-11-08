@@ -1,0 +1,292 @@
+---
+title: "NCBI Database Retrieval"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{NCBI Database Retrieval}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message = FALSE}
+options(width = 750)
+knitr::opts_chunk$set(
+  comment = "#>",
+  error = FALSE,
+  tidy = FALSE)
+```
+
+# Retrieve Sequence Databases from NCBI
+
+The `download_databases()` function implemented in `biomartr` allows users to download entire sequence databases from NCBI.
+
+## Search for available databases
+
+When specifying the argument `db_name = "all"` in `listDatabases()` users retrieve a list of of available sequence database files in `*.fasta` format stored in NCBI.
+
+```r
+library("biomartr")
+
+# retrieve a list of available sequence databases at NCBI
+# and look at the first 30 records
+head(listDatabases(db_name = "all"), 30)
+```
+
+```
+                            V1
+1                       README
+2                        FASTA
+3  human_genomic.00.tar.gz.md5
+4             env_nr.00.tar.gz
+5         env_nr.00.tar.gz.md5
+6             env_nr.01.tar.gz
+7         env_nr.01.tar.gz.md5
+8             env_nt.00.tar.gz
+9         env_nt.00.tar.gz.md5
+10            env_nt.01.tar.gz
+11        env_nt.01.tar.gz.md5
+12            env_nt.02.tar.gz
+13        env_nt.02.tar.gz.md5
+14                  est.tar.gz
+15              est.tar.gz.md5
+16         est_human.00.tar.gz
+17     est_human.00.tar.gz.md5
+18         est_human.01.tar.gz
+19     est_human.01.tar.gz.md5
+20            est_mouse.tar.gz
+21        est_mouse.tar.gz.md5
+22        est_others.00.tar.gz
+23    est_others.00.tar.gz.md5
+24        est_others.01.tar.gz
+25    est_others.01.tar.gz.md5
+26        est_others.02.tar.gz
+27    est_others.02.tar.gz.md5
+28        est_others.03.tar.gz
+29    est_others.03.tar.gz.md5
+30        est_others.04.tar.gz
+```
+
+However, in case users already know which database they would like to retrieve
+they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the `NCBI nr` database shall be retrieved.
+
+```r
+# show all NCBI nr files
+listDatabases(db_name = "nr")
+```
+
+```
+ [1] "nr.00.tar.gz" "nr.01.tar.gz" "nr.02.tar.gz" "nr.03.tar.gz" "nr.04.tar.gz" "nr.05.tar.gz"
+ [7] "nr.16.tar.gz" "nr.06.tar.gz" "nr.15.tar.gz" "nr.30.tar.gz" "nr.07.tar.gz" "nr.08.tar.gz"
+[13] "nr.09.tar.gz" "nr.10.tar.gz" "nr.11.tar.gz" "nr.12.tar.gz" "nr.13.tar.gz" "nr.14.tar.gz"
+[19] "nr.28.tar.gz" "nr.29.tar.gz" "nr.31.tar.gz" "nr.17.tar.gz" "nr.18.tar.gz" "nr.19.tar.gz"
+[25] "nr.20.tar.gz" "nr.21.tar.gz" "nr.22.tar.gz" "nr.23.tar.gz" "nr.32.tar.gz" "nr.24.tar.gz"
+[31] "nr.25.tar.gz" "nr.26.tar.gz" "nr.27.tar.gz" "nr.33.tar.gz" "nr.34.tar.gz" "nr.35.tar.gz"
+[37] "nr.36.tar.gz" "nr.37.tar.gz" "nr.38.tar.gz" "nr.39.tar.gz" "nr.40.tar.gz" "nr.41.tar.gz"
+```
+
+The output illustrates that the `NCBI nr` database has been separated into 41 files.
+This example shall illustrate that NCBI database files can be listed by specifing the `db_name` argument.
+
+Further examples are:
+
+
+```r
+# show all NCBI nt files
+listDatabases(db_name = "nt")
+```
+
+```
+ [1] "nt.00.tar.gz" "nt.01.tar.gz" "nt.02.tar.gz" "nt.03.tar.gz" "nt.04.tar.gz" "nt.05.tar.gz"
+ [7] "nt.06.tar.gz" "nt.07.tar.gz" "nt.08.tar.gz" "nt.09.tar.gz" "nt.10.tar.gz" "nt.11.tar.gz"
+[13] "nt.12.tar.gz" "nt.13.tar.gz" "nt.14.tar.gz" "nt.15.tar.gz" "nt.16.tar.gz" "nt.26.tar.gz"
+[19] "nt.27.tar.gz" "nt.17.tar.gz" "nt.18.tar.gz" "nt.28.tar.gz" "nt.29.tar.gz" "nt.19.tar.gz"
+[25] "nt.20.tar.gz" "nt.21.tar.gz" "nt.22.tar.gz" "nt.23.tar.gz" "nt.24.tar.gz" "nt.25.tar.gz"
+[31] "nt.30.tar.gz" "nt.31.tar.gz" "nt.32.tar.gz" "nt.33.tar.gz"
+```
+
+```r
+# show all NCBI ESTs others
+listDatabases(db_name = "est_others")
+```
+
+```
+ [1] "est_others.00.tar.gz" "est_others.01.tar.gz" "est_others.02.tar.gz" "est_others.03.tar.gz"
+ [5] "est_others.04.tar.gz" "est_others.05.tar.gz" "est_others.06.tar.gz" "est_others.07.tar.gz"
+ [9] "est_others.08.tar.gz" "est_others.09.tar.gz" "est_others.10.tar.gz"
+```
+
+```r
+# show all NCBI RefSeq (only genomes)
+head(listDatabases(db_name = "refseq_genomic"), 20)
+```
+
+```
+ [1] "refseq_genomic.00.tar.gz" "refseq_genomic.01.tar.gz" "refseq_genomic.02.tar.gz"
+ [4] "refseq_genomic.03.tar.gz" "refseq_genomic.04.tar.gz" "refseq_genomic.05.tar.gz"
+ [7] "refseq_genomic.06.tar.gz" "refseq_genomic.07.tar.gz" "refseq_genomic.08.tar.gz"
+[10] "refseq_genomic.09.tar.gz" "refseq_genomic.10.tar.gz" "refseq_genomic.11.tar.gz"
+[13] "refseq_genomic.12.tar.gz" "refseq_genomic.13.tar.gz" "refseq_genomic.14.tar.gz"
+[16] "refseq_genomic.15.tar.gz" "refseq_genomic.16.tar.gz" "refseq_genomic.17.tar.gz"
+[19] "refseq_genomic.18.tar.gz" "refseq_genomic.19.tar.gz"
+```
+
+```r
+# show all NCBI RefSeq (only proteomes)
+listDatabases(db_name = "refseq_protein")
+```
+
+```
+[1] "refseq_protein.00.tar.gz" "refseq_protein.01.tar.gz" "refseq_protein.02.tar.gz"
+ [4] "refseq_protein.03.tar.gz" "refseq_protein.04.tar.gz" "refseq_protein.05.tar.gz"
+ [7] "refseq_protein.06.tar.gz" "refseq_protein.07.tar.gz" "refseq_protein.08.tar.gz"
+[10] "refseq_protein.09.tar.gz" "refseq_protein.14.tar.gz" "refseq_protein.15.tar.gz"
+[13] "refseq_protein.16.tar.gz" "refseq_protein.10.tar.gz" "refseq_protein.11.tar.gz"
+[16] "refseq_protein.17.tar.gz" "refseq_protein.12.tar.gz" "refseq_protein.13.tar.gz"
+[19] "refseq_protein.18.tar.gz" "refseq_protein.19.tar.gz"
+```
+
+
+```r
+# show all NCBI RefSeq (only RNA)
+listDatabases(db_name = "refseq_rna")
+```
+
+```
+[1] "refseq_rna.00.tar.gz" "refseq_rna.01.tar.gz" "refseq_rna.02.tar.gz" "refseq_rna.05.tar.gz"
+[5] "refseq_rna.03.tar.gz" "refseq_rna.06.tar.gz" "refseq_rna.04.tar.gz" "refseq_rna.07.tar.gz"
+```
+
+```r
+# show all NCBI WGS
+head(listDatabases(db_name = "wgs"), 20)
+```
+
+```
+ [1] "wgs.66.tar.gz"  "wgs.67.tar.gz"  "wgs.68.tar.gz"  "wgs.69.tar.gz"  "wgs.70.tar.gz" 
+ [6] "wgs.71.tar.gz"  "wgs.72.tar.gz"  "wgs.73.tar.gz"  "wgs.107.tar.gz" "wgs.74.tar.gz" 
+[11] "wgs.79.tar.gz"  "wgs.00.tar.gz"  "wgs.01.tar.gz"  "wgs.02.tar.gz"  "wgs.03.tar.gz" 
+[16] "wgs.04.tar.gz"  "wgs.05.tar.gz"  "wgs.06.tar.gz"  "wgs.07.tar.gz"  "wgs.08.tar.gz"
+```
+
+```r
+# show NCBI swissprot
+listDatabases(db_name = "swissprot")
+```
+
+```
+[1] "swissprot.tar.gz"
+```
+
+```r
+# show NCBI PDB
+listDatabases(db_name = "pdb")
+```
+
+```
+[1] "pdbnt.00.tar.gz" "pdbnt.26.tar.gz" "pdbnt.27.tar.gz" "pdbnt.01.tar.gz" "pdbnt.02.tar.gz"
+ [6] "pdbnt.03.tar.gz" "pdbnt.04.tar.gz" "pdbnt.05.tar.gz" "pdbnt.06.tar.gz" "pdbnt.07.tar.gz"
+[11] "pdbnt.08.tar.gz" "pdbnt.09.tar.gz" "pdbnt.10.tar.gz" "pdbnt.11.tar.gz" "pdbnt.12.tar.gz"
+[16] "pdbnt.13.tar.gz" "pdbnt.14.tar.gz" "pdbnt.15.tar.gz" "pdbnt.16.tar.gz" "pdbnt.17.tar.gz"
+[21] "pdbnt.18.tar.gz" "pdbnt.28.tar.gz" "pdbnt.19.tar.gz" "pdbnt.20.tar.gz" "pdbnt.21.tar.gz"
+[26] "pdbnt.22.tar.gz" "pdbnt.23.tar.gz" "pdbnt.24.tar.gz" "pdbnt.29.tar.gz" "pdbnt.25.tar.gz"
+[31] "pdbaa.tar.gz"    "pdbnt.30.tar.gz" "pdbnt.31.tar.gz" "pdbnt.32.tar.gz" "pdbnt.33.tar.gz"
+```
+
+```r
+# show NCBI Human database
+listDatabases(db_name = "human")
+```
+
+```
+ [1] "human_genomic.00.tar.gz"         "human_genomic.01.tar.gz"        
+ [3] "human_genomic.02.tar.gz"         "human_genomic.03.tar.gz"        
+ [5] "human_genomic.04.tar.gz"         "human_genomic.05.tar.gz"        
+ [7] "human_genomic.06.tar.gz"         "human_genomic.07.tar.gz"        
+ [9] "human_genomic.08.tar.gz"         "human_genomic_transcript.tar.gz"
+[11] "human_genomic.10.tar.gz"         "human_genomic.11.tar.gz"        
+[13] "human_genomic.12.tar.gz"         "human_genomic.13.tar.gz"        
+[15] "human_genomic.14.tar.gz"         "human_genomic.15.tar.gz"
+```
+
+```r
+# show NCBI EST databases
+listDatabases(db_name = "est")
+```
+
+```
+ [1] "est.tar.gz"           "est_human.00.tar.gz"  "est_human.01.tar.gz"  "est_mouse.tar.gz"    
+ [5] "est_others.00.tar.gz" "est_others.01.tar.gz" "est_others.02.tar.gz" "est_others.03.tar.gz"
+ [9] "est_others.04.tar.gz" "est_others.05.tar.gz" "est_others.06.tar.gz" "est_others.07.tar.gz"
+[13] "est_others.08.tar.gz" "est_others.09.tar.gz" "est_others.10.tar.gz"
+```
+
+__Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.__
+
+
+## Download available databases
+
+Using the same search strategy by name as described above, users can now download these databases using the `download_database()` function.
+
+For downloading only single files users can type:
+
+```r
+# select NCBI nr version 27 =  "nr.27.tar.gz"
+# and download it into the folder
+download_database(name      = "nr.27.tar.gz", 
+                  db_format = "blastdb",
+                  path      = "nr")
+
+```
+
+Using this command first a folder named `nr` is created and the
+file `nr.27.tar.gz` is downloaded to this folder.
+Here the argument `db_format` specifies the `blastdb` format.
+This means that the pre-formatted (by makeblastdb formatted) database version is retrieved.
+
+Alternatively, users can retrieve all `nr` files with one command by typing:
+
+```r
+# download the entire NCBI nr database
+sapply(listDatabases("nr"), download_database, path = "nr")
+```
+
+Using this command, all `NCBI nr` files are loaded into the `nr` folder (`path = "nr"`).
+
+
+The same approach can be applied to all other databases mentioned above, e.g.:
+
+```r
+# download the entire NCBI nt database
+sapply(listDatabases("nt"), download_database, path = "nt")
+```
+
+```r
+# download the entire NCBI refseq (protein) database
+sapply(listDatabases("refseq_protein"), download_database, path = "refseq")
+```
+
+```r
+# download the entire NCBI PDB database
+sapply(listDatabases("pdb"), download_database, path = "pdb")
+```
+
+In case users wish to download the `fasta` files of the corresponding databases 
+instead of the `formatdb` files, they can specify the argument `db_format = "blastdb"`.
+
+
+```r
+# download the entire NCBI nt database in fasta format
+sapply(listDatabases("nt"), download_database, db_format = "fasta", path = "nt")
+```
+
+```r
+# download the entire NCBI refseq (protein) database in fasta format
+sapply(listDatabases("refseq_protein"), download_database, db_format = "fasta", path = "refseq")
+```
+
+```r
+# download the entire NCBI PDB database in fasta format
+sapply(listDatabases("pdb"), download_database, db_format = "fasta", path = "pdb")
+```
+
+Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.
