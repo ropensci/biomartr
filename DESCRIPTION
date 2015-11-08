@@ -3,12 +3,13 @@ Title: Functional Annotation and Biological Data Retrieval with R
 Version: 0.0.3.9000
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@informatik.uni-halle.de>
-Description: Performing biological data retrieval and functional annotation with R.
+Description: Performing biological data retrieval and functional annotation with
+    R.
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Depends: 
+Depends:
     R (>= 3.1.1)
-Imports: 
+Imports:
     biomaRt,
     Biostrings,
     data.table (>= 1.9.4),
@@ -18,7 +19,7 @@ Imports:
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
     stringr (>= 0.6.2)
-Suggests: 
+Suggests:
     knitr (>= 1.6),
     rmarkdown (>= 0.3.3),
     devtools (>= 1.6.1),
@@ -27,3 +28,4 @@ License: GPL-3
 LazyData: true
 URL: https://github.com/HajkD/biomartr
 BugReports: https://github.com/HajkD/biomartr/issues
+RoxygenNote: 5.0.0
