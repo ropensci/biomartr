@@ -2,9 +2,9 @@
 #' @description This function allows you to download a database selected by
 #' \code{\link{listDatabases}} to your local hard drive.
 #' @param name a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).
-#' @param db_format a character string specifying database format, e.g. \code{db_format} = \code{"blastdb"}.
+#' @param db_format a character string specifying database format, e.g. \code{db_format} = \code{"blastdb"} or \code{db_format} = \code{"fasta"}.
 #' @param path a character string specifying the location (a folder) in which the corresponding
-#' database shall be stored. Default is \code{path} = \code{"DB"}.
+#' database shall be stored. Default is \code{path} = \code{"DB"}. In case this folder does not exist yet, it will be created.
 #' @details
 #' This function downloads large databases to your hard drive. For this purpose a folder
 #' named \code{DB} (default) is created and the correspondning database then stored in this folder. 
