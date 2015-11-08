@@ -1,6 +1,10 @@
 biomartr 0.0.3
 ===========
 
+- the `listDatabases()` function now has a new option `db_name = "all"` allowing users to list all available databases stored on NCBI 
+
+### Vignettes
+- adding new vignette: Database Retrieval
 
 
 biomartr 0.0.2
