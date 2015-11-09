@@ -6,10 +6,10 @@
 #' @examples
 #' 
 #' # get a table of all available databases from BioMart
-#' head(getMarts(), 10)
+#'  head(getMarts(), 10)
 #' 
 #' @seealso \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
-#' #@export
+#' @export
 getMarts <- function(){
         
         # connect to BioMart API
