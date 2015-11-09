@@ -26,13 +26,19 @@
 
 download_database <- function(name, db_format = "blastdb", path = "DB"){
         
-        if(!is.element(db_format,c("blastdb","fasta")))
+        if (!is.element(db_format,c("blastdb","fasta")))
                 stop("db_format = '",db_format,"' is not supported by this function.")
         
-        if(!file.exists(path))
+        if (!file.exists(path))
                 dir.create(path)
         
-        downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/",name), file.path(path,name) , mode = "wb")
+        if (db_format == "blastdb"){
+                downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/",name), file.path(path,name) , mode = "wb")
+        }
+        
+        if (db_format == "fasta"){
+                downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/",name), file.path(path,name) , mode = "wb")
+        }
         
         # limit NCBI queries
         Sys.sleep(0.33)
