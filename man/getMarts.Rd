@@ -12,8 +12,10 @@ storing all available BioMart databases.
 }
 \examples{
 
+\dontrun{
 # get a table of all available databases from BioMart
  head(getMarts(), 10)
+}
 
 }
 \author{

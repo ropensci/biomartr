@@ -5,8 +5,10 @@
 #' @author Hajk-Georg Drost
 #' @examples
 #' 
+#' \dontrun{
 #' # get a table of all available databases from BioMart
 #'  head(getMarts(), 10)
+#' }
 #' 
 #' @seealso \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
@@ -37,7 +39,6 @@ getMarts <- function(){
         return(dplyr::filter(dbBioMart, visible != "0")[ , c("mart","version")])
                
 }
-
 
 
 
