@@ -16,11 +16,10 @@ This funcion queries the BioMart API and returns a table
 storing all available filters for a specific dataset.
 }
 \examples{
-
+\dontrun{
 # search for available datasets
 head(getMarts(), 10)
 
-\dontrun{
 
 # choose database (mart): "plants_mart_25" -> Note: mart versions change over time
 # and get a table of all available datasets from this BioMart database

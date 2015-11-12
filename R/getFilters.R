@@ -6,11 +6,10 @@
 #' @param dataset a character string specifying the dataset for which filters shall be listed.
 #' @author Hajk-Georg Drost
 #' @examples
-#' 
+#' \dontrun{
 #' # search for available datasets
 #' head(getMarts(), 10)
 #' 
-#' \dontrun{
 #' 
 #' # choose database (mart): "plants_mart_25" -> Note: mart versions change over time
 #' # and get a table of all available datasets from this BioMart database
