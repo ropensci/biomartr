@@ -1,6 +1,6 @@
 Package: biomartr
 Title: Functional Annotation and Biological Data Retrieval with R
-Version: 0.0.3.9000
+Version: 0.0.3
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Description: Performing biological data retrieval and functional annotation with
