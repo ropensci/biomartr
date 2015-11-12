@@ -5,11 +5,10 @@
 #' @param mart a character string specifying the database (mart) for which datasets shall be listed.
 #' @author Hajk-Georg Drost
 #' @examples
-#' 
+#' \dontrun{
 #' # search for available datasets
 #' head(getMarts(), 10)
 #' 
-#' \dontrun{
 #' 
 #' # choose database: "plants_mart_25" -> these versions vary over time
 #' # and get a table of all available datasets from this BioMart database
