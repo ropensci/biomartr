@@ -42,14 +42,14 @@ allowing subsequent queries to perform much faster.
 \examples{
 \dontrun{
 
-# return available attributes for "Arabidopsis thaliana"
-head(organismAttributes("Arabidopsis thaliana"), 20)
+# return available attributes for "Homo sapiens"
+head(organismAttributes("Homo sapiens"), 20)
 
 # search for attribute topic "id" 
-head(organismAttributes("Arabidopsis thaliana", topic = "id"), 20)
+head(organismAttributes("Homo sapiens", topic = "id"), 20)
 
 # search for attribute topic "homolog" 
-head(organismAttributes("Arabidopsis thaliana", topic = "homolog"), 20)
+head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 
 }
 }
