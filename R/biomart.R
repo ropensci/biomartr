@@ -55,7 +55,7 @@
 #' @export
 biomart <- function(genes, mart, dataset, attributes, filters, ...){
         
-        m <- biomaRt::useMart(mart)
+        m <- biomaRt::useMart(mart, host = "www.ensembl.org")
         d <- biomaRt::useDataset(dataset = dataset, mart = m)
         
         ### establishing a biomaRt connection and retrieving the information for the given gene list
