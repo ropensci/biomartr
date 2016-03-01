@@ -116,7 +116,7 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                          } else {
                                  
                                  warning ("File: ",download_url, " could not be loaded properly...")
-                         }
+     }
   }
 }
 
