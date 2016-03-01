@@ -76,6 +76,7 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                 
                 check_organisms <- strsplit(url_organisms,"\n")
                 check_organisms <- stringr::str_replace(unlist(check_organisms),"_"," ")
+                check_organisms <- check_organisms[-which(is.element(check_organisms,c("assembly summary.txt", "check_organisms historical.txt")))]
                 
                 if(!is.element(organism,unlist(check_organisms)))
                         stop("Please choose a valid organism.")
