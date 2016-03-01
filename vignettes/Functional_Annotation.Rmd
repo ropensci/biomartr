@@ -46,21 +46,16 @@ biocLite("biomaRt")
 library(biomaRt)
 
 # look at top 10 databases
-head(listMarts(), 10)
+head(listMarts(host = "www.ensembl.org"), 10)
 ```
 
 ```
-                 biomart                               version
-1                ensembl          ENSEMBL GENES 80 (SANGER UK)
-2                    snp      ENSEMBL VARIATION 80 (SANGER UK)
-3             regulation     ENSEMBL REGULATION 80 (SANGER UK)
-4                   vega                  VEGA 60  (SANGER UK)
-5          fungi_mart_26             ENSEMBL FUNGI 26 (EBI UK)
-6    fungi_variations_26   ENSEMBL FUNGI VARIATION 26 (EBI UK)
-7        metazoa_mart_26           ENSEMBL METAZOA 26 (EBI UK)
-8  metazoa_variations_26 ENSEMBL METAZOA VARIATION 26 (EBI UK)
-9         plants_mart_26            ENSEMBL PLANTS 26 (EBI UK)
-10  plants_variations_26  ENSEMBL PLANTS VARIATION 26 (EBI UK)
+               biomart               version
+1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 83
+2     ENSEMBL_MART_SNP  Ensembl Variation 83
+3 ENSEMBL_MART_FUNCGEN Ensembl Regulation 83
+4    ENSEMBL_MART_VEGA               Vega 63
+5                pride        PRIDE (EBI UK)
 ```
 
 Users will observe that several `marts` providing annotation for
@@ -70,120 +65,110 @@ For our example, we will choose the `plants_variations_26` `mart` and list all a
 datasets that are element of this `mart`.
 
 ```{r,eval=FALSE}
-tail(listDatasets(useMart("plants_mart_26")), 10)
+head(listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")), 10)
 ```
 
 ```
-                   dataset                                                               description
-30     mtruncatula_eg_gene Medicago truncatula str. A17 genes (MedtrA17_4.0 (2014-06-EnsemblPlants))
-31     atrichopoda_eg_gene                        Amborella trichopoda genes (AMTR1.0 (2014-01-AGD))
-32    creinhardtii_eg_gene                      Chlamydomonas reinhardtii genes (v3.1 (2007-11-ENA))
-33 olongistaminata_eg_gene                                Oryza longistaminata genes (2013-09-Maker)
-34        cmerolae_eg_gene                   Cyanidioschyzon merolae genes (ASM9120v1 (2008-11-ENA))
-35     oglaberrima_eg_gene                             Oryza glaberrima genes (AGI1.1 (2011-05-AGI))
-36          tcacao_eg_gene  Theobroma cacao genes (Theobroma_cacao_20110822 (2014-05-EnsemblPlants))
-37      macuminata_eg_gene                                Musa acuminata genes (MA1 (2012-08-Cirad))
-38         turartu_eg_gene                          Triticum urartu genes (ASM34745v1 (2013-04-BGI))
-39       athaliana_eg_gene                      Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))
-                                            version
-30             MedtrA17_4.0 (2014-06-EnsemblPlants)
-31                            AMTR1.0 (2014-01-AGD)
-32                               v3.1 (2007-11-ENA)
-33                                    2013-09-Maker
-34                          ASM9120v1 (2008-11-ENA)
-35                             AGI1.1 (2011-05-AGI)
-36 Theobroma_cacao_20110822 (2014-05-EnsemblPlants)
-37                              MA1 (2012-08-Cirad)
-38                         ASM34745v1 (2013-04-BGI)
-39                          TAIR10 (2010-09-TAIR10)
+                          dataset                                description         version
+1          oanatinus_gene_ensembl     Ornithorhynchus anatinus genes (OANA5)           OANA5
+2         cporcellus_gene_ensembl            Cavia porcellus genes (cavPor3)         cavPor3
+3         gaculeatus_gene_ensembl     Gasterosteus aculeatus genes (BROADS1)         BROADS1
+4          lafricana_gene_ensembl         Loxodonta africana genes (loxAfr3)         loxAfr3
+5  itridecemlineatus_gene_ensembl Ictidomys tridecemlineatus genes (spetri2)         spetri2
+6         choffmanni_gene_ensembl        Choloepus hoffmanni genes (choHof1)         choHof1
+7          csavignyi_gene_ensembl             Ciona savignyi genes (CSAV2.0)         CSAV2.0
+8             fcatus_gene_ensembl        Felis catus genes (Felis_catus_6.2) Felis_catus_6.2
+9        rnorvegicus_gene_ensembl         Rattus norvegicus genes (Rnor_6.0)        Rnor_6.0
+10         psinensis_gene_ensembl     Pelodiscus sinensis genes (PelSin_1.0)      PelSin_1.0
 ```
-
-__Please notice that BioMart frequently updates their `mart` names, so in case of `plants_mart_26` a new mart version might have to be specified to receive a proper result from `biomart()`__.
 
 The `useMart()` function is a wrapper function provided by `biomaRt` to connect a selected BioMart
 database (`mart`) with a corresponding dataset stored within this `mart`.
 
-We select dataset `athaliana_eg_gene` and now check for available attributes (annotation data)
-that can be accessed for `Arabidopsis thaliana` genes.
+We select dataset `hsapiens_gene_ensembl` and now check for available attributes (annotation data)
+that can be accessed for `Homo sapiens` genes.
 
 ```{r,eval=FALSE}
-head(listAttributes(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_26"))), 10)
+head(listAttributes(useDataset(dataset = "hsapiens_gene_ensembl", 
+                               mart    = useMart("ENSEMBL_MART_ENSEMBL",host = "www.ensembl.org"))), 10)
 ```
 
 ```
-                    name              description
-1        ensembl_gene_id           Gene stable ID
-2  ensembl_transcript_id     Transcript stable ID
-3     ensembl_peptide_id        Protein stable ID
-4        chromosome_name Chromosome/scaffold name
-5         start_position          Gene start (bp)
-6           end_position            Gene end (bp)
-7                 strand                   Strand
-8                   band                     Band
-9       transcript_start    Transcript start (bp)
-10        transcript_end      Transcript end (bp)
+                    name           description
+1        ensembl_gene_id       Ensembl Gene ID
+2  ensembl_transcript_id Ensembl Transcript ID
+3     ensembl_peptide_id    Ensembl Protein ID
+4        ensembl_exon_id       Ensembl Exon ID
+5            description           Description
+6        chromosome_name       Chromosome Name
+7         start_position       Gene Start (bp)
+8           end_position         Gene End (bp)
+9                 strand                Strand
+10                  band                  Band
 ```
 
 Please note the nested structure of this attribute query. For an attribute query procedure
 an additional wrapper function named `useDataset()` is needed in which `useMart()` and a corresponding 
 dataset needs to be specified. The result is a table storing the name of available attributes for
-_A. thaliana_ as well as a short description.
+_Homo sapiens_ as well as a short description.
 
-Furthermore, users can retrieve all filters for _A. thaliana_ that can be specified by the actual BioMart query process.
+Furthermore, users can retrieve all filters for _Homo sapiens_ that can be specified by the actual BioMart query process.
 
 ```{r,eval=FALSE}
-head(listFilters(useDataset(dataset = "athaliana_eg_gene", mart = useMart("plants_mart_26"))), 10)
+head(listFilters(useDataset(dataset = "hsapiens_gene_ensembl", 
+                            mart    = useMart("ENSEMBL_MART_ENSEMBL",
+                                              host = "www.ensembl.org"))), 10)
 ```
 
 ```
-                                name                                         description
-1                    chromosome_name                                     Chromosome name
-2                              start                                               Start
-3                                end                                                 End
-4                             strand                                              Strand
-5                 chromosomal_region             e.g. 1:100:10000:-1, 1:100000:2000000:1
-6  with_affy_arabidopsis_ath1_121501 with Affymetrix array Arabidopsis ATH1 121501 ID(s)
-7                  with_arrayexpress                             with ArrayExpress ID(s)
-8                   with_CATMA_CATMA                  with CATMA A. thaliana probe ID(s)
-9                        with_chembl                                   with ChEMBL ID(s)
-10                         with_embl                              with ENA/GenBank ID(s)
+                 name                                               description
+1     chromosome_name                                           Chromosome name
+2               start                                           Gene Start (bp)
+3                 end                                             Gene End (bp)
+4          band_start                                                Band Start
+5            band_end                                                  Band End
+6        marker_start                                              Marker Start
+7          marker_end                                                Marker End
+8       encode_region                                             Encode region
+9              strand                                                    Strand
+10 chromosomal_region Chromosome Regions (e.g 1:100:10000:-1,1:100000:200000:1)
 ```
 
 After accumulating all this information, it is now possible to perform an actual BioMart query
 by using the `getBM()` function.
 
 In this example we will retrieve attributes: `start_position`,`end_position` and `description`
-for the _A. thaliana_ genes `"AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", and "AT1G06200"`.
-Since the input genes are `tair locus ids`, we need to specify the `filters` argument `filters = "tair_locus"`.
+for the _Homo sapiens_ gene `"GUCA2A"`.
+
+Since the input genes are `ensembl gene ids`, we need to specify the `filters` argument `filters = "tair_locus"`.
 
 ```{r,eval=FALSE}
 # 1) select a mart and data set
-mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_26"))
+mart <- useDataset("hsapiens_gene_ensembl", 
+                   mart = useMart("ENSEMBL_MART_ENSEMBL",
+                                  host = "www.ensembl.org"))
 
 # 2) run a biomart query using the getBM() function
 # and specify the attributes and filter arguments
-geneSet <- c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200")
+geneSet <- "GUCA2A"
 
 resultTable <- getBM(attributes = c("start_position","end_position","description"),
-                     filters = "tair_locus", values = geneSet, mart = mart)
+                     filters = "hgnc_symbol", values = geneSet, mart = mart)
 
 resultTable 
 ```
 
 ```
-start_position end_position                                                             description
-1        1847883      1849693        Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06090]
-2        1851530      1853019        Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06100]
-3        1853077      1855031             SKP1/ASK-interacting protein 16 [Source:TAIR;Acc:AT1G06110]
-4        1855943      1857718        Fatty acid desaturase family protein [Source:TAIR;Acc:AT1G06120]
-5        1857767      1860730                              glyoxalase 2-4 [Source:TAIR;Acc:AT1G06130]
-6        1894336      1896935 Peptidase S24/S26A/S26B/S26C family protein [Source:TAIR;Acc:AT1G06200]
+  start_position end_position
+1       42162691     42164718
+                                                                   description
+1 guanylate cyclase activator 2A (guanylin) [Source:HGNC Symbol;Acc:HGNC:4682]
 ```
 
 When using `getBM()` users can pass all attributes retrieved by `listAttributes()` to the `attributes` argument
 of the `getBM()` function.
 
-# Getting Started with biomartr
+# Getting Started with `biomartr`
 
 This query methodology provided by `BioMart` and the `biomaRt` package is a very well defined approach
 for accurate annotation retrieval. Nevertheless, when learning this query methodology it (subjectively)
@@ -205,8 +190,8 @@ perform a BioMart query
 __Note that dataset names change very frequently due to the update of dataset versions.
 So in case some query functions do not work properly, users should check with
 `organismAttributes(update = TRUE)` whether or not their dataset name has been changed.
-For example, `organismAttributes("Arabidopsis thaliana", topic = "id", update = TRUE)`
-might reveal that the dataset `plants_mart_26` has changed to `plants_mart_27`__.
+For example, `organismAttributes("Homo sapiens", topic = "id", update = TRUE)`
+might reveal that the dataset `ENSEMBL_MART_ENSEMBL` has changed.__
 
 
 ## Retrieve marts, datasets, attributes, and filters with biomartr
@@ -219,60 +204,87 @@ The `getMarts()` function allows users to list all available databases that can 
 # load the biomartr package
 library(biomartr)
 
-# list all available databases (top 10)
-head(getMarts(), 10)
+# list all available databases
+getMarts()
 ```
 
 ```
-                    mart                               version
-1                ensembl          ENSEMBL GENES 80 (SANGER UK)
-2                    snp      ENSEMBL VARIATION 80 (SANGER UK)
-3             regulation     ENSEMBL REGULATION 80 (SANGER UK)
-4                   vega                  VEGA 60  (SANGER UK)
-5          fungi_mart_26             ENSEMBL FUNGI 26 (EBI UK)
-6    fungi_variations_26   ENSEMBL FUNGI VARIATION 26 (EBI UK)
-7        metazoa_mart_26           ENSEMBL METAZOA 26 (EBI UK)
-8  metazoa_variations_26 ENSEMBL METAZOA VARIATION 26 (EBI UK)
-9         plants_mart_26            ENSEMBL PLANTS 26 (EBI UK)
-10  plants_variations_26  ENSEMBL PLANTS VARIATION 26 (EBI UK)
+                   mart               version
+1  ENSEMBL_MART_ENSEMBL      Ensembl Genes 83
+2 ENSEMBL_MART_SEQUENCE              Sequence
+3 ENSEMBL_MART_ONTOLOGY              Ontology
+4  ENSEMBL_MART_GENOMIC   Genomic features 83
+5      ENSEMBL_MART_SNP  Ensembl Variation 83
+6  ENSEMBL_MART_FUNCGEN Ensembl Regulation 83
+7     ENSEMBL_MART_VEGA               Vega 63
+8                 pride        PRIDE (EBI UK)
 ```
 
 ### Retrieve Available Datasets from a Specific Mart
 
 Now users can select a specific database to list all available datasets
 that can be accessed through this database. In this example we choose
-the `plants_mart_26` database.
+the `ENSEMBL_MART_ENSEMBL` database.
 
 ```{r,eval=FALSE}
-head(getDatasets(mart = "plants_mart_26") , 5)
+head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL") , 5)
 ```
 
 ```
-               dataset                                                 description
-1    atauschii_eg_gene          Aegilops tauschii genes (ASM34733v1 (2013-12-BGI))
-2 obrachyantha_eg_gene Oryza brachyantha genes (Oryza_brachyantha.v1.4b (OGEv1.4))
-3     ppersica_eg_gene                   Prunus persica genes (Prupe1_0 (2013-03))
-4 ptrichocarpa_eg_gene            Populus trichocarpa genes (JGI2.0 (2010-01-JGI))
-5   stuberosum_eg_gene           Solanum tuberosum genes (SolTub_3.0 (SolTub_3.0))
-                            version
-1          ASM34733v1 (2013-12-BGI)
-2 Oryza_brachyantha.v1.4b (OGEv1.4)
-3                Prupe1_0 (2013-03)
-4              JGI2.0 (2010-01-JGI)
-5           SolTub_3.0 (SolTub_3.0)
+                         dataset                                description version
+1         oanatinus_gene_ensembl     Ornithorhynchus anatinus genes (OANA5)   OANA5
+2        cporcellus_gene_ensembl            Cavia porcellus genes (cavPor3) cavPor3
+3        gaculeatus_gene_ensembl     Gasterosteus aculeatus genes (BROADS1) BROADS1
+4         lafricana_gene_ensembl         Loxodonta africana genes (loxAfr3) loxAfr3
+5 itridecemlineatus_gene_ensembl Ictidomys tridecemlineatus genes (spetri2) spetri2
 ```
 
-Now you can select the dataset `athaliana_eg_gene` and list all available attributes that can be retrieved from this dataset.
+Now you can select the dataset `hsapiens_gene_ensembl` and list all available attributes that can be retrieved from this dataset.
 
 ```{r,eval=FALSE}
-tail(getDatasets(mart = "plants_mart_26") , 3)
+tail(getDatasets(mart = "ENSEMBL_MART_ENSEMBL") , 38)
 ```
 
 ```
-              dataset                                          description                  version
-37 macuminata_eg_gene           Musa acuminata genes (MA1 (2012-08-Cirad))      MA1 (2012-08-Cirad)
-38    turartu_eg_gene     Triticum urartu genes (ASM34745v1 (2013-04-BGI)) ASM34745v1 (2013-04-BGI)
-39  athaliana_eg_gene Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))  TAIR10 (2010-09-TAIR10)
+                       dataset                                 description      version
+32       hsapiens_gene_ensembl              Homo sapiens genes (GRCh38.p5)    GRCh38.p5
+33       pformosa_gene_ensembl       Poecilia formosa genes (PoeFor_5.1.2) PoeFor_5.1.2
+34          mfuro_gene_ensembl  Mustela putorius furo genes (MusPutFur1.0) MusPutFur1.0
+35     tbelangeri_gene_ensembl            Tupaia belangeri genes (tupBel1)      tupBel1
+36        ggallus_gene_ensembl               Gallus gallus genes (Galgal4)      Galgal4
+37    xtropicalis_gene_ensembl           Xenopus tropicalis genes (JGI4.2)       JGI4.2
+38      ecaballus_gene_ensembl              Equus caballus genes (EquCab2)      EquCab2
+39        pabelii_gene_ensembl                  Pongo abelii genes (PPYG2)        PPYG2
+40     xmaculatus_gene_ensembl   Xiphophorus maculatus genes (Xipmac4.4.2)  Xipmac4.4.2
+41         drerio_gene_ensembl                  Danio rerio genes (GRCz10)       GRCz10
+42     lchalumnae_gene_ensembl         Latimeria chalumnae genes (LatCha1)      LatCha1
+43  tnigroviridis_gene_ensembl Tetraodon nigroviridis genes (TETRAODON8.0) TETRAODON8.0
+44   amelanoleuca_gene_ensembl      Ailuropoda melanoleuca genes (ailMel1)      ailMel1
+45       mmulatta_gene_ensembl               Macaca mulatta genes (MMUL_1)       MMUL_1
+46      pvampyrus_gene_ensembl           Pteropus vampyrus genes (pteVam1)      pteVam1
+47        panubis_gene_ensembl              Papio anubis genes (PapAnu2.0)    PapAnu2.0
+48     mdomestica_gene_ensembl       Monodelphis domestica genes (monDom5)      monDom5
+49  acarolinensis_gene_ensembl       Anolis carolinensis genes (AnoCar2.0)    AnoCar2.0
+50         vpacos_gene_ensembl               Vicugna pacos genes (vicPac1)      vicPac1
+51      tsyrichta_gene_ensembl            Tarsius syrichta genes (tarSyr1)      tarSyr1
+52     ogarnettii_gene_ensembl          Otolemur garnettii genes (OtoGar3)      OtoGar3
+53  dmelanogaster_gene_ensembl       Drosophila melanogaster genes (BDGP6)        BDGP6
+54       mmurinus_gene_ensembl          Microcebus murinus genes (micMur1)      micMur1
+55      loculatus_gene_ensembl        Lepisosteus oculatus genes (LepOcu1)      LepOcu1
+56       olatipes_gene_ensembl                Oryzias latipes genes (HdrR)         HdrR
+57       ggorilla_gene_ensembl           Gorilla gorilla genes (gorGor3.1)    gorGor3.1
+58      oprinceps_gene_ensembl         Ochotona princeps genes (OchPri2.0)    OchPri2.0
+59         dordii_gene_ensembl             Dipodomys ordii genes (dipOrd1)      dipOrd1
+60         oaries_gene_ensembl                 Ovis aries genes (Oar_v3.1)     Oar_v3.1
+61      mmusculus_gene_ensembl              Mus musculus genes (GRCm38.p4)    GRCm38.p4
+62     mgallopavo_gene_ensembl            Meleagris gallopavo genes (UMD2)         UMD2
+63        gmorhua_gene_ensembl                Gadus morhua genes (gadMor1)      gadMor1
+64 aplatyrhynchos_gene_ensembl     Anas platyrhynchos genes (BGI_duck_1.0) BGI_duck_1.0
+65       saraneus_gene_ensembl               Sorex araneus genes (sorAra1)      sorAra1
+66      sharrisii_gene_ensembl       Sarcophilus harrisii genes (DEVIL7.0)     DEVIL7.0
+67       meugenii_gene_ensembl           Macropus eugenii genes (Meug_1.0)     Meug_1.0
+68        btaurus_gene_ensembl                   Bos taurus genes (UMD3.1)       UMD3.1
+69    cfamiliaris_gene_ensembl          Canis familiaris genes (CanFam3.1)    CanFam3.1
 ```
 
 ### Retrieve Available Attributes from a Specific Dataset
@@ -281,22 +293,22 @@ Now that you have selected a database (`plants_mart_26`) and a dataset (`athalia
 users can list all available attributes for this dataset using the `getAttributes()` function.
 
 ```{r,eval=FALSE}
-# list all available attributes for dataset: athaliana_eg_gene
-head( getAttributes(mart = "plants_mart_26", dataset = "athaliana_eg_gene"), 10 )
+# list all available attributes for dataset: hsapiens_gene_ensembl
+head( getAttributes(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl"), 10 )
 ```
 
 ```
-                    name              description
-1        ensembl_gene_id           Gene stable ID
-2  ensembl_transcript_id     Transcript stable ID
-3     ensembl_peptide_id        Protein stable ID
-4        chromosome_name Chromosome/scaffold name
-5         start_position          Gene start (bp)
-6           end_position            Gene end (bp)
-7                 strand                   Strand
-8                   band                     Band
-9       transcript_start    Transcript start (bp)
-10        transcript_end      Transcript end (bp)
+                    name           description
+1        ensembl_gene_id       Ensembl Gene ID
+2  ensembl_transcript_id Ensembl Transcript ID
+3     ensembl_peptide_id    Ensembl Protein ID
+4        ensembl_exon_id       Ensembl Exon ID
+5            description           Description
+6        chromosome_name       Chromosome Name
+7         start_position       Gene Start (bp)
+8           end_position         Gene End (bp)
+9                 strand                Strand
+10                  band                  Band
 ```
 
 ### Retrieve Available Filters from a Specific Dataset
@@ -305,22 +317,22 @@ Finally, the `getFilters()` function allows users to list available filters
 for a specific dataset that can be used for a `biomart()` query.
 
 ```{r,eval=FALSE}
-# list all available filters for dataset: athaliana_eg_gene
-head( getFilters(mart = "plants_mart_26", dataset = "athaliana_eg_gene"), 10 )
+# list all available filters for dataset: hsapiens_gene_ensembl
+head( getFilters(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl"), 10 )
 ```
 
 ```
-                                name                                         description
-1                    chromosome_name                                     Chromosome name
-2                              start                                               Start
-3                                end                                                 End
-4                             strand                                              Strand
-5                 chromosomal_region             e.g. 1:100:10000:-1, 1:100000:2000000:1
-6  with_affy_arabidopsis_ath1_121501 with Affymetrix array Arabidopsis ATH1 121501 ID(s)
-7                  with_arrayexpress                             with ArrayExpress ID(s)
-8                   with_CATMA_CATMA                  with CATMA A. thaliana probe ID(s)
-9                        with_chembl                                   with ChEMBL ID(s)
-10                         with_embl                              with ENA/GenBank ID(s)
+                 name                                               description
+1     chromosome_name                                           Chromosome name
+2               start                                           Gene Start (bp)
+3                 end                                             Gene End (bp)
+4          band_start                                                Band Start
+5            band_end                                                  Band End
+6        marker_start                                              Marker Start
+7          marker_end                                                Marker End
+8       encode_region                                             Encode region
+9              strand                                                    Strand
+10 chromosomal_region Chromosome Regions (e.g 1:100:10000:-1,1:100000:200000:1)
 ```
 
 ## Organism Specific Retrieval of Information
@@ -339,69 +351,60 @@ the inital call of the subsequent functions, again will take time to retrieve al
 ```{r,eval=FALSE}
 # retrieving all available datasets and biomart connections for
 # a specific query organism (scientific name)
-organismBM(organism = "Arabidopsis thaliana")
-```
-
-```
-         organism_name                                                          description
-1 Arabidopsis thaliana                 Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))
-2 Arabidopsis thaliana            Arabidopsis thaliana variations (TAIR10 (2010-09-TAIR10))
-3 Arabidopsis thaliana Arabidopsis thaliana structural Variations (TAIR10 (2010-09-TAIR10))
-4 Arabidopsis thaliana                 Arabidopsis thaliana genes (TAIR10 (2010-09-TAIR10))
-5 Arabidopsis thaliana            Arabidopsis thaliana variations (TAIR10 (2010-09-TAIR10))
-6 Arabidopsis thaliana Arabidopsis thaliana structural Variations (TAIR10 (2010-09-TAIR10))
-                    mart                dataset                 version
-1         plants_mart_26      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
-2   plants_variations_26       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
-3   plants_variations_26 athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
-4     ENSEMBL_MART_PLANT      athaliana_eg_gene TAIR10 (2010-09-TAIR10)
-5 ENSEMBL_MART_PLANT_SNP       athaliana_eg_snp TAIR10 (2010-09-TAIR10)
-6 ENSEMBL_MART_PLANT_SNP athaliana_eg_structvar TAIR10 (2010-09-TAIR10)
-
-```
-
-The result is a table storing all `marts` and `datasets` from which annotations can be retrieved
-for _Arabidopsis thaliana_. Furthermore, a short description as well as the version of the dataset
-being accessed (very useful for publications) is returned.
-
-Users will observe that 3 different `marts` provide 6 different `datasets` storing annotation information for
-_A. thaliana_.
-
-Another example using `Homo sapiens`.
-
-```{r,eval=FALSE}
-# retrieving all available datasets and biomart connections for "Homo sapiens"
 organismBM(organism = "Homo sapiens")
 ```
 
 ```
-   organism_name                                                        description       mart
-1   Homo sapiens                                     Homo sapiens genes (GRCh38.p2)    ensembl
-2   Homo sapiens         Homo sapiens Short Variation (SNPs and indels) (GRCh38.p2)        snp
-3   Homo sapiens                      Homo sapiens Structural Variation (GRCh38.p2)        snp
-4   Homo sapiens Homo sapiens Somatic Short Variation (SNPs and indels) (GRCh38.p2)        snp
-5   Homo sapiens              Homo sapiens Somatic Structural Variation (GRCh38.p2)        snp
-6   Homo sapiens                       Homo sapiens Regulatory Evidence (GRCh38.p2) regulation
-7   Homo sapiens                            Homo sapiens Binding Motifs (GRCh38.p2) regulation
-8   Homo sapiens                       Homo sapiens Regulatory Features (GRCh38.p2) regulation
-9   Homo sapiens                      Homo sapiens miRNA Target Regions (GRCh38.p2) regulation
-10  Homo sapiens                       Homo sapiens Regulatory Segments (GRCh38.p2) regulation
-11  Homo sapiens                  Homo sapiens Other Regulatory Regions (GRCh38.p2) regulation
-12  Homo sapiens                                     Homo sapiens genes (GRCh38.p2)       vega
-                         dataset   version
-1          hsapiens_gene_ensembl GRCh38.p2
-2                   hsapiens_snp GRCh38.p2
-3             hsapiens_structvar GRCh38.p2
-4               hsapiens_snp_som GRCh38.p2
-5         hsapiens_structvar_som GRCh38.p2
-6     hsapiens_annotated_feature GRCh38.p2
-7         hsapiens_motif_feature GRCh38.p2
-8    hsapiens_regulatory_feature GRCh38.p2
-9  hsapiens_mirna_target_feature GRCh38.p2
-10 hsapiens_segmentation_feature GRCh38.p2
-11     hsapiens_external_feature GRCh38.p2
-12            hsapiens_gene_vega GRCh38.p2
+   organism_name
+1   Homo sapiens
+2   Homo sapiens
+3   Homo sapiens
+4   Homo sapiens
+5   Homo sapiens
+6   Homo sapiens
+7   Homo sapiens
+8   Homo sapiens
+9   Homo sapiens
+10  Homo sapiens
+11  Homo sapiens
+12  Homo sapiens
+                                                                                    description
+1                                                                Homo sapiens genes (GRCh38.p5)
+2          Homo sapiens Short Variants (SNPs and indels excluding flagged variants) (GRCh38.p5)
+3                                                  Homo sapiens Structural Variants (GRCh38.p5)
+4                                          Homo sapiens Somatic Structural Variants (GRCh38.p5)
+5  Homo sapiens Somatic Short Variants (SNPs and indels excluding flagged variants) (GRCh38.p5)
+6                                                  Homo sapiens Regulatory Evidence (GRCh38.p5)
+7                                                       Homo sapiens Binding Motifs (GRCh38.p5)
+8                                                  Homo sapiens Regulatory Features (GRCh38.p5)
+9                                                 Homo sapiens miRNA Target Regions (GRCh38.p5)
+10                                                 Homo sapiens Regulatory Segments (GRCh38.p5)
+11                                            Homo sapiens Other Regulatory Regions (GRCh38.p5)
+12                                                               Homo sapiens genes (GRCh38.p5)
+                   mart                       dataset   version
+1  ENSEMBL_MART_ENSEMBL         hsapiens_gene_ensembl GRCh38.p5
+2      ENSEMBL_MART_SNP                  hsapiens_snp GRCh38.p5
+3      ENSEMBL_MART_SNP            hsapiens_structvar GRCh38.p5
+4      ENSEMBL_MART_SNP        hsapiens_structvar_som GRCh38.p5
+5      ENSEMBL_MART_SNP              hsapiens_snp_som GRCh38.p5
+6  ENSEMBL_MART_FUNCGEN    hsapiens_annotated_feature GRCh38.p5
+7  ENSEMBL_MART_FUNCGEN        hsapiens_motif_feature GRCh38.p5
+8  ENSEMBL_MART_FUNCGEN   hsapiens_regulatory_feature GRCh38.p5
+9  ENSEMBL_MART_FUNCGEN hsapiens_mirna_target_feature GRCh38.p5
+10 ENSEMBL_MART_FUNCGEN hsapiens_segmentation_feature GRCh38.p5
+11 ENSEMBL_MART_FUNCGEN     hsapiens_external_feature GRCh38.p5
+12    ENSEMBL_MART_VEGA            hsapiens_gene_vega GRCh38.p5
+
 ```
+
+The result is a table storing all `marts` and `datasets` from which annotations can be retrieved
+for _Homo sapiens_. Furthermore, a short description as well as the version of the dataset
+being accessed (very useful for publications) is returned.
+
+Users will observe that 3 different `marts` provide 6 different `datasets` storing annotation information for
+_Homo sapiens_.
+
+__Please note however, that scientific names of organisms must be written correctly! For ex. "Homo Sapiens" will be treated differently (not recognized) than "Homo sapiens" (recognized).__
 
 Similar to the `biomaRt` package query methodology, users need to specify `attributes` and `filters` to be able to perform
 accurate BioMart queries. Here the functions `organismAttributes()` and `organismFilters()` provide useful and intuitive
@@ -409,71 +412,108 @@ concepts to obtain this information.
 
 
 ```{r,eval=FALSE}
-# return available attributes for "Arabidopsis thaliana"
-head(organismAttributes("Arabidopsis thaliana"), 20)
+# return available attributes for "Homo sapiens"
+head(organismAttributes("Homo sapiens"), 20)
 ```
 
 ```
-Source: local data frame [20 x 4]
-
-                                   name                                 description           mart
-1                             3_utr_end                                  3' UTR end plants_mart_26
-2                           3_utr_start                                3' UTR start plants_mart_26
-3                                  3utr                                      3' UTR plants_mart_26
-4                             5_utr_end                                  5' UTR end plants_mart_26
-5                           5_utr_start                                5' UTR start plants_mart_26
-6                                  5utr                                      5' UTR plants_mart_26
-7                      affy_ath1_121501 Affymetrix array Arabidopsis ATH1 121501 ID plants_mart_26
-8                                allele                              Variant allele plants_mart_26
-9                    allele_string_2076                 Consequence specific allele plants_mart_26
-10                 alyrata_eg_chrom_end                 Arabidopsis lyrata end (bp) plants_mart_26
-11               alyrata_eg_chrom_start               Arabidopsis lyrata start (bp) plants_mart_26
-12                alyrata_eg_chromosome      Arabidopsis lyrata chromosome/scaffold plants_mart_26
-13                      alyrata_eg_gene           Arabidopsis lyrata gene stable ID plants_mart_26
-14          alyrata_eg_homolog_ancestor                                    Ancestor plants_mart_26
-15                alyrata_eg_homolog_dn                                          dS plants_mart_26
-16                alyrata_eg_homolog_ds                                          dN plants_mart_26
-17   alyrata_eg_homolog_ensembl_peptide        Arabidopsis lyrata protein stable ID plants_mart_26
-18 alyrata_eg_homolog_is_tree_compliant        Orthology confidence [0 low, 1 high] plants_mart_26
-19           alyrata_eg_homolog_perc_id                                  % identity plants_mart_26
-20        alyrata_eg_homolog_perc_id_r1               Arabidopsis lyrata % identity plants_mart_26
+                       name                                description               dataset
+1           ensembl_gene_id                            Ensembl Gene ID hsapiens_gene_ensembl
+2     ensembl_transcript_id                      Ensembl Transcript ID hsapiens_gene_ensembl
+3        ensembl_peptide_id                         Ensembl Protein ID hsapiens_gene_ensembl
+4           ensembl_exon_id                            Ensembl Exon ID hsapiens_gene_ensembl
+5               description                                Description hsapiens_gene_ensembl
+6           chromosome_name                            Chromosome Name hsapiens_gene_ensembl
+7            start_position                            Gene Start (bp) hsapiens_gene_ensembl
+8              end_position                              Gene End (bp) hsapiens_gene_ensembl
+9                    strand                                     Strand hsapiens_gene_ensembl
+10                     band                                       Band hsapiens_gene_ensembl
+11         transcript_start                      Transcript Start (bp) hsapiens_gene_ensembl
+12           transcript_end                        Transcript End (bp) hsapiens_gene_ensembl
+13 transcription_start_site             Transcription Start Site (TSS) hsapiens_gene_ensembl
+14        transcript_length Transcript length (including UTRs and CDS) hsapiens_gene_ensembl
+15           transcript_tsl             Transcript Support Level (TSL) hsapiens_gene_ensembl
+16 transcript_gencode_basic                   GENCODE basic annotation hsapiens_gene_ensembl
+17        transcript_appris                          APPRIS annotation hsapiens_gene_ensembl
+18       external_gene_name                       Associated Gene Name hsapiens_gene_ensembl
+19     external_gene_source                     Associated Gene Source hsapiens_gene_ensembl
+20 external_transcript_name                 Associated Transcript Name hsapiens_gene_ensembl
+                   mart
+1  ENSEMBL_MART_ENSEMBL
+2  ENSEMBL_MART_ENSEMBL
+3  ENSEMBL_MART_ENSEMBL
+4  ENSEMBL_MART_ENSEMBL
+5  ENSEMBL_MART_ENSEMBL
+6  ENSEMBL_MART_ENSEMBL
+7  ENSEMBL_MART_ENSEMBL
+8  ENSEMBL_MART_ENSEMBL
+9  ENSEMBL_MART_ENSEMBL
+10 ENSEMBL_MART_ENSEMBL
+11 ENSEMBL_MART_ENSEMBL
+12 ENSEMBL_MART_ENSEMBL
+13 ENSEMBL_MART_ENSEMBL
+14 ENSEMBL_MART_ENSEMBL
+15 ENSEMBL_MART_ENSEMBL
+16 ENSEMBL_MART_ENSEMBL
+17 ENSEMBL_MART_ENSEMBL
+18 ENSEMBL_MART_ENSEMBL
+19 ENSEMBL_MART_ENSEMBL
+20 ENSEMBL_MART_ENSEMBL
 ```
 
 Users will observe that the `organismAttributes()` function returns a data.frame storing attribute names, datasets, and marts which
-are available for `Arabidopsis thaliana`.
+are available for `Homo sapiens`.
 
 An additional feature provided by `organismAttributes()` is the `topic` argument. The `topic` argument allows users to to search for specific attributes,  topics, or categories for faster filtering.
 
 ```{r,eval=FALSE}
 # search for attribute topic "id"
-head(organismAttributes("Arabidopsis thaliana", topic = "id"), 20)
+head(organismAttributes("Homo sapiens", topic = "id"), 20)
 ```
 
 ```
-Source: local data frame [20 x 4]
-
-                                           name                               description
-1            alyrata_eg_homolog_ensembl_peptide      Arabidopsis lyrata protein stable ID
-2                    alyrata_eg_homolog_perc_id                                % identity
-3                 alyrata_eg_homolog_perc_id_r1             Arabidopsis lyrata % identity
-4          atauschii_eg_homolog_ensembl_peptide       Aegilops tauschii protein stable ID
-5                  atauschii_eg_homolog_perc_id                                % identity
-6               atauschii_eg_homolog_perc_id_r1              Aegilops tauschii % identity
-7          athaliana_eg_paralog_ensembl_peptide          Representative protein stable ID
-8  athaliana_eg_paralog_paralog_ensembl_peptide                 Paralog protein stable ID
-9        atrichopoda_eg_homolog_ensembl_peptide    Amborella trichopoda protein stable ID
-10               atrichopoda_eg_homolog_perc_id                                % identity
-11            atrichopoda_eg_homolog_perc_id_r1           Amborella trichopoda % identity
-12       bdistachyon_eg_homolog_ensembl_peptide Brachypodium distachyon protein stable ID
-13               bdistachyon_eg_homolog_perc_id                                % identity
-14            bdistachyon_eg_homolog_perc_id_r1        Brachypodium distachyon % identity
-15         boleracea_eg_homolog_ensembl_peptide       Brassica oleracea protein stable ID
-16                 boleracea_eg_homolog_perc_id                                % identity
-17              boleracea_eg_homolog_perc_id_r1              Brassica oleracea % identity
-18             brapa_eg_homolog_ensembl_peptide           Brassica rapa protein stable ID
-19                     brapa_eg_homolog_perc_id                                % identity
-20                  brapa_eg_homolog_perc_id_r1                  Brassica rapa % identity
-Variables not shown: mart (chr), dataset (chr)
+                        name                                       description
+1            ensembl_gene_id                                   Ensembl Gene ID
+2      ensembl_transcript_id                             Ensembl Transcript ID
+3         ensembl_peptide_id                                Ensembl Protein ID
+4            ensembl_exon_id                                   Ensembl Exon ID
+34         study_external_id                          Study External Reference
+35                     go_id                                 GO Term Accession
+49                 dbass3_id Database of Aberrant 3' Splice Sites (DBASS3) IDs
+51                 dbass5_id Database of Aberrant 5' Splice Sites (DBASS5) IDs
+64                   hgnc_id                                        HGNC ID(s)
+68      mim_morbid_accession                              MIM Morbid Accession
+69    mim_morbid_description                            MIM Morbid Description
+73                mirbase_id                                     miRBase ID(s)
+76                protein_id              Protein (Genbank) ID [e.g. AAA02487]
+84            refseq_peptide             RefSeq Protein ID [e.g. NP_001005353]
+85  refseq_peptide_predicted   RefSeq Predicted Protein ID [e.g. XP_001720922]
+96               wikigene_id                                       WikiGene ID
+182          ensembl_gene_id                                   Ensembl Gene ID
+183    ensembl_transcript_id                             Ensembl Transcript ID
+184       ensembl_peptide_id                                Ensembl Protein ID
+213          ensembl_exon_id                                   Ensembl Exon ID
+                  dataset                 mart
+1   hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+2   hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+3   hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+4   hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+34  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+35  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+49  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+51  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+64  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+68  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+69  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+73  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+76  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+84  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+85  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+96  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+182 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+183 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+184 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+213 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
 ```
 
 Now, all `attribute names` having `id` as part of their `name` are being returned.
@@ -482,112 +522,163 @@ Another example is `topic = "homolog"`.
 
 ```{r,eval=FALSE}
 # search for attribute topic "homolog"
-head(organismAttributes("Arabidopsis thaliana", topic = "homolog"), 20)
+head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 ```
 ```
-Source: local data frame [20 x 4]
-
-                                       name                            description           mart
-1               alyrata_eg_homolog_ancestor                               Ancestor plants_mart_26
-2                     alyrata_eg_homolog_dn                                     dS plants_mart_26
-3                     alyrata_eg_homolog_ds                                     dN plants_mart_26
-4        alyrata_eg_homolog_ensembl_peptide   Arabidopsis lyrata protein stable ID plants_mart_26
-5      alyrata_eg_homolog_is_tree_compliant   Orthology confidence [0 low, 1 high] plants_mart_26
-6                alyrata_eg_homolog_perc_id                             % identity plants_mart_26
-7             alyrata_eg_homolog_perc_id_r1          Arabidopsis lyrata % identity plants_mart_26
-8             atauschii_eg_homolog_ancestor                               Ancestor plants_mart_26
-9                   atauschii_eg_homolog_dn                                     dS plants_mart_26
-10                  atauschii_eg_homolog_ds                                     dN plants_mart_26
-11     atauschii_eg_homolog_ensembl_peptide    Aegilops tauschii protein stable ID plants_mart_26
-12   atauschii_eg_homolog_is_tree_compliant   Orthology confidence [0 low, 1 high] plants_mart_26
-13             atauschii_eg_homolog_perc_id                             % identity plants_mart_26
-14          atauschii_eg_homolog_perc_id_r1           Aegilops tauschii % identity plants_mart_26
-15          atrichopoda_eg_homolog_ancestor                               Ancestor plants_mart_26
-16                atrichopoda_eg_homolog_dn                                     dS plants_mart_26
-17                atrichopoda_eg_homolog_ds                                     dN plants_mart_26
-18   atrichopoda_eg_homolog_ensembl_peptide Amborella trichopoda protein stable ID plants_mart_26
-19 atrichopoda_eg_homolog_is_tree_compliant   Orthology confidence [0 low, 1 high] plants_mart_26
-20           atrichopoda_eg_homolog_perc_id                             % identity plants_mart_26
-Variables not shown: dataset (chr)
+                                             name                            description
+229                   vpacos_homolog_ensembl_gene                 Alpaca Ensembl Gene ID
+230   vpacos_homolog_canonical_transcript_protein     Canonical Protein or Transcript ID
+231                vpacos_homolog_ensembl_peptide              Alpaca Ensembl Protein ID
+232                     vpacos_homolog_chromosome                 Alpaca Chromosome Name
+233                    vpacos_homolog_chrom_start           Alpaca Chromosome Start (bp)
+234                      vpacos_homolog_chrom_end             Alpaca Chromosome End (bp)
+235                 vpacos_homolog_orthology_type                          Homology Type
+236                        vpacos_homolog_subtype                               Ancestor
+237           vpacos_homolog_orthology_confidence   Orthology confidence [0 low, 1 high]
+238                        vpacos_homolog_perc_id  % Identity with respect to query gene
+239                     vpacos_homolog_perc_id_r1 % Identity with respect to Alpaca gene
+240                 pformosa_homolog_ensembl_gene           Amazon molly Ensembl Gene ID
+241 pformosa_homolog_canonical_transcript_protein     Canonical Protein or Transcript ID
+242              pformosa_homolog_ensembl_peptide        Amazon molly Ensembl Protein ID
+243                   pformosa_homolog_chromosome           Amazon molly Chromosome Name
+244                  pformosa_homolog_chrom_start     Amazon molly Chromosome Start (bp)
+245                    pformosa_homolog_chrom_end       Amazon molly Chromosome End (bp)
+246               pformosa_homolog_orthology_type                          Homology Type
+247                      pformosa_homolog_subtype                               Ancestor
+248         pformosa_homolog_orthology_confidence   Orthology confidence [0 low, 1 high]
+                  dataset                 mart
+229 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+230 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+231 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+232 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+233 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+234 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+235 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+236 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+237 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+238 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+239 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+240 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+241 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+242 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+243 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+244 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+245 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+246 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+247 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+248 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
 ```
 
 Or `topic = "dn"` and `topic = "ds"` for `dn` and `ds` value retrieval.
 
 ```{r,eval=FALSE}
 # search for attribute topic "dn"
-organismAttributes("Arabidopsis thaliana", topic = "dn")
+head(organismAttributes("Homo sapiens", topic = "dn"))
 ```
 ```
-Source: local data frame [44 x 4]
-
-                        name                description           mart           dataset
-1      alyrata_eg_homolog_dn                         dS plants_mart_26 athaliana_eg_gene
-2    atauschii_eg_homolog_dn                         dS plants_mart_26 athaliana_eg_gene
-3  atrichopoda_eg_homolog_dn                         dS plants_mart_26 athaliana_eg_gene
-4  bdistachyon_eg_homolog_dn                         dS plants_mart_26 athaliana_eg_gene
-5    boleracea_eg_homolog_dn                         dS plants_mart_26 athaliana_eg_gene
-6        brapa_eg_homolog_dn                         dS plants_mart_26 athaliana_eg_gene
-7                       cdna             cDNA sequences plants_mart_26 athaliana_eg_gene
-8            cdna_coding_end            cDNA coding end plants_mart_26 athaliana_eg_gene
-9          cdna_coding_start          cDNA coding start plants_mart_26 athaliana_eg_gene
-10                  cdna_end Variation end in cDNA (bp) plants_mart_26  athaliana_eg_snp
-..                       ...                        ...            ...               ...
+                                                  name                        description
+209                                  cdna_coding_start                  cDNA coding start
+210                                    cdna_coding_end                    cDNA coding end
+262                           acarolinensis_homolog_dn                                 dN
+264                 dnovemcinctus_homolog_ensembl_gene          Armadillo Ensembl Gene ID
+265 dnovemcinctus_homolog_canonical_transcript_protein Canonical Protein or Transcript ID
+266              dnovemcinctus_homolog_ensembl_peptide       Armadillo Ensembl Protein ID
+                  dataset                 mart
+209 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+210 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+262 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+264 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+265 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+266 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
 ```
 
 ```{r,eval=FALSE}
 # search for attribute topic "ds"
-organismAttributes("Arabidopsis thaliana", topic = "ds")
+head(organismAttributes("Homo sapiens", topic = "ds"))
 ```
 
 ```
-Source: local data frame [43 x 4]
-
-                        name             description           mart           dataset
-1      alyrata_eg_homolog_ds                      dN plants_mart_26 athaliana_eg_gene
-2    atauschii_eg_homolog_ds                      dN plants_mart_26 athaliana_eg_gene
-3  atrichopoda_eg_homolog_ds                      dN plants_mart_26 athaliana_eg_gene
-4  bdistachyon_eg_homolog_ds                      dN plants_mart_26 athaliana_eg_gene
-5    boleracea_eg_homolog_ds                      dN plants_mart_26 athaliana_eg_gene
-6        brapa_eg_homolog_ds                      dN plants_mart_26 athaliana_eg_gene
-7                    cds_end   CDS end (within cDNA) plants_mart_26 athaliana_eg_gene
-8               cds_end_2076                 CDS end plants_mart_26 athaliana_eg_gene
-9                  cds_start CDS start (within cDNA) plants_mart_26 athaliana_eg_gene
-10            cds_start_2076               CDS start plants_mart_26 athaliana_eg_gene
-..   
+                        name description               dataset                 mart
+48                      ccds     CCDS ID hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+199               cds_length  CDS Length hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+214                cds_start   CDS Start hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+215                  cds_end     CDS End hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+263 acarolinensis_homolog_ds          dS hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+276 dnovemcinctus_homolog_ds          dS hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
 ```
 
 Analogous to the `organismAttributes()` function, the `organismFilters()` function returns
 all filters that are available for a query organism of interest.
 
 ```{r,eval=FALSE}
-# return available filters for "Arabidopsis thaliana"
-head(organismFilters("Arabidopsis thaliana"), 20)
+# return available filters for "Homo sapiens"
+head(organismFilters("Homo sapiens"), 20)
 ```
 
 ```
-Source: local data frame [20 x 4]
-
-                     name                                    description           mart                dataset
-1        affy_ath1_121501 Affymetrix array Arabidopsis ATH1 121501 ID(s) plants_mart_26      athaliana_eg_gene
-2            arrayexpress                             ArrayExpress ID(s) plants_mart_26      athaliana_eg_gene
-3                 biotype                                           Type plants_mart_26      athaliana_eg_gene
-4          blastprodom_pf                                   ProDom ID(s) plants_mart_26      athaliana_eg_gene
-5             catma_catma                  CATMA A. thaliana probe ID(s) plants_mart_26      athaliana_eg_gene
-6                  chembl                                   ChEMBL ID(s) plants_mart_26      athaliana_eg_gene
-7                chr_name                                Chromosome name plants_mart_26       athaliana_eg_snp
-8             chrom_start                                          Start plants_mart_26       athaliana_eg_snp
-9      chromosomal_region        e.g. 1:100:10000:-1, 1:100000:2000000:1 plants_mart_26      athaliana_eg_gene
-10        chromosome_name                                Chromosome name plants_mart_26      athaliana_eg_gene
-11       consequence_type                               Consequence type plants_mart_26       athaliana_eg_snp
-12   dgva_study_accession                              Study description plants_mart_26 athaliana_eg_structvar
-13 distance_to_transcript                      Distance to transcript <= plants_mart_26       athaliana_eg_snp
-14                   embl                              ENA/GenBank ID(s) plants_mart_26      athaliana_eg_gene
-15                    end                                            End plants_mart_26      athaliana_eg_gene
-16           ensembl_gene                             Gene stable ID(s): plants_mart_26       athaliana_eg_snp
-17        ensembl_gene_id                              Gene stable ID(s) plants_mart_26      athaliana_eg_gene
-18     ensembl_peptide_id                           Protein stable ID(s) plants_mart_26      athaliana_eg_gene
-19  ensembl_transcript_id                        Transcript stable ID(s) plants_mart_26      athaliana_eg_gene
-20             entrezgene                               EntrezGene ID(s) plants_mart_26      athaliana_eg_gene
+                                     name
+1                         chromosome_name
+2                                   start
+3                                     end
+4                              band_start
+5                                band_end
+6                            marker_start
+7                              marker_end
+8                           encode_region
+9                                  strand
+10                     chromosomal_region
+11                              with_hgnc
+12              with_hgnc_transcript_name
+13                   with_ox_arrayexpress
+14                              with_ccds
+15                            with_chembl
+16       with_ox_clone_based_ensembl_gene
+17 with_ox_clone_based_ensembl_transcript
+18          with_ox_clone_based_vega_gene
+19    with_ox_clone_based_vega_transcript
+20                            with_dbass3
+                                                 description               dataset
+1                                            Chromosome name hsapiens_gene_ensembl
+2                                            Gene Start (bp) hsapiens_gene_ensembl
+3                                              Gene End (bp) hsapiens_gene_ensembl
+4                                                 Band Start hsapiens_gene_ensembl
+5                                                   Band End hsapiens_gene_ensembl
+6                                               Marker Start hsapiens_gene_ensembl
+7                                                 Marker End hsapiens_gene_ensembl
+8                                              Encode region hsapiens_gene_ensembl
+9                                                     Strand hsapiens_gene_ensembl
+10 Chromosome Regions (e.g 1:100:10000:-1,1:100000:200000:1) hsapiens_gene_ensembl
+11                                           with HGNC ID(s) hsapiens_gene_ensembl
+12                              with HGNC transcript name(s) hsapiens_gene_ensembl
+13                                   with ArrayExpress ID(s) hsapiens_gene_ensembl
+14                                           with CCDS ID(s) hsapiens_gene_ensembl
+15                                         with ChEMBL ID(s) hsapiens_gene_ensembl
+16                       with clone based Ensembl gene ID(s) hsapiens_gene_ensembl
+17                 with clone based Ensembl transcript ID(s) hsapiens_gene_ensembl
+18                          with clone based VEGA gene ID(s) hsapiens_gene_ensembl
+19                    with clone based VEGA transcript ID(s) hsapiens_gene_ensembl
+20                                         with DBASS3 ID(s) hsapiens_gene_ensembl
+                   mart
+1  ENSEMBL_MART_ENSEMBL
+2  ENSEMBL_MART_ENSEMBL
+3  ENSEMBL_MART_ENSEMBL
+4  ENSEMBL_MART_ENSEMBL
+5  ENSEMBL_MART_ENSEMBL
+6  ENSEMBL_MART_ENSEMBL
+7  ENSEMBL_MART_ENSEMBL
+8  ENSEMBL_MART_ENSEMBL
+9  ENSEMBL_MART_ENSEMBL
+10 ENSEMBL_MART_ENSEMBL
+11 ENSEMBL_MART_ENSEMBL
+12 ENSEMBL_MART_ENSEMBL
+13 ENSEMBL_MART_ENSEMBL
+14 ENSEMBL_MART_ENSEMBL
+15 ENSEMBL_MART_ENSEMBL
+16 ENSEMBL_MART_ENSEMBL
+17 ENSEMBL_MART_ENSEMBL
+18 ENSEMBL_MART_ENSEMBL
+19 ENSEMBL_MART_ENSEMBL
+20 ENSEMBL_MART_ENSEMBL
 ```
 
 The `organismFilters()` function also allows users to search for filters that correspond to
@@ -595,30 +686,52 @@ a specific topic or category.
 
 ```{r,eval=FALSE}
 # search for filter topic "id"
-head(organismFilters("Arabidopsis thaliana", topic = "id"), 20)
+head(organismFilters("Homo sapiens", topic = "id"), 20)
 ```
 
 ```
-Source: local data frame [16 x 4]
-
-                                name                                         description           mart
-1                    ensembl_gene_id                                   Gene stable ID(s) plants_mart_26
-2                 ensembl_peptide_id                                Protein stable ID(s) plants_mart_26
-3              ensembl_transcript_id                             Transcript stable ID(s) plants_mart_26
-4                   external_gene_id                                        Gene name(s) plants_mart_26
-5                   go_evidence_code                                    GO evidence code plants_mart_26
-6                        interpro_id                                      InterPro ID(s) plants_mart_26
-7                       nasc_gene_id                                     NASC gene ID(s) plants_mart_26
-8                   po_evidence_code                                    PO evidence code plants_mart_26
-9                         protein_id                           ENA/GenBank protein ID(s) plants_mart_26
-10                    refseq_peptide                                Refseq protein ID(s) plants_mart_26
-11                       wikigene_id                                      WikiGene ID(s) plants_mart_26
-12 with_affy_arabidopsis_ath1_121501 with Affymetrix array Arabidopsis ATH1 121501 ID(s) plants_mart_26
-13                 with_nasc_gene_id                                with NASC gene ID(s) plants_mart_26
-14     with_omeridionalis_eg_homolog                Orthologous Oryza meridionalis Genes plants_mart_26
-15                   with_protein_id                      with ENA/GenBank protein ID(s) plants_mart_26
-16               with_refseq_peptide                           with RefSeq protein ID(s) plants_mart_26
-Variables not shown: dataset (chr)
+                             name                                        description
+31                     with_go_id                          with GO Term Accession(s)
+36                with_mim_morbid                             with MIM disease ID(s)
+43                with_protein_id                       with protein (Genbank) ID(s)
+53            with_refseq_peptide                          with RefSeq protein ID(s)
+54  with_refseq_peptide_predicted                with RefSeq predicted protein ID(s)
+63                ensembl_gene_id          Ensembl Gene ID(s) [e.g. ENSG00000139618]
+64          ensembl_transcript_id    Ensembl Transcript ID(s) [e.g. ENST00000380152]
+65             ensembl_peptide_id       Ensembl protein ID(s) [e.g. ENSP00000369497]
+66                ensembl_exon_id          Ensembl exon ID(s) [e.g. ENSE00001508081]
+67                        hgnc_id                        HGNC ID(s) [e.g. HGNC:8030]
+87                          go_id             GO Term Accession(s) [e.g. GO:0005515]
+92           mim_morbid_accession              MIM Morbid Accession(s) [e.g. 540000]
+93                     mirbase_id                   miRBase ID(s) [e.g. hsa-mir-137]
+97                     protein_id            Protein (Genbank) ID(s) [e.g. ACU09872]
+105                refseq_peptide           RefSeq protein ID(s) [e.g. NP_001005353]
+106      refseq_peptide_predicted RefSeq predicted protein ID(s) [e.g. XP_011520427]
+119                   wikigene_id                       WikiGene ID(s) [e.g. 115286]
+197              go_evidence_code                                   GO Evidence code
+300            with_validated_snp                        Variant supporting evidence
+325                with_validated                        Variant supporting evidence
+                  dataset                 mart
+31  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+36  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+43  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+53  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+54  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+63  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+64  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+65  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+66  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+67  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+87  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+92  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+93  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+97  hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+105 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+106 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+119 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+197 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+300 hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+325          hsapiens_snp ENSEMBL_MART_ENSEMBL
 ```
 
 ## Performing BioMart queries with biomartr
@@ -630,48 +743,41 @@ organism centric way. The main function to perform BioMart queries
 is `biomart()`.
 
 
-For the following examples we will assume that we are interested in the annotation of specific genes from the _A. thaliana_ proteome. We want to map the corresponding refseq gene id to a set of other gene ids used in other databases. For this purpose, first we need consult the `organismAttributes()` function.
+For the following examples we will assume that we are interested in the annotation of specific genes from the _Homo sapiens_ proteome. We want to map the corresponding refseq gene id to a set of other gene ids used in other databases. For this purpose, first we need consult the `organismAttributes()` function.
 
 ```{r,eval=FALSE}
-organismAttributes("Arabidopsis thaliana", topic = "id")
+head(organismAttributes("Homo sapiens", topic = "id"))
 ```
 
 ```
-Source: local data frame [186 x 4]
-
-                                           name                            description           mart           dataset
-1            alyrata_eg_homolog_ensembl_peptide   Arabidopsis lyrata protein stable ID plants_mart_26 athaliana_eg_gene
-2                    alyrata_eg_homolog_perc_id                             % identity plants_mart_26 athaliana_eg_gene
-3                 alyrata_eg_homolog_perc_id_r1          Arabidopsis lyrata % identity plants_mart_26 athaliana_eg_gene
-4          atauschii_eg_homolog_ensembl_peptide    Aegilops tauschii protein stable ID plants_mart_26 athaliana_eg_gene
-5                  atauschii_eg_homolog_perc_id                             % identity plants_mart_26 athaliana_eg_gene
-6               atauschii_eg_homolog_perc_id_r1           Aegilops tauschii % identity plants_mart_26 athaliana_eg_gene
-7          athaliana_eg_paralog_ensembl_peptide       Representative protein stable ID plants_mart_26 athaliana_eg_gene
-8  athaliana_eg_paralog_paralog_ensembl_peptide              Paralog protein stable ID plants_mart_26 athaliana_eg_gene
-9        atrichopoda_eg_homolog_ensembl_peptide Amborella trichopoda protein stable ID plants_mart_26 athaliana_eg_gene
-10               atrichopoda_eg_homolog_perc_id                             % identity plants_mart_26 athaliana_eg_gene
-..                                          ...                                    ...            ...               ...
+                    name              description               dataset                 mart
+1        ensembl_gene_id          Ensembl Gene ID hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+2  ensembl_transcript_id    Ensembl Transcript ID hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+3     ensembl_peptide_id       Ensembl Protein ID hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+4        ensembl_exon_id          Ensembl Exon ID hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+34     study_external_id Study External Reference hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
+35                 go_id        GO Term Accession hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
 ```
 
 ```{r,eval=FALSE}
-# retrieve the proteome of Arabidopsis thaliana from refseq
+# retrieve the proteome of Homo sapiens from refseq
 getProteome( db       = "refseq",
-             kingdom  = "plant",
-             organism = "Arabidopsis thaliana",
+             kingdom  = "vertebrate_mammalian",
+             organism = "Homo sapiens",
              path     = file.path("_ncbi_downloads","proteomes") )
 
 
-file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
+file_path <- file.path("_ncbi_downloads","proteomes","Homo_sapiens_protein.faa.gz")
 
-Ath_proteome <- read_proteome(file_path, format = "fasta")
+Hsapiens_proteome <- read_proteome(file_path, format = "fasta")
 
 # remove splice variants from id
-gene_set <- unlist(sapply(strsplit(Ath_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
+gene_set <- unlist(sapply(strsplit(Hsapiens_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
 
 result_BM <- biomart( genes      = gene_set,
-                      mart       = "plants_mart_26", 
-                      dataset    = "athaliana_eg_gene",
-                      attributes = c("tair_locus","ensembl_peptide_id",
+                      mart       = "ENSEMBL_MART_ENSEMBL", 
+                      dataset    = "hsapiens_gene_ensembl",
+                      attributes = c("ensembl_gene_id","ensembl_peptide_id",
                                      "external_transcript_id","interpro_id",
                                      "nasc_gene_id"),
                       filters    = "refseq_peptide")
@@ -713,50 +819,27 @@ stored as `tair locus id`.
 
 The `getGO()` function takes several arguments as input to retrieve GO information from BioMart. 
 First, the scientific name of the `organism` of interest needs to be specified. Furthermore, a set of
-`gene ids` as well as their corresponding `filter` notation (`AT1G06090` gene ids have `filter` notation `tair_locus`; see `organismFilters()` for details)
+`gene ids` as well as their corresponding `filter` notation (`GUCA2A` gene ids have `filter` notation `hgnc_symbol`; see `organismFilters()` for details)
 need to be specified. The `database` argument then defines the database from which GO information shall be retrieved.
 
 ```{r,eval=FALSE}
-# search for GO terms of 6 Arabidopsis thaliana genes in tair locus id notation
-GO_tbl <- getGO(organism = "Arabidopsis thaliana",
-                genes    = c("AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200"),
-                filters  = "tair_locus",
-                database = "BioMart")
-
-# look at the GO information
-GO_tbl[ , c("tair_locus","go_accession","go_name_1006")]
+# search for GO terms of an example Homo sapiens gene
+GO_tbl <- getGO(organism = "Homo sapiens", 
+                genes    = "GUCA2A",
+                filters  = "hgnc_symbol")
 ```
 
 ```
-   tair_locus go_accession
-1   AT1G06110   GO:0019243
-2   AT1G06110   GO:0019005
-3   AT1G06110   GO:0005515
-4   AT1G06110   GO:0016567
-5   AT1G06110   GO:0008150
-6   AT1G06120   GO:0016717
-7   AT1G06120   GO:0006631
-8   AT1G06120   GO:0006636
-9   AT1G06120   GO:0005789
-10  AT1G06120   GO:0005783
-11  AT1G06120   GO:0006629
-12  AT1G06120   GO:0006633
-13  AT1G06120   GO:0055114
-14  AT1G06120   GO:0016491
-15  AT1G06120   GO:0016021
-16  AT1G06120   GO:0016020
-17  AT1G06130   GO:0008270
-18  AT1G06130   GO:0006750
-19  AT1G06130   GO:0004416
-20  AT1G06130   GO:0019243
-21  AT1G06130   GO:0019344
-22  AT1G06130   GO:0009536
-23  AT1G06130   GO:0009507
-24  AT1G06130   GO:0046872
-25  AT1G06130   GO:0016787
-26  AT1G06200   GO:0008236
-27  AT1G06200   GO:0006508
-28  AT1G06200   GO:0016020
+  hgnc_symbol                       goslim_goa_description goslim_goa_accession
+1      GUCA2A                           biological_process           GO:0008150
+2      GUCA2A                           molecular_function           GO:0003674
+3      GUCA2A cellular nitrogen compound metabolic process           GO:0034641
+4      GUCA2A                           cellular_component           GO:0005575
+5      GUCA2A                         biosynthetic process           GO:0009058
+6      GUCA2A             small molecule metabolic process           GO:0044281
+7      GUCA2A                                    organelle           GO:0043226
+8      GUCA2A                    enzyme regulator activity           GO:0030234
+9      GUCA2A                         extracellular region           GO:0005576
 ```
 
 Hence, for each _gene id_ the resulting table stores all annotated GO terms found in BioMart.
