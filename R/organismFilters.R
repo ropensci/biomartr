@@ -25,11 +25,11 @@
 #' allowing subsequent queries to perform much faster.
 #' @examples \dontrun{
 #' 
-#' # return available filters for "Arabidopsis thaliana"
-#' head(organismFilters("Arabidopsis thaliana"), 20)
+#' # return available filters for "Homo sapiens"
+#' head(organismFilters("Homo sapiens"), 20)
 #' 
 #' # search for filter topic "id" 
-#' head(organismFilters("Arabidopsis thaliana", topic = "id"), 20)
+#' head(organismFilters("Homo sapiens", topic = "id"), 20)
 #' 
 #' }
 #' @references
@@ -56,7 +56,6 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
         orgMarts <- names(table(orgBM[ , "mart"]))
         martList <- lapply(orgMarts, function(mart) dplyr::filter(orgBM,mart == mart))
         
-        fsep <- .Platform$file.sep
         filtersTXT <- paste0("listFilters_",stringr::str_replace(organism," ","_"))
         
         if(!file.exists(file.path(tempdir(),"_biomart"))){
@@ -104,21 +103,20 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
                                 colClasses       = rep("character", 4),
                                 stringsAsFactors = FALSE)        
         
-        summ_filterTable <- dplyr::summarise(dplyr::group_by(filterTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
+        # summ_filterTable <- dplyr::summarise(dplyr::group_by(filterTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
         
         if(!is.null(topic)){
                 
-                findTopic <- which(sapply(summ_filterTable[ , "name"],function(x) stringr::str_detect(x,topic)))
+                findTopic <- which(sapply(filterTable[ , "name"],function(x) stringr::str_detect(x,topic)))
                 
-                if(dim(summ_filterTable[findTopic , ])[1] == 0)
+                if(dim(filterTable[findTopic , ])[1] == 0)
                         stop("Unfortunately the topic '", topic ,"' could not be found.")
                 
-                return(summ_filterTable[findTopic , ])
+                return(filterTable[findTopic , ])
                 
         } else {
                 
-                return(summ_filterTable)
-                
+                return(filterTable)
         }
 }
 
