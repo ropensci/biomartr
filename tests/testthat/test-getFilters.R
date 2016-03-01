@@ -10,9 +10,9 @@ test_that("The getFilters() interface works properly..",{
         skip_on_cran()
         
         marts <- getMarts()[ , "mart"]
-        plant_mart <- which(stringr::str_match(marts, "plants_mart_") != "NA")
+        elsembl_mart <- which(stringr::str_match(marts, "ENSEMBL_MART_ENSEMBL") != "NA")
         
-        attrib <- getFilters(mart = as.character(marts[plant_mart]), dataset = "athaliana_eg_gene")
+        attrib <- getFilters(mart = as.character(marts[elsembl_mart]), dataset = "hsapiens_gene_ensembl")
         
         expect_true(equal_lists(as.list(attrib[1 , ]), list(name = "chromosome_name",
                                                             description = "Chromosome name")))
