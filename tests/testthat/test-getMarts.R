@@ -11,7 +11,7 @@ test_that("The getMarts() interface works properly..",{
         skip_on_cran()
         
         m <- getMarts()
-        expect_identical(as.character(getMarts()[1, 1]),"ensembl")
+        expect_identical(as.character(getMarts()[1, 1]),"ENSEMBL_MART_ENSEMBL")
 })
 
 
