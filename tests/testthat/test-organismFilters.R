@@ -9,6 +9,6 @@ test_that("The organismFilters() interface works properly..",{
         
         skip_on_cran()
         
-        oF <- organismFilters("Arabidopsis thaliana")
-        expect_identical(as.character(oF[1, 1]),"affy_ath1_121501")
+        oF <- organismFilters("Homo sapiens")
+        expect_identical(as.character(oF[1, 1]),"chromosome_name")
 })
