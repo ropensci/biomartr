@@ -18,15 +18,14 @@ storing all available filters for a specific dataset.
 \examples{
 \dontrun{
 # search for available datasets
-head(getMarts(), 10)
+getMarts()
 
 
-# choose database (mart): "plants_mart_25" -> Note: mart versions change over time
-# and get a table of all available datasets from this BioMart database
-head(getDatasets(mart = "plants_mart_25"), 10)
+# choose database (mart): "ENSEMBL_MART_ENSEMBL"
+head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
 
-# choose dataset: "athaliana_eg_gene"
-head(getFilters(mart = "plants_mart_25", dataset = "athaliana_eg_gene") , 5)
+# choose dataset: "hsapiens_gene_ensembl"
+head(getFilters(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl") , 5)
 
 }
 
