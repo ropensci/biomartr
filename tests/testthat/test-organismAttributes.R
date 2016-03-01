@@ -9,6 +9,6 @@ test_that("The organismAttributes() interface works properly..",{
         
         skip_on_cran()
         
-        oattr <- organismAttributes("Arabidopsis thaliana")
-        expect_identical(as.character(oattr[1, 1]),"3_utr_end")
+        oattr <- organismAttributes("Homo sapiens")
+        expect_identical(as.character(oattr[1, 1]),"ensembl_gene_id")
 })
