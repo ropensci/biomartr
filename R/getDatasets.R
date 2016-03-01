@@ -7,12 +7,11 @@
 #' @examples
 #' \dontrun{
 #' # search for available datasets
-#' head(getMarts(), 10)
+#' getMarts()
 #' 
 #' 
-#' # choose database: "plants_mart_25" -> these versions vary over time
-#' # and get a table of all available datasets from this BioMart database
-#' head(getDatasets("plants_mart_25"), 10)
+#' # choose database: "ENSEMBL_MART_ENSEMBL"
+#' head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
 #' 
 #' }
 #' 
@@ -23,7 +22,7 @@ getDatasets <- function(mart){
         if(!is.character(mart))
                 stop("Please use a character string as mart.")
         
-        datasetPage <- httr::handle(paste0("http://www.biomart.org/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
+        datasetPage <- httr::handle(paste0("http://www.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
         xmlContentDatasets <- httr::GET(handle = datasetPage)
         
         tryCatch({
