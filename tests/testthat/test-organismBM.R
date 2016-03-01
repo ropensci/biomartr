@@ -9,6 +9,6 @@ test_that("The organismBM() interface works properly..",{
         
         skip_on_cran()
         
-        oBM <- organismBM("Arabidopsis thaliana")
-        expect_identical(as.character(oBM[1, 4]),"athaliana_eg_gene")
+        oBM <- organismBM("Homo sapiens")
+        expect_identical(as.character(oBM[1, 1]),"hsapiens_gene_ensembl")
 })
