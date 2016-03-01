@@ -35,7 +35,7 @@ head(organismBM(), 20)
 
 # retrieving all available datasets and biomart connections for
 # a specific query organism (scientific name)
-organismBM(organism = "Arabidopsis thaliana")
+organismBM(organism = "Homo sapiens")
 
 # you can also update the downloaded version using the "update = TRUE" argument
 head(organismBM(update = TRUE), 20)
