@@ -24,7 +24,7 @@
 #' 
 #' # retrieving all available datasets and biomart connections for
 #' # a specific query organism (scientific name)
-#' organismBM(organism = "Arabidopsis thaliana")
+#' organismBM(organism = "Homo sapiens")
 #' 
 #' # you can also update the downloaded version using the "update = TRUE" argument
 #' head(organismBM(update = TRUE), 20)
@@ -48,9 +48,8 @@
 
 organismBM <- function(organism = NULL, update = FALSE){
         
-        fsep <- .Platform$file.sep
-        
-        organism_name <- name <- description <- mart <- dataset <- NULL
+
+        organism_name <- description <- mart <- dataset <- NULL
         
         if (update){
                 
@@ -91,9 +90,9 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         if (!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
                 
-                remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("Eurexpress Biomart","Sigenae Oligo Annotation (Ensembl 59)","Sigenae Oligo Annotation (Ensembl 56)"))
-                all_marts <- all_marts[ -remove.corrupt.marts , ]
-                
+                 remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("pride"))
+                 all_marts <- all_marts[ -remove.corrupt.marts , ]
+                 
                 all_datasets <- do.call(rbind,lapply(as.vector(all_marts[ , "mart"]), 
                                        function(mart){ df <- as.data.frame(getDatasets(mart = mart))
                                                        df <- dplyr::mutate(df,mart = rep(mart,length(mart)))
