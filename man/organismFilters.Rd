@@ -42,11 +42,11 @@ allowing subsequent queries to perform much faster.
 \examples{
 \dontrun{
 
-# return available filters for "Arabidopsis thaliana"
-head(organismFilters("Arabidopsis thaliana"), 20)
+# return available filters for "Homo sapiens"
+head(organismFilters("Homo sapiens"), 20)
 
 # search for filter topic "id" 
-head(organismFilters("Arabidopsis thaliana", topic = "id"), 20)
+head(organismFilters("Homo sapiens", topic = "id"), 20)
 
 }
 }
