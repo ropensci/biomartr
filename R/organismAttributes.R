@@ -25,14 +25,14 @@
 #' allowing subsequent queries to perform much faster.
 #' @examples \dontrun{
 #' 
-#' # return available attributes for "Arabidopsis thaliana"
-#' head(organismAttributes("Arabidopsis thaliana"), 20)
+#' # return available attributes for "Homo sapiens"
+#' head(organismAttributes("Homo sapiens"), 20)
 #' 
 #' # search for attribute topic "id" 
-#' head(organismAttributes("Arabidopsis thaliana", topic = "id"), 20)
+#' head(organismAttributes("Homo sapiens", topic = "id"), 20)
 #' 
 #' # search for attribute topic "homolog" 
-#' head(organismAttributes("Arabidopsis thaliana", topic = "homolog"), 20)
+#' head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 #' 
 #' }
 #' @references
@@ -106,24 +106,23 @@ organismAttributes <- function(organism, update = FALSE, topic = NULL){
                                           colClasses       = rep("character", 4),
                                           stringsAsFactors = FALSE)        
         
-        summ_attrTable <- dplyr::summarise(dplyr::group_by(attributeTable, name),
-                                           description = names(table(description)),
-                                           mart        = names(table(mart)),
-                                           dataset     = names(table(dataset)))
+#         summ_attrTable <- dplyr::summarise(dplyr::group_by(attributeTable, name),
+#                                            description = names(table(description)),
+#                                            mart        = names(table(mart)),
+#                                            dataset     = names(table(dataset)))
         
         if(!is.null(topic)){
                 
-                findTopic <- which(sapply(summ_attrTable[ , "name"],function(x) stringr::str_detect(x,topic)))
+                findTopic <- which(sapply(attributeTable[ , "name"],function(x) stringr::str_detect(x,topic)))
                 
-                if(dim(summ_attrTable[findTopic , ])[1] == 0)
+                if(dim(attributeTable[findTopic , ])[1] == 0)
                         stop("Unfortunately the topic '", topic ,"' could not be found.")
                 
-                return(summ_attrTable[findTopic , ])
+                return(attributeTable[findTopic , ])
                 
         } else {
                 
-                return(summ_attrTable)
-                
+                return(attributeTable)
         }
 }
 
