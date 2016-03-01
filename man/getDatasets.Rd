@@ -16,12 +16,11 @@ storing all available datasets for a selected BioMart databases.
 \examples{
 \dontrun{
 # search for available datasets
-head(getMarts(), 10)
+getMarts()
 
 
-# choose database: "plants_mart_25" -> these versions vary over time
-# and get a table of all available datasets from this BioMart database
-head(getDatasets("plants_mart_25"), 10)
+# choose database: "ENSEMBL_MART_ENSEMBL"
+head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
 
 }
 
