@@ -20,14 +20,14 @@ storing all available attributes for a specific dataset.
 \dontrun{
 
 # search for available datasets
-head(getMarts(), 10)
+getMarts()
 
-# choose database (mart): "plants_mart_25"
+# choose database (mart): ENSEMBL_MART_ENSEMBL
 # and get a table of all available datasets from this BioMart database
-head(getDatasets(mart = "plants_mart_25"), 10)
+head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
 
-# choose dataset: "athaliana_eg_gene"
-head(getAttributes(mart = "plants_mart_25", dataset = "athaliana_eg_gene") , 5)
+# choose dataset: "hsapiens_gene_ensembl"
+head(getAttributes(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl") , 5)
 
 }
 
