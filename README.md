@@ -109,16 +109,11 @@ Getting Started with `biomartr`:
 
 #### Genome Retrieval
 
-* `getGenome()` : A function for downloading a specific genome stored on the NCBI ftp:// server
-* `listGenomes()` : Function to list all genomes available on the NCBI ftp:// server
+* `getGenome()` : Download a specific genome stored on the NCBI ftp:// server
+* `listGenomes()` : List all genomes available on the NCBI ftp:// server
 * `is.genome.available()` : Check Genome Availability
-#### Proteome Retrieval
-
-* `getProteome()` : A function for downloading a specific proteome stored on the NCBI ftp:// server
-
-#### CDS Retrieval
-
-* `getCDS()` : A function for downloading a specific CDS file (genome) stored on the NCBI ftp:// server
+* `getProteome()` : Download a specific proteome stored on the NCBI ftp:// server
+* `getCDS()` : Download a specific CDS file (genome) stored on the NCBI ftp:// server
 
 #### Database Retrieval
 
