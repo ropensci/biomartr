@@ -54,14 +54,9 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
         if(!is.genome.available(organism = organism))
                 stop(paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
         
-        
         if(db == "refseq"){
-                
-                
                 if(!file.exists(path)){
-                        
                         dir.create(path, recursive = TRUE)
-                        
                 }
                 
                 subfolders <- c("archaea","bacteria", "fungi", "invertebrate", "plant",
@@ -85,17 +80,14 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
                 if(!is.element(organism,unlist(check_organisms)))
                         stop("Please choose a valid organism.")
                 
-                
                 utils::download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/assembly_summary.txt"), 
                                      destfile = file.path(tempdir(),"assembly_summary.txt"))
                 summary.file <- readr::read_tsv(file.path(tempdir(),"assembly_summary.txt"))
                 
                 organism_name <- refseq_category <- version_status <- NULL
                 query <- dplyr::filter(summary.file, stringr::str_detect(organism_name,organism), 
-                                       (refseq_category == "representative genome"), 
+                                       ((refseq_category == "representative genome") || (refseq_category == "reference genome")), 
                                        (version_status == "latest"))
-                
-                
                 
                 organism <- stringr::str_replace(organism," ","_")
                 
@@ -114,7 +106,6 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
                         
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)
-                        
                         
                         print(paste0("The genome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_protein.faa.gz"),"' ."))
                 } else {
