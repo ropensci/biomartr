@@ -11,7 +11,7 @@ test_that("The getGenome() interface works properly..",{
                      path     = tempdir())
         
         
-        file_path <- file.path(tempdir(),"Arabidopsis_thaliana_genome.fna.gz")
+        file_path <- file.path(tempdir(),"Arabidopsis_thaliana_genomic.fna.gz")
         Ath_Genome <- read_cds(file_path, format = "fasta")
         
         expect_identical(Ath_Genome[1,geneids],"NC_000932.1")
