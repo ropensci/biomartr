@@ -777,9 +777,7 @@ gene_set <- unlist(sapply(strsplit(Hsapiens_proteome[1:5 , geneids], ".",fixed =
 result_BM <- biomart( genes      = gene_set,
                       mart       = "ENSEMBL_MART_ENSEMBL", 
                       dataset    = "hsapiens_gene_ensembl",
-                      attributes = c("ensembl_gene_id","ensembl_peptide_id",
-                                     "external_transcript_id","interpro_id",
-                                     "nasc_gene_id"),
+                      attributes = c("ensembl_gene_id","ensembl_peptide_id"),
                       filters    = "refseq_peptide")
 
 result_BM 
@@ -787,18 +785,12 @@ result_BM
 ```
 
 ```
-   refseq_peptide tair_locus ensembl_peptide_id external_transcript_id interpro_id nasc_gene_id
-1    NP_001030613  AT3G01100        AT3G01100.2                   HYP1   IPR003864    AT3G01100
-2    NP_001030613  AT3G01100        AT3G01100.2                   HYP1   IPR027815    AT3G01100
-3    NP_001030614  AT3G01310        AT3G01310.2                T22N4.6   IPR000560    AT3G01310
-4    NP_001030614  AT3G01310        AT3G01310.2                T22N4.6   IPR013651    AT3G01310
-5    NP_001030614  AT3G01310        AT3G01310.2                T22N4.6   IPR029033    AT3G01310
-6    NP_001030615  AT3G01323        AT3G01323.1                                       AT3G01323
-7    NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR001680    AT3G01340
-8    NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR015943    AT3G01340
-9    NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR017986    AT3G01340
-10   NP_001030616  AT3G01340        AT3G01340.2                T22N4.3   IPR020472    AT3G01340
-11   NP_001030617  AT3G01360        AT3G01360.2                T22N4.1   IPR006904    AT3G01360
+  refseq_peptide ensembl_gene_id ensembl_peptide_id
+1      NP_000005 ENSG00000175899    ENSP00000323929
+2      NP_000006 ENSG00000156006    ENSP00000286479
+3      NP_000007 ENSG00000117054    ENSP00000359878
+4      NP_000008 ENSG00000122971    ENSP00000242592
+5      NP_000009 ENSG00000072778    ENSP00000349297
 ```
 
 The `biomart()` function takes as arguments a set of genes (gene ids specified in the `filter` argument), the corresponding `mart` and `dataset`, as well as the `attributes` which shall be returned.
