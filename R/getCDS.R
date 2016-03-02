@@ -91,6 +91,10 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                                        ((refseq_category == "representative genome") || (refseq_category == "reference genome")), 
                                        (version_status == "latest"))
                 
+                if (nrow(query) > 1){
+                        query <- query[1, ]
+                }
+                
                 organism <- stringr::str_replace(organism," ","_")
                 
                 download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
