@@ -27,7 +27,7 @@ The `biomartr` package therefore, aims to provide users with easy to use and div
 
 The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes or entire genomes such as biological pathway analyses and biological sequence retrieval.
 
-Users of the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions allowing them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr`. The `biomartr` package is designed to achieve the highest degree of reproducible phylotranscriptomics research from data retrieval to data visualization.
+Users of the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions allowing them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr`. The `biomartr` package is designed to achieve the highest degree of reproducible _evolutionary transcriptomics_ research from data retrieval to data visualization.
 
 
 ## Workflow Design
