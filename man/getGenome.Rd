@@ -49,7 +49,7 @@ getGenome( db       = "refseq",
            organism = "Arabidopsis thaliana", 
            path = file.path("_ncbi_downloads","genomes"))
 
-file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genome.fna.gz")
+file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
 Ath_genome <- read_genome(file_path, format = "fasta")
 
 }
