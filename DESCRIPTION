@@ -4,7 +4,7 @@ Version: 0.0.3
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Description: Perform biological data retrieval and functional annotation with
-    R. This tool provies API functions to the BioMart database and genome retrieval
+    R. This tool provides API functions to the BioMart database and genome retrieval
     functions for bulk retrieval of genomes.
 VignetteBuilder: knitr
 NeedsCompilation: yes
