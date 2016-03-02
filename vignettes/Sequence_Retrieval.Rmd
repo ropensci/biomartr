@@ -68,10 +68,10 @@ length(listGenomes())
 ```
 
 ```
-[1] 13074
+[1] 15512
 ```
 
-Hence, currently 13074 genomes (including all kingdoms of life) are stored on [NCBI](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) servers.
+Hence, currently 15512 genomes (including all kingdoms of life) are stored on [NCBI](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) servers.
 
 
 Optionally, users can also specify the database for which the availability of organisms shall be checked.
@@ -92,10 +92,10 @@ length(listGenomes(database = "refseq"))
 ```
 
 ```
-[1] 4896
+[1] 5519
 ```
 
-This result shows that so far (year 2015) 4896 genomes are stored in refseq.
+This result shows that so far (year 2016) 5519 genomes are stored in refseq.
 
 The simplest way to work with `listGenomes()` is to print available genomes to the console.
 
@@ -105,11 +105,11 @@ head(listGenomes() , 5)
 ```
 
 ```
-[1] "'Chrysanthemum coronarium' phytoplasma"      
-[2] "'Deinococcus soli' Cha et al. 2014"          
-[3] "Abaca bunchy top virus"                      
-[4] "Abalone herpesvirus Victoria/AUS/2009"       
-[5] "Abalone shriveling syndrome-associated virus"
+[1] "'Chrysanthemum coronarium' phytoplasma"         
+[2] "'Deinococcus soli' Cha et al. 2014"             
+[3] "'Echinacea purpurea' witches'-broom phytoplasma"
+[4] "Abaca bunchy top virus"                         
+[5] "Abalone herpesvirus Victoria/AUS/2009"
 ```
 
 In case users are interested in a detailed output of the corresponding organism file
@@ -121,18 +121,18 @@ head(listGenomes(details = TRUE) , 5)
 ```
 
 ```
-                                 organism_name kingdoms                       group
-1       'Chrysanthemum coronarium' phytoplasma Bacteria                 Tenericutes
-2           'Deinococcus soli' Cha et al. 2014 Bacteria         Deinococcus-Thermus
-3                       Abaca bunchy top virus  Viruses               ssDNA viruses
-4        Abalone herpesvirus Victoria/AUS/2009  Viruses dsDNA viruses, no RNA stage
-5 Abalone shriveling syndrome-associated virus  Viruses dsDNA viruses, no RNA stage
-      subgroup file_size_MB chrs organelles plasmids bio_projects
-1   Mollicutes     0.739592   NA         NA       NA            1
-2   Deinococci     3.236980    1         NA       NA            1
-3  Nanoviridae     0.006422    6         NA       NA            1
-4 unclassified     0.211518    1         NA       NA            1
-5 unclassified     0.034952    1         NA       NA            1
+                                    organism_name kingdoms                       group
+1          'Chrysanthemum coronarium' phytoplasma Bacteria         Terrabacteria group
+2              'Deinococcus soli' Cha et al. 2014 Bacteria         Terrabacteria group
+3 'Echinacea purpurea' witches'-broom phytoplasma Bacteria         Terrabacteria group
+4                          Abaca bunchy top virus  Viruses               ssDNA viruses
+5           Abalone herpesvirus Victoria/AUS/2009  Viruses dsDNA viruses, no RNA stage
+             subgroup file_size_MB chrs organelles plasmids bio_projects
+1         Tenericutes     0.739592   NA         NA       NA            1
+2 Deinococcus-Thermus     3.236980    1         NA       NA            1
+3         Tenericutes     0.545427   NA         NA       NA            1
+4         Nanoviridae     0.006422    6         NA       NA            1
+5        unclassified     0.211518    1         NA       NA            1
 ```
 
 Users will observe that the detailed information output includes the `organism_name`, `kingdom`, `group`, `subgroup`, `file_size_MB`,
@@ -147,18 +147,18 @@ head(listGenomes(kingdom = "Bacteria", details = TRUE) , 5)
 ```
 
 ```
-                           organism_name kingdoms               group              subgroup
-1 'Chrysanthemum coronarium' phytoplasma Bacteria         Tenericutes            Mollicutes
-2     'Deinococcus soli' Cha et al. 2014 Bacteria Deinococcus-Thermus            Deinococci
-3                  Abiotrophia defectiva Bacteria          Firmicutes               Bacilli
-4                 Acaricomes phytoseiuli Bacteria      Actinobacteria        Actinobacteria
-5                          Acaryochloris Bacteria       Cyanobacteria Oscillatoriophycideae
-  file_size_MB chrs organelles plasmids bio_projects
-1     0.739592   NA         NA       NA            1
-2     3.236980    1         NA       NA            1
-3     2.043440   NA         NA       NA            1
-4     2.419520   NA         NA       NA            1
-5     7.875480   NA         NA       NA            1
+                                    organism_name kingdoms               group
+1          'Chrysanthemum coronarium' phytoplasma Bacteria Terrabacteria group
+2              'Deinococcus soli' Cha et al. 2014 Bacteria Terrabacteria group
+3 'Echinacea purpurea' witches'-broom phytoplasma Bacteria Terrabacteria group
+4                           Abiotrophia defectiva Bacteria Terrabacteria group
+5                          Acaricomes phytoseiuli Bacteria Terrabacteria group
+             subgroup file_size_MB chrs organelles plasmids bio_projects
+1         Tenericutes     0.739592   NA         NA       NA            1
+2 Deinococcus-Thermus     3.236980    1         NA       NA            1
+3         Tenericutes     0.545427   NA         NA       NA            1
+4          Firmicutes     2.043440   NA         NA       NA            1
+5      Actinobacteria     2.419520   NA         NA       NA            1
 ```
 
 The following filters can be specified for the `kingdom` argument: `all`, `Archaea`, `Bacteria`, `Eukaryota`, `Viroids`, and `Viruses`.
@@ -172,8 +172,8 @@ table(ncbi_genomes[ , "kingdoms"])
 ```
 
 ```
-  Archaea  Bacteria Eukaryota   Viroids   Viruses 
-      386      6473      1454        45      4716
+ Archaea  Bacteria Eukaryota   Viroids   Viruses 
+      516      7918      1660        48      5370 
 ```
 
 Analogous computations can be performed for `group`, `subgroup`, etc.
@@ -185,64 +185,50 @@ table(ncbi_genomes[ , "group"])
 ```
 
 ```
-                   Actinobacteria                   Aenigmarchaeota 
-                              934                                 3 
-                          Animals                         Aquificae 
-                              562                                16 
-                  Armatimonadetes                     Avsunviroidae 
-                                3                                 4 
-     Bacteroidetes/Chlorobi group                       Caldiserica 
-                              481                                 2 
- Chlamydiae/Verrucomicrobia group                       Chloroflexi 
-                               60                                32 
-                   Chrysiogenetes                     Crenarchaeota 
-                                2                                60 
-                    Cyanobacteria                   Deferribacteres 
-                              103                                 6 
-              Deinococcus-Thermus                        Deltavirus 
-                               43                                 1 
-                   Diapherotrites                       Dictyoglomi 
-                                3                                 2 
-      dsDNA viruses, no RNA stage                     dsRNA viruses 
-                             2008                               213 
-                    Elusimicrobia                     Euryarchaeota 
-                                3                               236 
-Fibrobacteres/Acidobacteria group                        Firmicutes 
-                               47                              1151 
-                            Fungi                      Fusobacteria 
-                              550                                25 
-                 Gemmatimonadetes                      Korarchaeota 
-                                5                                 1 
-                    Lokiarchaeota                     Nanoarchaeota 
-                                1                                10 
-                Nanohaloarchaeota                       Nitrospinae 
-                                4                                 2 
-                      Nitrospirae                             Other 
-                               10                                15 
-                    Parvarchaeota                    Planctomycetes 
-                                2                                22 
-                           Plants                     Pospiviroidae 
-                              162                                36 
-                   Proteobacteria                          Protists 
-                             2256                               167 
-       Retro-transcribing viruses                        Satellites 
-                              130                               214 
-                     Spirochaetes                     ssDNA viruses 
-                               81                               791 
-                    ssRNA viruses                     Synergistetes 
-                             1252                                18 
-                      Tenericutes                    Thaumarchaeota 
-                              132                                49 
-            Thermodesulfobacteria                       Thermotogae 
-                                7                                26 
-               unassigned viruses              unclassified Archaea 
-                               10                                17 
-    unclassified archaeal viruses             unclassified Bacteria 
-                                2                              1004 
-              unclassified phages              unclassified viroids 
-                               35                                 5 
-          unclassified virophages              unclassified viruses 
-                                5                                53
+                  Acidobacteria                         Animals 
+                             30                             617 
+                      Aquificae                   Avsunviroidae 
+                             17                               4 
+                    Caldiserica                  Chrysiogenetes 
+                              2                               2 
+                Deferribacteres                      Deltavirus 
+                              6                               1 
+                    Dictyoglomi                     DPANN group 
+                              2                              30 
+    dsDNA viruses, no RNA stage                   dsRNA viruses 
+                           2405                             244 
+                  Elusimicrobia           environmental samples 
+                              3                               7 
+                  Euryarchaeota                       FCB group 
+                            322                             690 
+                          Fungi                    Fusobacteria 
+                            662                              31 
+Nitrospinae/Tectomicrobia group                     Nitrospirae 
+                              3                              19 
+                          Other                          Plants 
+                             18                             179 
+                  Pospiviroidae                  Proteobacteria 
+                             36                            2718 
+                       Protists                       PVC group 
+                            190                             113 
+     Retro-transcribing viruses                      Satellites 
+                            134                             223 
+                   Spirochaetes                   ssDNA viruses 
+                             84                             848 
+                  ssRNA viruses                   Synergistetes 
+                           1389                              23 
+                     TACK group             Terrabacteria group 
+                            130                            3097 
+          Thermodesulfobacteria                     Thermotogae 
+                              9                              28 
+             unassigned viruses            unclassified Archaea 
+                             11                              29 
+  unclassified archaeal viruses           unclassified Bacteria 
+                              3                            1039 
+            unclassified phages            unclassified viroids 
+                             29                               8 
+        unclassified virophages            unclassified viruses 
+                              6                              71 
 ```
 
 Users can also order organisms by their file size.
@@ -256,20 +242,31 @@ head(arrange(ncbi_genomes, desc(file_size_MB)) , 10)
 ```
 
 ```
-               organism_name  kingdoms   group      subgroup file_size_MB chrs organelles plasmids bio_projects
-1               Picea glauca Eukaryota  Plants   Land Plants     26936.20   NA         NA       NA            2
-2  Acanthoscurria geniculata Eukaryota Animals Other Animals      7178.40   NA         NA       NA            1
-3         Locusta migratoria Eukaryota Animals       Insects      5759.80   NA          1       NA            1
-4           Orycteropus afer Eukaryota Animals       Mammals      4444.08   NA          1       NA            1
-5     Chrysochloris asiatica Eukaryota Animals       Mammals      4210.11   NA          1       NA            1
-6      Elephantulus edwardii Eukaryota Animals       Mammals      3843.98   NA         NA       NA            1
-7          Triticum aestivum Eukaryota  Plants   Land Plants      3800.33    1          1       NA            6
-8            Triticum urartu Eukaryota  Plants   Land Plants      3747.05   NA          1       NA            1
-9       Dasypus novemcinctus Eukaryota Animals       Mammals      3631.52   NA          1       NA            1
-10         Nicotiana tabacum Eukaryota  Plants   Land Plants      3613.16   NA          1       NA            3
+            organism_name  kingdoms   group    subgroup file_size_MB chrs organelles
+1       Pinus lambertiana Eukaryota  Plants Land Plants     27602.70   NA         NA
+2            Picea glauca Eukaryota  Plants Land Plants     24627.00   NA          1
+3             Pinus taeda Eukaryota  Plants Land Plants     22061.90   NA         NA
+4   Pseudotsuga menziesii Eukaryota  Plants Land Plants     14673.20   NA         NA
+5      Locusta migratoria Eukaryota Animals     Insects      5759.80   NA         NA
+6        Orycteropus afer Eukaryota Animals     Mammals      4444.08   NA          1
+7  Chrysochloris asiatica Eukaryota Animals     Mammals      4210.11   NA          1
+8   Elephantulus edwardii Eukaryota Animals     Mammals      3843.98   NA         NA
+9     Apodemus sylvaticus Eukaryota Animals     Mammals      3758.14   NA         NA
+10        Triticum urartu Eukaryota  Plants Land Plants      3747.05   NA         NA
+   plasmids bio_projects
+1        NA            1
+2        NA            2
+3        NA            1
+4        NA            1
+5        NA            1
+6        NA            1
+7        NA            1
+8        NA            1
+9        NA            1
+10       NA            1
 ```
 
-This analysis shows that `Picea glauca` has the largest genome available on the NCBI server.
+This analysis shows that `Pinus lambertiana` has the largest genome available on the NCBI server.
 
 
 Internally, the `listGenomes()` function downloads the [Genome Reports](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) file
@@ -284,18 +281,18 @@ head(listGenomes(details = TRUE, update = TRUE) , 5)
 ```
 
 ```
-                                 organism_name kingdoms                       group     subgroup file_size_MB
-1       'Chrysanthemum coronarium' phytoplasma Bacteria                 Tenericutes   Mollicutes     0.739592
-2           'Deinococcus soli' Cha et al. 2014 Bacteria         Deinococcus-Thermus   Deinococci     3.236980
-3                       Abaca bunchy top virus  Viruses               ssDNA viruses  Nanoviridae     0.006422
-4        Abalone herpesvirus Victoria/AUS/2009  Viruses dsDNA viruses, no RNA stage unclassified     0.211518
-5 Abalone shriveling syndrome-associated virus  Viruses dsDNA viruses, no RNA stage unclassified     0.034952
-  chrs organelles plasmids bio_projects
-1   NA         NA       NA            1
-2    1         NA       NA            1
-3    6         NA       NA            1
-4    1         NA       NA            1
-5    1         NA       NA            1
+                                    organism_name kingdoms                       group
+1          'Chrysanthemum coronarium' phytoplasma Bacteria         Terrabacteria group
+2              'Deinococcus soli' Cha et al. 2014 Bacteria         Terrabacteria group
+3 'Echinacea purpurea' witches'-broom phytoplasma Bacteria         Terrabacteria group
+4                          Abaca bunchy top virus  Viruses               ssDNA viruses
+5           Abalone herpesvirus Victoria/AUS/2009  Viruses dsDNA viruses, no RNA stage
+             subgroup file_size_MB chrs organelles plasmids bio_projects
+1         Tenericutes     0.739592   NA         NA       NA            1
+2 Deinococcus-Thermus     3.236980    1         NA       NA            1
+3         Tenericutes     0.545427   NA         NA       NA            1
+4         Nanoviridae     0.006422    6         NA       NA            1
+5        unclassified     0.211518    1         NA       NA            1
 
 ```
 
@@ -309,8 +306,8 @@ head(listGenomes(kingdom = "Eukaryota", database = "refseq") , 20)
 ```
                     organism_name
 1               Agaricus bisporus
-2          Ajellomyces capsulatus
-3        Ajellomyces dermatitidis
+2           Auricularia subglabra
+3            Komagataella phaffii
 4           Arthroderma benhamiae
 5                Arthroderma otae
 6            Aspergillus clavatus
@@ -320,9 +317,9 @@ head(listGenomes(kingdom = "Eukaryota", database = "refseq") , 20)
 10              Aspergillus niger
 11             Aspergillus oryzae
 12            Aspergillus terreus
-13           Auricularia delicata
+13        Phaeoacremonium minimum
 14 Batrachochytrium dendrobatidis
-15        Baudoinia compniacensis
+15            Ordospora colligata
 16               Bipolaris oryzae
 17          Bipolaris sorokiniana
 18              Bipolaris zeicola
@@ -341,7 +338,7 @@ table(ncbi_genomes[ , "kingdoms"])
 
 ```
   Archaea  Bacteria Eukaryota 
-      220      4167       509
+      258      4679       582 
 ```
 
 __Note__ that when running the `listGenomes()` function for the first time, it might take a while until
@@ -381,11 +378,11 @@ getGenome( db       = "refseq",
            path     = file.path("_ncbi_downloads","genomes") )
 ```
 
-The `getGenome()` function creates a directory named `'_ncbi_downloads/genomes'` into which the corresponding genome named `Arabidopsis_thaliana_genome.fna.gz` is downloaded. The `read_genome()` function enables users to work with the genome as `data.table` object.
+The `getGenome()` function creates a directory named `'_ncbi_downloads/genomes'` into which the corresponding genome named `Arabidopsis_thaliana_genomic.fna.gz` is downloaded. The `read_genome()` function enables users to work with the genome as `data.table` object.
 
 ```{r,eval=FALSE}
-# path to genome: '_ncbi_downloads/genomes/Arabidopsis_thaliana_genome.fna.gz'
-file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genome.fna.gz")
+# path to genome: '_ncbi_downloads/genomes/Arabidopsis_thaliana_genomic.fna.gz'
+file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
 # read genome as data.table object
 Ath_genome <- read_genome(file_path, format = "fasta")
 
@@ -478,87 +475,10 @@ getProteome( db       = "refseq",
 ```
 
 Again, first we download the _A. thaliana_ proteome and furthermore are interested in the following two genes for 
-subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of the fatty acid desaturase family and take over functions in oxidoreductase activity. To access the protein sequences of these genes in a proteome downloaded from refseq, first users need to map the `tair_locus` id to the corresponding `refseq` ids.
+subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of the fatty acid desaturase family and take over functions in oxidoreductase activity. 
 
 For this purpose users can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
 
-Here we can use the `organismFilter()` function to retrieve the filter argument for `tair gene ids`.
-
-```{r,eval=FALSE}
-# search for filters related to tair
-organismFilters("Arabidopsis thaliana", topic = "tair")
-```
-
-```
-Source: local data frame [6 x 4]
-
-                   name                 description           mart           dataset
-1            tair_locus            TAIR locus ID(s) plants_mart_26 athaliana_eg_gene
-2      tair_locus_model      TAIR locus model ID(s) plants_mart_26 athaliana_eg_gene
-3           tair_symbol           TAIR symbol ID(s) plants_mart_26 athaliana_eg_gene
-4       with_tair_locus       with TAIR locus ID(s) plants_mart_26 athaliana_eg_gene
-5 with_tair_locus_model with TAIR locus model ID(s) plants_mart_26 athaliana_eg_gene
-6      with_tair_symbol      with TAIR symbol ID(s) plants_mart_26 athaliana_eg_gene
-```
-
-Users will observe that we need the filter argument `tair_locus` from `mart` `plants_mart_26` and `dataset` `athaliana_eg_gene`.
-
-To find the attribute argument for refseq ids we can use the `organismAttributes()` function.
-
-```{r,eval=FALSE}
-# search for attributes related to refseq
-organismAttributes("Arabidopsis thaliana", topic = "refseq")
-```
-
-```
-Source: local data frame [3 x 4]
-
-            name       description           mart           dataset
-1    refseq_mrna    RefSeq mRNA ID plants_mart_26 athaliana_eg_gene
-2   refseq_ncrna   RefSeq ncRNA ID plants_mart_26 athaliana_eg_gene
-3 refseq_peptide RefSeq protein ID plants_mart_26 athaliana_eg_gene
-```
-
-Now it is clear that we need the attribute argument `refseq_peptide` to get the
-refseq id of the corresponding filter `tair_locus` ids. __Please notice that BioMart frequently updates their `mart` names, so in case of `plants_mart_26` a new mart version might have to be specified to receive a proper result from `biomart()`__.
-
-```{r,eval=FALSE}
-bm <- biomart(genes      = c("AT3G01360", "AT3G01540"),
-              mart       = "plants_mart_26", 
-              dataset    = "athaliana_eg_gene",
-              attributes = "refseq_peptide",
-              filters    = "tair_locus")
-
-bm
-```
-
-```
-  tair_locus refseq_peptide
-1  AT3G01360   NP_001030617
-2  AT3G01360      NP_186785
-3  AT3G01540      NP_850492
-4  AT3G01540      NP_974206
-5  AT3G01540      NP_566141
-6  AT3G01540   NP_001030619
-```
-
-```{r,eval=FALSE}
-genes_of_interest <- which(sapply(paste0(bm[ , "refseq_peptide"],".1"),
-                                  function(gene) stringr::str_detect(gene,Ath_proteome[ , geneids])))
-
-na.omit(Ath_proteome[genes_of_interest , list(geneids, seqs)])
-```
-
-```
-          geneids
-1: NP_001030617.1
-
-seqs
-1: mgilsyavagggfavigawesldssnldpnsssgtadssspmaqirasppksvgsssipvallsslfiansffsffs
-sigsrdrvgsmiqlqivavavlflyyailtylvnsknavfvalpssittllllfgfieeflmfylqkkdvsgienryydl
-mlvpiaicvfstvfelksdssthrfaklgrgiglilqgtwflqmgvsfftglitnnctfheksrgnftikckghgdyhra
-kaiatlqfnchlalmvvvatglfsviankngylrqdhskyrplgaelenlstftldsdeedevreesnvakevglngnsshd
-```
 
 
 
