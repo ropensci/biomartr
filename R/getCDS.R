@@ -100,9 +100,10 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                 download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
                                        organism,"/latest_assembly_versions/",paste0(query$`# assembly_accession`,"_",query$asm_name),"/",paste0(query$`# assembly_accession`,"_",query$asm_name,"_rna_fna.gz"))
                 
+                
                 if (nrow(query) == 1){
                         downloader::download(download_url, 
-                                             destfile = file.path(path,paste0(organism,"_genomic.fna.gz")), mode = "wb")
+                                             destfile = file.path(path,paste0(organism,"_rna_fna.gz")), mode = "wb")
                         
                         docFile( file.name = paste0(organism,"_rna_fna.gz"),
                                  organism  = organism, 
