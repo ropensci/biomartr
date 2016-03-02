@@ -100,7 +100,7 @@ getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncb
                 
                 if (nrow(query) == 1){
                         downloader::download(download_url, 
-                                             destfile = file.path(path,paste0(organism,"_genomic.fna.gz")), mode = "wb")
+                                             destfile = file.path(path,paste0(organism,"_protein.faa.gz")), mode = "wb")
                         
                         docFile( file.name = paste0(organism,"_protein.faa.gz"),
                                  organism  = organism, 
