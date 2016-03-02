@@ -98,14 +98,14 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                 organism <- stringr::str_replace(organism," ","_")
                 
                 download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
-                                       organism,"/latest_assembly_versions/",paste0(query$`# assembly_accession`,"_",query$asm_name),"/",paste0(query$`# assembly_accession`,"_",query$asm_name,"_rna_fna.gz"))
+                                       organism,"/latest_assembly_versions/",paste0(query$`# assembly_accession`,"_",query$asm_name),"/",paste0(query$`# assembly_accession`,"_",query$asm_name,"_rna.fna.gz"))
                 
                 
                 if (nrow(query) == 1){
                         downloader::download(download_url, 
-                                             destfile = file.path(path,paste0(organism,"_rna_fna.gz")), mode = "wb")
+                                             destfile = file.path(path,paste0(organism,"_rna.fna.gz")), mode = "wb")
                         
-                        docFile( file.name = paste0(organism,"_rna_fna.gz"),
+                        docFile( file.name = paste0(organism,"_rna.fna.gz"),
                                  organism  = organism, 
                                  url       = download_url, 
                                  database  = db,
@@ -114,7 +114,7 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                         # NCBI limits requests to three per second
                         Sys.sleep(0.33)
                         
-                        print(paste0("The genome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_rna_fna.gz"),"' ."))
+                        print(paste0("The genome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_rna.fna.gz"),"' ."))
                 } else {
                         
                         warning ("File: ",download_url, " could not be loaded properly...")
