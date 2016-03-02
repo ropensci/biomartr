@@ -106,7 +106,7 @@ library(readxl)
 Drerio.OrganSpecificExpression <- read_excel("MBE_2015a_Drerio_PhyloMap.xlsx", sheet = 2, skip = 3)
 
 # select only brain specific genes
-Drerio.Brain.Genes <- unique(na.omit(Drerio.OrganSpecificExpression[ , "brain"]))
+Drerio.Brain.Genes <- unlist(unique(na.omit(Drerio.OrganSpecificExpression[ , "brain"])))
 
 # visualize enriched Phylostrata of genes annotated as brain specific
 PlotEnrichment(Drerio.PhyloMap,
@@ -153,12 +153,38 @@ organismFilters("Danio rerio", topic = "zfin_id")
 ```
 
 ```
-Source: local data frame [3 x 4]
-
-                          name                           description    mart             dataset
-1                 with_zfin_id                       with ZFIN ID(s) ensembl drerio_gene_ensembl
-2 with_zfin_id_transcript_name          with ZFIN transcript name(s) ensembl drerio_gene_ensembl
-3                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] ensembl drerio_gene_ensembl
+                            name                           description             dataset
+52                  with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
+53  with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
+103                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] drerio_gene_ensembl
+274                 with_zfin_id                       with ZFIN ID(s)    drerio_gene_vega
+286                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-121214-212]    drerio_gene_vega
+366                 with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
+367 with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
+417                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] drerio_gene_ensembl
+588                 with_zfin_id                       with ZFIN ID(s)    drerio_gene_vega
+600                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-121214-212]    drerio_gene_vega
+680                 with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
+681 with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
+731                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] drerio_gene_ensembl
+902                 with_zfin_id                       with ZFIN ID(s)    drerio_gene_vega
+914                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-121214-212]    drerio_gene_vega
+                    mart
+52  ENSEMBL_MART_ENSEMBL
+53  ENSEMBL_MART_ENSEMBL
+103 ENSEMBL_MART_ENSEMBL
+274 ENSEMBL_MART_ENSEMBL
+286 ENSEMBL_MART_ENSEMBL
+366 ENSEMBL_MART_ENSEMBL
+367 ENSEMBL_MART_ENSEMBL
+417 ENSEMBL_MART_ENSEMBL
+588 ENSEMBL_MART_ENSEMBL
+600 ENSEMBL_MART_ENSEMBL
+680 ENSEMBL_MART_ENSEMBL
+681 ENSEMBL_MART_ENSEMBL
+731 ENSEMBL_MART_ENSEMBL
+902 ENSEMBL_MART_ENSEMBL
+914 ENSEMBL_MART_ENSEMBL
 ```
 
 Now users can retrieve the corresponding GO attribute of _D. rerio_ with `organismAttributes`.
@@ -169,36 +195,130 @@ organismAttributes("Danio rerio", topic = "go")
 ```
 
 ```
-Source: local data frame [18 x 4]
-
-                                            name                             description    mart
-1  ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID ensembl
-2                     ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp) ensembl
-3                   ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp) ensembl
-4                    ggorilla_homolog_chromosome                 Gorilla Chromosome Name ensembl
-5                            ggorilla_homolog_dn                                      dN ensembl
-6                            ggorilla_homolog_ds                                      dS ensembl
-7                  ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID ensembl
-8               ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID ensembl
-9          ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high] ensembl
-10               ggorilla_homolog_orthology_type                           Homology Type ensembl
-11                      ggorilla_homolog_perc_id   % Identity with respect to query gene ensembl
-12                   ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene ensembl
-13                      ggorilla_homolog_subtype                                Ancestor ensembl
-14                                         go_id                                   GO ID ensembl
-15                               go_linkage_type                   GO Term Evidence Code ensembl
-16                          goslim_goa_accession                 GOSlim GOA Accession(s) ensembl
-17                        goslim_goa_description                  GOSlim GOA Description ensembl
-18                                      quick_go                             Quick GO ID ensembl
-Variables not shown: dataset (chr)
+                                              name                             description
+33                                           go_id                       GO Term Accession
+36                                 go_linkage_type                   GO Term Evidence Code
+38                            goslim_goa_accession                 GOSlim GOA Accession(s)
+39                          goslim_goa_description                  GOSlim GOA Description
+516                  ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID
+517  ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID
+518               ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID
+519                    ggorilla_homolog_chromosome                 Gorilla Chromosome Name
+520                   ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp)
+521                     ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp)
+522                ggorilla_homolog_orthology_type                           Homology Type
+523                       ggorilla_homolog_subtype                                Ancestor
+524          ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high]
+525                       ggorilla_homolog_perc_id   % Identity with respect to query gene
+526                    ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene
+527                            ggorilla_homolog_dn                                      dN
+528                            ggorilla_homolog_ds                                      dS
+1240                                         go_id                                   GO ID
+1241                                      quick_go                             Quick GO ID
+1370                                         go_id                       GO Term Accession
+1373                               go_linkage_type                   GO Term Evidence Code
+1375                          goslim_goa_accession                 GOSlim GOA Accession(s)
+1376                        goslim_goa_description                  GOSlim GOA Description
+1853                 ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID
+1854 ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID
+1855              ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID
+1856                   ggorilla_homolog_chromosome                 Gorilla Chromosome Name
+1857                  ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp)
+1858                    ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp)
+1859               ggorilla_homolog_orthology_type                           Homology Type
+1860                      ggorilla_homolog_subtype                                Ancestor
+1861         ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high]
+1862                      ggorilla_homolog_perc_id   % Identity with respect to query gene
+1863                   ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene
+1864                           ggorilla_homolog_dn                                      dN
+1865                           ggorilla_homolog_ds                                      dS
+2577                                         go_id                                   GO ID
+2578                                      quick_go                             Quick GO ID
+2707                                         go_id                       GO Term Accession
+2710                               go_linkage_type                   GO Term Evidence Code
+2712                          goslim_goa_accession                 GOSlim GOA Accession(s)
+2713                        goslim_goa_description                  GOSlim GOA Description
+3190                 ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID
+3191 ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID
+3192              ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID
+3193                   ggorilla_homolog_chromosome                 Gorilla Chromosome Name
+3194                  ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp)
+3195                    ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp)
+3196               ggorilla_homolog_orthology_type                           Homology Type
+3197                      ggorilla_homolog_subtype                                Ancestor
+3198         ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high]
+3199                      ggorilla_homolog_perc_id   % Identity with respect to query gene
+3200                   ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene
+3201                           ggorilla_homolog_dn                                      dN
+3202                           ggorilla_homolog_ds                                      dS
+3914                                         go_id                                   GO ID
+3915                                      quick_go                             Quick GO ID
+                 dataset                 mart
+33   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+36   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+38   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+39   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+516  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+517  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+518  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+519  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+520  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+521  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+522  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+523  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+524  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+525  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+526  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+527  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+528  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1240    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+1241    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+1370 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1373 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1375 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1376 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1853 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1854 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1855 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1856 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1857 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1858 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1859 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1860 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1861 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1862 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1863 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1864 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1865 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2577    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+2578    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+2707 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2710 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2712 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2713 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3190 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3191 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3192 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3193 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3194 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3195 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3196 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3197 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3198 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3199 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3200 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3201 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3202 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3914    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+3915    drerio_gene_vega ENSEMBL_MART_ENSEMBL
 ```
 
 Now users can specify the filter `zfin_id` and attribute `go_id` to retrieve the GO terms of corresponding gene ids (__Please note that this will take some time__).
 
 ```{r, eval=FALSE}
 # retrieve GO terms of D. rerio brain genes originating in PS5
-GO_tbl.BrainGenes <- biomart(genes      = BrainGenes.PS5[ , "ZFIN_ID"]),
-                             mart       = "ensembl",
+GO_tbl.BrainGenes <- biomart(genes      = unlist(BrainGenes.PS5[ , "ZFIN_ID"]),
+                             mart       = "ENSEMBL_MART_ENSEMBL",
                              dataset    = "drerio_gene_ensembl",
                              attributes = "go_id",
                              filters    = "zfin_id")
@@ -206,7 +326,15 @@ GO_tbl.BrainGenes <- biomart(genes      = BrainGenes.PS5[ , "ZFIN_ID"]),
 head(GO_tbl.BrainGenes)
 ```
 
-
+```
+            zfin_id      go_id
+1 ZDB-GENE-000210-6 GO:0060037
+2 ZDB-GENE-000210-6 GO:0046983
+3 ZDB-GENE-000210-7 GO:0046983
+4 ZDB-GENE-000328-4 GO:0007275
+5 ZDB-GENE-000328-4 GO:0007166
+6 ZDB-GENE-000328-4 GO:0035567
+```
 
 
 
