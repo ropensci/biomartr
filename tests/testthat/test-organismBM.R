@@ -10,5 +10,5 @@ test_that("The organismBM() interface works properly..",{
         skip_on_cran()
         
         oBM <- organismBM("Homo sapiens")
-        expect_identical(as.character(oBM[1, 1]),"hsapiens_gene_ensembl")
+        expect_identical(as.character(oBM[1, 1]),"Homo sapiens")
 })
