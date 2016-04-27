@@ -24,7 +24,6 @@ Using `biomartr`, users can retrieve either genomes, proteomes, or CDS data usin
 * `getGenome()`
 * `getProteome()`
 * `getCDS()`
-* `geneSequence()`
 
 
 ## Getting Started with Sequence Retrieval
