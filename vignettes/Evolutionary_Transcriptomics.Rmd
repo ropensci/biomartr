@@ -1,9 +1,9 @@
 ---
-title: "Combine Phylotranscriptomics with `biomartr`"
+title: "Combine Evolutionary Transcriptomics with `biomartr`"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Phylotranscriptomics using biomartr}
+  %\VignetteIndexEntry{Evolutionary Transcriptomics using biomartr}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-`Phylotranscriptomics` is a sub-field of Evolutionary Developmental Biology research investigating the evolutionary conservation of transcriptomes during development. The term `Phylotranscriptomics` defines the combination of evolutionary information with transcriptome data to capture signals of evolutionary conservation.
+Evolutionary Transcriptomics defines the concept of combining genetic sequence conservation information with gene expression levels to quantify transcriptome conservation throughout biological processes (Domazet-Loso and Tautz, 2010 Nature ; Quint, Drost et al., 2012 Nature ; Drost et al., 2015 Mol. Biol. Evol. ; Drost et al., 2016 Mol. Biol. Evol.).
 
-The [Introduction to Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd) vignette provided by the [myTAI](https://github.com/HajkD/myTAI) package
+The [Introduction to Evolutionary Transcriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd) vignette provided by the [myTAI](https://github.com/HajkD/myTAI) package
 will give users a broad overwiew of phylotranscriptomics as scientific discipline.
 
 The `biomartr` package aims to provide an interface for functional annotation
@@ -34,7 +34,7 @@ of genes (`biomartr`) with their role in development (`myTAI`) in an evolutionar
 
 ## Use Case #1: Functional Annotation of Genes Sharing a Common Evolutionary History
 
-Phylotranscriptomics aims to predict stages or periods of evolutionary conservation in
+Evolutionary Transcriptomics aims to predict stages or periods of evolutionary conservation in
 biological processes on the transcriptome level. However, finding genes sharing a [common evolutionary history](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd) could reveal how the the biological process might have evolved in the first place.
 
 In this `Use Case` we will combine functional and biological annotation obtained with `biomartr` with enriched genes obtained with [PlotEnrichment()](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd). 
