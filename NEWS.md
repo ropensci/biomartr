@@ -1,3 +1,11 @@
+biomartr 0.0.4
+===========
+
+- fixed a major bug in `organismBM()` causing the function to fail. The failure of
+this function affected all downstream `organism*()` functions. Bug is now fixed and everything
+works properly
+
+
 biomartr 0.0.3
 ===========
 
