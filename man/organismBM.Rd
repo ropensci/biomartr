@@ -20,7 +20,7 @@ organism specific biomart connections.
 }
 \details{
 This function collects all available biomart connections and returns a table storing
-the organism for which biomart connections are available as well as the corresponding mart and dataset.
+the organism for which biomart connections are available as well as the corresponding mart and database.
 }
 \note{
 When you run this function for the first time, the data retrieval procedure will take some time,

@@ -9,7 +9,7 @@
 #' @author Hajk-Georg Drost
 #' @details
 #' This function collects all available biomart connections and returns a table storing
-#' the organism for which biomart connections are available as well as the corresponding mart and dataset.
+#' the organism for which biomart connections are available as well as the corresponding mart and database.
 #'   
 #' 
 #' @note
@@ -47,7 +47,6 @@
 #' @export
 
 organismBM <- function(organism = NULL, update = FALSE){
-        
 
         organism_name <- description <- mart <- dataset <- NULL
         
@@ -75,11 +74,7 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         
         if (file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
-                all_marts <- utils::read.csv(file.path(tempdir(),"_biomart","listMarts.txt"),
-                                             header           = TRUE,
-                                             sep              = "\t",
-                                             colClasses       = rep("character", 2),
-                                             stringsAsFactors = FALSE)
+                all_marts <- readr::read_tsv(file.path(tempdir(),"_biomart","listMarts.txt"))
         
         if (update){
                 
@@ -90,15 +85,18 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         if (!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
                 
-                 remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("pride"))
-                 all_marts <- all_marts[ -remove.corrupt.marts , ]
-                 
-                all_datasets <- do.call(rbind,lapply(as.vector(all_marts[ , "mart"]), 
-                                       function(mart){ df <- as.data.frame(getDatasets(mart = mart))
-                                                       df <- dplyr::mutate(df,mart = rep(mart,length(mart)))
-                                                       return(df) } ))
-                                                        
+                remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("pride"))
                 
+                if (length(remove.corrupt.marts) > 0){
+                        all_marts <- all_marts[ -remove.corrupt.marts , ]
+                }
+                
+                all_datasets <- do.call(rbind,lapply(unlist(all_marts[ , "mart"]), 
+                                                     function(mart){ 
+                                                             df <- getDatasets(mart = mart)
+                                                             df <- dplyr::mutate(dplyr::tbl_df(df),mart = rep(mart,nrow(df)))
+                                                             return(df) } ))
+                                                        
                 utils::write.table(all_datasets,
                                    file.path(tempdir(),"_biomart","listDatasets.txt"),
                                    sep = "\t",
@@ -108,15 +106,10 @@ organismBM <- function(organism = NULL, update = FALSE){
         }
         
         if (file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
-                all_datasets <- utils::read.csv(file.path(tempdir(),"_biomart","listDatasets.txt"),
-                                                header           = TRUE,
-                                                sep              = "\t",
-                                                colClasses       = rep("character", 3),
-                                                stringsAsFactors = FALSE)
+                all_datasets <- readr::read_tsv(file.path(tempdir(),"_biomart","listDatasets.txt"))
         
-  
        all_datasets <- dplyr::mutate(all_datasets,
-                                     organism_name = sapply(all_datasets[ ,"description"], function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
+                                     organism_name = sapply(unlist(all_datasets[ ,"description"]), function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
        
        all_datasets <- dplyr::select(all_datasets, organism_name,description,mart,dataset,version)
           
