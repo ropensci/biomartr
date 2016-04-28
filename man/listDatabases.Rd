@@ -2,7 +2,7 @@
 % Please edit documentation in R/listDatabases.R
 \name{listDatabases}
 \alias{listDatabases}
-\title{Retrieve a List of Available Databases for Download}
+\title{Retrieve a List of Available NCBI Databases for Download}
 \usage{
 listDatabases(db_name = "nr", db_format = "fasta", update = FALSE)
 }

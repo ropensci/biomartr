@@ -1,4 +1,4 @@
-#' @title Retrieve a List of Available Databases for Download  
+#' @title Retrieve a List of Available NCBI Databases for Download  
 #' @description This function allows you to retrieve a list of database names and versions
 #' that can be downloaded from correspondning servers.
 #' @param db_name a character string specifying the name of the database that shall be searched for.
