@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_database.R
 \name{download_database}
 \alias{download_database}
-\title{Download a Database to Your Local Hard Drive}
+\title{Download a NCBI Database to Your Local Hard Drive}
 \usage{
 download_database(name, db_format = "blastdb", path = "DB")
 }

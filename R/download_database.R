@@ -1,4 +1,4 @@
-#' @title Download a Database to Your Local Hard Drive
+#' @title Download a NCBI Database to Your Local Hard Drive
 #' @description This function allows you to download a database selected by
 #' \code{\link{listDatabases}} to your local hard drive.
 #' @param name a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).
