@@ -8,6 +8,16 @@ Hence, the `biomartr` package is designed to achieve the highest degree of repro
 
 Additionally, the `biomartr` package allows users to retrieve entire NCBI databases using only one command (see [Database Retrieval Vignette](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)).
 
+## Tutorials
+
+Getting Started with `biomartr`:
+
+- [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
+- [NCBI Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
+- [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
+- [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
+- [Evolutionary Transcriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Evolutionary_Transcriptomics.Rmd)
+
 
 ## Installation
 
@@ -82,17 +92,6 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 - Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
 
-## Tutorials
-
-Getting Started with `biomartr`:
-
-- [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
-- [NCBI Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
-- [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
-- [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
-- [Evolutionary Transcriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Evolutionary_Transcriptomics.Rmd)
-
-
 ### BioMart Queries
 
 * `biomart()` : Main function to query the BioMart database
@@ -117,8 +116,12 @@ Getting Started with `biomartr`:
 
 #### Database Retrieval
 
-* `listDatabases()` : Retrieve a List of Available Databases for Download
-* `download_database()` : Download a Database to Your Local Hard Drive
+* `listDatabases()` : Retrieve a List of Available NCBI Databases for Download
+* `download_database()` : Download a NCBI Database to Your Local Hard Drive
+
+#### Meta-Genome Retrieval
+
+* `meta.retieval()` : Perform Meta-Genome Retieval from NCBI
 
 ### Performing Gene Ontology queries
 
