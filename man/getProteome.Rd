@@ -8,7 +8,7 @@ getProteome(db = "refseq", kingdom, organism,
   path = file.path("_ncbi_downloads", "proteomes"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the proteome shall be retrieved: 'refseq'.
+\item{db}{a character string specifying the database from which the proteome shall be retrieved: \code{refseq} or \code{genbank}.
 Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 sequence retrieval from additional databases.}
 
@@ -30,8 +30,9 @@ the proteome file in the folder '_ncbi_downloads/proteomes'.
 \details{
 Internally this function loads the the overview.txt file from NCBI:
 
- refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
-
+ refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+ 
+ genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
 
 and creates a directory '_ncbi_downloads/proteomes' to store
 the proteome of interest as fasta file for future processing.
@@ -53,7 +54,16 @@ getProteome( db       = "refseq",
 file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
 Ath_proteome <- read_proteome(file_path, format = "fasta")
 
+# download the proteome of Arabidopsis thaliana from genbank
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+getProteome( db       = "genbank", 
+             kingdom  = "plant", 
+             organism = "Arabidopsis thaliana", 
+             path     = file.path("_ncbi_downloads","proteomes") )
 
+
+file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
+Ath_proteome <- read_proteome(file_path, format = "fasta")
 }
 }
 \author{
@@ -62,9 +72,11 @@ Hajk-Georg Drost
 \references{
 \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
 
+\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank}
+
 \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
-\code{\link{read_proteome}}
+\code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
 }
 
