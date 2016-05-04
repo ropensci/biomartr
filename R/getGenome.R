@@ -1,7 +1,7 @@
 #' @title Genome Retrieval
 #' @description This function retrieves a fasta-file storing the genome of an organism of interest and stores
 #' the genome file in the folder '_ncbi_downloads/genomes'.
-#' @param db a character string specifying the database from which the genome shall be retrieved: 'refseq'.
+#' @param db a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
 #' Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 #' sequence retrieval from additional databases.
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
@@ -12,9 +12,10 @@
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
-#'  refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
+#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 #' 
-#' 
+#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+#'  
 #' and creates a directory '_ncbi_downloads/genomes' to store
 #' the genome of interest as fasta file for future processing.
 #' In case the corresponding fasta file already exists within the
@@ -33,35 +34,46 @@
 #' file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
 #' Ath_genome <- read_genome(file_path, format = "fasta")
 #' 
+#' 
+#' # download the genome of Arabidopsis thaliana from genbank
+#' # and store the corresponding genome file in '_ncbi_downloads/genomes'
+#' getGenome( db       = "genbank", 
+#'            kingdom  = "plant", 
+#'            organism = "Arabidopsis thaliana", 
+#'            path = file.path("_ncbi_downloads","genomes"))
+#' 
+#' file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
+#' Ath_genome <- read_genome(file_path, format = "fasta")
 #' }
 #' @references 
 #' 
 #' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
 #' 
+#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank}
+#' 
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
-#' @seealso \code{\link{read_genome}}
+#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
 #' @export
+
 getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","genomes")){
         
-        if(!is.element(db,c("refseq")))
-                stop("Please select one of the available data bases: 'refseq'")
+        if(!is.element(db,c("refseq","genbank")))
+                stop ("Please select one of the available data bases: 'refseq' or 'genbank'")
         
         if(!is.genome.available(organism = organism))
-                stop(paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
-        
-        if(db == "refseq"){
+                stop (paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
+     
                 if(!file.exists(path)){
                         dir.create(path, recursive = TRUE)
                 }
                 
-                subfolders <- c("archaea","bacteria", "fungi", "invertebrate", "plant",
-                                "protozoa", "vertebrate_mammalian", "vertebrate_other")
+                subfolders <- getKingdoms()
                 
                 if(!is.element(kingdom,subfolders))
                         stop(paste0("Please select a valid kingdom: ",paste0(subfolders,collapse = ", ")))
                 
-                url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"),
+                url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/"),
                                                    ftp.use.epsv = FALSE, dirlistonly = TRUE))
                 
                 # replace white space in scientific name with "_"
@@ -76,7 +88,7 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                 if(!is.element(organism,unlist(check_organisms)))
                         stop("Please choose a valid organism.")
                 
-                utils::download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/assembly_summary.txt"), 
+                utils::download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/assembly_summary.txt"), 
                                      destfile = file.path(tempdir(),"assembly_summary.txt"))
                 summary.file <- readr::read_tsv(file.path(tempdir(),"assembly_summary.txt"))
                 
@@ -91,7 +103,7 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                 
                 organism <- stringr::str_replace(organism," ","_")
                 
-                          download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/",
+                          download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/",
                                                  organism,"/latest_assembly_versions/",paste0(query$`# assembly_accession`,"_",query$asm_name),"/",paste0(query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz"))
  
                 # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
@@ -117,8 +129,7 @@ getGenome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_
                                  
                                  warning ("File: ",download_url, " could not be loaded properly...")
      }
-  }
-}
+ }
 
 
 
