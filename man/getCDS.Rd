@@ -8,7 +8,7 @@ getCDS(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads",
   "CDS"), delete_corrupt = FALSE)
 }
 \arguments{
-\item{db}{a character string specifying the database from which the CDS file shall be retrieved: 'refseq'.
+\item{db}{a character string specifying the database from which the CDS file shall be retrieved: \code{refseq}.
 Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 sequence retrieval from additional databases.}
 
@@ -33,8 +33,7 @@ this file in the folder '_ncbi_downloads/CDS'.
 \details{
 Internally this function loads the the overview.txt file from NCBI:
 
- refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
-
+ refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
 and creates a directory '_ncbi_downloads/CDS' to store
 the genome of interest as CDS fasta file for future processing.
@@ -57,7 +56,6 @@ getCDS( db       = "refseq",
 file_path <- file.path("_ncbi_downloads","CDS","Arabidopsis_thaliana_rna.fna.gz")
 Ath_CDS <- read_cds(file_path, format = "fasta")
 
-
 }
 }
 \author{
@@ -65,10 +63,10 @@ Hajk-Georg Drost
 }
 \references{
 \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
-
+ 
 \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
-\code{\link{read_cds}}
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
 }
 
