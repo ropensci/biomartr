@@ -361,8 +361,8 @@ The easiest way to download a genome is to use the `getGenome()` function.
 
 In this example we will download the genome of `A. thaliana`.
 
-The `getGenome()` function is an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
-which corresponding genomes are downloaded.
+The `getGenome()` function is an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) or [NCBI genbank](http://www.ncbi.nlm.nih.gov/genbank/about/) databases from
+which corresponding genomes can be retrieved.
 
 For this purpose users need to specify the kingdom in which their organism of interest is classified into,
 e.g. `"archaea"`,`"bacteria"`, `"fungi"`, `"invertebrate"`, `"plant"`, `"protozoa"`, `"vertebrate_mammalian"`, or `"vertebrate_other"` (see also `?getKingdoms`)
@@ -390,10 +390,13 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 In case users would like to store the genome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
+In case, users wish to download genomes from [NCBI genbank](http://www.ncbi.nlm.nih.gov/genbank/about/) instead of [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/), they can specify the
+argument `db = "genbank"` in `getGenome()`.
+
 ### Proteome Retrieval
 
-The `getProteome()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
-which corresponding proteomes are downloaded. It works analogous to the `getGenome()` function. 
+The `getProteome()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) or [NCBI genbank](http://www.ncbi.nlm.nih.gov/genbank/about/) databases from
+which corresponding genomes can be retrieved. It works analogous to `getGenome()`. 
 
 
 ```{r,eval=FALSE}
@@ -417,6 +420,8 @@ Ath_proteome <- read_proteome(file_path, format = "fasta")
 In case users would like to store the proteome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
+In case, users wish to download genomes from [NCBI genbank](http://www.ncbi.nlm.nih.gov/genbank/about/) instead of [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/), they can specify the
+argument `db = "genbank"` in `getProteome()`.
 
 ### CDS Retrieval
 
