@@ -8,7 +8,7 @@ getGenome(db = "refseq", kingdom, organism,
   path = file.path("_ncbi_downloads", "genomes"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: 'refseq'.
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
 Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 sequence retrieval from additional databases.}
 
@@ -30,9 +30,10 @@ the genome file in the folder '_ncbi_downloads/genomes'.
 \details{
 Internally this function loads the the overview.txt file from NCBI:
 
- refseq: \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
+ refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
-
+ genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+ 
 and creates a directory '_ncbi_downloads/genomes' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
@@ -52,6 +53,16 @@ getGenome( db       = "refseq",
 file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
 Ath_genome <- read_genome(file_path, format = "fasta")
 
+
+# download the genome of Arabidopsis thaliana from genbank
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+getGenome( db       = "genbank", 
+           kingdom  = "plant", 
+           organism = "Arabidopsis thaliana", 
+           path = file.path("_ncbi_downloads","genomes"))
+
+file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
+Ath_genome <- read_genome(file_path, format = "fasta")
 }
 }
 \author{
@@ -60,9 +71,11 @@ Hajk-Georg Drost
 \references{
 \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
 
+\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank}
+
 \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
-\code{\link{read_genome}}
+\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
 }
 
