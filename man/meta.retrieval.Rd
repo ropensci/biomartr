@@ -4,11 +4,13 @@
 \alias{meta.retrieval}
 \title{Perform Meta-Genome Retieval}
 \usage{
-meta.retrieval(kingdom, type = "genome", out.folder = NULL)
+meta.retrieval(kingdom, db = "refseq", type = "genome", out.folder = NULL)
 }
 \arguments{
 \item{kingdom}{a character string specifying the kingdom of the organisms of interest,
 e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".}
+
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.}
 
 \item{type}{type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.}
 
@@ -24,8 +26,14 @@ that belong to the same kingdom of life.
 }
 \examples{
 \dontrun{
-# download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", type = "genome")
+# get all available kingdoms
+getKingdoms()
+
+# download all vertebrate genomes from refseq
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
+
+# download all vertebrate genomes from genbank
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 }
 }
 \author{
