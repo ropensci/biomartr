@@ -1,9 +1,11 @@
 biomartr
 ========
 
-## Functional Annotation and Biological Data Retrieval with R
+## Biological Data Retrieval with R
 
-The `biomartr` package aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to [BioMart](http://www.biomart.org/) to retrieve functional annotation.
+The `biomartr` package is designed for life scientists and provides a powerful sequence retrieval and functional annotation framework for the R programming language that aims to facilitate reproducibility and large-scale handling of biological data.  
+
+In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to [BioMart](http://www.biomart.org/) to retrieve functional annotation.
 Hence, the `biomartr` package is designed to achieve the highest degree of reproducible research from data retrieval to data visualization.
 
 Additionally, the `biomartr` package allows users to retrieve entire NCBI databases using only one command (see [Database Retrieval Vignette](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)).
