@@ -1,5 +1,8 @@
-biomartr 0.0.4
+biomartr 0.1.0
 ===========
+
+- fixing a parsing error of the file "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/assembly_summary.txt"
+The problem was that comment lines were introduced and columns couldn't be parsed correctly anymore. This caused that genomes, proteomes, and CDS files could not be downloaded properly. This has been fixed now.
 
 - genomes, proteome, and CDS as well as meta-genomes can now be retrieved
 from RefSeq and Genbank (not only RefSeq); only `getCDS()` does not have genebank access,
@@ -10,7 +13,7 @@ becasue genbank does not provide CDS sequences
 this function affected all downstream `organism*()` functions. Bug is now fixed and everything
 works properly
 
-- udated Vignettes
+- updated Vignettes
 
 biomartr 0.0.3
 ===========
