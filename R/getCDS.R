@@ -81,7 +81,15 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                 
                 utils::download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/assembly_summary.txt"), 
                                      destfile = file.path(tempdir(),"assembly_summary.txt"))
-                summary.file <- readr::read_tsv(file.path(tempdir(),"assembly_summary.txt"))
+                summary.file <- readr::read_tsv(file.path(tempdir(),"assembly_summary.txt"), comment = "#")
+                
+                colnames(summary.file) <- c("assembly_accession", "bioproject", "biosample",
+                                            "wgs_master", "refseq_category", "taxid",
+                                            "species_taxid", "organism_name", "infraspecific_name",
+                                            "isolate", "version_status", "assembly_level",
+                                            "release_type", "genome_rep", "seq_rel_date",
+                                            "asm_name", "submitter", "gbrs_paired_asm",
+                                            "paired_asm_comp", "ftp_path", "excluded_from_refseq")
                 
                 organism_name <- refseq_category <- version_status <- NULL
                 query <- dplyr::filter(summary.file, stringr::str_detect(organism_name,organism), 
@@ -95,8 +103,7 @@ getCDS <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_dow
                 organism <- stringr::str_replace(organism," ","_")
                 
                 download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/",
-                                       organism,"/latest_assembly_versions/",paste0(query$`# assembly_accession`,"_",query$asm_name),"/",paste0(query$`# assembly_accession`,"_",query$asm_name,"_rna.fna.gz"))
-                
+                                       organism,"/latest_assembly_versions/",paste0(query$assembly_accession,"_",query$asm_name),"/",paste0(query$assembly_accession,"_",query$asm_name,"_rna.fna.gz"))
                 
                 if (nrow(query) == 1){
                         downloader::download(download_url, 
