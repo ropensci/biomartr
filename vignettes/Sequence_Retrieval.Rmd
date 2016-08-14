@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 ```
 
 
+## Biological Sequence Retrieval 
+
 The `biomartr` package allows users to retrieve biological sequences in a very simple and intuitive way.
 
 Using `biomartr`, users can retrieve either genomes, proteomes, or CDS data using the specialized functions:
