@@ -3,7 +3,7 @@ biomartr
 
 ## Genomic Data Retrieval with R
 
-The `biomartr` package is designed for life scientists and provides a powerful genomic sequence retrieval and functional annotation framework for the R programming language that aims to facilitate reproducibility and large-scale handling of biological data.  
+The `biomartr` package is designed for life scientists and provides a powerful genomic sequence retrieval and functional annotation framework for the R programming language that aims to facilitate reproducibility and large-scale handling of biological data for meta-genomic analyses.  
 
 In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, and CDS data, as well as an interface to the [BioMart](http://www.biomart.org/) database to retrieve functional annotation for genomic loci.
 Hence, the `biomartr` package is designed to achieve the highest degree of reproducible research from data retrieval to data visualization.
