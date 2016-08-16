@@ -1,9 +1,9 @@
 Package: biomartr
-Title: Functional Annotation and Biological Data Retrieval with R
+Title: Genomic Data Retrieval with R
 Version: 0.1.0
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
-Description: Perform biological data retrieval and functional annotation with
+Description: Perform genomic data retrieval and functional annotation with
     R. This tool provides API functions to the 'BioMart' database and genome retrieval
     functions for bulk retrieval of genomes.
 VignetteBuilder: knitr
