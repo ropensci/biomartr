@@ -1,7 +1,7 @@
 biomartr
 ========
 
-## Biological Data Retrieval with R
+## Genomic Data Retrieval with R
 
 The `biomartr` package is designed for life scientists and provides a powerful sequence retrieval and functional annotation framework for the R programming language that aims to facilitate reproducibility and large-scale handling of biological data.  
 
