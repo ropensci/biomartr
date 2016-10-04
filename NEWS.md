@@ -1,11 +1,14 @@
 biomartr 0.2.0
 ===========
 
+- the argument `db_format` was removed from `listDatabases()` because it was misleading
+- the command `listDatabases("all")` now returns all available NCBI databases that can be retrieved with `download_database()`
+
 
 biomartr 0.1.0
 ===========
 
-- fixing a parsing error of the file "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/assembly_summary.txt"
+- fixing a parsing error of the file `ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/assembly_summary.txt`
 The problem was that comment lines were introduced and columns couldn't be parsed correctly anymore. This caused that genomes, proteomes, and CDS files could not be downloaded properly. This has been fixed now.
 
 - genomes, proteome, and CDS as well as meta-genomes can now be retrieved
