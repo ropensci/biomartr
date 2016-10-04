@@ -15,7 +15,7 @@ Additionally, the `biomartr` package allows users to retrieve entire NCBI databa
 Getting Started with `biomartr`:
 
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
-- [NCBI Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
+- [Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
 - [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
 - [Evolutionary Transcriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Evolutionary_Transcriptomics.Rmd)
