@@ -18,52 +18,33 @@ knitr::opts_chunk$set(
 
 # Retrieve Sequence Databases from NCBI
 
-The `download_databases()` function implemented in `biomartr` allows users to download entire sequence databases from NCBI.
+NCBI stores a variety of specialized database such as [Genbank, RefSeq, Taxonomy, SNP, etc.](https://www.ncbi.nlm.nih.gov/guide/data-software/) on their servers.
+The `download_databases()` function implemented in `biomartr` allows users to download these databases from NCBI.
 
 ## Search for available databases
 
-When specifying the argument `db_name = "all"` in `listDatabases()` users retrieve a list of of available sequence database files in `*.fasta` format stored in NCBI.
+Before downloading specific databases from NCBI users might want to list available databases. Using the `listDatabases()` function users can retrieve a list of  available databases stored on NCBI.
 
 ```r
 library("biomartr")
 
 # retrieve a list of available sequence databases at NCBI
-# and look at the first 30 records
-head(listDatabases(db_name = "all"), 30)
+listDatabases(db_name = "all")
 ```
 
 ```
-                            V1
-1                       README
-2                        FASTA
-3  human_genomic.00.tar.gz.md5
-4             env_nr.00.tar.gz
-5         env_nr.00.tar.gz.md5
-6             env_nr.01.tar.gz
-7         env_nr.01.tar.gz.md5
-8             env_nt.00.tar.gz
-9         env_nt.00.tar.gz.md5
-10            env_nt.01.tar.gz
-11        env_nt.01.tar.gz.md5
-12            env_nt.02.tar.gz
-13        env_nt.02.tar.gz.md5
-14                  est.tar.gz
-15              est.tar.gz.md5
-16         est_human.00.tar.gz
-17     est_human.00.tar.gz.md5
-18         est_human.01.tar.gz
-19     est_human.01.tar.gz.md5
-20            est_mouse.tar.gz
-21        est_mouse.tar.gz.md5
-22        est_others.00.tar.gz
-23    est_others.00.tar.gz.md5
-24        est_others.01.tar.gz
-25    est_others.01.tar.gz.md5
-26        est_others.02.tar.gz
-27    est_others.02.tar.gz.md5
-28        est_others.03.tar.gz
-29    est_others.03.tar.gz.md5
-30        est_others.04.tar.gz
+ [1] "16SMicrobial"             "cdd_delta"                "cloud"                   
+ [4] "env_nr"                   "env_nt"                   "est"                     
+ [7] "est_human"                "est_mouse"                "est_others"              
+[10] "FASTA"                    "gene_info"                "gss"                     
+[13] "gss_annot"                "htgs"                     "human_genomic"           
+[16] "human_genomic_transcript" "landmark"                 "mouse_genomic_transcript"
+[19] "nr"                       "nt"                       "other_genomic"           
+[22] "pataa"                    "patnt"                    "pdbaa"                   
+[25] "pdbnt"                    "README"                   "refseq_genomic"          
+[28] "refseq_protein"           "refseq_rna"               "refseqgene"              
+[31] "Representative_Genomes"   "sts"                      "swissprot"               
+[34] "taxdb"                    "tsa_nr"                   "tsa_nt"
 ```
 
 However, in case users already know which database they would like to retrieve
