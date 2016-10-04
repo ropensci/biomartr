@@ -27,7 +27,7 @@
 download_database <- function(name, db_format = "blastdb", path = "DB"){
         
         if (!is.element(db_format,c("blastdb","fasta")))
-                stop("db_format = '",db_format,"' is not supported by this function.")
+                stop("db_format = '",db_format,"' is not supported by this function. Please choose either db_format = 'blastdb' or db_format = 'fasta'.")
         
         if (!file.exists(path))
                 dir.create(path)
