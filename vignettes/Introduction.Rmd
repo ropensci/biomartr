@@ -32,7 +32,7 @@ Users of the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://git
 
 ## Workflow Design
 
-The `bopmartr` package is designed to cover the following branches of biological data retrieval:
+The `biomartr` package is designed to cover the following branches of biological data retrieval:
 
 - __Biological Sequence Retrieval__
 - __Functional Annotation Retrieval__
