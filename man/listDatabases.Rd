@@ -4,12 +4,10 @@
 \alias{listDatabases}
 \title{Retrieve a List of Available NCBI Databases for Download}
 \usage{
-listDatabases(db_name = "nr", db_format = "fasta", update = FALSE)
+listDatabases(db_name = "nr", update = FALSE)
 }
 \arguments{
 \item{db_name}{a character string specifying the name of the database that shall be searched for.}
-
-\item{db_format}{a character string specifying the database format, e.g. \code{db_format} = \code{"fasta"}.}
 
 \item{update}{a logical value specifying whether or not the local listDatabases.txt file shall be updated by remote access to NCBI.}
 }
@@ -29,10 +27,10 @@ select an appropriate database for download with \code{\link{download_database}}
 # listDatabases(db_name = "nr", db_format = "fasta")
 
 # analogous:
-# listDatabases(db_name = "cdd", db_format = "fasta")
-# listDatabases(db_name = "nt", db_format = "fasta")
-# listDatabases(db_name = "gss", db_format = "fasta")
-# listDatabases(db_name = "refseq_protein", db_format = "fasta")
+# listDatabases(db_name = "cdd")
+# listDatabases(db_name = "nt")
+# listDatabases(db_name = "gss")
+# listDatabases(db_name = "refseq_protein")
 
 }
 \author{
