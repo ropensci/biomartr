@@ -28,12 +28,11 @@ that are based on the `biomaRt` methodology but aim to introduce an more intuiti
 
 ### Getting Started with biomaRt
 
-The best way to get started with the methodology presented by [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) is to understand the workflow
+The best way to get started with the methodology presented by the established [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package is to understand the workflow
 of data retrieval. The database provided by [BioMart](http://biomart.org/) is organized in so called:
 `marts`, `datasets`, and `attributes`. So when users want to retrieve information for a specific organism
 of interest, first they need to specify the `marts` and `datasets` in which the information of the corresponding
-organism can be found and subsequently they can specify the `attributes` that shall be returned for that
-particular organism.
+organism can be found. Subsequently they can specify the `attributes` argument that is ought to be returned for the corresponding organism.
 
 The availability of `marts`, `datasets`, and `attributes` can be checked by the following functions:
 
@@ -61,7 +60,7 @@ head(listMarts(host = "www.ensembl.org"), 10)
 Users will observe that several `marts` providing annotation for
 specific classes of organisms or groups of organisms are available.
 
-For our example, we will choose the `plants_variations_26` `mart` and list all available
+For our example, we will choose the `hsapiens_gene_ensembl` `mart` and list all available
 datasets that are element of this `mart`.
 
 ```{r,eval=FALSE}
@@ -90,7 +89,8 @@ that can be accessed for `Homo sapiens` genes.
 
 ```{r,eval=FALSE}
 head(listAttributes(useDataset(dataset = "hsapiens_gene_ensembl", 
-                               mart    = useMart("ENSEMBL_MART_ENSEMBL",host = "www.ensembl.org"))), 10)
+                               mart    = useMart("ENSEMBL_MART_ENSEMBL",
+                               host    = "www.ensembl.org"))), 10)
 ```
 
 ```
@@ -117,7 +117,7 @@ Furthermore, users can retrieve all filters for _Homo sapiens_ that can be speci
 ```{r,eval=FALSE}
 head(listFilters(useDataset(dataset = "hsapiens_gene_ensembl", 
                             mart    = useMart("ENSEMBL_MART_ENSEMBL",
-                                              host = "www.ensembl.org"))), 10)
+                            host    = "www.ensembl.org"))), 10)
 ```
 
 ```
@@ -144,16 +144,18 @@ Since the input genes are `ensembl gene ids`, we need to specify the `filters` a
 
 ```{r,eval=FALSE}
 # 1) select a mart and data set
-mart <- useDataset("hsapiens_gene_ensembl", 
-                   mart = useMart("ENSEMBL_MART_ENSEMBL",
-                                  host = "www.ensembl.org"))
+mart <- useDataset(dataset = "hsapiens_gene_ensembl", 
+                   mart    = useMart("ENSEMBL_MART_ENSEMBL",
+                   host    = "www.ensembl.org"))
 
 # 2) run a biomart query using the getBM() function
 # and specify the attributes and filter arguments
 geneSet <- "GUCA2A"
 
 resultTable <- getBM(attributes = c("start_position","end_position","description"),
-                     filters = "hgnc_symbol", values = geneSet, mart = mart)
+                     filters    = "hgnc_symbol", 
+                     values     = geneSet, 
+                     mart       = mart)
 
 resultTable 
 ```
@@ -289,12 +291,13 @@ tail(getDatasets(mart = "ENSEMBL_MART_ENSEMBL") , 38)
 
 ### Retrieve Available Attributes from a Specific Dataset
 
-Now that you have selected a database (`plants_mart_26`) and a dataset (`athaliana_eg_gene`),
+Now that you have selected a database (`hsapiens_gene_ensembl`) and a dataset (`hsapiens_gene_ensembl`),
 users can list all available attributes for this dataset using the `getAttributes()` function.
 
 ```{r,eval=FALSE}
 # list all available attributes for dataset: hsapiens_gene_ensembl
-head( getAttributes(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl"), 10 )
+head( getAttributes(mart    = "ENSEMBL_MART_ENSEMBL", 
+                    dataset = "hsapiens_gene_ensembl"), 10 )
 ```
 
 ```
@@ -318,7 +321,8 @@ for a specific dataset that can be used for a `biomart()` query.
 
 ```{r,eval=FALSE}
 # list all available filters for dataset: hsapiens_gene_ensembl
-head( getFilters(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl"), 10 )
+head( getFilters(mart    = "ENSEMBL_MART_ENSEMBL", 
+                 dataset = "hsapiens_gene_ensembl"), 10 )
 ```
 
 ```
@@ -343,9 +347,12 @@ function addresses this issue and provides users with an organism centric query 
 which are available for a particular organism of interest.
 
 
-__Note__ that when running the following functions for the first time, the data retrieval procedure will take some time, due to the remote access to BioMart. The corresponding result is then saved in a *.txt file named `_biomart/listDatasets.txt` within the `tempdir()` folder, allowing subsequent queries to perform much faster.
-The `tempdir()` folder however, will be deleted after a new R session was established, so in this case
-the inital call of the subsequent functions, again will take time to retrieve all organism specific data from the BioMart API.
+__Note__ that when running the following functions for the first time, the data retrieval procedure will take some time, due to the remote access to BioMart. The corresponding result is then saved in a `*.txt` file named `_biomart/listDatasets.txt` within the `tempdir()` folder, allowing subsequent queries to be performed much faster.
+The `tempdir()` folder, however, will be deleted after a new R session was established. In this case
+the inital call of the subsequent functions again will take time to retrieve all organism specific data from the BioMart database.
+
+This concept of locally storing all organism specific database linking information available in BioMart into
+an internal file allows users to significantly speed up subsequent retrieval queries for that particular organism.
 
 
 ```{r,eval=FALSE}
@@ -404,7 +411,7 @@ being accessed (very useful for publications) is returned.
 Users will observe that 3 different `marts` provide 6 different `datasets` storing annotation information for
 _Homo sapiens_.
 
-__Please note however, that scientific names of organisms must be written correctly! For ex. "Homo Sapiens" will be treated differently (not recognized) than "Homo sapiens" (recognized).__
+__Please note, however, that scientific names of organisms must be written correctly! For ex. "Homo Sapiens" will be treated differently (not recognized) than "Homo sapiens" (recognized).__
 
 Similar to the `biomaRt` package query methodology, users need to specify `attributes` and `filters` to be able to perform
 accurate BioMart queries. Here the functions `organismAttributes()` and `organismFilters()` provide useful and intuitive
@@ -804,8 +811,8 @@ and additional information via the `getGO()` function. Several databases can be 
 to retrieve GO annotation information for a set of query genes. So far, the `getGO()`
 function allows GO information retrieval from the [BioMart](http://www.biomart.org/) database. 
 
-In this example we will retrieve GO information for a set of _A. thaliana_ genes
-stored as `tair locus id`.
+In this example we will retrieve GO information for a set of _Homo sapiens_ genes
+stored as `hgnc_symbol`.
 
 ### GO Annotation Retrieval via BioMart
 
