@@ -271,7 +271,7 @@ sapply(listDatabases("pdb"), download_database, path = "pdb")
 ```
 
 In case users wish to download the `fasta` files of the corresponding databases 
-instead of the `formatdb` files, they can specify the argument `db_format = "blastdb"`.
+instead of the `blastdb` files, they can specify the argument `db_format = "blastdb"`.
 
 
 ```r
