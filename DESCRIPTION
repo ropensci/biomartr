@@ -13,6 +13,7 @@ Depends:
 Imports:
     biomaRt,
     Biostrings,
+    stringi,
     data.table (>= 1.9.4),
     dplyr (>= 0.3.0),
     readr (>= 0.2.2),
