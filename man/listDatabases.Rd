@@ -24,7 +24,7 @@ select an appropriate database for download with \code{\link{download_database}}
 \examples{
 
 # retrieve all versions of the NCBI 'nr' database that can be downloaded
-# listDatabases(db_name = "nr", db_format = "fasta")
+# listDatabases(db_name = "nr")
 
 # analogous:
 # listDatabases(db_name = "cdd")
