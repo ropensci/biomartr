@@ -1,8 +1,16 @@
 biomartr 0.2.0
 ===========
 
+## New Functions
+
+- new helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
+
+## Function changes
+
 - the argument `db_format` was removed from `listDatabases()` and `download_database()` because it was misleading
+
 - the command `listDatabases("all")` now returns all available NCBI databases that can be retrieved with `download_database()`
+
 - `download_database()` now internally checks if input database specified by the user is actually available on NCBI servers
 
 
@@ -17,6 +25,7 @@ from RefSeq and Genbank (not only RefSeq); only `getCDS()` does not have geneban
 becasue genbank does not provide CDS sequences
 
 - adding new function `meta.retrieval()` to mass retrieve genomes for entire kingdoms of life 
+
 - fixed a major bug in `organismBM()` causing the function to fail. The failure of
 this function affected all downstream `organism*()` functions. Bug is now fixed and everything
 works properly
