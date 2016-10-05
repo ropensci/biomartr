@@ -4,12 +4,10 @@
 \alias{download_database}
 \title{Download a NCBI Database to Your Local Hard Drive}
 \usage{
-download_database(name, db_format = "blastdb", path = "DB")
+download_database(name, path = "DB")
 }
 \arguments{
 \item{name}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
-
-\item{db_format}{a character string specifying database format, e.g. \code{db_format} = \code{"blastdb"} or \code{db_format} = \code{"fasta"}.}
 
 \item{path}{a character string specifying the location (a folder) in which the corresponding
 database shall be stored. Default is \code{path} = \code{"DB"}. In case this folder does not exist yet, it will be created.}
@@ -31,7 +29,7 @@ named \code{DB} (default) is created and the correspondning database then stored
   # select NCBI nr version 27 =  "nr.27.tar.gz"
   # and download it to your hard drive
   # -> please note that large databases take some time for download!
-  download_database(name = "nr.27.tar.gz", db_format = "blastdb")
+  download_database(name = "nr.27.tar.gz")
 
 }
 }
