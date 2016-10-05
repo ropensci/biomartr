@@ -50,6 +50,9 @@ listDatabases(db_name = "all")
 However, in case users already know which database they would like to retrieve
 they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the `NCBI nr` database shall be retrieved.
 
+
+First, the `listDatabases(db_name = "nr")` allows to list all files corresponding to the `nr` database. 
+
 ```r
 # show all NCBI nr files
 listDatabases(db_name = "nr")
@@ -66,7 +69,6 @@ listDatabases(db_name = "nr")
 ```
 
 The output illustrates that the `NCBI nr` database has been separated into 41 files.
-This example shall illustrate that NCBI database files can be listed by specifing the `db_name` argument.
 
 Further examples are:
 
@@ -203,10 +205,12 @@ listDatabases(db_name = "est")
 
 __Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.__
 
+In a next step users can use a combination of the `listDatabases()` and `download_databases()` functions to retrieve 
+all files corresponding to a specific NCBI database.
 
 ## Download available databases
 
-Using the same search strategy by name as described above, users can now download these databases using the `download_database()` function.
+Using the same search strategy by specifying the database name as described above, users can now download these databases using the `download_database()` function.
 
 For downloading only single files users can type:
 
@@ -214,15 +218,13 @@ For downloading only single files users can type:
 # select NCBI nr version 27 =  "nr.27.tar.gz"
 # and download it into the folder
 download_database(name      = "nr.27.tar.gz", 
-                  db_format = "blastdb",
                   path      = "nr")
 
 ```
 
 Using this command first a folder named `nr` is created and the
-file `nr.27.tar.gz` is downloaded to this folder.
-Here the argument `db_format` specifies the `blastdb` format.
-This means that the pre-formatted (by makeblastdb formatted) database version is retrieved.
+file `nr.27.tar.gz` is downloaded to this folder. 
+This command will download the pre-formatted (by makeblastdb formatted) database version is retrieved.
 
 Alternatively, users can retrieve all `nr` files with one command by typing:
 
@@ -251,23 +253,4 @@ sapply(listDatabases("refseq_protein"), download_database, path = "refseq")
 sapply(listDatabases("pdb"), download_database, path = "pdb")
 ```
 
-In case users wish to download the `fasta` files of the corresponding databases 
-instead of the `blastdb` files, they can specify the argument `db_format = "blastdb"`.
-
-
-```r
-# download the entire NCBI nt database in fasta format
-sapply(listDatabases("nt"), download_database, db_format = "fasta", path = "nt")
-```
-
-```r
-# download the entire NCBI refseq (protein) database in fasta format
-sapply(listDatabases("refseq_protein"), download_database, db_format = "fasta", path = "refseq")
-```
-
-```r
-# download the entire NCBI PDB database in fasta format
-sapply(listDatabases("pdb"), download_database, db_format = "fasta", path = "pdb")
-```
-
-Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.
+__Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.__
