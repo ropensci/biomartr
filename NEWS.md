@@ -1,8 +1,9 @@
 biomartr 0.2.0
 ===========
 
-- the argument `db_format` was removed from `listDatabases()` because it was misleading
+- the argument `db_format` was removed from `listDatabases()` and `download_database()` because it was misleading
 - the command `listDatabases("all")` now returns all available NCBI databases that can be retrieved with `download_database()`
+- `download_database()` now internally checks if input database specified by the user is actually available on NCBI servers
 
 
 biomartr 0.1.0
