@@ -56,7 +56,7 @@ listDatabases <- function(db_name = "nr", update = FALSE) {
         listDBs <-
             strsplit(
                 RCurl::getURL(
-                    url         = "ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA",
+                    url         = "ftp://ftp.ncbi.nlm.nih.gov/blast/db/",
                     ftp.use.epsv = FALSE,
                     dirlistonly  = TRUE
                 ),
