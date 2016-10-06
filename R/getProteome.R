@@ -4,8 +4,6 @@
 #' @param db a character string specifying the database from which the proteome shall be retrieved: \code{refseq} or \code{genbank}.
 #' Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 #' sequence retrieval from additional databases.
-#' @param kingdom a character string specifying the kingdom of the organisms of interest,
-#' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other". 
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
 #' @param path a character string specifying the location (a folder) in which the corresponding
 #' proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
@@ -26,24 +24,18 @@
 #' 
 #' # download the proteome of Arabidopsis thaliana from refseq
 #' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-#' getProteome( db       = "refseq", 
-#'              kingdom  = "plant", 
+#' file_path <- getProteome( db       = "refseq", 
 #'              organism = "Arabidopsis thaliana", 
 #'              path     = file.path("_ncbi_downloads","proteomes") )
 #' 
-#' 
-#' file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' 
 #' # download the proteome of Arabidopsis thaliana from genbank
 #' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-#' getProteome( db       = "genbank", 
-#'              kingdom  = "plant", 
+#' file_path <- getProteome( db       = "genbank", 
 #'              organism = "Arabidopsis thaliana", 
 #'              path     = file.path("_ncbi_downloads","proteomes") )
 #' 
-#' 
-#' file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' }
 #' @references 
@@ -57,83 +49,155 @@
 #' @seealso \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
 #' @export
 
-getProteome <- function(db = "refseq", kingdom, organism, path = file.path("_ncbi_downloads","proteomes")){
+getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","proteomes")){
+    
+    if (!is.element(db, c("refseq", "genbank")))
+        stop ("Please select one of the available data bases: 'refseq' or 'genbank'")
+    
+    # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
+    # stored in temp()
+    if (file.exists(file.path(tempdir(),"AssemblyFilesAllKingdoms.txt"))) {
+        suppressWarnings(
+            AssemblyFilesAllKingdoms <-
+                readr::read_tsv(
+                    file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"),
+                    col_names = TRUE,
+                    col_types = readr::cols(
+                        assembly_accession = readr::col_character(),
+                        bioproject = readr::col_character(),
+                        biosample = readr::col_character(),
+                        wgs_master = readr::col_character(),
+                        refseq_category = readr::col_character(),
+                        taxid = readr::col_integer(),
+                        species_taxid = readr::col_integer(),
+                        organism_name = readr::col_character(),
+                        infraspecific_name = readr::col_character(),
+                        isolate = readr::col_character(),
+                        version_status = readr::col_character(),
+                        assembly_level = readr::col_character(),
+                        release_type = readr::col_character(),
+                        genome_rep = readr::col_character(),
+                        seq_rel_date = readr::col_date(),
+                        asm_name = readr::col_character(),
+                        submitter = readr::col_character(),
+                        gbrs_paired_asm = readr::col_character(),
+                        paired_asm_comp = readr::col_character(),
+                        ftp_path = readr::col_character(),
+                        excluded_from_refseq = readr::col_character()
+                    )
+                )
+        )
+    } else {
+        # otherwise download all assembly_summary.txt files for all kingdoms and store the AssemblyFilesAllKingdoms.txt file locally
+        # retrieve the assembly_summary.txt files for all kingdoms
+        kgdoms <- getKingdoms()
+        storeAssemblyFiles <- vector("list", length(kgdoms))
         
-        
-        if(!is.element(db,c("refseq","genbank")))
-                stop("Please select one of the available data bases: 'refseq' or 'genbank'")
-        
-        if(!is.genome.available(organism = organism))
-                stop(paste0("Unfortunately for '",organism,"' no genome is stored on NCBI."))
-        
-                if(!file.exists(path)){
-                        dir.create(path, recursive = TRUE)
-                }
-                
-                subfolders <- getKingdoms()
-                
-                if(!is.element(kingdom,subfolders))
-                        stop(paste0("Please select a valid kingdom: ",paste0(subfolders,collapse = ", ")))
-                
-                url_organisms <- try(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/"),
-                                                   ftp.use.epsv = FALSE, dirlistonly = TRUE))
-                
-                # replace white space in scientific name with "_"
-                # to match the corresponding folder on the NCBI server
-                # e.g. "Arabodopsis thaliana" will become "Arabodopsis_thaliana"
-                # organism <- stringr::str_replace(organism," ","_")
-                
-                check_organisms <- strsplit(url_organisms,"\n")
-                check_organisms <- stringr::str_replace(unlist(check_organisms),"_"," ")
-                check_organisms <- check_organisms[-which(is.element(check_organisms,c("assembly summary.txt", "check_organisms historical.txt")))]
-                
-                if(!is.element(organism,unlist(check_organisms)))
-                        stop("Please choose a valid organism.")
-                
-                utils::download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/assembly_summary.txt"), 
-                                     destfile = file.path(tempdir(),"assembly_summary.txt"))
-                summary.file <- readr::read_tsv(file.path(tempdir(),"assembly_summary.txt"), comment = "#")
-                
-                colnames(summary.file) <- c("assembly_accession", "bioproject", "biosample",
-                                            "wgs_master", "refseq_category", "taxid",
-                                            "species_taxid", "organism_name", "infraspecific_name",
-                                            "isolate", "version_status", "assembly_level",
-                                            "release_type", "genome_rep", "seq_rel_date",
-                                            "asm_name", "submitter", "gbrs_paired_asm",
-                                            "paired_asm_comp", "ftp_path", "excluded_from_refseq")
-                
-                organism_name <- refseq_category <- version_status <- NULL
-                query <- dplyr::filter(summary.file, stringr::str_detect(organism_name,organism), 
-                                       ((refseq_category == "representative genome") || (refseq_category == "reference genome")), 
-                                       (version_status == "latest"))
-                
-                if (nrow(query) > 1){
-                        query <- query[1, ]
-                }
-                
-                organism <- stringr::str_replace(organism," ","_")
-                
-                download_url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/",
-                                       organism,"/latest_assembly_versions/",paste0(query$assembly_accession,"_",query$asm_name),"/",paste0(query$assembly_accession,"_",query$asm_name,"_protein.faa.gz"))
-                
-                if (nrow(query) == 1){
-                        downloader::download(download_url, 
-                                             destfile = file.path(path,paste0(organism,"_protein.faa.gz")), mode = "wb")
-                        
-                        docFile( file.name = paste0(organism,"_protein.faa.gz"),
-                                 organism  = organism, 
-                                 url       = download_url, 
-                                 database  = db,
-                                 path      = path)
-                        
-                        # NCBI limits requests to three per second
-                        Sys.sleep(0.33)
-                        
-                        print(paste0("The genome of '",organism,"' has been downloaded to '",path,"' and has been named '",paste0(organism,"_protein.faa.gz"),"' ."))
-                } else {
-                        
-                        warning ("File: ",download_url, " could not be loaded properly...")
+        for (i in seq_along(kgdoms)) {
+            storeAssemblyFiles[i] <-
+                list(getSummaryFile(db = db, kingdom = kgdoms[i]))
         }
+        
+        AssemblyFilesAllKingdoms <-
+            dplyr::bind_rows(storeAssemblyFiles)
+        
+        readr::write_tsv(
+            AssemblyFilesAllKingdoms,
+            file.path(tempdir(), "AssemblyFilesAllKingdoms.txt")
+        )
+    }
+    
+    
+    # test wheter or not genome is available
+    is.genome.available(organism = organism, database = db)
+    
+    if (!file.exists(path)) {
+        dir.create(path, recursive = TRUE)
+    }
+    
+    organism_name <- refseq_category <- version_status <- NULL
+    
+    FoundOrganism <-
+        dplyr::filter(
+            AssemblyFilesAllKingdoms,
+            stringr::str_detect(organism_name, organism),
+            ((refseq_category == "representative genome") ||
+                 (refseq_category == "reference genome")
+            ),
+            (version_status == "latest")
+        )
+    
+    if (nrow(FoundOrganism) > 1) {
+        warnings(
+            "More than one entry has been found for '",
+            organism,
+            "'. Only the first entry '",
+            FoundOrganism[1, 1],
+            "' has been used for subsequent proteome retrieval."
+        )
+        FoundOrganism <- FoundOrganism[1, ]
+    }
+    
+    organism <- stringr::str_replace(organism, " ", "_")
+    
+    download_url <-
+        paste0(
+            FoundOrganism$ftp_path,
+            "/",
+            paste0(
+                FoundOrganism$assembly_accession,
+                "_",
+                FoundOrganism$asm_name,
+                "_protein.faa.gz"
+            )
+        )
+    
+    if (nrow(FoundOrganism) == 1) {
+        utils::capture.output(downloader::download(
+            download_url,
+            destfile = file.path(path,paste0(organism,"_protein.faa.gz")),
+            mode = "wb"
+        ))
+        
+        docFile(
+            file.name = paste0(organism,"_protein.faa.gz"),
+            organism  = organism,
+            url       = download_url,
+            database  = db,
+            path      = path,
+            refseq_category = FoundOrganism$refseq_category,
+            assembly_accession = FoundOrganism$assembly_accession,
+            bioproject = FoundOrganism$bioproject,
+            biosample = FoundOrganism$biosample,
+            taxid = FoundOrganism$taxid,
+            infraspecific_name = FoundOrganism$infraspecific_name,
+            version_status = FoundOrganism$version_status,
+            release_type = FoundOrganism$release_type,
+            genome_rep = FoundOrganism$genome_rep,
+            seq_rel_date = FoundOrganism$seq_rel_date,
+            submitter = FoundOrganism$submitter
+        )
+        
+        # NCBI limits requests to three per second
+        Sys.sleep(0.33)
+        
+        
+        print(
+            paste0(
+                "The proteome of '",
+                organism,
+                "' has been downloaded to '",
+                path,
+                "' and has been named '",
+                paste0(organism,"_protein.faa.gz"),
+                "' ."
+            )
+        )
+        
+        return(file.path(path,paste0(organism,"_protein.faa.gz")))
+    } else {
+        warning ("File: ", download_url, " could not be loaded properly... Are you connected to the internet?")
+    }
 }
 
 
