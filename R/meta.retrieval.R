@@ -56,7 +56,6 @@ meta.retrieval <- function(kingdom,
                 if (is.null(out.folder)){
                         for (i in seq_len(length(FinalOrganisms))){
                                 getGenome( db       = db,
-                                           kingdom  = kingdom,
                                            organism = FinalOrganisms[i],
                                            path     = kingdom)
                         }
@@ -65,7 +64,6 @@ meta.retrieval <- function(kingdom,
                 if (!is.null(out.folder)){
                         for (i in seq_len(length(FinalOrganisms))){
                                 getGenome( db       = db,
-                                           kingdom  = kingdom,
                                            organism = FinalOrganisms[i],
                                            path     = out.folder)
                         }
@@ -76,7 +74,6 @@ meta.retrieval <- function(kingdom,
                 if (is.null(out.folder)){
                         for (i in seq_len(length(FinalOrganisms))){
                                 getProteome( db       = db,
-                                           kingdom  = kingdom,
                                            organism = FinalOrganisms[i],
                                            path     = kingdom)
                         }
@@ -85,7 +82,6 @@ meta.retrieval <- function(kingdom,
                 if (!is.null(out.folder)){
                         for (i in seq_len(length(FinalOrganisms))){
                                 getProteome( db       = db,
-                                           kingdom  = kingdom,
                                            organism = FinalOrganisms[i],
                                            path     = out.folder)
                         }
@@ -96,7 +92,6 @@ meta.retrieval <- function(kingdom,
                 if (is.null(out.folder)){
                         for (i in seq_len(length(FinalOrganisms))){
                                 getCDS( db       = db,
-                                             kingdom  = kingdom,
                                              organism = FinalOrganisms[i],
                                              path     = kingdom)
                         }
@@ -105,9 +100,8 @@ meta.retrieval <- function(kingdom,
                 if (!is.null(out.folder)){
                         for (i in seq_len(length(FinalOrganisms))){
                                 getCDS( db       = db,
-                                             kingdom  = kingdom,
-                                             organism = FinalOrganisms[i],
-                                             path     = out.folder)
+                                        organism = FinalOrganisms[i],
+                                        path     = out.folder)
                         }
                 }
         }
