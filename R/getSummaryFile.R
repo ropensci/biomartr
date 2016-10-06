@@ -16,10 +16,14 @@ getSummaryFile <- function(db,kingdom){
     if (!is.element(kingdom,getKingdoms()))
         stop(paste0("Please select a valid kingdom: ",paste0(getKingdoms(),collapse = ", ")))
     
-    suppressMessages(downloader::download(
-        paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/assembly_summary.txt"),
-        destfile = file.path(tempdir(), paste0("assembly_summary_", kingdom, "_", db, ".txt"))
-    ))
+    if (!file.exists(file.path(tempdir(), paste0("assembly_summary_", kingdom, "_", db, ".txt")))) {
+        
+        suppressMessages(downloader::download(
+            paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/assembly_summary.txt"),
+            destfile = file.path(tempdir(), paste0("assembly_summary_", kingdom, "_", db, ".txt"))
+        ))
+        Sys.sleep(0.33)
+    }
     
     suppressWarnings(summary.file <-
         tibble::as_tibble(readr::read_tsv(
