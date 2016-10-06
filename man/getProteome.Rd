@@ -4,16 +4,13 @@
 \alias{getProteome}
 \title{Proteome Retrieval}
 \usage{
-getProteome(db = "refseq", kingdom, organism,
-  path = file.path("_ncbi_downloads", "proteomes"))
+getProteome(db = "refseq", organism, path = file.path("_ncbi_downloads",
+  "proteomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the proteome shall be retrieved: \code{refseq} or \code{genbank}.
 Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
 sequence retrieval from additional databases.}
-
-\item{kingdom}{a character string specifying the kingdom of the organisms of interest,
-e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".}
 
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
 
@@ -45,24 +42,18 @@ no download process will be performed.
 
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-getProteome( db       = "refseq", 
-             kingdom  = "plant", 
+file_path <- getProteome( db       = "refseq", 
              organism = "Arabidopsis thaliana", 
              path     = file.path("_ncbi_downloads","proteomes") )
 
-
-file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
 Ath_proteome <- read_proteome(file_path, format = "fasta")
 
 # download the proteome of Arabidopsis thaliana from genbank
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-getProteome( db       = "genbank", 
-             kingdom  = "plant", 
+file_path <- getProteome( db       = "genbank", 
              organism = "Arabidopsis thaliana", 
              path     = file.path("_ncbi_downloads","proteomes") )
 
-
-file_path <- file.path("_ncbi_downloads","proteomes","Arabidopsis_thaliana_protein.faa.gz")
 Ath_proteome <- read_proteome(file_path, format = "fasta")
 }
 }
