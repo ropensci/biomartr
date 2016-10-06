@@ -75,7 +75,7 @@ is.genome.available <- function(organism, details = FALSE, database = "refseq"){
         kgdoms <- getKingdoms()
         storeAssemblyFiles <- vector("list", length(kgdoms))
         
-        for (i in seq_len(kgdoms)) {
+        for (i in seq_along(kgdoms)) {
             storeAssemblyFiles[i] <-
                 list(getSummaryFile(db = database, kingdom = kgdoms[i]))
         }
