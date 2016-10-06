@@ -42,21 +42,19 @@ no download process will be performed.
 
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-getGenome( db       = "refseq", 
-           organism = "Arabidopsis thaliana", 
-           path = file.path("_ncbi_downloads","genomes"))
+file_path <- getGenome( db       = "refseq", 
+             organism = "Arabidopsis thaliana", 
+             path = file.path("_ncbi_downloads","genomes"))
 
-file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
 Ath_genome <- read_genome(file_path, format = "fasta")
 
 
 # download the genome of Arabidopsis thaliana from genbank
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-getGenome( db       = "genbank", 
-           organism = "Arabidopsis thaliana", 
-           path = file.path("_ncbi_downloads","genomes"))
+file_path <- getGenome( db       = "genbank", 
+             organism = "Arabidopsis thaliana", 
+             path = file.path("_ncbi_downloads","genomes"))
 
-file_path <- file.path("_ncbi_downloads","genomes","Arabidopsis_thaliana_genomic.fna.gz")
 Ath_genome <- read_genome(file_path, format = "fasta")
 }
 }
