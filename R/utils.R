@@ -86,6 +86,7 @@ is.genome.available <- function(organism, details = FALSE, database = "refseq"){
         readr::write_tsv(AssemblyFilesAllKingdoms,file.path(tempdir(),"AssemblyFilesAllKingdoms.txt"))
     }
     
+    organism_name <- NULL
     FoundOrganism <- dplyr::filter(AssemblyFilesAllKingdoms, organism_name == organism)
     
     if (nrow(FoundOrganism) == 0)
