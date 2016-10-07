@@ -4,7 +4,7 @@
 \alias{is.genome.available}
 \title{Check Genome Availability}
 \usage{
-is.genome.available(organism, details = FALSE, database = "refseq")
+is.genome.available(organism, details = FALSE, db = "refseq")
 }
 \arguments{
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
@@ -12,8 +12,8 @@ is.genome.available(organism, details = FALSE, database = "refseq")
 \item{details}{a logical value specifying whether or not details on genome size, kingdom, etc. shall be printed to the
 console intead of a boolean value.}
 
-\item{database}{a character string specifying the database for which genome availability shall be checked,
-e.g. \code{database} =  \code{"refseq"} or \code{database} =  \code{"all"}.}
+\item{db}{a character string specifying the database for which genome availability shall be checked,
+e.g. \code{db} =  \code{"refseq"} or \code{db} =  \code{"all"}.}
 }
 \value{
 a logical value specifing whether or not the genome of the input organism
