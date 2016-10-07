@@ -47,10 +47,10 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
     
     # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
     # stored in temp()
-    if (file.exists(file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"))) {
+    if (file.exists(file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")))) {
             AssemblyFilesAllKingdoms <-
                 readr::read_tsv(
-                    file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"),
+                    file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")),
                     col_names = TRUE,
                     col_types = readr::cols(
                         assembly_accession = readr::col_character(),
@@ -93,7 +93,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         
         readr::write_tsv(
             AssemblyFilesAllKingdoms,
-            file.path(tempdir(), "AssemblyFilesAllKingdoms.txt")
+            file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt"))
         )
     }
     
@@ -137,19 +137,19 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
                 FoundOrganism$assembly_accession,
                 "_",
                 FoundOrganism$asm_name,
-                "_rna.fna.gz"
+                "_cds_from_genomic.fna.gz"
             )
         )
     
     if (nrow(FoundOrganism) == 1) {
         utils::capture.output(downloader::download(
             download_url,
-            destfile = file.path(path, paste0(organism, "_rna.fna.gz")),
+            destfile = file.path(path, paste0(organism, "_cds_from_genomic.fna.gz")),
             mode = "wb"
         ))
         
         docFile(
-            file.name = paste0(organism, "_rna.fna.gz"),
+            file.name = paste0(organism, "_cds_from_genomic.fna.gz"),
             organism  = organism,
             url       = download_url,
             database  = db,
@@ -170,7 +170,6 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         # NCBI limits requests to three per second
         Sys.sleep(0.33)
         
-        
         print(
             paste0(
                 "The genomic CDS of '",
@@ -178,12 +177,12 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
                 "' has been downloaded to '",
                 path,
                 "' and has been named '",
-                paste0(organism, "_rna.fna.gz"),
+                paste0(organism, "_cds_from_genomic.fna.gz"),
                 "' ."
             )
         )
         
-        return(file.path(path, paste0(organism, "_rna.fna.gz")))
+        return(file.path(path, paste0(organism, "_cds_from_genomic.fna.gz")))
     } else {
         warning (
             "File: ",
