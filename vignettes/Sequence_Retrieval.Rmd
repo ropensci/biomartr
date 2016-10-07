@@ -42,7 +42,7 @@ and then stored locally. All further runs are then much faster.
 ```{r,eval=FALSE}
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
-is.genome.available("Homo sapiens", database = "refseq")
+is.genome.available("Homo sapiens", db = "refseq")
 ```
 
 ```
@@ -54,7 +54,7 @@ additional information can be printed to the console.
 
 ```{r,eval=FALSE}
 # printing details to the console
-is.genome.available("Homo sapiens", details = TRUE, database = "refseq")
+is.genome.available("Homo sapiens", details = TRUE, db = "refseq")
 ```
 
 ```
@@ -63,7 +63,7 @@ is.genome.available("Homo sapiens", details = TRUE, database = "refseq")
 ```
 
 Users will observe that the `Homo sapiens` genome file has a size of `3236.34 MB`. 
-The argument `database` specifies from which database (`refseq` or `genbank`) organism
+The argument `db` specifies from which database (`refseq` or `genbank`) organism
 information shall be retrieved.
 
 Users can determine the total number of available genomes using the `listGenomes()` function.
@@ -83,24 +83,23 @@ Optionally, users can also specify the database for which the availability of or
 
 ```{r,eval=FALSE}
 # cheking whether Homo sapiens is available in the refseq database
-is.genome.available("Homo sapiens", database = "refseq")
+is.genome.available("Homo sapiens", db = "refseq")
 ```
 
 ```
 [1] TRUE
 ```
 
-Users can also determine the total number of genomes stored in refseq.
+Or for `genbank`:
 
 ```{r,eval=FALSE}
-length(listGenomes(database = "refseq"))
+# cheking whether Homo sapiens is available in the genbank database
+is.genome.available("Homo sapiens", db = "genbank")
 ```
 
 ```
-[1] 6313
+[1] TRUE
 ```
-
-This result shows that so far (year 2016) 6313 genomes are stored in refseq.
 
 The simplest way to work with `listGenomes()` is to print available genomes to the console.
 
@@ -305,7 +304,7 @@ Again, the `listGenomes()` function can be users to filter for available genome 
 
 ```{r,eval=FALSE}
 # list all Eukaryota that are stored in refseq
-head(listGenomes(kingdom = "Eukaryota", database = "refseq") , 20)
+head(listGenomes(kingdom = "Eukaryota", db = "refseq") , 20)
 ```
 
 ```
@@ -357,7 +356,8 @@ the next step is to download the corresponding genome, proteome, or CDS file in 
 The following functions allow users to download proteomes, genomes, and CDS files from several
 database resources such as: `refseq`. When a corresponding proteome, genome, or CDS file was
 loaded to your hard-drive, a documentation `*.txt` file is generated storing `File Name`, `Organism`,
-`Database`, `URL`, `DATE`, etc. information. This way a better reproducibility of proteome, genome, and CDS versions
+`Database`, `URL`, `DATE`, `assembly_accession`, `bioproject`, `biosample`, `taxid`, `version_status`, `release_type`,
+`seq_rel_date` etc. information. This way a better reproducibility of proteome, genome, and CDS versions
 used for subsequent data analyses can be achieved.
 
 
@@ -453,8 +453,8 @@ read the correspondning CDS as `data.table` object.
 ```{r,eval=FALSE}
 # read CDS as data.table object
 Human_cds <- read_cds(getCDS( db       = "refseq", 
-                      organism = "Homo sapiens",
-                      path     = file.path("_ncbi_downloads","CDS") ), 
+                              organism = "Homo sapiens",
+                              path     = file.path("_ncbi_downloads","CDS") ), 
                       format = "fasta")
 ```
 
