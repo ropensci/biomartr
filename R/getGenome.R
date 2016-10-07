@@ -59,11 +59,11 @@ getGenome <-
         
         # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
         # stored in temp()
-        if (file.exists(file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"))) {
+        if (file.exists(file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")))) {
             suppressWarnings(
                 AssemblyFilesAllKingdoms <-
                     readr::read_tsv(
-                        file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"),
+                        file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")),
                         col_names = TRUE,
                         col_types = readr::cols(
                             assembly_accession = readr::col_character(),
