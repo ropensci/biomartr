@@ -119,7 +119,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
              "' could not be found.",
              call. = FALSE)
     
-    available_genome <- listGenomes("all", TRUE, db = db)
+    available_genome <- listGenomes("all", TRUE, db = "all")
     
     is_available <- any(stringr::str_detect(available_genome[, "organism_name"], organism))
     
