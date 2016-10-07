@@ -17,8 +17,16 @@ refseqOrganisms <- function(){
                                "vertebrate_other")
         
         
-        all_refseqOrgs <- as.vector( unlist( sapply( refseq_kingdoms, function(kingdom) strsplit(RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/",kingdom,"/"),
-                                                 ftp.use.epsv = FALSE, dirlistonly = TRUE),"\n" ) ) ) )
+        all_refseqOrgs <-
+            as.vector(unlist(sapply(refseq_kingdoms, function(kingdom)
+                strsplit(
+                    RCurl::getURL(
+                        paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/", kingdom, "/"),
+                        ftp.use.epsv = FALSE,
+                        dirlistonly = TRUE
+                    ),
+                    "\n"
+                ))))
         
         
         all_refseqOrgs <- stringr::str_replace(all_refseqOrgs,"_"," ")
