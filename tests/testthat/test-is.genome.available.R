@@ -12,4 +12,8 @@ test_that("The is.genome.available() interface works properly..",{
         
         g <- is.genome.available(organism = "Arabidopsis thaliana", details = TRUE)
         expect_identical(as.character(g[1, 1]),"Arabidopsis thaliana")
+        
+        # test with a second run using locally stored information
+        is.genome.available(organism = "Homo sapiens", details = TRUE)
+        
 })
