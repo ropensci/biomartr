@@ -79,7 +79,7 @@ listGenomes <- function(kingdom = "all", details = FALSE, update = FALSE, db = "
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
         dir.create(file.path(tempdir(), "_ncbi_downloads"))
     }
-    
+
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads", "overview.txt"))) {
         utils::download.file(
             "ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
