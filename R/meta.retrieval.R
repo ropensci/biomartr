@@ -27,86 +27,98 @@ meta.retrieval <- function(kingdom,
                            type       = "genome", 
                            out.folder = NULL){
         
-        subfolders <- getKingdoms()
-        
-        if(!is.element(kingdom,subfolders))
-                stop (paste0("Please select a valid kingdom: ",paste0(subfolders,collapse = ", ")))
-        
-        if (!is.element(type, c("genome","proteome","CDS")))
-                stop ("Please choose either type: 'genome', 'proteome', or 'CDS'")
-        
-        if (!is.element(db, c("refseq","genbank")))
-                stop ("Please select einter 'db = 'refseq'' or 'db = 'genbank''")
-        
-        if ((type == "CDS") && (db == "genbank"))
-                stop ("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
-        
-        
-        getOrganisms <- try (RCurl::getURL(paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/"), 
-                                          ftp.use.epsv = FALSE, dirlistonly = TRUE))
-        FilterOrganisms <- strsplit(getOrganisms,"\n")
-        FinalOrganisms <- stringr::str_replace(unlist(FilterOrganisms),"_"," ")
-        FinalOrganisms <- FinalOrganisms[-which(is.element(FinalOrganisms, c("assembly summary_historical.txt","assembly summary.txt")))]
-        
-        cat("\n")
-        cat(paste0("Starting meta retrieval of all ",type,"s for ",kingdom,"."))
-        cat("\n")
-        
-        if (type == "genome"){
-                if (is.null(out.folder)){
-                        for (i in seq_len(length(FinalOrganisms))){
-                                getGenome( db       = db,
-                                           organism = FinalOrganisms[i],
-                                           path     = kingdom)
-                        }
-                }
-                
-                if (!is.null(out.folder)){
-                        for (i in seq_len(length(FinalOrganisms))){
-                                getGenome( db       = db,
-                                           organism = FinalOrganisms[i],
-                                           path     = out.folder)
-                        }
-                }
+    subfolders <- getKingdoms()
+    
+    if (!is.element(kingdom, subfolders))
+        stop (paste0(
+            "Please select a valid kingdom: ",
+            paste0(subfolders, collapse = ", ")
+        ))
+    
+    if (!is.element(type, c("genome", "proteome", "CDS")))
+        stop ("Please choose either type: 'genome', 'proteome', or 'CDS'")
+    
+    if (!is.element(db, c("refseq", "genbank")))
+        stop ("Please select einter 'db = 'refseq'' or 'db = 'genbank''")
+    
+    if ((type == "CDS") && (db == "genbank"))
+        stop ("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
+    
+    
+    getOrganisms <-
+        try (RCurl::getURL(
+            paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/", db, "/", kingdom, "/"),
+            ftp.use.epsv = FALSE,
+            dirlistonly = TRUE
+        ))
+    FilterOrganisms <- strsplit(getOrganisms, "\n")
+    FinalOrganisms <-
+        stringr::str_replace(unlist(FilterOrganisms), "_", " ")
+    FinalOrganisms <-
+        FinalOrganisms[-which(is.element(
+            FinalOrganisms,
+            c("assembly summary_historical.txt", "assembly summary.txt")
+        ))]
+    
+    cat("\n")
+    cat(paste0("Starting meta retrieval of all ", type, "s for ", kingdom, "."))
+    cat("\n")
+    
+    if (type == "genome") {
+        if (is.null(out.folder)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getGenome(db       = db,
+                          organism = FinalOrganisms[i],
+                          path     = kingdom)
+            }
         }
         
-        if (type == "proteome"){
-                if (is.null(out.folder)){
-                        for (i in seq_len(length(FinalOrganisms))){
-                                getProteome( db       = db,
-                                           organism = FinalOrganisms[i],
-                                           path     = kingdom)
-                        }
-                }
-                
-                if (!is.null(out.folder)){
-                        for (i in seq_len(length(FinalOrganisms))){
-                                getProteome( db       = db,
-                                           organism = FinalOrganisms[i],
-                                           path     = out.folder)
-                        }
-                }
+        if (!is.null(out.folder)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getGenome(db       = db,
+                          organism = FinalOrganisms[i],
+                          path     = out.folder)
+            }
+        }
+    }
+    
+    if (type == "proteome") {
+        if (is.null(out.folder)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getProteome(db       = db,
+                            organism = FinalOrganisms[i],
+                            path     = kingdom)
+            }
         }
         
-        if (type == "CDS"){
-                if (is.null(out.folder)){
-                        for (i in seq_len(length(FinalOrganisms))){
-                                getCDS( db       = db,
-                                             organism = FinalOrganisms[i],
-                                             path     = kingdom)
-                        }
-                }
-                
-                if (!is.null(out.folder)){
-                        for (i in seq_len(length(FinalOrganisms))){
-                                getCDS( db       = db,
-                                        organism = FinalOrganisms[i],
-                                        path     = out.folder)
-                        }
-                }
+        if (!is.null(out.folder)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getProteome(db       = db,
+                            organism = FinalOrganisms[i],
+                            path     = out.folder)
+            }
         }
-        cat("\n")
-        cat("Finished meta retieval process.")
+    }
+    
+    if (type == "CDS") {
+        if (is.null(out.folder)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getCDS(db       = db,
+                       organism = FinalOrganisms[i],
+                       path     = kingdom)
+            }
+        }
+        
+        if (!is.null(out.folder)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getCDS(db       = db,
+                       organism = FinalOrganisms[i],
+                       path     = out.folder)
+            }
+        }
+    }
+    cat("\n")
+    cat("Finished meta retieval process.")
 }
 
 
