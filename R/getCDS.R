@@ -99,7 +99,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
     
     
     # test wheter or not genome is available
-    is.genome.available(organism = organism, database = db)
+    is.genome.available(organism = organism, db = db)
     
     if (!file.exists(path)) {
         dir.create(path, recursive = TRUE)
