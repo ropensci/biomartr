@@ -54,158 +54,228 @@ getGenome <-
     function(db = "refseq",
              organism,
              path = file.path("_ncbi_downloads", "genomes")) {
-        if (!is.element(db, c("refseq", "genbank")))
+        
+        if (!is.element(db, c("refseq", "genbank","ensembl")))
             stop ("Please select one of the available data bases: 'refseq' or 'genbank'")
         
-        # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
-        # stored in temp()
-        if (file.exists(file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")))) {
-            suppressWarnings(
-                AssemblyFilesAllKingdoms <-
-                    readr::read_tsv(
-                        file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")),
-                        col_names = TRUE,
-                        col_types = readr::cols(
-                            assembly_accession = readr::col_character(),
-                            bioproject = readr::col_character(),
-                            biosample = readr::col_character(),
-                            wgs_master = readr::col_character(),
-                            refseq_category = readr::col_character(),
-                            taxid = readr::col_integer(),
-                            species_taxid = readr::col_integer(),
-                            organism_name = readr::col_character(),
-                            infraspecific_name = readr::col_character(),
-                            isolate = readr::col_character(),
-                            version_status = readr::col_character(),
-                            assembly_level = readr::col_character(),
-                            release_type = readr::col_character(),
-                            genome_rep = readr::col_character(),
-                            seq_rel_date = readr::col_date(),
-                            asm_name = readr::col_character(),
-                            submitter = readr::col_character(),
-                            gbrs_paired_asm = readr::col_character(),
-                            paired_asm_comp = readr::col_character(),
-                            ftp_path = readr::col_character(),
-                            excluded_from_refseq = readr::col_character()
+        if (is.element(db, c("refseq", "genbank"))) {
+            # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
+            # stored in temp()
+            if (file.exists(file.path(
+                tempdir(),
+                paste0("AssemblyFilesAllKingdoms_", db, ".txt")
+            ))) {
+                suppressWarnings(
+                    AssemblyFilesAllKingdoms <-
+                        readr::read_tsv(
+                            file.path(
+                                tempdir(),
+                                paste0("AssemblyFilesAllKingdoms_", db, ".txt")
+                            ),
+                            col_names = TRUE,
+                            col_types = readr::cols(
+                                assembly_accession = readr::col_character(),
+                                bioproject = readr::col_character(),
+                                biosample = readr::col_character(),
+                                wgs_master = readr::col_character(),
+                                refseq_category = readr::col_character(),
+                                taxid = readr::col_integer(),
+                                species_taxid = readr::col_integer(),
+                                organism_name = readr::col_character(),
+                                infraspecific_name = readr::col_character(),
+                                isolate = readr::col_character(),
+                                version_status = readr::col_character(),
+                                assembly_level = readr::col_character(),
+                                release_type = readr::col_character(),
+                                genome_rep = readr::col_character(),
+                                seq_rel_date = readr::col_date(),
+                                asm_name = readr::col_character(),
+                                submitter = readr::col_character(),
+                                gbrs_paired_asm = readr::col_character(),
+                                paired_asm_comp = readr::col_character(),
+                                ftp_path = readr::col_character(),
+                                excluded_from_refseq = readr::col_character()
+                            )
                         )
-                    )
-            )
-        } else {
-            # otherwise download all assembly_summary.txt files for all kingdoms and store the AssemblyFilesAllKingdoms.txt file locally
-            # retrieve the assembly_summary.txt files for all kingdoms
-            kgdoms <- getKingdoms()
-            storeAssemblyFiles <- vector("list", length(kgdoms))
-            
-            for (i in seq_along(kgdoms)) {
-                storeAssemblyFiles[i] <-
-                    list(getSummaryFile(db = db, kingdom = kgdoms[i]))
+                )
+            } else {
+                # otherwise download all assembly_summary.txt files for all kingdoms and store the AssemblyFilesAllKingdoms.txt file locally
+                # retrieve the assembly_summary.txt files for all kingdoms
+                kgdoms <- getKingdoms()
+                storeAssemblyFiles <- vector("list", length(kgdoms))
+                
+                for (i in seq_along(kgdoms)) {
+                    storeAssemblyFiles[i] <-
+                        list(getSummaryFile(db = db, kingdom = kgdoms[i]))
+                }
+                
+                AssemblyFilesAllKingdoms <-
+                    dplyr::bind_rows(storeAssemblyFiles)
+                
+                readr::write_tsv(
+                    AssemblyFilesAllKingdoms,
+                    file.path(tempdir(), "AssemblyFilesAllKingdoms.txt")
+                )
             }
             
-            AssemblyFilesAllKingdoms <-
-                dplyr::bind_rows(storeAssemblyFiles)
+            # test wheter or not genome is available
+            is.genome.available(organism = organism, db = db)
             
-            readr::write_tsv(
-                AssemblyFilesAllKingdoms,
-                file.path(tempdir(), "AssemblyFilesAllKingdoms.txt")
-            )
-        }
-        
-        # test wheter or not genome is available
-        is.genome.available(organism = organism, db = db)
-        
-        if (!file.exists(path)) {
-            dir.create(path, recursive = TRUE)
-        }
-        
-        organism_name <- refseq_category <- version_status <- NULL
-        
-        FoundOrganism <-
-            dplyr::filter(
-                AssemblyFilesAllKingdoms,
-                stringr::str_detect(organism_name, organism),
-                ((refseq_category == "representative genome") ||
-                     (refseq_category == "reference genome")
-                ),
-                (version_status == "latest")
-            )
-        
-        if (nrow(FoundOrganism) > 1) {
-            warnings(
-                "More than one entry has been found for '",
-                organism,
-                "'. Only the first entry '",
-                FoundOrganism[1, 1],
-                "' has been used for subsequent genome retrieval."
-            )
-            FoundOrganism <- FoundOrganism[1, ]
-        }
-        
-        organism <- stringr::str_replace(organism, " ", "_")
-        
-        download_url <-
-            paste0(
-                FoundOrganism$ftp_path,
-                "/",
-                paste0(
-                    FoundOrganism$assembly_accession,
-                    "_",
-                    FoundOrganism$asm_name,
-                    "_genomic.fna.gz"
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
+            }
+            
+            organism_name <-
+                refseq_category <- version_status <- NULL
+            
+            FoundOrganism <-
+                dplyr::filter(
+                    AssemblyFilesAllKingdoms,
+                    stringr::str_detect(organism_name, organism),
+                    ((refseq_category == "representative genome") ||
+                         (refseq_category == "reference genome")
+                    ),
+                    (version_status == "latest")
                 )
-            )
-        
-        # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
-        
-        if (nrow(FoundOrganism) == 1) {
-            utils::capture.output(downloader::download(
-                download_url,
-                destfile = file.path(path, paste0(organism, "_genomic.fna.gz")),
-                mode = "wb"
-            ))
             
-            docFile(
-                file.name = paste0(organism, "_genomic.fna.gz"),
-                organism  = organism,
-                url       = download_url,
-                database  = db,
-                path      = path,
-                refseq_category = FoundOrganism$refseq_category,
-                assembly_accession = FoundOrganism$assembly_accession,
-                bioproject = FoundOrganism$bioproject,
-                biosample = FoundOrganism$biosample,
-                taxid = FoundOrganism$taxid,
-                infraspecific_name = FoundOrganism$infraspecific_name,
-                version_status = FoundOrganism$version_status,
-                release_type = FoundOrganism$release_type,
-                genome_rep = FoundOrganism$genome_rep,
-                seq_rel_date = FoundOrganism$seq_rel_date,
-                submitter = FoundOrganism$submitter
-            )
-            
-            # NCBI limits requests to three per second
-            Sys.sleep(0.33)
-            
-            
-            print(
-                paste0(
-                    "The genome of '",
+            if (nrow(FoundOrganism) > 1) {
+                warnings(
+                    "More than one entry has been found for '",
                     organism,
-                    "' has been downloaded to '",
-                    path,
-                    "' and has been named '",
-                    paste0(organism, "_genomic.fna.gz"),
-                    "' ."
+                    "'. Only the first entry '",
+                    FoundOrganism[1, 1],
+                    "' has been used for subsequent genome retrieval."
                 )
-            )
+                FoundOrganism <- FoundOrganism[1,]
+            }
             
-            return(file.path(path, paste0(organism, "_genomic.fna.gz")))
-        } else {
-            warning (
-                "File: ",
-                download_url,
-                " could not be loaded properly... Are you connected to the internet?"
-            )
+            organism <- stringr::str_replace(organism, " ", "_")
+            
+            download_url <-
+                paste0(
+                    FoundOrganism$ftp_path,
+                    "/",
+                    paste0(
+                        FoundOrganism$assembly_accession,
+                        "_",
+                        FoundOrganism$asm_name,
+                        "_genomic.fna.gz"
+                    )
+                )
+            
+            # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
+            
+            if (nrow(FoundOrganism) == 1) {
+                utils::capture.output(downloader::download(
+                    download_url,
+                    destfile = file.path(path, paste0(organism, "_genomic.fna.gz")),
+                    mode = "wb"
+                ))
+                
+                docFile(
+                    file.name = paste0(organism, "_genomic.fna.gz"),
+                    organism  = organism,
+                    url       = download_url,
+                    database  = db,
+                    path      = path,
+                    refseq_category = FoundOrganism$refseq_category,
+                    assembly_accession = FoundOrganism$assembly_accession,
+                    bioproject = FoundOrganism$bioproject,
+                    biosample = FoundOrganism$biosample,
+                    taxid = FoundOrganism$taxid,
+                    infraspecific_name = FoundOrganism$infraspecific_name,
+                    version_status = FoundOrganism$version_status,
+                    release_type = FoundOrganism$release_type,
+                    genome_rep = FoundOrganism$genome_rep,
+                    seq_rel_date = FoundOrganism$seq_rel_date,
+                    submitter = FoundOrganism$submitter
+                )
+                
+                # NCBI limits requests to three per second
+                Sys.sleep(0.33)
+                
+                
+                print(
+                    paste0(
+                        "The genome of '",
+                        organism,
+                        "' has been downloaded to '",
+                        path,
+                        "' and has been named '",
+                        paste0(organism, "_genomic.fna.gz"),
+                        "' ."
+                    )
+                )
+                
+                return(file.path(path, paste0(organism, "_genomic.fna.gz")))
+            } else {
+                warning (
+                    "File: ",
+                    download_url,
+                    " could not be loaded properly... Are you connected to the internet?"
+                )
+            }
         }
+        
+        if (db == "ensembl") {
+            
+            # create result folder
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
+            }
+            
+            # download genome sequence from ENSEMBL
+            genome.path <- getENSEMBL.Seq(organism, type = "dna", id.type = "toplevel", path)
+            
+            new.organism <- stringr::str_replace(organism," ","_")
+            
+            # test proper API access
+            tryCatch({
+                json.qry.info <-
+                    jsonlite::fromJSON(
+                        paste0(
+                            "http://rest.ensembl.org/info/assembly/",
+                            new.organism,
+                            "?content-type=application/json"
+                        )
+                    )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
+                ))
+            
+            cwd <- getwd()
+            
+            setwd(path)
+            
+            # generate Genome documentation
+            sink(paste0("doc_",new.organism,"_db_",db,".txt"))
+            
+            cat(paste0("File Name: ", genome.path))
+            cat("\n")
+            cat(paste0("Organism Name: ", new.organism))
+            cat("\n")
+            cat(paste0("Database: ", db))
+            cat("\n")
+            cat(paste0("Download_Date: ", date()))
+            cat("\n")
+            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+            cat("\n")
+            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+            cat("\n")
+            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
+            cat("\n")
+            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
+            cat("\n")
+            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
+            
+            sink()
+            
+            setwd(cwd)
+            
+            return(genome.path)
+        }
+    
     }
 
 
