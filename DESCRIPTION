@@ -15,6 +15,7 @@ Imports:
     Biostrings,
     stringi,
     tibble,
+    jsonlite,
     data.table (>= 1.9.4),
     dplyr (>= 0.3.0),
     readr (>= 0.2.2),
