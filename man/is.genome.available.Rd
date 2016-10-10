@@ -13,7 +13,7 @@ is.genome.available(organism, details = FALSE, db = "refseq")
 console intead of a boolean value.}
 
 \item{db}{a character string specifying the database for which genome availability shall be checked,
-e.g. \code{db} =  \code{"refseq"} or \code{db} =  \code{"all"}.}
+e.g. \code{db} =  \code{"refseq"}, \code{db} =  \code{"ensembl"} or \code{db} =  \code{"all"}.}
 }
 \value{
 a logical value specifing whether or not the genome of the input organism
@@ -31,12 +31,17 @@ and checks whether or not the specified organism is available for download.
 \examples{
 \dontrun{
 
-# checking whether the Arabidopsis thaliana genome is stored on NCBI
-is.genome.available(organism = "Arabidopsis thaliana")
+# checking whether the Homo sapiens genome is stored on NCBI
+is.genome.available(organism = "Homo sapiens", db = "refseq")
 
 # and printing details
-is.genome.available(organism = "Arabidopsis thaliana", details = TRUE)
+is.genome.available(organism = "Homo sapiens", db = "refseq", details = TRUE)
 
+# checking whether the Homo sapiens genome is stored on ENSEMBL
+is.genome.available(organism = "Homo sapiens", db = "ensembl")
+
+# and printing details
+is.genome.available(organism = "Homo sapiens", details = TRUE, db = "ensembl")
 }
 }
 \author{
