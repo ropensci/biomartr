@@ -5,6 +5,18 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
 
     new.organism <- stringr::str_replace(organism," ","_")
     
+    # check if organism is available on ENSEMBL
+    tryCatch({
+        ensembl.available.organisms <-
+            jsonlite::fromJSON("http://rest.ensembl.org/info/species?content-type=application/json")
+    }, error = function(e)
+        stop(
+            "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
+        ))
+    
+    if (!is.element(stringr::str_to_lower(new.organism),ensembl.available.organisms$species$name))
+        stop("Unfortunately organism '",organism,"' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
+    
     # test proper API access
     tryCatch({
         json.qry.info <-
