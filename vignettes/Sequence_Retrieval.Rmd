@@ -101,6 +101,36 @@ is.genome.available("Homo sapiens", db = "genbank")
 [1] TRUE
 ```
 
+### Using `is.genome.available()` with ENSEMBL
+
+Users can also specify `db = "ensembl"` to retrieve available organisms provided by ENSEMBL.
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the ENSEMBL database
+is.genome.available("Homo sapiens", db = "ensembl")
+```
+
+```
+[1] TRUE
+```
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the ENSEMBL database
+is.genome.available("Homo sapiens", db = "ensembl", details = TRUE)
+```
+
+```
+  division taxon_id         name release display_name        accession common_name
+1  Ensembl     9606 homo_sapiens      86        Human GCA_000001405.22       human
+                                                                    aliases
+1 homo, homo sapiens, h_sapiens, enshs, human, hsap, 9606, homsap, hsapiens
+                                                       groups assembly
+1 core, cdna, vega, otherfeatures, rnaseq, variation, funcgen   GRCh38
+```
+
+Please note that the detailed information provided by ENSEMBL differs from the information provided by NCBI. 
+
+
 The simplest way to work with `listGenomes()` is to print available genomes to the console.
 
 ```{r,eval=FALSE}
