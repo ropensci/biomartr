@@ -114,7 +114,7 @@ getGenome <-
                 
                 readr::write_tsv(
                     AssemblyFilesAllKingdoms,
-                    file.path(tempdir(), "AssemblyFilesAllKingdoms.txt")
+                    file.path(tempdir(), paste0("AssemblyFilesAllKingdoms_", db, ".txt"))
                 )
             }
             
