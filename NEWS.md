@@ -1,13 +1,20 @@
 biomartr 0.2.0
 ===========
 
-## New Functions
+In this version, `biomartr` was extended to retrieve genome, proteome, CDS, and meta-genome data
+from [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/).
+Furthermore, all NCBI retrieval functions were updated to the new server folder structure standards of NCBI.
+
+
+### New Functions
 
 - new external helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
 
 - new internal helper function `getENSEMBL.Seq()` acting as main interface function to communicate with the ENSEMBL database API
 
-## Function changes
+- new internal helper function `get.ensemblgenome.info()` to retrieve general organism information from ENSEMLGENOMES 
+
+### Function changes
 
 - the functions `getGenome()`, `getProteome()`, and `getCDS()` were completely re-written and now use the assembly_summary.txt files
 provided by NCBI to retrieve the download path to the corresponding genome. Furthermore, these functions now lost the `kingdom` argument.
@@ -25,6 +32,14 @@ return the path to the downloaded genome so that this path can be used as input 
 - argument `database` in `is.genome.available()` and `listGenomes()` has been renamed to `db` to be consistent with all other sequence retrieval functions
 
 - `is.genome.available()` now also checks availability of organisms in ENSEMBL. See `db = "ensembl"`
+
+### Vignette updates
+
+-  
+-
+-
+-
+
 
 
 biomartr 0.1.0
