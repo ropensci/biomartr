@@ -4,19 +4,20 @@
 #' selected by the users (hence all packages corresponding to this database).
 #' @param db a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).
 #' @param path a character string specifying the location (a folder) in which the corresponding
-#' database shall be stored. Default is \code{path} = \code{"DB"}. In case this folder does not exist yet, it will be created.
+#' database shall be stored. In case this folder does not exist yet, it will be created.
 #' @author Hajk-Georg Drost
 #' @examples 
 #' \dontrun {
 #' # search for available NCBI databases
-#'   listDatabases(db_name = "all")
+#'   listDatabases(db = "all")
 #'   
 #' # choose database NCBI nr and download compelete database
-#'   download_database_all(name = "nr", path = "database/nr")
+#'   download_database_all(name = "nr", path = "nr")
 #' }
 #' @seealso \code{\link{download_database}}
+#' @export
 download_database_all <- function(db, path) {
     
-    sapply(listDatabases(db), download_database, path = path)
+    sapply(listDatabases(db = db), download_database, path = path)
     
 }
