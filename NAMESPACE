@@ -2,6 +2,7 @@
 
 export(biomart)
 export(download_database)
+export(download_database_all)
 export(getAttributes)
 export(getCDS)
 export(getDatasets)
