@@ -99,13 +99,13 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 #### Meta-Genome Retrieval
 
 * `meta.retieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
-* `meta.retieval.all()` : : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
+* `meta.retieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
 
 #### Database Retrieval
 
 * `listDatabases()` : Retrieve a list of available NCBI databases
 * `download.database()` : Download a NCBI database to your local hard drive
-* `download.database.all` : Download a complete NCBI Database such as e.g. `NCBI nr` to your local hard drive
+* `download.database.all()` : Download a complete NCBI Database such as e.g. `NCBI nr` to your local hard drive
 
 #### Genome Retrieval
 
