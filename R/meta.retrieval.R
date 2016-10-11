@@ -4,7 +4,7 @@
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
 #' @param type type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.
-#' @param out.folder path to the folder in which downloaded genomes shall be stored. By default the
+#' @param path path to the folder in which downloaded genomes shall be stored. By default the
 #' kingdom name is used to name the output folder.
 #' @author Hajk-Georg Drost
 #' @details This function aims to perform bulk retrieval of the genomes of species
@@ -25,7 +25,7 @@
 meta.retrieval <- function(kingdom, 
                            db         = "refseq", 
                            type       = "genome", 
-                           out.folder = NULL){
+                           path = NULL){
         
     subfolders <- getKingdoms()
     
@@ -65,7 +65,7 @@ meta.retrieval <- function(kingdom,
     cat("\n")
     
     if (type == "genome") {
-        if (is.null(out.folder)) {
+        if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 getGenome(db       = db,
                           organism = FinalOrganisms[i],
@@ -73,17 +73,17 @@ meta.retrieval <- function(kingdom,
             }
         }
         
-        if (!is.null(out.folder)) {
+        if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 getGenome(db       = db,
                           organism = FinalOrganisms[i],
-                          path     = out.folder)
+                          path     = path)
             }
         }
     }
     
     if (type == "proteome") {
-        if (is.null(out.folder)) {
+        if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 getProteome(db       = db,
                             organism = FinalOrganisms[i],
@@ -91,17 +91,17 @@ meta.retrieval <- function(kingdom,
             }
         }
         
-        if (!is.null(out.folder)) {
+        if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 getProteome(db       = db,
                             organism = FinalOrganisms[i],
-                            path     = out.folder)
+                            path     = path)
             }
         }
     }
     
     if (type == "CDS") {
-        if (is.null(out.folder)) {
+        if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 getCDS(db       = db,
                        organism = FinalOrganisms[i],
@@ -109,11 +109,11 @@ meta.retrieval <- function(kingdom,
             }
         }
         
-        if (!is.null(out.folder)) {
+        if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 getCDS(db       = db,
                        organism = FinalOrganisms[i],
-                       path     = out.folder)
+                       path     = path)
             }
         }
     }
