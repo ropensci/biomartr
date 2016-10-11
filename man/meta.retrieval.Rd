@@ -4,7 +4,7 @@
 \alias{meta.retrieval}
 \title{Perform Meta-Genome Retieval}
 \usage{
-meta.retrieval(kingdom, db = "refseq", type = "genome", out.folder = NULL)
+meta.retrieval(kingdom, db = "refseq", type = "genome", path = NULL)
 }
 \arguments{
 \item{kingdom}{a character string specifying the kingdom of the organisms of interest,
@@ -14,7 +14,7 @@ e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "verteb
 
 \item{type}{type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.}
 
-\item{out.folder}{path to the folder in which downloaded genomes shall be stored. By default the
+\item{path}{path to the folder in which downloaded genomes shall be stored. By default the
 kingdom name is used to name the output folder.}
 }
 \description{
