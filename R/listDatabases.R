@@ -1,7 +1,7 @@
 #' @title Retrieve a List of Available NCBI Databases for Download  
 #' @description This function allows you to retrieve a list of database names and versions
 #' that can be downloaded from correspondning servers.
-#' @param db_name a character string specifying the name of the database that shall be searched for.
+#' @param db a character string specifying the name of the database that shall be searched for.
 #' @param update a logical value specifying whether or not the local listDatabases.txt file shall be updated by remote access to NCBI.
 #' @description
 #' 
@@ -18,18 +18,18 @@
 #' @examples
 #' 
 #' # retrieve all versions of the NCBI 'nr' database that can be downloaded
-#' # listDatabases(db_name = "nr")
+#' # listDatabases(db = "nr")
 #' 
 #' # analogous:
-#' # listDatabases(db_name = "cdd")
-#' # listDatabases(db_name = "nt")
-#' # listDatabases(db_name = "gss")
-#' # listDatabases(db_name = "refseq_protein")
+#' # listDatabases(db = "cdd")
+#' # listDatabases(db = "nt")
+#' # listDatabases(db = "gss")
+#' # listDatabases(db = "refseq_protein")
 #' 
 #' @seealso \code{\link{download_database}}
 #' @export
 
-listDatabases <- function(db_name = "nr", update = FALSE) {
+listDatabases <- function(db = "nr", update = FALSE) {
     
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
         dir.create(file.path(tempdir(), "_ncbi_downloads"))
@@ -73,32 +73,36 @@ listDatabases <- function(db_name = "nr", update = FALSE) {
         )
     }
     
-    if (db_name == "all") {
-        
+    if (db == "all") {
         listDBs2 <- listDBs[[1]]
-        all_databases <- listDBs2[-which(sapply(listDBs2, function(x)
-            stringr::str_detect(x, ".md5")))]
+        all_databases <-
+            listDBs2[-which(sapply(listDBs2, function(x)
+                stringr::str_detect(x, ".md5")))]
         # available DBs
-        dbs <- names(table(unlist(sapply(all_databases, function (x) unlist(stringr::str_split(x,"[.]"))[1]))))
-        return(dbs)
+        dbs <-
+            as.vector(names(table(unlist(
+                sapply(all_databases, function(x)
+                    unlist(stringr::str_split(x, "[.]"))[1])
+            ))))
+        return(dbs[-which(dbs == "README")])
         
     } else {
         listDBs2 <- listDBs[[1]]
-        # select all database versions of 'db_name'
+        # select all database versions of 'db'
         DBName <-
             listDBs2[sapply(listDBs2, function(x)
-                stringr::str_detect(x, paste0("^", db_name)))]
+                stringr::str_detect(x, paste0("^", db)))]
         
         if (length(DBName) == 0)
-            stop("No entries for db_name = '", db_name, "' could not be found.")
+            stop("No entries for db = '", db, "' could not be found.")
         
         # limit NCBI queries
         if (!file.exists(file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt")))
             Sys.sleep(0.33)
         
         # delete md5 entries
-        return(DBName[-which(sapply(DBName, function(x)
-            stringr::str_detect(x, ".md5")))])
+        return(as.vector(DBName[-which(sapply(DBName, function(x)
+            stringr::str_detect(x, ".md5")))]))
         
     }
 }
