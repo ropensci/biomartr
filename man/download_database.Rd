@@ -4,13 +4,13 @@
 \alias{download_database}
 \title{Download a NCBI Database to Your Local Hard Drive}
 \usage{
-download_database(name, path = "DB")
+download_database(db, path = "database")
 }
 \arguments{
-\item{name}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
+\item{db}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
 
 \item{path}{a character string specifying the location (a folder) in which the corresponding
-database shall be stored. Default is \code{path} = \code{"DB"}. In case this folder does not exist yet, it will be created.}
+database shall be stored. Default is \code{path} = \code{"database"}. In case this folder does not exist yet, it will be created.}
 }
 \description{
 This function allows you to download a database selected by
@@ -18,22 +18,25 @@ This function allows you to download a database selected by
 }
 \details{
 This function downloads large databases to your hard drive. For this purpose a folder
-named \code{DB} (default) is created and the correspondning database then stored in this folder.
+named \code{database} (default) is created and the correspondning database then stored in this folder.
 }
 \examples{
 \dontrun{
   
   # search for available NCBI nr databases
-  listDatabases(db_name = "nr")
+  listDatabases(db = "nr")
   
   # select NCBI nr version 27 =  "nr.27.tar.gz"
   # and download it to your hard drive
   # -> please note that large databases take some time for download!
-  download_database(name = "nr.27.tar.gz")
+  download_database(db = "nr.27.tar.gz")
 
 }
 }
 \author{
 Hajk-Georg Drost
+}
+\seealso{
+\code{\link{download_database_all}}
 }
 
