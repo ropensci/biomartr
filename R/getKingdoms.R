@@ -8,6 +8,17 @@
 #' @export
 
 getKingdoms <- function(){
-        return( c("archaea","bacteria", "fungi", "invertebrate", "plant",
-          "protozoa", "vertebrate_mammalian", "vertebrate_other") )
+    return(
+        c(
+            "archaea",
+            "bacteria",
+            "fungi",
+            "invertebrate",
+            "plant",
+            "protozoa",
+            "vertebrate_mammalian",
+            "vertebrate_other",
+            "viral"
+        )
+    )
 }
