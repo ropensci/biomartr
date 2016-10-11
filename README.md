@@ -17,6 +17,7 @@ Getting Started with `biomartr`:
 - [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
 - [Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
 - [Sequence and Database Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
+- [Meta-Genome Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/MetaGenome_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
 - [Evolutionary Transcriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Evolutionary_Transcriptomics.Rmd)
 
@@ -93,6 +94,26 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 
 - Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
+### Biological Data Retrieval
+
+#### Meta-Genome Retrieval
+
+* `meta.retieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
+* `meta.retieval.all()` : : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
+
+#### Database Retrieval
+
+* `listDatabases()` : Retrieve a list of available NCBI databases
+* `download.database()` : Download a NCBI database to your local hard drive
+* `download.database.all` : Download a complete NCBI Database such as e.g. `NCBI nr` to your local hard drive
+
+#### Genome Retrieval
+
+* `getGenome()` : Download a specific genome stored on the NCBI ftp:// server
+* `listGenomes()` : List all genomes available on the NCBI ftp:// server
+* `is.genome.available()` : Check Genome Availability
+* `getProteome()` : Download a specific proteome stored on the NCBI ftp:// server
+* `getCDS()` : Download a specific CDS file (genome) stored on the NCBI ftp:// server
 
 ### BioMart Queries
 
@@ -104,26 +125,6 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 * `organismBM()` : Function for organism specific retrieval of available BioMart marts and datasets
 * `organismAttributes()` : Function for organism specific retrieval of available BioMart attributes
 * `organismFilters()` : Function for organism specific retrieval of available BioMart filters
-
-
-### Biological Data Retrieval
-
-#### Genome Retrieval
-
-* `getGenome()` : Download a specific genome stored on the NCBI ftp:// server
-* `listGenomes()` : List all genomes available on the NCBI ftp:// server
-* `is.genome.available()` : Check Genome Availability
-* `getProteome()` : Download a specific proteome stored on the NCBI ftp:// server
-* `getCDS()` : Download a specific CDS file (genome) stored on the NCBI ftp:// server
-
-#### Database Retrieval
-
-* `listDatabases()` : Retrieve a List of Available NCBI Databases for Download
-* `download_database()` : Download a NCBI Database to Your Local Hard Drive
-
-#### Meta-Genome Retrieval
-
-* `meta.retieval()` : Perform Meta-Genome Retieval from NCBI
 
 ### Performing Gene Ontology queries
 
