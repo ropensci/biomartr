@@ -163,6 +163,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
         if (!is.element(stringr::str_to_lower(new.organism),ensembl.available.organisms$species$name))
             stop("Unfortunately organism '",organism,"' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
         
+        name <- NULL
         selected.organism <- dplyr::filter(ensembl.available.organisms$species, name == stringr::str_to_lower(new.organism))
         
         if (!details) {
