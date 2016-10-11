@@ -4,10 +4,10 @@
 \alias{listDatabases}
 \title{Retrieve a List of Available NCBI Databases for Download}
 \usage{
-listDatabases(db_name = "nr", update = FALSE)
+listDatabases(db = "nr", update = FALSE)
 }
 \arguments{
-\item{db_name}{a character string specifying the name of the database that shall be searched for.}
+\item{db}{a character string specifying the name of the database that shall be searched for.}
 
 \item{update}{a logical value specifying whether or not the local listDatabases.txt file shall be updated by remote access to NCBI.}
 }
@@ -24,13 +24,13 @@ select an appropriate database for download with \code{\link{download_database}}
 \examples{
 
 # retrieve all versions of the NCBI 'nr' database that can be downloaded
-# listDatabases(db_name = "nr")
+# listDatabases(db = "nr")
 
 # analogous:
-# listDatabases(db_name = "cdd")
-# listDatabases(db_name = "nt")
-# listDatabases(db_name = "gss")
-# listDatabases(db_name = "refseq_protein")
+# listDatabases(db = "cdd")
+# listDatabases(db = "nt")
+# listDatabases(db = "gss")
+# listDatabases(db = "refseq_protein")
 
 }
 \author{
