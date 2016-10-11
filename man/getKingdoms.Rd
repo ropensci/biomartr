@@ -17,6 +17,6 @@ getKingdoms()
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}
+\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}
 }
 
