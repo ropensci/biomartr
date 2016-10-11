@@ -8,6 +8,8 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 ### New Functions
 
+- new database retrieval function `download_database_all()` allows users to download entire NCBI databases with only one command
+
 - new external helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
 
 - new internal helper function `getENSEMBL.Seq()` acting as main interface function to communicate with the ENSEMBL database API
