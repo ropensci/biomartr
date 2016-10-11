@@ -4,7 +4,7 @@
 #' @author Hajk-Georg Drost
 #' @examples 
 #' getKingdoms()
-#' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}
+#' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}
 #' @export
 
 getKingdoms <- function(){
