@@ -10,57 +10,91 @@
  
 getSummaryFile <- function(db,kingdom){
     
-    if (!is.element(db,c("refseq","genbank")))
+    if (!is.element(db, c("refseq", "genbank")))
         stop("Please select one of the available data bases: 'refseq' or 'genbank'")
     
-    if (!is.element(kingdom,getKingdoms()))
-        stop(paste0("Please select a valid kingdom: ",paste0(getKingdoms(),collapse = ", ")))
+    if (!is.element(kingdom, getKingdoms()))
+        stop(paste0(
+            "Please select a valid kingdom: ",
+            paste0(getKingdoms(), collapse = ", ")
+        ))
     
-    if (!file.exists(file.path(tempdir(), paste0("assembly_summary_", kingdom, "_", db, ".txt")))) {
-        
+    if (!file.exists(file.path(
+        tempdir(),
+        paste0("assembly_summary_", kingdom, "_", db, ".txt")
+    ))) {
         suppressMessages(downloader::download(
-            paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db,"/",kingdom,"/assembly_summary.txt"),
-            destfile = file.path(tempdir(), paste0("assembly_summary_", kingdom, "_", db, ".txt"))
+            paste0(
+                "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
+                db,
+                "/",
+                kingdom,
+                "/assembly_summary.txt"
+            ),
+            destfile = file.path(
+                tempdir(),
+                paste0("assembly_summary_", kingdom, "_", db, ".txt")
+            )
         ))
         Sys.sleep(0.33)
     }
     
     suppressWarnings(summary.file <-
-        tibble::as_tibble(readr::read_tsv(
-            file.path(tempdir(), paste0("assembly_summary_", kingdom, "_", db, ".txt")),
-            comment = "#",
-            col_names = c("assembly_accession", "bioproject", "biosample",
-                          "wgs_master", "refseq_category", "taxid",
-                          "species_taxid", "organism_name", "infraspecific_name",
-                          "isolate", "version_status", "assembly_level",
-                          "release_type", "genome_rep", "seq_rel_date",
-                          "asm_name", "submitter", "gbrs_paired_asm",
-                          "paired_asm_comp", "ftp_path", "excluded_from_refseq"),
-            col_types = readr::cols(
-                assembly_accession = readr::col_character(),
-                bioproject = readr::col_character(),
-                biosample = readr::col_character(),
-                wgs_master = readr::col_character(),
-                refseq_category = readr::col_character(),
-                taxid = readr::col_integer(),
-                species_taxid = readr::col_integer(),
-                organism_name = readr::col_character(),
-                infraspecific_name = readr::col_character(),
-                isolate = readr::col_character(),
-                version_status = readr::col_character(),
-                assembly_level = readr::col_character(),
-                release_type = readr::col_character(),
-                genome_rep = readr::col_character(),
-                seq_rel_date = readr::col_date(),
-                asm_name = readr::col_character(),
-                submitter = readr::col_character(),
-                gbrs_paired_asm = readr::col_character(),
-                paired_asm_comp = readr::col_character(),
-                ftp_path = readr::col_character(),
-                excluded_from_refseq = readr::col_character()
-            )
-          )
-        )
+                         tibble::as_tibble(
+                             readr::read_tsv(
+                                 file.path(
+                                     tempdir(),
+                                     paste0("assembly_summary_", kingdom, "_", db, ".txt")
+                                 ),
+                                 comment = "#",
+                                 col_names = c(
+                                     "assembly_accession",
+                                     "bioproject",
+                                     "biosample",
+                                     "wgs_master",
+                                     "refseq_category",
+                                     "taxid",
+                                     "species_taxid",
+                                     "organism_name",
+                                     "infraspecific_name",
+                                     "isolate",
+                                     "version_status",
+                                     "assembly_level",
+                                     "release_type",
+                                     "genome_rep",
+                                     "seq_rel_date",
+                                     "asm_name",
+                                     "submitter",
+                                     "gbrs_paired_asm",
+                                     "paired_asm_comp",
+                                     "ftp_path",
+                                     "excluded_from_refseq"
+                                 ),
+                                 col_types = readr::cols(
+                                     assembly_accession = readr::col_character(),
+                                     bioproject = readr::col_character(),
+                                     biosample = readr::col_character(),
+                                     wgs_master = readr::col_character(),
+                                     refseq_category = readr::col_character(),
+                                     taxid = readr::col_integer(),
+                                     species_taxid = readr::col_integer(),
+                                     organism_name = readr::col_character(),
+                                     infraspecific_name = readr::col_character(),
+                                     isolate = readr::col_character(),
+                                     version_status = readr::col_character(),
+                                     assembly_level = readr::col_character(),
+                                     release_type = readr::col_character(),
+                                     genome_rep = readr::col_character(),
+                                     seq_rel_date = readr::col_date(),
+                                     asm_name = readr::col_character(),
+                                     submitter = readr::col_character(),
+                                     gbrs_paired_asm = readr::col_character(),
+                                     paired_asm_comp = readr::col_character(),
+                                     ftp_path = readr::col_character(),
+                                     excluded_from_refseq = readr::col_character()
+                                 )
+                             )
+                         )
     )
     
     return(summary.file)
