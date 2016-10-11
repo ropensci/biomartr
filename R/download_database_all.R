@@ -1,5 +1,5 @@
 #' @title Download all elements of an NCBI databse
-#' @description The \code{\link{download_database}} functions allows users to retrieve individual
+#' @description The \code{\link{download.database}} functions allows users to retrieve individual
 #' packages of a NCBI database. This function is designed to retrieve the entire database 
 #' selected by the users (hence all packages corresponding to this database).
 #' @param db a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).
@@ -7,17 +7,17 @@
 #' database shall be stored. In case this folder does not exist yet, it will be created.
 #' @author Hajk-Georg Drost
 #' @examples 
-#' \dontrun {
+#' \dontrun{
 #' # search for available NCBI databases
 #'   listDatabases(db = "all")
 #'   
 #' # choose database NCBI nr and download compelete database
-#'   download_database_all(name = "nr", path = "nr")
+#'   download.database.all(name = "nr", path = "nr")
 #' }
-#' @seealso \code{\link{download_database}}
+#' @seealso \code{\link{download.database}}, \code{\link{listDatabases}}
 #' @export
-download_database_all <- function(db, path) {
+download.database.all <- function(db, path) {
     
-    sapply(listDatabases(db = db), download_database, path = path)
+    sapply(listDatabases(db = db), download.database, path = path)
     
 }
