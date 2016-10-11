@@ -225,17 +225,17 @@ The same approach can be applied to all other databases mentioned above, e.g.:
 
 ```r
 # download the entire NCBI nt database
-sapply(listDatabases("nt"), download.database, path = "nt")
+download.database.all(db = "nt", path = "nt")
 ```
 
 ```r
 # download the entire NCBI refseq (protein) database
-sapply(listDatabases("refseq_protein"), download.database, path = "refseq")
+download.database.all(db = "refseq_protein", path = "refseq_protein")
 ```
 
 ```r
 # download the entire NCBI PDB database
-sapply(listDatabases("pdb"), download.database, path = "pdb")
+download.database.all(db = "pdb", path = "pdb")
 ```
 
 __Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.__
