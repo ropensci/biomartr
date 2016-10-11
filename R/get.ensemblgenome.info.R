@@ -31,6 +31,7 @@ get.ensemblgenome.info <- function(update = FALSE) {
                 "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?"
             ))
         
+        aliases <- groups <- NULL
         readr::write_tsv(
             dplyr::select(ensemblgenome.info, -aliases, -groups),
             file.path(tempdir(), "ensemblgenome_info.tsv")
