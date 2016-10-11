@@ -18,11 +18,11 @@ test_that("The getProteome() interface works properly..",{
         # test proper download from genbank
         Ath_Proteome <- read_proteome(getProteome( db       = "genbank",
                                                    organism = "Arabidopsis thaliana",
-                                                   path     = tempdir()), format = "fasta")
+                                                   path     = tempdir()), format = "gbk")
         
         # test proper use of internal referece files when command is repeated
         Ath_Proteome <- read_proteome(getProteome( db       = "genbank",
                                                    organism = "Arabidopsis thaliana",
-                                                   path     = tempdir()), format = "fasta")
+                                                   path     = tempdir()), format = "gbk")
         
 })
