@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 # Retrieve Sequence Databases from NCBI
 
 NCBI stores a variety of specialized database such as [Genbank, RefSeq, Taxonomy, SNP, etc.](https://www.ncbi.nlm.nih.gov/guide/data-software/) on their servers.
-The `download_databases()` function implemented in `biomartr` allows users to download these databases from NCBI.
+The `download.database()` and `download.database.all()` functions implemented in `biomartr` allows users to download these databases from NCBI.
 
 ## Search for available databases
 
@@ -29,33 +29,30 @@ Before downloading specific databases from NCBI users might want to list availab
 library("biomartr")
 
 # retrieve a list of available sequence databases at NCBI
-listDatabases(db_name = "all")
+listDatabases(db = "all")
 ```
 
 ```
- [1] "16SMicrobial"             "cdd_delta"                "cloud"                   
- [4] "env_nr"                   "env_nt"                   "est"                     
- [7] "est_human"                "est_mouse"                "est_others"              
-[10] "FASTA"                    "gene_info"                "gss"                     
-[13] "gss_annot"                "htgs"                     "human_genomic"           
-[16] "human_genomic_transcript" "landmark"                 "mouse_genomic_transcript"
-[19] "nr"                       "nt"                       "other_genomic"           
-[22] "pataa"                    "patnt"                    "pdbaa"                   
-[25] "pdbnt"                    "README"                   "refseq_genomic"          
-[28] "refseq_protein"           "refseq_rna"               "refseqgene"              
-[31] "Representative_Genomes"   "sts"                      "swissprot"               
-[34] "taxdb"                    "tsa_nr"                   "tsa_nt"
+ [1] "16SMicrobial"             "cdd_delta"                "cloud"                    "env_nr"
+ [5] "env_nt"                   "est"                      "est_human"                "est_mouse"
+ [9] "est_others"               "FASTA"                    "gene_info"                "gss"
+[13] "gss_annot"                "htgs"                     "human_genomic"            "human_genomic_transcript"
+[17] "landmark"                 "mouse_genomic_transcript" "nr"                       "nt"
+[21] "other_genomic"            "pataa"                    "patnt"                    "pdbaa"
+[25] "pdbnt"                    "refseq_genomic"           "refseq_protein"           "refseq_rna"
+[29] "refseqgene"               "Representative_Genomes"   "sts"                      "swissprot"
+[33] "taxdb"                    "tsa_nr"                   "tsa_nt"                   "vector"
 ```
 
 However, in case users already know which database they would like to retrieve
 they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the `NCBI nr` database shall be retrieved.
 
 
-First, the `listDatabases(db_name = "nr")` allows to list all files corresponding to the `nr` database. 
+First, the `listDatabases(db = "nr")` allows to list all files corresponding to the `nr` database. 
 
 ```r
 # show all NCBI nr files
-listDatabases(db_name = "nr")
+listDatabases(db = "nr")
 ```
 
 ```
@@ -75,7 +72,7 @@ Further examples are:
 
 ```r
 # show all NCBI nt files
-listDatabases(db_name = "nt")
+listDatabases(db = "nt")
 ```
 
 ```
@@ -89,7 +86,7 @@ listDatabases(db_name = "nt")
 
 ```r
 # show all NCBI ESTs others
-listDatabases(db_name = "est_others")
+listDatabases(db = "est_others")
 ```
 
 ```
@@ -100,7 +97,7 @@ listDatabases(db_name = "est_others")
 
 ```r
 # show all NCBI RefSeq (only genomes)
-head(listDatabases(db_name = "refseq_genomic"), 20)
+head(listDatabases(db = "refseq_genomic"), 20)
 ```
 
 ```
@@ -115,7 +112,7 @@ head(listDatabases(db_name = "refseq_genomic"), 20)
 
 ```r
 # show all NCBI RefSeq (only proteomes)
-listDatabases(db_name = "refseq_protein")
+listDatabases(db = "refseq_protein")
 ```
 
 ```
@@ -131,7 +128,7 @@ listDatabases(db_name = "refseq_protein")
 
 ```r
 # show all NCBI RefSeq (only RNA)
-listDatabases(db_name = "refseq_rna")
+listDatabases(db = "refseq_rna")
 ```
 
 ```
@@ -140,20 +137,8 @@ listDatabases(db_name = "refseq_rna")
 ```
 
 ```r
-# show all NCBI WGS
-head(listDatabases(db_name = "wgs"), 20)
-```
-
-```
- [1] "wgs.66.tar.gz"  "wgs.67.tar.gz"  "wgs.68.tar.gz"  "wgs.69.tar.gz"  "wgs.70.tar.gz" 
- [6] "wgs.71.tar.gz"  "wgs.72.tar.gz"  "wgs.73.tar.gz"  "wgs.107.tar.gz" "wgs.74.tar.gz" 
-[11] "wgs.79.tar.gz"  "wgs.00.tar.gz"  "wgs.01.tar.gz"  "wgs.02.tar.gz"  "wgs.03.tar.gz" 
-[16] "wgs.04.tar.gz"  "wgs.05.tar.gz"  "wgs.06.tar.gz"  "wgs.07.tar.gz"  "wgs.08.tar.gz"
-```
-
-```r
 # show NCBI swissprot
-listDatabases(db_name = "swissprot")
+listDatabases(db = "swissprot")
 ```
 
 ```
@@ -162,7 +147,7 @@ listDatabases(db_name = "swissprot")
 
 ```r
 # show NCBI PDB
-listDatabases(db_name = "pdb")
+listDatabases(db = "pdb")
 ```
 
 ```
@@ -177,7 +162,7 @@ listDatabases(db_name = "pdb")
 
 ```r
 # show NCBI Human database
-listDatabases(db_name = "human")
+listDatabases(db = "human")
 ```
 
 ```
@@ -193,7 +178,7 @@ listDatabases(db_name = "human")
 
 ```r
 # show NCBI EST databases
-listDatabases(db_name = "est")
+listDatabases(db = "est")
 ```
 
 ```
@@ -205,19 +190,19 @@ listDatabases(db_name = "est")
 
 __Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.__
 
-In a next step users can use a combination of the `listDatabases()` and `download_databases()` functions to retrieve 
+In a next step users can use the `listDatabases()` and `download.database.all()` functions to retrieve 
 all files corresponding to a specific NCBI database.
 
 ## Download available databases
 
-Using the same search strategy by specifying the database name as described above, users can now download these databases using the `download_database()` function.
+Using the same search strategy by specifying the database name as described above, users can now download these databases using the `download.database()` function.
 
 For downloading only single files users can type:
 
 ```r
 # select NCBI nr version 27 =  "nr.27.tar.gz"
 # and download it into the folder
-download_database(name      = "nr.27.tar.gz", 
+download.database(db        = "nr.27.tar.gz", 
                   path      = "nr")
 
 ```
@@ -230,7 +215,7 @@ Alternatively, users can retrieve all `nr` files with one command by typing:
 
 ```r
 # download the entire NCBI nr database
-sapply(listDatabases("nr"), download_database, path = "nr")
+download.database.all(db = "nr", path = "nr")
 ```
 
 Using this command, all `NCBI nr` files are loaded into the `nr` folder (`path = "nr"`).
@@ -240,17 +225,17 @@ The same approach can be applied to all other databases mentioned above, e.g.:
 
 ```r
 # download the entire NCBI nt database
-sapply(listDatabases("nt"), download_database, path = "nt")
+sapply(listDatabases("nt"), download.database, path = "nt")
 ```
 
 ```r
 # download the entire NCBI refseq (protein) database
-sapply(listDatabases("refseq_protein"), download_database, path = "refseq")
+sapply(listDatabases("refseq_protein"), download.database, path = "refseq")
 ```
 
 ```r
 # download the entire NCBI PDB database
-sapply(listDatabases("pdb"), download_database, path = "pdb")
+sapply(listDatabases("pdb"), download.database, path = "pdb")
 ```
 
 __Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.__
