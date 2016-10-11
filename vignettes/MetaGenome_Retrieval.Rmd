@@ -1,0 +1,133 @@
+---
+title: "Meta-Genome Retrieval"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Meta-Genome Retrieval}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message = FALSE}
+options(width = 750)
+knitr::opts_chunk$set(
+  comment = "#>",
+  error = FALSE,
+  tidy = FALSE)
+```
+
+
+## Perform Meta-Genome Retieval
+
+The number of genome sequences generated and stored in sequence databases is growing exponentially every day. With the availability of this growing amount of data, meta-genomics studies become more popular
+and useful for finding patterns within genomes by comparing them to thousands of other genomes.
+However, the first step in any meta-genomics study is the retrieval of the genomes that shall be compared
+or investigated. 
+
+For this purpose, I implemented the `meta.retrieval()` function to allow users to perform easy meta-genome retrieval in R.
+
+The `getKingdoms()` function stores a list of all available kingdoms of life.
+
+```{r, eval=FALSE}
+getKingdoms()
+```
+
+```
+[1] "archaea"              "bacteria"             "fungi"                "invertebrate"        
+[5] "plant"                "protozoa"             "vertebrate_mammalian" "vertebrate_other"    
+[9] "viral"
+```
+
+These kingdoms can be specified in `meta.retrieval()`.
+
+The `meta.retrieval()` function aims to simplify the genome retrieval process
+for subsequent meta-genomics studies.
+
+Usually this step is performed with `shell` scripts. However, since many
+meta-genomics packages exist for the R programming language, I implemented
+this functionality for easy integration into existing workflows.
+
+For example, the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package can be used with
+`meta.retrieval()`.
+
+```{r,eval=FALSE}
+# download all vertebrate genomes, then apply ...
+meta.retrieval(kingdom = "vertebrate_mammalian", type = "genome") %>% ...
+```
+
+Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval()` enables the pipelining methodology for meta-genomics. 
+
+The `meta.retrieval()` function can retrieve genomes, proteomes, and CDS files.
+
+#### Retrieve Genomic Sequences
+
+Download all mammalian vertebrate genomes from RefSeq.
+
+```{r,eval=FALSE}
+# download all vertebrate genomes
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
+```
+
+All geneomes are stored in the folder named according to the kingdom.
+In this case `vertebrate_mammalian`. Alternatively, users can specify
+the `out.folder` argument to define a custom output folder path.
+
+Alternatively, download all mammalian vertebrate genomes from genbank
+
+```{r,eval=FALSE}
+# download all vertebrate genomes
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
+```
+
+#### Retrieve Protein Sequences
+
+Download all mammalian vertebrate proteomes from RefSeq.
+
+```{r,eval=FALSE}
+# download all vertebrate genomes
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "proteome")
+```
+
+Alternatively, download all mammalian vertebrate proteomes from genbank
+
+```{r,eval=FALSE}
+# download all vertebrate genomes
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteome")
+```
+
+#### Retrieve CDS Sequences
+
+Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS data).
+
+```{r,eval=FALSE}
+# download all vertebrate genomes
+meta.retrieval(kingdom = "vertebrate_mammalian", type = "CDS")
+
+```
+
+Users can obtain alternative kingdoms using `getKingdoms()`.
+
+#### Retrieve Genomes for all kingdoms of life stored in RefSeq
+
+Finally, users can download all genomes stored in the RefSeq database with one command:
+
+```{r,eval=FALSE}
+# download all geneomes stored in RefSeq
+meta.retrieval.all(db = "refseq", type = "genome")
+```
+
+Analogously, proteomes or CDS files can be retrieved by exchanging `type = "genome"`
+by `type = "proteome"` or `type = "CDS"`.
+
+
+#### Retrieve Genomes for all kingdoms of life stored in GenBank
+
+Users can download all genomes stored in the Genbank database with one command:
+
+```{r,eval=FALSE}
+# download all geneomes stored in Genbank
+meta.retrieval.all(db = "genbank", type = "genome")
+```
+
+Analogously, proteomes or CDS files can be retrieved by exchanging `type = "genome"`
+by `type = "proteome"`.
