@@ -463,6 +463,15 @@ In case, users wish to download genomes from [NCBI genbank](http://www.ncbi.nlm.
 argument `db = "genbank"` in `getProteome()`. In case users select `db = "genbank"`, the `format` argument in `read_proteome()` must be adapted accordingly to
 handle genbank formatted files as input: `read_proteome(..., format = "gbk")`.
 
+```{r,eval=FALSE}
+# read proteome as data.table object
+Human_Proteome <- read_proteome(getProteome( db       = "genbank", 
+                                             organism = "Homo sapiens",
+                                             path     = file.path("_ncbi_downloads","proteomes") ), 
+                                format = "gbk")
+```
+
+
 ### CDS Retrieval
 
 The `getCDS()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
