@@ -43,11 +43,11 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
     if (is.element(db, c("refseq", "genbank"))) {
         # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
         # stored in temp()
-        if (file.exists(file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"))) {
+        if (file.exists(file.path(tempdir(), paste0("AssemblyFilesAllKingdoms_", db, ".txt")))) {
             suppressWarnings(
                 AssemblyFilesAllKingdoms <-
                     readr::read_tsv(
-                        file.path(tempdir(), "AssemblyFilesAllKingdoms.txt"),
+                        file.path(tempdir(), paste0("AssemblyFilesAllKingdoms_", db, ".txt")),
                         col_names = c(
                             "assembly_accession",
                             "bioproject",
@@ -112,7 +112,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
             
             readr::write_tsv(
                 AssemblyFilesAllKingdoms,
-                file.path(tempdir(), "AssemblyFilesAllKingdoms.txt")
+                file.path(tempdir(), paste0("AssemblyFilesAllKingdoms_", db, ".txt"))
             )
         }
         
@@ -122,7 +122,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
         if (nrow(FoundOrganism) == 0)
             stop("Unfortunately no entry for organism '",
                  organism,
-                 "' could not be found.",
+                 "' could be found.",
                  call. = FALSE)
         
         available_genome <- listGenomes("all", TRUE, db = "all")
