@@ -33,6 +33,12 @@ return the path to the downloaded genome so that this path can be used as input 
 
 - `is.genome.available()` now also checks availability of organisms in ENSEMBL. See `db = "ensembl"`
 
+- the argument `db_name` in `listDatabases()` has been renamed `db` to be more consistent with the notation in other functions
+
+- the argument `name` in `download_database()` has been renamed `db` to be more consistent with the notation in other functions
+
+
+
 ### Vignette updates
 
 -  
