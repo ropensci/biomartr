@@ -19,7 +19,7 @@ Database retrieval is crucial for most biological studies and analyses.
 There is a vast diversity of databases that can be accessed remotely or that can be downloaded
 to your local machine. This function provides an interface to databases that can be downloaded 
 from NCBI servers and lists all available databases and their database version to be able to
-select an appropriate database for download with \code{\link{download_database}}.
+select an appropriate database for download with \code{\link{download.database}}.
 }
 \examples{
 
@@ -40,6 +40,6 @@ Hajk-Georg Drost
 \url{ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA}
 }
 \seealso{
-\code{\link{download_database}}
+\code{\link{download.database}}
 }
 
