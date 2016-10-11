@@ -18,13 +18,13 @@
 #'   # select NCBI nr version 27 =  "nr.27.tar.gz"
 #'   # and download it to your hard drive
 #'   # -> please note that large databases take some time for download!
-#'   download_database(db = "nr.27.tar.gz")
+#'   download.database(db = "nr.27.tar.gz")
 #' 
 #' }
-#' @seealso \code{\link{download_database_all}}
+#' @seealso \code{\link{download.database.all}}, \code{\link{listDatabases}}
 #' @export
 
-download_database <- function(db, path = "database"){
+download.database <- function(db, path = "database"){
         
     if (!file.exists(path))
         dir.create(path)
