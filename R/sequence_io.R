@@ -20,29 +20,41 @@
 #' sequence as string in the second column.
 #' @export
 read_genome <- function(file, format, ...){
+    
+     if (!is.element(format, c("fasta", "gbk")))
+        stop("Please choose a file format that is supported by this function.")
+    
+    geneids <- NULL
+    
+    tryCatch({
+        genome <-
+            Biostrings::readDNAStringSet(filepath = file, format = format, ...)
+        genome_names <-
+            as.vector(unlist(sapply(genome@ranges@NAMES, function(x) {
+                return(strsplit(x, " ")[[1]][1])
+            })))
+        genome.dt <-
+            data.table::data.table(geneids = genome_names,
+                                   seqs = tolower(as.character(genome)))
         
-        if(!is.element(format,c("fasta","gbk")))
-                stop("Please choose a file format that is supported by this function.")
+        data.table::setkey(genome.dt, geneids)
         
-        geneids <- seqs <- NULL
-        
-        if(format == "fasta"){
-                
-                tryCatch({
-                        
-                          genome <- Biostrings::readDNAStringSet(filepath = file, format = format, ...)
-                          genome_names <- as.vector(unlist(sapply(genome@ranges@NAMES, function(x){return(strsplit(x, " ")[[1]][1])})))
-                          genome.dt <- data.table::data.table(geneids = genome_names,
-                                                              seqs = tolower(as.character(genome)))
-        
-                          data.table::setkey(genome.dt,geneids)
-        
-                }, error = function(e){ stop(paste0("File ",file, " could not be read properly. \n",
-                                   "Please make sure that ",file," contains only DNA sequences and is in ",format," format."))}
-                )
-        }
-        
-        return(genome.dt)
+    }, error = function(e) {
+        stop(
+            paste0(
+                "File ",
+                file,
+                " could not be read properly. \n",
+                "Please make sure that ",
+                file,
+                " contains only DNA sequences and is in ",
+                format,
+                " format."
+            )
+        )
+    })
+    
+    return(genome.dt)
 }
 
 
@@ -71,28 +83,40 @@ read_genome <- function(file, format, ...){
 #' @export
 read_proteome <- function(file, format, ...){
         
-        if(!is.element(format,c("fasta","gbk")))
-                stop("Please choose a file format that is supported by this function.")
+    if (!is.element(format, c("fasta", "gbk")))
+        stop("Please choose a file format that is supported by this function.")
+    
+    geneids <- NULL
+    
+    tryCatch({
+        proteome <-
+            Biostrings::readAAStringSet(filepath = file, format = format, ...)
+        proteome_names <-
+            as.vector(unlist(sapply(proteome@ranges@NAMES, function(x) {
+                return(strsplit(x, " ")[[1]][1])
+            })))
+        proteome.dt <-
+            data.table::data.table(geneids = proteome_names,
+                                   seqs = tolower(as.character(proteome)))
         
-        geneids <- seqs <- NULL 
+        data.table::setkey(proteome.dt, geneids)
         
-        if(format == "fasta"){
-                
-                tryCatch({
-                        
-                           proteome <- Biostrings::readAAStringSet(filepath = file, format = format, ...)
-                           proteome_names <- as.vector(unlist(sapply(proteome@ranges@NAMES, function(x){return(strsplit(x, " ")[[1]][1])})))
-                           proteome.dt <- data.table::data.table(geneids = proteome_names,
-                                                                 seqs = tolower(as.character(proteome)))
-                           
-                           data.table::setkey(proteome.dt, geneids)
-        
-                }, error = function(e){ stop(paste0("File ",file, " could not be read properly. \n",
-                                   "Please make sure that ",file," contains only amino acid sequences and is in ",format," format."))}
-                )
-        }
-        
-        return(proteome.dt)
+    }, error = function(e) {
+        stop(
+            paste0(
+                "File ",
+                file,
+                " could not be read properly. \n",
+                "Please make sure that ",
+                file,
+                " contains only amino acid sequences and is in ",
+                format,
+                " format."
+            )
+        )
+    })
+
+    return(proteome.dt)
 }
 
 
@@ -123,57 +147,68 @@ read_proteome <- function(file, format, ...){
 #' @export
 read_cds <- function(file, format, delete_corrupt = FALSE, ...){
         
-        if(!is.element(format,c("fasta","gbk")))
-                stop("Please choose a file format that is supported by this function.")
-
+    if(!is.element(format, c("fasta", "gbk")))
+        stop("Please choose a file format that is supported by this function.")
+    
+    geneids <- seqs <- NULL
+    
+    tryCatch({
+        cds_file <-
+            Biostrings::readBStringSet(filepath = file, format = format, ...)
         
-        geneids <- seqs <- NULL
+        cds_names <-
+            as.vector(unlist(sapply(cds_file@ranges@NAMES, function(x) {
+                return(strsplit(x, " ")[[1]][1])
+            })))
+        
+        cds.dt <-
+            data.table::data.table(geneids = cds_names ,
+                                   seqs = tolower(as.character(cds_file)))
         
         
-        if(format == "fasta"){
-
-                tryCatch({
-                        
-                          cds_file <- Biostrings::readBStringSet(filepath = file, format = format, ...)
-                                            
-                          cds_names <- as.vector(unlist(sapply(cds_file@ranges@NAMES, function(x){return(strsplit(x, " ")[[1]][1])})))
+        data.table::setkey(cds.dt, geneids)
         
-                          cds.dt <- data.table::data.table(geneids = cds_names ,
-                                                           seqs = tolower(as.character(cds_file)))
-                          
-                          
-                          data.table::setkey(cds.dt, geneids)
-         
-                          mod3 <- function(x) { return((nchar(x) %% 3) == 0) }
-
-                          all_triplets <- cds.dt[ , mod3(seqs)]
-                         
-                          if(!all(all_triplets)){
-                                  
-                                warning(paste0("There have been ",length(which(!all_triplets))," genes found that cannot be divided by 3. To delete these sequences please specify the 'delete_corrupt = TRUE' argument."))
-                          }
-                                  
-                         
-                          
-       
-        }, error = function(e){ stop(paste0("File ",file, " could not be read properly. \n",
-                                   "Please make sure that ",file," contains only CDS sequences and is in ",format," format."))}
+        mod3 <-
+            function(x) {
+                return((nchar(x) %% 3) == 0)
+            }
+        
+        all_triplets <- cds.dt[, mod3(seqs)]
+        
+        if (!all(all_triplets)) {
+            warning(
+                paste0(
+                    "There have been ",
+                    length(which(!all_triplets)),
+                    " genes found that cannot be divided by 3. To delete these sequences please specify the 'delete_corrupt = TRUE' argument."
                 )
+            )
         }
+    }, error = function(e) {
+        stop(
+            paste0(
+                "File ",
+                file,
+                " could not be read properly. \n",
+                "Please make sure that ",
+                file,
+                " contains only CDS sequences and is in ",
+                format,
+                " format."
+            )
+        )
+    })
+    
+    if (!all(all_triplets)) {
+        if (delete_corrupt)
+            return(cds.dt[-which(!all_triplets) , list(geneids, seqs)])
         
-        if(!all(all_triplets)){
-                
-                if(delete_corrupt)
-                        return(cds.dt[-which(!all_triplets) , list(geneids, seqs)])
-                
-                if(!delete_corrupt)
-                        return(cds.dt)
-                
-        } else {
-                
-                return(cds.dt)
-        }
+        if (!delete_corrupt)
+            return(cds.dt)
         
+    } else {
+        return(cds.dt)
+    }
         
 }
 
