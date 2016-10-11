@@ -8,7 +8,9 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 ### New Functions
 
-- new database retrieval function `download_database_all()` allows users to download entire NCBI databases with only one command
+- new meta-retrieval function `meta.retrieval.all()` allows users to download all individual genomes of all kingdoms of life with one command
+
+- new database retrieval function `download_database_all()` allows users to download entire NCBI databases with one command
 
 - new external helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
 
@@ -23,9 +25,11 @@ provided by NCBI to retrieve the download path to the corresponding genome. Furt
 Users now only need to specify the organism name and not the kingdom anymore. Furthermore, all `get*` functions now
 return the path to the downloaded genome so that this path can be used as input to all `read_*` functions.
 
-- the argument `db_format` was removed from `listDatabases()` and `download_database()` because it was misleading
+- `download_databases()` has been renamed to `download.databases()` to be more consistent with other function notation
 
-- the command `listDatabases("all")` now returns all available NCBI databases that can be retrieved with `download_database()`
+- the argument `db_format` was removed from `listDatabases()` and `download.database()` because it was misleading
+
+- the command `listDatabases("all")` now returns all available NCBI databases that can be retrieved with `download.database()`
 
 - `download_database()` now internally checks if input database specified by the user is actually available on NCBI servers
 
@@ -37,14 +41,18 @@ return the path to the downloaded genome so that this path can be used as input 
 
 - the argument `db_name` in `listDatabases()` has been renamed `db` to be more consistent with the notation in other functions
 
-- the argument `name` in `download_database()` has been renamed `db` to be more consistent with the notation in other functions
+- the argument `name` in `download.database()` has been renamed `db` to be more consistent with the notation in other functions
 
+- `getKingdoms()` received one more member: `"viral"`
+
+- argument `out.folder` in `meta.retrieval()` has been renamed to `path` to be more consistent with other retrieval functions
 
 
 ### Vignette updates
 
--  
--
+- new Vignette `Meta-Genome Retrieval`
+- Update examples and extend `Database Retrieval` Vignette 
+- Update examples and extend `Sequence Retrieval` Vignette
 -
 -
 
