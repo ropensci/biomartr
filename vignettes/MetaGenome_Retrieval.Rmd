@@ -79,6 +79,17 @@ Alternatively, download all mammalian vertebrate genomes from genbank
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 ```
 
+
+Alternative use cases are to download all bacterial or viral genomes:
+
+```{r,eval=FALSE}
+# download all bacteria genomes
+meta.retrieval(kingdom = "bacteria", db = "refseq", type = "genome")
+```
+
+
+
+
 #### Retrieve Protein Sequences
 
 Download all mammalian vertebrate proteomes from RefSeq.
