@@ -26,12 +26,13 @@ that belong to the same kingdom of life.
 }
 \examples{
 \dontrun{
-# get all available kingdoms
-getKingdoms()
-
+# get all available kingdoms for refseq
+getKingdoms(db = "refseq")
 # download all vertebrate genomes from refseq
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
 
+# get all available kingdoms for genbank
+getKingdoms(db = "genbank")
 # download all vertebrate genomes from genbank
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 }
