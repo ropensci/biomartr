@@ -117,7 +117,10 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
         }
         
         organism_name <- NULL
-        FoundOrganism <- dplyr::filter(AssemblyFilesAllKingdoms, stringr::str_detect(organism, organism_name))
+        
+        FoundOrganism <-
+            dplyr::filter(AssemblyFilesAllKingdoms,
+                          stringr::str_detect(organism_name, organism))
         
         if (nrow(FoundOrganism) == 0)
             stop("Unfortunately no entry for organism '",
