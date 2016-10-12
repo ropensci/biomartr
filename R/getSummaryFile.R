@@ -13,10 +13,10 @@ getSummaryFile <- function(db,kingdom){
     if (!is.element(db, c("refseq", "genbank")))
         stop("Please select one of the available data bases: 'refseq' or 'genbank'")
     
-    if (!is.element(kingdom, getKingdoms()))
+    if (!is.element(kingdom, getKingdoms(db = db)))
         stop(paste0(
             "Please select a valid kingdom: ",
-            paste0(getKingdoms(), collapse = ", ")
+            paste0(getKingdoms(db = db), collapse = ", ")
         ))
     
     if (!file.exists(file.path(
