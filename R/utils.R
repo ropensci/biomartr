@@ -99,7 +99,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
         } else {
             # otherwise download all assembly_summary.txt files for all kingdoms and store the AssemblyFilesAllKingdoms.txt file locally
             # retrieve the assembly_summary.txt files for all kingdoms
-            kgdoms <- getKingdoms()
+            kgdoms <- getKingdoms(db = db)
             storeAssemblyFiles <- vector("list", length(kgdoms))
             
             for (i in seq_along(kgdoms)) {
