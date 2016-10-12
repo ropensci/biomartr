@@ -1,5 +1,14 @@
 
 
+clean.str.brackets <- function(string) {
+    
+    str.new <- stringr::str_replace(string,"\\(","\\\\\\\\(")
+    str.new <- stringr::str_replace(str.new,"\\)","\\\\\\\\)")
+    
+    return(str.new)
+}
+
+
 docFile <- function(file.name, 
                     organism, 
                     url, 
