@@ -18,12 +18,12 @@ test_that("The getGenome() interface works properly..",{
         # test proper download from genbank
         Ath_Genome <- read_genome(getGenome( db       = "genbank",
                                              organism = "Arabidopsis thaliana",
-                                             path     = tempdir()), format = "gbk")
+                                             path     = tempdir()), format = "fasta")
         
         # test proper use of internal referece files when command is repeated
         Ath_Genome <- read_genome(getGenome( db       = "genbank",
                                              organism = "Arabidopsis thaliana",
-                                             path     = tempdir()), format = "gbk")
+                                             path     = tempdir()), format = "fasta")
         
         # test proper download from ENSEMBL
         Scerevisiae_Genome <- read_genome(getGenome( db       = "ensembl",
