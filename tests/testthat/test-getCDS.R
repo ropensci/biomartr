@@ -18,12 +18,12 @@ test_that("The getCDS() interface works properly..",{
         # test proper download from genbank
         Ath_CDS <- read_cds(getCDS( db       = "genbank",
                                     organism = "Arabidopsis thaliana",
-                                    path     = tempdir()), format = "gbk")
+                                    path     = tempdir()), format = "fasta")
         
         # test proper use of internal referece files when command is repeated
         Ath_CDS <- read_cds(getCDS( db       = "genbank",
                                     organism = "Arabidopsis thaliana",
-                                    path     = tempdir()), format = "gbk")
+                                    path     = tempdir()), format = "fasta")
         
 })
 
