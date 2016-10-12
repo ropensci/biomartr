@@ -46,20 +46,26 @@ meta.retrieval <- function(kingdom,
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
     
     
-    getOrganisms <-
-        try(RCurl::getURL(
-            paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/", db, "/", kingdom, "/"),
-            ftp.use.epsv = FALSE,
-            dirlistonly = TRUE
-        ))
-    FilterOrganisms <- strsplit(getOrganisms, "\n")
-    FinalOrganisms <-
-        stringr::str_replace(unlist(FilterOrganisms), "_", " ")
-    FinalOrganisms <-
-        FinalOrganisms[-which(is.element(
-            FinalOrganisms,
-            c("assembly summary_historical.txt", "assembly summary.txt")
-        ))]
+    # getOrganisms <-
+    #     try(RCurl::getURL(
+    #         paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/", db, "/", kingdom, "/"),
+    #         ftp.use.epsv = FALSE,
+    #         dirlistonly = TRUE
+    #     ))
+    # FilterOrganisms <- strsplit(getOrganisms, "\n")
+    # FinalOrganisms <-
+    #     stringr::str_replace(unlist(FilterOrganisms), "_", " ")
+    # FinalOrganisms <-
+    #     FinalOrganisms[-which(is.element(
+    #         FinalOrganisms,
+    #         c("assembly summary_historical.txt", "assembly summary.txt")
+    #     ))]
+    
+    organism_name <- NULL
+    assembly.summary.file <- getSummaryFile(db = db, kingdom = kingdom)
+    assembly.summary.file <-
+        dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
+    FinalOrganisms <- unique(assembly.summary.file$organism_name)
     
     cat("\n")
     
