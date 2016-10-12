@@ -26,10 +26,13 @@ or investigated.
 
 For this purpose, I implemented the `meta.retrieval()` function to allow users to perform easy meta-genome retrieval in R.
 
-The `getKingdoms()` function stores a list of all available kingdoms of life.
+The `getKingdoms()` function stores a list of all available kingdoms of life. Using the argument `db` users can specify from which database
+kingdom information shall be retrieved.
+
+Example `refseq`:
 
 ```{r, eval=FALSE}
-getKingdoms()
+getKingdoms(db = "refseq")
 ```
 
 ```
@@ -37,6 +40,20 @@ getKingdoms()
 [5] "plant"                "protozoa"             "vertebrate_mammalian" "vertebrate_other"    
 [9] "viral"
 ```
+
+Example `genbank`:
+
+```{r, eval=FALSE}
+getKingdoms(db = "genbank")
+```
+
+```
+[1] "archaea"              "bacteria"             "fungi"               
+[4] "invertebrate"         "plant"                "protozoa"            
+[7] "vertebrate_mammalian" "vertebrate_other"
+```
+
+In these examples the difference betwenn `refseq` and `genbank` is that `genbank` does not store `viral` information.
 
 These kingdoms can be specified in `meta.retrieval()`.
 
@@ -52,7 +69,7 @@ For example, the pipeline logic of the [magrittr](https://github.com/smbache/mag
 
 ```{r,eval=FALSE}
 # download all vertebrate genomes, then apply ...
-meta.retrieval(kingdom = "vertebrate_mammalian", type = "genome") %>% ...
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome") %>% ...
 ```
 
 Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval()` enables the pipelining methodology for meta-genomics. 
