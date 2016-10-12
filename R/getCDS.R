@@ -80,7 +80,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
     } else {
         # otherwise download all assembly_summary.txt files for all kingdoms and store the AssemblyFilesAllKingdoms.txt file locally
         # retrieve the assembly_summary.txt files for all kingdoms
-        kgdoms <- getKingdoms()
+        kgdoms <- getKingdoms(db = db)
         storeAssemblyFiles <- vector("list", length(kgdoms))
         
         for (i in seq_along(kgdoms)) {
