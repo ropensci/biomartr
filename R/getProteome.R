@@ -116,7 +116,7 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
     }
     
     organism_name <- refseq_category <- version_status <- NULL
-    
+
     FoundOrganism <-
         dplyr::filter(
             AssemblyFilesAllKingdoms,
