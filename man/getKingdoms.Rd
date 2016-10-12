@@ -4,14 +4,22 @@
 \alias{getKingdoms}
 \title{Retrieve available kingdoms of life stored in RefSeq}
 \usage{
-getKingdoms()
+getKingdoms(db = "refseq")
+}
+\arguments{
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
+Default is \code{db = "refseq"}.}
 }
 \description{
 A short list of kingdoms of life that are stored in the RefSeq
 database and that can be downloaded using e.g. \code{\link{meta.retrieval}}, \code{\link{getGenome}}, etc.
 }
 \examples{
-getKingdoms()
+# retrieve kingdoms available at refseq
+getKingdoms(db = "refseq")
+
+# retrieve kingdoms available at genbank
+getKingdoms(db = "genbank")
 }
 \author{
 Hajk-Georg Drost
