@@ -43,7 +43,9 @@ return the path to the downloaded genome so that this path can be used as input 
 
 - the argument `name` in `download.database()` has been renamed `db` to be more consistent with the notation in other functions
 
-- `getKingdoms()` received one more member: `"viral"`
+- `getKingdoms()` received new argument `db` to specify from which database (e.g. `refseq` or `genbank`) kingdom information shall be retrieved
+
+- `getKingdoms(db = "refseq")` received one more member: `"viral"`
 
 - argument `out.folder` in `meta.retrieval()` has been renamed to `path` to be more consistent with other retrieval functions
 
