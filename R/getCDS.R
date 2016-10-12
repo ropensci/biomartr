@@ -52,6 +52,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
                 readr::read_tsv(
                     file.path(tempdir(),  paste0("AssemblyFilesAllKingdoms_",db,".txt")),
                     col_names = TRUE,
+                    comment = "#",
                     col_types = readr::cols(
                         assembly_accession = readr::col_character(),
                         bioproject = readr::col_character(),
