@@ -16,8 +16,7 @@
 #' @export
 
 meta.retrieval.all <- function(db = "refseq", type = "genome") {
-    
-    sapply(getKingdoms(), function(x) meta.retrieval(x, type = type, db = db))
-    
+    # retrieve all genomes from all kingdoms of life
+    sapply(getKingdoms(db = db), function(x) meta.retrieval(x, type = type, db = db))
     
 }
