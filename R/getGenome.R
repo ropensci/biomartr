@@ -72,6 +72,7 @@ getGenome <-
                                 tempdir(),
                                 paste0("AssemblyFilesAllKingdoms_", db, ".txt")
                             ),
+                            comment = "#",
                             col_names = TRUE,
                             col_types = readr::cols(
                                 assembly_accession = readr::col_character(),
