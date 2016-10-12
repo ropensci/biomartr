@@ -10,7 +10,7 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new meta-retrieval function `meta.retrieval.all()` allows users to download all individual genomes of all kingdoms of life with one command
 
-- new database retrieval function `download_database_all()` allows users to download entire NCBI databases with one command
+- new database retrieval function `download.database.all()` allows users to download entire NCBI databases with one command
 
 - new external helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
 
@@ -55,8 +55,8 @@ return the path to the downloaded genome so that this path can be used as input 
 - new Vignette `Meta-Genome Retrieval`
 - Update examples and extend `Database Retrieval` Vignette 
 - Update examples and extend `Sequence Retrieval` Vignette
--
--
+
+
 
 
 
