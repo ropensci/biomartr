@@ -459,6 +459,17 @@ Human_Proteome <- read_proteome(getProteome( db       = "refseq",
 In case users would like to store the proteome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
+Or using the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package:
+
+```{r,eval=FALSE}
+library(magrittr)
+# read proteome as data.table object
+Human_Proteome <- getProteome( db       = "refseq", 
+                               organism = "Homo sapiens",
+                               path     = file.path("_ncbi_downloads","proteomes")) %>%
+    read_proteome(format = "fasta")
+```
+
 In case, users wish to download genomes from [NCBI genbank](http://www.ncbi.nlm.nih.gov/genbank/about/) instead of [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/), they can specify the
 argument `db = "genbank"` in `getProteome()`. In case users select `db = "genbank"`, the `format` argument in `read_proteome()` must be adapted accordingly to
 handle genbank formatted files as input: `read_proteome(..., format = "gbk")`.
