@@ -11,12 +11,13 @@
 #' that belong to the same kingdom of life.
 #' @examples 
 #' \dontrun{
-#' # get all available kingdoms
-#' getKingdoms()
-#' 
+#' # get all available kingdoms for refseq
+#' getKingdoms(db = "refseq")
 #' # download all vertebrate genomes from refseq
 #' meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
 #' 
+#' # get all available kingdoms for genbank
+#' getKingdoms(db = "genbank")
 #' # download all vertebrate genomes from genbank
 #' meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 #' }
@@ -27,26 +28,26 @@ meta.retrieval <- function(kingdom,
                            type       = "genome", 
                            path = NULL){
         
-    subfolders <- getKingdoms()
+    subfolders <- getKingdoms(db = db)
     
     if (!is.element(kingdom, subfolders))
-        stop (paste0(
+        stop(paste0(
             "Please select a valid kingdom: ",
             paste0(subfolders, collapse = ", ")
         ))
     
     if (!is.element(type, c("genome", "proteome", "CDS")))
-        stop ("Please choose either type: 'genome', 'proteome', or 'CDS'")
+        stop("Please choose either type: 'genome', 'proteome', or 'CDS'")
     
     if (!is.element(db, c("refseq", "genbank")))
-        stop ("Please select einter 'db = 'refseq'' or 'db = 'genbank''")
+        stop("Please select einter 'db = 'refseq'' or 'db = 'genbank''")
     
     if ((type == "CDS") && (db == "genbank"))
-        stop ("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
+        stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
     
     
     getOrganisms <-
-        try (RCurl::getURL(
+        try(RCurl::getURL(
             paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/", db, "/", kingdom, "/"),
             ftp.use.epsv = FALSE,
             dirlistonly = TRUE
@@ -61,6 +62,7 @@ meta.retrieval <- function(kingdom,
         ))]
     
     cat("\n")
+    
     cat(paste0("Starting meta retrieval of all ", type, "s for ", kingdom, "."))
     cat("\n")
     
