@@ -35,11 +35,11 @@ test_that("The is.genome.available() interface works properly..",{
 test_that("The is.genome.available() error messages work properly..",{
     
     # test unknown organism error handling for 'refseq'
-    expect_error(is.genome.available(organism = "Homo sapi", db = "refseq"), "Unfortunately no entry for organism 'Homo sapi' could be found.")
+    expect_error(is.genome.available(organism = "Hrmo sapi", db = "refseq"), "Unfortunately no entry for organism 'Homo sapi' could be found.")
     # test unknown organism error handling for 'genbank'
-    expect_error(is.genome.available(organism = "Homo sapi", db = "genbank"), "Unfortunately no entry for organism 'Homo sapi' could be found.")
+    expect_error(is.genome.available(organism = "Hrmo sapi", db = "genbank"), "Unfortunately no entry for organism 'Homo sapi' could be found.")
     # test unknown organism error handling for 'ensembl'
-    expect_error(is.genome.available(organism = "Homo sapi", db = "ensembl"), "Unfortunately organism 'Homo sapi' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
+    expect_error(is.genome.available(organism = "Hrmo sapi", db = "ensembl"), "Unfortunately organism 'Homo sapi' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
     
     
 })
