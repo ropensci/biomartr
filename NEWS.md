@@ -10,7 +10,11 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new meta-retrieval function `meta.retrieval.all()` allows users to download all individual genomes of all kingdoms of life with one command
 
+- new metagenome retrieval function `getMetaGenomes()` allows users to etrieve metagenomes from NCBI Genbank
+
 - new database retrieval function `download.database.all()` allows users to download entire NCBI databases with one command
+
+- new function `listMetaGenomes()` allowing users to list available metagenomes on NCBI Genbank
 
 - new external helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
 
