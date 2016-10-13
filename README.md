@@ -114,6 +114,8 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 * `is.genome.available()` : Check Genome Availability
 * `getProteome()` : Download a specific proteome stored on the NCBI ftp:// server
 * `getCDS()` : Download a specific CDS file (genome) stored on the NCBI ftp:// server
+* `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
+* `getSummaryFile()` : Helper function to retrieve the assembly_summary.txt file from NCBI for a specific kingdom
 
 ### BioMart Queries
 
