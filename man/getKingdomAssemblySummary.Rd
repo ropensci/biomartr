@@ -22,6 +22,6 @@ test
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getSummaryFile}}
+\code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}}
 }
 

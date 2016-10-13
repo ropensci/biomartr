@@ -7,7 +7,7 @@
 #' test <- getKingdomAssemblySummary(db = "refseq")
 #' test
 #' }
-#' @seealso \code{\link{getSummaryFile}} 
+#' @seealso \code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}} 
 #' @export
 getKingdomAssemblySummary <- function(db) {
     
