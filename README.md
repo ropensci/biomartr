@@ -101,12 +101,6 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 * `meta.retieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
 * `meta.retieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
 
-#### Database Retrieval
-
-* `listDatabases()` : Retrieve a list of available NCBI databases
-* `download.database()` : Download a NCBI database to your local hard drive
-* `download.database.all()` : Download a complete NCBI Database such as e.g. `NCBI nr` to your local hard drive
-
 #### Genome Retrieval
 
 * `getGenome()` : Download a specific genome stored on the NCBI ftp:// server
@@ -115,7 +109,14 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 * `getProteome()` : Download a specific proteome stored on the NCBI ftp:// server
 * `getCDS()` : Download a specific CDS file (genome) stored on the NCBI ftp:// server
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
+* `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
 * `getSummaryFile()` : Helper function to retrieve the assembly_summary.txt file from NCBI for a specific kingdom
+
+#### Database Retrieval
+
+* `listDatabases()` : Retrieve a list of available NCBI databases
+* `download.database()` : Download a NCBI database to your local hard drive
+* `download.database.all()` : Download a complete NCBI Database such as e.g. `NCBI nr` to your local hard drive
 
 ### BioMart Queries
 
