@@ -14,6 +14,9 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new external helper function `getSummaryFile()` to retrieve the assembly_summary.txt file from NCBI
 
+- new external helper function `getKingdomAssemblySummary()` to retrieve the assembly_summary.txt files from NCBI for all kingdoms and combine them
+into one big data.frame
+
 - new internal helper function `getENSEMBL.Seq()` acting as main interface function to communicate with the ENSEMBL database API
 
 - new internal helper function `get.ensemblgenome.info()` to retrieve general organism information from ENSEMLGENOMES 
