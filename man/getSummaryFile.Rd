@@ -21,4 +21,7 @@ test
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getKingdomAssemblySummary}}
+}
 
