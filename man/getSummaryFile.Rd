@@ -22,6 +22,6 @@ test
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getKingdomAssemblySummary}}
+\code{\link{getKingdomAssemblySummary}}, \code{\link{getMetaGenomeSummary}}
 }
 
