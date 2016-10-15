@@ -14,6 +14,7 @@
 #' # Now, retrieve the 'human gut metagenome'
 #' getMetaGenomes(name = "human gut metagenome")
 #' } 
+#' @export
 getMetaGenomes <- function(name, path = file.path("_ncbi_downloads","metagenome")) {
     
     if (!is.element(name, listMetaGenomes()))
