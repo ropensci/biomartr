@@ -4,8 +4,8 @@ biomartr
 ## Genomic Data Retrieval with R
 
 The vastly growing number of sequenced genomes allows us to perform a new type of biological research.
-Using a comparative approach these genomes give us new insights about how biological information is encoded 
-on the molecular level and how this information changes of evolutionary time.
+Using a comparative approach these genomes provide us with new insights on how biological information is encoded 
+on the molecular level and how this information changes over evolutionary time.
 
 The first step, however, of any genome based study is to retrieve genomes from databases. For automating this
 retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
