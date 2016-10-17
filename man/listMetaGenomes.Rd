@@ -17,7 +17,11 @@ all available metagenomes that can then be downloaded via \code{\link{getMetaGen
 }
 \examples{
 \dontrun{
+# retrieve available metagenome projects at NCBI Genbank
 listMetaGenomes()
+
+# retrieve detailed information on available metagenome projects at NCBI Genbank
+listMetaGenomes(details = TRUE)
 } 
 }
 \author{
