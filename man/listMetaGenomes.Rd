@@ -4,7 +4,11 @@
 \alias{listMetaGenomes}
 \title{List available metagenomes on NCBI Genbank}
 \usage{
-listMetaGenomes()
+listMetaGenomes(details = FALSE)
+}
+\arguments{
+\item{details}{a boolean value specifying whether only the scientific names of stored metagenomes shall be returned
+(\code{details = FALSE}) or all information such as "organism_name","bioproject", etc (\code{details = TRUE}).}
 }
 \description{
 List available metagenomes on NCBI genbank. NCBI genbank allows users
