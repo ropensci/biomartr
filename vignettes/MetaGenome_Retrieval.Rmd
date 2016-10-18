@@ -104,8 +104,101 @@ Alternative use cases are to download all bacterial or viral genomes:
 meta.retrieval(kingdom = "bacteria", db = "refseq", type = "genome")
 ```
 
+### Metagenome project retrieval from NCBI Genbank
 
+NCBI Genbank stores [metagenome projects](ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/) in addition to species specific genome, proteome or CDS sequences. To retrieve these metagenomes users can perform the following combination of commands:
 
+First, users can list the project names of available metagenomes by typing
+
+```{r,eval=FALSE}
+# list available metagenomes at NCBI Genbank
+listMetaGenomes()
+```
+
+```
+[1] "metagenome"                     "human gut metagenome"           "epibiont metagenome"           
+ [4] "marine metagenome"              "soil metagenome"                "mine drainage metagenome"      
+ [7] "mouse gut metagenome"           "marine sediment metagenome"     "termite gut metagenome"        
+[10] "hot springs metagenome"         "human lung metagenome"          "fossil metagenome"             
+[13] "freshwater metagenome"          "saltern metagenome"             "stromatolite metagenome"       
+[16] "coral metagenome"               "mosquito metagenome"            "fish metagenome"               
+[19] "bovine gut metagenome"          "chicken gut metagenome"         "wastewater metagenome"         
+[22] "microbial mat metagenome"       "freshwater sediment metagenome" "human metagenome"              
+[25] "hydrothermal vent metagenome"   "compost metagenome"             "wallaby gut metagenome"        
+[28] "groundwater metagenome"         "gut metagenome"                 "sediment metagenome"           
+[31] "ant fungus garden metagenome"   "food metagenome"                "hypersaline lake metagenome"   
+[34] "hydrocarbon metagenome"         "activated sludge metagenome"    "viral metagenome"              
+[37] "bioreactor metagenome"          "wasp metagenome"                "permafrost metagenome"         
+[40] "sponge metagenome"              "aquatic metagenome"             "insect gut metagenome"         
+[43] "activated carbon metagenome"    "anaerobic digester metagenome"  "rock metagenome"               
+[46] "terrestrial metagenome"         "rock porewater metagenome"      "seawater metagenome"           
+[49] "scorpion gut metagenome"        "soda lake metagenome"           "glacier metagenome"
+```
+
+Internally the `listMetaGenomes()` function downloads the assembly_summary.txt file from ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/ to retrieve
+available metagenome information. This procedure might take a few seconds during the first run of `listMetaGenomes()`. Subsequently, the assembly_summary.txt file will be stored in the `tempdir()` directory to
+achieve a much faster access of this information during following uses of `listMetaGenomes()`.
+
+In case users wish to retrieve detailed information about available metagenome projects they can specify the `details = TRUE` argument.
+
+```{r,eval=FALSE}
+# detailed information on available metagenomes at NCBI Genbank
+listMetaGenomes(details = TRUE)
+```
+
+```
+# A tibble: 857 x 21
+   assembly_accession bioproject    biosample     wgs_master refseq_category  taxid species_taxid
+                <chr>      <chr>        <chr>          <chr>           <chr>  <int>         <int>
+1     GCA_000206185.1 PRJNA32359 SAMN02954317 AAGA00000000.1              na 256318        256318
+2     GCA_000206205.1 PRJNA32355 SAMN02954315 AAFZ00000000.1              na 256318        256318
+3     GCA_000206225.1 PRJNA32357 SAMN02954316 AAFY00000000.1              na 256318        256318
+4     GCA_000208265.2 PRJNA17779 SAMN02954240 AASZ00000000.1              na 256318        256318
+5     GCA_000208285.1 PRJNA17657 SAMN02954268 AATO00000000.1              na 256318        256318
+6     GCA_000208305.1 PRJNA17659 SAMN02954269 AATN00000000.1              na 256318        256318
+7     GCA_000208325.1 PRJNA16729 SAMN02954263 AAQL00000000.1              na 256318        256318
+8     GCA_000208345.1 PRJNA16729 SAMN02954262 AAQK00000000.1              na 256318        256318
+9     GCA_000208365.1 PRJNA13699 SAMN02954283 AAFX00000000.1              na 256318        256318
+10    GCA_900010595.1 PRJEB11544 SAMEA3639840 CZPY00000000.1              na 256318        256318
+# ... with 847 more rows, and 14 more variables: organism_name <chr>, infraspecific_name <chr>,
+#   isolate <chr>, version_status <chr>, assembly_level <chr>, release_type <chr>, genome_rep <chr>,
+#   seq_rel_date <date>, asm_name <chr>, submitter <chr>, gbrs_paired_asm <chr>, paired_asm_comp <chr>,
+#   ftp_path <chr>, excluded_from_refseq <chr>
+```
+
+Finally, users can retrieve available metagenomes using `getMetaGenomes()`. The `name`
+argument receives the metagenome project name retrieved with `listMetaGenomes()`.
+
+```{r,eval=FALSE}
+# retrieve all genomes belonging to the human gut metagenome project
+getMetaGenomes(name = "human gut metagenome", path = file.path("_ncbi_downloads","human_gut"))
+```
+
+```
+1] "The metagenome of 'human gut metagenome' has been downloaded to '_ncbi_downloads/human_gut'."
+  [1] "_ncbi_downloads/human_gut/GCA_000205525.2_ASM20552v2_genomic.fna.gz"
+  [2] "_ncbi_downloads/human_gut/GCA_000205765.1_ASM20576v1_genomic.fna.gz"
+  [3] "_ncbi_downloads/human_gut/GCA_000205785.1_ASM20578v1_genomic.fna.gz"
+  [4] "_ncbi_downloads/human_gut/GCA_000207925.1_ASM20792v1_genomic.fna.gz"
+  [5] "_ncbi_downloads/human_gut/GCA_000207945.1_ASM20794v1_genomic.fna.gz"
+  [6] "_ncbi_downloads/human_gut/GCA_000207965.1_ASM20796v1_genomic.fna.gz"
+  [7] "_ncbi_downloads/human_gut/GCA_000207985.1_ASM20798v1_genomic.fna.gz"
+  [8] "_ncbi_downloads/human_gut/GCA_000208005.1_ASM20800v1_genomic.fna.gz"
+  [9] "_ncbi_downloads/human_gut/GCA_000208025.1_ASM20802v1_genomic.fna.gz"
+ [10] "_ncbi_downloads/human_gut/GCA_000208045.1_ASM20804v1_genomic.fna.gz"
+ [11] "_ncbi_downloads/human_gut/GCA_000208065.1_ASM20806v1_genomic.fna.gz"
+ [12] "_ncbi_downloads/human_gut/GCA_000208085.1_ASM20808v1_genomic.fna.gz"
+ [13] "_ncbi_downloads/human_gut/GCA_000208105.1_ASM20810v1_genomic.fna.gz"
+ [14] "_ncbi_downloads/human_gut/GCA_000208125.1_ASM20812v1_genomic.fna.gz"
+ [15] "_ncbi_downloads/human_gut/GCA_000208145.1_ASM20814v1_genomic.fna.gz"
+ [16] "_ncbi_downloads/human_gut/GCA_000208165.1_ASM20816v1_genomic.fna.gz"
+ ...
+```
+
+Internally, `getMetaGenomes()` creates a folder specified in the `path` argument.
+Genomes associated with the metagenomes project specified in the `name` argument
+will then be downloaded and stored in this folder. As return value `getMetaGenomes()`
+returns the file paths to the genome files which can then be used as input to the `read*()` functions .
 
 #### Retrieve Protein Sequences
 
