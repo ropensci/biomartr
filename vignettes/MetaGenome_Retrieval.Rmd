@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 
-## Perform Meta-Genome Retieval
+## Perform Meta-Genome Retrieval
 
 The number of genome sequences generated and stored in sequence databases is growing exponentially every day. With the availability of this growing amount of data, meta-genomics studies become more popular
 and useful for finding patterns within genomes by comparing them to thousands of other genomes.
@@ -168,6 +168,7 @@ listMetaGenomes(details = TRUE)
 
 Finally, users can retrieve available metagenomes using `getMetaGenomes()`. The `name`
 argument receives the metagenome project name retrieved with `listMetaGenomes()`.
+The `path` argument specifies the folder path in which corresponding genomes shall be stored.
 
 ```{r,eval=FALSE}
 # retrieve all genomes belonging to the human gut metagenome project
@@ -198,7 +199,42 @@ getMetaGenomes(name = "human gut metagenome", path = file.path("_ncbi_downloads"
 Internally, `getMetaGenomes()` creates a folder specified in the `path` argument.
 Genomes associated with the metagenomes project specified in the `name` argument
 will then be downloaded and stored in this folder. As return value `getMetaGenomes()`
-returns the file paths to the genome files which can then be used as input to the `read*()` functions .
+returns the file paths to the genome files which can then be used as input to the `read*()` functions.
+
+Alternatively or subsequent to the metagenome retrieval, users can retrieve annotation files of genomes belonging to a metagenome project
+selected with `listMetaGenomes()` by using the `getMetaGenomeAnnotations()` function.
+
+
+```{r,eval=FALSE}
+# retrieve all genomes belonging to the human gut metagenome project
+getMetaGenomeAnnotations(name = "human gut metagenome", path = file.path("_ncbi_downloads","human_gut","annotations"))
+```
+
+```
+[1] "The annotations of metagenome 'human gut metagenome' have been downloaded and stored at '_ncbi_downloads/human_gut/annotations'."
+  [1] "_ncbi_downloads/human_gut/annotations/GCA_000205525.2_ASM20552v2_genomic.gff.gz"
+  [2] "_ncbi_downloads/human_gut/annotations/GCA_000205765.1_ASM20576v1_genomic.gff.gz"
+  [3] "_ncbi_downloads/human_gut/annotations/GCA_000205785.1_ASM20578v1_genomic.gff.gz"
+  [4] "_ncbi_downloads/human_gut/annotations/GCA_000207925.1_ASM20792v1_genomic.gff.gz"
+  [5] "_ncbi_downloads/human_gut/annotations/GCA_000207945.1_ASM20794v1_genomic.gff.gz"
+  [6] "_ncbi_downloads/human_gut/annotations/GCA_000207965.1_ASM20796v1_genomic.gff.gz"
+  [7] "_ncbi_downloads/human_gut/annotations/GCA_000207985.1_ASM20798v1_genomic.gff.gz"
+  [8] "_ncbi_downloads/human_gut/annotations/GCA_000208005.1_ASM20800v1_genomic.gff.gz"
+  [9] "_ncbi_downloads/human_gut/annotations/GCA_000208025.1_ASM20802v1_genomic.gff.gz"
+ [10] "_ncbi_downloads/human_gut/annotations/GCA_000208045.1_ASM20804v1_genomic.gff.gz"
+ [11] "_ncbi_downloads/human_gut/annotations/GCA_000208065.1_ASM20806v1_genomic.gff.gz"
+ [12] "_ncbi_downloads/human_gut/annotations/GCA_000208085.1_ASM20808v1_genomic.gff.gz"
+ [13] "_ncbi_downloads/human_gut/annotations/GCA_000208105.1_ASM20810v1_genomic.gff.gz"
+ [13] "_ncbi_downloads/human_gut/annotations/GCA_000208105.1_ASM20810v1_genomic.gff.gz"
+ [14] "_ncbi_downloads/human_gut/annotations/GCA_000208125.1_ASM20812v1_genomic.gff.gz"
+ [15] "_ncbi_downloads/human_gut/annotations/GCA_000208145.1_ASM20814v1_genomic.gff.gz"
+ [16] "_ncbi_downloads/human_gut/annotations/GCA_000208165.1_ASM20816v1_genomic.gff.gz"
+ ...
+```
+
+The file paths of the downloaded `*.gff` are retured by `getMetaGenomeAnnotations()` and can be used
+as input for the `read.gff()` function in the [seqreadr](https://github.com/HajkD/seqreadr) package.
+
 
 #### Retrieve Protein Sequences
 
