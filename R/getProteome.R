@@ -1,10 +1,8 @@
 #' @title Proteome Retrieval
 #' @description This function retrieves a fasta-file storing the proteome of an organism of interest and stores
 #' the proteome file in the folder '_ncbi_downloads/proteomes'.
-#' @param db a character string specifying the database from which the proteome shall be retrieved: \code{refseq} or \code{genbank}.
-#' Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
-#' sequence retrieval from additional databases.
-#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
+#' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.
+#' @param organism a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) in which the corresponding
 #' proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
 #' @author Hajk-Georg Drost
@@ -19,7 +17,7 @@
 #' In case the corresponding fasta file already exists within the
 #' '_ncbi_downloads/genomes' folder and is accessible within the workspace,
 #' no download process will be performed.
-#' @return A data.table storing the geneids in the first column and the protein dequence in the second column.
+#' @return File path to downloaded proteome.
 #' @examples \dontrun{
 #' 
 #' # download the proteome of Arabidopsis thaliana from refseq
@@ -46,7 +44,7 @@
 #' 
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
-#' @seealso \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
+#' @seealso \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getAnnotation}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
 #' @export
 
 getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","proteomes")){
@@ -104,7 +102,7 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
     if (nrow(FoundOrganism) == 1) {
         tryCatch({utils::capture.output(downloader::download(
             download_url,
-            destfile = file.path(path,paste0(organism,"_protein.faa.gz")),
+            destfile = file.path(path,paste0(organism,"_protein_",db,".faa.gz")),
             mode = "wb"
         ))}, error = function(e)
             stop(
@@ -141,14 +139,14 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
                 "' has been downloaded to '",
                 path,
                 "' and has been named '",
-                paste0(organism,"_protein.faa.gz"),
+                paste0(organism,"_protein_",db,".faa.gz"),
                 "' ."
             )
         )
         
-        return(file.path(path,paste0(organism,"_protein.faa.gz")))
+        return(file.path(path,paste0(organism,"_protein_",db,".faa.gz")))
     } else {
-        warning ("File: ", download_url, " could not be loaded properly... Are you connected to the internet?")
+        stop("File: ", download_url, " could not be loaded properly... Are you connected to the internet?")
     }
 }
 
