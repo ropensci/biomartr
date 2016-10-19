@@ -16,7 +16,7 @@ getAnnotation(db = "refseq", organism, path = file.path("_ncbi_downloads",
 annotation file shall be stored. Default is \code{path = file.path("_ncbi_downloads","genomes")}.}
 }
 \value{
-A data.table storing the geneids in the first column and the DNA dequence in the second column.
+File path to downloaded annotation file.
 }
 \description{
 This function retrieves *.gff annotation files of an organism of interest and stores
