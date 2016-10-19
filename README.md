@@ -60,41 +60,6 @@ install.packages("biomartr",
 ## NEWS
 The current status of the package as well as a detailed history of the functionality of each version of `biomartr` can be found in the [NEWS](https://github.com/HajkD/biomartr/blob/master/NEWS.md) section.
 
-## Download Developer Version
-
-The developer version of `biomartr` might include more functionality than the stable version on CRAN.
-
-### On Unix Based Systems
-
-Now you can use the `devtools` package to install biomartr from GitHub.
-
-```r
-# install.packages("devtools")
-
-# install the current version of biomartr on your system
-library(devtools)
-install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
-
-```
-
-### On Windows Systems
-
-```r
-# On Windows, this won't work - see ?build_github_devtools
-install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
-
-# When working with Windows, first you need to install the
-# R package: rtools -> install.packages("rtools")
-
-# Afterwards you can install devtools -> install.packages("devtools")
-# and then you can run:
-
-devtools::install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
-
-# and then call it from the library
-library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
-```
-
 ### Troubleshooting on Windows Machines
 
 - Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
@@ -106,6 +71,7 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 * `meta.retieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
 * `meta.retieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
 * `getMetaGenomes()` : Retrieve metagenomes from NCBI Genbank
+* `getMetaGenomeAnnotations()` : Retrieve annotation *.gff files for metagenomes from NCBI Genbank
 * `listMetaGenomes()` : List available metagenomes on NCBI Genbank
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt file from NCBI genbank metagenomes
 
@@ -143,6 +109,41 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 
 * `getGO()` : Function to retrieve GO terms for a given set of genes
 
+
+## Download Developer Version
+
+The developer version of `biomartr` might include more functionality than the stable version on CRAN.
+
+### On Unix Based Systems
+
+Now you can use the `devtools` package to install biomartr from GitHub.
+
+```r
+# install.packages("devtools")
+
+# install the current version of biomartr on your system
+library(devtools)
+install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
+
+```
+
+### On Windows Systems
+
+```r
+# On Windows, this won't work - see ?build_github_devtools
+install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
+
+# When working with Windows, first you need to install the
+# R package: rtools -> install.packages("rtools")
+
+# Afterwards you can install devtools -> install.packages("devtools")
+# and then you can run:
+
+devtools::install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
+
+# and then call it from the library
+library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
+```
 
 ## Discussions and Bug Reports
 
