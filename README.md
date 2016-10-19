@@ -60,11 +60,7 @@ install.packages("biomartr",
 ## NEWS
 The current status of the package as well as a detailed history of the functionality of each version of `biomartr` can be found in the [NEWS](https://github.com/HajkD/biomartr/blob/master/NEWS.md) section.
 
-### Troubleshooting on Windows Machines
-
-- Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
-
-### Biological Data Retrieval
+## Genomic Data Retrieval
 
 #### Meta-Genome Retrieval
 
@@ -144,6 +140,10 @@ devtools::install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies 
 # and then call it from the library
 library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 ```
+
+### Troubleshooting on Windows Machines
+
+- Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
 ## Discussions and Bug Reports
 
