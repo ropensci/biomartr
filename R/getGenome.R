@@ -1,10 +1,8 @@
 #' @title Genome Retrieval
 #' @description This function retrieves a fasta-file storing the genome of an organism of interest and stores
 #' the genome file in the folder '_ncbi_downloads/genomes'.
-#' @param db a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
-#' Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
-#' sequence retrieval from additional databases.
-#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
+#' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.
+#' @param organism a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) in which the corresponding
 #' genome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
 #' @author Hajk-Georg Drost
@@ -19,7 +17,7 @@
 #' In case the corresponding fasta file already exists within the
 #' '_ncbi_downloads/genomes' folder and is accessible within the workspace,
 #' no download process will be performed.
-#' @return A data.table storing the geneids in the first column and the DNA dequence in the second column.
+#' @return File path to downloaded genome.
 #' @examples \dontrun{
 #' 
 #' # download the genome of Arabidopsis thaliana from refseq
@@ -47,7 +45,7 @@
 #' 
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
+#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getAnnotation}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
 #' @export
 
 getGenome <-
@@ -112,7 +110,7 @@ getGenome <-
             if (nrow(FoundOrganism) == 1) {
                 tryCatch({utils::capture.output(downloader::download(
                     download_url,
-                    destfile = file.path(path, paste0(organism, "_genomic.fna.gz")),
+                    destfile = file.path(path, paste0(organism, "_genomic_",db,".fna.gz")),
                     mode = "wb"
                 ))}, error = function(e)
                     stop(
@@ -120,7 +118,7 @@ getGenome <-
                     ))
                 
                 docFile(
-                    file.name = paste0(organism, "_genomic.fna.gz"),
+                    file.name = paste0(organism, "_genomic_",db,".fna.gz"),
                     organism  = organism,
                     url       = download_url,
                     database  = db,
@@ -149,12 +147,12 @@ getGenome <-
                         "' has been downloaded to '",
                         path,
                         "' and has been named '",
-                        paste0(organism, "_genomic.fna.gz"),
+                        paste0(organism, "_genomic_",db,".fna.gz"),
                         "' ."
                     )
                 )
                 
-                return(file.path(path, paste0(organism, "_genomic.fna.gz")))
+                return(file.path(path, paste0(organism, "_genomic_",db,".fna.gz")))
             } else {
                 stop(
                     "File: ",
