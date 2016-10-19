@@ -110,11 +110,14 @@ getGenome <-
             # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
             
             if (nrow(FoundOrganism) == 1) {
-                utils::capture.output(downloader::download(
+                tryCatch({utils::capture.output(downloader::download(
                     download_url,
                     destfile = file.path(path, paste0(organism, "_genomic.fna.gz")),
                     mode = "wb"
-                ))
+                ))}, error = function(e)
+                    stop(
+                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",download_url,"' currently available?", call. = FALSE
+                    ))
                 
                 docFile(
                     file.name = paste0(organism, "_genomic.fna.gz"),
