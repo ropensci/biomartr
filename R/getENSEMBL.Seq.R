@@ -5,6 +5,9 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     
     new.organism <- stringr::str_replace(organism, " ", "_")
     
+    # test if REST API is responding
+    is.ensembl.alive()
+    
     # check if organism is available on ENSEMBL
     tryCatch({
         ensembl.available.organisms <-
