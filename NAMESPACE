@@ -3,6 +3,7 @@
 export(biomart)
 export(download.database)
 export(download.database.all)
+export(getAnnotation)
 export(getAttributes)
 export(getCDS)
 export(getDatasets)
