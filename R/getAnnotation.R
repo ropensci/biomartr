@@ -17,7 +17,7 @@
 #' In case the corresponding fasta file already exists within the
 #' '_ncbi_downloads/annotation' folder and is accessible within the workspace,
 #' no download process will be performed.
-#' @return A data.table storing the geneids in the first column and the DNA dequence in the second column.
+#' @return File path to downloaded annotation file.
 #' @examples \dontrun{
 #' 
 #' # download the annotation of Arabidopsis thaliana from refseq
