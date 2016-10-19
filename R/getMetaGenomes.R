@@ -13,8 +13,10 @@
 #' 
 #' # Now, retrieve the 'human gut metagenome'
 #' getMetaGenomes(name = "human gut metagenome")
-#' } 
+#' }
+#' @seealso \code{\link{getMetaGenomeAnnotations}}, \code{\link{listMetaGenomes}}  
 #' @export
+
 getMetaGenomes <- function(name, path = file.path("_ncbi_downloads","metagenome")) {
     
     if (!is.element(name, listMetaGenomes(details = FALSE)))
@@ -44,11 +46,14 @@ getMetaGenomes <- function(name, path = file.path("_ncbi_downloads","metagenome"
                 )
             )
         
-            utils::capture.output(downloader::download(
+            tryCatch({utils::capture.output(downloader::download(
                 download_url,
                 destfile = file.path(path, paste0(basename(file.names[i]), "_genomic.fna.gz")),
                 mode = "wb"
-            ))
+            ))}, error = function(e)
+                stop(
+                    "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",download_url,"' currently available?"
+                ))
             
             docFile(
                 file.name = paste0(basename(file.names[i]), "_genomic.fna.gz"),
