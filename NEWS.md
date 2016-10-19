@@ -10,7 +10,9 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new meta-retrieval function `meta.retrieval.all()` allows users to download all individual genomes of all kingdoms of life with one command
 
-- new metagenome retrieval function `getMetaGenomes()` allows users to etrieve metagenomes from NCBI Genbank
+- new metagenome retrieval function `getMetaGenomes()` allows users to retrieve metagenomes from NCBI Genbank
+
+- new metagenome retrieval function `getMetaGenomeAnnotations()` allows users to retrieve annotation files for genomes belonging to a metagenome project stored at NCBI Genbank
 
 - new database retrieval function `download.database.all()` allows users to download entire NCBI databases with one command
 
