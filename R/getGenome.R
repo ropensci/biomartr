@@ -156,7 +156,7 @@ getGenome <-
                 
                 return(file.path(path, paste0(organism, "_genomic.fna.gz")))
             } else {
-                warning (
+                stop(
                     "File: ",
                     download_url,
                     " could not be loaded properly... Are you connected to the internet?"
@@ -188,7 +188,7 @@ getGenome <-
                     )
             }, error = function(e)
                 stop(
-                    "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
+                    "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
                 ))
             
             cwd <- getwd()
@@ -222,7 +222,6 @@ getGenome <-
             
             return(genome.path)
         }
-    
     }
 
 
