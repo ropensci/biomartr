@@ -37,7 +37,7 @@
 #'  
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
-#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
+#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getAnnotation}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
 #' @export
 
 getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","CDS")){
@@ -95,7 +95,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         tryCatch({utils::capture.output(downloader::download(
             download_url,
             destfile = file.path(path, paste0(
-                organism, "_cds_from_genomic.fna.gz"
+                organism, "_cds_from_genomic_,",db,".fna.gz"
             )),
             mode = "wb"
         ))}, error = function(e)
@@ -104,7 +104,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
             ))
         
         docFile(
-            file.name = paste0(organism, "_cds_from_genomic.fna.gz"),
+            file.name = paste0(organism, "_cds_from_genomic_,",db,".fna.gz"),
             organism  = organism,
             url       = download_url,
             database  = db,
@@ -132,16 +132,16 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
                 "' has been downloaded to '",
                 path,
                 "' and has been named '",
-                paste0(organism, "_cds_from_genomic.fna.gz"),
+                paste0(organism, "_cds_from_genomic_,",db,".fna.gz"),
                 "' ."
             )
         )
         
         return(file.path(path, paste0(
-            organism, "_cds_from_genomic.fna.gz"
+            organism, "_cds_from_genomic_,",db,".fna.gz"
         )))
     } else {
-        warning (
+        stop(
             "File: ",
             download_url,
             " could not be loaded properly... Are you connected to the internet?"
