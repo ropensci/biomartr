@@ -8,18 +8,21 @@
 #' } 
 #' @seealso \code{\link{getKingdomAssemblySummary}}, \code{\link{getSummaryFile}}
 #' @export
-#' 
+ 
 getMetaGenomeSummary <- function() {
     
     if (!file.exists(file.path(tempdir(),
                                "assembly_summary_metagenomes_genbank.txt"))) {
-        suppressMessages(
+        tryCatch({suppressMessages(
             downloader::download(
                 "ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt",
                 destfile = file.path(tempdir(),
                                      "assembly_summary_metagenomes_genbank.txt")
             )
-        )
+        )}, error = function(e)
+            stop(
+                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt' cannot be reached. Are you connected to the internet? Is the homepage 'ftp://ftp.ncbi.nlm.nih.gov/' currently available?", call. = FALSE
+            ))
         Sys.sleep(0.33)
     }
     
