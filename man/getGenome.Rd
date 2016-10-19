@@ -8,17 +8,15 @@ getGenome(db = "refseq", organism, path = file.path("_ncbi_downloads",
   "genomes"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
-Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
-sequence retrieval from additional databases.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.}
 
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
+\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
 \item{path}{a character string specifying the location (a folder) in which the corresponding
 genome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
 }
 \value{
-A data.table storing the geneids in the first column and the DNA dequence in the second column.
+File path to downloaded genome.
 }
 \description{
 This function retrieves a fasta-file storing the genome of an organism of interest and stores
@@ -69,6 +67,6 @@ Hajk-Georg Drost
 \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
+\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getAnnotation}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
 }
 
