@@ -37,7 +37,7 @@
 #'  
 #' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 #' 
-#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getAnnotation}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
+#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
 #' @export
 
 getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","CDS")){
