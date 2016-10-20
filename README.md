@@ -73,12 +73,12 @@ The current status of the package as well as a detailed history of the functiona
 
 #### Genome Retrieval
 
-* `listGenomes()` : List all genomes available on the NCBI ftp:// server
-* `is.genome.available()` : Check Genome Availability
-* `getGenome()` : Download a specific genome stored on the NCBI ftp:// server
-* `getProteome()` : Download a specific proteome stored on the NCBI ftp:// server
-* `getCDS()` : Download a specific CDS file (genome) stored on the NCBI ftp:// server
-* `getAnnotation()` : Genome Annotation Retrieval
+* `listGenomes()` : List all genomes available on NCBI and ENSEMBL servers
+* `is.genome.available()` : Check Genome Availability  NCBI and ENSEMBL servers
+* `getGenome()` : Download a specific genome stored on NCBI and ENSEMBL servers
+* `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
+* `getCDS()` : Download a specific CDS file (genome) stored on NCBI and ENSEMBL servers
+* `getGFF()` : Genome Annotation Retrieval (`*.gff`) from NCBI and ENSEMBL servers
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
 * `getSummaryFile()` : Helper function to retrieve the assembly_summary.txt file from NCBI for a specific kingdom
