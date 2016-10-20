@@ -14,7 +14,7 @@
 #' # Now, retrieve the 'human gut metagenome'
 #' getMetaGenomeAnnotations(name = "human gut metagenome")
 #' }
-#' @seealso \code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}} 
+#' @seealso \code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}}, \code{\link{getGFF}}  
 #' @export
 
 getMetaGenomeAnnotations <- function(name, path = file.path("_ncbi_downloads","metagenome","annotations")) {
