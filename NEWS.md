@@ -14,7 +14,7 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new metagenome retrieval function `getMetaGenomeAnnotations()` allows users to retrieve annotation files for genomes belonging to a metagenome project stored at NCBI Genbank
 
-- new retrieval function `getAnnotation()` allows users to retrieve annotation (*.gff) files for specific genomes
+- new retrieval function `getGFF()` allows users to retrieve annotation (*.gff) files for specific genomes from NCBI and ENSEMBL databases
 
 - new database retrieval function `download.database.all()` allows users to download entire NCBI databases with one command
 
