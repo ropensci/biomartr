@@ -31,6 +31,6 @@ getMetaGenomeAnnotations(name = "human gut metagenome")
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}}
+\code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}}, \code{\link{getGFF}}
 }
 
