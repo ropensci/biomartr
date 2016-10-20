@@ -24,7 +24,7 @@ getSummaryFile <- function(db,kingdom){
         tempdir(),
         paste0("assembly_summary_", kingdom, "_", db, ".txt")
     ))) {
-        suppressMessages(downloader::download(
+        tryCatch({suppressMessages(downloader::download(
             paste0(
                 "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
                 db,
@@ -36,7 +36,16 @@ getSummaryFile <- function(db,kingdom){
                 tempdir(),
                 paste0("assembly_summary_", kingdom, "_", db, ".txt")
             )
-        ))
+        ))}, error = function(e)
+            stop(
+                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",paste0(
+                    "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
+                    db,
+                    "/",
+                    kingdom,
+                    "/assembly_summary.txt"
+                ),"' currently available?", call. = FALSE
+            ))
         Sys.sleep(0.33)
     }
     
