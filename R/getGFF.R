@@ -22,14 +22,14 @@
 #' 
 #' # download the annotation of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome file in '_ncbi_downloads/annotation'
-#' getAnnotation( db       = "refseq", 
+#' getGFF( db       = "refseq", 
 #'                organism = "Arabidopsis thaliana", 
 #'                path = file.path("_ncbi_downloads","annotation"))
 #' 
 #' 
 #' # download the genome of Arabidopsis thaliana from genbank
 #' # and store the corresponding genome file in '_ncbi_downloads/annotation'
-#' getAnnotation( db       = "genbank", 
+#' getGFF( db       = "genbank", 
 #'                organism = "Arabidopsis thaliana", 
 #'                path = file.path("_ncbi_downloads","annotation"))
 #' 
@@ -45,7 +45,7 @@
 #' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{meta.retrieval}}
 #' @export
 
-getAnnotation <-
+getGFF <-
     function(db = "refseq",
              organism,
              path = file.path("_ncbi_downloads", "annotation")) {
