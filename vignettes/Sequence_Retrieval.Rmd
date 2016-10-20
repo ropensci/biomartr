@@ -26,7 +26,8 @@ Using `biomartr`, users can retrieve either genomes, proteomes, or CDS data usin
 * `getGenome()`
 * `getProteome()`
 * `getCDS()`
-* `meta.retrieval()`
+* `getGFF()`
+
 
 ## Getting Started with Sequence Retrieval
 
@@ -100,6 +101,12 @@ is.genome.available("Homo sapiens", db = "genbank")
 ```
 [1] TRUE
 ```
+
+```{r,eval=FALSE}
+# printing details to the console
+is.genome.available("Homo sapiens", details = TRUE, db = "genbank")
+```
+
 
 ### Using `is.genome.available()` with ENSEMBL
 
@@ -379,7 +386,7 @@ __Note__ that when running the `listGenomes()` function for the first time, it m
 the function returns any results, because necessary information need to be downloaded from NCBI databases. All subsequent executions of `listGenomes()`
 will then respond very fast, because they will access the corresponding files stored on your hard drive.
 
-## Downloading Biological Sequences
+## Downloading Biological Sequences and Annotations
 
 After checking for the availability of sequence information for an organism of interest,
 the next step is to download the corresponding genome, proteome, or CDS file in `fasta` format.
@@ -519,26 +526,50 @@ number of corresponding genes. In case users would like to extract these sequenc
 `delete_delete_corrupt = TRUE` argument, which will then delete all corrupt CDS sequences.
 
 
-### Retrieving sequences for a set of genes
+### Retrieve the annotation file of a particular genome
 
-For most analyses only subsets of sequences (taken from the entire genome) are needed.
-This section introduces several approaches to select a set of sequences for furthr analyses.
+Finally, users can download the annotation `*.gff` file for a particular genome of interest using the `getGFF()` function.
+In `getGFF()`, users again can specify the database from which annotation files shall be retrieved.
 
-#### Using the output from `getProteome()`
-
-As seen before, the `getProteome()` function allows users to download 
-the entire proteome of a specific organism of interest that is stored in refseq.
+Example `RefSeq`:
 
 ```{r,eval=FALSE}
-# download the proteome of Homo sapiens from refseq
-# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-getProteome( db       = "refseq", 
-             organism = "Homo sapiens",
-             path     = file.path("_ncbi_downloads","proteomes") )
+# download the annotation file of Homo sapiens from refseq
+# and store the corresponding file in '_ncbi_downloads/annotation'
+getGFF( db       = "refseq", 
+        organism = "Homo sapiens", 
+        path = file.path("_ncbi_downloads","annotation"))
 ```
 
-Again, first we download the _Homo sapiens_ proteome and furthermore are interested in the following two genes for 
-subsequent analyses, `AT1G06090` and `AT1G06100`. Both genes are memebers of the fatty acid desaturase family and take over functions in oxidoreductase activity. 
+Example `GenBank`:
 
-For this purpose users can use the `biomart()` function [see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details].
+```{r,eval=FALSE}
+# download the annotation file of Homo sapiens from genbank
+# and store the corresponding file in '_ncbi_downloads/annotation'
+getGFF( db       = "genbank", 
+        organism = "Homo sapiens", 
+        path = file.path("_ncbi_downloads","annotation"))
+```
+
+
+Example `Ensembl`:
+
+```{r,eval=FALSE}
+# download the annotation file of Homo sapiens from refseq
+# and store the corresponding file in '_ncbi_downloads/annotation'
+getGFF( db       = "ensembl", 
+        organism = "Homo sapiens", 
+        path = file.path("_ncbi_downloads","annotation"))
+```
+
+The `getGFF()` function retrieves `*.gff` annotation files of an organism of interest and stores the annotation file in a specified folder, e.g. `file.path("_ncbi_downloads","annotation")`.
+The return value of `getGFF()` is the file path to the downloaded annotation file. Internally, again a documentation file is generated to log the origin, date, information, etc. of the retrieved 
+`*.gff` file.
+
+Taken together, `getGFF()` in combination with `getGenome()`, `getProteome()` and `getCDS()` allows users to retrieve the genome information together with the
+corresponding `*.gff` annotation file to make sure that they both have the same version and origin.
+
+
+
+
 
