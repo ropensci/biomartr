@@ -57,6 +57,6 @@ Hajk-Georg Drost
 \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getAnnotation}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
 }
 
