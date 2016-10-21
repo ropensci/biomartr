@@ -8,7 +8,7 @@ getGenome(db = "refseq", organism, path = file.path("_ncbi_downloads",
   "genomes"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, or \code{db = "ensemblgenomes"}.}
 
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
