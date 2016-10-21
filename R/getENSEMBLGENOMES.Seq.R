@@ -120,7 +120,7 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                              mode = "wb")
     }, error = function(e)
         stop(
-            "The FTP site of ENSEMBL 'ftp://ftp.ensemblgenomes.org/pub/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/pub/' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/pub/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/pub/' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
         ))
     
     return(file.path(
