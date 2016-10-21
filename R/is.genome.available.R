@@ -1,11 +1,11 @@
 #' @title Check Genome Availability
 #' @description This function checks the availability of a given genome on the NBCI servers specified
 #' as scientific name.
-#' @param organism a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.
+#' @param organism a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param details a logical value specifying whether or not details on genome size, kingdom, etc. shall be printed to the
 #' console intead of a boolean value.
 #' @param db a character string specifying the database for which genome availability shall be checked,
-#' e.g. \code{db} =  \code{"refseq"}, \code{db} =  \code{"ensembl"} or \code{db} =  \code{"all"}.
+#' e.g. \code{db = "refseq"},\code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}, or \code{db =  "all"}.
 #' @details
 #'
 #' Internally this function calls the \code{\link{listGenomes}} function to detect all available genomes
@@ -35,7 +35,7 @@
 
 is.genome.available <- function(organism, details = FALSE, db = "refseq"){
     
-    if (!is.element(db, c("refseq", "genbank", "ensembl")))
+    if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
         stop("Please select one of the available data bases: 'refseq', 'genbank', or 'ensembl'",
              call. = FALSE)
     
@@ -146,28 +146,138 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
             
         } else {
             return(FALSE)
-            
         }
     }
     
     if (db == "ensembl") {
         
         new.organism <- stringr::str_replace(organism," ","_")
+    
+        if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
+            suppressWarnings(ensembl.available.organisms <-
+                readr::read_tsv(
+                    file.path(tempdir(), "ensembl_summary.txt"),
+                    col_names = c(
+                        "division",
+                        "taxon_id",
+                        "name",
+                        "release",
+                        "display_name",
+                        "accession",
+                        "common_name",
+                        "assembly"
+                    ),
+                    col_types = readr::cols(
+                        division = readr::col_character(),
+                        taxon_id = readr::col_integer(),
+                        name = readr::col_character(),
+                        release = readr::col_integer(),
+                        display_name = readr::col_character(),
+                        accession = readr::col_character(),
+                        common_name = readr::col_character(),
+                        assembly = readr::col_character()
+                    ),
+                    comment = "#"
+                ))
+        }
         
+        if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
+            # check if organism is available on ENSEMBL
+            tryCatch({
+                ensembl.available.organisms <-
+                    jsonlite::fromJSON("http://rest.ensembl.org/info/species?content-type=application/json")
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
+                ))
+            
+            # transform list object returned by 'fromJSON' to tibble
+            ensembl.available.organisms <-
+                tibble::as_tibble(dplyr::select(ensembl.available.organisms$species, -aliases, -groups))
+            
+            readr::write_tsv(ensembl.available.organisms,
+                             file.path(tempdir(), "ensembl_summary.txt"))
+        }
+        
+        if (!is.element(stringr::str_to_lower(new.organism),
+                        ensembl.available.organisms$name))
+            stop(
+                "Unfortunately organism '",
+                organism,
+                "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly or try to use db = 'ensemblgenomes'.", call. = FALSE
+            )
+        
+        name <- NULL
+        selected.organism <- dplyr::filter(ensembl.available.organisms,
+                                           name == stringr::str_to_lower(new.organism))
+        
+        if (!details) {
+            if (nrow(selected.organism) > 0)
+                return(TRUE)
+            
+            if (nrow(selected.organism) == 0)
+                return(FALSE)
+        }
+        
+        if (details)
+            return(selected.organism)
+    }
+    
+    if (db == "ensemblgenomes") {
+        
+        new.organism <- stringr::str_replace(organism," ","_")
+        
+        if (file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
+            suppressWarnings(ensembl.available.organisms <-
+                readr::read_tsv(
+                    file.path(tempdir(), "ensemblgenomes_summary.txt"),
+                    col_names = c(
+                        "division",
+                        "taxon_id",
+                        "name",
+                        "release",
+                        "display_name",
+                        "accession",
+                        "common_name",
+                        "assembly"
+                    ),
+                    col_types = readr::cols(
+                        division = readr::col_character(),
+                        taxon_id = readr::col_integer(),
+                        name = readr::col_character(),
+                        release = readr::col_integer(),
+                        display_name = readr::col_character(),
+                        accession = readr::col_character(),
+                        common_name = readr::col_character(),
+                        assembly = readr::col_character()
+                    ),
+                    comment = "#"
+                ))
+        }
+        
+        if (!file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
         # check if organism is available on ENSEMBL
         tryCatch({
             ensembl.available.organisms <-
-                jsonlite::fromJSON("http://rest.ensembl.org/info/species?content-type=application/json")
+                jsonlite::fromJSON("http://rest.ensemblgenomes.org/info/species?content-type=application/json")
         }, error = function(e)
             stop(
-                "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
+                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?"
             ))
         
-        if (!is.element(stringr::str_to_lower(new.organism),ensembl.available.organisms$species$name))
-            stop("Unfortunately organism '",organism,"' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
+        # transform list object returned by 'fromJSON' to tibble
+        ensembl.available.organisms <-
+            tibble::as_tibble(dplyr::select(ensembl.available.organisms$species, -aliases, -groups))
+        
+        readr::write_tsv(ensembl.available.organisms,
+                         file.path(tempdir(), "ensemblgenomes_summary.txt"))
+        }
+        
+        if (!is.element(stringr::str_to_lower(new.organism),ensembl.available.organisms$name))
+            stop("Unfortunately organism '",organism,"' is not available at ENSEMBLGENOMES. Please check whether or not the organism name is typed correctly.", call. = FALSE)
         
         name <- NULL
-        selected.organism <- dplyr::filter(ensembl.available.organisms$species, name == stringr::str_to_lower(new.organism))
+        selected.organism <- dplyr::filter(ensembl.available.organisms, name == stringr::str_to_lower(new.organism))
         
         if (!details) {
             if (nrow(selected.organism) > 0)
