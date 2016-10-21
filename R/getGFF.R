@@ -50,8 +50,8 @@ getGFF <-
              organism,
              path = file.path("_ncbi_downloads", "annotation")) {
         
-        if (!is.element(db, c("refseq", "genbank","ensembl")))
-            stop("Please select one of the available data bases: 'refseq', 'genbank', or 'ensembl'.")
+        if (!is.element(db, c("refseq", "genbank","ensembl","ensemblgenomes")))
+            stop("Please select one of the available data bases: 'refseq', 'genbank', 'ensembl', 'ensemblgenomes'.")
         
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
@@ -139,13 +139,13 @@ getGFF <-
                 
                 print(
                     paste0(
-                        "The genome of '",
+                        "The *.gff annotation file of '",
                         organism,
                         "' has been downloaded to '",
                         path,
                         "' and has been named '",
                         paste0(organism, "_genomic_",db,".gff.gz"),
-                        "' ."
+                        "'."
                     )
                 )
                 
@@ -214,6 +214,89 @@ getGFF <-
             sink()
             
             setwd(cwd)
+            
+            print(
+                paste0(
+                    "The *.gff annotation file of '",
+                    organism,
+                    "' has been downloaded to '",
+                    genome.path,
+                    "' and has been named '",
+                    basename(genome.path),
+                    "'."
+                )
+            )
+            
+            return(genome.path)
+        }
+        
+        if (db == "ensemblgenomes") {
+            
+            # create result folder
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
+            }
+            
+            # download genome sequence from ENSEMBLGENOMES
+            genome.path <- getENSEMBLGENOMES.Annotation(organism, type = "dna", id.type = "toplevel", path)
+            
+            new.organism <- stringr::str_replace(organism," ","_")
+            
+            # test proper API access
+            tryCatch({
+                json.qry.info <-
+                    jsonlite::fromJSON(
+                        paste0(
+                            "http://rest.ensemblgenomes.org/info/assembly/",
+                            new.organism,
+                            "?content-type=application/json"
+                        )
+                    )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+                ))
+            
+            cwd <- getwd()
+            
+            setwd(path)
+            
+            # generate Genome documentation
+            sink(paste0("doc_",new.organism,"_db_",db,".txt"))
+            
+            cat(paste0("File Name: ", genome.path))
+            cat("\n")
+            cat(paste0("Organism Name: ", new.organism))
+            cat("\n")
+            cat(paste0("Database: ", db))
+            cat("\n")
+            cat(paste0("Download_Date: ", date()))
+            cat("\n")
+            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+            cat("\n")
+            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+            cat("\n")
+            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
+            cat("\n")
+            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
+            cat("\n")
+            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
+            
+            sink()
+            
+            setwd(cwd)
+            
+            print(
+                paste0(
+                    "The *.gff annotation file of '",
+                    organism,
+                    "' has been downloaded to '",
+                    genome.path,
+                    "' and has been named '",
+                    basename(genome.path),
+                    "'."
+                )
+            )
             
             return(genome.path)
         }
