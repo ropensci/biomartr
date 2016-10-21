@@ -14,7 +14,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
             jsonlite::fromJSON("http://rest.ensembl.org/info/species?content-type=application/json")
     }, error = function(e)
         stop(
-            "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
+            "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?",call. = FALSE
         ))
     
     if (!is.element(stringr::str_to_lower(new.organism),
@@ -22,7 +22,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
         stop(
             "Unfortunately organism '",
             organism,
-            "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly."
+            "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.", call. = FALSE
         )
     
     # test proper API access
@@ -37,7 +37,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
             )
     }, error = function(e)
         stop(
-            "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
+            "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
         ))
     
     # construct retrieval query
@@ -73,7 +73,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
                              mode = "wb")
     }, error = function(e)
         stop(
-            "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/pub/' or 'http://rest.ensembl.org' currently available?", call. = FALSE
+            "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/current_gff3/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/current_gff3/' or 'http://rest.ensembl.org' currently available?", call. = FALSE
         ))
     
     return(file.path(
