@@ -16,6 +16,8 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new retrieval function `getGFF()` allows users to retrieve annotation (*.gff) files for specific genomes from NCBI and ENSEMBL databases
 
+- new internal functions to check for availability of ENSEMBL or ENSEMBLGENOMES databases
+
 - new database retrieval function `download.database.all()` allows users to download entire NCBI databases with one command
 
 - new function `listMetaGenomes()` allowing users to list available metagenomes on NCBI Genbank
@@ -27,11 +29,19 @@ into one big data.frame
 
 - new external helper function `getMetaGenomeSummary()` to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
 
-- new internal helper function `getENSEMBL.Seq()` acting as main interface function to communicate with the ENSEMBL database API
+- new internal helper function `getENSEMBL.Seq()` acting as main interface function to communicate with the ENSEMBL database API for sequence retrieval
+
+- new internal helper function `getENSEMBLGENOMES.Seq()` acting as main interface function to communicate with the ENSEMBL database API for sequence retrieval
+
+- new internal helper function `getENSEMBL.Annotation()` acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval
+
+- new internal helper function `getENSEMBLGENOMES.Annotation()` acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval
 
 - new internal helper function `get.ensemblgenome.info()` to retrieve general organism information from ENSEMLGENOMES 
 
 ### Function changes
+
+- functions `getGenome()`, `getProteome()`, and `getCDS()` now can also in addition to NCBI retrieve genomes, proteomes or CDS from  [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/)
 
 - the functions `getGenome()`, `getProteome()`, and `getCDS()` were completely re-written and now use the assembly_summary.txt files
 provided by NCBI to retrieve the download path to the corresponding genome. Furthermore, these functions now lost the `kingdom` argument.
