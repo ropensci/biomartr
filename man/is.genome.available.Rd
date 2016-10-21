@@ -7,13 +7,13 @@
 is.genome.available(organism, details = FALSE, db = "refseq")
 }
 \arguments{
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
+\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
 \item{details}{a logical value specifying whether or not details on genome size, kingdom, etc. shall be printed to the
 console intead of a boolean value.}
 
 \item{db}{a character string specifying the database for which genome availability shall be checked,
-e.g. \code{db} =  \code{"refseq"}, \code{db} =  \code{"ensembl"} or \code{db} =  \code{"all"}.}
+e.g. \code{db = "refseq"},\code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}, or \code{db =  "all"}.}
 }
 \value{
 a logical value specifing whether or not the genome of the input organism
