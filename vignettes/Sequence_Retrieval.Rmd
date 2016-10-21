@@ -108,9 +108,16 @@ is.genome.available("Homo sapiens", details = TRUE, db = "genbank")
 ```
 
 
-### Using `is.genome.available()` with ENSEMBL
+### Using `is.genome.available()` with ENSEMBL and ENSEMBLGENOMES
 
-Users can also specify `db = "ensembl"` to retrieve available organisms provided by ENSEMBL.
+Users can also specify `db = "ensembl"` or `db = "ensemblgenomes"` to retrieve available organisms provided by ENSEMBL or ENSEMBLGENOMES.
+Again, users might experience a delay in the execution of this function when running it for the first time.
+This is due to the download of ENSEMBL or ENSEMBLGENOMES information which is then stored internally to enable a much faster
+execution of this function in following runs. The corresponding information files are stored at `file.path(tempdir(), "ensembl_summary.txt")` 
+and `file.path(tempdir(), "ensemblgenomes_summary.txt")`.
+
+
+Example `ENSEMBL`: 
 
 ```{r,eval=FALSE}
 # cheking whether Homo sapiens is available in the ENSEMBL database
@@ -122,7 +129,7 @@ is.genome.available("Homo sapiens", db = "ensembl")
 ```
 
 ```{r,eval=FALSE}
-# cheking whether Homo sapiens is available in the ENSEMBL database
+# retrieve details for Homo sapiens
 is.genome.available("Homo sapiens", db = "ensembl", details = TRUE)
 ```
 
@@ -135,8 +142,49 @@ is.genome.available("Homo sapiens", db = "ensembl", details = TRUE)
 1 core, cdna, vega, otherfeatures, rnaseq, variation, funcgen   GRCh38
 ```
 
-Please note that the detailed information provided by ENSEMBL differs from the information provided by NCBI. 
+Example `ENSEMBLGENOMES`: 
 
+For example, some species that cannot be found at `db = "ensembl"` might be available at `db = "ensemblgenomes"`
+and vice versa. So I recommend users to to check in both databases ENSEMBL and ESEMBLGENOMES whether or not a
+particular species is present. In case of `"Homo sapiens"`, the genome is available at `db = "ensembl"` but
+__not__ at `db = "ensemblgenomes"` whereas the genome of `"Arabidopsis thaliana"` is available at `db = "ensemblgenomes"`
+but __not__ at `db = "ensembl"`.
+
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the ENSEMBLGENOMES database
+is.genome.available("Homo sapiens", db = "ensemblgenomes")
+    ```
+
+```
+Error: Unfortunately organism 'Homo sapiens' is not available at ENSEMBLGENOMES. Please check whether or not the organism name is typed correctly.
+```
+
+```{r,eval=FALSE}
+# cheking whether Arabidopsis thaliana is available in the ENSEMBLGENOMES database
+is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes")
+```
+
+```
+[1] TRUE
+```
+
+```{r,eval=FALSE}
+# show details for Arabidopsis thaliana
+is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRUE)
+```
+
+```
+# A tibble: 1 x 8
+       division taxon_id                 name release         display_name       accession common_name assembly
+          <chr>    <int>                <chr>   <int>                <chr>           <chr>       <chr>    <chr>
+1 EnsemblPlants     3702 arabidopsis_thaliana      85 Arabidopsis thaliana GCA_000001735.1 thale-cress   TAIR10
+```
+
+Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
+
+
+### Using `listGenomes()` to retrieve names of available genomes stored within NCBI databases
 
 The simplest way to work with `listGenomes()` is to print available genomes to the console.
 
@@ -536,9 +584,21 @@ Example `RefSeq`:
 ```{r,eval=FALSE}
 # download the annotation file of Homo sapiens from refseq
 # and store the corresponding file in '_ncbi_downloads/annotation'
-getGFF( db       = "refseq", 
-        organism = "Homo sapiens", 
-        path = file.path("_ncbi_downloads","annotation"))
+HS.refseq <- getGFF( db       = "refseq", 
+                     organism = "Homo sapiens", 
+                     path = file.path("_ncbi_downloads","annotation"))
+```
+
+```
+[1] "The genome of 'Homo_sapiens' has been downloaded to '_ncbi_downloads/annotation' and has been named 'Homo_sapiens_genomic_refseq.gff.gz' ."
+```
+
+```{r,eval=FALSE}
+HS.refseq
+```
+
+```
+[1] "_ncbi_downloads/annotation/Homo_sapiens_genomic_refseq.gff.gz"
 ```
 
 Example `GenBank`:
@@ -546,20 +606,73 @@ Example `GenBank`:
 ```{r,eval=FALSE}
 # download the annotation file of Homo sapiens from genbank
 # and store the corresponding file in '_ncbi_downloads/annotation'
-getGFF( db       = "genbank", 
-        organism = "Homo sapiens", 
-        path = file.path("_ncbi_downloads","annotation"))
+HS.genbank <- getGFF( db       = "genbank", 
+                      organism = "Homo sapiens", 
+                      path = file.path("_ncbi_downloads","annotation"))
 ```
 
+```
+[1] "The genome of 'Homo_sapiens' has been downloaded to '_ncbi_downloads/annotation' 
+and has been named 'Homo_sapiens_genomic_genbank.gff.gz' ."
+```
+
+```{r,eval=FALSE}
+HS.genbank
+```
+
+```
+[1] "_ncbi_downloads/annotation/Homo_sapiens_genomic_genbank.gff.gz"
+```
 
 Example `Ensembl`:
 
 ```{r,eval=FALSE}
-# download the annotation file of Homo sapiens from refseq
+# download the annotation file of Homo sapiens from ensembl
 # and store the corresponding file in '_ncbi_downloads/annotation'
-getGFF( db       = "ensembl", 
-        organism = "Homo sapiens", 
-        path = file.path("_ncbi_downloads","annotation"))
+HS.ensembl <- getGFF( db       = "ensembl", 
+                      organism = "Homo sapiens", 
+                      path = file.path("_ncbi_downloads","annotation"))
+```
+
+```
+[1] "The *.gff annotation file of 'Homo sapiens' has been downloaded to 
+'_ncbi_downloads/annotation/Homo_sapiens.GRCh38.86_ensembl.gff3.gz' 
+and has been named 'Homo_sapiens.GRCh38.86_ensembl.gff3.gz'.
+```
+
+```{r,eval=FALSE}
+HS.ensembl
+```
+
+```
+[1] "_ncbi_downloads/annotation/Homo_sapiens.GRCh38.86_ensembl.gff3.gz"
+```
+
+Example `EnsemblGenomes`:
+
+Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the annotation file of Arabidopsis thaliana from ensemblgenomes
+# and store the corresponding file in '_ncbi_downloads/annotation'
+Ath.ensemblgenomes <- getGFF( db       = "ensemblgenomes", 
+                             organism = "Arabidopsis thaliana", 
+                             path = file.path("_ncbi_downloads","annotation"))
+```
+
+```
+"The *.gff annotation file of 'Arabidopsis thaliana' has been downloaded to 
+'_ncbi_downloads/annotation/Arabidopsis_thaliana.TAIR10.32_ensemblgenomes.gff3.gz' 
+and has been named 'Arabidopsis_thaliana.TAIR10.32_ensemblgenomes.gff3.gz'."
+```
+
+```{r,eval=FALSE}
+Ath.ensemblgenomes
+```
+
+```
+[1] "_ncbi_downloads/annotation/Arabidopsis_thaliana.TAIR10.32_ensemblgenomes.gff3.gz"
 ```
 
 The `getGFF()` function retrieves `*.gff` annotation files of an organism of interest and stores the annotation file in a specified folder, e.g. `file.path("_ncbi_downloads","annotation")`.
