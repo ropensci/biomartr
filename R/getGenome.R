@@ -1,7 +1,7 @@
 #' @title Genome Retrieval
 #' @description This function retrieves a fasta-file storing the genome of an organism of interest and stores
 #' the genome file in the folder '_ncbi_downloads/genomes'.
-#' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.
+#' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, or \code{db = "ensemblgenomes"}.
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) in which the corresponding
 #' genome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
@@ -53,7 +53,7 @@ getGenome <-
              organism,
              path = file.path("_ncbi_downloads", "genomes")) {
         
-        if (!is.element(db, c("refseq", "genbank","ensembl")))
+        if (!is.element(db, c("refseq", "genbank","ensembl", "ensemblgenomes")))
             stop("Please select one of the available data bases: 'refseq', 'genbank', or 'ensembl'.")
         
         if (is.element(db, c("refseq", "genbank"))) {
@@ -187,6 +187,65 @@ getGenome <-
             }, error = function(e)
                 stop(
                     "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
+                ))
+            
+            cwd <- getwd()
+            
+            setwd(path)
+            
+            # generate Genome documentation
+            sink(paste0("doc_",new.organism,"_db_",db,".txt"))
+            
+            cat(paste0("File Name: ", genome.path))
+            cat("\n")
+            cat(paste0("Organism Name: ", new.organism))
+            cat("\n")
+            cat(paste0("Database: ", db))
+            cat("\n")
+            cat(paste0("Download_Date: ", date()))
+            cat("\n")
+            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+            cat("\n")
+            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+            cat("\n")
+            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
+            cat("\n")
+            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
+            cat("\n")
+            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
+            
+            sink()
+            
+            setwd(cwd)
+            
+            return(genome.path)
+        }
+        
+        if (db == "ensemblgenomes") {
+            
+            # create result folder
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
+            }
+            
+            # download genome sequence from ENSEMBLGENOMES
+            genome.path <- getENSEMBLGENOMES.Seq(organism, type = "dna", id.type = "toplevel", path)
+            
+            new.organism <- stringr::str_replace(organism," ","_")
+            
+            # test proper API access
+            tryCatch({
+                json.qry.info <-
+                    jsonlite::fromJSON(
+                        paste0(
+                            "http://rest.ensemblgenomes.org/info/assembly/",
+                            new.organism,
+                            "?content-type=application/json"
+                        )
+                    )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
                 ))
             
             cwd <- getwd()
