@@ -1,66 +1,7 @@
 
 
 
-#' @title Read the proteome of a given Organism
-#' @description This function reads an organism specific proteome stored in a defined file format.
-#' @param file a character string specifying the path to the file storing the proteome.
-#' @param format a character string specifying the file format used to store the proteome, e.g. "fasta", "gbk".
-#' @param ... additional arguments that are used by the seqinr::read.fasta() function.
-#' @author Hajk-Georg Drost
-#' @details The \code{read.proteome} function takes a string specifying the path to the proteome file
-#' of interest as first argument.
-#'
-#' It is possible to read in different proteome file standards such as \emph{fasta} or \emph{genebank}.
-#'
-#' Proteomes stored in fasta files can be downloaded from http://www.ebi.ac.uk/reference_proteomes.
-#'
-#' @examples \dontrun{
-#' # reading a proteome stored in a fasta file
-#' Ath.proteome <- read.proteome(system.file('seqs/ortho_thal_aa.fasta', package = 'orthologr'),
-#'                                format = "fasta")
-#' }
-#'
-#' @return A data.table storing the gene id in the first column and the corresponding
-#' sequence as string in the second column.
-#' @import data.table
-#' @export
-read_proteome <- function(file, format, ...){
-        
-    if (!is.element(format, c("fasta", "gbk")))
-        stop("Please choose a file format that is supported by this function.")
-    
-    geneids <- NULL
-    
-    tryCatch({
-        proteome <-
-            Biostrings::readAAStringSet(filepath = file, format = format, ...)
-        proteome_names <-
-            as.vector(unlist(sapply(proteome@ranges@NAMES, function(x) {
-                return(strsplit(x, " ")[[1]][1])
-            })))
-        proteome.dt <-
-            data.table::data.table(geneids = proteome_names,
-                                   seqs = tolower(as.character(proteome)))
-        
-        data.table::setkey(proteome.dt, geneids)
-        
-    }, error = function(e) {
-        stop(
-            paste0(
-                "File ",
-                file,
-                " could not be read properly. \n",
-                "Please make sure that ",
-                file,
-                " contains only amino acid sequences and is in ",
-                format,
-                " format."
-            )
-        )
-    })
 
-    return(proteome.dt)
-}
 
 
 #' @title Read the CDS of a given Organism
