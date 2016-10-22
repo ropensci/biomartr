@@ -148,7 +148,7 @@ getGenome <-
                         path,
                         "' and has been named '",
                         paste0(organism, "_genomic_",db,".fna.gz"),
-                        "' ."
+                        "'."
                     )
                 )
                 
@@ -218,6 +218,18 @@ getGenome <-
             
             setwd(cwd)
             
+            print(
+                paste0(
+                    "The genome of '",
+                    organism,
+                    "' has been downloaded to '",
+                    path,
+                    "' and has been named '",
+                    basename(genome.path),
+                    "'."
+                )
+            )
+            
             return(genome.path)
         }
         
@@ -276,6 +288,18 @@ getGenome <-
             sink()
             
             setwd(cwd)
+            
+            print(
+                paste0(
+                    "The genome of '",
+                    organism,
+                    "' has been downloaded to '",
+                    path,
+                    "' and has been named '",
+                    basename(genome.path),
+                    "'."
+                )
+            )
             
             return(genome.path)
         }
