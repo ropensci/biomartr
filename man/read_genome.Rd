@@ -2,14 +2,14 @@
 % Please edit documentation in R/read_genome.R
 \name{read_genome}
 \alias{read_genome}
-\title{Read Genome Assembly}
+\title{Import Genome Assembly as Biostrings or data.table object}
 \usage{
-read_genome(file, format, obj.type = "Biostrings", ...)
+read_genome(file, format = "fasta", obj.type = "Biostrings", ...)
 }
 \arguments{
 \item{file}{a character string specifying the path to the file storing the genome.}
 
-\item{format}{a character string specifying the file format used to store the genome, e.g. "fasta", "gbk".}
+\item{format}{a character string specifying the file format used to store the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
 
 \item{obj.type}{a character string specifying the object stype in which the genomic sequence shall be represented. 
 Either as \code{obj.type = "Biostrings"} (default) or as \code{obj.type = "data.table"}.}
@@ -17,7 +17,7 @@ Either as \code{obj.type = "Biostrings"} (default) or as \code{obj.type = "data.
 \item{...}{additional arguments that are used by the seqinr::read.fasta() function.}
 }
 \value{
-Either a \code{Biostrings} or \code{data.table} object
+Either a \code{Biostrings} or \code{data.table} object.
 }
 \description{
 This function reads an organism specific genome stored in a defined file format.
@@ -38,5 +38,8 @@ Ath.genome
 }
 \author{
 Hajk-Georg Drost
+}
+\seealso{
+\code{\link{getGenome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
 }
 
