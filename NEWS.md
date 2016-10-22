@@ -1,8 +1,8 @@
 biomartr 0.2.0
 ===========
 
-In this version, `biomartr` was extended to retrieve genome, proteome, CDS, and meta-genome data
-from [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/).
+In this version, `biomartr` was extended to now retrieve genome, proteome, CDS, GFF and meta-genome data
+also from [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/).
 Furthermore, all NCBI retrieval functions were updated to the new server folder structure standards of NCBI.
 
 
