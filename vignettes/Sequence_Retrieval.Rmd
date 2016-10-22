@@ -545,9 +545,9 @@ Alternatively, users can perform the pipeline logic of the [magrittr](https://gi
 # install.packages("magrittr")
 library(magrittr)
 # import genome as Biostrings object
-Human_Genome <- getProteome( db       = "refseq", 
-                               organism = "Homo sapiens",
-                               path     = file.path("_ncbi_downloads","genomes")) %>%
+Human_Genome <- getGenome( db       = "refseq", 
+                           organism = "Homo sapiens",
+                           path     = file.path("_ncbi_downloads","genomes")) %>%
     read_genome(obj.type = "Biostrings")
 ```
 
