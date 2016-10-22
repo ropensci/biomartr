@@ -30,6 +30,16 @@ test_that("The getGenome() interface works properly..",{
                                                      organism = "Saccharomyces cerevisiae",
                                                      path     = tempdir()), format = "fasta")
         
+        # test proper download from ENSEMBLGENOMES
+        Ath_Genome <- read_genome(getGenome( db       = "ensemblgenomes",
+                                             organism = "Arabidopsis thaliana",
+                                             path     = tempdir()), format = "fasta")
+     
+        # test proper use of internal referece files when command is repeated
+        Ath_Genome <- read_genome(getGenome( db       = "ensemblgenomes",
+                                             organism = "Arabidopsis thaliana",
+                                             path     = tempdir()), format = "fasta")
+        
 })
 
 
