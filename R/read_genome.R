@@ -1,4 +1,4 @@
-#' @title Read Genome Assembly
+#' @title Import Genome Assembly as Biostrings or data.table object
 #' @description This function reads an organism specific genome stored in a defined file format.
 #' @param file a character string specifying the path to the file storing the genome.
 #' @param format a character string specifying the file format used to store the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.
@@ -17,7 +17,9 @@
 #' Ath.genome
 #' }
 #'
-#' @return Either a \code{Biostrings} or \code{data.table} object
+#' @return Either a \code{Biostrings} or \code{data.table} object.
+#' @seealso \code{\link{getGenome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
+#' @import data.table
 #' @export
 
 read_genome <- function(file, format = "fasta", obj.type = "Biostrings", ...){
