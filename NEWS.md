@@ -72,6 +72,9 @@ return the path to the downloaded genome so that this path can be used as input 
 
 - argument `out.folder` in `meta.retrieval()` has been renamed to `path` to be more consistent with other retrieval functions
 
+- all `read_*` functions now received a new argument `obj.type` allowing users to choose between storing input genomes as Biostrings object or data.table object
+
+- all `read_*` functions now have `format = "fasta"` as default
 
 ### Vignette updates
 
