@@ -82,6 +82,9 @@ The current status of the package as well as a detailed history of the functiona
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
 * `getSummaryFile()` : Helper function to retrieve the assembly_summary.txt file from NCBI for a specific kingdom
+* `read_genome()` : Import genomes as Biostrings or data.table object
+* `read_proteome()` : Import proteome as Biostrings or data.table object
+* `read_cds()` : Import CDS as Biostrings or data.table object
 
 #### Database Retrieval
 
