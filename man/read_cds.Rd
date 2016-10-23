@@ -2,14 +2,18 @@
 % Please edit documentation in R/read_cds.R
 \name{read_cds}
 \alias{read_cds}
-\title{Read the CDS of a given Organism}
+\title{Import CDS as Biostrings or data.table object}
 \usage{
-read_cds(file, format, delete_corrupt = FALSE, ...)
+read_cds(file, format = "fasta", obj.type = "Biostrings",
+  delete_corrupt = FALSE, ...)
 }
 \arguments{
 \item{file}{a character string specifying the path to the file storing the CDS.}
 
-\item{format}{a character string specifying the file format used to store the CDS, e.g. "fasta", "gbk".}
+\item{format}{a character string specifying the file format used to store the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
+
+\item{obj.type}{a character string specifying the object stype in which the genomic sequence shall be represented. 
+Either as \code{obj.type = "Biostrings"} (default) or as \code{obj.type = "data.table"}.}
 
 \item{delete_corrupt}{a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
 be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
