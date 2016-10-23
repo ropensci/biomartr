@@ -555,6 +555,21 @@ Human_Genome <- getGenome( db       = "refseq",
 Human_Genome
 ```
 
+```
+  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
+```
 
 Example `Genbank`:
 
@@ -693,7 +708,7 @@ Example `RefSeq`:
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
 HS.proteome.refseq <- getProteome( db       = "refseq", 
                                    organism = "Homo sapiens",
-                                   path     = file.path("_ncbi_downloads","proteomes") )
+                                   path     = file.path("_ncbi_downloads","proteomes"))
 ```
 
 In this example, `getProteome()` creates a directory named `'_ncbi_downloads/proteomes'` into which the corresponding genome named `GCF_000001405.34_GRCh38.p8_protein.faa.gz` is downloaded. The return value of `getProteome()` is the folder path to the downloaded proteome file
@@ -763,13 +778,116 @@ Human_Proteome
 Example `Genbank`:
 
 ```{r,eval=FALSE}
-# read proteome as data.table object
-Human_Proteome <- read_proteome(getProteome( db       = "genbank", 
-                                             organism = "Homo sapiens",
-                                             path     = file.path("_ncbi_downloads","proteomes") ), 
-                                format = "gbk")
+# download the proteome of Homo sapiens from genbank
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+HS.proteome.genbank <- getProteome( db       = "genbank", 
+                                   organism = "Homo sapiens",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
 ```
 
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Human_Proteome <- read_proteome(file = HS.proteome.genbank, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Proteome
+```
+
+```
+  A AAStringSet instance of length 13
+     width seq                                                     names               
+ [1]   318 MPMANLLLLIVPILIAMAFLMLTERK...FLPLTLALLMWYVSMPITISSIPPQT AAB58943.1 NADH d...
+ [2]   347 MNPLAQPVIYSTIFAGTLITALSSHW...PTPFLPTLIALTTLLLPISPFMLMIL AAB58944.1 NADH d...
+ [3]   513 MFADRWLFSTNHKDIGTLYLLFGAWA...PSMNLEWLYGCPPPYHTFEEPVYMKS AAB58945.1 cytoch...
+ [4]   227 MAHAAQVGLQDATSPIMEELITFHDH...ANHSFMPIVLELIPLKIFEMGPVFTL AAB58946.1 cytoch...
+ [5]    68 MPQLNTTVWPTMITPMLLTLFLITQL...KMKNYNKPWEPKWTKICSLHSLPPQS AAB58947.1 ATPase...
+ ...   ... ...
+ [9]    98 MPLIYMNIMLAFTISLLGMLVYRSHL...VGLALLVSISNTYGLDYVHNLNLLQC AAB58951.1 NADH d...
+[10]   459 MLKLIVPTIMLLPLTWLSKKHMIWIN...NTLMFMHLSPILLLSLNPDIITGFSS AAB58952.1 NADH d...
+[11]   603 MTMHTTMTTLTLTSLIPPILTTLVNP...STQKGMIKLYFLSFFFPLILTLLLIT AAB58953.1 NADH d...
+[12]   174 MMYALFLLSVGLVMGFVGFSSKPSPI...GRWLVVVTGWTLFVGVYIVIEIARGN AAB58954.1 NADH d...
+[13]   380 MTPMRKTNPLMKLINHSFIDLPTPSN...SVLYFTTILILMPTISLIENKMLKWA AAB58955.3 cytoch...
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the proteome of Homo sapiens from ENSEMBL
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+HS.proteome.ensembl <- getProteome( db       = "ensembl", 
+                                   organism = "Homo sapiens",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Human_Proteome <- read_proteome(file = HS.proteome.ensembl, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Proteome
+```
+
+```
+  A AAStringSet instance of length 102915
+         width seq                                                 names               
+     [1]     4 TGGY                                                ENSP00000452494.1...
+     [2]     4 GTGG                                                ENSP00000488240.1...
+     [3]     4 GTGG                                                ENSP00000487941.1...
+     [4]     3 PSY                                                 ENSP00000451515.1...
+     [5]     2 EI                                                  ENSP00000451042.1...
+     ...   ... ...
+[102911]   554 MLLPLLLSSLLGGSQAMDGRFWIR...GVRPRPEARMPKGTQADYAEVKFQ ENSP00000414324.2...
+[102912]   639 MLLPLLLSSLLGGSQAMDGRFWIR...GVRPRPEARMPKGTQADYAEVKFQ ENSP00000389132.2...
+[102913]   697 MLLPLLLSSLLGGSQAMDGRFWIR...GVRPRPEARMPKGTQADYAEVKFQ ENSP00000345243.4...
+[102914]   155 MLLPLLLSSLLGVLSFTPRPQDHN...SGRYTCRAENRLGSQQRALDLSVQ ENSP00000435281.1...
+[102915]   186 MRRCYCHCCCPRCWADWTGSTPAY...HFSVLSFTPRPQDHNTDLTCHVDF ENSP00000433838.1...
+```
+
+
+Example `ENSEMBLGENOMES`:
+
+Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the proteome of Arabidopsis thaliana from ENSEMBLGENOMES
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+AT.proteome.ensemblgenomes <- getProteome( db       = "ensemblgenomes", 
+                                           organism = "Arabidopsis thaliana",
+                                           path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Cress_Proteome <- read_proteome(file = AT.proteome.ensemblgenomes, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Cress_Proteome
+```
+
+```
+  A AAStringSet instance of length 35386
+        width seq                                                  names               
+    [1]   415 MGRDETETYITVPSFFKCPISLDVM...IKVLKFNSSALAAYETKTTHIMPF AT3G18710.1 pep:k...
+    [2]   855 MATENPIRISGSNERWSNSRKVSVP...YTYGKHIVSRLEQPSIEENQELRR AT4G25880.2 pep:k...
+    [3]   858 MATENPIRISGSNERWSNSRKVSVP...GKHIVSRLEQPSIEGMKFPNKTKN AT4G25880.3 pep:k...
+    [4]   861 MATENPIRISGSNERWSNSRKVSVP...YTYGKHIVSRLEQPSIEENQELRR AT4G25880.1 pep:k...
+    [5]   358 MTKAYSTRVLTFLILISLMAVTLNL...CSARNTQSFMSVLEEGIEEAISMI AT1G71695.1 pep:k...
+    ...   ... ...
+[35382]   374 MHSRSALLYRFLRPASRCFSSSSAV...YKAGEYYIKSMIEADRVASPSTSP AT2G20860.1 pep:k...
+[35383]   392 MADNLNLVSVLGVLLVLTIFHNPII...WEPNNLAIRRRPSRDFYLGLAAYY AT3G14210.1 pep:k...
+[35384]   495 MASLLSPATPTATSAAFHSCSTAGF...LRHPYFLLGGDQAAAVLSKLSFSK AT5G01920.1 pep:k...
+[35385]   563 MSLTKKASEPKLSGTSIKPTTLNPH...VAVQRYLLEEEGLDYSEPQAGLLR AT2G26280.1 pep:k...
+[35386]   453 MGVSLLKQQHRITNQADTFSRFMER...NHQQQQQQQRSELRVENGLANNVI AT4G32600.1 pep:k...
+```
 
 ### CDS Retrieval
 
