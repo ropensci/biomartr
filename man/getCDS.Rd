@@ -7,17 +7,15 @@
 getCDS(db = "refseq", organism, path = file.path("_ncbi_downloads", "CDS"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the CDS file shall be retrieved: \code{refseq}.
-Right now only the ref seq database is included. Later version of \pkg{biomartr} will also allow
-sequence retrieval from additional databases.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or \code{db = "ensemblgenomes"}.}
 
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. 'Arabidopsis thaliana'.}
+\item{organism}{a character string specifying the scientific name of the organism of interest,\code{organism = "Homo sapiens"}.}
 
 \item{path}{a character string specifying the location (a folder) in which the corresponding
 CDS file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.}
 }
 \value{
-A data.table storing the geneids in the first column and the DNA dequence in the second column.
+File path to downloaded CDS file.
 }
 \description{
 This function retrieves a fasta-file storing the CDS files of the genome of an organism of interest and stores
@@ -30,10 +28,6 @@ Internally this function loads the the overview.txt file from NCBI:
 
 and creates a directory '_ncbi_downloads/CDS' to store
 the genome of interest as CDS fasta file for future processing.
-In case the corresponding fasta file already exists within the
-'_ncbi_downloads/CDS' folder and is accessible within the workspace,
-no download process will be performed. So the folder can delete when the corresponding
-CDS file shall be downloaded again.
 }
 \examples{
 \dontrun{
