@@ -891,38 +891,126 @@ Cress_Proteome
 
 ### CDS Retrieval
 
-The `getCDS()` function is also an interface function to the [NCBI refseq](http://www.ncbi.nlm.nih.gov/refseq/about/) database from
-which the corresponding CDS files are downloaded. It works analogous to the `getGenome()` and `getProteome()` functions but for CDS files. 
+The `getCDS()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
+[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+which corresponding CDS files can be retrieved. It works analogous to `getGenome()` and `getProteome()`. 
 
+The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
+
+Options are:
+
+- `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
+- `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
+- `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
+- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
+Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
+Finally, the `path` argument specifies the folder path in which the corresponding CDS file shall be locally stored. In case users would like to store the CDS file at a different location,
+they can specify the `path = file.path("put","your","path","here")` argument.
+
+Example `RefSeq`:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from refseq
 # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-getCDS( db       = "refseq", 
-        organism = "Homo sapiens",
-        path     = file.path("_ncbi_downloads","CDS") )
+HS.cds.refseq <- getCDS( db       = "refseq", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","CDS"))
 ```
 
-The `getCDS()` function creates a directory named `_ncbi_downloads/CDS` into which
-corresponding CDS are loaded. The `read_cds()` function allows users to
-read the correspondning CDS as `data.table` object.
+
+In this example, `getCDS()` creates a directory named `'_ncbi_downloads/CDS'` into which the corresponding genome named `Homo_sapiens_cds_from_genomic_refseq.fna.gz` is downloaded. The return value of `getCDS()` is the folder path to the downloaded genome file
+that can then be used as input to the `read_cds()` function. The variable `HS.cds.refseq` stores the path to the downloaded CDS file. 
+Subsequently, users can use the `read_cds()` function to import the genome into the R session. Users can choose to work with the genome sequence in R either as [Biostrings](http://bioconductor.org/packages/release/bioc/html/Biostrings.html) object (`obj.type = "Biostrings"`) or [data.table](https://github.com/Rdatatable/data.table/wiki) object
+(`obj.type = "data.table"`) by specifying the `obj.type` argument of the `read_cds()` function. 
 
 ```{r,eval=FALSE}
-# read CDS as data.table object
-Human_cds <- read_cds(getCDS( db       = "refseq", 
-                              organism = "Homo sapiens",
-                              path     = file.path("_ncbi_downloads","CDS") ), 
-                      format = "fasta")
+# import downloaded CDS as Biostrings object
+Human_CDS <- read_cds(file     = HS.cds.refseq, 
+                      obj.type = "Biostrings")
+
 ```
 
-In case users would like to store the CDS file at a different location,
-they can specify the `path = file.path("put","your","path","here")` argument.
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_CDS
+```
 
+```
+ A BStringSet instance of length 114967
+          width seq                                                names               
+     [1]    918 ATGGTGACTGAATTCATTTTTCTG...CACATTCTAGTGTAAAGTTTTAG lcl|NC_000001.11_...
+     [2]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [3]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [4]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [5]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     ...    ... ...
+[114963]    297 ATGCCCCTCATTTACATAAATATT...ACCTAAACCTACTCCAATGCTAA lcl|NC_012920.1_c...
+[114964]   1378 ATGCTAAAACTAATCGTCCCAACA...CATCATTACCGGGTTTTCCTCTT lcl|NC_012920.1_c...
+[114965]   1812 ATAACCATGCACACTACTATAACC...TAACCCTACTCCTAATCACATAA lcl|NC_012920.1_c...
+[114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
+[114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...
+```
 
-Furthermore, the `getCDS()` function checks whether all CDS sequences can be divided by 3 (codons).
-In case sequences of particualar genes cannot be divided by 3, a warning massage is returned to quantify the
-number of corresponding genes. In case users would like to extract these sequences from their data, they can specify the
-`delete_delete_corrupt = TRUE` argument, which will then delete all corrupt CDS sequences.
+Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
+
+```
+File Name: Homo_sapiens_cds_from_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_cds_from_genomic.fna.gz
+Download_Date: Sun Oct 23 17:19:05 2016
+refseq_category: reference genome
+assembly_accession: GCF_000001405.35
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-09-26
+submitter: Genome Reference Consortium
+```
+
+In summary, the `getCDS()` and `read_cds()` functions allow users to retrieve CDS files by specifying
+the scientific name of the organism of interest and allow them to import the retrieved CDS file e.g. as `Biostrings` object.
+Thus, users can then perform the [Biostrings notation](https://web.stanford.edu/class/bios221/labs/biostrings/lab_1_biostrings.html) to work with downloaded CDS and can rely on the log
+file generated by `getCDS()` to better document the source and version of CDS used for subsequent studies.
+
+Alternatively, users can perform the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package:
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import CDS as Biostrings object
+Human_CDS <- getCDS( db       = "refseq", 
+                     organism = "Homo sapiens",
+                     path     = file.path("_ncbi_downloads","CDS")) %>%
+    read_cds(obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_CDS
+```
+
+```
+ A BStringSet instance of length 114967
+          width seq                                                names               
+     [1]    918 ATGGTGACTGAATTCATTTTTCTG...CACATTCTAGTGTAAAGTTTTAG lcl|NC_000001.11_...
+     [2]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [3]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [4]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [5]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     ...    ... ...
+[114963]    297 ATGCCCCTCATTTACATAAATATT...ACCTAAACCTACTCCAATGCTAA lcl|NC_012920.1_c...
+[114964]   1378 ATGCTAAAACTAATCGTCCCAACA...CATCATTACCGGGTTTTCCTCTT lcl|NC_012920.1_c...
+[114965]   1812 ATAACCATGCACACTACTATAACC...TAACCCTACTCCTAATCACATAA lcl|NC_012920.1_c...
+[114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
+[114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...
+```
+
+Example `Genbank`:
 
 
 ### Retrieve the annotation file of a particular genome
