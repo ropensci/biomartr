@@ -8,7 +8,7 @@ getProteome(db = "refseq", organism, path = file.path("_ncbi_downloads",
   "proteomes"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or \code{db = "ensemblgenomes"}.}
 
 \item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
@@ -31,9 +31,6 @@ Internally this function loads the the overview.txt file from NCBI:
 
 and creates a directory '_ncbi_downloads/proteomes' to store
 the proteome of interest as fasta file for future processing.
-In case the corresponding fasta file already exists within the
-'_ncbi_downloads/genomes' folder and is accessible within the workspace,
-no download process will be performed.
 }
 \examples{
 \dontrun{
