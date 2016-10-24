@@ -43,6 +43,6 @@ Ath.proteome
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
+\code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}
 }
 
