@@ -16,6 +16,8 @@ Furthermore, all NCBI retrieval functions were updated to the new server folder 
 
 - new retrieval function `getGFF()` allows users to retrieve annotation (*.gff) files for specific genomes from NCBI and ENSEMBL databases
 
+- new import function `read_gff()` allowing users to import GFF files downloaded with `getGFF()`
+
 - new internal functions to check for availability of ENSEMBL or ENSEMBLGENOMES databases
 
 - new database retrieval function `download.database.all()` allows users to download entire NCBI databases with one command
