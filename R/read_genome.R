@@ -18,7 +18,7 @@
 #' }
 #'
 #' @return Either a \code{Biostrings} or \code{data.table} object.
-#' @seealso \code{\link{getGenome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
+#' @seealso \code{\link{getGenome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_gff}}
 #' @import data.table
 #' @export
 
