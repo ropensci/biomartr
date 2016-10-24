@@ -1234,7 +1234,7 @@ Human_GFF
    seqid source              type start       end   score strand phase                                          attribute
    <int>  <chr>             <chr> <int>     <int>   <chr>  <chr> <dbl>                                              <chr>
 1      1 GRCh38        chromosome     1 248956422       .      .     0 ID=chromosome:1;Alias=CM000663.2,chr1,NC_000001.11
-2      1      . biological_region 10469     11240 1.3e+03      .     0           external_name=oe %3D 0.79;logic_name=cpg
+2      1      . biological_region 10469     11240 1.3e+03      .     0           external_name=oe 3D 0.79;logic_name=cpg
 3      1      . biological_region 10650     10657   0.999      +     0                                 logic_name=eponine
 4      1      . biological_region 10655     10657   0.999      -     0                                 logic_name=eponine
 5      1      . biological_region 10678     10687   0.999      +     0                                 logic_name=eponine
