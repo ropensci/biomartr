@@ -1134,7 +1134,7 @@ Finally, users can download the corresponding annotation `*.gff` files for parti
 Example `RefSeq`:
 
 ```{r,eval=FALSE}
-# download the annotation file of Homo sapiens from refseq
+# download the GFF file of Homo sapiens from refseq
 # and store the corresponding file in '_ncbi_downloads/annotation'
 HS.gff.refseq <- getGFF( db       = "refseq", 
                          organism = "Homo sapiens", 
@@ -1143,91 +1143,19 @@ HS.gff.refseq <- getGFF( db       = "refseq",
 
 
 ```{r,eval=FALSE}
-# import downloaded CDS as Biostrings object
+# import downloaded GFF file
 Human_GFF <- read_gff(file = HS.gff.refseq)
 ```
 
-```
-[1] "_ncbi_downloads/annotation/Homo_sapiens_genomic_refseq.gff.gz"
-```
-
-Example `GenBank`:
-
 ```{r,eval=FALSE}
-# download the annotation file of Homo sapiens from genbank
-# and store the corresponding file in '_ncbi_downloads/annotation'
-HS.genbank <- getGFF( db       = "genbank", 
-                      organism = "Homo sapiens", 
-                      path = file.path("_ncbi_downloads","annotation"))
+Human_GFF
 ```
 
 ```
-[1] "The genome of 'Homo_sapiens' has been downloaded to '_ncbi_downloads/annotation' 
-and has been named 'Homo_sapiens_genomic_genbank.gff.gz' ."
-```
-
-```{r,eval=FALSE}
-HS.genbank
-```
 
 ```
-[1] "_ncbi_downloads/annotation/Homo_sapiens_genomic_genbank.gff.gz"
-```
 
-Example `Ensembl`:
 
-```{r,eval=FALSE}
-# download the annotation file of Homo sapiens from ensembl
-# and store the corresponding file in '_ncbi_downloads/annotation'
-HS.ensembl <- getGFF( db       = "ensembl", 
-                      organism = "Homo sapiens", 
-                      path = file.path("_ncbi_downloads","annotation"))
-```
-
-```
-[1] "The *.gff annotation file of 'Homo sapiens' has been downloaded to 
-'_ncbi_downloads/annotation/Homo_sapiens.GRCh38.86_ensembl.gff3.gz' 
-and has been named 'Homo_sapiens.GRCh38.86_ensembl.gff3.gz'.
-```
-
-```{r,eval=FALSE}
-HS.ensembl
-```
-
-```
-[1] "_ncbi_downloads/annotation/Homo_sapiens.GRCh38.86_ensembl.gff3.gz"
-```
-
-Example `EnsemblGenomes`:
-
-Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
-as example.
-
-```{r,eval=FALSE}
-# download the annotation file of Arabidopsis thaliana from ensemblgenomes
-# and store the corresponding file in '_ncbi_downloads/annotation'
-Ath.ensemblgenomes <- getGFF( db       = "ensemblgenomes", 
-                              organism = "Arabidopsis thaliana", 
-                              path = file.path("_ncbi_downloads","annotation"))
-```
-
-```
-"The *.gff annotation file of 'Arabidopsis thaliana' has been downloaded to 
-'_ncbi_downloads/annotation/Arabidopsis_thaliana.TAIR10.32_ensemblgenomes.gff3.gz' 
-and has been named 'Arabidopsis_thaliana.TAIR10.32_ensemblgenomes.gff3.gz'."
-```
-
-```{r,eval=FALSE}
-Ath.ensemblgenomes
-```
-
-```
-[1] "_ncbi_downloads/annotation/Arabidopsis_thaliana.TAIR10.32_ensemblgenomes.gff3.gz"
-```
-
-The `getGFF()` function retrieves `*.gff` annotation files of an organism of interest and stores the annotation file in a specified folder, e.g. `file.path("_ncbi_downloads","annotation")`.
-The return value of `getGFF()` is the file path to the downloaded annotation file. Internally, again a documentation file is generated to log the origin, date, information, etc. of the retrieved 
-`*.gff` file.
 
 Taken together, `getGFF()` in combination with `getGenome()`, `getProteome()` and `getCDS()` allows users to retrieve the genome information together with the
 corresponding `*.gff` annotation file to make sure that they both have the same version and origin.
