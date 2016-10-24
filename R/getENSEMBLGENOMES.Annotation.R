@@ -121,7 +121,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                              mode = "wb")
     }, error = function(e)
         stop(
-            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomesl.org/current/gff3' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/gff3' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
         ))
     
     return(file.path(
