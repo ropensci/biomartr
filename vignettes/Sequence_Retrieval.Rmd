@@ -1012,28 +1012,139 @@ Human_CDS
 
 Example `Genbank`:
 
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from genbank
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+HS.cds.genbank <- getCDS( db       = "genbank", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","CDS"))
+```
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Human_CDS <- read_cds(file     = HS.cds.genbank, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_CDS
+```
+
+```
+  A BStringSet instance of length 13
+     width seq                                                     names               
+ [1]   956 ATACCCATGGCCAACCTCCTACTCCT...ATCTCCAGCATTCCCCCTCAAACCTA lcl|J01415.2_cds_...
+ [2]  1042 ATTAATCCCCTGGCCCAACCCGTCAT...CTCCCCTTTTATACTAATAATCTTAT lcl|J01415.2_cds_...
+ [3]  1542 ATGTTCGCCGACCGTTGACTATTCTC...AAGAACCCGTATACATAAAATCTAGA lcl|J01415.2_cds_...
+ [4]   684 ATGGCACATGCAGCGCAAGTAGGTCT...AAATAGGGCCCGTATTTACCCTATAG lcl|J01415.2_cds_...
+ [5]   207 ATGCCCCAACTAAATACTACCGTATG...TTCATTCATTGCCCCCACAATCCTAG lcl|J01415.2_cds_...
+ ...   ... ...
+ [9]   297 ATGCCCCTCATTTACATAAATATTAT...ATAACCTAAACCTACTCCAATGCTAA lcl|J01415.2_cds_...
+[10]  1378 ATGCTAAAACTAATCGTCCCAACAAT...CGACATCATTACCGGGTTTTCCTCTT lcl|J01415.2_cds_...
+[11]  1812 ATAACCATGCACACTACTATAACCAC...TCCTAACCCTACTCCTAATCACATAA lcl|J01415.2_cds_...
+[12]   525 ATGATGTATGCTTTGTTTCTGTTGAG...TAATTGAGATTGCTCGGGGGAATAGG lcl|J01415.2_cds_...
+[13]  1141 ATGACCCCAATACGCAAAACTAACCC...TGAAAACAAAATACTCAAATGGGCCT lcl|J01415.2_cds_...
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from ensembl
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+HS.cds.ensembl <- getCDS( db       = "ensembl", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","CDS"))
+```
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Human_CDS <- read_cds(file     = HS.cds.ensembl, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_CDS
+```
+
+```
+  A BStringSet instance of length 102915
+          width seq                                                names               
+     [1]     13 ACTGGGGGATACG                                      ENST00000448914.1...
+     [2]     12 GGGACAGGGGGC                                       ENST00000631435.1...
+     [3]     12 GGGACAGGGGGC                                       ENST00000632684.1...
+     [4]      9 CCTTCCTAC                                          ENST00000434970.2...
+     [5]      8 GAAATAGT                                           ENST00000415118.1...
+     ...    ... ...
+[102911]   1665 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000436984.6...
+[102912]   1920 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000439889.6...
+[102913]   2094 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000339313.9...
+[102914]    466 ATGCTACTGCCACTGCTGCTGTCC...AGCCCTGGACCTCTCTGTGCAGT ENST00000529627.1...
+[102915]    559 ATGCGGAGATGCTACTGCCACTGC...CCTCACCTGCCATGTGGACTTCT ENST00000530476.1...
+```
+
+Example `ENSEMBLGENOMES`:
+
+Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from ensemblgenomes
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+AT.cds.ensemblgenomes <- getCDS( db       = "ensemblgenomes", 
+                                 organism = "Arabidopsis thaliana",
+                                 path     = file.path("_ncbi_downloads","CDS"))
+```
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Cress_CDS <- read_cds(file     = AT.cds.ensemblgenomes, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Cress_CDS
+```
+
+```
+  A BStringSet instance of length 35386
+        width seq                                                  names               
+    [1]  1248 ATGGGGAGAGATGAAACAGAGACGT...ACTACTCATATTATGCCTTTTTGA AT3G18710.1 cds:k...
+    [2]  2568 ATGGCAACTGAGAATCCTATTAGGA...GAAAACCAAGAATTGAGGAGATGA AT4G25880.2 cds:k...
+    [3]  2577 ATGGCAACTGAGAATCCTATTAGGA...TTCCCCAATAAAACCAAGAATTGA AT4G25880.3 cds:k...
+    [4]  2586 ATGGCAACTGAGAATCCTATTAGGA...GAAAACCAAGAATTGAGGAGATGA AT4G25880.1 cds:k...
+    [5]  1077 ATGACAAAGGCTTATTCAACACGTG...GAGGAAGCTATTTCCATGATCTAA AT1G71695.1 cds:k...
+    ...   ... ...
+[35382]  1125 ATGCATTCGCGCTCCGCCTTGCTCT...GCTTCTCCTTCTACATCCCCGTAG AT2G20860.1 cds:k...
+[35383]  1179 ATGGCAGACAATTTGAATTTGGTGA...TTGGGCCTCGCCGCCTATTATTAG AT3G14210.1 cds:k...
+[35384]  1488 ATGGCCTCTCTTCTCTCTCCCGCCA...TCAAAGCTCAGTTTCAGCAAGTGA AT5G01920.1 cds:k...
+[35385]  1689 ATGAGTTTAACAAAGAAAGCAAGTG...GAACCACAGGCCGGTCTCCTTAGA AT2G26280.1 cds:k...
+[35386]  1362 ATGGGTGTTTCTCTTCTGAAACAAC...GGTTTGGCCAATAATGTTATCTAG AT4G32600.1 cds:k...
+```
 
 ### Retrieve the annotation file of a particular genome
 
-Finally, users can download the annotation `*.gff` file for a particular genome of interest using the `getGFF()` function.
-In `getGFF()`, users again can specify the database from which annotation files shall be retrieved.
+Finally, users can download the corresponding annotation `*.gff` files for particular genomes of interest using the `getGFF()` function.
 
 Example `RefSeq`:
 
 ```{r,eval=FALSE}
 # download the annotation file of Homo sapiens from refseq
 # and store the corresponding file in '_ncbi_downloads/annotation'
-HS.refseq <- getGFF( db       = "refseq", 
-                     organism = "Homo sapiens", 
-                     path = file.path("_ncbi_downloads","annotation"))
+HS.gff.refseq <- getGFF( db       = "refseq", 
+                         organism = "Homo sapiens", 
+                         path = file.path("_ncbi_downloads","annotation"))
 ```
 
-```
-[1] "The genome of 'Homo_sapiens' has been downloaded to '_ncbi_downloads/annotation' and has been named 'Homo_sapiens_genomic_refseq.gff.gz' ."
-```
 
 ```{r,eval=FALSE}
-HS.refseq
+# import downloaded CDS as Biostrings object
+Human_GFF <- read_gff(file = HS.gff.refseq)
 ```
 
 ```
