@@ -85,6 +85,7 @@ The current status of the package as well as a detailed history of the functiona
 * `read_genome()` : Import genomes as Biostrings or data.table object
 * `read_proteome()` : Import proteome as Biostrings or data.table object
 * `read_cds()` : Import CDS as Biostrings or data.table object
+* `read_gff()` : Import GFF file
 
 #### Database Retrieval
 
