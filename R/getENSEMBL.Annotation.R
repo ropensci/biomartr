@@ -77,10 +77,18 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
             "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
         ))
     
+    # retrieve detailed information for organism of interest
+    get.org.info <- is.genome.available(organism = organism, details = TRUE, db = "ensembl")
+    
+    # retrieve the Ensembl Genomes version of the databases backing this service
+    eg_version <- jsonlite::fromJSON("http://rest.ensembl.org/info/eg_version?content-type=application/json")
+    
     # construct retrieval query
     ensembl.qry <-
         paste0(
-            "ftp://ftp.ensembl.org/pub/current_gff3/",
+            "ftp://ftp.ensembl.org/pub/current/",
+            stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
+            "/gff3/",
             stringr::str_to_lower(new.organism),
             "/",
             paste0(
@@ -88,7 +96,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
                 ".",
                 json.qry.info$default_coord_system_version,
                 ".",
-                ensembl.available.organisms$species$release[1],
+                eg_version,
                 ".gff3.gz"
             )
         )
@@ -102,7 +110,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
                                      ".",
                                      json.qry.info$default_coord_system_version,
                                      ".",
-                                     ensembl.available.organisms$species$release[1],
+                                     eg_version,
                                      "_ensembl",
                                      ".gff3.gz"
                                  )
@@ -110,7 +118,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
                              mode = "wb")
     }, error = function(e)
         stop(
-            "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/current_gff3/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/current_gff3/' or 'http://rest.ensembl.org' currently available?", call. = FALSE
+            "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/current/gff3' or 'http://rest.ensembl.org' currently available?", call. = FALSE
         ))
     
     return(file.path(
@@ -120,7 +128,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
             ".",
             json.qry.info$default_coord_system_version,
             ".",
-            ensembl.available.organisms$species$release[1],
+            eg_version,
             "_ensembl",
             ".gff3.gz"
         )
