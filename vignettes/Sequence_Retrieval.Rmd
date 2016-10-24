@@ -37,7 +37,7 @@ Using the scientific name of the organism of interest, users can check whether t
 corresponding genome is available via the `is.genome.available()` function.
 
 Please note that the first time you run this command it might take a while, because
-during the initial execution of this function all neccessary information is retrieved from NCBI
+during the initial execution of this function all necessary information is retrieved from NCBI
 and then stored locally. All further runs are then much faster.
 
 ```{r,eval=FALSE}
@@ -648,7 +648,7 @@ Human_Genome
 
 Example `ENSEMBLGENOMES`:
 
-Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
 
 ```{r,eval=FALSE}
@@ -851,7 +851,7 @@ Human_Proteome
 
 Example `ENSEMBLGENOMES`:
 
-Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
 
 ```{r,eval=FALSE}
@@ -1130,7 +1130,7 @@ Cress_CDS
 
 ### Retrieve the annotation file of a particular genome
 
-Finally, users can download the corresponding annotation `*.gff` files for particular genomes of interest using the `getGFF()` function.
+Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` function.
 
 Example `RefSeq`:
 
@@ -1142,7 +1142,7 @@ HS.gff.refseq <- getGFF( db       = "refseq",
                          path = file.path("_ncbi_downloads","annotation"))
 ```
 
-After downloading the `*.gff` file, users can import the `*.gff` file with `read_gff()`.
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
 
 ```{r,eval=FALSE}
 # import downloaded GFF file
@@ -1153,22 +1153,6 @@ Human_GFF <- read_gff(file = HS.gff.refseq)
 Human_GFF
 ```
 
-```
-# A tibble: 3,525,746 × 9
-          seqid     source       type start       end score strand phase
-          <chr>      <chr>      <chr> <int>     <int> <dbl>  <chr> <dbl>
-1  NC_000001.11     RefSeq     region     1 248956422     0      +     0
-2  NC_000001.11 BestRefSeq       gene 11874     14409     0      +     0
-3  NC_000001.11 BestRefSeq transcript 11874     14409     0      +     0
-4  NC_000001.11 BestRefSeq       exon 11874     12227     0      +     0
-5  NC_000001.11 BestRefSeq       exon 12613     12721     0      +     0
-6  NC_000001.11 BestRefSeq       exon 13221     14409     0      +     0
-7  NC_000001.11 BestRefSeq       gene 14362     29370     0      -     0
-8  NC_000001.11 BestRefSeq transcript 14362     29370     0      -     0
-9  NC_000001.11 BestRefSeq       exon 29321     29370     0      -     0
-10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0
-# ... with 3,525,736 more rows, and 1 more variables: attribute <chr>
-```
 
 Example `Genbank`:
 
@@ -1180,7 +1164,7 @@ HS.gff.genbank <- getGFF( db       = "genbank",
                          path = file.path("_ncbi_downloads","annotation"))
 ```
 
-After downloading the `*.gff` file, users can import the `*.gff` file with `read_gff()`.
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
 
 ```{r,eval=FALSE}
 # import downloaded GFF file
@@ -1191,22 +1175,6 @@ Human_GFF <- read_gff(file = HS.gff.genbank)
 Human_GFF
 ```
 
-```
-# A tibble: 957 × 9
-        seqid  source       type     start       end score strand phase
-        <chr>   <chr>      <chr>     <int>     <int> <dbl>  <chr> <dbl>
-1  CM000663.2 Genbank     region         1 248956422     0      +     0
-2  CM000663.2 Genbank centromere 122026460 125184587     0      +     0
-3  KI270706.1 Genbank     region         1    175055     0      +     0
-4  KI270707.1 Genbank     region         1     32032     0      +     0
-5  KI270708.1 Genbank     region         1    127682     0      +     0
-6  KI270709.1 Genbank     region         1     66860     0      +     0
-7  KI270710.1 Genbank     region         1     40176     0      +     0
-8  KI270711.1 Genbank     region         1     42210     0      +     0
-9  KI270712.1 Genbank     region         1    176043     0      +     0
-10 KI270713.1 Genbank     region         1     40745     0      +     0
-# ... with 947 more rows, and 1 more variables: attribute <chr>
-```
 
 Example `ENSEMBL`:
 
@@ -1218,7 +1186,7 @@ HS.gff.ensembl <- getGFF( db       = "ensembl",
                          path = file.path("_ncbi_downloads","annotation"))
 ```
 
-After downloading the `*.gff` file, users can import the `*.gff` file with `read_gff()`.
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
 
 ```{r,eval=FALSE}
 # import downloaded GFF file
@@ -1229,22 +1197,6 @@ Human_GFF <- read_gff(file = HS.gff.ensembl)
 Human_GFF
 ```
 
-```
-# A tibble: 2,601,849 × 9
-   seqid source              type start       end   score strand phase                                          attribute
-   <int>  <chr>             <chr> <int>     <int>   <chr>  <chr> <dbl>                                              <chr>
-1      1 GRCh38        chromosome     1 248956422       .      .     0 ID=chromosome:1;Alias=CM000663.2,chr1,NC_000001.11
-2      1      . biological_region 10469     11240 1.3e+03      .     0           external_name=oe 3D 0.79;logic_name=cpg
-3      1      . biological_region 10650     10657   0.999      +     0                                 logic_name=eponine
-4      1      . biological_region 10655     10657   0.999      -     0                                 logic_name=eponine
-5      1      . biological_region 10678     10687   0.999      +     0                                 logic_name=eponine
-6      1      . biological_region 10681     10688   0.999      -     0                                 logic_name=eponine
-7      1      . biological_region 10707     10716   0.999      +     0                                 logic_name=eponine
-8      1      . biological_region 10708     10718   0.999      -     0                                 logic_name=eponine
-9      1      . biological_region 10735     10747   0.999      -     0                                 logic_name=eponine
-10     1      . biological_region 10737     10744   0.999      +     0                                 logic_name=eponine
-# ... with 2,601,839 more rows
-```
 
 Example `ENSEMBLGENOMES`:
 
@@ -1259,7 +1211,7 @@ AT.gff.ensemblgenomes <- getGFF( db       = "ensemblgenomes",
                                  path = file.path("_ncbi_downloads","annotation"))
 ```
 
-After downloading the `*.gff` file, users can import the `*.gff` file with `read_gff()`.
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
 
 ```{r,eval=FALSE}
 # import downloaded GFF file
@@ -1270,26 +1222,8 @@ Cress_GFF <- read_gff(file = AT.gff.ensemblgenomes)
 Cress_GFF
 ```
 
-```
-# A tibble: 554,874 × 9
-   seqid source           type start      end score strand phase
-   <int>  <chr>          <chr> <int>    <int> <dbl>  <chr> <dbl>
-1      1   TAIR     chromosome     1 30427671     0      .     0
-2      1   tair           gene  3631     5899     0      +     0
-3      1   tair     transcript  3631     5899     0      +     0
-4      1   tair five_prime_UTR  3631     3759     0      +     0
-5      1   tair           exon  3631     3913     0      +     0
-6      1   tair            CDS  3760     3913     0      +     0
-7      1   tair           exon  3996     4276     0      +     0
-8      1   tair            CDS  3996     4276     0      +     2
-9      1   tair           exon  4486     4605     0      +     0
-10     1   tair            CDS  4486     4605     0      +     0
-# ... with 554,864 more rows, and 1 more variables: attribute <chr>
-```
-
 Taken together, `getGFF()` in combination with `getGenome()`, `getProteome()` and `getCDS()` allows users to retrieve the genome information together with the
-corresponding `*.gff` annotation file to make sure that they both have the same version and origin.
-
+corresponding `.gff` annotation file to make sure that they both have the same version and origin.
 
 
 
