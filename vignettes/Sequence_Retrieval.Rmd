@@ -59,8 +59,10 @@ is.genome.available("Homo sapiens", details = TRUE, db = "refseq")
 ```
 
 ```
-     organism_name  kingdoms   group subgroup file_size_MB chrs organelles plasmids bio_projects
-7366  Homo sapiens Eukaryota Animals  Mammals      3236.34   48          1       NA           44
+     organism_name  kingdoms   group subgroup file_size_MB chrs organelles
+7770  Homo sapiens Eukaryota Animals  Mammals      3238.44   48          1
+     plasmids bio_projects
+7770       NA           45
 ```
 
 Users will observe that the `Homo sapiens` genome file has a size of `3236.34 MB`. 
@@ -157,7 +159,8 @@ is.genome.available("Homo sapiens", db = "ensemblgenomes")
     ```
 
 ```
-Error: Unfortunately organism 'Homo sapiens' is not available at ENSEMBLGENOMES. Please check whether or not the organism name is typed correctly.
+Error: Unfortunately organism 'Homo sapiens' is not available at ENSEMBLGENOMES. 
+Please check whether or not the organism name is typed correctly.
 ```
 
 ```{r,eval=FALSE}
@@ -175,10 +178,11 @@ is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRU
 ```
 
 ```
-# A tibble: 1 x 8
-       division taxon_id                 name release         display_name       accession common_name assembly
-          <chr>    <int>                <chr>   <int>                <chr>           <chr>       <chr>    <chr>
-1 EnsemblPlants     3702 arabidopsis_thaliana      85 Arabidopsis thaliana GCA_000001735.1 thale-cress   TAIR10
+# A tibble: 1 × 8
+       division taxon_id                 name release         display_name
+          <chr>    <int>                <chr>   <int>                <chr>
+1 EnsemblPlants     3702 arabidopsis_thaliana      85 Arabidopsis thaliana
+# ... with 3 more variables: accession <chr>, common_name <chr>, assembly <chr>
 ```
 
 Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
