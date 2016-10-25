@@ -29,7 +29,7 @@ For this purpose, I implemented the `meta.retrieval()` function to allow users t
 The `getKingdoms()` function stores a list of all available kingdoms of life. Using the argument `db` users can specify from which database
 kingdom information shall be retrieved.
 
-Example `refseq`:
+Example `RefSeq`:
 
 ```{r, eval=FALSE}
 getKingdoms(db = "refseq")
@@ -41,7 +41,7 @@ getKingdoms(db = "refseq")
 [9] "viral"
 ```
 
-Example `genbank`:
+Example `Genbank`:
 
 ```{r, eval=FALSE}
 getKingdoms(db = "genbank")
@@ -53,7 +53,7 @@ getKingdoms(db = "genbank")
 [7] "vertebrate_mammalian" "vertebrate_other"
 ```
 
-In these examples the difference betwenn `refseq` and `genbank` is that `genbank` does not store `viral` information.
+In these examples the difference betwenn `db = "refseq"` and `db = "genbank"` is that `db = "genbank"` does not store `viral` information.
 
 These kingdoms can be specified in `meta.retrieval()`.
 
