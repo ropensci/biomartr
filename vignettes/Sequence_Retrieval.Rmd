@@ -109,6 +109,12 @@ is.genome.available("Homo sapiens", db = "genbank")
 is.genome.available("Homo sapiens", details = TRUE, db = "genbank")
 ```
 
+```
+     organism_name  kingdoms   group subgroup file_size_MB chrs organelles
+8249  Homo sapiens Eukaryota Animals  Mammals      3238.44   48          1
+     plasmids bio_projects
+8249       NA           44
+```
 
 ### Using `is.genome.available()` with ENSEMBL and ENSEMBLGENOMES
 
@@ -178,11 +184,9 @@ is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRU
 ```
 
 ```
-# A tibble: 1 × 8
        division taxon_id                 name release         display_name
           <chr>    <int>                <chr>   <int>                <chr>
 1 EnsemblPlants     3702 arabidopsis_thaliana      85 Arabidopsis thaliana
-# ... with 3 more variables: accession <chr>, common_name <chr>, assembly <chr>
 ```
 
 Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
@@ -1157,6 +1161,20 @@ Human_GFF <- read_gff(file = HS.gff.refseq)
 Human_GFF
 ```
 
+```
+          seqid     source       type start       end score strand phase
+          <chr>      <chr>      <chr> <int>     <int> <dbl>  <chr> <dbl>
+1  NC_000001.11     RefSeq     region     1 248956422     0      +     0
+2  NC_000001.11 BestRefSeq       gene 11874     14409     0      +     0
+3  NC_000001.11 BestRefSeq transcript 11874     14409     0      +     0
+4  NC_000001.11 BestRefSeq       exon 11874     12227     0      +     0
+5  NC_000001.11 BestRefSeq       exon 12613     12721     0      +     0
+6  NC_000001.11 BestRefSeq       exon 13221     14409     0      +     0
+7  NC_000001.11 BestRefSeq       gene 14362     29370     0      -     0
+8  NC_000001.11 BestRefSeq transcript 14362     29370     0      -     0
+9  NC_000001.11 BestRefSeq       exon 29321     29370     0      -     0
+10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0
+```
 
 Example `Genbank`:
 
@@ -1179,6 +1197,20 @@ Human_GFF <- read_gff(file = HS.gff.genbank)
 Human_GFF
 ```
 
+```
+        seqid  source       type     start       end score strand phase
+        <chr>   <chr>      <chr>     <int>     <int> <dbl>  <chr> <dbl>
+1  CM000663.2 Genbank     region         1 248956422     0      +     0
+2  CM000663.2 Genbank centromere 122026460 125184587     0      +     0
+3  KI270706.1 Genbank     region         1    175055     0      +     0
+4  KI270707.1 Genbank     region         1     32032     0      +     0
+5  KI270708.1 Genbank     region         1    127682     0      +     0
+6  KI270709.1 Genbank     region         1     66860     0      +     0
+7  KI270710.1 Genbank     region         1     40176     0      +     0
+8  KI270711.1 Genbank     region         1     42210     0      +     0
+9  KI270712.1 Genbank     region         1    176043     0      +     0
+10 KI270713.1 Genbank     region         1     40745     0      +     0
+```
 
 Example `ENSEMBL`:
 
@@ -1201,6 +1233,20 @@ Human_GFF <- read_gff(file = HS.gff.ensembl)
 Human_GFF
 ```
 
+```
+   seqid source              type start       end   score strand phase
+   <int>  <chr>             <chr> <int>     <int>   <chr>  <chr> <dbl>
+1      1 GRCh38        chromosome     1 248956422       .      .     0
+2      1      . biological_region 10469     11240 1.3e+03      .     0
+3      1      . biological_region 10650     10657   0.999      +     0
+4      1      . biological_region 10655     10657   0.999      -     0
+5      1      . biological_region 10678     10687   0.999      +     0
+6      1      . biological_region 10681     10688   0.999      -     0
+7      1      . biological_region 10707     10716   0.999      +     0
+8      1      . biological_region 10708     10718   0.999      -     0
+9      1      . biological_region 10735     10747   0.999      -     0
+10     1      . biological_region 10737     10744   0.999      +     0
+```
 
 Example `ENSEMBLGENOMES`:
 
@@ -1224,6 +1270,21 @@ Cress_GFF <- read_gff(file = AT.gff.ensemblgenomes)
 
 ```{r,eval=FALSE}
 Cress_GFF
+```
+
+```
+   seqid source           type start      end score strand phase
+   <int>  <chr>          <chr> <int>    <int> <dbl>  <chr> <dbl>
+1      1   TAIR     chromosome     1 30427671     0      .     0
+2      1   tair           gene  3631     5899     0      +     0
+3      1   tair     transcript  3631     5899     0      +     0
+4      1   tair five_prime_UTR  3631     3759     0      +     0
+5      1   tair           exon  3631     3913     0      +     0
+6      1   tair            CDS  3760     3913     0      +     0
+7      1   tair           exon  3996     4276     0      +     0
+8      1   tair            CDS  3996     4276     0      +     2
+9      1   tair           exon  4486     4605     0      +     0
+10     1   tair            CDS  4486     4605     0      +     0
 ```
 
 Taken together, `getGFF()` in combination with `getGenome()`, `getProteome()` and `getCDS()` allows users to retrieve the genome information together with the
