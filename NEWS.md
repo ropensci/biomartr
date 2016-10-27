@@ -41,6 +41,8 @@ into one big data.frame
 
 - new internal helper function `get.ensemblgenome.info()` to retrieve general organism information from ENSEMLGENOMES 
 
+- new internal helper function `getGENOMEREPORT()` to retrieve the genome reports file from ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
+
 ### Function changes
 
 - functions `getGenome()`, `getProteome()`, and `getCDS()` now can also in addition to NCBI retrieve genomes, proteomes or CDS from  [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/)
@@ -77,6 +79,13 @@ return the path to the downloaded genome so that this path can be used as input 
 - all `read_*` functions now received a new argument `obj.type` allowing users to choose between storing input genomes as Biostrings object or data.table object
 
 - all `read_*` functions now have `format = "fasta"` as default
+
+- the `kingdom` argument in the `listGenomes()` function was renamed to `type`, now allowing users to specify not only specify kingdoms,
+but also groups and subgroups. Use: `listGenomes(type = "kingdom")` or `listGenomes(type = "group")` or `listGenomes(type = "subgroup")`
+
+- the `listGenomes()` function receives a new argument `subset` to specify a subset of the selected `type` argument. E.g. `subset = "Eukaryota"` when specifying
+`type = "kingdom"`
+
 
 ### Vignette updates
 
