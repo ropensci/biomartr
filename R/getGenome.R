@@ -54,7 +54,7 @@ getGenome <-
              path = file.path("_ncbi_downloads", "genomes")) {
         
         if (!is.element(db, c("refseq", "genbank","ensembl", "ensemblgenomes")))
-            stop("Please select one of the available data bases: 'refseq', 'genbank', or 'ensembl'.", call. = FALSE)
+            stop("Please select one of the available data bases: 'refseq', 'genbank', 'ensembl', or 'ensemblgenomes'.", call. = FALSE)
         
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
