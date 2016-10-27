@@ -39,7 +39,9 @@ into one big data.frame
 
 - new internal helper function `getENSEMBLGENOMES.Annotation()` acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval
 
-- new internal helper function `get.ensemblgenome.info()` to retrieve general organism information from ENSEMLGENOMES 
+- new internal helper function `get.ensemblgenome.info()` to retrieve general organism information from ENSEMBLGENOMES 
+
+- new internal helper function `get.ensembl.info()` to retrieve general organism information from ENSEMBL 
 
 - new internal helper function `getGENOMEREPORT()` to retrieve the genome reports file from ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
 
