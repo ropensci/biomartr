@@ -7,7 +7,7 @@
 getKingdoms(db = "refseq")
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.
 Default is \code{db = "refseq"}.}
 }
 \description{
