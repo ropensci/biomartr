@@ -194,69 +194,7 @@ Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes
 
 ### Using `listGenomes()` to retrieve names of available genomes stored within NCBI databases
 
-The simplest way to work with `listGenomes()` is to print available genomes to the console.
 
-```{r,eval=FALSE}
-# the simplest way to retrieve names of available genomes stored within NCBI databases
-head(listGenomes() , 5)
-```
-
-```
-[1] "'Chrysanthemum coronarium' phytoplasma"         
-[2] "'Deinococcus soli' Cha et al. 2014"             
-[3] "'Echinacea purpurea' witches'-broom phytoplasma"
-[4] "Abaca bunchy top virus"                         
-[5] "Abalone herpesvirus Victoria/AUS/2009"
-```
-
-In case users are interested in a detailed output of the corresponding organism file
-stored on NCBI, again they can specify the `details = TRUE` argument.
-
-```{r,eval=FALSE}
-# show all details
-head(listGenomes(details = TRUE) , 5)
-```
-
-```
-                                    organism_name kingdoms                       group
-1          'Chrysanthemum coronarium' phytoplasma Bacteria         Terrabacteria group
-2              'Deinococcus soli' Cha et al. 2014 Bacteria         Terrabacteria group
-3 'Echinacea purpurea' witches'-broom phytoplasma Bacteria         Terrabacteria group
-4                          Abaca bunchy top virus  Viruses               ssDNA viruses
-5           Abalone herpesvirus Victoria/AUS/2009  Viruses dsDNA viruses, no RNA stage
-             subgroup file_size_MB chrs organelles plasmids bio_projects
-1         Tenericutes     0.739592   NA         NA       NA            1
-2 Deinococcus-Thermus     3.236980    1         NA       NA            1
-3         Tenericutes     0.545427   NA         NA       NA            1
-4         Nanoviridae     0.006422    6         NA       NA            1
-5        unclassified     0.211518    1         NA       NA            1
-```
-
-Users will observe that the detailed information output includes the `organism_name`, `kingdom`, `group`, `subgroup`, `file_size_MB`,
-`chrs`, `organelles`, `plasmids`, and `bio_projects`.
-
-In case users are interested in organisms classified into a specific kingdom of life, they can use the `kingdom`
-argument to filter for organisms that are classified into the corresponding kingdom.
-
-```{r,eval=FALSE}
-# show all details only for Bacteria
-head(listGenomes(kingdom = "Bacteria", details = TRUE) , 5)
-```
-
-```
-                                    organism_name kingdoms               group
-1          'Chrysanthemum coronarium' phytoplasma Bacteria Terrabacteria group
-2              'Deinococcus soli' Cha et al. 2014 Bacteria Terrabacteria group
-3 'Echinacea purpurea' witches'-broom phytoplasma Bacteria Terrabacteria group
-4                           Abiotrophia defectiva Bacteria Terrabacteria group
-5                          Acaricomes phytoseiuli Bacteria Terrabacteria group
-             subgroup file_size_MB chrs organelles plasmids bio_projects
-1         Tenericutes     0.739592   NA         NA       NA            1
-2 Deinococcus-Thermus     3.236980    1         NA       NA            1
-3         Tenericutes     0.545427   NA         NA       NA            1
-4          Firmicutes     2.043440   NA         NA       NA            1
-5      Actinobacteria     2.419520   NA         NA       NA            1
-```
 
 The following filters can be specified for the `kingdom` argument: `all`, `Archaea`, `Bacteria`, `Eukaryota`, `Viroids`, and `Viruses`.
 
