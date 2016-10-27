@@ -4,25 +4,19 @@
 \alias{listGenomes}
 \title{List All Available Genomes}
 \usage{
-listGenomes(kingdom = "all", details = FALSE, update = FALSE,
-  db = "all")
+listGenomes(db = "refseq", type = "all", subset = NULL, details = FALSE)
 }
 \arguments{
-\item{kingdom}{a character string specifying a potential filter of available genomes: "all","Archaea", "Bacteria", "Eukaryota", "Viroids", "Viruses".}
+\item{db}{a character string specifying the database for which genome availability shall be checked, 
+e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.}
+
+\item{type}{a character string specifying a potential filter of available genomes. Options are \code{type = "all"}, \code{type = "kingdom"}, \code{type = "group"}, \code{type = "subgroup"}.}
+
+\item{subset}{a character string or character vector specifying a subset of \code{type}. E.g. if users are interested in retrieving all
+\code{Eukaryota} species, they can specify: \code{type = "kingdom"} and \code{subset = "Eukaryota"}.}
 
 \item{details}{a boolean value specifying whether only the scientific names of stored genomes shall be returned
-(details = FALSE) or all information such as "organism_name","kingdoms", "group","subgroup","file_size_MB",
-"chrs","organelles","plasmids", and "bio_projects".}
-
-\item{update}{a logical value specifying whether or not the available organism table shall be updated from the NCBI server.
-Default is \code{update} = \code{FALSE}.}
-
-\item{db}{a character string specifying the database for which genome availability shall be checked, 
-e.g. \code{db} =  \code{"refseq"} or \code{db} =  \code{"all"}.}
-}
-\value{
-A data.frame storing either the organism names (details = FALSE)
-or all information present on the NCBI database (details = TRUE).
+(details = FALSE) or all information such as \code{organism_name},\code{kingdoms}, \code{group}, \code{subgroup}, \code{file_size_MB}, etc.}
 }
 \description{
 This function retrieves the names of all genomes available on the NCBI ftp:// server and stores
@@ -36,47 +30,13 @@ folder to store the overview.txt file for future processing. In case the overvie
 '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed again.
 }
 \note{
-Please note that the ftp:// connection relies on the NCBI server and cannot be
+Please note that the ftp:// connection relies on the NCBI or ENSEMBL server and cannot be
 accurately accessed via a proxy.
 }
 \examples{
 \dontrun{
 
-# the simplest way to retrieve all names of genomes stored within NCBI databases
-head(listGenomes() , 5)
 
-# show all details
-head(listGenomes(details = TRUE) , 5)
-
-# show all details only for Bacteria
-head(listGenomes(kingdom = "Bacteria", details = TRUE) , 5)
-
-# in case you are interested in the number of genomes available for each kingdom, run:
-
-ncbi_genomes <- listGenomes(details = TRUE)
-table(ncbi_genomes[ , "kingdoms"])
-
-# analogous, if you are interested in the number of genomes available for each group, run:
-ncbi_genomes <- listGenomes(details = TRUE)
-table(ncbi_genomes[ , "group"])
-
-# for subgroup
-table(ncbi_genomes[ , "subgroup"])
-
-# you can also limit your search to the refseq database
-head(listGenomes(db = "refseq") , 20)
-
-head(listGenomes(details=TRUE, db = "refseq") , 5)
-
-head(listGenomes(kingdom = "Eukaryota", details = TRUE,db = "refseq") , 5)
-
-# order by file size
-library(dplyr)
-head(arrange(ncbi_genomes, desc(file_size_MB)) , 5)
-
-
-# you can also update the organism table using the 'update' argument
-head(listGenomes(details = TRUE,update = TRUE) , 5)
 
 }
 
