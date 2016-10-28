@@ -46,6 +46,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
                 "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
             ))
         
+        aliases <- groups <- NULL
         # transform list object returned by 'fromJSON' to tibble
         ensembl.available.organisms <-
             tibble::as_tibble(dplyr::select(ensembl.available.organisms$species, -aliases, -groups))
