@@ -35,7 +35,8 @@ accurately accessed via a proxy.
 }
 \examples{
 \dontrun{
-
+# print details for refseq
+listGenomes(db = "refseq") 
 
 
 }
