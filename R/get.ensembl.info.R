@@ -18,6 +18,7 @@ get.ensembl.info <- function(update = FALSE) {
                     )
                 )
         )
+    
     } else {
         tryCatch({
             ensembl.info <-
@@ -32,8 +33,9 @@ get.ensembl.info <- function(update = FALSE) {
             ))
         
         aliases <- groups <- NULL
-        readr::write_tsv(
-            dplyr::select(ensembl.info, -aliases, -groups),
+        ensembl.info <- dplyr::select(ensembl.info, -aliases, -groups)
+        
+        readr::write_tsv(ensembl.info,
             file.path(tempdir(), "ensembl_info.tsv")
         )
     }
