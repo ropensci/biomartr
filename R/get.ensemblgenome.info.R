@@ -18,6 +18,7 @@ get.ensemblgenome.info <- function(update = FALSE) {
                     )
                 )
         )
+    
     } else {
         tryCatch({
             ensemblgenome.info <-
@@ -32,8 +33,9 @@ get.ensemblgenome.info <- function(update = FALSE) {
             ))
         
         aliases <- groups <- NULL
-        readr::write_tsv(
-            dplyr::select(ensemblgenome.info, -aliases, -groups),
+        ensemblgenome.info <- dplyr::select(ensemblgenome.info, -aliases, -groups)
+        
+        readr::write_tsv(ensemblgenome.info,
             file.path(tempdir(), "ensemblgenome_info.tsv")
         )
     }
