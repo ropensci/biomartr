@@ -128,17 +128,17 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
                  "' could be found.",
                  call. = FALSE)
         
-        available_genome <- listGenomes("all", TRUE, db = "all")
+        available_genome <- listGenomes(db = db, type = "all", details = TRUE)
         
-        is_available <- any(stringr::str_detect(available_genome[, "organism_name"], organism))
+        is_available <- any(stringr::str_detect(available_genome$organism_name, organism))
         
         
         if (is_available) {
             organism_index <-
-                which(stringr::str_detect(available_genome[, "organism_name"], organism))
+                which(stringr::str_detect(available_genome$organism_name, organism))
             
             if (details) {
-                return(available_genome[organism_index,])
+                return(available_genome[organism_index, ])
                 
             } else {
                 return(TRUE)
