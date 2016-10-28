@@ -40,6 +40,8 @@ Please note that the first time you run this command it might take a while, beca
 during the initial execution of this function all necessary information is retrieved from NCBI
 and then stored locally. All further runs are then much faster.
 
+Example `refseq`: 
+
 ```{r,eval=FALSE}
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
@@ -50,70 +52,16 @@ is.genome.available("Homo sapiens", db = "refseq")
 [1] TRUE
 ```
 
-By specifying the `details = TRUE` argument, the genome file size as well as 
-additional information can be printed to the console.
+Example `genbank`: 
 
 ```{r,eval=FALSE}
-# printing details to the console
-is.genome.available("Homo sapiens", details = TRUE, db = "refseq")
-```
-
-```
-     organism_name  kingdoms   group subgroup file_size_MB chrs organelles
-7770  Homo sapiens Eukaryota Animals  Mammals      3238.44   48          1
-     plasmids bio_projects
-7770       NA           45
-```
-
-Users will observe that the `Homo sapiens` genome file has a size of `3236.34 MB`. 
-The argument `db` specifies from which database (`refseq` or `genbank`) organism
-information shall be retrieved.
-
-Users can determine the total number of available genomes using the `listGenomes()` function.
-
-```{r,eval=FALSE}
-length(listGenomes())
-```
-
-```
-[1] 17461
-```
-
-Hence, currently 17461 genomes (including all kingdoms of life) are stored on [NCBI](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) servers.
-
-
-Optionally, users can also specify the database for which the availability of organisms shall be checked.
-
-```{r,eval=FALSE}
-# cheking whether Homo sapiens is available in the refseq database
-is.genome.available("Homo sapiens", db = "refseq")
-```
-
-```
-[1] TRUE
-```
-
-Or for `genbank`:
-
-```{r,eval=FALSE}
-# cheking whether Homo sapiens is available in the genbank database
+# checking whether or not the Homo sapiens 
+# genome is avaialable for download
 is.genome.available("Homo sapiens", db = "genbank")
 ```
 
 ```
 [1] TRUE
-```
-
-```{r,eval=FALSE}
-# printing details to the console
-is.genome.available("Homo sapiens", details = TRUE, db = "genbank")
-```
-
-```
-     organism_name  kingdoms   group subgroup file_size_MB chrs organelles
-8249  Homo sapiens Eukaryota Animals  Mammals      3238.44   48          1
-     plasmids bio_projects
-8249       NA           44
 ```
 
 ### Using `is.genome.available()` with ENSEMBL and ENSEMBLGENOMES
@@ -192,23 +140,136 @@ is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRU
 Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
 
 
+By specifying the `details = TRUE` argument, the genome file size as well as 
+additional information can be printed to the console.
+
+```{r,eval=FALSE}
+# printing details to the console
+is.genome.available("Homo sapiens", details = TRUE, db = "refseq")
+```
+
+```
+  assembly_accession  bioproject    biosample     wgs_master
+               <chr>       <chr>        <chr>          <chr>
+1   GCF_000001405.35    PRJNA168         <NA>           <NA>
+2    GCF_000306695.2 PRJNA178030 SAMN02205338 AMYH00000000.2
+ with 25 more variables: refseq_category <chr>, taxid <int>,
+   species_taxid <int>, organism_name <chr>, infraspecific_name <chr>,
+   isolate <chr>, version_status <chr>, assembly_level <chr>,
+   release_type <chr>, genome_rep <chr>, seq_rel_date <date>,
+   asm_name <chr>, submitter <chr>, gbrs_paired_asm <chr>,
+   paired_asm_comp <chr>, ftp_path <chr>, excluded_from_refseq <chr>,
+   kingdoms <chr>, group <chr>, subgroup <chr>, file_size_MB <dbl>,
+   chrs <int>, organelles <int>, plasmids <int>, bio_projects <int>
+```
+
+The argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `ensemblgenomes`) organism
+information shall be retrieved.
+
+Users can determine the total number of available genomes using the `listGenomes()` function.
+
+Example `refseq`: 
+
+```{r,eval=FALSE}
+length(listGenomes(db = "refseq"))
+```
+
+```
+[1] 7879
+```
+
+Example `genbank`: 
+
+```{r,eval=FALSE}
+length(listGenomes(db = "genbank"))
+```
+
+```
+[1] 6723
+```
+
+Example `ensembl`: 
+
+```{r,eval=FALSE}
+length(listGenomes(db = "ensembl"))
+```
+
+```
+[1] 85
+```
+
+Example `ensemblgenomes`: 
+
+```{r,eval=FALSE}
+length(listGenomes(db = "ensemblgenomes"))
+```
+
+```
+[1] 42529
+```
+
+Hence, currently 7879 genomes (including all kingdoms of life) are stored on NCBI RefSeq.
+
+
 ### Using `listGenomes()` to retrieve names of available genomes stored within NCBI databases
 
+The `listGenomes()` function provides additional arguments `type` and `subset` to select kingdoms, groups, or subgroups of available species.
 
 
-The following filters can be specified for the `kingdom` argument: `all`, `Archaea`, `Bacteria`, `Eukaryota`, `Viroids`, and `Viruses`.
 
-Furthermore, users can simply count the kingdom specific availability of genomes as following:
+
+
+
+Using this example users can retrieve the number of available species for each kingdom of life:
+
+Example `refseq`:
 
 ```{r,eval=FALSE}
 # the number of genomes available for each kingdom
-ncbi_genomes <- listGenomes(details = TRUE)
-table(ncbi_genomes[ , "kingdoms"])
+listKingdoms(db = "refseq")
 ```
 
 ```
- Archaea  Bacteria Eukaryota   Viroids   Viruses 
-      586      8932      2029        46      5868
+  Archaea  Bacteria Eukaryota   Viroids   Viruses 
+       78      1627       425        46      5703
+```
+
+Example `genbank`:
+
+```{r,eval=FALSE}
+# the number of genomes available for each kingdom
+listKingdoms(db = "genbank")
+```
+
+```
+  Archaea  Bacteria Eukaryota 
+      347      4876      1501
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# the number of genomes available for each kingdom
+listKingdoms(db = "ensembl")
+```
+
+```
+Ensembl 
+     85
+```
+
+Example `ENSEMBLGENOMES`:
+
+```{r,eval=FALSE}
+# the number of genomes available for each kingdom
+listKingdoms(db = "ensemblgenomes")
+```
+
+```
+EnsemblBacteria    EnsemblFungi  EnsemblMetazoa   EnsemblPlants 
+          41610             634              65              44 
+EnsemblProtists 
+            176
 ```
 
 Analogous computations can be performed for `group`, `subgroup`, etc.
