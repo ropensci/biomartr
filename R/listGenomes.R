@@ -20,7 +20,8 @@
 #' accurately accessed via a proxy. 
 #' 
 #' @examples \dontrun{
-#' 
+#' # print details for refseq
+#' listGenomes(db = "refseq") 
 #'
 #' 
 #' }
@@ -201,22 +202,20 @@ listGenomes <- function(db = "refseq", type = "all", subset = NULL, details = FA
     }
     
     if (db == "ensembl") {
-        if (!is.element(type, c("all","kingdom")))
-            stop("Unfortunately, ENSEMBL only provides kingdom information and no group or subgroup information.")
-    
+        if (!is.element(type, c("all", "kingdom")))
+            stop(
+                "Unfortunately, ENSEMBL only provides kingdom information and no group or subgroup information."
+            )
+        
         ensemblinfo <- get.ensembl.info()
-        ensemblgenomesinfo <-  get.ensemblgenome.info()
-        
-        joined.df <-
-            dplyr::inner_join(ensemblinfo, ensemblgenomesinfo, by = "name")
-        
+
         if (details) {
             if (type == "all")
-                return(joined.df)
+                return(ensemblinfo)
             if (type == "kingdom") {
                 if (!is.null(subset)) {
                     if (!all(is.element(subset, names(
-                        table(joined.df$division.y)
+                        table(ensemblinfo$division)
                     ))))
                         stop(
                             "Unfortunately, not all memebrs of your specified subset '",
@@ -224,27 +223,93 @@ listGenomes <- function(db = "refseq", type = "all", subset = NULL, details = FA
                             " could be found. Search terms are case sensitive, so you could try to type 'EnsemblMetazoa' instead of 'ensemblmetazoa'.",
                             call. = FALSE
                         )
-                    return(dplyr::filter(joined.df, is.element(division.y, subset)))
+                    return(dplyr::filter(ensemblinfo, is.element(division, subset)))
                     
                 } else {
-                    return(joined.df)
+                    return(ensemblinfo)
                 }
             }
         }
-
+        
         if (!details) {
-            
+            if (type == "all")
+                return(unique(ensemblinfo$name))
+            if (type == "kingdom") {
+                if (!is.null(subset)) {
+                    if (!all(is.element(subset, names(
+                        table(ensemblinfo$division)
+                    ))))
+                        stop(
+                            "Unfortunately, not all memebrs of your specified subset '",
+                            paste0(subset, ", '"),
+                            " could be found. Search terms are case sensitive, so you could try to type 'EnsemblMetazoa' instead of 'ensemblmetazoa'.",
+                            call. = FALSE
+                        )
+                    return(unique(dplyr::filter(
+                        ensemblinfo, is.element(division, subset)
+                    )$name))
+                    
+                } else {
+                    return(unique(ensemblinfo$name))
+                }
+            }
         }
-            return(unique(joined.df$name))
     }
     
     if (db == "ensemblgenomes") {
         
-        ensemblinfo <- get.ensembl.info()
+        if (!is.element(type, c("all", "kingdom")))
+            stop(
+                "Unfortunately, ENSEMBLGENOMES only provides kingdom information and no group or subgroup information."
+            )
         
+        ensemblgenomesinfo <-  get.ensemblgenome.info()
+       
+        if (details) {
+            if (type == "all")
+                return(ensemblgenomesinfo)
+            if (type == "kingdom") {
+                if (!is.null(subset)) {
+                    if (!all(is.element(subset, names(
+                        table(ensemblgenomesinfo$division)
+                    ))))
+                        stop(
+                            "Unfortunately, not all memebrs of your specified subset '",
+                            paste0(subset, ", '"),
+                            " could be found. Search terms are case sensitive, so you could try to type 'EnsemblMetazoa' instead of 'ensemblmetazoa'.",
+                            call. = FALSE
+                        )
+                    return(dplyr::filter(ensemblgenomesinfo, is.element(division, subset)))
+                    
+                } else {
+                    return(ensemblgenomesinfo)
+                }
+            }
+        }
         
-        
-        
+        if (!details) {
+            if (type == "all")
+                return(unique(ensemblgenomesinfo$name))
+            if (type == "kingdom") {
+                if (!is.null(subset)) {
+                    if (!all(is.element(subset, names(
+                        table(ensemblgenomesinfo$division)
+                    ))))
+                        stop(
+                            "Unfortunately, not all memebrs of your specified subset '",
+                            paste0(subset, ", '"),
+                            " could be found. Search terms are case sensitive, so you could try to type 'EnsemblMetazoa' instead of 'ensemblmetazoa'.",
+                            call. = FALSE
+                        )
+                    return(unique(dplyr::filter(
+                        ensemblgenomesinfo, is.element(division, subset)
+                    )$name))
+                    
+                } else {
+                    return(unique(ensemblgenomesinfo$name))
+                }
+            }
+        }        
     }
 }
         
