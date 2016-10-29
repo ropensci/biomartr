@@ -14,9 +14,12 @@ e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{d
 Users can retrieve the available number of sequenced genomes per kingdom.
 }
 \examples{
-\dontrun {
 
+\dontrun{
+# list number of available genomes in refseq for each kingdom of life
+listKingdoms(db = "refseq")
 }
+
 }
 \author{
 Hajk-Georg Drost

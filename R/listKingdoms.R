@@ -4,9 +4,12 @@
 #' e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}. 
 #' @author Hajk-Georg Drost
 #' @examples 
-#' \dontrun {
 #' 
+#' \dontrun{
+#' # list number of available genomes in refseq for each kingdom of life
+#' listKingdoms(db = "refseq")
 #' }
+#' 
 #' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}
 #' @export
 
