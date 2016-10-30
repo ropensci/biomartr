@@ -34,10 +34,10 @@ Please note that the ftp:// connection relies on the NCBI or ENSEMBL server and 
 accurately accessed via a proxy.
 }
 \examples{
+
 \dontrun{
 # print details for refseq
 listGenomes(db = "refseq") 
-
 
 }
 
