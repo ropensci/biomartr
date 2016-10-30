@@ -26,6 +26,8 @@ getMetaGenomeAnnotations <- function(name, path = file.path("_ncbi_downloads","m
         dir.create(path, recursive = TRUE)
     }
     
+    organism_name <- NULL
+    
     # retrieve metagenomes assembly_summary.txt file
     mgs <- getMetaGenomeSummary()
     
