@@ -5,13 +5,15 @@
 #' e.g. \code{db = "refseq"} and \code{db = "genbank"}. 
 #' @author Hajk-Georg Drost
 #' @examples 
-#' \dontrun {
+#' 
+#' \dontrun{
 #' # example for refseq
 #' listSubgroups(db = "refseq")
 #' 
 #' # example for genbank
 #' listSubgroups(db = "genbank")
 #' }
+#' 
 #' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}, \code{\link{listGroups}}
 #' @export
 
