@@ -210,15 +210,7 @@ length(listGenomes(db = "ensemblgenomes"))
 
 Hence, currently 7879 genomes (including all kingdoms of life) are stored on NCBI RefSeq.
 
-
-### Using `listGenomes()` to retrieve names of available genomes stored within NCBI databases
-
-The `listGenomes()` function provides additional arguments `type` and `subset` to select kingdoms, groups, or subgroups of available species.
-
-
-
-
-
+### Retrieving kingdom, group and subgroup information
 
 Using this example users can retrieve the number of available species for each kingdom of life:
 
@@ -272,59 +264,61 @@ EnsemblProtists
             176
 ```
 
-Analogous computations can be performed for `group`, `subgroup`, etc.
+### Analogous computations can be performed for `groups` and `subgroups`
+
+Unfortunately, `ENSEMBL` and `ENSEMBLGENOMES` do not provide group or subgroup information.
+Therefore, group and subgroup listings are limited to `refseq` and `genbank`.
+
+
+Example `refseq`:
 
 ```{r,eval=FALSE}
 # the number of genomes available for each group
-ncbi_genomes <- listGenomes(details = TRUE)
-table(ncbi_genomes[ , "group"])
+listGroups(db = "refseq")
 ```
 
 ```
-                  Acidobacteria                         Animals 
-                             30                             617 
-                      Aquificae                   Avsunviroidae 
-                             17                               4 
-                    Caldiserica                  Chrysiogenetes 
-                              2                               2 
-                Deferribacteres                      Deltavirus 
-                              6                               1 
-                    Dictyoglomi                     DPANN group 
-                              2                              30 
-    dsDNA viruses, no RNA stage                   dsRNA viruses 
-                           2405                             244 
-                  Elusimicrobia           environmental samples 
-                              3                               7 
-                  Euryarchaeota                       FCB group 
-                            322                             690 
-                          Fungi                    Fusobacteria 
-                            662                              31 
-Nitrospinae/Tectomicrobia group                     Nitrospirae 
-                              3                              19 
-                          Other                          Plants 
-                             18                             179 
-                  Pospiviroidae                  Proteobacteria 
-                             36                            2718 
-                       Protists                       PVC group 
-                            190                             113 
-     Retro-transcribing viruses                      Satellites 
-                            134                             223 
-                   Spirochaetes                   ssDNA viruses 
-                             84                             848 
-                  ssRNA viruses                   Synergistetes 
-                           1389                              23 
-                     TACK group             Terrabacteria group 
-                            130                            3097 
-          Thermodesulfobacteria                     Thermotogae 
-                              9                              28 
-             unassigned viruses            unclassified Archaea 
-                             11                              29 
-  unclassified archaeal viruses           unclassified Bacteria 
-                              3                            1039 
-            unclassified phages            unclassified viroids 
-                             29                               8 
-        unclassified virophages            unclassified viruses 
-                              6                              71 
+                Acidobacteria                       Animals 
+                           11                           293 
+                Avsunviroidae                    Deltavirus 
+                            4                             1 
+  dsDNA viruses, no RNA stage                 dsRNA viruses 
+                         2572                           261 
+                Elusimicrobia                 Euryarchaeota 
+                            1                            64 
+                    FCB group                         Fungi 
+                          155                            34 
+                 Fusobacteria                   Nitrospirae 
+                            6                             3 
+                        Other                        Plants 
+                           10                            62 
+                Pospiviroidae                Proteobacteria 
+                           34                           774 
+                     Protists                     PVC group 
+                           34                            20 
+   Retro-transcribing viruses                    Satellites 
+                          135                           213 
+                 Spirochaetes                 ssDNA viruses 
+                           12                           864 
+                ssRNA viruses                 Synergistetes 
+                         1432                             1 
+                   TACK group           Terrabacteria group 
+                           13                           630 
+        Thermodesulfobacteria                   Thermotogae 
+                            3                             2 
+           unassigned viruses          unclassified Archaea 
+                            9                             1 
+unclassified archaeal viruses         unclassified Bacteria 
+                            3                             9 
+          unclassified phages          unclassified viroids 
+                           23                             8 
+      unclassified virophages          unclassified viruses 
+                            6                           176  
+```
+
+```{r,eval=FALSE}
+# the number of genomes available for each subgroup
+listSubgroups(db = "refseq")
 ```
 
 Users can also order organisms by their file size.
