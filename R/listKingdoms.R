@@ -20,6 +20,9 @@
 #' }
 #' 
 #' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listGroups}}, \code{\link{listSubgroups}}
+#' }
+#' 
+#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}
 #' @export
 
 listKingdoms <- function(db = "refseq") {
