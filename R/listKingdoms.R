@@ -4,13 +4,27 @@
 #' e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}. 
 #' @author Hajk-Georg Drost
 #' @examples 
-#' \dontrun {
 #' 
+#' \dontrun{
+#' # list number of available genomes in refseq for each kingdom of life
+#' listKingdoms(db = "refseq")
+#' 
+#' # example for genbank
+#' listKingdoms(db = "genbank")
+#' 
+#' # example for ensembl
+#' listKingdoms(db = "ensembl")
+#' 
+#' # example for ensemblgenomes
+#' listKingdoms(db = "ensemblgenomes")
 #' }
-#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}
+#' 
+#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listGroups}}, \code{\link{listSubgroups}}
 #' @export
 
 listKingdoms <- function(db = "refseq") {
+    
+    organism_name <- kingdoms <- name <- division <- NULL
     
     listgenomes.data <-
         listGenomes(db = db, type = "kingdom", details = TRUE)
