@@ -19,11 +19,12 @@
 #' Please note that the ftp:// connection relies on the NCBI or ENSEMBL server and cannot be
 #' accurately accessed via a proxy. 
 #' 
-#' @examples \dontrun{
+#' @examples 
+#' 
+#' \dontrun{
 #' # print details for refseq
 #' listGenomes(db = "refseq") 
 #'
-#' 
 #' }
 #' 
 #' @references \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
