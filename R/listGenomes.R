@@ -43,6 +43,8 @@ listGenomes <- function(db = "refseq", type = "all", subset = NULL, details = FA
             call. = FALSE
         )
     
+    subgroup <- division <- NULL
+    
     if (is.element(db, c("refseq", "genbank"))) {
         # retrieve genome report overview file
         ncbi_overview <- getGENOMEREPORT()
