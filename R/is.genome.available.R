@@ -40,6 +40,8 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
              call. = FALSE)
     
     if (is.element(db, c("refseq", "genbank"))) {
+        
+        aliases <- groups <- NULL
         # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
         # stored in temp()
         if (file.exists(file.path(tempdir(), paste0("AssemblyFilesAllKingdoms_", db, ".txt")))) {
