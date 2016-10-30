@@ -15,13 +15,15 @@ Users can retrieve the available number of sequenced genomes per group.
 Only available for \code{db = "refseq"} and \code{db = "genbank"}.
 }
 \examples{
-\dontrun {
+ 
+\dontrun{
 # example for refseq
 listGroups(db = "refseq")
 
 # example for genbank
 listGroups(db = "genbank")
 }
+
 }
 \author{
 Hajk-Georg Drost

@@ -4,14 +4,16 @@
 #' @param db a character string specifying the database for which genome availability shall be checked, 
 #' e.g. \code{db = "refseq"} and \code{db = "genbank"}. 
 #' @author Hajk-Georg Drost
-#' @examples 
-#' \dontrun {
+#' @examples
+#'  
+#' \dontrun{
 #' # example for refseq
 #' listGroups(db = "refseq")
 #' 
 #' # example for genbank
 #' listGroups(db = "genbank")
 #' }
+#' 
 #' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}, \code{\link{listSubgroups}}
 #' @export
 
