@@ -318,7 +318,86 @@ unclassified archaeal viruses         unclassified Bacteria
 
 ```{r,eval=FALSE}
 # the number of genomes available for each subgroup
-listSubgroups(db = "refseq")
+head(listSubgroups(db = "refseq"), 15)
+```
+
+```
+         Acidithiobacillia             Acidobacteriia 
+                         2                          8 
+            Actinobacteria               Adenoviridae 
+                       194                         55 
+         Alloherpesviridae          Alphaflexiviridae 
+                         7                         48 
+       Alphaproteobacteria          Alphatetraviridae 
+                       256                          3 
+            Alvernaviridae              Amalgaviridae 
+                         1                          4 
+                Amphibians             Ampullaviridae 
+                         3                          3 
+             Anelloviridae              Apicomplexans 
+                        53                         16 
+Apple fruit crinkle viroid 
+                         1 
+```
+
+Example `genbank`:
+
+```{r,eval=FALSE}
+# the number of genomes available for each group
+listGroups(db = "genbank")
+```
+
+```
+                   Acidobacteria                         Animals 
+                             47                             655 
+                    Caldiserica                 Deferribacteres 
+                              1                               1 
+                    DPANN group                   Elusimicrobia 
+                             27                              57 
+          environmental samples                   Euryarchaeota 
+                              6                             197 
+                      FCB group                           Fungi 
+                            545                             508 
+                   Fusobacteria Nitrospinae/Tectomicrobia group 
+                              7                              11 
+                    Nitrospirae                           Other 
+                             46                               7 
+                         Plants                  Proteobacteria 
+                            193                            1490 
+                       Protists                       PVC group 
+                            142                             180 
+                   Spirochaetes                   Synergistetes 
+                             26                              12 
+                     TACK group             Terrabacteria group 
+                             73                            1072 
+          Thermodesulfobacteria                     Thermotogae 
+                              3                               9 
+           unclassified Archaea           unclassified Bacteria 
+                             48                            1407
+```
+
+```{r,eval=FALSE}
+# the number of genomes available for each subgroup
+head(listSubgroups(db = "genbank"), 15)
+```
+
+```
+           Acidithiobacillia               Acidobacteriia 
+                           5                            9 
+              Actinobacteria          Alphaproteobacteria 
+                         313                          411 
+                  Amphibians                Apicomplexans 
+                           4                           32 
+     Archaea candidate phyla                 Archaeoglobi 
+                          25                            3 
+             Armatimonadetes                  Ascomycetes 
+                          10                          361 
+    Bacteria candidate phyla Bacteroidetes/Chlorobi group 
+                        1372                          405 
+              Basidiomycetes           Betaproteobacteria 
+                         122                          268 
+                       Birds 
+                          59 
 ```
 
 Users can also order organisms by their file size.
