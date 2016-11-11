@@ -153,7 +153,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
     
     if (db == "ensembl") {
         
-        new.organism <- stringr::str_replace(organism," ","_")
+        new.organism <- stringr::str_replace_all(organism," ","_")
     
         if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
             suppressWarnings(ensembl.available.organisms <-
@@ -227,7 +227,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
     
     if (db == "ensemblgenomes") {
         
-        new.organism <- stringr::str_replace(organism," ","_")
+        new.organism <- stringr::str_replace_all(organism," ","_")
         
         if (file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
             suppressWarnings(ensembl.available.organisms <-
