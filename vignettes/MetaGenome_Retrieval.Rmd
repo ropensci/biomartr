@@ -238,15 +238,16 @@ as input for the `read.gff()` function in the [seqreadr](https://github.com/Hajk
 
 #### Retrieve Protein Sequences
 
-Download all mammalian vertebrate proteomes from RefSeq.
+Download all mammalian vertebrate proteomes.
 
+Example `RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "proteome")
 ```
 
-Alternatively, download all mammalian vertebrate proteomes from genbank
 
+Example `Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteome")
@@ -256,25 +257,52 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteom
 
 Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS data).
 
+
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", type = "CDS")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "CDS")
 
 ```
 
+### Retrieve GFF files
+
+Download all mammalian vertebrate gff files.
+
+Example `RefSeq`:
+```{r,eval=FALSE}
+# download all vertebrate gff files
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "gff")
+```
+
+
+Example `Genbank`:
+```{r,eval=FALSE}
+# download all vertebrate gff files
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "gff")
+```
+
+
 Users can obtain alternative kingdoms using `getKingdoms()`.
 
-#### Retrieve Genomes for all kingdoms of life stored in RefSeq
+## Retrieve Genomes for all kingdoms of life
 
-Finally, users can download all genomes stored in the RefSeq database with one command:
+If users wish to download the all genomes, proteome, CDS, or gff files for all species
+available in RefSeq or Genbank, they can use the `meta.retrieval.all()` function for this purpose.
 
+Example `RefSeq`:
 ```{r,eval=FALSE}
 # download all geneomes stored in RefSeq
 meta.retrieval.all(db = "refseq", type = "genome")
 ```
 
-Analogously, proteomes or CDS files can be retrieved by exchanging `type = "genome"`
-by `type = "proteome"` or `type = "CDS"`.
+Example `Genbank`:
+```{r,eval=FALSE}
+# download all geneomes stored in RefSeq
+meta.retrieval.all(db = "refseq", type = "genome")
+```
+
+Analogously, proteomes, CDS or GFF files can be retrieved by exchanging `type = "genome"`
+by `type = "proteome"`, `type = "CDS"`, `type = "gff"`.
 
 
 #### Retrieve Genomes for all kingdoms of life stored in GenBank
@@ -286,5 +314,5 @@ Users can download all genomes stored in the Genbank database with one command:
 meta.retrieval.all(db = "genbank", type = "genome")
 ```
 
-Analogously, proteomes or CDS files can be retrieved by exchanging `type = "genome"`
-by `type = "proteome"`.
+Analogously, proteomes, CDS or GFF files can be retrieved by exchanging `type = "genome"`
+by `type = "proteome"`, `type = "CDS"`, `type = "gff"`.
