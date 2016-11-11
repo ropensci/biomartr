@@ -2,6 +2,7 @@
 #' @description Download genomes, proteomes, or CDS of all species within a kingdom of life.
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
+#' Available kingdoms can be retrieved with \code{\link{getKingdoms}}.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
 #' @param type type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.
 #' @param path path to the folder in which downloaded genomes shall be stored. By default the
@@ -36,11 +37,11 @@ meta.retrieval <- function(kingdom,
             paste0(subfolders, collapse = ", ")
         ))
     
-    if (!is.element(type, c("genome", "proteome", "CDS")))
-        stop("Please choose either type: 'genome', 'proteome', or 'CDS'")
+    if (!is.element(type, c("genome", "proteome", "CDS", "gff")))
+        stop("Please choose either type: 'genome', 'proteome', 'CDS', or 'gff'")
     
     if (!is.element(db, c("refseq", "genbank")))
-        stop("Please select einter 'db = 'refseq'' or 'db = 'genbank''")
+        stop("Please select einter db = 'refseq' or db = 'genbank'")
     
     if ((type == "CDS") && (db == "genbank"))
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
@@ -61,10 +62,11 @@ meta.retrieval <- function(kingdom,
     #         c("assembly summary_historical.txt", "assembly summary.txt")
     #     ))]
     
-    organism_name <- NULL
-    assembly.summary.file <- getSummaryFile(db = db, kingdom = kingdom)
+    #organism_name <- NULL
     assembly.summary.file <-
-        dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
+        getSummaryFile(db = db, kingdom = kingdom)
+    #assembly.summary.file <-
+    #    dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
     FinalOrganisms <- unique(assembly.summary.file$organism_name)
     
     cat("\n")
@@ -125,6 +127,25 @@ meta.retrieval <- function(kingdom,
             }
         }
     }
+    
+    if (type == "gff") {
+        if (is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getGFF(db       = db,
+                       organism = FinalOrganisms[i],
+                       path     = kingdom)
+            }
+        }
+        
+        if (!is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getGFF(db       = db,
+                       organism = FinalOrganisms[i],
+                       path     = path)
+            }
+        }
+    }
+    
     cat("\n")
     cat("Finished meta retieval process.")
 }
