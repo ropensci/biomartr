@@ -51,6 +51,8 @@ into one big data.frame
 
 - new internal helper function `getGENOMEREPORT()` to retrieve the genome reports file from ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt
 
+- new internal helper function `connected.to.internet()` enabling internet connection check
+
 ### Function changes
 
 - functions `getGenome()`, `getProteome()`, and `getCDS()` now can also in addition to NCBI retrieve genomes, proteomes or CDS from  [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/)
