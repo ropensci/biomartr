@@ -88,16 +88,14 @@ getGFF <-
                 FoundOrganism <- FoundOrganism[1,]
             }
             
-            organism <- stringr::str_replace(organism, " ", "_")
+            organism <- stringr::str_replace_all(organism, " ", "_")
             
             download_url <-
                 paste0(
                     FoundOrganism$ftp_path,
                     "/",
                     paste0(
-                        FoundOrganism$assembly_accession,
-                        "_",
-                        FoundOrganism$asm_name,
+                        basename(FoundOrganism$ftp_path),
                         "_genomic.gff.gz"
                     )
                 )
