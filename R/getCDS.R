@@ -72,16 +72,14 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
             FoundOrganism <- FoundOrganism[1, ]
         }
         
-        organism <- stringr::str_replace(organism, " ", "_")
+        organism <- stringr::str_replace_all(organism, " ", "_")
         
         download_url <-
             paste0(
                 FoundOrganism$ftp_path,
                 "/",
                 paste0(
-                    FoundOrganism$assembly_accession,
-                    "_",
-                    FoundOrganism$asm_name,
+                    basename(FoundOrganism$ftp_path),
                     "_cds_from_genomic.fna.gz"
                 )
             )
@@ -161,7 +159,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         # download CDS sequence from ENSEMBL
         cds.path <- getENSEMBL.Seq(organism, type = "cds", id.type = "all", path)
         
-        new.organism <- stringr::str_replace(organism," ","_")
+        new.organism <- stringr::str_replace_all(organism," ","_")
         
         # test proper API access
         tryCatch({
@@ -232,7 +230,7 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         # download CDS sequence from ENSEMBLGENOMES
         cds.path <- getENSEMBLGENOMES.Seq(organism, type = "cds", id.type = "all", path)
         
-        new.organism <- stringr::str_replace(organism," ","_")
+        new.organism <- stringr::str_replace_all(organism," ","_")
         
         # test proper API access
         tryCatch({
