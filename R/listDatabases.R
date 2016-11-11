@@ -94,7 +94,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
                 stringr::str_detect(x, paste0("^", db)))]
         
         if (length(DBName) == 0)
-            stop("No entries for db = '", db, "' could not be found.")
+            stop("No entries for db = '", db, "' could not be found.", call. = FALSE)
         
         # limit NCBI queries
         if (!file.exists(file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt")))
