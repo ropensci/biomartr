@@ -3,7 +3,7 @@
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
 #' Available kingdoms can be retrieved with \code{\link{getKingdoms}}.
-#' @param db a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.
+#' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.
 #' @param type type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.
 #' @param path path to the folder in which downloaded genomes shall be stored. By default the
 #' kingdom name is used to name the output folder.
@@ -40,7 +40,7 @@ meta.retrieval <- function(kingdom,
     if (!is.element(type, c("genome", "proteome", "CDS", "gff")))
         stop("Please choose either type: 'genome', 'proteome', 'CDS', or 'gff'")
     
-    if (!is.element(db, c("refseq", "genbank")))
+    if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
         stop("Please select einter db = 'refseq' or db = 'genbank'")
     
     if ((type == "CDS") && (db == "genbank"))
