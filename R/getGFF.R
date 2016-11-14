@@ -1,6 +1,7 @@
 #' @title Genome Annotation Retrieval
-#' @description This function retrieves *.gff annotation files of an organism of interest and stores
-#' the annotation file in a specified folder, e.g. \code{_ncbi_downloads/annotation}.
+#' @description  Main retrieval function for GFF files of an organism of interest.
+#' By specifying the scientific name of an organism of interest the corresponding gff file storing the annotation  for the organism of interest
+#' can be downloaded and stored locally. GFF files can be retrieved from several databases.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, or \code{db = "ensembl"}.
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) in which the corresponding
