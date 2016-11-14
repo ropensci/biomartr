@@ -34,7 +34,9 @@ meta.retrieval <- function(kingdom,
                            db         = "refseq", 
                            type       = "genome", 
                            path = NULL){
-        
+    
+    connected.to.internet()
+    
     subfolders <- getKingdoms(db = db)
     
     if (!is.element(kingdom, subfolders))
