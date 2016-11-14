@@ -21,6 +21,12 @@
 #' getKingdoms(db = "genbank")
 #' # download all vertebrate genomes from genbank
 #' meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
+#' 
+#' # get all available kingdoms for ensemblgenomes
+#' getKingdoms(db = "ensemblgenomes")
+#' # download all vertebrate genomes from ensemblgenomes
+#' meta.retrieval(kingdom = "", db = "ensemblgenomes", type = "genome")
+#' 
 #' }
 #' @export
 
