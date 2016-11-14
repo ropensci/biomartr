@@ -1,6 +1,7 @@
 #' @title Proteome Retrieval
-#' @description This function retrieves a fasta-file storing the proteome of an organism of interest and stores
-#' the proteome file in the folder '_ncbi_downloads/proteomes'.
+#' @description Main proteome retrieval function for an organism of interest.
+#' By specifying the scientific name of an organism of interest the corresponding fasta-file storing the proteome of the organism of interest
+#' can be downloaded and stored locally. Proteome files can be retrieved from several databases.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or \code{db = "ensemblgenomes"}.
 #' @param organism a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) in which the corresponding
