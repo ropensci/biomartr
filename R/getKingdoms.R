@@ -1,4 +1,4 @@
-#' @title Retrieve available kingdoms of life stored in RefSeq
+#' @title Retrieve available kingdoms of life stored in databases
 #' @description A short list of kingdoms of life that are stored in the RefSeq
 #' database and that can be downloaded using e.g. \code{\link{meta.retrieval}}, \code{\link{getGenome}}, etc.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.
