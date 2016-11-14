@@ -119,6 +119,18 @@ Example `Plants`
 meta.retrieval(kingdom = "plant", db = "refseq", type = "genome")
 ```
 
+Example `Invertebrates`
+```{r,eval=FALSE}
+# download all invertebrate genomes
+meta.retrieval(kingdom = "invertebrate", db = "refseq", type = "genome")
+```
+
+Example `Protozoa`
+```{r,eval=FALSE}
+# download all invertebrate genomes
+meta.retrieval(kingdom = "protozoa", db = "refseq", type = "genome")
+```
+
 Alternatively, download all mammalian vertebrate genomes from Genbank, e.g.
 
 ```{r,eval=FALSE}
