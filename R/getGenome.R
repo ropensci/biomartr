@@ -70,6 +70,9 @@ getGenome <-
             organism_name <-
                 refseq_category <- version_status <- NULL
             
+            organism <- stringr::str_replace_all(organism,"\\(","")
+            organism <- stringr::str_replace_all(organism,"\\)","")
+            
             FoundOrganism <-
                 dplyr::filter(
                     AssemblyFilesAllKingdoms,
@@ -80,83 +83,92 @@ getGenome <-
                     (version_status == "latest")
                 )
             
-            if (nrow(FoundOrganism) > 1) {
-                warnings(
-                    "More than one entry has been found for '",
-                    organism,
-                    "'. Only the first entry '",
-                    FoundOrganism[1, 1],
-                    "' has been used for subsequent genome retrieval."
-                )
-                FoundOrganism <- FoundOrganism[1,]
-            }
-            
-            organism <- stringr::str_replace_all(organism, " ", "_")
-            
-            download_url <-
-                paste0(
-                    FoundOrganism$ftp_path,
-                    "/",
-                    paste0(
-                        basename(FoundOrganism$ftp_path),
-                        "_genomic.fna.gz"
-                    )
-                )
-            
-            # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
-            
-            if (nrow(FoundOrganism) == 1) {
-                tryCatch({utils::capture.output(downloader::download(
-                    download_url,
-                    destfile = file.path(path, paste0(organism, "_genomic_",db,".fna.gz")),
-                    mode = "wb"
-                ))}, error = function(e)
-                    stop(
-                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",download_url,"' currently available?", call. = FALSE
-                    ))
-                
-                docFile(
-                    file.name = paste0(organism, "_genomic_",db,".fna.gz"),
-                    organism  = organism,
-                    url       = download_url,
-                    database  = db,
-                    path      = path,
-                    refseq_category = FoundOrganism$refseq_category,
-                    assembly_accession = FoundOrganism$assembly_accession,
-                    bioproject = FoundOrganism$bioproject,
-                    biosample = FoundOrganism$biosample,
-                    taxid = FoundOrganism$taxid,
-                    infraspecific_name = FoundOrganism$infraspecific_name,
-                    version_status = FoundOrganism$version_status,
-                    release_type = FoundOrganism$release_type,
-                    genome_rep = FoundOrganism$genome_rep,
-                    seq_rel_date = FoundOrganism$seq_rel_date,
-                    submitter = FoundOrganism$submitter
-                )
-                
-                # NCBI limits requests to three per second
-                Sys.sleep(0.33)
-                
-                
-                print(
-                    paste0(
-                        "The genome of '",
-                        organism,
-                        "' has been downloaded to '",
-                        path,
-                        "' and has been named '",
-                        paste0(organism, "_genomic_",db,".fna.gz"),
-                        "'."
-                    )
-                )
-                
-                return(file.path(path, paste0(organism, "_genomic_",db,".fna.gz")))
+            if (nrow(FoundOrganism) == 0) {
+                cat("\n")
+                cat(paste0("----------> No reference genome or representative genome was found for '",organism,"'. Thus, download for this species has been omitted."))
+                cat("\n")
             } else {
-                stop(
-                    "File: ",
-                    download_url,
-                    " could not be loaded properly... Are you connected to the internet?", call. = FALSE
-                )
+                if (nrow(FoundOrganism) > 1) {
+                    warnings(
+                        "More than one entry has been found for '",
+                        organism,
+                        "'. Only the first entry '",
+                        FoundOrganism[1, 1],
+                        "' has been used for subsequent genome retrieval."
+                    )
+                    FoundOrganism <- FoundOrganism[1,]
+                }
+                
+                organism <- stringr::str_replace_all(organism, " ", "_")
+                
+                download_url <-
+                    paste0(
+                        FoundOrganism$ftp_path,
+                        "/",
+                        paste0(
+                            basename(FoundOrganism$ftp_path),
+                            "_genomic.fna.gz"
+                        )
+                    )
+                
+                # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
+                
+                local.org <- stringr::str_replace_all(organism,"-","_")
+                local.org <- stringr::str_replace_all(organism,"\\/","_")
+                
+                if (nrow(FoundOrganism) == 1) {
+                    tryCatch({utils::capture.output(downloader::download(
+                        download_url,
+                        destfile = file.path(path, paste0(local.org, "_genomic_",db,".fna.gz")),
+                        mode = "wb"
+                    ))}, error = function(e)
+                        stop(
+                            "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",download_url,"' currently available?", call. = FALSE
+                        ))
+                    
+                    docFile(
+                        file.name = paste0(local.org, "_genomic_",db,".fna.gz"),
+                        organism  = organism,
+                        url       = download_url,
+                        database  = db,
+                        path      = path,
+                        refseq_category = FoundOrganism$refseq_category,
+                        assembly_accession = FoundOrganism$assembly_accession,
+                        bioproject = FoundOrganism$bioproject,
+                        biosample = FoundOrganism$biosample,
+                        taxid = FoundOrganism$taxid,
+                        infraspecific_name = FoundOrganism$infraspecific_name,
+                        version_status = FoundOrganism$version_status,
+                        release_type = FoundOrganism$release_type,
+                        genome_rep = FoundOrganism$genome_rep,
+                        seq_rel_date = FoundOrganism$seq_rel_date,
+                        submitter = FoundOrganism$submitter
+                    )
+                    
+                    # NCBI limits requests to three per second
+                    Sys.sleep(0.33)
+                    
+                    
+                    print(
+                        paste0(
+                            "The genome of '",
+                            organism,
+                            "' has been downloaded to '",
+                            path,
+                            "' and has been named '",
+                            paste0(local.org, "_genomic_",db,".fna.gz"),
+                            "'."
+                        )
+                    )
+                    
+                    return(file.path(path, paste0(local.org, "_genomic_",db,".fna.gz")))
+                } else {
+                    stop(
+                        "File: ",
+                        download_url,
+                        " could not be loaded properly... Are you connected to the internet?", call. = FALSE
+                    )
+                }
             }
         }
     
