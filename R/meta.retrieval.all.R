@@ -12,6 +12,9 @@
 #' 
 #' # download all vertebrate genomes from genbank
 #' meta.retrieval.all(db = "genbank", type = "genome")
+#' 
+#' # download all vertebrate genomes from ensemblgenomes
+#' meta.retrieval.all(db = "genbank", type = "ensemblgenomes")
 #' }
 #' @export
 
