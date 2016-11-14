@@ -76,5 +76,10 @@ getKingdomAssemblySummary <- function(db) {
                              ))
         }
     }
-        return(AssemblyFilesAllKingdoms)
+    
+    orgs <- stringr::str_replace_all(AssemblyFilesAllKingdoms$organism_name,"\\(","")
+    orgs <- stringr::str_replace_all(orgs,"\\)","")
+    
+    AssemblyFilesAllKingdoms <- dplyr::mutate(AssemblyFilesAllKingdoms, organism_name = orgs)
+    return(AssemblyFilesAllKingdoms)
 }
