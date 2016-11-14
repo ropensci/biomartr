@@ -29,8 +29,10 @@ docFile <- function(file.name,
         cwd <- getwd()
 
         setwd(path)
-
-        sink(paste0("doc_",organism,"_db_",database,".txt"))
+        local.org <- stringr::str_replace_all(organism,"-","_")
+        local.org <- stringr::str_replace_all(organism,"\\/","_")
+        
+        sink(paste0("doc_",local.org,"_db_",database,".txt"))
 
         cat(paste0("File Name: ", file.name))
         cat("\n")
