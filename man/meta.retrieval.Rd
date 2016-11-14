@@ -11,7 +11,7 @@ meta.retrieval(kingdom, db = "refseq", type = "genome", path = NULL)
 e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
 Available kingdoms can be retrieved with \code{\link{getKingdoms}}.}
 
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.}
 
 \item{type}{type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.}
 
