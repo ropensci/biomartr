@@ -2,12 +2,13 @@
 % Please edit documentation in R/getMetaGenomeSummary.R
 \name{getMetaGenomeSummary}
 \alias{getMetaGenomeSummary}
-\title{Helper function to retrieve the assembly_summary.txt file from NCBI genbank metagenomes}
+\title{Retrieve the assembly_summary.txt file from NCBI genbank metagenomes}
 \usage{
 getMetaGenomeSummary()
 }
 \description{
 Retrieval function of the assembly_summary.txt file from NCBI genbank metagenomes.
+This files stores all available metagenome projects on NCBI Genbank.
 }
 \examples{
 \dontrun{
