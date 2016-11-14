@@ -94,17 +94,17 @@ head(listAttributes(useDataset(dataset = "hsapiens_gene_ensembl",
 ```
 
 ```
-                    name           description
-1        ensembl_gene_id       Ensembl Gene ID
-2  ensembl_transcript_id Ensembl Transcript ID
-3     ensembl_peptide_id    Ensembl Protein ID
-4        ensembl_exon_id       Ensembl Exon ID
-5            description           Description
-6        chromosome_name       Chromosome Name
-7         start_position       Gene Start (bp)
-8           end_position         Gene End (bp)
-9                 strand                Strand
-10                  band                  Band
+                    name           description         page
+1        ensembl_gene_id       Ensembl Gene ID feature_page
+2  ensembl_transcript_id Ensembl Transcript ID feature_page
+3     ensembl_peptide_id    Ensembl Protein ID feature_page
+4        ensembl_exon_id       Ensembl Exon ID feature_page
+5            description           Description feature_page
+6        chromosome_name       Chromosome Name feature_page
+7         start_position       Gene Start (bp) feature_page
+8           end_position         Gene End (bp) feature_page
+9                 strand                Strand feature_page
+10                  band                  Band feature_page
 ```
 
 Please note the nested structure of this attribute query. For an attribute query procedure
@@ -768,18 +768,14 @@ head(organismAttributes("Homo sapiens", topic = "id"))
 
 ```{r,eval=FALSE}
 # retrieve the proteome of Homo sapiens from refseq
-getProteome( db       = "refseq",
-             kingdom  = "vertebrate_mammalian",
-             organism = "Homo sapiens",
-             path     = file.path("_ncbi_downloads","proteomes") )
-
-
-file_path <- file.path("_ncbi_downloads","proteomes","Homo_sapiens_protein.faa.gz")
+file_path <- getProteome( db       = "refseq",
+                          organism = "Homo sapiens",
+                          path     = file.path("_ncbi_downloads","proteomes") )
 
 Hsapiens_proteome <- read_proteome(file_path, format = "fasta")
 
 # remove splice variants from id
-gene_set <- unlist(sapply(strsplit(Hsapiens_proteome[1:5 , geneids], ".",fixed = TRUE),function(x) x[1]))
+gene_set <- unlist(sapply(strsplit(Hsapiens_proteome@ranges@NAMES[1:5], ".",fixed = TRUE),function(x) x[1]))
 
 result_BM <- biomart( genes      = gene_set,
                       mart       = "ENSEMBL_MART_ENSEMBL", 
@@ -788,7 +784,6 @@ result_BM <- biomart( genes      = gene_set,
                       filters    = "refseq_peptide")
 
 result_BM 
-
 ```
 
 ```
@@ -801,8 +796,6 @@ result_BM
 ```
 
 The `biomart()` function takes as arguments a set of genes (gene ids specified in the `filter` argument), the corresponding `mart` and `dataset`, as well as the `attributes` which shall be returned.
-
-
 
 ## Gene Ontology 
 
@@ -826,19 +819,17 @@ need to be specified. The `database` argument then defines the database from whi
 GO_tbl <- getGO(organism = "Homo sapiens", 
                 genes    = "GUCA2A",
                 filters  = "hgnc_symbol")
+
+GO_tbl
 ```
 
 ```
-  hgnc_symbol                       goslim_goa_description goslim_goa_accession
-1      GUCA2A                           biological_process           GO:0008150
-2      GUCA2A                           molecular_function           GO:0003674
-3      GUCA2A cellular nitrogen compound metabolic process           GO:0034641
-4      GUCA2A                           cellular_component           GO:0005575
-5      GUCA2A                         biosynthetic process           GO:0009058
-6      GUCA2A             small molecule metabolic process           GO:0044281
-7      GUCA2A                                    organelle           GO:0043226
-8      GUCA2A                    enzyme regulator activity           GO:0030234
-9      GUCA2A                         extracellular region           GO:0005576
+  hgnc_symbol    goslim_goa_description goslim_goa_accession
+1      GUCA2A      extracellular region           GO:0005576
+2      GUCA2A        molecular_function           GO:0003674
+3      GUCA2A        cellular_component           GO:0005575
+4      GUCA2A                 organelle           GO:0043226
+5      GUCA2A enzyme regulator activity           GO:0030234
 ```
 
 Hence, for each _gene id_ the resulting table stores all annotated GO terms found in BioMart.
