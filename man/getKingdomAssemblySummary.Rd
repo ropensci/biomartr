@@ -2,7 +2,7 @@
 % Please edit documentation in R/getKingdomAssemblySummary.R
 \name{getKingdomAssemblySummary}
 \alias{getKingdomAssemblySummary}
-\title{Helper function to retrieve the assembly_summary.txt files  from NCBI for all kingdoms}
+\title{Retrieve and summarise the assembly_summary.txt files from NCBI for all kingdoms}
 \usage{
 getKingdomAssemblySummary(db)
 }
@@ -11,6 +11,7 @@ getKingdomAssemblySummary(db)
 }
 \description{
 Retrieval function of the assembly_summary.txt file from NCBI for all kingdoms.
+The assembly_summary.txt files store available species on NCBI.
 }
 \examples{
 \dontrun{
