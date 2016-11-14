@@ -2,7 +2,7 @@
 % Please edit documentation in R/getKingdoms.R
 \name{getKingdoms}
 \alias{getKingdoms}
-\title{Retrieve available kingdoms of life stored in RefSeq}
+\title{Retrieve available kingdoms of life stored in databases}
 \usage{
 getKingdoms(db = "refseq")
 }
