@@ -19,8 +19,9 @@ genome shall be stored. Default is \code{path} = \code{file.path("_ncbi_download
 File path to downloaded genome.
 }
 \description{
-This function retrieves a fasta-file storing the genome of an organism of interest and stores
-the genome file in the folder '_ncbi_downloads/genomes'.
+Main genome retrieval function for an organism of interest.
+By specifying the scientific name of an organism of interest the corresponding fasta-file storing the genome of the organism of interest
+can be downloaded and stored locally. Genome files can be retrieved from several databases.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
