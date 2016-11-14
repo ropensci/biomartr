@@ -19,8 +19,9 @@ annotation file shall be stored. Default is \code{path = file.path("_ncbi_downlo
 File path to downloaded annotation file.
 }
 \description{
-This function retrieves *.gff annotation files of an organism of interest and stores
-the annotation file in a specified folder, e.g. \code{_ncbi_downloads/annotation}.
+Main retrieval function for GFF files of an organism of interest.
+By specifying the scientific name of an organism of interest the corresponding gff file storing the annotation  for the organism of interest
+can be downloaded and stored locally. GFF files can be retrieved from several databases.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
