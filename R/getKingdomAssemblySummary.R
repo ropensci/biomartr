@@ -1,5 +1,6 @@
-#' @title Helper function to retrieve the assembly_summary.txt files  from NCBI for all kingdoms
+#' @title Retrieve and summarise the assembly_summary.txt files from NCBI for all kingdoms
 #' @description Retrieval function of the assembly_summary.txt file from NCBI for all kingdoms.
+#' The assembly_summary.txt files store available species on NCBI. 
 #' @param db database name. E.g. \code{refseq} or \code{genbank}.
 #' @author Hajk-Georg Drost
 #' @examples
