@@ -61,6 +61,8 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
         }
         
         organism_name <- refseq_category <- version_status <- NULL
+        organism <- stringr::str_replace_all(organism,"\\(","")
+        organism <- stringr::str_replace_all(organism,"\\)","")
         
         FoundOrganism <-
             dplyr::filter(
@@ -72,90 +74,99 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
                 (version_status == "latest")
             )
         
-        if (nrow(FoundOrganism) > 1) {
-            warnings(
-                "More than one entry has been found for '",
-                organism,
-                "'. Only the first entry '",
-                FoundOrganism[1, 1],
-                "' has been used for subsequent proteome retrieval."
-            )
-            FoundOrganism <- FoundOrganism[1,]
-        }
-        
-        organism <- stringr::str_replace_all(organism, " ", "_")
-        
-        download_url <-
-            paste0(
-                FoundOrganism$ftp_path,
-                "/",
-                paste0(
-                    basename(FoundOrganism$ftp_path),
-                    "_protein.faa.gz"
-                )
-            )
-        
-        if (nrow(FoundOrganism) == 1) {
-            tryCatch({
-                utils::capture.output(downloader::download(
-                    download_url,
-                    destfile = file.path(path, paste0(
-                        organism, "_protein_", db, ".faa.gz"
-                    )),
-                    mode = "wb"
-                ))
-            }, error = function(e)
-                stop(
-                    "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
-                    download_url,
-                    "' currently available?",
-                    call. = FALSE
-                ))
-            
-            docFile(
-                file.name = paste0(organism, "_protein.faa.gz"),
-                organism  = organism,
-                url       = download_url,
-                database  = db,
-                path      = path,
-                refseq_category = FoundOrganism$refseq_category,
-                assembly_accession = FoundOrganism$assembly_accession,
-                bioproject = FoundOrganism$bioproject,
-                biosample = FoundOrganism$biosample,
-                taxid = FoundOrganism$taxid,
-                infraspecific_name = FoundOrganism$infraspecific_name,
-                version_status = FoundOrganism$version_status,
-                release_type = FoundOrganism$release_type,
-                genome_rep = FoundOrganism$genome_rep,
-                seq_rel_date = FoundOrganism$seq_rel_date,
-                submitter = FoundOrganism$submitter
-            )
-            
-            # NCBI limits requests to three per second
-            Sys.sleep(0.33)
-            
-            
-            print(
-                paste0(
-                    "The proteome of '",
-                    organism,
-                    "' has been downloaded to '",
-                    path,
-                    "' and has been named '",
-                    paste0(organism, "_protein_", db, ".faa.gz"),
-                    "' ."
-                )
-            )
-            
-            return(file.path(path, paste0(
-                organism, "_protein_", db, ".faa.gz"
-            )))
+        if (nrow(FoundOrganism) == 0) {
+            cat("\n")
+            cat(paste0("----------> No reference genome or representative genome was found for '",organism,"'. Thus, download for this species has been omitted."))
+            cat("\n")
         } else {
-            stop(
-                "File: ",
-                download_url,
-                " could not be loaded properly... Are you connected to the internet?", call. = FALSE
-            )
+            if (nrow(FoundOrganism) > 1) {
+                warnings(
+                    "More than one entry has been found for '",
+                    organism,
+                    "'. Only the first entry '",
+                    FoundOrganism[1, 1],
+                    "' has been used for subsequent proteome retrieval."
+                )
+                FoundOrganism <- FoundOrganism[1,]
+            }
+            
+            organism <- stringr::str_replace_all(organism, " ", "_")
+            
+            download_url <-
+                paste0(
+                    FoundOrganism$ftp_path,
+                    "/",
+                    paste0(
+                        basename(FoundOrganism$ftp_path),
+                        "_protein.faa.gz"
+                    )
+                )
+            
+            local.org <- stringr::str_replace_all(organism,"-","_")
+            local.org <- stringr::str_replace_all(organism,"\\/","_")
+            
+            if (nrow(FoundOrganism) == 1) {
+                tryCatch({
+                    utils::capture.output(downloader::download(
+                        download_url,
+                        destfile = file.path(path, paste0(
+                            local.org, "_protein_", db, ".faa.gz"
+                        )),
+                        mode = "wb"
+                    ))
+                }, error = function(e)
+                    stop(
+                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+                        download_url,
+                        "' currently available?",
+                        call. = FALSE
+                    ))
+                
+                docFile(
+                    file.name = paste0(local.org, "_protein.faa.gz"),
+                    organism  = organism,
+                    url       = download_url,
+                    database  = db,
+                    path      = path,
+                    refseq_category = FoundOrganism$refseq_category,
+                    assembly_accession = FoundOrganism$assembly_accession,
+                    bioproject = FoundOrganism$bioproject,
+                    biosample = FoundOrganism$biosample,
+                    taxid = FoundOrganism$taxid,
+                    infraspecific_name = FoundOrganism$infraspecific_name,
+                    version_status = FoundOrganism$version_status,
+                    release_type = FoundOrganism$release_type,
+                    genome_rep = FoundOrganism$genome_rep,
+                    seq_rel_date = FoundOrganism$seq_rel_date,
+                    submitter = FoundOrganism$submitter
+                )
+                
+                # NCBI limits requests to three per second
+                Sys.sleep(0.33)
+                
+                
+                print(
+                    paste0(
+                        "The proteome of '",
+                        organism,
+                        "' has been downloaded to '",
+                        path,
+                        "' and has been named '",
+                        paste0(local.org, "_protein_", db, ".faa.gz"),
+                        "' ."
+                    )
+                )
+                
+                return(file.path(path, paste0(
+                    local.org, "_protein_", db, ".faa.gz"
+                )))
+            } else {
+                stop(
+                    "File: ",
+                    download_url,
+                    " could not be loaded properly... Are you connected to the internet?", call. = FALSE
+                )
+            }
         }
     }
     
