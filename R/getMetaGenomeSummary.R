@@ -1,5 +1,6 @@
-#' @title Helper function to retrieve the assembly_summary.txt file from NCBI genbank metagenomes
+#' @title Retrieve the assembly_summary.txt file from NCBI genbank metagenomes
 #' @description Retrieval function of the assembly_summary.txt file from NCBI genbank metagenomes.
+#' This files stores all available metagenome projects on NCBI Genbank.
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
