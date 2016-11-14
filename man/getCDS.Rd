@@ -18,20 +18,12 @@ CDS file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downlo
 File path to downloaded CDS file.
 }
 \description{
-This function retrieves a fasta-file storing the CDS files of the genome of an organism of interest and stores
-this file in the folder '_ncbi_downloads/CDS'.
-}
-\details{
-Internally this function loads the the overview.txt file from NCBI:
-
- refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
-
-and creates a directory '_ncbi_downloads/CDS' to store
-the genome of interest as CDS fasta file for future processing.
+Main retrieval function for coding sequences (CDS) of an organism of interest.
+By specifying the scientific name of an organism of interest the corresponding fasta-file storing the CDS information for the organism of interest
+can be downloaded and stored locally. CDS files can be retrieved from several databases.
 }
 \examples{
 \dontrun{
-
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
 file_path <- getCDS( db       = "refseq", 
