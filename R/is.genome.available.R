@@ -120,34 +120,30 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
         
         organism_name <- NULL
         
+        orgs <- stringr::str_replace_all(AssemblyFilesAllKingdoms$organism_name,"\\(","")
+        orgs <- stringr::str_replace_all(orgs,"\\)","")
+        
+        AssemblyFilesAllKingdoms <- dplyr::mutate(AssemblyFilesAllKingdoms, organism_name = orgs)
+        
+        organism <- stringr::str_replace_all(organism,"\\(","")
+        organism <- stringr::str_replace_all(organism,"\\)","")
+        
         FoundOrganism <-
             dplyr::filter(AssemblyFilesAllKingdoms,
                           stringr::str_detect(organism_name, organism))
         
-        if (nrow(FoundOrganism) == 0)
-            stop("Unfortunately no entry for organism '",
-                 organism,
-                 "' could be found.",
-                 call. = FALSE)
-        
-        available_genome <- listGenomes(db = db, type = "all", details = TRUE)
-        
-        is_available <- any(stringr::str_detect(available_genome$organism_name, organism))
-        
-        
-        if (is_available) {
-            organism_index <-
-                which(stringr::str_detect(available_genome$organism_name, organism))
+        if (nrow(FoundOrganism) == 0) {
             
-            if (details) {
-                return(available_genome[organism_index, ])
-                
-            } else {
-                return(TRUE)
-            }
-            
-        } else {
             return(FALSE)
+        }
+        
+        if (nrow(FoundOrganism) > 0) {
+            
+            if (!details)
+                return(TRUE)
+            
+            if (details)
+                return(FoundOrganism)
         }
     }
     
