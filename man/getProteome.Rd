@@ -19,8 +19,9 @@ proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downlo
 File path to downloaded proteome.
 }
 \description{
-This function retrieves a fasta-file storing the proteome of an organism of interest and stores
-the proteome file in the folder '_ncbi_downloads/proteomes'.
+Main proteome retrieval function for an organism of interest.
+By specifying the scientific name of an organism of interest the corresponding fasta-file storing the proteome of the organism of interest
+can be downloaded and stored locally. Proteome files can be retrieved from several databases.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
