@@ -60,8 +60,8 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         )
     }
     
-    if (!is.element(stringr::str_to_lower(new.organism),
-                    ensembl.available.organisms$name))
+    if (!any(stringr::str_detect(stringr::str_to_lower(new.organism),
+                    ensembl.available.organisms$name)))
         stop(
             "Unfortunately organism '",
             organism,
@@ -89,23 +89,99 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
     # retrieve the Ensembl Genomes version of the databases backing this service
     eg_version <- jsonlite::fromJSON("http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json")
     
-    # construct retrieval query
-    ensembl.qry <-
-        paste0(
-            "ftp://ftp.ensemblgenomes.org/pub/current/",
-            stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
-            "/gff3/",
-            stringr::str_to_lower(new.organism),
-            "/",
+    if (get.org.info$division == "EnsemblBacteria") {
+        
+        if (!file.exists(file.path(tempdir(),"EnsemblBacteria.txt"))) {
+            tryCatch({
+                downloader::download(
+                    "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt",
+                    destfile = file.path(tempdir(),"EnsemblBacteria.txt"),
+                    mode = "wb"
+                )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' currently available?",
+                    call. = FALSE
+                ))
+        }
+        
+        suppressWarnings(bacteria.info <-
+                             readr::read_tsv(
+                                 file.path(tempdir(), "EnsemblBacteria.txt"),
+                                 col_names = c(
+                                     "name",
+                                     "species",
+                                     "division",
+                                     "taxonomy_id",
+                                     "assembly",
+                                     "assembly_accession",
+                                     "genebuild",
+                                     "variation",
+                                     "pan_compara",
+                                     "peptide_compara",
+                                     "genome_alignments",
+                                     "other_alignments",
+                                     "core_db",
+                                     "species_id"
+                                 ),
+                                 col_types = readr::cols(
+                                     name = readr::col_character(),
+                                     species = readr::col_character(),
+                                     division = readr::col_character(),
+                                     taxonomy_id = readr::col_integer(),
+                                     assembly = readr::col_character(),
+                                     assembly_accession = readr::col_character(),
+                                     genebuild = readr::col_character(),
+                                     variation = readr::col_character(),
+                                     pan_compara = readr::col_character(),
+                                     peptide_compara = readr::col_character(),
+                                     genome_alignments = readr::col_character(),
+                                     other_alignments = readr::col_character(),
+                                     core_db = readr::col_character(),
+                                     species_id = readr::col_integer()
+                                 ),
+                                 comment = "#"
+                             ))
+        
+        bacteria.info <- dplyr::filter(bacteria.info, name == organism)
+        
+        # construct retrieval query
+        ensembl.qry <-
             paste0(
-                new.organism,
-                ".",
-                json.qry.info$default_coord_system_version,
-                ".",
-                eg_version,
-                ".gff3.gz"
+                "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
+                paste0(stringr::str_split(bacteria.info$core_db,"_")[1:3], collapse = "_"),
+                stringr::str_to_lower(new.organism),
+                "/",
+                paste0(
+                    new.organism,
+                    ".",
+                    json.qry.info$default_coord_system_version,
+                    ".",
+                    eg_version,
+                    ".gff3.gz"
+                )
             )
-        )
+        
+    } else {
+        # construct retrieval query
+        ensembl.qry <-
+            paste0(
+                "ftp://ftp.ensemblgenomes.org/pub/current/",
+                stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
+                "/gff3/",
+                stringr::str_to_lower(new.organism),
+                "/",
+                paste0(
+                    new.organism,
+                    ".",
+                    json.qry.info$default_coord_system_version,
+                    ".",
+                    eg_version,
+                    ".gff3.gz"
+                )
+            )
+    }
+    
     
     tryCatch({
         downloader::download(ensembl.qry,
