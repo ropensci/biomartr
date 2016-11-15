@@ -49,33 +49,34 @@ meta.retrieval <- function(kingdom,
         stop("Please choose either type: 'genome', 'proteome', 'CDS', or 'gff'")
     
     if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
-        stop("Please select einter db = 'refseq' or db = 'genbank'")
+        stop("Please select einter db = 'refseq', db = 'genbank', db = 'ensembl' or db = 'ensemblgenomes'.")
     
     if ((type == "CDS") && (db == "genbank"))
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
     
+    if (is.element(db, c("refseq", "genbank"))) {
+        #organism_name <- NULL
+        assembly.summary.file <-
+            getSummaryFile(db = db, kingdom = kingdom)
+        #assembly.summary.file <-
+        #    dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
+        FinalOrganisms <- unique(assembly.summary.file$organism_name)
+    }
     
-    # getOrganisms <-
-    #     try(RCurl::getURL(
-    #         paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/", db, "/", kingdom, "/"),
-    #         ftp.use.epsv = FALSE,
-    #         dirlistonly = TRUE
-    #     ))
-    # FilterOrganisms <- strsplit(getOrganisms, "\n")
-    # FinalOrganisms <-
-    #     stringr::str_replace(unlist(FilterOrganisms), "_", " ")
-    # FinalOrganisms <-
-    #     FinalOrganisms[-which(is.element(
-    #         FinalOrganisms,
-    #         c("assembly summary_historical.txt", "assembly summary.txt")
-    #     ))]
+    if (db == "ensembl") {
+        summary.file <- get.ensembl.info()
+        FinalOrganisms <- unique(summary.file$name)
+        FinalOrganisms <- stringr::str_replace_all(FinalOrganisms,"_"," ")
+        stringr::str_sub(FinalOrganisms,1,1) <- stringr::str_to_upper(stringr::str_sub(FinalOrganisms,1,1))
+    }
     
-    #organism_name <- NULL
-    assembly.summary.file <-
-        getSummaryFile(db = db, kingdom = kingdom)
-    #assembly.summary.file <-
-    #    dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
-    FinalOrganisms <- unique(assembly.summary.file$organism_name)
+    if (db == "ensemblgenomes") {
+        summary.file <- get.ensemblgenome.info()
+        summary.file <- dplyr::filter(summary.file, division == kingdom)
+        FinalOrganisms <- unique(summary.file$name)
+        FinalOrganisms <- stringr::str_replace_all(FinalOrganisms,"_"," ")
+        stringr::str_sub(FinalOrganisms,1,1) <- stringr::str_to_upper(stringr::str_sub(FinalOrganisms,1,1))
+    }
     
     cat("\n")
     
