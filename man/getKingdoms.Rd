@@ -15,10 +15,10 @@ A short list of available kingdoms of life
 }
 \examples{
 \dontrun{ 
-# retrieve kingdoms available at refseq
+# retrieve kingdoms available from refseq
 getKingdoms(db = "refseq")
 
-# retrieve kingdoms available at genbank
+# retrieve kingdoms available from genbank
 getKingdoms(db = "genbank")
 }
 }
