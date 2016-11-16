@@ -35,6 +35,10 @@ into one big data.frame
 
 - new function `listSubgroups()` allows users to list the number of available species per subgroup
 
+- new function `getGroups()` allows users to retrieve available groups for a kingdom of life
+
+- new function `getSubgroups()` allows users to retrieve available subgroups for a kingdom of life
+
 - new external helper function `getMetaGenomeSummary()` to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
 
 - new internal helper function `getENSEMBL.Seq()` acting as main interface function to communicate with the ENSEMBL database API for sequence retrieval
