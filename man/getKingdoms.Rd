@@ -14,11 +14,13 @@ Default is \code{db = "refseq"}.}
 A short list of available kingdoms of life
 }
 \examples{
+\dontrun{ 
 # retrieve kingdoms available at refseq
 getKingdoms(db = "refseq")
 
 # retrieve kingdoms available at genbank
 getKingdoms(db = "genbank")
+}
 }
 \author{
 Hajk-Georg Drost
