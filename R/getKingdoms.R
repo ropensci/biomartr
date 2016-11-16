@@ -5,10 +5,10 @@
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{ 
-#' # retrieve kingdoms available at refseq
+#' # retrieve kingdoms available from refseq
 #' getKingdoms(db = "refseq")
 #' 
-#' # retrieve kingdoms available at genbank
+#' # retrieve kingdoms available from genbank
 #' getKingdoms(db = "genbank")
 #' }
 #' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getSubgroups}}, \code{\link{getGroups}}
