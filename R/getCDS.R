@@ -163,65 +163,69 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         # download CDS sequence from ENSEMBL
         cds.path <- getENSEMBL.Seq(organism, type = "cds", id.type = "all", path)
         
-        new.organism <- stringr::str_replace_all(organism," ","_")
-        
-        # test proper API access
-        tryCatch({
-            json.qry.info <-
-                jsonlite::fromJSON(
-                    paste0(
-                        "http://rest.ensembl.org/info/assembly/",
-                        new.organism,
-                        "?content-type=application/json"
+        if (is.logical(cds.path)) {
+            invisible(return(TRUE))
+        } else {
+            new.organism <- stringr::str_replace_all(organism," ","_")
+            
+            # test proper API access
+            tryCatch({
+                json.qry.info <-
+                    jsonlite::fromJSON(
+                        paste0(
+                            "http://rest.ensembl.org/info/assembly/",
+                            new.organism,
+                            "?content-type=application/json"
+                        )
                     )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
+                ))
+            
+            cwd <- getwd()
+            
+            setwd(path)
+            
+            # generate CDS documentation
+            sink(paste0("doc_",new.organism,"_db_",db,".txt"))
+            
+            cat(paste0("File Name: ", cds.path))
+            cat("\n")
+            cat(paste0("Organism Name: ", new.organism))
+            cat("\n")
+            cat(paste0("Database: ", db))
+            cat("\n")
+            cat(paste0("Download_Date: ", date()))
+            cat("\n")
+            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+            cat("\n")
+            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+            cat("\n")
+            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
+            cat("\n")
+            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
+            cat("\n")
+            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
+            
+            sink()
+            
+            setwd(cwd)
+            
+            print(
+                paste0(
+                    "The CDS of '",
+                    organism,
+                    "' has been downloaded to '",
+                    path,
+                    "' and has been named '",
+                    basename(cds.path),
+                    "'."
                 )
-        }, error = function(e)
-            stop(
-                "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
-            ))
-        
-        cwd <- getwd()
-        
-        setwd(path)
-        
-        # generate CDS documentation
-        sink(paste0("doc_",new.organism,"_db_",db,".txt"))
-        
-        cat(paste0("File Name: ", cds.path))
-        cat("\n")
-        cat(paste0("Organism Name: ", new.organism))
-        cat("\n")
-        cat(paste0("Database: ", db))
-        cat("\n")
-        cat(paste0("Download_Date: ", date()))
-        cat("\n")
-        cat(paste0("assembly_name: ", json.qry.info$assembly_name))
-        cat("\n")
-        cat(paste0("assembly_date: ", json.qry.info$assembly_date))
-        cat("\n")
-        cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
-        cat("\n")
-        cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
-        cat("\n")
-        cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
-        
-        sink()
-        
-        setwd(cwd)
-        
-        print(
-            paste0(
-                "The CDS of '",
-                organism,
-                "' has been downloaded to '",
-                path,
-                "' and has been named '",
-                basename(cds.path),
-                "'."
             )
-        )
-        
-        return(cds.path)
+            
+            return(cds.path)   
+        }
     }
     
     if (db == "ensemblgenomes") {
@@ -234,65 +238,71 @@ getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","
         # download CDS sequence from ENSEMBLGENOMES
         cds.path <- getENSEMBLGENOMES.Seq(organism, type = "cds", id.type = "all", path)
         
-        new.organism <- stringr::str_replace_all(organism," ","_")
-        
-        # test proper API access
-        tryCatch({
-            json.qry.info <-
-                jsonlite::fromJSON(
-                    paste0(
-                        "http://rest.ensemblgenomes.org/info/assembly/",
-                        new.organism,
-                        "?content-type=application/json"
+        if (is.logical(cds.path)) {
+            invisible(return(TRUE))
+        } else {
+            
+            new.organism <- stringr::str_replace_all(organism," ","_")
+            
+            # test proper API access
+            tryCatch({
+                json.qry.info <-
+                    jsonlite::fromJSON(
+                        paste0(
+                            "http://rest.ensemblgenomes.org/info/assembly/",
+                            new.organism,
+                            "?content-type=application/json"
+                        )
                     )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+                ))
+            
+            cwd <- getwd()
+            
+            setwd(path)
+            
+            # generate CDS documentation
+            sink(paste0("doc_",new.organism,"_db_",db,".txt"))
+            
+            cat(paste0("File Name: ", cds.path))
+            cat("\n")
+            cat(paste0("Organism Name: ", new.organism))
+            cat("\n")
+            cat(paste0("Database: ", db))
+            cat("\n")
+            cat(paste0("Download_Date: ", date()))
+            cat("\n")
+            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+            cat("\n")
+            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+            cat("\n")
+            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
+            cat("\n")
+            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
+            cat("\n")
+            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
+            
+            sink()
+            
+            setwd(cwd)
+            
+            print(
+                paste0(
+                    "The CDS of '",
+                    organism,
+                    "' has been downloaded to '",
+                    path,
+                    "' and has been named '",
+                    basename(cds.path),
+                    "'."
                 )
-        }, error = function(e)
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-            ))
-        
-        cwd <- getwd()
-        
-        setwd(path)
-        
-        # generate CDS documentation
-        sink(paste0("doc_",new.organism,"_db_",db,".txt"))
-        
-        cat(paste0("File Name: ", cds.path))
-        cat("\n")
-        cat(paste0("Organism Name: ", new.organism))
-        cat("\n")
-        cat(paste0("Database: ", db))
-        cat("\n")
-        cat(paste0("Download_Date: ", date()))
-        cat("\n")
-        cat(paste0("assembly_name: ", json.qry.info$assembly_name))
-        cat("\n")
-        cat(paste0("assembly_date: ", json.qry.info$assembly_date))
-        cat("\n")
-        cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
-        cat("\n")
-        cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
-        cat("\n")
-        cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
-        
-        sink()
-        
-        setwd(cwd)
-        
-        print(
-            paste0(
-                "The CDS of '",
-                organism,
-                "' has been downloaded to '",
-                path,
-                "' and has been named '",
-                basename(cds.path),
-                "'."
             )
-        )
+            
+            return(cds.path)
+        }   
         
-        return(cds.path)
     }
 }
 
