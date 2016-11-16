@@ -19,12 +19,12 @@ A short list of available groups for a kingdom of life.
 \dontrun{ 
 # get possible kigdom names
 getKingdoms(db = "refseq")
-# retrieve subgroups for vertebrate_mammalian available at refseq
+# retrieve subgroups for vertebrate_mammalian available from refseq
 getGroups(kingdom = "vertebrate_mammalian", db = "refseq")
 
 # get possible kigdom names
 getKingdoms(db = "genbank")
-# retrieve subgroups for vertebrate_mammalian available at genbank
+# retrieve subgroups for vertebrate_mammalian available from genbank
 getGroups(kingdom = "vertebrate_mammalian",db = "genbank")
 }
 }
