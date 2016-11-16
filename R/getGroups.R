@@ -8,12 +8,12 @@
 #' \dontrun{ 
 #' # get possible kigdom names
 #' getKingdoms(db = "refseq")
-#' # retrieve subgroups for vertebrate_mammalian available at refseq
+#' # retrieve subgroups for vertebrate_mammalian available from refseq
 #' getGroups(kingdom = "vertebrate_mammalian", db = "refseq")
 #' 
 #' # get possible kigdom names
 #' getKingdoms(db = "genbank")
-#' # retrieve subgroups for vertebrate_mammalian available at genbank
+#' # retrieve subgroups for vertebrate_mammalian available from genbank
 #' getGroups(kingdom = "vertebrate_mammalian",db = "genbank")
 #' }
 #' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getKingdoms}}, \code{\link{getSubgroups}}
