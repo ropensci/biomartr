@@ -16,6 +16,7 @@ Default is \code{db = "refseq"}.}
 A short list of available subgroups for a kingdom of life.
 }
 \examples{
+\dontrun{ 
 # get possible kigdom names
 getKingdoms(db = "refseq")
 # retrieve subgroups for vertebrate_mammalian available at refseq
@@ -25,6 +26,7 @@ getSubgroups(kingdom = "vertebrate_mammalian", db = "refseq")
 getKingdoms(db = "genbank")
 # retrieve subgroups for vertebrate_mammalian available at genbank
 getSubgroups(kingdom = "vertebrate_mammalian",db = "genbank")
+}
 }
 \author{
 Hajk-Georg Drost
