@@ -6,7 +6,9 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
     # test if REST API is responding
     is.ensemblgenomes.alive()
     
-    new.organism <- stringr::str_replace(organism, " ", "_")
+    name <- NULL
+    
+    new.organism <- stringr::str_replace_all(organism, " ", "_")
     
     if (file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
         suppressWarnings(
@@ -87,7 +89,16 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
     get.org.info <- is.genome.available(organism = organism, details = TRUE, db = "ensemblgenomes")
     
     # retrieve the Ensembl Genomes version of the databases backing this service
-    eg_version <- jsonlite::fromJSON("http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json")
+    tryCatch({
+        eg_version <-
+            jsonlite::fromJSON(
+                "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+            )
+    }, error = function(e)
+        stop(
+            "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?",
+            call. = FALSE
+        ))
     
     if (get.org.info$division == "EnsemblBacteria") {
         
@@ -143,13 +154,21 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                                  comment = "#"
                              ))
         
-        bacteria.info <- dplyr::filter(bacteria.info, name == organism)
+        organism <- stringr::str_replace_all(organism, " sp ", " sp. ")
+        
+        bacteria.info <- dplyr::filter(bacteria.info, stringr::str_detect(name, stringr::coll(organism, ignore_case = TRUE)))
+        
+        if (nrow(bacteria.info) == 0) {
+            stop("Unfortunately organism '",organism,"' could not be found,", call. = FALSE)
+        }
+            
         
         # construct retrieval query
         ensembl.qry <-
             paste0(
                 "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
-                paste0(stringr::str_split(bacteria.info$core_db,"_")[1:3], collapse = "_"),
+                paste0(unlist(stringr::str_split(bacteria.info$core_db,"_"))[1:3], collapse = "_"),
+                "/",
                 stringr::str_to_lower(new.organism),
                 "/",
                 paste0(
