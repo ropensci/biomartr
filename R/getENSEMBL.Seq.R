@@ -3,7 +3,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     if (!is.element(type, c("dna", "cds", "pep")))
         stop("Please a 'type' argument supported by this function: 'dna', 'cds', 'pep'.")
     
-    new.organism <- stringr::str_replace(organism, " ", "_")
+    new.organism <- stringr::str_replace_all(organism, " ", "_")
     
     # test if REST API is responding
     is.ensembl.alive()
