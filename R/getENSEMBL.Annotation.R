@@ -56,12 +56,15 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
     }
     
     if (!is.element(stringr::str_to_lower(new.organism),
-                    ensembl.available.organisms$name))
-        stop(
+                    ensembl.available.organisms$name)) {
+        
+        warning(
             "Unfortunately organism '",
             organism,
-            "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.", call. = FALSE
+            "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly. Thus, download of this species has been omitted."
         )
+        return(FALSE)
+    }
     
     # test proper API access
     tryCatch({
