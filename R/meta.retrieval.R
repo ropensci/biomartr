@@ -37,6 +37,8 @@ meta.retrieval <- function(kingdom,
     
     connected.to.internet()
     
+    division <- NULL
+    
     subfolders <- getKingdoms(db = db)
     
     if (!is.element(kingdom, subfolders))
