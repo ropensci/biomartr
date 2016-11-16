@@ -63,12 +63,14 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
     }
     
     if (!any(stringr::str_detect(stringr::str_to_lower(new.organism),
-                    ensembl.available.organisms$name)))
-        stop(
-            "Unfortunately organism '",
-            organism,
-            "' is not available at ENSEMBLGENOMES. Please check whether or not the organism name is typed correctly.", call. = FALSE
-        )
+                    ensembl.available.organisms$name))) {
+            warning(
+                "Unfortunately organism '",
+                organism,
+                "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly. Thus, download of this species has been omitted."
+            )
+            return(FALSE)
+    }
     
     # test proper API access
     tryCatch({
@@ -159,7 +161,8 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         bacteria.info <- dplyr::filter(bacteria.info, stringr::str_detect(name, stringr::coll(organism, ignore_case = TRUE)))
         
         if (nrow(bacteria.info) == 0) {
-            stop("Unfortunately organism '",organism,"' could not be found,", call. = FALSE)
+            warning("Unfortunately organism '",organism,"' could not be found. Thus download for this species is omitted.", call. = FALSE)
+            return(FALSE)
         }
             
         
@@ -181,6 +184,40 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                 )
             )
         
+        get.files <- RCurl::getURL(
+            paste0(
+                "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
+                paste0(unlist(
+                    stringr::str_split(bacteria.info$core_db, "_")
+                )[1:3], collapse = "_"),
+                "/",
+                stringr::str_to_lower(new.organism),
+                "/"
+            ),
+            verbose = FALSE,
+            ftp.use.epsv = TRUE,
+            dirlistonly = TRUE
+        )
+        
+        if (stringr::str_detect(get.files,"abinitio")) {
+            ensembl.qry <-
+                paste0(
+                    "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
+                    paste0(unlist(stringr::str_split(bacteria.info$core_db,"_"))[1:3], collapse = "_"),
+                    "/",
+                    stringr::str_to_lower(new.organism),
+                    "/",
+                    paste0(
+                        new.organism,
+                        ".",
+                        json.qry.info$default_coord_system_version,
+                        ".",
+                        eg_version,
+                        ".abinitio.gff3.gz"
+                    )
+                )
+        }
+        
     } else {
         # construct retrieval query
         ensembl.qry <-
@@ -199,6 +236,25 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                     ".gff3.gz"
                 )
             )
+        
+        if (stringr::str_detect(get.files,"abinitio")) {
+            ensembl.qry <-
+                paste0(
+                    "ftp://ftp.ensemblgenomes.org/pub/current/",
+                    stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
+                    "/gff3/",
+                    stringr::str_to_lower(new.organism),
+                    "/",
+                    paste0(
+                        new.organism,
+                        ".",
+                        json.qry.info$default_coord_system_version,
+                        ".",
+                        eg_version,
+                        ".abinitio.gff3.gz"
+                    )
+                )
+        }
     }
     
     
