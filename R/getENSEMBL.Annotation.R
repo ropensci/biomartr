@@ -6,7 +6,7 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
     # test if REST API is responding
     is.ensembl.alive()
     
-    new.organism <- stringr::str_replace(organism, " ", "_")
+    new.organism <- stringr::str_replace_all(organism, " ", "_")
     
     if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
         suppressWarnings(ensembl.available.organisms <-
