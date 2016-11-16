@@ -1,6 +1,5 @@
-#' @title Retrieve available kingdoms of life stored in databases
-#' @description A short list of kingdoms of life that are stored in the RefSeq
-#' database and that can be downloaded using e.g. \code{\link{meta.retrieval}}, \code{\link{getGenome}}, etc.
+#' @title Retrieve available kingdoms of life
+#' @description A short list of available kingdoms of life
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.
 #' Default is \code{db = "refseq"}.
 #' @author Hajk-Georg Drost
@@ -10,7 +9,7 @@
 #' 
 #' # retrieve kingdoms available at genbank
 #' getKingdoms(db = "genbank")
-#' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}
+#' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getSubgroups}}, \code{\link{getGroups}}
 #' @export
 
 getKingdoms <- function(db = "refseq"){
