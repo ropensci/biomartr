@@ -4,7 +4,8 @@
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}.
 #' Default is \code{db = "refseq"}.
 #' @author Hajk-Georg Drost
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # get possible kigdom names
 #' getKingdoms(db = "refseq")
 #' # retrieve subgroups for vertebrate_mammalian available at refseq
@@ -14,6 +15,7 @@
 #' getKingdoms(db = "genbank")
 #' # retrieve subgroups for vertebrate_mammalian available at genbank
 #' getGroups(kingdom = "vertebrate_mammalian",db = "genbank")
+#' }
 #' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getKingdoms}}, \code{\link{getSubgroups}}
 #' @export
 
