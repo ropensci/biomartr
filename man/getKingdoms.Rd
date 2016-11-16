@@ -2,7 +2,7 @@
 % Please edit documentation in R/getKingdoms.R
 \name{getKingdoms}
 \alias{getKingdoms}
-\title{Retrieve available kingdoms of life stored in databases}
+\title{Retrieve available kingdoms of life}
 \usage{
 getKingdoms(db = "refseq")
 }
@@ -11,8 +11,7 @@ getKingdoms(db = "refseq")
 Default is \code{db = "refseq"}.}
 }
 \description{
-A short list of kingdoms of life that are stored in the RefSeq
-database and that can be downloaded using e.g. \code{\link{meta.retrieval}}, \code{\link{getGenome}}, etc.
+A short list of available kingdoms of life
 }
 \examples{
 # retrieve kingdoms available at refseq
@@ -25,6 +24,6 @@ getKingdoms(db = "genbank")
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}
+\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getSubgroups}}, \code{\link{getGroups}}
 }
 
