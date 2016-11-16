@@ -3,12 +3,14 @@
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.
 #' Default is \code{db = "refseq"}.
 #' @author Hajk-Georg Drost
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # retrieve kingdoms available at refseq
 #' getKingdoms(db = "refseq")
 #' 
 #' # retrieve kingdoms available at genbank
 #' getKingdoms(db = "genbank")
+#' }
 #' @seealso \code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getSubgroups}}, \code{\link{getGroups}}
 #' @export
 
