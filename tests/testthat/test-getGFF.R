@@ -37,7 +37,7 @@ test_that("The getGFF() interface works properly..",{
 
 test_that("The getGFF() error messages work properly..",{
     
-    expect_true(getGFF( db       = "ensembl",
+    expect_error(getGFF( db       = "ensembl",
                             organism = "Saccharomyces cerevisi",
-                            path     = tempdir()))
+                            path     = tempdir()), "Unfortunately organism 'Saccharomyces cerevisi' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
 })
