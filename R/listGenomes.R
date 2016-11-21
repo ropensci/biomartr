@@ -27,7 +27,6 @@
 #'
 #' }
 #' 
-#' @references \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
 #' @export
 
 listGenomes <- function(db = "refseq", type = "all", subset = NULL, details = FALSE){
