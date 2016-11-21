@@ -29,8 +29,6 @@
 #' # and printing details
 #' is.genome.available(organism = "Homo sapiens", details = TRUE, db = "ensembl")
 #' }
-#' @references
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
 #' @export
 
 is.genome.available <- function(organism, details = FALSE, db = "refseq"){
