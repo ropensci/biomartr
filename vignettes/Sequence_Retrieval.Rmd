@@ -185,7 +185,7 @@ length(listGenomes(db = "genbank"))
 ```
 
 ```
-[1] 6723
+[1] 8568
 ```
 
 Example `ensembl`: 
@@ -235,7 +235,7 @@ listKingdoms(db = "genbank")
 
 ```
   Archaea  Bacteria Eukaryota 
-      347      4876      1501
+      392      6651      1525
 ```
 
 Example `ENSEMBL`:
