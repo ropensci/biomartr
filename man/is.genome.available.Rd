@@ -47,7 +47,4 @@ is.genome.available(organism = "Homo sapiens", details = TRUE, db = "ensembl")
 \author{
 Hajk-Georg Drost
 }
-\references{
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
-}
 
