@@ -8,33 +8,33 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
     
     new.organism <- stringr::str_replace_all(organism, " ", "_")
     
-    if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-        suppressWarnings(ensembl.available.organisms <-
-                             readr::read_tsv(
-                                 file.path(tempdir(), "ensembl_summary.txt"),
-                                 col_names = c(
-                                     "division",
-                                     "taxon_id",
-                                     "name",
-                                     "release",
-                                     "display_name",
-                                     "accession",
-                                     "common_name",
-                                     "assembly"
-                                 ),
-                                 col_types = readr::cols(
-                                     division = readr::col_character(),
-                                     taxon_id = readr::col_integer(),
-                                     name = readr::col_character(),
-                                     release = readr::col_integer(),
-                                     display_name = readr::col_character(),
-                                     accession = readr::col_character(),
-                                     common_name = readr::col_character(),
-                                     assembly = readr::col_character()
-                                 ),
-                                 comment = "#"
-                             ))
-    }
+    # if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
+    #     suppressWarnings(ensembl.available.organisms <-
+    #                          readr::read_tsv(
+    #                              file.path(tempdir(), "ensembl_summary.txt"),
+    #                              col_names = c(
+    #                                  "division",
+    #                                  "taxon_id",
+    #                                  "name",
+    #                                  "release",
+    #                                  "display_name",
+    #                                  "accession",
+    #                                  "common_name",
+    #                                  "assembly"
+    #                              ),
+    #                              col_types = readr::cols(
+    #                                  division = readr::col_character(),
+    #                                  taxon_id = readr::col_integer(),
+    #                                  name = readr::col_character(),
+    #                                  release = readr::col_integer(),
+    #                                  display_name = readr::col_character(),
+    #                                  accession = readr::col_character(),
+    #                                  common_name = readr::col_character(),
+    #                                  assembly = readr::col_character()
+    #                              ),
+    #                              comment = "#"
+    #                          ))
+    # }
     
     if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
         # check if organism is available on ENSEMBL
@@ -51,20 +51,17 @@ getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", 
         ensembl.available.organisms <-
             tibble::as_tibble(dplyr::select(ensembl.available.organisms$species, -aliases, -groups))
         
-        readr::write_tsv(ensembl.available.organisms,
-                         file.path(tempdir(), "ensembl_summary.txt"))
+        # readr::write_tsv(ensembl.available.organisms,
+        #                  file.path(tempdir(), "ensembl_summary.txt"), col_names = TRUE)
     }
     
     if (!is.element(stringr::str_to_lower(new.organism),
-                    ensembl.available.organisms$name)) {
-        
-        warning(
+                    ensembl.available.organisms$name))
+        stop(
             "Unfortunately organism '",
             organism,
-            "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly. Thus, download of this species has been omitted."
+            "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.", call. = FALSE
         )
-        return(FALSE)
-    }
     
     # test proper API access
     tryCatch({
