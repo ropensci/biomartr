@@ -53,16 +53,10 @@ getGFF( db       = "genbank",
                path = file.path("_ncbi_downloads","annotation"))
 
 }
+
 }
 \author{
 Hajk-Georg Drost
-}
-\references{
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
-
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank}
-
-\url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
 \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{meta.retrieval}}
