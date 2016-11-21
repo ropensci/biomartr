@@ -36,9 +36,6 @@ select an appropriate database for download with \code{\link{download.database}}
 \author{
 Hajk-Georg Drost
 }
-\references{
-\url{ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA}
-}
 \seealso{
 \code{\link{download.database}}
 }
