@@ -12,9 +12,6 @@
 #' select an appropriate database for download with \code{\link{download.database}}.
 #' 
 #' @author Hajk-Georg Drost
-#' @references 
-#' 
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA}
 #' @examples
 #' 
 #' # retrieve all versions of the NCBI 'nr' database that can be downloaded
