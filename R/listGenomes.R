@@ -10,8 +10,7 @@
 #' @param details a boolean value specifying whether only the scientific names of stored genomes shall be returned
 #' (details = FALSE) or all information such as \code{organism_name},\code{kingdoms}, \code{group}, \code{subgroup}, \code{file_size_MB}, etc.
 #' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from NCBI:
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' in the \code{temdir()}
+#' @details Internally this function loads the the overview.txt file from NCBI and creates a directory '_ncbi_downloads' in the \code{temdir()}
 #' folder to store the overview.txt file for future processing. In case the overview.txt file already exists within the
 #' '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed again.
 #' @note
