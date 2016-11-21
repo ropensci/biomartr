@@ -44,7 +44,8 @@ test_that("The getGenome() interface works properly..",{
 
 
 test_that("The getGenome() error messages work properly..",{
-    
+        skip_on_cran()
+        
     expect_true(getGenome( db       = "ensembl",
                organism = "Saccharomyces cerevisi",
                path     = tempdir()))
