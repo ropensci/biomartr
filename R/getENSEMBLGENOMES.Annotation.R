@@ -172,7 +172,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         }
             
         
-        if (is.na(bacteria.info$core_db)) {
+        if (is.na(bacteria.info$core_db[1])) {
             warning("Unfortunately organism '",organism,"' was not assigned to a bacteria collection. Thus download for this species is omitted.", call. = FALSE)
             return(FALSE)
         }
@@ -181,7 +181,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         ensembl.qry <-
             paste0(
                 "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
-                paste0(unlist(stringr::str_split(bacteria.info$core_db,"_"))[1:3], collapse = "_"),
+                paste0(unlist(stringr::str_split(bacteria.info$core_db[1],"_"))[1:3], collapse = "_"),
                 "/",
                 stringr::str_to_lower(new.organism),
                 "/",
@@ -198,7 +198,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         server.folder.path <- paste0(
             "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
             paste0(unlist(
-                stringr::str_split(bacteria.info$core_db, "_")
+                stringr::str_split(bacteria.info$core_db[1], "_")
             )[1:3], collapse = "_"),
             "/",
             stringr::str_to_lower(new.organism),
@@ -220,7 +220,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
             ensembl.qry <-
                 paste0(
                     "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
-                    paste0(unlist(stringr::str_split(bacteria.info$core_db,"_"))[1:3], collapse = "_"),
+                    paste0(unlist(stringr::str_split(bacteria.info$core_db[1],"_"))[1:3], collapse = "_"),
                     "/",
                     stringr::str_to_lower(new.organism),
                     "/",
@@ -240,7 +240,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         ensembl.qry <-
             paste0(
                 "ftp://ftp.ensemblgenomes.org/pub/current/",
-                stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
+                stringr::str_to_lower(stringr::str_replace(get.org.info$division[1],"Ensembl","")),
                 "/gff3/",
                 stringr::str_to_lower(new.organism),
                 "/",
@@ -258,7 +258,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
             ensembl.qry <-
                 paste0(
                     "ftp://ftp.ensemblgenomes.org/pub/current/",
-                    stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
+                    stringr::str_to_lower(stringr::str_replace(get.org.info$division[1],"Ensembl","")),
                     "/gff3/",
                     stringr::str_to_lower(new.organism),
                     "/",
