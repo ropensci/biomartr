@@ -196,7 +196,7 @@ getGFF <-
                         )
                 }, error = function(e)
                     stop(
-                        "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
+                        "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage '",json.qry.info,"' currently available?", call. = FALSE
                     ))
                 
                 cwd <- getwd()
