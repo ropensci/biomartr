@@ -28,7 +28,8 @@ test_that("The getCDS() interface works properly..",{
 })
 
 test_that("The getCDS() error messages work properly..",{
-    
+        skip_on_cran()
+        
     expect_true(getCDS( db       = "ensembl",
                         organism = "Saccharomyces cerevisi",
                         path     = tempdir()))
