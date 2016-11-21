@@ -1,12 +1,5 @@
 context("Test: download.database()")
 
-test_that("The download.database() interface works properly..",{
-    
-    skip_on_cran()
-    skip_on_travis()
-    
-    download.database(db = "nr.27.tar.gz")
-})
 
 test_that("The download.database() throws error when wrong input database is specified..",{
     
