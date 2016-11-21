@@ -4,7 +4,7 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
         stop("Please a 'type' argument supported by this function: 'dna', 'cds', 'pep'.")
     
     new.organism <- stringr::str_replace_all(organism, " ", "_")
-    
+    name <- NULL
     # test if REST API is responding
     is.ensemblgenomes.alive()
     
