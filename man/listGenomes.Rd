@@ -24,8 +24,7 @@ the results in a file named 'overview.txt' inside the directory '_ncbi_downloads
 is built inside the workspace.
 }
 \details{
-Internally this function loads the the overview.txt file from NCBI:
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/} and creates a directory '_ncbi_downloads' in the \code{temdir()}
+Internally this function loads the the overview.txt file from NCBI and creates a directory '_ncbi_downloads' in the \code{temdir()}
 folder to store the overview.txt file for future processing. In case the overview.txt file already exists within the
 '_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed again.
 }
