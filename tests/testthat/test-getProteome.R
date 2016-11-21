@@ -26,3 +26,10 @@ test_that("The getProteome() interface works properly..",{
                                                    path     = tempdir()), format = "fasta")
         
 })
+
+test_that("The getProteome() error messages work properly..",{
+    
+    expect_true(getProteome( db       = "ensembl",
+                        organism = "Saccharomyces cerevisi",
+                        path     = tempdir()))
+})
