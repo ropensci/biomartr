@@ -91,27 +91,126 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
     # retrieve detailed information for organism of interest
     get.org.info <- is.genome.available(organism = organism, details = TRUE, db = "ensemblgenomes")
     
-    # construct retrieval query
-    ensembl.qry <-
-        paste0(
-            "ftp://ftp.ensemblgenomes.org/pub/current/",
-            stringr::str_to_lower(stringr::str_replace(get.org.info$division,"Ensembl","")),
-            "/fasta/",
-            stringr::str_to_lower(new.organism),
-            "/",
-            type,
-            "/",
+    if (get.org.info$division == "EnsemblBacteria") {
+        
+        if (!file.exists(file.path(tempdir(),"EnsemblBacteria.txt"))) {
+            tryCatch({
+                downloader::download(
+                    "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt",
+                    destfile = file.path(tempdir(),"EnsemblBacteria.txt"),
+                    mode = "wb"
+                )
+            }, error = function(e)
+                stop(
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' currently available?",
+                    call. = FALSE
+                ))
+        }
+        
+        suppressWarnings(bacteria.info <-
+                             readr::read_tsv(
+                                 file.path(tempdir(), "EnsemblBacteria.txt"),
+                                 col_names = c(
+                                     "name",
+                                     "species",
+                                     "division",
+                                     "taxonomy_id",
+                                     "assembly",
+                                     "assembly_accession",
+                                     "genebuild",
+                                     "variation",
+                                     "pan_compara",
+                                     "peptide_compara",
+                                     "genome_alignments",
+                                     "other_alignments",
+                                     "core_db",
+                                     "species_id"
+                                 ),
+                                 col_types = readr::cols(
+                                     name = readr::col_character(),
+                                     species = readr::col_character(),
+                                     division = readr::col_character(),
+                                     taxonomy_id = readr::col_integer(),
+                                     assembly = readr::col_character(),
+                                     assembly_accession = readr::col_character(),
+                                     genebuild = readr::col_character(),
+                                     variation = readr::col_character(),
+                                     pan_compara = readr::col_character(),
+                                     peptide_compara = readr::col_character(),
+                                     genome_alignments = readr::col_character(),
+                                     other_alignments = readr::col_character(),
+                                     core_db = readr::col_character(),
+                                     species_id = readr::col_integer()
+                                 ),
+                                 comment = "#"
+                             ))
+        
+        # parse for wrong name conventions and fix them... 
+        organism <- stringr::str_replace_all(organism, " sp ", " sp. ")
+        organism <- stringr::str_replace_all(organism, " pv ", " pv. ")
+        organism <- stringr::str_replace_all(organism, " str ", " str. ")
+        organism <- stringr::str_replace_all(organism, " subsp ", " subsp. ")
+        organism <- stringr::str_replace_all(organism,"\\(","")
+        organism <- stringr::str_replace_all(organism,"\\)","")
+        
+        bacteria.info <- dplyr::filter(bacteria.info, stringr::str_detect(name, stringr::coll(organism, ignore_case = TRUE)))
+        
+        if (nrow(bacteria.info) == 0) {
+            warning("Unfortunately organism '",organism,"' could not be found. Thus download for this species is omitted.", call. = FALSE)
+            return(FALSE)
+        }
+        
+        
+        if (is.na(bacteria.info$core_db[1])) {
+            warning("Unfortunately organism '",organism,"' was not assigned to a bacteria collection. Thus download for this species is omitted.", call. = FALSE)
+            return(FALSE)
+        }
+        
+        # construct retrieval query
+        ensembl.qry <-
             paste0(
-                new.organism,
-                ".",
-                json.qry.info$default_coord_system_version,
-                ".",
+                "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/fasta/",
+                paste0(unlist(stringr::str_split(bacteria.info$core_db[1],"_"))[1:3], collapse = "_"),
+                "/",
+                stringr::str_to_lower(new.organism),
+                "/",
                 type,
-                ".",
-                id.type,
-                ".fa.gz"
+                "/",
+                paste0(
+                    new.organism,
+                    ".",
+                    json.qry.info$default_coord_system_version,
+                    ".",
+                    type,
+                    ".",
+                    id.type,
+                    ".fa.gz"
+                )
             )
-        )
+        
+    } else {
+        # construct retrieval query
+        ensembl.qry <-
+            paste0(
+                "ftp://ftp.ensemblgenomes.org/pub/current/",
+                stringr::str_to_lower(stringr::str_replace(get.org.info$division[1],"Ensembl","")),
+                "/fasta/",
+                stringr::str_to_lower(new.organism),
+                "/",
+                type,
+                "/",
+                paste0(
+                    new.organism,
+                    ".",
+                    json.qry.info$default_coord_system_version,
+                    ".",
+                    type,
+                    ".",
+                    id.type,
+                    ".fa.gz"
+                )
+            )
+    }
     
     tryCatch({
         downloader::download(ensembl.qry,
@@ -131,7 +230,7 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                              mode = "wb")
     }, error = function(e)
         stop(
-            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomesl.org/current/gff3' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/fasta' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
         ))
     
     return(file.path(
