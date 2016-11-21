@@ -1,6 +1,6 @@
 context("Test: getGFF()")
 
-test_that("The getGenome() interface works properly..",{
+test_that("The getGFF() interface works properly..",{
     
     skip_on_cran()
     skip_on_travis() 
