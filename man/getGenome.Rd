@@ -56,16 +56,10 @@ file_path <- getGenome( db       = "genbank",
 
 Ath_genome <- read_genome(file_path, format = "fasta")
 }
+
 }
 \author{
 Hajk-Georg Drost
-}
-\references{
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
-
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank}
-
-\url{http://www.ncbi.nlm.nih.gov/refseq/about/}
 }
 \seealso{
 \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
