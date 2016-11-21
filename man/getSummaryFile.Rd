@@ -15,8 +15,10 @@ getSummaryFile(db, kingdom)
 Retrieval function of the assembly_summary.txt file from NCBI.
 }
 \examples{
+\dontrun{ 
 test <- getSummaryFile("refseq","plant")
 test
+}
 }
 \author{
 Hajk-Georg Drost
