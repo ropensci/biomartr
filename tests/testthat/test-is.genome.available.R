@@ -39,7 +39,8 @@ test_that("The is.genome.available() interface works properly..",{
 
 
 test_that("The is.genome.available() error messages work properly..",{
-    
+        skip_on_cran()
+        
     # test unknown organism error handling for 'refseq'
     expect_identical(is.genome.available(organism = "Hrmo sapi", db = "refseq"), FALSE)
     # test unknown organism error handling for 'genbank'
