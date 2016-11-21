@@ -57,7 +57,7 @@ getKingdoms <- function(db = "refseq"){
         joined.df <-
             dplyr::inner_join(ensemblinfo, ensemblgenomesinfo, by = "name")
         
-        return(names(table(joined.df$division.y)))
+        return(names(table(joined.df$division.x)))
     }
     
     if (db == "ensemblgenomes") {
