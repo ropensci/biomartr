@@ -156,7 +156,13 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                                  comment = "#"
                              ))
         
+        # parse for wrong name conventions and fix them... 
         organism <- stringr::str_replace_all(organism, " sp ", " sp. ")
+        organism <- stringr::str_replace_all(organism, " pv ", " pv. ")
+        organism <- stringr::str_replace_all(organism, " str ", " str. ")
+        organism <- stringr::str_replace_all(organism, " subsp ", " subsp. ")
+        organism <- stringr::str_replace_all(organism,"\\(","")
+        organism <- stringr::str_replace_all(organism,"\\)","")
         
         bacteria.info <- dplyr::filter(bacteria.info, stringr::str_detect(name, stringr::coll(organism, ignore_case = TRUE)))
         
@@ -165,6 +171,11 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
             return(FALSE)
         }
             
+        
+        if (is.na(bacteria.info$core_db)) {
+            warning("Unfortunately organism '",organism,"' was not assigned to a bacteria collection. Thus download for this species is omitted.", call. = FALSE)
+            return(FALSE)
+        }
         
         # construct retrieval query
         ensembl.qry <-
@@ -184,20 +195,26 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                 )
             )
         
-        get.files <- RCurl::getURL(
-            paste0(
-                "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
-                paste0(unlist(
-                    stringr::str_split(bacteria.info$core_db, "_")
-                )[1:3], collapse = "_"),
-                "/",
-                stringr::str_to_lower(new.organism),
-                "/"
-            ),
+        server.folder.path <- paste0(
+            "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
+            paste0(unlist(
+                stringr::str_split(bacteria.info$core_db, "_")
+            )[1:3], collapse = "_"),
+            "/",
+            stringr::str_to_lower(new.organism),
+            "/"
+        )
+        tryCatch({get.files <- RCurl::getURL(
+            server.folder.path,
             verbose = FALSE,
             ftp.use.epsv = TRUE,
             dirlistonly = TRUE
-        )
+        )}, error = function(e)
+            stop(
+                "The server path '",server.folder.path,"' seems not to exist. Please make sure that the selected bacteria is available at ENSEMBLGENOMES.",
+                call. = FALSE
+            ))
+        Sys.sleep(0.33)
         
         if (stringr::str_detect(get.files,"abinitio")) {
             ensembl.qry <-
