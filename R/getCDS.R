@@ -8,7 +8,8 @@
 #' CDS file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
 #' @author Hajk-Georg Drost
 #' @return File path to downloaded CDS file.
-#' @examples \dontrun{
+#' @examples 
+#' \dontrun{
 #' # download the genome of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
 #' file_path <- getCDS( db       = "refseq", 
@@ -18,12 +19,6 @@
 #' Ath_CDS <- read_cds(file_path, format = "fasta")
 #' 
 #' }
-#' @references 
-#' 
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
-#'  
-#' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
-#' 
 #' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
 #' @export
 
