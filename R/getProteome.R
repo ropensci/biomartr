@@ -34,14 +34,6 @@
 #' 
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' }
-#' @references 
-#' 
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
-#' 
-#' \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank}
-#' 
-#' \url{http://www.ncbi.nlm.nih.gov/refseq/about/}
-#' 
 #' @seealso \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
 #' @export
 
