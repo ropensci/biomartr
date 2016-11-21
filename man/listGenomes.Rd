@@ -45,7 +45,4 @@ listGenomes(db = "refseq")
 \author{
 Hajk-Georg Drost
 }
-\references{
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt}
-}
 
