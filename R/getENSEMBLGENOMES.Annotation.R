@@ -254,27 +254,6 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                 )
             )
         
-        if (stringr::str_detect(get.files,"abinitio")) {
-            ensembl.qry <-
-                paste0(
-                    "ftp://ftp.ensemblgenomes.org/pub/current/",
-                    stringr::str_to_lower(stringr::str_replace(get.org.info$division[1],"Ensembl","")),
-                    "/gff3/",
-                    stringr::str_to_lower(new.organism),
-                    "/",
-                    paste0(
-                        new.organism,
-                        ".",
-                        json.qry.info$default_coord_system_version,
-                        ".",
-                        eg_version,
-                        ".abinitio.gff3.gz"
-                    )
-                )
-        }
-    }
-    
-    
     tryCatch({
         downloader::download(ensembl.qry,
                              destfile = file.path(
@@ -294,6 +273,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         stop(
             "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/gff3' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
         ))
+    }
     
     return(file.path(
         path,
