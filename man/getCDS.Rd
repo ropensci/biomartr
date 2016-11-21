@@ -37,11 +37,6 @@ Ath_CDS <- read_cds(file_path, format = "fasta")
 \author{
 Hajk-Georg Drost
 }
-\references{
-\url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq}
- 
-\url{http://www.ncbi.nlm.nih.gov/refseq/about/}
-}
 \seealso{
 \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
 }
