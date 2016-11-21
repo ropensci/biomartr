@@ -2,7 +2,6 @@
 #' @description This function extracts all organism names (scientific names) for which genomes,
 #' proteomes, and CDS files are stored on the NCBI refseq server.
 #' @author Hajk-Georg Drost
-#' @references \url{ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/}
 #' @export
 
 refseqOrganisms <- function(){
