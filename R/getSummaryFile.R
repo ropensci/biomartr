@@ -35,7 +35,7 @@ getSummaryFile <- function(db,kingdom){
             destfile = file.path(
                 tempdir(),
                 paste0("assembly_summary_", kingdom, "_", db, ".txt")
-            )
+            ), mode = "wb"
         ))}, error = function(e)
             stop(
                 "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",paste0(
@@ -46,7 +46,7 @@ getSummaryFile <- function(db,kingdom){
                     "/assembly_summary.txt"
                 ),"' currently available?", call. = FALSE
             ))
-        Sys.sleep(0.33)
+        Sys.sleep(0.4)
     }
     
     suppressWarnings(summary.file <-
