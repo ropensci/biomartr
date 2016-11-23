@@ -54,9 +54,7 @@ Now users can download `biomartr` from CRAN :
 
 ```r
 # install biomartr 0.2.0 from CRAN
-install.packages("biomartr",
-                 repos        = "https://cran.rstudio.com/",
-                 dependencies = TRUE)
+install.packages("biomartr")
 ```
 
 ## NEWS
