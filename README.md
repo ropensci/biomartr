@@ -11,7 +11,7 @@ The first step, however, of any genome based study is to retrieve genomes from d
 retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
 
 In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF, and metagenome project data. Furthermore, an interface to the [BioMart](http://www.biomart.org/) database allows users to retrieve functional annotation for genomic loci.
-Users can [download entire databases]((https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
+Users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
 Hence, the `biomartr` package is designed to achieve the highest degree of reproducible research.
 
