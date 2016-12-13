@@ -29,7 +29,7 @@ of interest as first argument (e.g. the path returned by \code{\link{getGenome}}
 \examples{
 \dontrun{
 # reading a genome stored in a fasta file
-Ath.genome <- read.genome(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
+Ath.genome <- read_genome(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
                            format = "fasta")
                            
 Ath.genome
