@@ -31,7 +31,7 @@ It is possible to read in different proteome file standards such as \emph{fasta}
 \examples{
 \dontrun{
 # import a proteome stored as fasta
-Ath.proteome <- read.proteome(system.file('seqs/ortho_thal_aa.fasta', package = 'orthologr'),
+Ath.proteome <- read_proteome(system.file('seqs/ortho_thal_aa.fasta', package = 'orthologr'),
                                format = "fasta",
                                obj.type = "Biostrings")
          
