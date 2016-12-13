@@ -74,7 +74,14 @@ organismBM <- function(organism = NULL, update = FALSE){
         
         
         if (file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
-                all_marts <- readr::read_tsv(file.path(tempdir(),"_biomart","listMarts.txt"))
+                all_marts <-
+                        readr::read_tsv(
+                                file.path(tempdir(), "_biomart", "listMarts.txt"),
+                                col_types = readr::cols(
+                                        "mart" = readr::col_character(),
+                                        "version" = readr::col_character()
+                                )
+                        )
         
         if (update){
                 
@@ -106,22 +113,41 @@ organismBM <- function(organism = NULL, update = FALSE){
         }
         
         if (file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
-                all_datasets <- readr::read_tsv(file.path(tempdir(),"_biomart","listDatasets.txt"))
+                all_datasets <-
+                        readr::read_tsv(
+                                file.path(tempdir(), "_biomart", "listDatasets.txt"),
+                                col_types = readr::cols(
+                                        "dataset" = readr::col_character(),
+                                        "description" = readr::col_character(),
+                                        "version" = readr::col_character(),
+                                        "mart" = readr::col_character()
+                                )
+                        )
         
-       all_datasets <- dplyr::mutate(all_datasets,
-                                     organism_name = sapply(unlist(all_datasets[ ,"description"]), function(x) paste0(strsplit(x," ")[[1]][1:2],collapse = " ")))
-       
-       all_datasets <- dplyr::select(all_datasets, organism_name,description,mart,dataset,version)
+        all_datasets <- dplyr::mutate(all_datasets,
+                                      organism_name = sapply(unlist(all_datasets[, "dataset"]), 
+                                                             function(x) unlist(strsplit(x, "_")[[1]][1])))
+        
+        all_datasets <-
+                dplyr::select(all_datasets,
+                              organism_name,
+                              description,
+                              mart,
+                              dataset,
+                              version)
           
        if (!is.null(organism)){
                
-               res <- dplyr::filter(all_datasets,organism_name == organism)
+               organism <- unlist(stringr::str_split(organism, " "))
+               organism <- stringr::str_c(stringr::str_to_lower(stringr::str_sub(organism[1],1,1)),organism[2], collapse = "")
+
+               res <- dplyr::filter(all_datasets,stringr::str_detect(organism_name, organism))
                
                if (dim(res)[1] == 0){
                        stop ("Unfortunately, no entry for '", organism, "' has been found.")
                } else {
                        
-                       return (dplyr::filter(all_datasets,organism_name == organism))
+                       return (dplyr::filter(all_datasets,stringr::str_detect(organism_name, organism)))
                }
        }
        
