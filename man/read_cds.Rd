@@ -38,7 +38,7 @@ CDS stored in fasta files can be downloaded from http://www.ensembl.org/info/dat
 \examples{
 \dontrun{
 # reading a cds file stored in fasta format
-Ath.cds <- read.cds(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
+Ath.cds <- read_cds(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
                     format = "fasta")
 }
 
