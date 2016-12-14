@@ -21,29 +21,50 @@
 #' 
 #' }
 #' 
-#' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}},\code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+#' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 getAttributes <- function(mart, dataset){
         
-        if((!is.character(mart)) || (!is.character(dataset)))
+        if ((!is.character(mart)) || (!is.character(dataset)))
                 stop("Please use a character string as mart or dataset.")
         
-        url <- paste0("http://www.ensembl.org/biomart/martservice?type=attributes&dataset=",dataset,"&requestid=biomart&mart=",mart,"&virtualSchema=default")
-        
-        attributesPage <- httr::handle(url)
-        xmlContentAttributes <- httr::GET(handle = attributesPage)
-        
-        httr::stop_for_status(xmlContentAttributes)
-        
-        # extract attribute name and attribute description
-        suppressWarnings(rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentAttributes,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t")))))
-        
-        colnames(rawDF) <- paste0("V",1:ncol(rawDF))
-        
-        attrBioMart <- as.data.frame(rawDF[ , c("V1","V2")], stringsAsFactors = FALSE, colClasses = rep("character",2))
-        colnames(attrBioMart) <- c("name","description")
-        
+    url <-
+        paste0(
+            "http://www.ensembl.org/biomart/martservice?type=attributes&dataset=",
+            dataset,
+            "&requestid=biomart&mart=",
+            mart,
+            "&virtualSchema=default"
+        )
+    
+    testContent <- httr::content(httr::GET(url), as = "text")
+    if (testContent == "Attribute 'mains' does not exist\n") {
+        warning("No attributes were available for mart = ",mart," and dataset = ",dataset,".", call. = FALSE)
+        attrBioMart <- data.frame(name = "NA", description = "NA")
         return(attrBioMart)
+    }
+    
+    attributesPage <- httr::handle(url)
+    xmlContentAttributes <- httr::GET(handle = attributesPage)
+    
+    httr::stop_for_status(xmlContentAttributes)
+    
+    # extract attribute name and attribute description
+    suppressWarnings(rawDF <-
+                         do.call("rbind", apply(as.data.frame(strsplit(
+                             httr::content(xmlContentAttributes, as = "text"), "\n"
+                         )), 1, function(x)
+                             unlist(strsplit(x, "\t")))))
+    
+    colnames(rawDF) <- paste0("V", 1:ncol(rawDF))
+    
+    attrBioMart <-
+        as.data.frame(rawDF[, c("V1", "V2")],
+                      stringsAsFactors = FALSE,
+                      colClasses = rep("character", 2))
+    colnames(attrBioMart) <- c("name", "description")
+    
+    return(attrBioMart)
 }
 
 
