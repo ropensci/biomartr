@@ -16,7 +16,7 @@ test_that("The getDatasets() interface works properly..",{
         attrib <- getDatasets(mart = as.character(marts[ex_mart]))
         
         expect_true(equal_lists(as.list(attrib[1 , ]), list(dataset = "oanatinus_gene_ensembl",
-                                                            description = "Ornithorhynchus anatinus genes (OANA5)",
+                                                            description = "Platypus genes (OANA5)",
                                                             version = "OANA5")))
 })
 
