@@ -23,30 +23,58 @@
 #' @export
 getFilters <- function(mart, dataset){
         
-        if((!is.character(mart)) || (!is.character(dataset)))
+        if ((!is.character(mart)) || (!is.character(dataset)))
                 stop("Please use a character string as mart or dataset.")
         
-        url <- paste0("http://www.ensembl.org/biomart/martservice?type=filters&dataset=",dataset,"&requestid=biomart&mart=",mart,"&virtualSchema=default")
+    url <-
+        paste0(
+            "http://www.ensembl.org/biomart/martservice?type=filters&dataset=",
+            dataset,
+            "&requestid=biomart&mart=",
+            mart,
+            "&virtualSchema=default"
+        )
+    
+    testContent <- httr::content(httr::GET(url), as = "text")
+
+    if ((testContent == "Attribute 'mains' does not exist\n") || is.na(testContent)) {
+        warning("No attributes were available for mart = ",mart," and dataset = ",dataset,".", call. = FALSE)
+        filterBioMart <- data.frame(name = "NA", description = "NA")
+        return(filterBioMart)
+    }
+    
+    filterPage <- httr::handle(url)
+    xmlContentFilters <- httr::GET(handle = filterPage)
+    
+    httr::stop_for_status(xmlContentFilters)
+    
+    
+    tryCatch({
+        # extract attribute name and attribute description
+        suppressWarnings(rawDF <-
+                             do.call("rbind", apply(as.data.frame(strsplit(
+                                 httr::content(xmlContentFilters, as = "text"), "\n"
+                             )), 1, function(x)
+                                 unlist(strsplit(x, "\t")))))
         
-        filterPage <- httr::handle(url)
-        xmlContentFilters <- httr::GET(handle = filterPage)
+        colnames(rawDF) <- paste0("V", 1:ncol(rawDF))
         
-        httr::stop_for_status(xmlContentFilters)
+        filterBioMart <-
+            as.data.frame(rawDF[, c("V1", "V2")],
+                          stringsAsFactors = FALSE,
+                          colClasses = rep("character", 2))
+        colnames(filterBioMart) <- c("name", "description")
         
+        return(filterBioMart)
         
-        tryCatch({
-                
-                # extract attribute name and attribute description
-                suppressWarnings(rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentFilters,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t")))))
-        
-                colnames(rawDF) <- paste0("V",1:ncol(rawDF))
-        
-                filterBioMart <- as.data.frame(rawDF[ , c("V1","V2")], stringsAsFactors = FALSE, colClasses = rep("character",2))
-                colnames(filterBioMart) <- c("name","description")
-        
-                return(filterBioMart)
-        
-        }, error = function(e) stop("Your input mart '",mart,"' or dataset '",dataset,"' could not be found. Please use getMarts() to choose from available marts."))
+    }, error = function(e)
+        stop(
+            "Your input mart '",
+            mart,
+            "' or dataset '",
+            dataset,
+            "' could not be found. Please use getMarts() to choose from available marts."
+        ))
 }
 
 
