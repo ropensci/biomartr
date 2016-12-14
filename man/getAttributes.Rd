@@ -36,6 +36,6 @@ head(getAttributes(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensem
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{getDatasets}},\code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+\code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 
