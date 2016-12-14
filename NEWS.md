@@ -1,3 +1,11 @@
+biomartr 0.2.1
+===========
+
+In this version of `biomartr` the `organism*()` functions were adapted to the new [ENSEMBL 87 release](http://www.ensembl.info/blog/2016/12/08/ensembl-87-has-been-released/)
+in which organism name specification in the Biomart description column [was changed](https://github.com/HajkD/biomartr/issues/1)
+from a scientific name convention to a mix of common name and scientific name convention.
+
+
 biomartr 0.2.0
 ===========
 
