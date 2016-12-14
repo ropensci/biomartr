@@ -16,5 +16,5 @@ test_that("The getAttributes() interface works properly..",{
         attrib <- getAttributes(mart = as.character(marts[ensemb_mart]), dataset = "hsapiens_gene_ensembl")
         
         expect_true(equal_lists(as.list(attrib[1 , ]), list(name = "ensembl_gene_id",
-                                                            description = "Ensembl Gene ID")))
+                                                            description = "Gene ID")))
 })
