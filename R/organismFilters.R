@@ -53,70 +53,83 @@ organismFilters <- function(organism, update = FALSE, topic = NULL){
         name <- description <- mart <- dataset <- NULL
         
         orgBM <- organismBM(organism = organism, update = update)
-        orgMarts <- names(table(orgBM[ , "mart"]))
-        martList <- lapply(orgMarts, function(mart) dplyr::filter(orgBM,mart == mart))
         
-        filtersTXT <- paste0("listFilters_",stringr::str_replace(organism," ","_"))
+        orgMarts <- names(table(orgBM$mart))
         
-        if(!file.exists(file.path(tempdir(),"_biomart"))){
-                
-                dir.create(file.path(tempdir(),"_biomart"))
-        }       
+        martList <-
+            lapply(orgMarts, function(mart)
+                dplyr::filter(orgBM, mart == mart))
         
-        if(!file.exists(file.path(tempdir(),"_biomart",paste0(filtersTXT,".txt")))){
-                
-                filtersList <- lapply(martList, function(mart) { 
-                        
-                        mart <- as.data.frame(mart); 
-                        mart_tbl <- do.call(rbind,lapply(1:nrow(mart),
-                                                         function(dataset) {
-                                                                 
-                                                                 filters_tbl <- getFilters(
-                                                                                      dataset = mart[ dataset , "dataset"], 
-                                                                                      mart    = mart[ dataset , "mart"])
-                                                                 
-                                                                 datasetVec <- rep(mart[ dataset , "dataset"], nrow(filters_tbl))
-                                                                 
-                                                                 filters_tbl <- dplyr::mutate(filters_tbl, dataset = datasetVec)
-                                                                 
-                                                                 return(filters_tbl)
-                                                         }))
-                        
-                        martVec <-rep(mart[1  , "mart"], nrow(mart_tbl))
-                        mart_tbl <- dplyr::mutate(mart_tbl, mart = martVec)
-                        return(mart_tbl)
-                }
-                )
-                
-                utils::write.table(do.call(rbind,filtersList),
-                            file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
-                            sep       = "\t",
-                            quote     = FALSE,
-                            col.names = TRUE,
-                            row.names = FALSE)
-                
+        filtersTXT <-
+            paste0("listFilters_", stringr::str_replace(organism, " ", "_"))
+        
+        if (!file.exists(file.path(tempdir(), "_biomart"))) {
+            dir.create(file.path(tempdir(), "_biomart"))
         }
         
-        filterTable <- utils::read.csv(file.path(tempdir(), "_biomart",paste0(filtersTXT,".txt")),
-                                sep              = "\t",
-                                header           = TRUE,
-                                colClasses       = rep("character", 4),
-                                stringsAsFactors = FALSE)        
+        if (!file.exists(file.path(tempdir(), "_biomart", paste0(filtersTXT, ".txt")))) {
+            filtersList <- lapply(martList, function(mart) {
+                mart <- as.data.frame(mart)
+                
+                mart_tbl <-
+                    do.call(rbind, lapply(1:nrow(mart),
+                                          function(dataset) {
+                                              filters_tbl <- getFilters(dataset = mart$dataset[dataset],
+                                                                        mart    = mart$mart[dataset])
+                                              
+                                              datasetVec <-
+                                                  rep(mart$dataset[dataset], nrow(filters_tbl))
+                                              
+                                              filters_tbl <-
+                                                  dplyr::mutate(filters_tbl, dataset = datasetVec)
+                                              
+                                              return(filters_tbl)
+                                          }))
+                
+                martVec <-
+                    rep(mart$mart[1], nrow(mart_tbl))
+                mart_tbl <-
+                    dplyr::mutate(mart_tbl, mart = martVec)
+                return(mart_tbl)
+            })
+            
+            utils::write.table(
+                do.call(rbind, filtersList),
+                file.path(tempdir(), "_biomart", paste0(filtersTXT, ".txt")),
+                sep       = "\t",
+                quote     = FALSE,
+                col.names = TRUE,
+                row.names = FALSE
+            )
+            
+        }
+        
+        filterTable <-
+            readr::read_tsv(
+                file.path(tempdir(), "_biomart", paste0(filtersTXT, ".txt")),
+                col_names = TRUE,
+                col_types = readr::cols(
+                    "name" = readr::col_character(),
+                    "description" = readr::col_character(),
+                    "dataset" = readr::col_character(),
+                    "mart" = readr::col_character()
+                )
+            )
         
         # summ_filterTable <- dplyr::summarise(dplyr::group_by(filterTable, name), description = names(table(description)), mart = names(table(mart)), dataset = names(table(dataset)))
         
-        if(!is.null(topic)){
-                
-                findTopic <- which(sapply(filterTable[ , "name"],function(x) stringr::str_detect(x,topic)))
-                
-                if(dim(filterTable[findTopic , ])[1] == 0)
-                        stop("Unfortunately the topic '", topic ,"' could not be found.")
-                
-                return(filterTable[findTopic , ])
-                
+        if (!is.null(topic)) {
+            findTopic <-
+                which(sapply(filterTable$name, function(x)
+                    stringr::str_detect(x, topic)))
+            
+            if (dim(filterTable[findTopic , ])[1] == 0)
+                stop("Unfortunately the topic '", topic , "' could not be found.")
+            
+            return(filterTable[findTopic , ])
+            
         } else {
-                
-                return(filterTable)
+            return(filterTable)
         }
 }
 
