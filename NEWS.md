@@ -5,6 +5,8 @@ In this version of `biomartr` the `organism*()` functions were adapted to the ne
 in which organism name specification in the Biomart description column [was changed](https://github.com/HajkD/biomartr/issues/1)
 from a scientific name convention to a mix of common name and scientific name convention.
 
+- all `organism*()` functions have been adapted to the new ENSEMBL 87 release organism name notation that is used in the Biomart description
+
 
 biomartr 0.2.0
 ===========
