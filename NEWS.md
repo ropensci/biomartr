@@ -7,6 +7,7 @@ from a scientific name convention to a mix of common name and scientific name co
 
 - all `organism*()` functions have been adapted to the new ENSEMBL 87 release organism name notation that is used in the Biomart description
 
+- fixing error handling bug that caused commands such as `download.database(db = "nr.27.tar.gz")` to not execute properly
 
 biomartr 0.2.0
 ===========
