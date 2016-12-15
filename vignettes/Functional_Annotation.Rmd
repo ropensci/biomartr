@@ -326,17 +326,7 @@ head( getFilters(mart    = "ENSEMBL_MART_ENSEMBL",
 ```
 
 ```
-                 name                                               description
-1     chromosome_name                                           Chromosome name
-2               start                                           Gene Start (bp)
-3                 end                                             Gene End (bp)
-4          band_start                                                Band Start
-5            band_end                                                  Band End
-6        marker_start                                              Marker Start
-7          marker_end                                                Marker End
-8       encode_region                                             Encode region
-9              strand                                                    Strand
-10 chromosomal_region Chromosome Regions (e.g 1:100:10000:-1,1:100000:200000:1)
+
 ```
 
 ## Organism Specific Retrieval of Information
