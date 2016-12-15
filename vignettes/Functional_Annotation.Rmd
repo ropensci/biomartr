@@ -400,7 +400,7 @@ head(organismAttributes("Homo sapiens"), 20)
 ```
 
 ```
- A tibble: 20 × 4
+A tibble: 20 × 4
                        name                                description               dataset                 mart
                       <chr>                                      <chr>                 <chr>                <chr>
 1           ensembl_gene_id                                    Gene ID hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
@@ -444,7 +444,7 @@ head(organismAttributes("Homo sapiens", topic = "id"), 20)
 ```
 
 ```
- A tibble: 20 × 4
+A tibble: 20 × 4
                        name                                       description               dataset
                       <chr>                                             <chr>                 <chr>
 1           ensembl_gene_id                                           Gene ID hsapiens_gene_ensembl
@@ -453,8 +453,8 @@ head(organismAttributes("Homo sapiens", topic = "id"), 20)
 4           ensembl_exon_id                                           Exon ID hsapiens_gene_ensembl
 5         study_external_id                          Study External Reference hsapiens_gene_ensembl
 6                     go_id                                 GO Term Accession hsapiens_gene_ensembl
-7                 dbass3_id Database of Aberrant 3' Splice Sites (DBASS3) IDs hsapiens_gene_ensembl
-8                 dbass5_id Database of Aberrant 5' Splice Sites (DBASS5) IDs hsapiens_gene_ensembl
+7                 dbass3_id Database of Aberrant 3 Splice Sites (DBASS3) IDs hsapiens_gene_ensembl
+8                 dbass5_id Database of Aberrant 5 Splice Sites (DBASS5) IDs hsapiens_gene_ensembl
 9                   hgnc_id                                        HGNC ID(s) hsapiens_gene_ensembl
 10               mirbase_id                                     miRBase ID(s) hsapiens_gene_ensembl
 11               mim_morbid                                        MIM MORBID hsapiens_gene_ensembl
@@ -467,7 +467,7 @@ head(organismAttributes("Homo sapiens", topic = "id"), 20)
 18       ensembl_peptide_id                                        Protein ID hsapiens_gene_ensembl
 19          ensembl_exon_id                                           Exon ID hsapiens_gene_ensembl
 20          ensembl_gene_id                                           Gene ID hsapiens_gene_ensembl
- ... with 1 more variables: mart <chr>
+with 1 more variables: mart <chr>
 ```
 
 Now, all `attribute names` having `id` as part of their `name` are being returned.
@@ -479,7 +479,7 @@ Another example is `topic = "homolog"`.
 head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 ```
 ```
- A tibble: 20 × 4
+A tibble: 20 × 4
                                           name                                     description               dataset
                                          <chr>                                           <chr>                 <chr>
 1                  vpacos_homolog_ensembl_gene                           Alpaca gene stable ID hsapiens_gene_ensembl
@@ -502,7 +502,7 @@ head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 18       pformosa_homolog_associated_gene_name               Amazon molly associated gene name hsapiens_gene_ensembl
 19            pformosa_homolog_ensembl_peptide    Amazon molly protein or transcript stable ID hsapiens_gene_ensembl
 20                 pformosa_homolog_chromosome           Amazon molly chromosome/scaffold name hsapiens_gene_ensembl
- ... with 1 more variables: mart <chr>
+with 1 more variables: mart <chr>
 ```
 
 Or `topic = "dn"` and `topic = "ds"` for `dn` and `ds` value retrieval.
@@ -512,7 +512,7 @@ Or `topic = "dn"` and `topic = "ds"` for `dn` and `ds` value retrieval.
 head(organismAttributes("Homo sapiens", topic = "dn"))
 ```
 ```
- A tibble: 6 × 4
+A tibble: 6 × 4
                                 name              description               dataset                 mart
                                <chr>                    <chr>                 <chr>                <chr>
 1                  cdna_coding_start        cDNA coding start hsapiens_gene_ensembl ENSEMBL_MART_ENSEMBL
@@ -572,7 +572,7 @@ head(organismFilters("Homo sapiens"), 20)
 18          with_ox_clone_based_vega_gene                          with clone based VEGA gene ID(s)
 19    with_ox_clone_based_vega_transcript                    with clone based VEGA transcript ID(s)
 20                            with_dbass3                                         with DBASS3 ID(s)
- ... with 2 more variables: dataset <chr>, mart <chr>
+ with 2 more variables: dataset <chr>, mart <chr>
 ```
 
 The `organismFilters()` function also allows users to search for filters that correspond to
@@ -607,7 +607,7 @@ head(organismFilters("Homo sapiens", topic = "id"), 20)
 18               go_evidence_code                                   GO Evidence code
 19 with_itridecemlineatus_homolog                         Orthologous Squirrel Genes
 20     with_tnigroviridis_homolog                        Orthologous Tetraodon Genes
- ... with 2 more variables: dataset <chr>, mart <chr>
+with 2 more variables: dataset <chr>, mart <chr>
 ```
 
 ## Performing BioMart queries with biomartr
