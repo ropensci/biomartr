@@ -31,7 +31,7 @@ download.database <- function(db, path = "database"){
     db.name <- names(table(unlist(sapply(db, function(x)
         unlist(stringr::str_split(x, "[.]"))[1]))))
     
-    if (!is.element(db.name, listDatabases(db = db.name)) || !is.element(db.name, listDatabases("all")))
+    if (!is.element(db.name, listDatabases("all")))
         stop(
             "The specified database '",
             db,

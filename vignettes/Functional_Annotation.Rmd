@@ -140,7 +140,7 @@ by using the `getBM()` function.
 In this example we will retrieve attributes: `start_position`,`end_position` and `description`
 for the _Homo sapiens_ gene `"GUCA2A"`.
 
-Since the input genes are `ensembl gene ids`, we need to specify the `filters` argument `filters = "tair_locus"`.
+Since the input genes are `ensembl gene ids`, we need to specify the `filters` argument `filters = "hgnc_symbol"`.
 
 ```{r,eval=FALSE}
 # 1) select a mart and data set
