@@ -1,6 +1,6 @@
 Package: biomartr
 Title: Genomic Data Retrieval with R
-Version: 0.2.1
+Version: 0.3.0
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Description: Perform meta-genomic data retrieval and functional annotation retrieval with
