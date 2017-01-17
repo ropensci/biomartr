@@ -29,10 +29,13 @@ getMetaGenomeSummary <- function() {
     
     suppressWarnings(summary.file <-
                          tibble::as_tibble(
-                             readr::read_tsv(
+                             readr::read_delim(
                                  file.path(tempdir(),
                                            "assembly_summary_metagenomes_genbank.txt"),
                                  comment = "#",
+                                 delim = "\t",
+                                 quote = "\"",
+                                 escape_backslash = FALSE,
                                  col_names = c(
                                      "assembly_accession",
                                      "bioproject",
