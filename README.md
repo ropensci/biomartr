@@ -22,6 +22,18 @@ working on this software tool and will motivate me to extend its functionality a
 
 > Hajk-Georg Drost, Jerzy Paszkowski; __Biomartr: genomic data retrieval with R.__ *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
 
+## Discussions and Bug Reports
+
+I would be very happy to learn more about potential improvements of the concepts and functions
+provided in this package.
+
+Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts
+of this package, please let me know:
+
+[twitter: HajkDrost](https://twitter.com/hajkdrost) or  [email](hgd23@cam.ac.uk)
+
+For Bug Report: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
+
 ## Tutorials
 
 Getting Started with `biomartr`:
@@ -161,16 +173,6 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 
 - Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
-## Discussions and Bug Reports
 
-I would be very happy to learn more about potential improvements of the concepts and functions
-provided in this package.
-
-Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts
-of this package, please let me know:
-
-[twitter: HajkDrost](https://twitter.com/hajkdrost) or  [email](hgd23@cam.ac.uk)
-
-For Bug Report: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
 
 
