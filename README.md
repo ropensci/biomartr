@@ -15,6 +15,13 @@ Users can [download entire databases](https://github.com/HajkD/biomartr/blob/mas
 
 Hence, the `biomartr` package is designed to achieve the highest degree of reproducible research.
 
+### Citation
+
+**Please cite the following paper when using `biomartr` for your own research. This will allow me to continue
+working on this software tool and will motivate me to extend its functionality and usability in the next years. Many thanks in advance :)**
+
+> Hajk-Georg Drost, Jerzy Paszkowski; __Biomartr: genomic data retrieval with R.__ *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
+
 ## Tutorials
 
 Getting Started with `biomartr`:
