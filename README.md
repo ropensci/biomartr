@@ -172,6 +172,8 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 
 - Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
+# Code of conduct
 
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 
