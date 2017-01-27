@@ -20,7 +20,7 @@ Hence, the `biomartr` package is designed to achieve the highest degree of repro
 **Please cite the following paper when using `biomartr` for your own research. This will allow me to continue
 working on this software tool and will motivate me to extend its functionality and usability in the next years. Many thanks in advance :)**
 
-> Hajk-Georg Drost, Jerzy Paszkowski; __Biomartr: genomic data retrieval with R.__ *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
+> Hajk-Georg Drost, Jerzy Paszkowski; [Biomartr: genomic data retrieval with R](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R). *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
 
 ## Discussions and Bug Reports
 
