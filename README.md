@@ -22,6 +22,10 @@ working on this software tool and will motivate me to extend its functionality a
 
 > Hajk-Georg Drost, Jerzy Paszkowski; [Biomartr: genomic data retrieval with R](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R). *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
 
+### Platforms
+
+> Find `biomartr` also at [OmicTools](https://omictools.com/biomartr-tool).
+
 ## Discussions and Bug Reports
 
 I would be very happy to learn more about potential improvements of the concepts and functions
