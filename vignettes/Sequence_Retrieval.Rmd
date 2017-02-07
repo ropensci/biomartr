@@ -452,6 +452,17 @@ HS.genome.refseq <- getGenome( db       = "refseq",
 
 In this example, `getGenome()` creates a directory named `'_ncbi_downloads/genomes'` into which the corresponding genome named `GCF_000001405.34_GRCh38.p8_genomic.fna.gz` is downloaded. The return value of `getGenome()` is the folder path to the downloaded genome file
 that can then be used as input to the `read_genome()` function. The variable `HS.genome.refseq` stores the path to the downloaded genome. 
+
+Users can also omit the `path` argument if they wish to store the genome in their current working directory. E.g.:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from refseq
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+HS.genome.refseq <- getGenome( db       = "refseq", 
+                               organism = "Homo sapiens")
+```
+
+
 Subsequently, users can use the `read_genome()` function to import the genome into the R session. Users can choose to work with the genome sequence in R either as [Biostrings](http://bioconductor.org/packages/release/bioc/html/Biostrings.html) object (`obj.type = "Biostrings"`) or [data.table](https://github.com/Rdatatable/data.table/wiki) object
 (`obj.type = "data.table"`) by specifying the `obj.type` argument of the `read_genome()` function. 
 
