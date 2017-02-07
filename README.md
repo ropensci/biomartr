@@ -84,8 +84,8 @@ The current status of the package as well as a detailed history of the functiona
 
 #### Meta-Genome Retrieval
 
-* `meta.retieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
-* `meta.retieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
+* `meta.retrieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
+* `meta.retrieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
 * `getMetaGenomes()` : Retrieve metagenomes from NCBI Genbank
 * `getMetaGenomeAnnotations()` : Retrieve annotation *.gff files for metagenomes from NCBI Genbank
 * `listMetaGenomes()` : List available metagenomes on NCBI Genbank
