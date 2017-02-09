@@ -3,8 +3,7 @@ Title: Genomic Data Retrieval with R
 Version: 0.3.0
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
-Description: Perform meta-genomic data retrieval and functional annotation retrieval with
-    R.
+Description: Perform metagenomic data retrieval and functional annotation retrieval with R.
 VignetteBuilder: knitr
 NeedsCompilation: yes
 Depends:
@@ -32,5 +31,5 @@ License: GPL-3
 LazyData: true
 URL: https://github.com/HajkD/biomartr
 BugReports: https://github.com/HajkD/biomartr/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Encoding: UTF-8
