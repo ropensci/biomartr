@@ -53,10 +53,9 @@ file_path <- getProteome( db       = "genbank",
 Ath_proteome <- read_proteome(file_path, format = "fasta")
 }
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
 }
-
+\author{
+Hajk-Georg Drost
+}

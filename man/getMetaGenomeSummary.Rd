@@ -16,10 +16,9 @@ test <- getMetaGenomeSummary()
 test
 } 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getKingdomAssemblySummary}}, \code{\link{getSummaryFile}}
 }
-
+\author{
+Hajk-Georg Drost
+}

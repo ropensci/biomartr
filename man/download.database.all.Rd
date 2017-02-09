@@ -26,10 +26,9 @@ selected by the users (hence all packages corresponding to this database).
   download.database.all(name = "nr", path = "nr")
 }
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{download.database}}, \code{\link{listDatabases}}
 }
-
+\author{
+Hajk-Georg Drost
+}

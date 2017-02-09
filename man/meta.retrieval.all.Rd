@@ -33,4 +33,3 @@ meta.retrieval.all(db = "genbank", type = "ensemblgenomes")
 \author{
 Hajk-Georg Drost
 }
-

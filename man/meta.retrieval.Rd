@@ -47,4 +47,3 @@ meta.retrieval(kingdom = "", db = "ensemblgenomes", type = "genome")
 \author{
 Hajk-Georg Drost
 }
-
