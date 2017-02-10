@@ -73,7 +73,7 @@ Please type `a` specifying that all package dependencies of the corresponding pa
 Now users can download `biomartr` from CRAN :
 
 ```r
-# install biomartr 0.2.1 from CRAN
+# install biomartr 0.3.0 from CRAN
 install.packages("biomartr")
 ```
 
