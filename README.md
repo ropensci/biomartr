@@ -26,6 +26,10 @@ working on this software tool and will motivate me to extend its functionality a
 
 > Find `biomartr` also at [OmicTools](https://omictools.com/biomartr-tool).
 
+### Frequently Asked Questions (FAQs)
+
+Please find [all FAQs here](FAQs.md).
+
 ## Discussions and Bug Reports
 
 I would be very happy to learn more about potential improvements of the concepts and functions
