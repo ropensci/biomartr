@@ -47,4 +47,3 @@ is.genome.available(organism = "Homo sapiens", details = TRUE, db = "ensembl")
 \author{
 Hajk-Georg Drost
 }
-

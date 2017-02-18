@@ -11,8 +11,11 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
     if (file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
         suppressWarnings(
             ensembl.available.organisms <-
-                readr::read_tsv(
+                readr::read_delim(
                     file.path(tempdir(), "ensemblgenomes_summary.txt"),
+                    delim = "\t",
+                    quote = "\"",
+                    escape_backslash = FALSE,
                     col_names = c(
                         "division",
                         "taxon_id",
@@ -108,8 +111,11 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
         }
         
         suppressWarnings(bacteria.info <-
-                             readr::read_tsv(
+                             readr::read_delim(
                                  file.path(tempdir(), "EnsemblBacteria.txt"),
+                                 delim = "\t",
+                                 quote = "\"",
+                                 escape_backslash = FALSE,
                                  col_names = c(
                                      "name",
                                      "species",

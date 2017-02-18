@@ -7,3 +7,5 @@ README.html
 README.Rmd
 ^\.travis\.yml$
 ^\.httr-oauth$
+^CONDUCT\.md$
+^FAQs\.md$

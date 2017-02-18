@@ -69,11 +69,10 @@ biomart(genes      = c("AT1G06090", "AT1G06100",
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{organismFilters}}, \code{\link{organismBM}},
 \code{\link[biomaRt]{listAttributes}}, \code{\link[biomaRt]{getBM}}
 }
-
+\author{
+Hajk-Georg Drost
+}

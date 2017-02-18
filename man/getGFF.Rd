@@ -55,10 +55,9 @@ getGFF( db       = "genbank",
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{meta.retrieval}}
 }
-
+\author{
+Hajk-Georg Drost
+}

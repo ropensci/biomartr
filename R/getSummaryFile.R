@@ -53,12 +53,15 @@ getSummaryFile <- function(db,kingdom){
     
     suppressWarnings(summary.file <-
                          tibble::as_tibble(
-                             readr::read_tsv(
+                             readr::read_delim(
                                  file.path(
                                      tempdir(),
                                      paste0("assembly_summary_", kingdom, "_", db, ".txt")
                                  ),
                                  comment = "#",
+                                 delim = "\t",
+                                 quote = "\"",
+                                 escape_double = FALSE,
                                  col_names = c(
                                      "assembly_accession",
                                      "bioproject",

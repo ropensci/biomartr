@@ -8,12 +8,39 @@ Using a comparative approach these genomes provide us with new insights on how b
 on the molecular level and how this information changes over evolutionary time.
 
 The first step, however, of any genome based study is to retrieve genomes from databases. For automating this
-retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
+retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
 
 In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF, and metagenome project data. Furthermore, an interface to the [BioMart](http://www.biomart.org/) database allows users to retrieve functional annotation for genomic loci.
 Users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
 Hence, the `biomartr` package is designed to achieve the highest degree of reproducible research.
+
+### Citation
+
+**Please cite the following paper when using `biomartr` for your own research. This will allow me to continue
+working on this software tool and will motivate me to extend its functionality and usability in the next years. Many thanks in advance :)**
+
+> Hajk-Georg Drost, Jerzy Paszkowski; [Biomartr: genomic data retrieval with R](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R). *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
+
+### Platforms
+
+> Find `biomartr` also at [OmicTools](https://omictools.com/biomartr-tool).
+
+### Frequently Asked Questions (FAQs)
+
+Please find [all FAQs here](FAQs.md).
+
+## Discussions and Bug Reports
+
+I would be very happy to learn more about potential improvements of the concepts and functions
+provided in this package.
+
+Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts
+of this package, please let me know:
+
+[twitter: HajkDrost](https://twitter.com/hajkdrost) or  [email](hgd23@cam.ac.uk)
+
+For Bug Report: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
 
 ## Tutorials
 
@@ -24,7 +51,6 @@ Getting Started with `biomartr`:
 - [Genomic Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Meta-Genome Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/MetaGenome_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
-- [Evolutionary Transcriptomics using myTAI, orthologr, and biomartr](https://github.com/HajkD/biomartr/tree/master/vignettes/Evolutionary_Transcriptomics.Rmd)
 
 
 ## Installation
@@ -51,7 +77,7 @@ Please type `a` specifying that all package dependencies of the corresponding pa
 Now users can download `biomartr` from CRAN :
 
 ```r
-# install biomartr 0.2.1 from CRAN
+# install biomartr 0.3.0 from CRAN
 install.packages("biomartr")
 ```
 
@@ -62,8 +88,8 @@ The current status of the package as well as a detailed history of the functiona
 
 #### Meta-Genome Retrieval
 
-* `meta.retieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
-* `meta.retieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
+* `meta.retrieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
+* `meta.retrieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
 * `getMetaGenomes()` : Retrieve metagenomes from NCBI Genbank
 * `getMetaGenomeAnnotations()` : Retrieve annotation *.gff files for metagenomes from NCBI Genbank
 * `listMetaGenomes()` : List available metagenomes on NCBI Genbank
@@ -154,16 +180,8 @@ library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 
 - Install `biomartr` on a Win 8 laptop: [solution](https://github.com/HajkD/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
-## Discussions and Bug Reports
+# Code of conduct
 
-I would be very happy to learn more about potential improvements of the concepts and functions
-provided in this package.
-
-Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts
-of this package, please let me know:
-
-[twitter: HajkDrost](https://twitter.com/hajkdrost) or  [email](hgd23@cam.ac.uk)
-
-For Bug Report: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 

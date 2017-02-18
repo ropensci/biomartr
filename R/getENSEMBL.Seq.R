@@ -9,8 +9,11 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     is.ensembl.alive()
     if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
         suppressWarnings(ensembl.available.organisms <-
-                             readr::read_tsv(
+                             readr::read_delim(
                                  file.path(tempdir(), "ensembl_summary.txt"),
+                                 delim = "\t",
+                                 quote = "\"",
+                                 escape_backslash = FALSE,
                                  col_names = c(
                                      "division",
                                      "taxon_id",

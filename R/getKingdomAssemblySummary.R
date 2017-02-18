@@ -24,12 +24,15 @@ getKingdomAssemblySummary <- function(db) {
         ))) {
             suppressWarnings(
                 AssemblyFilesAllKingdoms <-
-                    readr::read_tsv(
+                    readr::read_delim(
                         file.path(
                             tempdir(),
                             paste0("AssemblyFilesAllKingdoms_", db, ".txt")
                         ),
                         comment = "#",
+                        delim = "\t",
+                        quote = "\"",
+                        escape_backslash = FALSE,
                         col_names = TRUE,
                         col_types = readr::cols(
                             assembly_accession = readr::col_character(),

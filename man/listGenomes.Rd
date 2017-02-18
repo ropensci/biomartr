@@ -44,4 +44,3 @@ listGenomes(db = "refseq")
 \author{
 Hajk-Georg Drost
 }
-

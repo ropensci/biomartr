@@ -25,10 +25,9 @@ listSubgroups(db = "genbank")
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}, \code{\link{listGroups}}
 }
-
+\author{
+Hajk-Georg Drost
+}
