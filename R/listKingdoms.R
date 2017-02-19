@@ -19,7 +19,7 @@
 #' listKingdoms(db = "ensemblgenomes")
 #' }
 #' 
-#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listGroups}}, \code{\link{listSubgroups}}
+#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listGroups}}
 #' @export
 
 listKingdoms <- function(db = "refseq") {
