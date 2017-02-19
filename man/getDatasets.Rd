@@ -25,9 +25,10 @@ head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
 }
 
 }
-\seealso{
-\code{\link{getMarts}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getMarts}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+}
+

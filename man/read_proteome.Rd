@@ -39,9 +39,10 @@ Ath.proteome
 }
 
 }
-\seealso{
-\code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}
+}
+

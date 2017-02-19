@@ -42,6 +42,9 @@ head(organismBM(update = TRUE), 20)
 
 }
 }
+\author{
+Hajk-Georg Drost
+}
 \references{
 \url{http://biomart.org/}
 
@@ -58,6 +61,4 @@ Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 \code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{biomart}},
 \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
-\author{
-Hajk-Georg Drost
-}
+

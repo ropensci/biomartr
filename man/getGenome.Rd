@@ -58,9 +58,10 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 }
 
 }
-\seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
+}
+

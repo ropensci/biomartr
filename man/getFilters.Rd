@@ -30,9 +30,10 @@ head(getFilters(mart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl"
 }
 
 }
-\seealso{
-\code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getMarts}}, \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+}
+

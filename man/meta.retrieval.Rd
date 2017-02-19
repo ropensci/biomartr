@@ -4,7 +4,8 @@
 \alias{meta.retrieval}
 \title{Perform Meta-Genome Retieval}
 \usage{
-meta.retrieval(kingdom, db = "refseq", type = "genome", path = NULL)
+meta.retrieval(kingdom, group = NULL, db = "refseq", type = "genome",
+  path = NULL)
 }
 \arguments{
 \item{kingdom}{a character string specifying the kingdom of the organisms of interest,
@@ -47,3 +48,4 @@ meta.retrieval(kingdom = "", db = "ensemblgenomes", type = "genome")
 \author{
 Hajk-Georg Drost
 }
+

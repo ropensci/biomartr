@@ -33,9 +33,10 @@ select an appropriate database for download with \code{\link{download.database}}
 # listDatabases(db = "refseq_protein")
 
 }
-\seealso{
-\code{\link{download.database}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{download.database}}
+}
+

@@ -22,9 +22,10 @@ getKingdoms(db = "refseq")
 getKingdoms(db = "genbank")
 }
 }
-\seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getSubgroups}}, \code{\link{getGroups}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getSubgroups}}, \code{\link{getGroups}}
+}
+

@@ -43,9 +43,10 @@ Ath.cds <- read_cds(system.file('seqs/ortho_thal_cds.fasta', package = 'ortholog
 }
 
 }
-\seealso{
-\code{\link{getCDS}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_gff}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getCDS}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_gff}}
+}
+

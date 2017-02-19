@@ -19,9 +19,10 @@ This function reads an organism specific CDS stored in a defined file format.
 This function takes a string specifying the path to the GFF file
 of interest (e.g. the path returned by \code{\link{getGFF}}).
 }
-\seealso{
-\code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
+}
+

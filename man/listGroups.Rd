@@ -4,11 +4,15 @@
 \alias{listGroups}
 \title{List number of available genomes in each group}
 \usage{
-listGroups(db = "refseq")
+listGroups(db = "refseq", kingdom = "all", details = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database for which genome availability shall be checked, 
 e.g. \code{db = "refseq"} and \code{db = "genbank"}.}
+
+\item{kingdom}{a kingdom specification retrieved by \code{\link{getKingdoms}}.}
+
+\item{details}{shall all species corresponding to the specified \code{kingdom} be returned? Default is \code{details = FALSE}.}
 }
 \description{
 Users can retrieve the available number of sequenced genomes per group. 
@@ -22,12 +26,25 @@ listGroups(db = "refseq")
 
 # example for genbank
 listGroups(db = "genbank")
-}
+
+### in case groups should be specified by kingdom
+# first, retrieve available kingdom names
+listKingdoms()
+
+# now we choose kingdom "bacteria"
+listGroups(db = "refseq", kingdom = "bacteria")
+
+# or 
+
+listGroups(db = "genbank", kingdom = "bacteria")
 
 }
-\seealso{
-\code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}, \code{\link{listSubgroups}}
+
 }
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}, \code{\link{listSubgroups}}
+}
+

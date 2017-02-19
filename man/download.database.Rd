@@ -32,9 +32,10 @@ named \code{database} (default) is created and the correspondning database then 
 
 }
 }
-\seealso{
-\code{\link{download.database.all}}, \code{\link{listDatabases}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{download.database.all}}, \code{\link{listDatabases}}
+}
+

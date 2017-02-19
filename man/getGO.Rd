@@ -44,10 +44,11 @@ head(GO_tbl[ , c("tair_locus","go_accession","go_name_1006")])
 
 }
 }
+\author{
+Hajk-Georg Drost
+}
 \seealso{
 \code{\link{biomart}}, \code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link[biomaRt]{getBM}}, \code{\link{getMarts}},
 \code{\link{getDatasets}}, \code{\link{getFilters}}
 }
-\author{
-Hajk-Georg Drost
-}
+

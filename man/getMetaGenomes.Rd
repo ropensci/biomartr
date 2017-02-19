@@ -26,9 +26,10 @@ listMetaGenomes()
 getMetaGenomes(name = "human gut metagenome")
 }
 }
-\seealso{
-\code{\link{getMetaGenomeAnnotations}}, \code{\link{listMetaGenomes}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getMetaGenomeAnnotations}}, \code{\link{listMetaGenomes}}
+}
+

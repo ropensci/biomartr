@@ -28,9 +28,10 @@ getKingdoms(db = "genbank")
 getGroups(kingdom = "vertebrate_mammalian",db = "genbank")
 }
 }
-\seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getKingdoms}}, \code{\link{getSubgroups}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getKingdoms}}, \code{\link{getSubgroups}}
+}
+

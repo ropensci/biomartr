@@ -19,9 +19,10 @@ test <- getKingdomAssemblySummary(db = "refseq")
 test
 }
 }
-\seealso{
-\code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}}
-}
 \author{
 Hajk-Georg Drost
 }
+\seealso{
+\code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}}
+}
+

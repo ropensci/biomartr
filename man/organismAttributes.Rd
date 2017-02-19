@@ -53,6 +53,9 @@ head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 
 }
 }
+\author{
+Hajk-Georg Drost
+}
 \references{
 \url{http://biomart.org/}
 
@@ -69,6 +72,4 @@ Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 \code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link{biomart}},
 \code{\link[biomaRt]{listAttributes}}
 }
-\author{
-Hajk-Georg Drost
-}
+
