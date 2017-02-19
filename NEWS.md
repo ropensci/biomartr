@@ -10,6 +10,11 @@ has been merged and integrated into `getGroups()` and `listGroups()`
 - `listGroups()` receives a new argument `details` that allows users to retrieve the organism names that belong to the corresponding subgroups
 - `getGroups()` is now based on `listGroups()`
 
+### Vignette updates
+
+- Vignette `Meta-Genome Retrieval` has more examples how to download genomes of species that belong to the same subgroup
+
+
 biomartr 0.3.0
 ===========
 
