@@ -1,3 +1,15 @@
+biomartr 0.4.0
+===========
+
+### Function changes
+
+- `meta.retrieval()` receives a new argument `group` that allows users to retrieve species belonging to a subgroup instead of the entire kingdom.
+Available groups can be retrieved with `getGroups()`.
+- functions `getSubgroups()` and `listSubgroups()` have been removed and their initial functionality
+has been merged and integrated into `getGroups()` and `listGroups()`
+- `listGroups()` receives a new argument `details` that allows users to retrieve the organism names that belong to the corresponding subgroups
+- `getGroups()` is now based on `listGroups()`
+
 biomartr 0.3.0
 ===========
 
