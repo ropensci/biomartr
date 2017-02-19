@@ -19,12 +19,12 @@ knitr::opts_chunk$set(
 
 ## Perform Meta-Genome Retrieval
 
-The number of genome sequences generated and stored in sequence databases is growing exponentially every day. With the availability of this growing amount of data, meta-genomics studies become more popular
-and useful for finding patterns within genomes by comparing them to thousands of other genomes.
-However, the first step in any meta-genomics study is the retrieval of the genomes that shall be compared
-or investigated. 
+The number of genome assemblies generated and stored in sequence databases is growing exponentially every year. With the availability of this growing amount of data, meta-genomics studies become more and more popular. By using this bulk of genomes for comparing them to thousands of other genomes
+new structural patterns and evolutionary insights can be obtained.
+However, the first step in any meta-genomics study is the retrieval of the genomes, proteomes, coding sequences or annotation files that shall be compared
+and investigated. 
 
-For this purpose, I implemented the `meta.retrieval()` function to allow users to perform easy meta-genome retrieval in R.
+For this purpose, the `meta.retrieval()` function allows users to perform straightforward meta-genome retrieval in R.
 
 The `getKingdoms()` function stores a list of all available kingdoms of life. Using the argument `db` users can specify from which database
 kingdom information shall be retrieved.
@@ -138,6 +138,74 @@ Alternatively, download all mammalian vertebrate genomes from Genbank, e.g.
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 ```
 
+In case users do not wish to retrieve genomes from an entire kingdom, but rather from
+a subgoup (e.g. from species belonging to the `Gammaproteobacteria` class, a subgroup of the `bacteria` kingdom),
+they can use the following workflow:
+
+#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI ReSeq`:
+
+First, users can again consult the `getKingdoms()` function to retrieve kingdom information.
+
+```{r, eval=FALSE}
+getKingdoms(db = "refseq")
+```
+
+```
+[1] "archaea"              "bacteria"             "fungi"                "invertebrate"        
+[5] "plant"                "protozoa"             "vertebrate_mammalian" "vertebrate_other"    
+[9] "viral"
+```
+
+In this example, we will choose the `bacteria` kingdom. Now, the `getGroups()` function allows users to obtain
+available subgroups of the `bacteria` kingdom.
+
+```{r, eval=FALSE}
+getGroups(db = "refseq", kingsom = "bacteria")
+```
+
+```
+ [1] "Acidithiobacillia"                     "Acidobacteriia"                       
+ [3] "Actinobacteria"                        "Alphaproteobacteria"                  
+ [5] "Aquificae"                             "Armatimonadetes"                      
+ [7] "Bacteroidetes/Chlorobi group"          "Balneolia"                            
+ [9] "Betaproteobacteria"                    "Blastocatellia"                       
+[11] "Candidatus Kryptonia"                  "Chlamydiae"                           
+[13] "Chloroflexi"                           "Cyanobacteria/Melainabacteria group"  
+[15] "Deinococcus-Thermus"                   "delta/epsilon subdivisions"           
+[17] "Endomicrobia"                          "Fibrobacteres"                        
+[19] "Firmicutes"                            "Fusobacteriia"                        
+[21] "Gammaproteobacteria"                   "Gemmatimonadetes"                     
+[23] "Kiritimatiellaeota"                    "Nitrospira"                           
+[25] "Planctomycetes"                        "Spirochaetia"                         
+[27] "Synergistia"                           "Tenericutes"                          
+[29] "Thermodesulfobacteria"                 "Thermotogae"                          
+[31] "unclassified Acidobacteria"            "unclassified Bacteria (miscellaneous)"
+[33] "unclassified Proteobacteria"           "Verrucomicrobia"                      
+[35] "Zetaproteobacteria" 
+```
+
+Please note, that the `kingdom` argument specified in `getGroups()` needs to match with an available kingdom retrieved with `getKingdoms()`.
+It is also important that in both cases: `getKingdoms()` and `getGroups()` the same database should be specified.
+
+
+Now we choose the group `Gammaproteobacteria` and specify the `group` argument in the `meta.retrieval()` function.
+
+```{r, eval=FALSE}
+meta.retrieval(kingdom = "bacteria", group = "Gammaproteobacteria", db = "refseq", type = "genome")
+```
+
+Using this command, all bacterial (`kingdom = "bacteria"`) genomes (`type = "genome"`) that belong to the group `Gammaproteobacteria` (`group = "Gammaproteobacteria"`) will be retrieved from NCBI RefSeq (`db = "refseq"`).
+
+Alternatively, `Gammaproteobacteria` genomes can be retrieved from NCBI Genbank by exchanging `db = "refseq"` to `db = "genbank"`.
+If users wish to download proteome, CDS, or GFF files instead of genomes, they can specify the argument: `type = "proteome"`, `type = "CDS"`, or `type = "gff"`.
+
+#### Example retrieval of all `Adenoviridae` genomes from `NCBI ReSeq`:
+
+```{r, eval=FALSE}
+meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = "genome")
+```
+
+Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "CDS"`, or `type = "gff"`, users can retrieve proteome, CDS, or GFF files instead of genomes.
 
 ### Metagenome project retrieval from NCBI Genbank
 
