@@ -3,6 +3,7 @@
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
 #' Available kingdoms can be retrieved with \code{\link{getKingdoms}}.
+#' @param group only species belonging to this subgroup will be downloaded. Groups can be retrieved with \code{\link{getGroups}}.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.
 #' @param type type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.
 #' @param path path to the folder in which downloaded genomes shall be stored. By default the
@@ -30,7 +31,8 @@
 #' }
 #' @export
 
-meta.retrieval <- function(kingdom, 
+meta.retrieval <- function(kingdom,
+                           group = NULL,
                            db         = "refseq", 
                            type       = "genome", 
                            path = NULL){
@@ -47,6 +49,10 @@ meta.retrieval <- function(kingdom,
             paste0(subfolders, collapse = ", ")
         ))
     
+    if (!is.null(group))
+        if (!is.element(group, getGroups(kingdom = kingdom, db = db)))
+            stop("Please specify a group that is supported by getGroups(). Your specification '",group,"' does not exist in getGroups(kingdom = '",kingdom,"', db = '",db,"'). Maybe you used a different db argument in getGroups()?", call. = FALSE)
+    
     if (!is.element(type, c("genome", "proteome", "CDS", "gff")))
         stop("Please choose either type: 'genome', 'proteome', 'CDS', or 'gff'")
     
@@ -57,12 +63,21 @@ meta.retrieval <- function(kingdom,
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
     
     if (is.element(db, c("refseq", "genbank"))) {
-        #organism_name <- NULL
-        assembly.summary.file <-
-            getSummaryFile(db = db, kingdom = kingdom)
-        #assembly.summary.file <-
-        #    dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
-        FinalOrganisms <- unique(assembly.summary.file$organism_name)
+        
+        if (is.null(group)) {
+            assembly.summary.file <-
+                getSummaryFile(db = db, kingdom = kingdom)
+            #assembly.summary.file <-
+            #    dplyr::mutate(assembly.summary.file, organism_name = clean.str.brackets(organism_name))
+            FinalOrganisms <- unique(assembly.summary.file$organism_name)
+            #organism_name <- NULL
+            
+        }
+        if (!is.null(group)) {
+            groups.selection <- listGroups(kingdom = kingdom, db = db, details = TRUE)
+            groups.selection <- dplyr::filter(groups.selection, subgroup %in% group)
+            FinalOrganisms <- unique(groups.selection$organism_name)
+        }
     }
     
     if (db == "ensembl") {
@@ -82,7 +97,11 @@ meta.retrieval <- function(kingdom,
     
     cat("\n")
     
-    cat(paste0("Starting meta retrieval of all ", type, "s for ", kingdom, "."))
+    if (is.null(group))
+        cat(paste0("Starting meta retrieval of all ", type, "s for ", kingdom, "."))
+    if (!is.null(group))
+        cat(paste0("Starting meta retrieval of all ", type, "s within kingdom '", kingdom, "' and subgroup '",group,"'."))
+    
     cat("\n")
     
     if (type == "genome") {
