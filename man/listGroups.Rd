@@ -45,6 +45,6 @@ listGroups(db = "genbank", kingdom = "bacteria")
 Hajk-Georg Drost
 }
 \seealso{
-\code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}, \code{\link{listSubgroups}}
+\code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}
 }
 
