@@ -160,7 +160,7 @@ In this example, we will choose the `bacteria` kingdom. Now, the `getGroups()` f
 available subgroups of the `bacteria` kingdom.
 
 ```{r, eval=FALSE}
-getGroups(db = "refseq", kingsom = "bacteria")
+getGroups(db = "refseq", kingdom = "bacteria")
 ```
 
 ```
@@ -200,6 +200,77 @@ Alternatively, `Gammaproteobacteria` genomes can be retrieved from NCBI Genbank 
 If users wish to download proteome, CDS, or GFF files instead of genomes, they can specify the argument: `type = "proteome"`, `type = "CDS"`, or `type = "gff"`.
 
 #### Example retrieval of all `Adenoviridae` genomes from `NCBI ReSeq`:
+
+Retrieve groups for viruses.
+```{r, eval=FALSE}
+getGroups(db = "refseq", kingdom = "viral")
+```
+
+```
+ [1] "Adenoviridae"                                        "Alloherpesviridae"                                  
+  [3] "Alphaflexiviridae"                                   "Alphatetraviridae"                                  
+  [5] "Alvernaviridae"                                      "Amalgaviridae"                                      
+  [7] "Ampullaviridae"                                      "Anelloviridae"                                      
+  [9] "Apple fruit crinkle viroid"                          "Apple hammerhead viroid-like circular RNA"          
+ [11] "Apscaviroid"                                         "Arenaviridae"                                       
+ [13] "Arteriviridae"                                       "Ascoviridae"                                        
+ [15] "Asfarviridae"                                        "Astroviridae"                                       
+ [17] "Avsunviroid"                                         "Baculoviridae"                                      
+ [19] "Barnaviridae"                                        "Benyviridae"                                        
+ [21] "Betaflexiviridae"                                    "Bicaudaviridae"                                     
+ [23] "Birnaviridae"                                        "Bornaviridae"                                       
+ [25] "Bromoviridae"                                        "Bunyaviridae"                                       
+ [27] "Caliciviridae"                                       "Carmotetraviridae"                                  
+ [29] "Caulimoviridae"                                      "Cherry leaf scorch small circular viroid-like RNA 1"
+ [31] "Cherry small circular viroid-like RNA"               "Chrysoviridae"                                      
+ [33] "Circoviridae"                                        "Closteroviridae"                                    
+ [35] "Cocadviroid"                                         "Coleviroid"                                         
+ [37] "Coronaviridae"                                       "Corticoviridae"                                     
+ [39] "Cystoviridae"                                        "Dicistroviridae"                                    
+ [41] "Elaviroid"                                           "Endornaviridae"                                     
+ [43] "Filoviridae"                                         "Flaviviridae"                                       
+ [45] "Fusarividae"                                         "Fuselloviridae"                                     
+ [47] "Gammaflexiviridae"                                   "Geminiviridae"                                      
+ [49] "Genomoviridae"                                       "Globuloviridae"                                     
+ [51] "Grapevine latent viroid"                             "Guttaviridae"                                       
+ [53] "Hepadnaviridae"                                      "Hepeviridae"                                        
+ [55] "Herpesviridae"                                       "Hostuviroid"                                        
+ [57] "Hypoviridae"                                         "Hytrosaviridae"                                     
+ [59] "Iflaviridae"                                         "Inoviridae"                                         
+ [61] "Iridoviridae"                                        "Lavidaviridae"                                      
+ [63] "Leviviridae"                                         "Lipothrixviridae"                                   
+ [65] "Luteoviridae"                                        "Malacoherpesviridae"                                
+ [67] "Marnaviridae"                                        "Marseilleviridae"                                   
+ [69] "Megabirnaviridae"                                    "Mesoniviridae"                                      
+ [71] "Microviridae"                                        "Mimiviridae"                                        
+ [73] "Mulberry small circular viroid-like RNA 1"           "Mymonaviridae"                                      
+ [75] "Myoviridae"                                          "Nanoviridae"                                        
+ [77] "Narnaviridae"                                        "Nimaviridae"                                        
+ [79] "Nodaviridae"                                         "Nudiviridae"                                        
+ [81] "Nyamiviridae"                                        "Ophioviridae"                                       
+ [83] "Orthomyxoviridae"                                    "Other"                                              
+ [85] "Papillomaviridae"                                    "Paramyxoviridae"                                    
+ [87] "Partitiviridae"                                      "Parvoviridae"                                       
+ [89] "Pelamoviroid"                                        "Permutotetraviridae"                                
+ [91] "Persimmon viroid"                                    "Phycodnaviridae"                                    
+ [93] "Picobirnaviridae"                                    "Picornaviridae"                                     
+ [95] "Plasmaviridae"                                       "Pneumoviridae"                                      
+ [97] "Podoviridae"                                         "Polydnaviridae"                                     
+ [99] "Polyomaviridae"                                      "Pospiviroid"                                        
+[101] "Potyviridae"                                         "Poxviridae"                                         
+[103] "Quadriviridae"                                       "Reoviridae"                                         
+[105] "Retroviridae"                                        "Rhabdoviridae"                                      
+[107] "Roniviridae"                                         "Rubber viroid India/2009"                           
+[109] "Rudiviridae"                                         "Secoviridae"                                        
+[111] "Siphoviridae"                                        "Sphaerolipoviridae"                                 
+[113] "Sunviridae"                                          "Tectiviridae"                                       
+[115] "Togaviridae"                                         "Tombusviridae"                                      
+[117] "Totiviridae"                                         "Turriviridae"                                       
+[119] "Tymoviridae"                                         "unclassified"                                       
+[121] "unclassified Pospiviroidae"                          "Virgaviridae"
+```
+
+Now we can choose `Adenoviridae` as group argument for the `meta.retrieval()` function.
 
 ```{r, eval=FALSE}
 meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = "genome")
