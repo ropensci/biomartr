@@ -40,7 +40,7 @@ of this package, please let me know:
 
 [twitter: HajkDrost](https://twitter.com/hajkdrost) or  [email](hgd23@cam.ac.uk)
 
-For Bug Report: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
+For Bug Reports: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
 
 ## Tutorials
 
@@ -100,10 +100,8 @@ The current status of the package as well as a detailed history of the functiona
 * `listGenomes()` : List all genomes available on NCBI and ENSEMBL servers
 * `listKingdoms()` : list the number of available species per kingdom of life on NCBI and ENSEMBL servers
 * `listGroups()` : list the number of available species per group on NCBI and ENSEMBL servers
-* `listSubgroups()` : list the number of available species per subgroup on NCBI and ENSEMBL servers
 * `getKingdoms()` : Retrieve available kingdoms of life
 * `getGroups()` : Retrieve available groups for a kingdom of life
-* `getSubgroups()` : Retrieve available subgroups for a kingdom of life
 * `is.genome.available()` : Check Genome Availability  NCBI and ENSEMBL servers
 * `getGenome()` : Download a specific genome stored on NCBI and ENSEMBL servers
 * `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
