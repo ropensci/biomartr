@@ -138,11 +138,15 @@ Alternatively, download all mammalian vertebrate genomes from Genbank, e.g.
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 ```
 
+
+#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI ReSeq`:
+
+Please note that the following functionality is so far only provided by the [developer version of biomartr](https://github.com/HajkD/biomartr#download-developer-version).
+
 In case users do not wish to retrieve genomes from an entire kingdom, but rather from
 a subgoup (e.g. from species belonging to the `Gammaproteobacteria` class, a subgroup of the `bacteria` kingdom),
 they can use the following workflow:
 
-#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI ReSeq`:
 
 First, users can again consult the `getKingdoms()` function to retrieve kingdom information.
 
