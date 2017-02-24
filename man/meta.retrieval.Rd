@@ -5,7 +5,7 @@
 \title{Perform Meta-Genome Retieval}
 \usage{
 meta.retrieval(kingdom, group = NULL, db = "refseq", type = "genome",
-  path = NULL)
+  combine = FALSE, path = NULL)
 }
 \arguments{
 \item{kingdom}{a character string specifying the kingdom of the organisms of interest,
@@ -21,6 +21,8 @@ Available kingdoms can be retrieved with \code{\link{getKingdoms}}.}
 \code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
 \code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
 \code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).}
+
+\item{combine}{just in case \code{type = "assemblystats"} is specified, shall assemby stats of individual species be imported and combined to a \code{\link{data.frame}}?}
 
 \item{path}{path to the folder in which downloaded genomes shall be stored. By default the
 kingdom name is used to name the output folder.}
