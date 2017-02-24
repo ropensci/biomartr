@@ -1,14 +1,29 @@
 biomartr 0.4.0
 ===========
 
+### New Functions
+
+- new function `getAssemblyStats()` allows users to retrieve the genome assembly stats file from NCBI RefSeq or Genbank, e.g. ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt
+
+- new function `read_assemblystats()` allows to import the genome assembly stats file from NCBI RefSeq or Genbank that was retrieved
+using the `getAssemblyStats()` function
+
 ### Function changes
 
 - `meta.retrieval()` receives a new argument `group` that allows users to retrieve species belonging to a subgroup instead of the entire kingdom.
 Available groups can be retrieved with `getGroups()`.
+
 - functions `getSubgroups()` and `listSubgroups()` have been removed and their initial functionality
 has been merged and integrated into `getGroups()` and `listGroups()`
+
 - `listGroups()` receives a new argument `details` that allows users to retrieve the organism names that belong to the corresponding subgroups
+
 - `getGroups()` is now based on `listGroups()`
+
+- internal function `getGENOMESREPORT()` is now exported and available to the user
+
+
+
 
 ### Vignette updates
 
