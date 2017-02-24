@@ -5,12 +5,16 @@
 #' Available kingdoms can be retrieved with \code{\link{getKingdoms}}.
 #' @param group only species belonging to this subgroup will be downloaded. Groups can be retrieved with \code{\link{getGroups}}.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.
-#' @param type type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.
+#' @param type type of sequences that shall be retrieved. Options are:
+#'  \code{type = "genome"} (for genome assembly retrieval; see also \code{\link{getGenome}}), \code{type = "proteome"} (for proteome retrieval; see also \code{\link{getProteome}}),
+#'  \code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
+#'  \code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
+#'  \code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).
 #' @param path path to the folder in which downloaded genomes shall be stored. By default the
 #' kingdom name is used to name the output folder.
 #' @author Hajk-Georg Drost
-#' @details This function aims to perform bulk retrieval of the genomes of species
-#' that belong to the same kingdom of life.
+#' @details This function aims to perform bulk retrieval of the genomes, proteomes, cds, etc. of species
+#' that belong to the same kingdom of life or to the same subgroup.
 #' @examples 
 #' \dontrun{
 #' # get all available kingdoms for refseq
@@ -28,6 +32,23 @@
 #' # download all vertebrate genomes from ensemblgenomes
 #' meta.retrieval(kingdom = "", db = "ensemblgenomes", type = "genome")
 #' 
+#' # In case users do not wish to retrieve genomes from an entire kingdom, 
+#' # but rather from a subgoup (e.g. from species belonging to the Gammaproteobacteria class,
+#' # a subgroup of the bacteria kingdom), they can use the following workflow"
+#' # First, users can again consult the getKingdoms() function to retrieve kingdom information.
+#' getKingdoms(db = "refseq")
+#' 
+#' # In this example, we will choose the bacteria kingdom. 
+#' # Now, the getGroups() function allows users to obtain available 
+#' # subgroups of the bacteria kingdom.
+#' getGroups(db = "refseq", kingdom = "bacteria")
+#' 
+#' # Now we choose the group Gammaproteobacteria and specify 
+#' # the group argument in the meta.retrieval() function
+#' meta.retrieval(kingdom = "bacteria", 
+#'    roup = "Gammaproteobacteria", 
+#'    db = "refseq", 
+#'    type = "genome")
 #' }
 #' @export
 
@@ -37,6 +58,7 @@ meta.retrieval <- function(kingdom,
                            type       = "genome", 
                            path = NULL){
     
+    # test internet connection
     connected.to.internet()
     
     division <- NULL
@@ -53,14 +75,18 @@ meta.retrieval <- function(kingdom,
         if (!is.element(group, getGroups(kingdom = kingdom, db = db)))
             stop("Please specify a group that is supported by getGroups(). Your specification '",group,"' does not exist in getGroups(kingdom = '",kingdom,"', db = '",db,"'). Maybe you used a different db argument in getGroups()?", call. = FALSE)
     
-    if (!is.element(type, c("genome", "proteome", "CDS", "gff")))
-        stop("Please choose either type: 'genome', 'proteome', 'CDS', or 'gff'")
+    if (!is.element(type, c("genome", "proteome", "CDS", "gff", "assemblystats")))
+        stop("Please choose either type: type = 'genome', type = 'proteome', type = 'CDS', type = 'gff', or type = 'assemblystats'.")
     
     if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
         stop("Please select einter db = 'refseq', db = 'genbank', db = 'ensembl' or db = 'ensemblgenomes'.")
     
     if ((type == "CDS") && (db == "genbank"))
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
+    
+    if (type == "assemblystats" && !is.element(db, c("refseq", "genbank")))
+        stop("Unfortunately, assembly stats files are only available for db = 'refseq' and db = 'genbank'.")
+    
     
     if (is.element(db, c("refseq", "genbank"))) {
         
@@ -98,9 +124,9 @@ meta.retrieval <- function(kingdom,
     cat("\n")
     
     if (is.null(group))
-        cat(paste0("Starting meta retrieval of all ", type, "s for ", kingdom, "."))
+        cat(paste0("Starting meta retrieval of all ", type, " files for ", kingdom, "."))
     if (!is.null(group))
-        cat(paste0("Starting meta retrieval of all ", type, "s within kingdom '", kingdom, "' and subgroup '",group,"'."))
+        cat(paste0("Starting meta retrieval of all ", type, " files within kingdom '", kingdom, "' and subgroup '",group,"'."))
     
     cat("\n")
     
@@ -172,6 +198,24 @@ meta.retrieval <- function(kingdom,
                 getGFF(db       = db,
                        organism = FinalOrganisms[i],
                        path     = path)
+            }
+        }
+    }
+    
+    if (type == "assemblystats") {
+        if (is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getAssemblyStats(db       = db,
+                          organism = FinalOrganisms[i],
+                          path     = kingdom)
+            }
+        }
+        
+        if (!is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getAssemblyStats(db       = db,
+                          organism = FinalOrganisms[i],
+                          path     = path)
             }
         }
     }
