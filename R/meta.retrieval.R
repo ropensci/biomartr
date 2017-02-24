@@ -10,6 +10,7 @@
 #'  \code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
 #'  \code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
 #'  \code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).
+#' @param combine just in case \code{type = "assemblystats"} is specified, shall assemby stats of individual species be imported and combined to a \code{\link{data.frame}}? 
 #' @param path path to the folder in which downloaded genomes shall be stored. By default the
 #' kingdom name is used to name the output folder.
 #' @author Hajk-Georg Drost
@@ -55,7 +56,8 @@
 meta.retrieval <- function(kingdom,
                            group = NULL,
                            db         = "refseq", 
-                           type       = "genome", 
+                           type       = "genome",
+                           combine    = FALSE,
                            path = NULL){
     
     # test internet connection
@@ -76,17 +78,19 @@ meta.retrieval <- function(kingdom,
             stop("Please specify a group that is supported by getGroups(). Your specification '",group,"' does not exist in getGroups(kingdom = '",kingdom,"', db = '",db,"'). Maybe you used a different db argument in getGroups()?", call. = FALSE)
     
     if (!is.element(type, c("genome", "proteome", "CDS", "gff", "assemblystats")))
-        stop("Please choose either type: type = 'genome', type = 'proteome', type = 'CDS', type = 'gff', or type = 'assemblystats'.")
+        stop("Please choose either type: type = 'genome', type = 'proteome', type = 'CDS', type = 'gff', or type = 'assemblystats'.", call. = FALSE)
     
     if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
-        stop("Please select einter db = 'refseq', db = 'genbank', db = 'ensembl' or db = 'ensemblgenomes'.")
+        stop("Please select einter db = 'refseq', db = 'genbank', db = 'ensembl' or db = 'ensemblgenomes'.", call. = FALSE)
     
     if ((type == "CDS") && (db == "genbank"))
-        stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.")
+        stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.", call. = FALSE)
     
     if (type == "assemblystats" && !is.element(db, c("refseq", "genbank")))
-        stop("Unfortunately, assembly stats files are only available for db = 'refseq' and db = 'genbank'.")
+        stop("Unfortunately, assembly stats files are only available for db = 'refseq' and db = 'genbank'.", call. = FALSE)
     
+    if (combine && type != "assemblystats")
+        stop("Only option type = 'assemblystats' can use combine = TRUE. Please specify: type = 'assemblystats' and combine = TRUE.", call. = FALSE)
     
     if (is.element(db, c("refseq", "genbank"))) {
         
@@ -203,21 +207,42 @@ meta.retrieval <- function(kingdom,
     }
     
     if (type == "assemblystats") {
+        stats.files <- vector("list", length(FinalOrganisms))
+        
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getAssemblyStats(db       = db,
-                          organism = FinalOrganisms[i],
-                          path     = kingdom)
+                if (combine) {
+                    stats.files[i] <- list(getAssemblyStats(db       = db,
+                                     organism = FinalOrganisms[i],
+                                     path     = kingdom,
+                                     type     = "import"))
+                } else {
+                    getAssemblyStats(db       = db,
+                                     organism = FinalOrganisms[i],
+                                     path     = kingdom)
+                }
             }
         }
         
         if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getAssemblyStats(db       = db,
-                          organism = FinalOrganisms[i],
-                          path     = path)
+                if (combine) {
+                    stats.files[i] <- list(getAssemblyStats(db       = db,
+                                                       organism = FinalOrganisms[i],
+                                                       path     = path,
+                                                       type     = "import"))
+                } else {
+                    getAssemblyStats(db       = db,
+                                     organism = FinalOrganisms[i],
+                                     path     = path)
+                }
             }
         }
+    }
+    
+    if (combine) {
+        stats.files <- dplyr::bind_rows(stats.files)
+        return(stats.files)
     }
     
     cat("\n")
