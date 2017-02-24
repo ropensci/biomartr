@@ -10,6 +10,8 @@ using the `getAssemblyStats()` function
 
 ### Function changes
 
+- `meta.retrieval()` and `meta.retrieval.all()` can now also download genome assembly stats for all selected species
+
 - `meta.retrieval()` receives a new argument `group` that allows users to retrieve species belonging to a subgroup instead of the entire kingdom.
 Available groups can be retrieved with `getGroups()`.
 
