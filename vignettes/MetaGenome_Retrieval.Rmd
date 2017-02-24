@@ -139,7 +139,7 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome"
 ```
 
 
-#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI ReSeq`:
+#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI RefSeq`:
 
 Please note that the following functionality is so far only provided by the [developer version of biomartr](https://github.com/HajkD/biomartr#download-developer-version).
 
@@ -203,7 +203,7 @@ Using this command, all bacterial (`kingdom = "bacteria"`) genomes (`type = "gen
 Alternatively, `Gammaproteobacteria` genomes can be retrieved from NCBI Genbank by exchanging `db = "refseq"` to `db = "genbank"`.
 If users wish to download proteome, CDS, or GFF files instead of genomes, they can specify the argument: `type = "proteome"`, `type = "CDS"`, or `type = "gff"`.
 
-#### Example retrieval of all `Adenoviridae` genomes from `NCBI ReSeq`:
+#### Example retrieval of all `Adenoviridae` genomes from `NCBI RefSeq`:
 
 Retrieve groups for viruses.
 ```{r, eval=FALSE}
