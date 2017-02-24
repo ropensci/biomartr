@@ -7,13 +7,13 @@ The vastly growing number of sequenced genomes allows us to perform a new type o
 Using a comparative approach these genomes provide us with new insights on how biological information is encoded 
 on the molecular level and how this information changes over evolutionary time.
 
-The first step, however, of any genome based study is to retrieve genomes from databases. For automating this
+The first step, however, of any genome based study is to retrieve genomes from databases. To automate this
 retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
 
-In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF, and metagenome project data. Furthermore, an interface to the [BioMart](http://www.biomart.org/) database allows users to retrieve functional annotation for genomic loci.
+In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data. Furthermore, an interface to the [BioMart](http://www.biomart.org/) database allows users to retrieve functional annotation for genomic loci.
 Users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
-Hence, the `biomartr` package is designed to achieve the highest degree of reproducible research.
+Hence, the `biomartr` package is designed to achieve the highest degree of computational reproducibility in genomics research.
 
 ### Citation
 
@@ -88,7 +88,7 @@ The current status of the package as well as a detailed history of the functiona
 
 #### Meta-Genome Retrieval
 
-* `meta.retrieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life 
+* `meta.retrieval()` : Perform Meta-Genome Retieval from NCBI of species belonging to the same kingdom of life or to the same taxonomic subgroup
 * `meta.retrieval.all()` : Perform Meta-Genome Retieval from NCBI of the entire kingdom of life
 * `getMetaGenomes()` : Retrieve metagenomes from NCBI Genbank
 * `getMetaGenomeAnnotations()` : Retrieve annotation *.gff files for metagenomes from NCBI Genbank
@@ -107,14 +107,19 @@ The current status of the package as well as a detailed history of the functiona
 * `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
 * `getCDS()` : Download a specific CDS file (genome) stored on NCBI and ENSEMBL servers
 * `getGFF()` : Genome Annotation Retrieval (`*.gff`) from NCBI and ENSEMBL servers
+* `getAssemblyStats()` : Genome Assembly Stats Retrieval from NCBI
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
 * `getSummaryFile()` : Helper function to retrieve the assembly_summary.txt file from NCBI for a specific kingdom
 * `getENSEMBLInfo()` : Retrieve ENSEMBL info file
+* `getGENOMEREPORT()` : Retrieve GENOME_REPORTS file from NCBI
+
+#### Import Downloaded Files
 * `read_genome()` : Import genomes as Biostrings or data.table object
 * `read_proteome()` : Import proteome as Biostrings or data.table object
 * `read_cds()` : Import CDS as Biostrings or data.table object
 * `read_gff()` : Import GFF file
+* `read_assemblystats()` : Import Genome Assembly Stats File
 
 #### Database Retrieval
 
