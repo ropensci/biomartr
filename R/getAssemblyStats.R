@@ -26,7 +26,7 @@
 #' @examples \dontrun{
 #' # download the genome assembly stats file of Homo sapiens from NCBI RefSeq
 #' # and store the corresponding genome file in '_ncbi_downloads/genomeassembly_stats'
-#' file_path <- getAssemblyStats( db       = "refseq", 
+#' file_path <- getAssemblyStats( db = "refseq", 
 #'                  organism = "Homo sapiens", 
 #'                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
 #' # import the raw file as it is downloaded
@@ -34,7 +34,7 @@
 #' 
 #' # download the genome assembly stats file of Homo sapiens from NCBI RefSeq 
 #' # and import overall statistics of the genome assembly
-#' Hsapiens.stats.import <- getAssemblyStats( db       = "refseq", 
+#' Hsapiens.stats.import <- getAssemblyStats( db = "refseq", 
 #'                  organism = "Homo sapiens",
 #'                  type = "import", 
 #'                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
