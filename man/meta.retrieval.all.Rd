@@ -7,9 +7,13 @@
 meta.retrieval.all(db = "refseq", type = "genome")
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{refseq} or \code{genbank}.}
+\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.}
 
-\item{type}{type of sequences that shall be retrieved. Either \code{genome}, \code{proteome}, or \code{CDS}.}
+\item{type}{type of sequences that shall be retrieved. Options are:
+\code{type = "genome"} (for genome assembly retrieval; see also \code{\link{getGenome}}), \code{type = "proteome"} (for proteome retrieval; see also \code{\link{getProteome}}),
+\code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
+\code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
+\code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).}
 }
 \description{
 Download genomes, proteomes, or CDS of individual species of all kingdoms of life.
