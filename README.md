@@ -7,7 +7,7 @@ The vastly growing number of sequenced genomes allows us to perform a new type o
 Using a comparative approach these genomes provide us with new insights on how biological information is encoded 
 on the molecular level and how this information changes over evolutionary time.
 
-The first step, however, of any genome based study is to retrieve genomes from databases. To automate this
+The first step, however, of any genome based study is to retrieve genomes from databases. To automate the
 retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
 
 In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data. Furthermore, an interface to the [BioMart](http://www.biomart.org/) database allows users to retrieve functional annotation for genomic loci.
