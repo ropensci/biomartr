@@ -1,7 +1,7 @@
 #' @title Import Genome Assembly Stats File
 #' @description This function reads an organism specific Genome Assembly Stats file that was retrieved with \code{\link{getAssemblyStats}}.
 #' @param file a character string specifying the path to the file storing the Genome Assembly Stats file.
-#' @param type either \code{type = "raw"} to import the entire genome assembly stats file or \code{type = "stats"} to import overall statsitics including all chromosomes, mitochondria and plastids.
+#' @param type either \code{type = "raw"} to import the entire genome assembly stats file or \code{type = "stats"} to import overall statistics including all chromosomes, mitochondria and plastids.
 #' @author Hajk-Georg Drost
 #' @details This function takes a string specifying the path to the Genome Assembly Stats file
 #' of interest (e.g. the path returned by \code{\link{getAssemblyStats}}) and imports it.
