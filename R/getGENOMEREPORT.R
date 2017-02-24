@@ -1,3 +1,7 @@
+#' @title Retrieve NCBI GENOME_REPORTS file
+#' @description Retrieves NCBI GENOME_REPORTS file from ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
+#' @author Hajk-Georg Drost
+#' @export
 getGENOMEREPORT <- function() {
     
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
