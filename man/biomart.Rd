@@ -54,7 +54,7 @@ biomart(genes      = c("AT1G06090", "AT1G06100",
         mart       = "plants_mart", 
         dataset    = "athaliana_eg_gene",
         attributes = c("start_position","end_position","description"),
-        filters    = "tair_locus") 
+        filters    = "ensembl_gene_id") 
 
 }
 
