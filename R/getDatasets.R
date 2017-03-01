@@ -19,34 +19,53 @@
 #' @export
 getDatasets <- function(mart){
         
-        if(!is.character(mart))
-                stop("Please use a character string as mart.")
+        if (!is.character(mart))
+                stop("Please use a character string as mart.", call. = FALSE)
         
+        
+    if (stringr::str_detect(mart, "ENSEMBL"))
+        # connect to BioMart API
         datasetPage <- httr::handle(paste0("http://www.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
-        xmlContentDatasets <- httr::GET(handle = datasetPage)
+    
+    if (stringr::str_detect(mart, "plants"))
+        # connect to BioMart API
+        datasetPage <- httr::handle(paste0("http://plants.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
+    
+    if (stringr::str_detect(mart, "fung"))
+        # connect to BioMart API
+        datasetPage <- httr::handle(paste0("http://fungi.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
+    
+    if (stringr::str_detect(mart, "protist"))
+        # connect to BioMart API
+        datasetPage <- httr::handle(paste0("http://protists.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
+    
+    if (stringr::str_detect(mart, "metazoa"))
+        # connect to BioMart API
+        datasetPage <- httr::handle(paste0("http://metazoa.ensembl.org:80/biomart/martservice?type=datasets&requestid=biomart&mart=",mart))
+    
+    xmlContentDatasets <- httr::GET(handle = datasetPage)
+    
+    tryCatch({
         
-        tryCatch({
-                
-                httr::stop_for_status(xmlContentDatasets)
+        httr::stop_for_status(xmlContentDatasets)
         
-                # extract dataset name, description, and version, etc.
-                rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentDatasets,as = "text"),"\n")),1,function(x) unlist(strsplit(x,"\t"))))
+        # extract dataset name, description, and version, etc.
+        rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentDatasets, as = "text", encoding = "UTF-8"),"\n")),1,function(x) unlist(strsplit(x,"\t"))))
         
-                colnames(rawDF) <- paste0("V",1:ncol(rawDF))
-         
-                if(dim(rawDF)[1] > 2)
-                        # store available datasets
-                        dsBioMart <- as.data.frame(rawDF[-seq(1,nrow(rawDF),2), c("V2","V3","V5")], stringsAsFactors = FALSE, colClasses = rep("character",3))
+        colnames(rawDF) <- paste0("V",1:ncol(rawDF))
         
-                if(dim(rawDF)[1] <= 2)
-                        dsBioMart <- data.frame(V2 = "", V3 = "", V5 = "")
+        if (dim(rawDF)[1] > 2)
+            # store available datasets
+            dsBioMart <- as.data.frame(rawDF[-seq(1,nrow(rawDF),2), c("V2","V3","V5")], stringsAsFactors = FALSE, colClasses = rep("character",3))
         
-                colnames(dsBioMart) <- c("dataset","description","version")
+        if (dim(rawDF)[1] <= 2)
+            dsBioMart <- data.frame(V2 = "", V3 = "", V5 = "")
         
-                return(dsBioMart)
+        colnames(dsBioMart) <- c("dataset","description","version")
         
-        }, error = function(e) stop("Your input mart '",mart,"' could not be found. Please use getMarts() to choose from available marts."))
-        
+        return(tibble::as_tibble(dsBioMart))
+    }, error = function(e) stop("Your input mart '",mart,"' could not be found. Please use getMarts() to choose from available marts."))
+    
 }
 
 
