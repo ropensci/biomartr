@@ -35,25 +35,15 @@ implemented by Steffen Durinck et al.
 }
 \examples{
 
-\dontrun{
-# the initial biomaRt workflow would work as follows:
+\dontrun{ 
+# 1) select a mart 
+getMarts()
 
-# 1) select a mart and data set
-mart <- useDataset("athaliana_eg_gene", mart = useMart("plants_mart_25"))
+# we will select mart 'plants_mart' and search for available datasets
+getDatasets(mart = "plants_mart")
 
-# 2) run a biomart query using the getBM() function
-# and specify the attributes and filter arguments
-geneSet <- c("AT1G06090", "AT1G06100",
-             "AT1G06110", "AT1G06120", 
-             "AT1G06130", "AT1G06200")
- 
-resultTable <- getBM(attributes = c("start_position","end_position","description"),
-                     filters = "tair_locus", values = geneSet, mart = mart)
-                     
-# for faster query access and easier query logic the
-# biomart() function combines this workflow
-                     
-# using mart: 'plants_mart_25', dataset: "athaliana_eg_gene"
+# we choose dataset 'athaliana_eg_gene' and run biomart()
+# using mart: 'plants_mart', dataset: "athaliana_eg_gene"
 # attributes: c("start_position","end_position","description")
 # for an example gene set of Arabidopsis thaliana: 
 # c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120", "AT1G06130", "AT1G06200") 
@@ -61,7 +51,7 @@ resultTable <- getBM(attributes = c("start_position","end_position","description
 biomart(genes      = c("AT1G06090", "AT1G06100", 
                        "AT1G06110", "AT1G06120", 
                        "AT1G06130", "AT1G06200"),
-        mart       = "plants_mart_25", 
+        mart       = "plants_mart", 
         dataset    = "athaliana_eg_gene",
         attributes = c("start_position","end_position","description"),
         filters    = "tair_locus") 
