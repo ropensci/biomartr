@@ -26,14 +26,53 @@ getFilters <- function(mart, dataset){
         if ((!is.character(mart)) || (!is.character(dataset)))
                 stop("Please use a character string as mart or dataset.")
         
-    url <-
-        paste0(
-            "http://www.ensembl.org/biomart/martservice?type=filters&dataset=",
-            dataset,
-            "&requestid=biomart&mart=",
-            mart,
-            "&virtualSchema=default"
-        )
+    if (stringr::str_detect(mart, "ENSEMBL"))
+        # connect to BioMart API
+        url <-
+            paste0(
+                "http://ensembl.org/biomart/martservice?type=filters&dataset=",
+                dataset,
+                "&requestid=biomart&mart=",
+                mart
+            )    
+    if (stringr::str_detect(mart, "plants"))
+        # connect to BioMart API
+        url <-
+            paste0(
+                "http://plants.ensembl.org/biomart/martservice?type=filters&dataset=",
+                dataset,
+                "&requestid=biomart&mart=",
+                mart
+            )    
+    if (stringr::str_detect(mart, "fung"))
+        # connect to BioMart API
+        url <-
+            paste0(
+                "http://fungi.ensembl.org/biomart/martservice?type=filters&dataset=",
+                dataset,
+                "&requestid=biomart&mart=",
+                mart
+            )
+    
+    if (stringr::str_detect(mart, "protist"))
+        # connect to BioMart API
+        url <-
+            paste0(
+                "http://protist.ensembl.org/biomart/martservice?type=filters&dataset=",
+                dataset,
+                "&requestid=biomart&mart=",
+                mart
+            )    
+    if (stringr::str_detect(mart, "metazoa"))
+        # connect to BioMart API
+        url <-
+            paste0(
+                "http://metazoa.ensembl.org/biomart/martservice?type=filters&dataset=",
+                dataset,
+                "&requestid=biomart&mart=",
+                mart
+            )    
+    
     
     testContent <- httr::content(httr::GET(url), as = "text")
 
@@ -53,7 +92,7 @@ getFilters <- function(mart, dataset){
         # extract attribute name and attribute description
         suppressWarnings(rawDF <-
                              do.call("rbind", apply(as.data.frame(strsplit(
-                                 httr::content(xmlContentFilters, as = "text"), "\n"
+                                 httr::content(xmlContentFilters, as = "text", encoding = "UTF-8"), "\n"
                              )), 1, function(x)
                                  unlist(strsplit(x, "\t")))))
         
