@@ -24,7 +24,9 @@ has been merged and integrated into `getGroups()` and `listGroups()`
 
 - internal function `getGENOMESREPORT()` is now exported and available to the user
 
+- all `organism*()` functions now also support Ensembl Plants, Ensembl Metazoa, Ensembl Protist, and Ensembl Fungi (Thanks for pointing out [Alex Gabel](https://github.com/AlexGa))
 
+- `getMarts()` and `getDatasets()` now also support Ensembl Plants, Ensembl Metazoa, Ensembl Protist, and Ensembl Fungi (Thanks for pointing out [Alex Gabel](https://github.com/AlexGa))
 
 
 ### Vignette updates
