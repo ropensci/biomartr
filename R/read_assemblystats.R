@@ -12,6 +12,8 @@ read_assemblystats <- function(file, type = "raw") {
     if (!is.element(type, c("raw", "stats")))
         stop("Please choose a type that is supported byt this function, e.g. type = 'raw' or type = 'stats'.", call. = FALSE)
     
+    unit_name <- molecule_name <- statistic <- NULL
+    
     assemblystats_file <- readr::read_delim(
         file,
         delim = "\t",
