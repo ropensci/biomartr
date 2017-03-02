@@ -282,6 +282,61 @@ meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = 
 
 Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "CDS"`, or `type = "gff"`, users can retrieve proteome, CDS, or GFF files instead of genomes.
 
+
+### Meta retrieval of genome assembly quality information
+
+Although much effort is invested to increase the genome assembly quality
+when new genomes are published or new versions are released, the influence
+of genome assembly quality on downstream analyses cannot be neglected.
+A rule of thumb is, that the larger the genome the more prone it is to
+genome assembly errors and therefore, a reduction of assembly quality.
+
+In [Veeckman et al., 2016](http://www.plantcell.org/content/28/8/1759.short) the authors conclude:
+
+> As yet, no uniform metrics or standards are in place to estimate the completeness of a genome assembly or
+> the annotated gene space, despite their importance for downstream analyses
+
+In most metagenomics studies, however, the influence or bias of genome assembly quality on the 
+outcome of the analysis (e.g. comparative genomics, annotation, etc.) is neglected. To better 
+grasp the genome assembly quality, the NCBI databases store genome assembly statistics of some
+species for which genome assemblies are available. An example assembly statistics report can
+be found at: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt. 
+
+The `biomartr` package allows users to retrieve these genome assembly stats file in an automated way.
+
+```{r, eval=FALSE}
+# show all elements of the data.frame
+options(tibble.print_max = Inf)
+# retrieve genome assembly stats for all mammal genome assemblies
+# and store these stats in a data.frame
+mammals.gc <- meta.retrieval(kingdom = "vertebrate_mammalian", 
+                             db      = "refseq", 
+                             type    = "assemblystats", 
+                             combine = TRUE)
+
+mammals.gc
+```
+
+```
+                    species total_length spanned_gaps unspanned_gaps region_count scaffold_count
+                      <chr>        <int>        <int>          <int>        <int>          <int>
+1  Ornithorhynchus anatinus   1995607322       243698            137            0         200283
+2      Sarcophilus harrisii           NA       201317              0            0          35974
+3      Dasypus novemcinctus           NA       268413              0            0          46559
+4       Erinaceus europaeus           NA       219764              0            0           5803
+5         Echinops telfairi           NA       269444              0            0           8402
+6           Pteropus alecto   1985975446       104566              0            0          65598
+7     Rousettus aegyptiacus   1910250568          559              0            0             NA
+8        Callithrix jacchus           NA       184972           2242            0          16399
+9  Cebus capucinus imitator           NA       133441              0            0           7156
+10          Cercocebus atys           NA        65319              0            0          11433
+# ... with 89 more rows, and 9 more variables: scaffold_N50 <int>, scaffold_L50 <int>,
+#   scaffold_N75 <int>, scaffold_N90 <int>, contig_count <int>, contig_N50 <int>, total_gap_length <int>,
+#   molecule_count <int>, top_level_count <int>
+```
+
+Analogous, for each kingdom available at `getKingdoms()` this information can be retrieved.
+
 ### Metagenome project retrieval from NCBI Genbank
 
 NCBI Genbank stores [metagenome projects](ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/) in addition to species specific genome, proteome or CDS sequences. To retrieve these metagenomes users can perform the following combination of commands:
@@ -320,6 +375,8 @@ achieve a much faster access of this information during following uses of `listM
 In case users wish to retrieve detailed information about available metagenome projects they can specify the `details = TRUE` argument.
 
 ```{r,eval=FALSE}
+# show all elements of the data.frame
+options(tibble.print_max = Inf)
 # detailed information on available metagenomes at NCBI Genbank
 listMetaGenomes(details = TRUE)
 ```
