@@ -63,7 +63,7 @@ meta.retrieval <- function(kingdom,
     # test internet connection
     connected.to.internet()
     
-    division <- NULL
+    division <- subgroup <- NULL
     
     subfolders <- getKingdoms(db = db)
     
