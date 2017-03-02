@@ -1168,6 +1168,8 @@ Human_GFF <- read_gff(file = HS.gff.genbank)
 ```
 
 ```{r,eval=FALSE}
+# show all elements of the data.frame
+options(tibble.print_max = Inf)
 Human_GFF
 ```
 
@@ -1204,6 +1206,8 @@ Human_GFF <- read_gff(file = HS.gff.ensembl)
 ```
 
 ```{r,eval=FALSE}
+# show all elements of the data.frame
+options(tibble.print_max = Inf)
 Human_GFF
 ```
 
@@ -1243,6 +1247,8 @@ Cress_GFF <- read_gff(file = AT.gff.ensemblgenomes)
 ```
 
 ```{r,eval=FALSE}
+# show all elements of the data.frame
+options(tibble.print_max = Inf)
 Cress_GFF
 ```
 
