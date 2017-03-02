@@ -39,7 +39,7 @@ listGroups <- function(db = "refseq", kingdom = "all", details = FALSE) {
     if (!is.element(kingdom, c(getKingdoms(), "all")))
         stop("Please choose a kingdom that is supported by NCBI RefSeq or NCBI Genbank. See getKingdoms() for details.", call. = FALSE)
     
-    organism_name <- group <- NULL
+    organism_name <- group <- kingdoms <- subgroup <- NULL
     
     listgenomes.data <-
         listGenomes(db = db, type = "group", details = TRUE)
