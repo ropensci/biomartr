@@ -23,6 +23,7 @@ getSubMarts <- function(submart = "ensembl") {
         # connect to BioMart API
         biomartPage <- httr::handle("http://metazoa.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart")
     
+
     xmlContentMarts <- httr::GET(handle = biomartPage)
     
     # test whether or not a connection could be established
@@ -42,6 +43,8 @@ getSubMarts <- function(submart = "ensembl") {
     visible <- as.data.frame(XML::xmlSApply(rootNode, function(x) XML::xmlGetAttr(x,"visible")))
     
     dbBioMart <- tibble::tibble(mart = as.character(databases[ , 1]), version = as.character(displayNames[ , 1]), visible = as.character(visible[ , 1]))
+    
+    mart <- version <- NULL
     
     dbBioMart <- dplyr::select(dplyr::filter(dbBioMart, visible != "0"), mart, version)
     
