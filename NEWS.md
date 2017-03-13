@@ -1,6 +1,14 @@
 biomartr 0.4.0
 ===========
 
+### Bug fixes
+
+- fixing a major bug https://github.com/HajkD/biomartr/issues/6 that caused that in all `get*()` (genome, proteome, gff, etc.) and `meta.retrieval*()` functions
+ the meta retrieval process errored and terminated whenever NCBI or ENSEMBL didn't
+store all types of sequences for a particular organism: genome, proteome, cds, etc. This has been fixed now and function calls
+such as `meta.retrieval(kingdom = "bacteria", db = "genbank", type = "proteome")` should work properly now (Thanks to @ARamesh123 for making me aware if this bug). Hence, this bug affected all attempts to download all proteome sequences e.g. for bacteria and viruses, because NCBI does not store genome AND proteome information for all bacterial or viral species. 
+
+
 ### New Functions
 
 - new function `getAssemblyStats()` allows users to retrieve the genome assembly stats file from NCBI RefSeq or Genbank, e.g. ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt
