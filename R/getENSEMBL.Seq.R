@@ -105,6 +105,17 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             )
         )
     
+    if (!exists.ftp.file(url = paste0(
+        "ftp://ftp.ensembl.org/pub/current_fasta/",
+        stringr::str_to_lower(new.organism),
+        "/",
+        type,
+        "/"), file.path = ensembl.qry)) {
+        message("Unfortunately no ",type," file could be found for organism '",organism,"'. Thus, the download of this organism has been omitted.")
+        return(FALSE) 
+    }
+    
+    
     tryCatch({
         downloader::download(ensembl.qry,
                              destfile = file.path(
