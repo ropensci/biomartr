@@ -40,5 +40,5 @@ License: GPL-3
 LazyData: true
 URL: https://github.com/HajkD/biomartr
 BugReports: https://github.com/HajkD/biomartr/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Encoding: UTF-8

@@ -41,10 +41,9 @@ listGroups(db = "genbank", kingdom = "bacteria")
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}
 }
-
+\author{
+Hajk-Georg Drost
+}

@@ -59,10 +59,9 @@ Hsapiens.stats.import <- getAssemblyStats( db = "refseq",
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_assemblystats}}
 }
-
+\author{
+Hajk-Georg Drost
+}

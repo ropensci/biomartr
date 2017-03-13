@@ -18,10 +18,9 @@ This function reads an organism specific Genome Assembly Stats file that was ret
 This function takes a string specifying the path to the Genome Assembly Stats file
 of interest (e.g. the path returned by \code{\link{getAssemblyStats}}) and imports it.
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getAssemblyStats}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_gff}}
 }
-
+\author{
+Hajk-Georg Drost
+}

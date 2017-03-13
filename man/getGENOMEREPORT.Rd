@@ -12,4 +12,3 @@ Retrieves NCBI GENOME_REPORTS file from ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOM
 \author{
 Hajk-Georg Drost
 }
-

@@ -18,10 +18,9 @@ storing all available BioMart databases.
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getDatasets}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
-
+\author{
+Hajk-Georg Drost
+}

@@ -20,10 +20,9 @@ test <- getSummaryFile("refseq","plant")
 test
 }
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getKingdomAssemblySummary}}, \code{\link{getMetaGenomeSummary}}
 }
-
+\author{
+Hajk-Georg Drost
+}
