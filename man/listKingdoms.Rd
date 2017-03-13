@@ -30,10 +30,9 @@ listKingdoms(db = "ensemblgenomes")
 }
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listGroups}}
 }
-
+\author{
+Hajk-Georg Drost
+}

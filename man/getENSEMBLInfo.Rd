@@ -12,4 +12,3 @@ Retrieve species and genome information from http://rest.ensembl.org/info/specie
 \author{
 Hajk-Georg Drost
 }
-

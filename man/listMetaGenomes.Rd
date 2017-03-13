@@ -24,10 +24,9 @@ listMetaGenomes()
 listMetaGenomes(details = TRUE)
 } 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{getMetaGenomes}}, \code{\link{getMetaGenomeSummary}}
 }
-
+\author{
+Hajk-Georg Drost
+}

@@ -73,4 +73,3 @@ meta.retrieval(kingdom = "bacteria",
 \author{
 Hajk-Georg Drost
 }
-
