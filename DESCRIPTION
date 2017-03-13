@@ -21,6 +21,7 @@ Imports:
     biomaRt,
     Biostrings,
     stringi,
+    curl,
     tibble,
     jsonlite,
     data.table (>= 1.9.4),
