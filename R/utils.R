@@ -25,14 +25,11 @@ docFile <- function(file.name,
                     genome_rep,
                     seq_rel_date,
                     submitter){
-
-        cwd <- getwd()
-
-        setwd(path)
+    
         local.org <- stringr::str_replace_all(organism,"-","_")
         local.org <- stringr::str_replace_all(organism,"\\/","_")
         
-        sink(paste0("doc_",local.org,"_db_",database,".txt"))
+        sink(file.path(path, paste0("doc_",local.org,"_db_",database,".txt")))
 
         cat(paste0("File Name: ", file.name))
         cat("\n")
@@ -67,8 +64,6 @@ docFile <- function(file.name,
         cat(paste0("submitter: ", submitter))
         
         sink()
-
-        setwd(cwd)
 
 }
 
