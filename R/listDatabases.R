@@ -33,17 +33,19 @@ listDatabases <- function(db = "nr", update = FALSE) {
         
     }
     
+    db.file.name <- file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt")
+    
     if (update) {
-        if (file.exists(file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt")))
-            unlink(file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt"))
+        if (file.exists(db.file.name))
+            unlink(db.file.name)
         
     }
     
     
-    if (file.exists(file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt"))) {
+    if (file.exists(db.file.name)) {
         listDBs <-
             utils::read.csv(
-                file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt"),
+                db.file.name,
                 sep = ";",
                 header = FALSE
             )
@@ -62,7 +64,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
         
         utils::write.table(
             x         = listDBs[[1]],
-            file      = file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt"),
+            file      = db.file.name,
             quote     = FALSE,
             col.names = FALSE,
             row.names = FALSE,
@@ -94,7 +96,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
             stop("No entries for db = '", db, "' could not be found.", call. = FALSE)
         
         # limit NCBI queries
-        if (!file.exists(file.path(tempdir(), "_ncbi_downloads", "listDatabases.txt")))
+        if (!file.exists(db.file.name))
             Sys.sleep(0.33)
         
         # delete md5 entries
