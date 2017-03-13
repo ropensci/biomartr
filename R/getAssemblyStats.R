@@ -88,15 +88,13 @@ getAssemblyStats <-
             )
         
         if (nrow(FoundOrganism) == 0) {
-            cat("\n")
-            cat(
+            message(
                 paste0(
                     "----------> No genome assembly stats file for a reference genome or representative genome was found for '",
                     organism,
                     "'. Thus, download for this species has been omitted."
                 )
             )
-            cat("\n")
         } else {
             if (nrow(FoundOrganism) > 1) {
                 warnings(
