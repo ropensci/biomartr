@@ -125,14 +125,11 @@ meta.retrieval <- function(kingdom,
         stringr::str_sub(FinalOrganisms,1,1) <- stringr::str_to_upper(stringr::str_sub(FinalOrganisms,1,1))
     }
     
-    cat("\n")
-    
+
     if (is.null(group))
-        cat(paste0("Starting meta retrieval of all ", type, " files for ", kingdom, "."))
+        message(paste0("Starting meta retrieval of all ", type, " files for ", kingdom, "."))
     if (!is.null(group))
-        cat(paste0("Starting meta retrieval of all ", type, " files within kingdom '", kingdom, "' and subgroup '",group,"'."))
-    
-    cat("\n")
+        message(paste0("Starting meta retrieval of all ", type, " files within kingdom '", kingdom, "' and subgroup '",group,"'."))
     
     if (type == "genome") {
         if (is.null(path)) {
@@ -245,8 +242,7 @@ meta.retrieval <- function(kingdom,
         return(stats.files)
     }
     
-    cat("\n")
-    cat("Finished meta retieval process.")
+    message("Finished meta retieval process.")
 }
 
 
