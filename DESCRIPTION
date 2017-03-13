@@ -6,8 +6,7 @@ Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Description: Perform metagenomic data retrieval and functional annotation
     retrieval. In detail, this package aims to provide users with a standardized
     way to automate genome, proteome, coding sequence ('CDS'), 'GFF', and metagenome
-    retrieval from 'NCBI' and 'ENSEMBL' (Yates et al. (2016) <doi:10.1093/nar/
-    gkv1157>) databases. Furthermore, an interface to the 'BioMart' database
+    retrieval from 'NCBI' and 'ENSEMBL' databases. Furthermore, an interface to the 'BioMart' database
     (Smedley et al. (2009) <doi:10.1186/1471-2164-10-22>) allows users to retrieve
     functional annotation for genomic loci. Users can download entire databases such
     as 'NCBI RefSeq' (Pruitt et al. (2007) <doi:10.1093/nar/gkl842>), 'NCBI nr',
