@@ -42,6 +42,7 @@
 #' gene vector in the second column, and all attributes in the following columns.
 #' @seealso \code{\link{organismFilters}}, \code{\link{organismBM}},
 #' \code{\link[biomaRt]{listAttributes}}, \code{\link[biomaRt]{getBM}}
+#' @import biomaRt
 #' @export
 biomart <- function(genes, mart, dataset, attributes, filters, ...){
         
