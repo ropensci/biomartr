@@ -105,6 +105,11 @@ getGenome <-
                         )
                     )
                 
+                if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path,"/"), file.path = download_url)) {
+                   message("Unfortunately no genome file could be found for organism '",organism,"'. Thus, the download of this organism has been omitted.")
+                   return(FALSE) 
+                }
+                
                 # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
                 
                 local.org <- stringr::str_replace_all(organism,"-","_")
