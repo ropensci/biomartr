@@ -1,9 +1,9 @@
 ---
-title: "Combine Evolutionary Transcriptomics with `biomartr`"
+title: "Ensembl BioMart Examples"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Evolutionary Transcriptomics using biomartr}
+  %\VignetteIndexEntry{Ensembl BioMart Examples}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
@@ -15,22 +15,6 @@ knitr::opts_chunk$set(
   error = FALSE,
   tidy = FALSE)
 ```
-
-## Introduction
-
-Evolutionary Transcriptomics defines the concept of combining genetic sequence conservation information with gene expression levels to quantify transcriptome conservation throughout biological processes (Domazet-Loso and Tautz, 2010 Nature ; Quint, Drost et al., 2012 Nature ; Drost et al., 2015 Mol. Biol. Evol. ; Drost et al., 2016 Mol. Biol. Evol.).
-
-The [Introduction to Evolutionary Transcriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd) vignette provided by the [myTAI](https://github.com/HajkD/myTAI) package
-will give users a broad overwiew of phylotranscriptomics as scientific discipline.
-
-The `biomartr` package aims to provide an interface for functional annotation
-queries. Hence, combining functional annotation with the detection of evolutionary signals in
-biological processes with [orthologr](https://github.com/HajkD/orthologr) and [myTAI](https://github.com/HajkD/myTAI) allows users to correlate 
-biological functions and constraints with their evolutionary origin.
-
-This vignette aims to provide use cases for combining functional annotation
-of genes (`biomartr`) with their role in development (`myTAI`) in an evolutionary context (`orthologr`).
-
 
 ## Use Case #1: Functional Annotation of Genes Sharing a Common Evolutionary History
 
