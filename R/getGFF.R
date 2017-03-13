@@ -64,6 +64,7 @@ getGFF <-
             organism <- stringr::str_replace_all(organism,"\\(","")
             organism <- stringr::str_replace_all(organism,"\\)","")
             
+            
             FoundOrganism <-
                 dplyr::filter(
                     AssemblyFilesAllKingdoms,
@@ -101,6 +102,11 @@ getGFF <-
                             "_genomic.gff.gz"
                         )
                     )
+                
+                if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path,"/"), file.path = download_url)) {
+                    message("Unfortunately no GFF file could be found for organism '",organism,"'. Thus, the download of this organism has been omitted.")
+                    return(FALSE) 
+                }
                 
                 # download_url <- paste0(query$ftp_path,query$`# assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
                 local.org <- stringr::str_replace_all(organism,"-","_")
