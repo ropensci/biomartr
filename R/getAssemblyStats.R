@@ -127,6 +127,11 @@ getAssemblyStats <-
             local.org <-
                 stringr::str_replace_all(organism, "\\/", "_")
             
+            if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path,"/"), file.path = download_url)) {
+                message("Unfortunately no assembly stats file could be found for organism '",organism,"'. Thus, the download of this organism has been omitted.")
+                return(FALSE) 
+            }
+            
             if (nrow(FoundOrganism) == 1) {
                 tryCatch({
                     utils::capture.output(
