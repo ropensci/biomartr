@@ -23,7 +23,7 @@
 #'
 #' @return Either a \code{Biostrings} or \code{data.table} object.
 #' @seealso \code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}
-#' @import data.table
+#' @import Biostrings
 #' @export
 
 read_proteome <- function(file, format = "fasta", obj.type = "Biostrings", ...){
