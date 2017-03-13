@@ -55,30 +55,10 @@ Getting Started with `biomartr`:
 
 ## Installation
 
-Before users can download and install `biomartr` they need to install the following packages from [Bioconductor](http://www.bioconductor.org/):
-
 ```r
-# install Bioconductor base packages
+# install biomartr 0.3.0
 source("http://bioconductor.org/biocLite.R")
-biocLite()
-
-# load the biomaRt package
-source("http://bioconductor.org/biocLite.R")
-biocLite("biomaRt")
-
-# load the Biostrings package
-source("http://bioconductor.org/biocLite.R")
-biocLite("Biostrings")
-```
-
-Users might be asked during the installation process of `Biostrings` and `biomaRt` whether or not they would like to update all package dependencies of the corresponding packages.
-Please type `a` specifying that all package dependencies of the corresponding packages shall be updated. This is important for the sufficient functionality of `biomartr`.
-
-Now users can download `biomartr` from CRAN :
-
-```r
-# install biomartr 0.3.0 from CRAN
-install.packages("biomartr")
+biocLite('biomartr')
 ```
 
 ## NEWS
@@ -154,12 +134,9 @@ The developer version of `biomartr` might include more functionality than the st
 Now you can use the `devtools` package to install biomartr from GitHub.
 
 ```r
-# install.packages("devtools")
-
 # install the current version of biomartr on your system
-library(devtools)
-install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies = TRUE)
-
+source("http://bioconductor.org/biocLite.R")
+biocLite("HajkD/biomartr")
 ```
 
 ### On Windows Systems
