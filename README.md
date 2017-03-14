@@ -57,7 +57,7 @@ Getting Started with `biomartr`:
 ## Installation
 
 ```r
-# install biomartr 0.3.0
+# install biomartr 0.4.0
 source("http://bioconductor.org/biocLite.R")
 biocLite('biomartr')
 ```
