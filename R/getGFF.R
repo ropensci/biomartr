@@ -36,7 +36,7 @@
 #' 
 #' }
 #' 
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{meta.retrieval}}
+#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}
 #' @export
 
 getGFF <-
