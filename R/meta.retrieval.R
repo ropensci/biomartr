@@ -1,15 +1,19 @@
 #' @title Perform Meta-Genome Retieval
-#' @description Download genomes, proteomes, or CDS of all species within a kingdom of life.
+#' @description Download genomes, proteomes, cds, gff, rna, or assembly stats files of all species within a kingdom of life.
 #' @param kingdom a character string specifying the kingdom of the organisms of interest,
 #' e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
 #' Available kingdoms can be retrieved with \code{\link{getKingdoms}}.
 #' @param group only species belonging to this subgroup will be downloaded. Groups can be retrieved with \code{\link{getGroups}}.
 #' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.
 #' @param type type of sequences that shall be retrieved. Options are:
-#'  \code{type = "genome"} (for genome assembly retrieval; see also \code{\link{getGenome}}), \code{type = "proteome"} (for proteome retrieval; see also \code{\link{getProteome}}),
-#'  \code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
-#'  \code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
-#'  \code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).
+#' \itemize{
+#'  \item \code{type = "genome"} (for genome assembly retrieval; see also \code{\link{getGenome}}), 
+#'  \item \code{type = "proteome"} (for proteome retrieval; see also \code{\link{getProteome}}),
+#'  \item \code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
+#'  \item \code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
+#'  \item \code{type = "rna"} (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
+#'  \item \code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).
+#'  }
 #' @param combine just in case \code{type = "assemblystats"} is specified, shall assemby stats of individual species be imported and combined to a \code{\link{data.frame}}? 
 #' @param path path to the folder in which downloaded genomes shall be stored. By default the
 #' kingdom name is used to name the output folder.
@@ -31,7 +35,7 @@
 #' # get all available kingdoms for ensemblgenomes
 #' getKingdoms(db = "ensemblgenomes")
 #' # download all vertebrate genomes from ensemblgenomes
-#' meta.retrieval(kingdom = "", db = "ensemblgenomes", type = "genome")
+#' meta.retrieval(kingdom = "vertebrate_mammalian", db = "ensemblgenomes", type = "genome")
 #' 
 #' # In case users do not wish to retrieve genomes from an entire kingdom, 
 #' # but rather from a subgoup (e.g. from species belonging to the Gammaproteobacteria class,
@@ -77,8 +81,8 @@ meta.retrieval <- function(kingdom,
         if (!is.element(group, getGroups(kingdom = kingdom, db = db)))
             stop("Please specify a group that is supported by getGroups(). Your specification '",group,"' does not exist in getGroups(kingdom = '",kingdom,"', db = '",db,"'). Maybe you used a different db argument in getGroups()?", call. = FALSE)
     
-    if (!is.element(type, c("genome", "proteome", "CDS", "gff", "assemblystats")))
-        stop("Please choose either type: type = 'genome', type = 'proteome', type = 'CDS', type = 'gff', or type = 'assemblystats'.", call. = FALSE)
+    if (!is.element(type, c("genome", "proteome", "CDS", "gff", "rna", "assemblystats")))
+        stop("Please choose either type: type = 'genome', type = 'proteome', type = 'CDS', type = 'gff', type = 'rna', or type = 'assemblystats'.", call. = FALSE)
     
     if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
         stop("Please select einter db = 'refseq', db = 'genbank', db = 'ensembl' or db = 'ensemblgenomes'.", call. = FALSE)
