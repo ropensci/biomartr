@@ -21,17 +21,19 @@ knitr::opts_chunk$set(
 
 The `biomartr` package allows users to retrieve biological sequences in a very simple and intuitive way.
 
-Using `biomartr`, users can retrieve either genomes, proteomes, or CDS data using the specialized functions:
+Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
 * `getGenome()`
 * `getProteome()`
 * `getCDS()`
+* `getRNA()`
 * `getGFF()`
+* `getAssemblyStats()`
 
 
 ## Getting Started with Sequence Retrieval
 
-First users can check whether or not the genome, proteome, or CDS of their interest is available for download.
+First users can check whether or not the genome, proteome, CDS, RNA, GFF, or genome assembly statistics of their interest is available for download.
 
 Using the scientific name of the organism of interest, users can check whether the 
 corresponding genome is available via the `is.genome.available()` function.
@@ -1109,6 +1111,245 @@ Cress_CDS
 [35385]  1689 ATGAGTTTAACAAAGAAAGCAAGTG...GAACCACAGGCCGGTCTCCTTAGA AT2G26280.1 cds:k...
 [35386]  1362 ATGGGTGTTTCTCTTCTGAAACAAC...GGTTTGGCCAATAATGTTATCTAG AT4G32600.1 cds:k...
 ```
+
+
+### RNA Retrieval
+
+The `getRNA()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
+[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+which corresponding RNA files can be retrieved. It works analogous to `getGenome()`, `getProteome()`, and `getCDS()`. 
+
+The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
+
+Options are:
+
+- `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
+- `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
+- `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
+- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
+Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
+Finally, the `path` argument specifies the folder path in which the corresponding RNA file shall be locally stored. In case users would like to store the RNA file at a different location,
+they can specify the `path = file.path("put","your","path","here")` argument.
+
+Example `RefSeq`:
+
+```{r,eval=FALSE}
+# download the RNA of Homo sapiens from refseq
+# and store the corresponding RNA file in '_ncbi_downloads/RNA'
+HS.rna.refseq <- getRNA( db       = "refseq", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","RNA"))
+```
+
+
+In this example, `getRNA()` creates a directory named `'_ncbi_downloads/RNA'` into which the corresponding RNA file named `Homo_sapiens_rna_from_genomic_refseq.fna.gz` is downloaded. The return value of `getRNA()` is the folder path to the downloaded genome file
+that can then be used as input to the `read_rna()` function. The variable `HS.rna.refseq` stores the path to the downloaded RNA file. 
+Subsequently, users can use the `read_cds()` function to import the genome into the R session. Users can choose to work with the genome sequence in R either as [Biostrings](http://bioconductor.org/packages/release/bioc/html/Biostrings.html) object (`obj.type = "Biostrings"`) or [data.table](https://github.com/Rdatatable/data.table/wiki) object
+(`obj.type = "data.table"`) by specifying the `obj.type` argument of the `read_rna()` function. 
+
+```{r,eval=FALSE}
+# import downloaded RNA as Biostrings object
+Human_rna <- read_rna(file     = HS.rna.refseq, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_rna
+```
+
+```
+   A BStringSet instance of length 164136
+          width seq                                                                                       names               
+     [1]   1652 CTTGCCGTCAGCCTTTTCTTTGACCTCTTCTTTCTGTTCATGT...CACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTG lcl|NC_000001.11_...
+     [2]   1769 TCCGGCAGAGCGGAAGCGGCGGCGGGAGCTTCCGGGAGGGCGG...ACCAACAGTGTGCTTTTAATAAAGGATCTCTAGCTGTGCAGGA lcl|NC_000001.11_...
+     [3]     68 TGTGGGAGAGGAACATGGGCTCAGGACAGCGGGTGTCAGCTTGCCTGACCCCCATGTCGCCTCTGTAG                      lcl|NC_000001.11_...
+     [4]     23 TGACCCCCATGTCGCCTCTGTAG                                                                   lcl|NC_000001.11_...
+     [5]     23 GAGAGGAACATGGGCTCAGGACA                                                                   lcl|NC_000001.11_...
+     ...    ... ...
+[164132]     59 GAGAAAGCTCACAAGAACTGCTAACTCATGCCCCCATGTCTAACAACATGGCTTTCTCA                               lcl|NC_012920.1_t...
+[164133]     71 ACTTTTAAAGGATAACAGCTATCCATTGGTCTTAGGCCCCAAAAATTTTGGTGCAACTCCAAATAAAAGTA                   lcl|NC_012920.1_t...
+[164134]     69 GTTCTTGTAGTTGAAATACAACGATGGTTTTTCATATCATTGGTCGTGGTTGTAGTCCGTGCGAGAATA                     lcl|NC_012920.1_t...
+[164135]     66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                        lcl|NC_012920.1_t...
+[164136]     68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                      lcl|NC_012920.1_t...
+```
+
+Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
+
+```
+File Name: Homo_sapiens_rna_from_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_rna_from_genomic.fna.gz
+Download_Date: Wed Mar 15 16:46:45 2017
+refseq_category: reference genome
+assembly_accession: GCF_000001405.36
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2017-01-06
+submitter: Genome Reference Consortium
+```
+
+In summary, the `getRNA()` and `read_rna()` functions allow users to retrieve RNA files by specifying
+the scientific name of the organism of interest and allow them to import the retrieved RNA file e.g. as `Biostrings` object.
+Thus, users can then perform the `Biostrings notation` to work with downloaded RNA and can rely on the log
+file generated by `getRNA()` to better document the source and version of RNA used for subsequent studies.
+
+Alternatively, users can perform the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package:
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import RNA as Biostrings object
+Human_rna <- getRNA( db       = "refseq", 
+                     organism = "Homo sapiens",
+                     path     = file.path("_ncbi_downloads","RNA")) %>%
+    read_cds(obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_rna
+```
+
+```
+   A BStringSet instance of length 164136
+          width seq                                                                                       names               
+     [1]   1652 CTTGCCGTCAGCCTTTTCTTTGACCTCTTCTTTCTGTTCATGT...CACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTG lcl|NC_000001.11_...
+     [2]   1769 TCCGGCAGAGCGGAAGCGGCGGCGGGAGCTTCCGGGAGGGCGG...ACCAACAGTGTGCTTTTAATAAAGGATCTCTAGCTGTGCAGGA lcl|NC_000001.11_...
+     [3]     68 TGTGGGAGAGGAACATGGGCTCAGGACAGCGGGTGTCAGCTTGCCTGACCCCCATGTCGCCTCTGTAG                      lcl|NC_000001.11_...
+     [4]     23 TGACCCCCATGTCGCCTCTGTAG                                                                   lcl|NC_000001.11_...
+     [5]     23 GAGAGGAACATGGGCTCAGGACA                                                                   lcl|NC_000001.11_...
+     ...    ... ...
+[164132]     59 GAGAAAGCTCACAAGAACTGCTAACTCATGCCCCCATGTCTAACAACATGGCTTTCTCA                               lcl|NC_012920.1_t...
+[164133]     71 ACTTTTAAAGGATAACAGCTATCCATTGGTCTTAGGCCCCAAAAATTTTGGTGCAACTCCAAATAAAAGTA                   lcl|NC_012920.1_t...
+[164134]     69 GTTCTTGTAGTTGAAATACAACGATGGTTTTTCATATCATTGGTCGTGGTTGTAGTCCGTGCGAGAATA                     lcl|NC_012920.1_t...
+[164135]     66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                        lcl|NC_012920.1_t...
+[164136]     68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                      lcl|NC_012920.1_t...
+```
+
+Example `Genbank`:
+
+```{r,eval=FALSE}
+# download the RNA of Homo sapiens from genbank
+# and store the corresponding genome RNA file in '_ncbi_downloads/RNA'
+HS.rna.genbank <- getRNA( db       = "genbank", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","RNA"))
+```
+
+```{r,eval=FALSE}
+# import downloaded RNA as Biostrings object
+Human_rna <- read_cds(file     = HS.rna.genbank, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_rna
+```
+
+```
+  A BStringSet instance of length 24
+     width seq                                                                                            names               
+ [1]    71 GTTTATGTAGCTTACCTCCTCAAAGCAATACACTGAAAATGTTTAGACGGGCTCACATCACCCCATAAACA                        lcl|J01415.2_trna...
+ [2]   954 AATAGGTTTGGTCCTAGCCTTTCTATTAGCTCTTAGTAAGATTACA...AAGTCGTAACATGGTAAGTGTACTGGAAAGTGCACTTGGACGAAC lcl|J01415.2_rrna...
+ [3]    69 CAGAGTGTAGCTTAACACAAAGCACCCAACTTACACTTAGGAGATTTCAACTTAACTTGACCGCTCTGA                          lcl|J01415.2_trna...
+ [4]  1559 GCTAAACCTAGCCCCAAACCCACTCCACCTTACTACCAGACAACCT...ATCTCAACTTAGTATTATACCCACACCCACCCAAGAACAGGGTTT lcl|J01415.2_rrna...
+ [5]    75 GTTAAGATGGCAGAGCCCGGTAATCGCATAAAACTTAAAACTTTACAGTCAGAGGTTCAATTCCTCTTCTTAACA                    lcl|J01415.2_trna...
+ ...   ... ...
+[20]    59 GAGAAAGCTCACAAGAACTGCTAACTCATGCCCCCATGTCTAACAACATGGCTTTCTCA                                    lcl|J01415.2_trna...
+[21]    71 ACTTTTAAAGGATAACAGCTATCCATTGGTCTTAGGCCCCAAAAATTTTGGTGCAACTCCAAATAAAAGTA                        lcl|J01415.2_trna...
+[22]    69 GTTCTTGTAGTTGAAATACAACGATGGTTTTTCATATCATTGGTCGTGGTTGTAGTCCGTGCGAGAATA                          lcl|J01415.2_trna...
+[23]    66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                             lcl|J01415.2_trna...
+[24]    68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                           lcl|J01415.2_trna...
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the RNA of Homo sapiens from ensembl
+# and store the corresponding genome RNA file in '_ncbi_downloads/RNA'
+HS.rna.ensembl <- getRNA( db       = "ensembl", 
+                          organism = "Homo sapiens",
+                          path     = file.path("_ncbi_downloads","RNA"))
+```
+
+```{r,eval=FALSE}
+# import downloaded RNA as Biostrings object
+Human_rna <- read_cds(file     = HS.rna.ensembl, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_rna
+```
+
+```
+  A BStringSet instance of length 36701
+         width seq                                                                                        names               
+    [1]    104 GTGCTCACTTTGGCAACATACATACTAAAATTGGACGGATACAG...GCACAAGGATGACATGCAAATTCATGAAGCATTCCATATTTTT ENST00000516494.2...
+    [2]    164 TTAACTACCTGACAGAGGAGATACTGTGATCATGAAAGTGGTTT...CATAATTTCTGGTGGTAGGGGACTGCGTTCATGTTCTCCCCTA ENST00000627793.1...
+    [3]    114 ACACTGGTTTCTCTTCAGATCGAATAAATCTTTCGCCTTTTACT...AGTTATAAGCTAATTTTTTGTAAGCCTTGCCCTGGGGAGGCAG ENST00000629478.1...
+    [4]     64 CAGTGTTACACCTCTTTTAGAATTTATCTATCAGGTTTTCCAGTGTTCACTGAAATTTGTCTCT                           ENST00000629187.1...
+    [5]    107 GTGTTGGCCTGGGCAGCACGTATACTAAAGTTGGAATGACACAG...GCGCAAGGATGATGTGCAAATTCGTGACAAGTTCCATATTTTT ENST00000631612.1...
+    ...    ... ...
+[36697]     90 GGCTAGTCCAAATGTAGTGGTGTTCCAAACTAATTAATCACAACCAGTTACAGATTTCTTGTTTTCTTTTCCACTCACACTTAGCCTTAA ENST00000410951.1...
+[36698]    109 GGCTGATCTGAAGATGATGAGTTATCTCAATTGATTGTTCAGCC...TCTATTCTTTCCTCTCTTCTCACTACTGCACTTGGCTAGGAAA ENST00000410462.2...
+[36699]    109 GGTGGGTCCAAAGGTAGCAAGTTATCTCAATTGATCACAGTCAG...CATTCTATCACCCCTTCTCATTACTGTACTTGACTAGTCTTTT ENST00000364501.1...
+[36700]    293 GGATATGAGGGCGATCTGGCAGGGACATCTGTCACCCCACTGAT...AAAATTAGCTGGGCATAGTGGCGTGCACCTGTCGTCCTAGCTA ENST00000365097.1...
+[36701]    172 TTGAAGGCGTGGAGACTGAAGTCCTCTCTATATCCACAGAACAG...AAGAGGGCTGTTCAGTCTCCATGCCCTTCAATCCTTGGCTACT ENST00000615087.1...
+```
+
+Example `ENSEMBLGENOMES`:
+
+Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the genome of Arabidopsis thaliana from ensemblgenomes
+# and store the corresponding genome RNA file in '_ncbi_downloads/RNA'
+AT.rna.ensemblgenomes <- getRNA( db       = "ensemblgenomes", 
+                                 organism = "Arabidopsis thaliana",
+                                 path     = file.path("_ncbi_downloads","RNA"))
+```
+
+```{r,eval=FALSE}
+# import downloaded RNA as Biostrings object
+Cress_rna <- read_cds(file     = AT.rna.ensemblgenomes, 
+                      obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Cress_rna
+```
+
+```
+  A BStringSet instance of length 1398
+       width seq                                                                                          names               
+   [1]   101 TAGTGAGCACAAAGCGAACTATTCTTTCGCCTTTTACTAAAGAAT...CCACGCTAAGTGGCATACGCCTATTTTTGGAGGGATCTGCCTTC AT1G05853.1 ncrna...
+   [2]   195 ATACCTTTCTCGGCCTTTTGGCTAAGATCAAGTGTAGTATCTGTT...AGTCGCCCATGCGTTGCACTACTGCATGGGCCTGGCTCAACCCG AT2G04455.1 ncrna...
+   [3]   195 TTTTTCTAATTACTTGCAAGCGATGTGTAAATTAGATTAATTCAA...TCATAAATTTAGATAATATTTCACTAAATAAGTTGAAATTGACC AT5G09945.1 ncrna...
+   [4]   101 CGCAGCTATGTGGTGAGCACAAAGCGAACTATTCTTTCGCCTTTT...CGTGTGCTCTCCACGCCAAGTGGCTTACGCCTATTTTTGGAGGG AT4G04185.1 ncrna...
+   [5]    55 GTGATCAATAAGACAAGTGGCCTAGGCTAGTGATCGCATTGCACATATCGTTTGG                                      AT4G06405.1 ncrna...
+   ...   ... ...
+[1394]   118 ACACATAAAACTAGTATATTGCCTTGAACATGGTTTATTAGGAAA...TCCTTATATACAATGTTCAAAGTAATGAATTAGTTTTATTTTGT at4g21362 ncrna c...
+[1395]   121 CTTACAGAGATCTTTGGCATTCTGTCCACCTCCTCTCTCTATATT...TTTCGTAAGAGGAGGTGGGCATACTGCCAATAGAGATCTGTTAG at1g76135 ncrna c...
+[1396]   100 GGTTGGATTACTGGGCGAATACTCCTATGGCAGATCGCATTGGCT...TAAAATGCTTCTCTGCCAAAGGAGATTTGCCCCGCAATTCATCC at2g34202 ncrna c...
+[1397]   174 TTGACCCAGCCAAATCGACTCACCGTTAAAACTTCTTAACAGCTC...CGCTGTTAAGGAGTGTTAACGGTGAGTCGATTTGGCCGGGTCAA at4g07565 ncrna c...
+[1398]   189 CTTAAGGCAATTTGACCTATATCAAATTTGGCACCGTTGCCGGGG...CCCGGCAACGGCGCCAAATTTGATATAGCTCAAATCGCCTTAAG at2g05455 ncrna c...
+```
+
 
 ### Retrieve the annotation file of a particular genome
 
