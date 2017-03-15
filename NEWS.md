@@ -1,6 +1,15 @@
 biomartr 0.5.0
 ===========
 
+### New Functions
+
+- new function `getRNA()` to perform RNA Sequence Retrieval from NCBI and ENSEMBL databases (Thanks for suggesting it @carlo-berg)
+
+- new function `read_rna()` for importing RNA downloaded with `getRNA()` as Biostrings or data.table object
+
+### Function changes
+
+- `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of RNA files via `type = "rna"`. See `getRNA()` for more details.
 
 biomartr 0.4.0
 ===========
