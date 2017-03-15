@@ -20,7 +20,7 @@ This function takes a string specifying the path to the GFF file
 of interest (e.g. the path returned by \code{\link{getGFF}}).
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
+\code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_rna}}
 }
 \author{
 Hajk-Georg Drost
