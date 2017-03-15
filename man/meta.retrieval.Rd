@@ -74,6 +74,9 @@ meta.retrieval(kingdom = "bacteria",
    type = "genome")
 }
 }
+\seealso{
+\code{\link{meta.retrieval.all}}
+}
 \author{
 Hajk-Georg Drost
 }
