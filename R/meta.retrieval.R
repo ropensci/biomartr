@@ -208,6 +208,24 @@ meta.retrieval <- function(kingdom,
         }
     }
     
+    if (type == "rna") {
+        if (is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getRNA(db       = db,
+                       organism = FinalOrganisms[i],
+                       path     = kingdom)
+            }
+        }
+        
+        if (!is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                getRNA(db       = db,
+                       organism = FinalOrganisms[i],
+                       path     = path)
+            }
+        }
+    }
+    
     if (type == "assemblystats") {
         stats.files <- vector("list", length(FinalOrganisms))
         
