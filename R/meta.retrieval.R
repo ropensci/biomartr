@@ -55,6 +55,7 @@
 #'    db = "refseq", 
 #'    type = "genome")
 #' }
+#' @seealso \code{\link{meta.retrieval.all}}
 #' @export
 
 meta.retrieval <- function(kingdom,
