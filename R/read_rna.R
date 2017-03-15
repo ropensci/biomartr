@@ -31,7 +31,7 @@ read_rna <- function(file, format = "fasta", obj.type = "Biostrings", delete_cor
     if (obj.type == "Biostrings") { 
         tryCatch({
             RNA_file <-
-                Biostrings::readBStringSet(filepath = file, format = format, ...)}, error = function(e) {
+                Biostrings::readRNAStringSet(filepath = file, format = format, ...)}, error = function(e) {
                     stop(
                         paste0(
                             "File ",
@@ -52,7 +52,7 @@ read_rna <- function(file, format = "fasta", obj.type = "Biostrings", delete_cor
     if (obj.type == "data.table") {
         tryCatch({
             RNA_file <-
-                Biostrings::readBStringSet(filepath = file, format = format, ...)
+                Biostrings::readRNAStringSet(filepath = file, format = format, ...)
             
             RNA_names <-
                 as.vector(unlist(sapply(RNA_file@ranges@NAMES, function(x) {
