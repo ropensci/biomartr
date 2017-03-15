@@ -62,6 +62,16 @@ source("http://bioconductor.org/biocLite.R")
 biocLite('biomartr')
 ```
 
+## Install Developer Version
+Some bug fixes or new functionality will not be available on CRAN yet, but in the developer version here on GitHub. To download and install the most recent version of `biomartr` run:
+
+```r
+# install the current version of biomartr on your system
+source("http://bioconductor.org/biocLite.R")
+biocLite("HajkD/biomartr")
+```
+
+
 ## NEWS
 The current status of the package as well as a detailed history of the functionality of each version of `biomartr` can be found in the [NEWS](https://github.com/HajkD/biomartr/blob/master/NEWS.md) section.
 
@@ -87,6 +97,7 @@ The current status of the package as well as a detailed history of the functiona
 * `getGenome()` : Download a specific genome stored on NCBI and ENSEMBL servers
 * `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
 * `getCDS()` : Download a specific CDS file (genome) stored on NCBI and ENSEMBL servers
+* `getRNA()` : Download a specific RNA file stored on NCBI and ENSEMBL servers
 * `getGFF()` : Genome Annotation Retrieval (`*.gff`) from NCBI and ENSEMBL servers
 * `getAssemblyStats()` : Genome Assembly Stats Retrieval from NCBI
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
@@ -100,6 +111,7 @@ The current status of the package as well as a detailed history of the functiona
 * `read_proteome()` : Import proteome as Biostrings or data.table object
 * `read_cds()` : Import CDS as Biostrings or data.table object
 * `read_gff()` : Import GFF file
+* `read_rna()` : Import RNA file
 * `read_assemblystats()` : Import Genome Assembly Stats File
 
 #### Database Retrieval
