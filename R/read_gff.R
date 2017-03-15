@@ -6,7 +6,7 @@
 #' of interest (e.g. the path returned by \code{\link{getGFF}}).
 #'
 #' @return Either a \code{Biostrings} or \code{data.table} object.
-#' @seealso \code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}
+#' @seealso \code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_rna}}
 #' @export
 
 read_gff <- function(file) {
