@@ -6,27 +6,27 @@ test_that("The getRNA() interface works properly..",{
     skip_on_travis() 
     
     # test proper download
-    Ath_CDS <- read_rna(getRNA( db       = "refseq",
+    Ath_rna <- read_rna(getRNA( db       = "refseq",
                                 organism = "Arabidopsis thaliana",
                                 path     = tempdir()), format = "fasta")
     
     # test proper use of internal referece files when command is repeated
-    Ath_CDS <- read_rna(getRNA( db       = "refseq",
+    Ath_rna <- read_rna(getRNA( db       = "refseq",
                                 organism = "Arabidopsis thaliana",
                                 path     = tempdir()), format = "fasta")
     
     # test proper download from genbank
-    Ath_CDS <- read_rna(getRNA( db       = "genbank",
+    Ath_rna <- read_rna(getRNA( db       = "genbank",
                                 organism = "Arabidopsis thaliana",
                                 path     = tempdir()), format = "fasta")
     
     # test proper use of internal referece files when command is repeated
-    Ath_CDS <- read_rna(getRNA( db       = "genbank",
+    Ath_rna <- read_rna(getRNA( db       = "genbank",
                                 organism = "Arabidopsis thaliana",
                                 path     = tempdir()), format = "fasta")
     
     # test proper download from ensemblgenomes
-    Ath_CDS <- read_rna(getRNA( db       = "ensemblgenomes",
+    Ath_rna <- read_rna(getRNA( db       = "ensemblgenomes",
                                 organism = "Arabidopsis thaliana",
                                 path     = tempdir()), format = "fasta")
     
