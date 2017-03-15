@@ -23,7 +23,7 @@
 #'
 #' @return A data.table storing the gene id in the first column and the corresponding
 #' sequence as string in the second column.
-#' @seealso \code{\link{getCDS}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_gff}}
+#' @seealso \code{\link{getCDS}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_gff}}, \code{\link{read_rna}}
 #' @import Biostrings
 #' @export
 read_cds <- function(file, format = "fasta", obj.type = "Biostrings", delete_corrupt = FALSE, ...){
