@@ -141,8 +141,6 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome"
 
 #### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI RefSeq`:
 
-Please note that the following functionality is so far only provided by the [developer version of biomartr](https://github.com/HajkD/biomartr#download-developer-version).
-
 In case users do not wish to retrieve genomes from an entire kingdom, but rather from
 a subgoup (e.g. from species belonging to the `Gammaproteobacteria` class, a subgroup of the `bacteria` kingdom),
 they can use the following workflow:
@@ -280,7 +278,7 @@ Now we can choose `Adenoviridae` as group argument for the `meta.retrieval()` fu
 meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = "genome")
 ```
 
-Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "CDS"`, or `type = "gff"`, users can retrieve proteome, CDS, or GFF files instead of genomes.
+Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "CDS"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve proteome, CDS, RNA, genome assembly statistics or GFF files instead of genomes.
 
 
 ### Meta retrieval of genome assembly quality information
@@ -557,5 +555,5 @@ Example `Genbank`:
 meta.retrieval.all(db = "genbank", type = "proteome")
 ```
 
-
+Again, by exchanging `type = "proteome"` by either `type = "genome"`, `type = "CDS"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve genome, CDS, RNA, genome assembly statistics or GFF files instead of proteomes
 
