@@ -1,7 +1,7 @@
 getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     
-    if (!is.element(type, c("dna", "cds", "pep")))
-        stop("Please a 'type' argument supported by this function: 'dna', 'cds', 'pep'.")
+    if (!is.element(type, c("dna", "cds", "pep", "ncrna")))
+        stop("Please a 'type' argument supported by this function: 'dna', 'cds', 'pep', 'ncrna'.")
     
     new.organism <- stringr::str_replace_all(organism, " ", "_")
     
@@ -43,10 +43,13 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
         tryCatch({
             ensembl.available.organisms <-
                 jsonlite::fromJSON("http://rest.ensembl.org/info/species?content-type=application/json")
-        }, error = function(e)
-            stop(
-                "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
-            ))
+        }, error = function(e) {
+            warning(
+                "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available? Do you have a fast and stable internet connection?", call. = FALSE
+            )
+            return(FALSE)
+        }
+            )
         
         aliases <- groups <- NULL
         
@@ -80,10 +83,13 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                     "?content-type=application/json"
                 )
             )
-    }, error = function(e)
-        stop(
+    }, error = function(e) {
+        warning(
             "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?"
-        ))
+        )
+        return(FALSE)
+    }
+        )
     
     # construct retrieval query
     ensembl.qry <-
@@ -99,8 +105,8 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                 json.qry.info$default_coord_system_version,
                 ".",
                 type,
-                ".",
-                id.type,
+                ifelse(id.type == "none","","."),
+                ifelse(id.type == "none","",id.type),
                 ".fa.gz"
             )
         )
@@ -126,16 +132,19 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                                      json.qry.info$default_coord_system_version,
                                      ".",
                                      type,
-                                     ".",
-                                     id.type,
+                                     ifelse(id.type == "none","","."),
+                                     ifelse(id.type == "none","",id.type),
                                      ".fa.gz"
                                  )
                              ),
                              mode = "wb")
-    }, error = function(e)
-        stop(
+    }, error = function(e) {
+        warning(
             "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/pub/' or 'http://rest.ensembl.org' currently available?"
-        ))
+        )
+        return(FALSE)
+    }
+        )
     
     return(file.path(
         path,
@@ -145,8 +154,8 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             json.qry.info$default_coord_system_version,
             ".",
             type,
-            ".",
-            id.type,
+            ifelse(id.type == "none","","."),
+            ifelse(id.type == "none","",id.type),
             ".fa.gz"
         )
     ))
