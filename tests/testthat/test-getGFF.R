@@ -40,5 +40,5 @@ test_that("The getGFF() error messages work properly..",{
     skip_on_travis()
     expect_error(getGFF( db       = "ensembl",
                             organism = "Saccharomyces cerevisi",
-                            path     = tempdir()), "Unfortunately organism 'Saccharomyces cerevisi' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly.")
+                            path     = tempdir()))
 })
