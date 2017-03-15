@@ -1,7 +1,7 @@
 getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     
-    if (!is.element(type, c("dna", "cds", "pep")))
-        stop("Please a 'type' argument supported by this function: 'dna', 'cds', 'pep'.")
+    if (!is.element(type, c("dna", "cds", "pep", "ncrna")))
+        stop("Please a 'type' argument supported by this function: 'dna', 'cds', 'pep', 'ncrna'.")
     
     new.organism <- stringr::str_replace_all(organism, " ", "_")
     name <- NULL
@@ -48,10 +48,13 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                 jsonlite::fromJSON(
                     "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
                 )
-        }, error = function(e)
-            stop(
+        }, error = function(e) {
+            warning(
                 "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-            ))
+            )
+            return(FALSE)
+        }
+            )
         
         aliases <- groups <- NULL
         
@@ -86,10 +89,13 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                     "?content-type=application/json"
                 )
             )
-    }, error = function(e)
-        stop(
+    }, error = function(e) {
+        warning(
             "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?"
-        ))
+        )
+        return(FALSE)
+    }
+        )
     
     # retrieve detailed information for organism of interest
     get.org.info <- is.genome.available(organism = organism, details = TRUE, db = "ensemblgenomes")
@@ -103,11 +109,14 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                     destfile = file.path(tempdir(),"EnsemblBacteria.txt"),
                     mode = "wb"
                 )
-            }, error = function(e)
-                stop(
+            }, error = function(e) {
+                warning(
                     "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' currently available?",
                     call. = FALSE
-                ))
+                )
+                return(FALSE)
+            }
+                )
         }
         
         suppressWarnings(bacteria.info <-
@@ -188,8 +197,8 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                     json.qry.info$default_coord_system_version,
                     ".",
                     type,
-                    ".",
-                    id.type,
+                    ifelse(id.type == "none","","."),
+                    ifelse(id.type == "none","",id.type),
                     ".fa.gz"
                 )
             )
@@ -211,8 +220,8 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                     json.qry.info$default_coord_system_version,
                     ".",
                     type,
-                    ".",
-                    id.type,
+                    ifelse(id.type == "none","","."),
+                    ifelse(id.type == "none","",id.type),
                     ".fa.gz"
                 )
             )
@@ -240,16 +249,19 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
                                      json.qry.info$default_coord_system_version,
                                      ".",
                                      type,
-                                     ".",
-                                     id.type,
+                                     ifelse(id.type == "none","","."),
+                                     ifelse(id.type == "none","",id.type),
                                      ".fa.gz"
                                  )
                              ),
                              mode = "wb")
-    }, error = function(e)
-        stop(
+    }, error = function(e) {
+        warning(
             "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/fasta' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-        ))
+        )
+        return(FALSE)
+    })
+        
     
     return(file.path(
         path,
@@ -259,8 +271,8 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
             json.qry.info$default_coord_system_version,
             ".",
             type,
-            ".",
-            id.type,
+            ifelse(id.type == "none","","."),
+            ifelse(id.type == "none","",id.type),
             ".fa.gz"
         )
     ))
