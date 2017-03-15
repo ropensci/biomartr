@@ -22,7 +22,7 @@
 #' }
 #'
 #' @return Either a \code{Biostrings} or \code{data.table} object.
-#' @seealso \code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}
+#' @seealso \code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}, \code{\link{read_rna}}
 #' @import Biostrings
 #' @export
 
