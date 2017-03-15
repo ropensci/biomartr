@@ -37,7 +37,7 @@ Ath.genome
 
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_gff}}
+\code{\link{getGenome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_gff}}, \code{\link{read_rna}}
 }
 \author{
 Hajk-Georg Drost
