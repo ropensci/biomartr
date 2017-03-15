@@ -56,7 +56,7 @@ getGFF( db       = "genbank",
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{meta.retrieval}}
+\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}
 }
 \author{
 Hajk-Georg Drost
