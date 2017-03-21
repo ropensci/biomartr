@@ -131,25 +131,37 @@ getAssemblyStats <-
             }
             
             if (nrow(FoundOrganism) == 1) {
-                tryCatch({
-                    utils::capture.output(
-                        downloader::download(
-                            download_url,
-                            destfile = file.path(
-                                path,
-                                paste0(local.org, "_assembly_stats_", db, ".txt")
-                            ),
-                            mode = "wb"
-                        )
-                    )
-                }, error = function(e)
-                    stop(
-                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
-                        download_url,
-                        "' currently available?",
-                        call. = FALSE
-                    ))
-                
+                if (file.exists(file.path(
+                        path,
+                        paste0(local.org, "_assembly_stats_", db, ".txt")
+                ))) {
+                        message("File ",
+                                file.path(
+                                        path,
+                                        paste0(local.org, "_assembly_stats_", db, ".txt")
+                                ),
+                                " exists already. Thus, download has been skipped.")
+                } else {
+                        tryCatch({
+                                utils::capture.output(
+                                        custom_download(
+                                                download_url,
+                                                destfile = file.path(
+                                                        path,
+                                                        paste0(local.org, "_assembly_stats_", db, ".txt")
+                                                ),
+                                                mode = "wb"
+                                        )
+                                )
+                        }, error = function(e)
+                                stop(
+                                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+                                        download_url,
+                                        "' currently available?",
+                                        call. = FALSE
+                                ))
+                }   
+                    
                 docFile(
                     file.name = paste0(local.org, "_assembly_stats_", db, ".txt"),
                     organism  = organism,
@@ -169,11 +181,7 @@ getAssemblyStats <-
                     submitter = FoundOrganism$submitter
                 )
                 
-                # NCBI limits requests to three per second
-                Sys.sleep(0.33)
-                
-                
-                print(
+                message(
                     paste0(
                         "The assembly statistics file of '",
                         organism,
