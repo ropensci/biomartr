@@ -114,15 +114,21 @@ getGenome <-
                 local.org <- stringr::str_replace_all(organism,"\\/","_")
                 
                 if (nrow(FoundOrganism) == 1) {
-                    tryCatch({utils::capture.output(downloader::download(
-                        download_url,
-                        destfile = file.path(path, paste0(local.org, "_genomic_",db,".fna.gz")),
-                        mode = "wb"
-                    ))}, error = function(e)
-                        stop(
-                            "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",download_url,"' currently available?", call. = FALSE
-                        ))
-                    
+                        if (file.exists(file.path(path, paste0(local.org, "_genomic_",db,".fna.gz")))) {
+                                message("File ",
+                                        file.path(path, paste0(local.org, "_genomic_", db, ".fna.gz")),
+                                        " exists already. Thus, download has been skipped.")
+                        } else {
+                                tryCatch({utils::capture.output(custom_download(
+                                        download_url,
+                                        destfile = file.path(path, paste0(local.org, "_genomic_",db,".fna.gz")),
+                                        mode = "wb"
+                                ))}, error = function(e)
+                                        stop(
+                                                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",download_url,"' currently available?", call. = FALSE
+                                        )) 
+                        }
+                
                     docFile(
                         file.name = paste0(local.org, "_genomic_",db,".fna.gz"),
                         organism  = organism,
@@ -142,11 +148,7 @@ getGenome <-
                         submitter = FoundOrganism$submitter
                     )
                     
-                    # NCBI limits requests to three per second
-                    Sys.sleep(0.33)
-                    
-                    
-                    print(
+                    message(
                         paste0(
                             "The genome of '",
                             organism,
@@ -222,7 +224,7 @@ getGenome <-
                 
                 sink()
                 
-                print(
+                message(
                     paste0(
                         "The genome of '",
                         organism,
@@ -291,7 +293,7 @@ getGenome <-
                 
                 sink()
                 
-                print(
+                message(
                     paste0(
                         "The genome of '",
                         organism,
