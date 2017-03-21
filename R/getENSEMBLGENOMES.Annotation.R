@@ -106,7 +106,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
         
         if (!file.exists(file.path(tempdir(),"EnsemblBacteria.txt"))) {
             tryCatch({
-                downloader::download(
+                custom_download(
                     "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt",
                     destfile = file.path(tempdir(),"EnsemblBacteria.txt"),
                     mode = "wb"
@@ -214,8 +214,7 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                 "The server path '",server.folder.path,"' seems not to exist. Please make sure that the selected bacteria is available at ENSEMBLGENOMES.",
                 call. = FALSE
             ))
-        Sys.sleep(0.33)
-        
+
         if (stringr::str_detect(get.files,"abinitio")) {
             ensembl.qry <-
                 paste0(
@@ -253,26 +252,52 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", id.type = "topl
                     ".gff3.gz"
                 )
             )
-        
-    tryCatch({
-        downloader::download(ensembl.qry,
-                             destfile = file.path(
-                                 path,
-                                 paste0(
-                                     new.organism,
-                                     ".",
-                                     json.qry.info$default_coord_system_version,
-                                     ".",
-                                     eg_version,
-                                     "_ensemblgenomes",
-                                     ".gff3.gz"
-                                 )
-                             ),
-                             mode = "wb")
-    }, error = function(e)
-        stop(
-            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/gff3' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-        ))
+    
+        if (file.exists(file.path(
+                path,
+                paste0(
+                        new.organism,
+                        ".",
+                        json.qry.info$default_coord_system_version,
+                        ".",
+                        eg_version,
+                        "_ensemblgenomes",
+                        ".gff3.gz"
+                )
+        ))) {
+                message("File ",file.path(
+                        path,
+                        paste0(
+                                new.organism,
+                                ".",
+                                json.qry.info$default_coord_system_version,
+                                ".",
+                                eg_version,
+                                "_ensemblgenomes",
+                                ".gff3.gz"
+                        )
+                )," exists already. Thus, download has been skipped.")
+        } else {
+                tryCatch({
+                        custom_download(ensembl.qry,
+                                        destfile = file.path(
+                                                path,
+                                                paste0(
+                                                        new.organism,
+                                                        ".",
+                                                        json.qry.info$default_coord_system_version,
+                                                        ".",
+                                                        eg_version,
+                                                        "_ensemblgenomes",
+                                                        ".gff3.gz"
+                                                )
+                                        ),
+                                        mode = "wb")
+                }, error = function(e)
+                        stop(
+                                "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/gff3' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+                        ))
+        }
     }
     
     return(file.path(
