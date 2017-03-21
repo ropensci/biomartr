@@ -121,30 +121,57 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
         return(FALSE) 
     }
     
-    
-    tryCatch({
-        downloader::download(ensembl.qry,
-                             destfile = file.path(
-                                 path,
-                                 paste0(
-                                     new.organism,
-                                     ".",
-                                     json.qry.info$default_coord_system_version,
-                                     ".",
-                                     type,
-                                     ifelse(id.type == "none","","."),
-                                     ifelse(id.type == "none","",id.type),
-                                     ".fa.gz"
-                                 )
-                             ),
-                             mode = "wb")
-    }, error = function(e) {
-        warning(
-            "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/pub/' or 'http://rest.ensembl.org' currently available?"
-        )
-        return(FALSE)
+    if (file.exists(file.path(
+            path,
+            paste0(
+                    new.organism,
+                    ".",
+                    json.qry.info$default_coord_system_version,
+                    ".",
+                    type,
+                    ifelse(id.type == "none","","."),
+                    ifelse(id.type == "none","",id.type),
+                    ".fa.gz"
+            )
+    ))) {
+            message("File ",file.path(
+                    path,
+                    paste0(
+                            new.organism,
+                            ".",
+                            json.qry.info$default_coord_system_version,
+                            ".",
+                            type,
+                            ifelse(id.type == "none","","."),
+                            ifelse(id.type == "none","",id.type),
+                            ".fa.gz"
+                    )
+            )," exists already. Thus, download has been skipped.")
+    } else {
+            tryCatch({
+                    custom_download(ensembl.qry,
+                                    destfile = file.path(
+                                            path,
+                                            paste0(
+                                                    new.organism,
+                                                    ".",
+                                                    json.qry.info$default_coord_system_version,
+                                                    ".",
+                                                    type,
+                                                    ifelse(id.type == "none","","."),
+                                                    ifelse(id.type == "none","",id.type),
+                                                    ".fa.gz"
+                                            )
+                                    ),
+                                    mode = "wb")
+            }, error = function(e) {
+                    warning(
+                            "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensembl.org/pub/' or 'http://rest.ensembl.org' currently available?"
+                    )
+                    return(FALSE)
+            }
+            )
     }
-        )
     
     return(file.path(
         path,
