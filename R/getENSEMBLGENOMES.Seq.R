@@ -104,7 +104,7 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
         
         if (!file.exists(file.path(tempdir(),"EnsemblBacteria.txt"))) {
             tryCatch({
-                downloader::download(
+                custom_download(
                     "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt",
                     destfile = file.path(tempdir(),"EnsemblBacteria.txt"),
                     mode = "wb"
@@ -239,29 +239,56 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
         return(FALSE) 
     }
     
-    tryCatch({
-        downloader::download(ensembl.qry,
-                             destfile = file.path(
-                                 path,
-                                 paste0(
-                                     new.organism,
-                                     ".",
-                                     json.qry.info$default_coord_system_version,
-                                     ".",
-                                     type,
-                                     ifelse(id.type == "none","","."),
-                                     ifelse(id.type == "none","",id.type),
-                                     ".fa.gz"
-                                 )
-                             ),
-                             mode = "wb")
-    }, error = function(e) {
-        warning(
-            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/fasta' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-        )
-        return(FALSE)
-    })
-        
+    if (file.exists(file.path(
+            path,
+            paste0(
+                    new.organism,
+                    ".",
+                    json.qry.info$default_coord_system_version,
+                    ".",
+                    type,
+                    ifelse(id.type == "none","","."),
+                    ifelse(id.type == "none","",id.type),
+                    ".fa.gz"
+            )
+    ))) {
+            message("File ",file.path(
+                    path,
+                    paste0(
+                            new.organism,
+                            ".",
+                            json.qry.info$default_coord_system_version,
+                            ".",
+                            type,
+                            ifelse(id.type == "none","","."),
+                            ifelse(id.type == "none","",id.type),
+                            ".fa.gz"
+                    )
+            )," exists already. Thus, download has been skipped.")
+    } else {
+            tryCatch({
+                    custom_download(ensembl.qry,
+                                    destfile = file.path(
+                                            path,
+                                            paste0(
+                                                    new.organism,
+                                                    ".",
+                                                    json.qry.info$default_coord_system_version,
+                                                    ".",
+                                                    type,
+                                                    ifelse(id.type == "none","","."),
+                                                    ifelse(id.type == "none","",id.type),
+                                                    ".fa.gz"
+                                            )
+                                    ),
+                                    mode = "wb")
+            }, error = function(e) {
+                    warning(
+                            "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/fasta' does not seem to work properly. Are you connected to the internet? Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
+                    )
+                    return(FALSE)
+            })
+    }
     
     return(file.path(
         path,
