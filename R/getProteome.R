@@ -102,22 +102,32 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
             }
             
             if (nrow(FoundOrganism) == 1) {
-                tryCatch({
-                    utils::capture.output(downloader::download(
-                        download_url,
-                        destfile = file.path(path, paste0(
-                            local.org, "_protein_", db, ".faa.gz"
-                        )),
-                        mode = "wb"
-                    ))
-                }, error = function(e)
-                    stop(
-                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
-                        download_url,
-                        "' currently available?",
-                        call. = FALSE
-                    ))
-                
+                if (file.exists(file.path(path, paste0(
+                        local.org, "_protein_", db, ".faa.gz"
+                )))) {
+                        message("File ",
+                                file.path(path, paste0(
+                                        local.org, "_protein_", db, ".faa.gz"
+                                )),
+                                " exists already. Thus, download has been skipped.")
+                } else {
+                        tryCatch({
+                                utils::capture.output(custom_download(
+                                        download_url,
+                                        destfile = file.path(path, paste0(
+                                                local.org, "_protein_", db, ".faa.gz"
+                                        )),
+                                        mode = "wb"
+                                ))
+                        }, error = function(e)
+                                stop(
+                                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+                                        download_url,
+                                        "' currently available?",
+                                        call. = FALSE
+                                ))
+                }   
+                   
                 docFile(
                     file.name = paste0(local.org, "_protein.faa.gz"),
                     organism  = organism,
@@ -137,11 +147,7 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
                     submitter = FoundOrganism$submitter
                 )
                 
-                # NCBI limits requests to three per second
-                Sys.sleep(0.33)
-                
-                
-                print(
+                message(
                     paste0(
                         "The proteome of '",
                         organism,
@@ -219,7 +225,7 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
             
             sink()
             
-            print(
+            message(
                 paste0(
                     "The proteome of '",
                     organism,
@@ -288,7 +294,7 @@ getProteome <- function(db = "refseq", organism, path = file.path("_ncbi_downloa
             
             sink()
             
-            print(
+            message(
                 paste0(
                     "The proteome of '",
                     organism,
