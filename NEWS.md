@@ -7,9 +7,14 @@ biomartr 0.5.0
 
 - new function `read_rna()` for importing RNA downloaded with `getRNA()` as Biostrings or data.table object
 
+- new helper function `custom_download()` that aims to make the download process more robust and stable
+-> In detail, the download process is now adapting to the operating system, e.g. using either `curl` (macOS), `wget` (Linux), or `wininet` (Windows).
+
 ### Function changes
 
 - `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of RNA files via `type = "rna"`. See `getRNA()` for more details.
+
+- all `get*()` retrieval functions now skip the download of a particular file if it already exists in the specified file path
 
 biomartr 0.4.0
 ===========
