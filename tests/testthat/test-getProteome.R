@@ -3,8 +3,7 @@ context("Test: getProteome()")
 test_that("The getProteome() interface works properly..",{
 
         skip_on_cran()
-        skip_on_travis() 
-        
+
         # test proper download
         Ath_Proteome <- read_proteome(getProteome( db       = "refseq",
                                               organism = "Arabidopsis thaliana",
@@ -29,8 +28,7 @@ test_that("The getProteome() interface works properly..",{
 
 test_that("The getProteome() error messages work properly..",{
     skip_on_cran()
-    skip_on_travis()        
-    expect_true(getProteome( db       = "ensembl",
+    expect_error(getProteome( db       = "ensembl",
                         organism = "Saccharomyces cerevisi",
                         path     = tempdir()))
 })
