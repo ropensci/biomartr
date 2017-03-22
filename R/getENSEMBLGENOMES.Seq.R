@@ -227,14 +227,7 @@ getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", 
             )
     }
     
-    if (!exists.ftp.file(url = paste0(
-        "ftp://ftp.ensemblgenomes.org/pub/current/",
-        stringr::str_to_lower(stringr::str_replace(get.org.info$division[1],"Ensembl","")),
-        "/fasta/",
-        stringr::str_to_lower(new.organism),
-        "/",
-        type,
-        "/"), file.path = ensembl.qry)) {
+    if (!exists.ftp.file(url = ensembl.qry, file.path = ensembl.qry)) {
         message("Unfortunately no ",type," file could be found for organism '",organism,"'. Thus, the download of this organism has been omitted.")
         return(FALSE) 
     }
