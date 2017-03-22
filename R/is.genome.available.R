@@ -195,7 +195,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
                              file.path(tempdir(), "ensembl_summary.txt"))
         }
         
-        if (!any(vapply(ensembl.available.organisms$name, function(x) stringr::str_detect(x, stringr::str_to_lower(new.organism)))))
+        if (!any(unlist(sapply(ensembl.available.organisms$name, function(x) stringr::str_detect(x, stringr::str_to_lower(new.organism))))))
             stop(
                 "Unfortunately organism '",
                 organism,
