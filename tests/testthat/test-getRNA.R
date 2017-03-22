@@ -35,7 +35,7 @@ test_that("The getRNA() interface works properly..",{
 test_that("The getRNA() error messages work properly..",{
     skip_on_cran()
     
-    expect_error(getRNA( db       = "ensembl",
+    expect_warning(getRNA( db       = "ensembl",
                         organism = "Saccharomyces cerevisi",
                         path     = tempdir()))
 })
