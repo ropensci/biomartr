@@ -28,7 +28,7 @@ test_that("The getProteome() interface works properly..",{
 
 test_that("The getProteome() error messages work properly..",{
     skip_on_cran()
-    expect_error(getProteome( db       = "ensembl",
+    expect_warning(getProteome( db       = "ensembl",
                         organism = "Saccharomyces cerevisi",
                         path     = tempdir()))
 })
