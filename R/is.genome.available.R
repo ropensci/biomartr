@@ -195,8 +195,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
                              file.path(tempdir(), "ensembl_summary.txt"))
         }
         
-        if (!is.element(stringr::str_to_lower(new.organism),
-                        ensembl.available.organisms$name))
+        if (!any(vapply(ensembl.available.organisms$name, function(x) stringr::str_detect(x, stringr::str_to_lower(new.organism)))))
             stop(
                 "Unfortunately organism '",
                 organism,
@@ -205,7 +204,7 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
         
         name <- NULL
         selected.organism <- dplyr::filter(ensembl.available.organisms,
-                                           name == stringr::str_to_lower(new.organism))
+                                           stringr::str_detect(name, stringr::str_to_lower(new.organism)))
         
         if (!details) {
             if (nrow(selected.organism) > 0)
@@ -269,11 +268,11 @@ is.genome.available <- function(organism, details = FALSE, db = "refseq"){
                          file.path(tempdir(), "ensemblgenomes_summary.txt"))
         }
         
-        if (!is.element(stringr::str_to_lower(new.organism),ensembl.available.organisms$name))
+        if (!any(unlist(sapply(ensembl.available.organisms$name, function(x) stringr::str_detect(x, stringr::str_to_lower(new.organism))))))
             stop("Unfortunately organism '",organism,"' is not available at ENSEMBLGENOMES. Please check whether or not the organism name is typed correctly.", call. = FALSE)
         
         name <- NULL
-        selected.organism <- dplyr::filter(ensembl.available.organisms, name == stringr::str_to_lower(new.organism))
+        selected.organism <- dplyr::filter(ensembl.available.organisms, stringr::str_detect(name, stringr::str_to_lower(new.organism)))
         
         if (!details) {
             if (nrow(selected.organism) > 0)
