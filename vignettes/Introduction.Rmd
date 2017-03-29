@@ -19,24 +19,25 @@ knitr::opts_chunk$set(
 ## Getting Started
 
 A major problem in bioinformatics research is consistent data retrieval. 
-The `biomartr` package therefore, aims to provide users with easy to use and diverse interfaces to well curated genomic databases such as:
+The `biomartr` package aims to fill this gap by providing users with easy to use and diverse interfaces to well curated genomic databases such as:
 
 * [NCBI](http://www.ncbi.nlm.nih.gov/)
 * [ENSEMBL](http://www.ensembl.org/index.html)
 * [ENSEMBLGENOMES](http://ensemblgenomes.org/)
-* [BioMart](http://www.biomart.org/)
+* [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart)
 * [Gene Ontology](http://geneontology.org/)
 
 The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes, entire genomes or meta-genome projects such as biological pathway analyses and genomic sequence retrieval.
 
-Users of the [myTAI](https://github.com/HajkD/myTAI) and [orthologr](https://github.com/HajkD/orthologr) packages will find additional functions allowing them to integrate `biomartr` to any workflow implemented using `myTAI` or `orthologr`. 
+Although, the name of this package `biomartr` is inspired by the Ensembl Biomart database it extends its functionality and service
+by providing additional interface functions to the most prominent databases for genome, proteime, CDS, GFF, etc. retrieval.
+
 ## Workflow Design
 
 The `biomartr` package is designed to cover the following branches of biological data retrieval:
 
 - __Biological Sequence Retrieval__
 - __Functional Annotation Retrieval__
-- __Enrichment Analyses__
 
 Hence, all functions implemented in `biomartr` serve to fulfill the above listed tasks.
 
