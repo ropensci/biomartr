@@ -38,23 +38,19 @@ download.database <- function(db, path = "database"){
             "' could not be found on NCBI. Please use the listDatabases() command to retrieve available databases or check if the name was written correctly.",
             call. = FALSE
         )
-    
-    
+
     if (!file.exists(path))
         dir.create(path)
     
     tryCatch({
-        downloader::download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/", db),
+        custom_download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/", db),
                              file.path(path, db) ,
                              mode = "wb")
     }, error = function(e)
         stop(
-            "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/' cannot be reached. Are you connected to the internet?",
+            "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/",db,"' cannot be reached. Are you connected to the internet or did something go wrong with the connection to the NCBI server?",
             call. = FALSE
         ))
-    
-    # limit NCBI queries
-    Sys.sleep(0.33)
 }
 
 
