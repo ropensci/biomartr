@@ -5,6 +5,6 @@ test_that("The download.database() throws error when wrong input database is spe
     
     skip_on_cran()
 
-    expect_output(download.database(db = "nr.00.tar.gz"))
+    expect_null(download.database(db = "nr.00.tar.gz"))
     
 })
