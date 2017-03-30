@@ -4,8 +4,7 @@ context("Test: download.database()")
 test_that("The download.database() throws error when wrong input database is specified..",{
     
     skip_on_cran()
-    skip_on_travis()
-    
-    expect_error(download.database(db = "nl"))
+
+    expect_output(download.database(db = "nr.00.tar.gz"))
     
 })
