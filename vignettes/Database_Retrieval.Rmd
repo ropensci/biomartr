@@ -105,7 +105,7 @@ Using the same search strategy by specifying the database name as described abov
 
 For downloading only single files users can type:
 
-```r
+```{r, eval=FALSE}
 # select NCBI nr version 27 =  "nr.27.tar.gz"
 # and download it into the folder
 biomartr::download.database(db        = "nr.27.tar.gz", 
@@ -119,7 +119,7 @@ This command will download the pre-formatted (by makeblastdb formatted) database
 
 Alternatively, users can retrieve all `nr` files with one command by typing:
 
-```r
+```{r, eval=FALSE}
 # download the entire NCBI nr database
 biomartr::download.database.all(db = "nr", path = "nr")
 ```
@@ -129,17 +129,17 @@ Using this command, all `NCBI nr` files are loaded into the `nr` folder (`path =
 
 The same approach can be applied to all other databases mentioned above, e.g.:
 
-```r
+```{r, eval=FALSE}
 # download the entire NCBI nt database
 biomartr::download.database.all(db = "nt", path = "nt")
 ```
 
-```r
+```{r, eval=FALSE}
 # download the entire NCBI refseq (protein) database
 biomartr::download.database.all(db = "refseq_protein", path = "refseq_protein")
 ```
 
-```r
+```{r, eval=FALSE}
 # download the entire NCBI PDB database
 biomartr::download.database.all(db = "pdb", path = "pdb")
 ```
