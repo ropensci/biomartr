@@ -1,3 +1,9 @@
+#' @title Helper function to retrieve species information from the ENSEMBL API
+#' @description This function interfaces with the ENSEMBL API (http://rest.ensembl.org/info/species?content-type=application/json)
+#' and internally stores the output to use this information for subsequent
+#' retrieval function calls.
+#' @author Hajk-Georg Drost
+#' @noRd
 get.ensembl.info <- function(update = FALSE) {
     if (file.exists(file.path(tempdir(), "ensembl_info.tsv")) &&
         !update) {
