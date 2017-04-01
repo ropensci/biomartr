@@ -1,3 +1,9 @@
+#' @title Helper function to perform customized downloads 
+#' @description To achieve the most stable download experience, ftp file downloads 
+#' are customized for each operating system.
+#' @param ... additional arguments that shall be passed to \code{\link[downloader]{download}}
+#' @author Hajk-Georg Drost
+#' @noRd
 custom_download <- function(...) {
         
         operating_sys <- Sys.info()[1]
