@@ -118,7 +118,7 @@ The current status of the package as well as a detailed history of the functiona
 
 #### Database Retrieval
 
-* `listDatabases()` : Retrieve a list of available NCBI databases
+* `listNCBIDatabases()` : Retrieve a List of Available NCBI Databases for Download
 * `download.database()` : Download a NCBI database to your local hard drive
 * `download.database.all()` : Download a complete NCBI Database such as e.g. `NCBI nr` to your local hard drive
 
