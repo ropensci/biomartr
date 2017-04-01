@@ -23,7 +23,7 @@ named \code{database} (default) is created and the correspondning database then 
 \examples{
 \dontrun{
   # search for available NCBI nr databases
-  listDatabases(db = "nr")
+  listNCBIDatabases(db = "nr")
   
   # select NCBI nr version 27 =  "nr.27.tar.gz"
   # and download it to your hard drive
