@@ -1,3 +1,12 @@
+#' @title Helper function for retrieving gff files from ENSEMBL
+#' @description This function downloads gff files of query organisms from ENSEMBL.
+#' @param organism scientific name of the organism of interest.
+#' @param type specification type.
+#' @param id.type id type.
+#' @param path location where file shall be stored.
+#' @author Hajk-Georg Drost
+#' @noRd
+
 getENSEMBL.Annotation <- function(organism, type = "dna", id.type = "toplevel", path) {
     
     if (!is.element(type, c("dna", "cds", "pep")))
