@@ -1,3 +1,12 @@
+#' @title Helper function for retrieving biological sequence files from ENSEMBLGENOMES
+#' @description This function downloads gff files of query organisms from ENSEMBLGENOMES
+#' @param organism scientific name of the organism of interest.
+#' @param type biological sequence type.
+#' @param id.type id type.
+#' @param path location where file shall be stored.
+#' @author Hajk-Georg Drost
+#' @noRd
+
 getENSEMBLGENOMES.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     
     if (!is.element(type, c("dna", "cds", "pep", "ncrna")))
