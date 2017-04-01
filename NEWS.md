@@ -17,9 +17,12 @@ biomartr 0.5.0
 
 ### Function changes
 
+- function name `listDatabases()` has been renamed `listNCBIDatabases()`. In `biomartr` version 0.6.0 the function name `listDatabases()` will be depreciated
+
 - `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of RNA files via `type = "rna"`. See `getRNA()` for more details.
 
 - all `get*()` retrieval functions now skip the download of a particular file if it already exists in the specified file path
+
 
 biomartr 0.4.0
 ===========
