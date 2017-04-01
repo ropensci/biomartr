@@ -1,3 +1,8 @@
+#' @title Helper function to test if ENSEMBLGENOMES server is reachable
+#' @description This function pings the ENSEMBLGENOMES FTP server to 
+#' test whether or not a connection can be established.
+#' @author Hajk-Georg Drost
+#' @noRd
 is.ensemblgenomes.alive <- function() {
     
     ping <- jsonlite::fromJSON("http://rest.ensemblgenomes.org/info/ping?content-type=application/json")
