@@ -20,7 +20,7 @@ selected by the users (hence all packages corresponding to this database).
 \examples{
 \dontrun{
 # search for available NCBI databases
-  listDatabases(db = "all")
+  listNCBIDatabases(db = "all")
   
 # choose database NCBI nr and download compelete database
   download.database.all(name = "nr", path = "nr")
