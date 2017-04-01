@@ -23,22 +23,22 @@ The `download.database()` and `download.database.all()` functions implemented in
 
 ## Search for available databases
 
-Before downloading specific databases from NCBI users might want to list available databases. Using the `listDatabases()` function users can retrieve a list of  available databases stored on NCBI.
+Before downloading specific databases from NCBI users might want to list available databases. Using the `listNCBIDatabases()` function users can retrieve a list of  available databases stored on NCBI.
 
 ```{r, eval=TRUE}
 # retrieve a list of available sequence databases at NCBI
-biomartr::listDatabases(db = "all")
+biomartr::listNCBIDatabases(db = "all")
 ```
 
 However, in case users already know which database they would like to retrieve
 they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the `NCBI nr` database shall be retrieved.
 
 
-First, the `listDatabases(db = "nr")` allows to list all files corresponding to the `nr` database. 
+First, the `listNCBIDatabases(db = "nr")` allows to list all files corresponding to the `nr` database. 
 
 ```{r, eval=TRUE}
 # show all NCBI nr files
-biomartr::listDatabases(db = "nr")
+biomartr::listNCBIDatabases(db = "nr")
 ```
 
 
@@ -49,54 +49,54 @@ Further examples are:
 
 ```{r, eval=TRUE}
 # show all NCBI nt files
-biomartr::listDatabases(db = "nt")
+biomartr::listNCBIDatabases(db = "nt")
 ```
 
 ```{r, eval=TRUE}
 # show all NCBI ESTs others
-biomartr::listDatabases(db = "est_others")
+biomartr::listNCBIDatabases(db = "est_others")
 ```
 
 
 ```{r, eval=TRUE}
 # show all NCBI RefSeq (only genomes)
-head(biomartr::listDatabases(db = "refseq_genomic"), 20)
+head(biomartr::listNCBIDatabases(db = "refseq_genomic"), 20)
 ```
 
 
 ```{r, eval=TRUE}
 # show all NCBI RefSeq (only proteomes)
-biomartr::listDatabases(db = "refseq_protein")
+biomartr::listNCBIDatabases(db = "refseq_protein")
 ```
 
 ```{r, eval=TRUE}
 # show all NCBI RefSeq (only RNA)
-biomartr::listDatabases(db = "refseq_rna")
+biomartr::listNCBIDatabases(db = "refseq_rna")
 ```
 
 ```{r, eval=TRUE}
 # show NCBI swissprot
-biomartr::listDatabases(db = "swissprot")
+biomartr::listNCBIDatabases(db = "swissprot")
 ```
 
 ```{r, eval=TRUE}
 # show NCBI PDB
-biomartr::listDatabases(db = "pdb")
+biomartr::listNCBIDatabases(db = "pdb")
 ```
 
 ```{r, eval=TRUE}
 # show NCBI Human database
-biomartr::listDatabases(db = "human")
+biomartr::listNCBIDatabases(db = "human")
 ```
 
 ```{r, eval=TRUE}
 # show NCBI EST databases
-biomartr::listDatabases(db = "est")
+biomartr::listNCBIDatabases(db = "est")
 ```
 
 __Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.__
 
-In a next step users can use the `listDatabases()` and `download.database.all()` functions to retrieve 
+In a next step users can use the `listNCBIDatabases()` and `download.database.all()` functions to retrieve 
 all files corresponding to a specific NCBI database.
 
 ## Download available databases
