@@ -12,7 +12,7 @@
 #' @examples 
 #' \dontrun{
 #'   # search for available NCBI nr databases
-#'   listDatabases(db = "nr")
+#'   listNCBIDatabases(db = "nr")
 #'   
 #'   # select NCBI nr version 27 =  "nr.27.tar.gz"
 #'   # and download it to your hard drive
@@ -31,11 +31,11 @@ download.database <- function(db, path = "database"){
     db.name <- names(table(unlist(sapply(db, function(x)
         unlist(stringr::str_split(x, "[.]"))[1]))))
     
-    if (!is.element(db.name, listDatabases("all")))
+    if (!is.element(db.name, listNCBIDatabases("all")))
         stop(
             "The specified database '",
             db,
-            "' could not be found on NCBI. Please use the listDatabases() command to retrieve available databases or check if the name was written correctly.",
+            "' could not be found on NCBI. Please use the listNCBIDatabases() command to retrieve available databases or check if the name was written correctly.",
             call. = FALSE
         )
 
