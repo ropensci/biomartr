@@ -1,3 +1,9 @@
+#' @title Helper function to retrieve species information from the ENSEMBLGENOMES API
+#' @description This function interfaces with the ENSEMBL API (http://rest.ensemblgenomes.org/info/species?content-type=application/json)
+#' and internally stores the output to use this information for subsequent
+#' retrieval function calls.
+#' @author Hajk-Georg Drost
+#' @noRd
 get.ensemblgenome.info <- function(update = FALSE) {
     if (file.exists(file.path(tempdir(), "ensemblgenome_info.tsv")) &&
         !update) {
