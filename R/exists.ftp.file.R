@@ -1,3 +1,8 @@
+#' @title Helper function to test connection and availability of queried FTP files.
+#' @description To make sure that the automatically generated query path to the ftp stored file
+#' on NCBI or ENSEMBL actually exists, this helper function makes a test query.
+#' @author Hajk-Georg Drost
+#' @noRd 
 #' @import curl
 exists.ftp.file <- function(url, file.path) {
         tryCatch({
