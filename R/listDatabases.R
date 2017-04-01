@@ -15,19 +15,23 @@
 #' @examples
 #' 
 #' # retrieve all versions of the NCBI 'nr' database that can be downloaded
-#' # listDatabases(db = "nr")
+#' # listNCBIDatabases(db = "nr")
 #' 
 #' # analogous:
-#' # listDatabases(db = "cdd")
-#' # listDatabases(db = "nt")
-#' # listDatabases(db = "gss")
-#' # listDatabases(db = "refseq_protein")
+#' # listNCBIDatabases(db = "cdd")
+#' # listNCBIDatabases(db = "nt")
+#' # listNCBIDatabases(db = "gss")
+#' # listNCBIDatabases(db = "refseq_protein")
 #' 
 #' @seealso \code{\link{download.database}}
 #' @export
 
 listDatabases <- function(db = "nr", update = FALSE) {
     
+    if (as.character(match.call()[[1]]) == "listDatabases")
+        warning("Please use listNCBIDatabases() instead of listDatabases(), in the next version 0.6.0 of biomartr this function will be deprecated.", call. = FALSE)
+        
+        
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
         dir.create(file.path(tempdir(), "_ncbi_downloads"))
         
