@@ -1,6 +1,8 @@
 biomartr
 ========
 
+[![Travis-CI Build Status](https://travis-ci.org/HajkD/biomartr.svg?branch=master)](https://travis-ci.org/HajkD/biomartr)
+
 ## Genomic Data Retrieval with R
 
 The vastly growing number of sequenced genomes allows us to perform a new type of biological research.
