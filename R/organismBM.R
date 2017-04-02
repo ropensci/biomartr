@@ -50,16 +50,16 @@ organismBM <- function(organism = NULL, update = FALSE){
 
         organism_name <- description <- mart <- dataset <- NULL
         
-        if (update){
+        if (update) {
                 
                 if (file.exists(getTMPFile(file.path("_biomart","listMarts.txt"))))
                         unlink(getTMPFile(file.path("_biomart","listMarts.txt")))
                 
         }
         
-        if (!file.exists(getTMPFile(file.path("_biomart","listMarts.txt")))){
+        if (!file.exists(getTMPFile(file.path("_biomart","listMarts.txt")))) {
                 
-                if(!file.exists(file.path(tempdir(),"_biomart")))
+                if (!file.exists(file.path(tempdir(),"_biomart")))
                         dir.create(file.path(tempdir(),"_biomart"))
                 
                 all_marts <- droplevels.data.frame(getMarts())
@@ -83,22 +83,22 @@ organismBM <- function(organism = NULL, update = FALSE){
                                 )
                         )
         
-        if (update){
+        if (update) {
                 
-                if(file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
+                if (file.exists(file.path(tempdir(),"_biomart","listDatasets.txt")))
                         unlink(file.path(tempdir(),"_biomart","listDatasets.txt"))
                 
         }
         
-        if (!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))){
+        if (!file.exists(file.path(tempdir(),"_biomart","listDatasets.txt"))) {
                 
                 remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("pride"))
                 
-                if (length(remove.corrupt.marts) > 0){
+                if (length(remove.corrupt.marts) > 0) {
                         all_marts <- all_marts[ -remove.corrupt.marts , ]
                 }
                 
-                all_datasets <- do.call(rbind,lapply(unlist(all_marts[ , "mart"]), 
+                all_datasets <- do.call(rbind, lapply(unlist(all_marts[ , "mart"]), 
                                                      function(mart){ 
                                                              df <- getDatasets(mart = mart)
                                                              df <- dplyr::mutate(dplyr::tbl_df(df),mart = rep(mart,nrow(df)))
@@ -136,23 +136,23 @@ organismBM <- function(organism = NULL, update = FALSE){
                               dataset,
                               version)
           
-       if (!is.null(organism)){
+       if (!is.null(organism)) {
                
                organism <- unlist(stringr::str_split(organism, " "))
                organism <- stringr::str_c(stringr::str_to_lower(stringr::str_sub(organism[1],1,1)),organism[2], collapse = "")
 
                res <- dplyr::filter(all_datasets,stringr::str_detect(organism_name, organism))
                
-               if (dim(res)[1] == 0){
-                       stop ("Unfortunately, no entry for '", organism, "' has been found.")
+               if (dim(res)[1] == 0) {
+                       stop("Unfortunately, no entry for '", organism, "' has been found.")
                } else {
                        
-                       return (dplyr::filter(all_datasets,stringr::str_detect(organism_name, organism)))
+                       return(dplyr::filter(all_datasets,stringr::str_detect(organism_name, organism)))
                }
        }
        
        if (is.null(organism))
-               return (all_datasets)
+               return(all_datasets)
              
 }
 
