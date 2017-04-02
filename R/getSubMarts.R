@@ -1,3 +1,8 @@
+#' @title Helper function to query sub marts from Ensembl Biomart
+#' @description Internal interface function to the Ensembl Biomart API
+#' @param submart type of submart
+#' @author Hajk-Georg Drost
+#' @noRd
 getSubMarts <- function(submart = "ensembl") {
     
     if (!is.element(submart, c("ensembl", "plants", "fungi", "protists", "metazoa")))
@@ -30,7 +35,7 @@ getSubMarts <- function(submart = "ensembl") {
     httr::stop_for_status(xmlContentMarts)
     
     # parse Mart information
-    doc <- XML::xmlTreeParse(xmlContentMarts, useInternalNodes = TRUE, encoding = "UTF-8")
+    doc <- suppressMessages(XML::xmlTreeParse(xmlContentMarts, useInternalNodes = TRUE, encoding = "UTF-8"))
     rootNode <- XML::xmlRoot(doc)
     
     # extract available databases
