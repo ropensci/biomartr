@@ -50,7 +50,7 @@ getDatasets <- function(mart){
         httr::stop_for_status(xmlContentDatasets)
         
         # extract dataset name, description, and version, etc.
-        rawDF <- do.call("rbind",apply(as.data.frame(strsplit(httr::content(xmlContentDatasets, as = "text", encoding = "UTF-8"),"\n")),1,function(x) unlist(strsplit(x,"\t"))))
+        rawDF <- do.call("rbind", apply(as.data.frame(stringr::str_split(httr::content(xmlContentDatasets, as = "text", encoding = "UTF-8"),"\n")),1,function(x) unlist(strsplit(x,"\t"))))
         
         colnames(rawDF) <- paste0("V",1:ncol(rawDF))
         
