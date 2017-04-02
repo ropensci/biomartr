@@ -27,10 +27,9 @@ The `biomartr` package aims to fill this gap by providing users with easy to use
 * [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart)
 * [Gene Ontology](http://geneontology.org/)
 
-The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes, entire genomes or meta-genome projects such as biological pathway analyses and genomic sequence retrieval.
-
-Although, the name of this package `biomartr` is inspired by the Ensembl Biomart database it extends its functionality and service
+The collection of functions implemented in `biomartr` enable fast functional annotation queries for a set of genes, entire genomes or meta-genome projects such as biological pathway analyses and genomic sequence retrieval. Although, the name of this package `biomartr` is inspired by the Ensembl Biomart database it extends its functionality and service
 by providing additional interface functions to the most prominent databases for genome, proteime, CDS, GFF, etc. retrieval.
+
 
 ## Workflow Design
 
