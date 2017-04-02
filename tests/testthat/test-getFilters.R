@@ -14,7 +14,8 @@ test_that("The getFilters() interface works properly..",{
         
         attrib <- getFilters(mart = as.character(marts[elsembl_mart]), dataset = "hsapiens_gene_ensembl")
         
-        expect_true(equal_lists(as.list(attrib[1 , ]), list(name = "chromosome_name")))
+        expect_equal(attrib[1 , 1], "chromosome_name")
+        
 })
 
 
