@@ -37,7 +37,7 @@ test_that("The getGFF() interface works properly..",{
 
 test_that("The getGFF() error messages work properly..",{
     skip_on_cran()
-    expect_error(getGFF( db       = "ensembl",
+    expect_output(getGFF( db       = "ensembl",
                             organism = "Saccharomyces cerevisi",
                             path     = tempdir()))
 })
