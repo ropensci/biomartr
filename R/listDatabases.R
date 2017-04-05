@@ -28,7 +28,7 @@
 
 listDatabases <- function(db = "nr", update = FALSE) {
     
-    if (as.character(match.call()[[1]]) == "listDatabases")
+    if (is.element("listDatabases", as.character(match.call()[[1]])))
         warning("Please use listNCBIDatabases() instead of listDatabases(), in the next version 0.6.0 of biomartr this function will be deprecated.", call. = FALSE)
         
         
