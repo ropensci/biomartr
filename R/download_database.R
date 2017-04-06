@@ -28,6 +28,7 @@ download.database <- function(db, path = "database"){
     # test if internet connection is available
     connected.to.internet()
     
+    message("Starting download process of file: ",db, " ...")        
     db.name <- names(table(unlist(sapply(db, function(x)
         unlist(stringr::str_split(x, "[.]"))[1]))))
     
@@ -44,13 +45,28 @@ download.database <- function(db, path = "database"){
     
     tryCatch({
         custom_download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/", db),
-                             file.path(path, db) ,
+                             file.path(path, db),
                              mode = "wb")
+         
+        custom_download(paste0("ftp://ftp.ncbi.nlm.nih.gov/blast/db/", paste0(db,".md5")),
+                            file.path(path, paste0(db,".md5")),
+                            mode = "wb")    
     }, error = function(e)
         stop(
             "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/",db,"' cannot be reached. Are you connected to the internet or did something go wrong with the connection to the NCBI server?",
             call. = FALSE
         ))
+    
+    # test check sum
+    md5_file <- readr::read_lines(file.path(path, paste0(db,".md5")))
+    md5_sum <- unlist(stringr::str_split(md5_file, " "))[1]
+    
+    message("Checking md5 hash of file: ", db , " ...")
+    if (!(tools::md5sum(file.path(path, db)) == md5_sum))
+            stop("Please download the file '",db,"' again. The md5 hash between the downloaded file and the file stored at NCBI do not match.")
+    unlink(file.path(path, paste0(db,".md5")))
+    message("The md5 hash of file '",db,"' matches!")
+    message("File '", file.path(path, db), " has successfully been retrieved.")
 }
 
 
