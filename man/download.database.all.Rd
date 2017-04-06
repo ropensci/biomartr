@@ -7,27 +7,30 @@
 download.database.all(db, path = "database")
 }
 \arguments{
-\item{db}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
+\item{db}{a character string specifying the database that shall be downloaded
+(selected from \code{\link{listDatabases}}).}
 
-\item{path}{a character string specifying the location (a folder) in which the corresponding
-database shall be stored. In case this folder does not exist yet, it will be created.}
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding
+database shall be stored. In case this folder does not exist yet,
+it will be created.}
 }
 \description{
-The \code{\link{download.database}} functions allows users to retrieve individual
-packages of a NCBI database. This function is designed to retrieve the entire database 
-selected by the users (hence all packages corresponding to this database).
+The \code{\link{download.database}} functions allows users to
+retrieve individual packages of a NCBI database. This function is designed to
+retrieve the entire database selected by the users (hence all packages 
+corresponding to this database).
 }
 \examples{
-\dontrun{
 # search for available NCBI databases
   listNCBIDatabases(db = "all")
-  
+\dontrun{  
 # choose database NCBI nr and download compelete database
   download.database.all(name = "nr", path = "nr")
 }
 }
 \seealso{
-\code{\link{download.database}}, \code{\link{listDatabases}}
+\code{\link{download.database}}, \code{\link{listNCBIDatabases}}
 }
 \author{
 Hajk-Georg Drost
