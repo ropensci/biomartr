@@ -7,29 +7,32 @@
 download.database(db, path = "database")
 }
 \arguments{
-\item{db}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
+\item{db}{a character string specifying the database that shall be downloaded
+(selected from \code{\link{listDatabases}}).}
 
-\item{path}{a character string specifying the location (a folder) in which the corresponding
-database shall be stored. Default is \code{path = "database"}. In case this folder does not exist yet, it will be created.}
+\item{path}{a character string specifying the location (a folder) in
+which the corresponding database shall be stored.
+Default is \code{path = "database"}.
+In case this folder does not exist yet, it will be created.}
 }
 \description{
 This function allows users to download a database selected by
 \code{\link{listDatabases}} to their local hard drive.
 }
 \details{
-This function downloads large databases to your hard drive. For this purpose a folder
-named \code{database} (default) is created and the correspondning database then stored in this folder.
+This function downloads large databases to your hard drive.
+For this purpose a folder
+named \code{database} (default) is created and the correspondning
+database then stored in this folder.
 }
 \examples{
-\dontrun{
   # search for available NCBI nr databases
   listNCBIDatabases(db = "nr")
-  
+\dontrun{
   # select NCBI nr version 27 =  "nr.27.tar.gz"
   # and download it to your hard drive
   # -> please note that large databases take some time for download!
   download.database(db = "nr.27.tar.gz")
-
 }
 }
 \seealso{
