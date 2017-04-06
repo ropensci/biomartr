@@ -7,26 +7,23 @@
 getDatasets(mart)
 }
 \arguments{
-\item{mart}{a character string specifying the database (mart) for which datasets shall be listed.}
+\item{mart}{a character string specifying the database (mart) for 
+which datasets shall be listed.}
 }
 \description{
 This funcion queries the BioMart API and returns a table
 storing all available datasets for a selected BioMart databases.
 }
 \examples{
-\dontrun{
 # search for available datasets
 getMarts()
-
-
 # choose database: "ENSEMBL_MART_ENSEMBL"
 head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
-
-}
-
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{getAttributes}}, \code{\link{getFilters}}, \code{\link{organismBM}}, \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+\code{\link{getMarts}}, \code{\link{getAttributes}}, 
+\code{\link{getFilters}}, \code{\link{organismBM}}, 
+\code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 \author{
 Hajk-Georg Drost
