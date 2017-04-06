@@ -1,5 +1,7 @@
-#' @title Helper function to retrieve species information from the ENSEMBLGENOMES API
-#' @description This function interfaces with the ENSEMBL API (http://rest.ensemblgenomes.org/info/species?content-type=application/json)
+#' @title Helper function to retrieve species information 
+#' from the ENSEMBLGENOMES API
+#' @description This function interfaces with the ENSEMBL API 
+#' (http://rest.ensemblgenomes.org/info/species?content-type=application/json)
 #' and internally stores the output to use this information for subsequent
 #' retrieval function calls.
 #' @author Hajk-Georg Drost
@@ -30,20 +32,23 @@ get.ensemblgenome.info <- function(update = FALSE) {
             ensemblgenome.info <-
                 tibble::as_tibble(
                     jsonlite::fromJSON(
-                        "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
+    "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
                     )$species
                 )
         }, error = function(e)
             stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?"
+                "The API 'http://rest.ensemblgenomes.org' does not 
+                seem to work properly. Are you connected to the internet? 
+                Is the homepage 'http://rest.ensemblgenomes.org' 
+                currently available?"
             ))
         
         aliases <- groups <- NULL
-        ensemblgenome.info <- dplyr::select(ensemblgenome.info, -aliases, -groups)
+        ensemblgenome.info <-
+            dplyr::select(ensemblgenome.info, -aliases, -groups)
         
         readr::write_tsv(ensemblgenome.info,
-            file.path(tempdir(), "ensemblgenome_info.tsv")
-        )
+                         file.path(tempdir(), "ensemblgenome_info.tsv"))
     }
     
     return(ensemblgenome.info)
