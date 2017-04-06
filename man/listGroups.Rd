@@ -7,7 +7,7 @@
 listGroups(db = "refseq", kingdom = "all", details = FALSE)
 }
 \arguments{
-\item{db}{a character string specifying the database for which genome availability shall be checked, 
+\item{db}{a character string specifying the database for which genome availability shall be checked,
 e.g. \code{db = "refseq"} and \code{db = "genbank"}.}
 
 \item{kingdom}{a kingdom specification retrieved by \code{\link{getKingdoms}}.}
@@ -15,11 +15,11 @@ e.g. \code{db = "refseq"} and \code{db = "genbank"}.}
 \item{details}{shall all species corresponding to the specified \code{kingdom} be returned? Default is \code{details = FALSE}.}
 }
 \description{
-Users can retrieve the available number of sequenced genomes per group. 
+Users can retrieve the available number of sequenced genomes per group.
 Only available for \code{db = "refseq"} and \code{db = "genbank"}.
 }
 \examples{
- 
+
 \dontrun{
 # example for refseq
 listGroups(db = "refseq")
@@ -34,7 +34,7 @@ listKingdoms()
 # now we choose kingdom "bacteria"
 listGroups(db = "refseq", kingdom = "bacteria")
 
-# or 
+# or
 
 listGroups(db = "genbank", kingdom = "bacteria")
 
