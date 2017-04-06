@@ -1,5 +1,6 @@
 #' @title Helper function to retrieve species information from the ENSEMBL API
-#' @description This function interfaces with the ENSEMBL API (http://rest.ensembl.org/info/species?content-type=application/json)
+#' @description This function interfaces with the ENSEMBL API
+#' (http://rest.ensembl.org/info/species?content-type=application/json)
 #' and internally stores the output to use this information for subsequent
 #' retrieval function calls.
 #' @author Hajk-Georg Drost
@@ -24,26 +25,29 @@ get.ensembl.info <- function(update = FALSE) {
                     )
                 )
         )
-    
+        
     } else {
         tryCatch({
             ensembl.info <-
                 tibble::as_tibble(
                     jsonlite::fromJSON(
-                        "http://rest.ensembl.org/info/species?content-type=application/json"
+            "http://rest.ensembl.org/info/species?content-type=application/json"
                     )$species
                 )
         }, error = function(e)
             stop(
-                "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
+                "The API 'http://rest.ensembl.org' does not seem to
+                work properly. Are you connected to the internet?
+                Is the homepage 'http://rest.ensembl.org' currently available?",
+                call. = FALSE
             ))
         
         aliases <- groups <- NULL
-        ensembl.info <- dplyr::select(ensembl.info, -aliases, -groups)
+        ensembl.info <-
+            dplyr::select(ensembl.info, -aliases, -groups)
         
         readr::write_tsv(ensembl.info,
-            file.path(tempdir(), "ensembl_info.tsv")
-        )
+                         file.path(tempdir(), "ensembl_info.tsv"))
     }
     
     return(ensembl.info)
