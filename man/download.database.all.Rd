@@ -4,7 +4,7 @@
 \alias{download.database.all}
 \title{Download all elements of an NCBI databse}
 \usage{
-download.database.all(db, path)
+download.database.all(db, path = "database")
 }
 \arguments{
 \item{db}{a character string specifying the database that shall be downloaded (selected from \code{\link{listDatabases}}).}
