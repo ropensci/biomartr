@@ -8,22 +8,29 @@ getAssemblyStats(db = "refseq", organism, type = "download",
   path = file.path("_ncbi_downloads", "genomeassembly_stats"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"} or \code{db = "genbank"}.}
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved: \code{db = "refseq"} or \code{db = "genbank"}.}
 
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+\item{organism}{a character string specifying the scientific name of the 
+organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
-\item{type}{shall only the file be retrieved (default) \code{type = "download"} or should the corresponding file be downloaded and subsequently be imported \code{type = "import"}.}
+\item{type}{shall only the file be retrieved (default) 
+\code{type = "download"} or should the corresponding file be downloaded and 
+subsequently be imported \code{type = "import"}.}
 
-\item{path}{a character string specifying the location (a folder) in which the corresponding
-file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","genomeassembly_stats")}.}
+\item{path}{a character string specifying the location (a folder) in
+which the corresponding file shall be stored. Default is 
+\code{path} = \code{file.path("_ncbi_downloads","genomeassembly_stats")}.}
 }
 \value{
 File path to downloaded genome assembly stats file.
 }
 \description{
-Main genome assembly stats retrieval function for an organism of interest.
-By specifying the scientific name of an organism of interest the corresponding  genome assembly stats file storing the assembly statistics of the organism of interest
-can be downloaded and stored locally. Genome assembly stats files can be retrieved from several databases.
+Main genome assembly stats retrieval function for an organism
+of interest. By specifying the scientific name of an organism of interest the
+corresponding  genome assembly stats file storing the assembly statistics of 
+the organism of interest can be downloaded and stored locally. 
+Genome assembly stats files can be retrieved from several databases.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
@@ -32,35 +39,43 @@ Internally this function loads the the overview.txt file from NCBI:
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
  
-to retrieve available scientific names of organisms and creates a directory '_ncbi_downloads/genomeassembly_stats' to store
+to retrieve available scientific names of organisms and creates a directory
+'_ncbi_downloads/genomeassembly_stats' to store
 the Genome Assembly Stats of interest as text file for future processing.
 In case the corresponding fasta file already exists within the
-'_ncbi_downloads/genomeassembly_stats' folder and is accessible within the workspace,
-no download process will be performed.
+'_ncbi_downloads/genomeassembly_stats' folder and is
+accessible within the workspace, no download process will be performed.
 
-An example genome assembly stats file can be found here: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt.
+An example genome assembly stats file can be found here:
+ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt.
 }
 \examples{
 \dontrun{
-# download the genome assembly stats file of Homo sapiens from NCBI RefSeq
-# and store the corresponding genome file in '_ncbi_downloads/genomeassembly_stats'
+# download the genome assembly stats file of Saccharomyces cerevisiae
+# from NCBI RefSeq
+# and store the corresponding genome file in 
+# '_ncbi_downloads/genomeassembly_stats'
 file_path <- getAssemblyStats( db = "refseq", 
-                 organism = "Homo sapiens", 
+                 organism = "Saccharomyces cerevisiae", 
                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
 # import the raw file as it is downloaded
-Hsapiens.stats <- read_assemblystats(file_path, type = "raw")
+Scerevisiae.stats <- read_assemblystats(file_path, type = "raw")
 
-# download the genome assembly stats file of Homo sapiens from NCBI RefSeq 
+# download the genome assembly stats file of Saccharomyces cerevisiae
+# from NCBI RefSeq 
 # and import overall statistics of the genome assembly
 Hsapiens.stats.import <- getAssemblyStats( db = "refseq", 
-                 organism = "Homo sapiens",
+                 organism = "Saccharomyces cerevisiae",
                  type = "import", 
                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
 }
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, \code{\link{read_assemblystats}}
+\code{\link{getProteome}}, \code{\link{getCDS}},
+\code{\link{getGFF}}, \code{\link{meta.retrieval}}, 
+\code{\link{read_assemblystats}}
 }
 \author{
 Hajk-Georg Drost
