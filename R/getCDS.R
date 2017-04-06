@@ -1,11 +1,19 @@
 #' @title Coding Sequence Retrieval
-#' @description Main retrieval function for coding sequences (CDS) of an organism of interest.
-#' By specifying the scientific name of an organism of interest the corresponding fasta-file storing the CDS information for the organism of interest
-#' can be downloaded and stored locally. CDS files can be retrieved from several databases.
-#' @param db a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or \code{db = "ensemblgenomes"}.
-#' @param organism a character string specifying the scientific name of the organism of interest,\code{organism = "Homo sapiens"}.
-#' @param path a character string specifying the location (a folder) in which the corresponding
-#' CDS file shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
+#' @description Main retrieval function for coding sequences (CDS) 
+#' of an organism of interest.
+#' By specifying the scientific name of an organism of interest the 
+#' corresponding fasta-file storing the CDS information for the organism 
+#' of interest can be downloaded and stored locally. CDS files can be retrieved 
+#' from several databases.
+#' @param db a character string specifying the database from which the genome 
+#' shall be retrieved: 
+#' \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or
+#' \code{db = "ensemblgenomes"}.
+#' @param organism a character string specifying the scientific name of the 
+#' organism of interest,\code{organism = "Homo sapiens"}.
+#' @param path a character string specifying the location (a folder) 
+#' in which the corresponding CDS file shall be stored. 
+#' Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
 #' @author Hajk-Georg Drost
 #' @return File path to downloaded CDS file.
 #' @examples 
@@ -19,287 +27,392 @@
 #' Ath_CDS <- read_cds(file_path, format = "fasta")
 #' 
 #' }
-#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, \code{\link{read_cds}}
+#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, 
+#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
+#' \code{\link{read_cds}}
 #' @export
 
-getCDS <- function(db = "refseq", organism, path = file.path("_ncbi_downloads","CDS")){
-    
-    if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
-        stop("Please select one of the available data bases: 'refseq', 'genbank', 'ensembl' or 'ensemblgenomes'.", call. = FALSE)
-    
-    if (is.element(db, c("refseq", "genbank"))) {
-        # get Kingdom Assembly Summary file
-        AssemblyFilesAllKingdoms <- getKingdomAssemblySummary(db = db)
+getCDS <-
+    function(db = "refseq",
+             organism,
+             path = file.path("_ncbi_downloads", "CDS")) {
+        if (!is.element(db, c("refseq", "genbank", 
+                              "ensembl", "ensemblgenomes")))
+            stop(
+                "Please select one of the available data bases: 
+                'refseq', 'genbank', 'ensembl' or 'ensemblgenomes'.",
+                call. = FALSE
+            )
         
-        # test wheter or not genome is available
-        is.genome.available(organism = organism, db = db)
-        
-        if (!file.exists(path)) {
-            dir.create(path, recursive = TRUE)
-        }
-        
-        organism_name <- refseq_category <- version_status <- NULL
-        organism <- stringr::str_replace_all(organism,"\\(","")
-        organism <- stringr::str_replace_all(organism,"\\)","")
-        
-        FoundOrganism <- dplyr::filter(
-            AssemblyFilesAllKingdoms,
-            stringr::str_detect(organism_name, organism),
-            ((refseq_category == "representative genome") ||
-                 (refseq_category == "reference genome")
-            ),
-            (version_status == "latest")
-        )
-        
-        if (nrow(FoundOrganism) == 0) {
-            message(paste0("----------> No reference genome or representative genome was found for '",organism,"'. Thus, download for this species has been omitted."))
-        } else { 
-            if (nrow(FoundOrganism) > 1) {
-                warnings(
-                    "More than one entry has been found for '",
-                    organism,
-                    "'. Only the first entry '",
-                    FoundOrganism[1, 1],
-                    "' has been used for subsequent genomic CDS retrieval."
-                )
-                FoundOrganism <- FoundOrganism[1, ]
+        if (is.element(db, c("refseq", "genbank"))) {
+            # get Kingdom Assembly Summary file
+            AssemblyFilesAllKingdoms <-
+                getKingdomAssemblySummary(db = db)
+            
+            # test wheter or not genome is available
+            is.genome.available(organism = organism, db = db)
+            
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
             }
             
-            organism <- stringr::str_replace_all(organism, " ", "_")
+            organism_name <-
+                refseq_category <- version_status <- NULL
+            organism <-
+                stringr::str_replace_all(organism, "\\(", "")
+            organism <-
+                stringr::str_replace_all(organism, "\\)", "")
             
-            download_url <-
-                paste0(
-                    FoundOrganism$ftp_path,
-                    "/",
+            FoundOrganism <- dplyr::filter(
+                AssemblyFilesAllKingdoms,
+                stringr::str_detect(organism_name, organism),
+                ((refseq_category == "representative genome") ||
+                     (refseq_category == "reference genome")
+                ),
+                (version_status == "latest")
+            )
+            
+            if (nrow(FoundOrganism) == 0) {
+                message(
                     paste0(
-                        basename(FoundOrganism$ftp_path),
-                        "_cds_from_genomic.fna.gz"
+                        "----------> No reference genome or representative 
+                        genome was found for '",
+                        organism,
+                        "'. Thus, download for this species has been omitted."
                     )
                 )
-            
-            local.org <- stringr::str_replace_all(organism,"-","_")
-            local.org <- stringr::str_replace_all(organism,"\\/","_")
-            
-            if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path,"/"), file.path = download_url)) {
-                message("Unfortunately no CDS file could be found for organism '",organism,"'. Thus, the download of this organism has been omitted.")
-                return(FALSE) 
+            } else {
+                if (nrow(FoundOrganism) > 1) {
+                    warnings(
+                        "More than one entry has been found for '",
+                        organism,
+                        "'. Only the first entry '",
+                        FoundOrganism[1, 1],
+                        "' has been used for subsequent genomic CDS retrieval."
+                    )
+                    FoundOrganism <- FoundOrganism[1, ]
+                }
+                
+                organism <-
+                    stringr::str_replace_all(organism, " ", "_")
+                
+                download_url <-
+                    paste0(
+                        FoundOrganism$ftp_path,
+                        "/",
+                        paste0(
+                            basename(FoundOrganism$ftp_path),
+                            "_cds_from_genomic.fna.gz"
+                        )
+                    )
+                
+                local.org <-
+                    stringr::str_replace_all(organism, "-", "_")
+                local.org <-
+                    stringr::str_replace_all(organism, "\\/", "_")
+                
+                if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path, "/"),
+                                     file.path = download_url)) {
+                    message(
+                    "Unfortunately no CDS file could be found for organism '",
+                        organism,
+                    "'. Thus, the download of this organism has been omitted."
+                    )
+                    return(FALSE)
+                }
+                
+                if (nrow(FoundOrganism) == 1) {
+                    if (file.exists(file.path(
+                        path,
+                        paste0(
+                            local.org,
+                            "_cds_from_genomic_",
+                            db,
+                            ".fna.gz"
+                        )
+                    ))) {
+                        message(
+                            "File ",
+                            file.path(
+                                path,
+                                paste0(
+                                    local.org,
+                                    "_cds_from_genomic_",
+                                    db,
+                                    ".fna.gz"
+                                )
+                            ),
+                            " exists already. Thus, download has been skipped."
+                        )
+                    } else {
+                        tryCatch({
+                            utils::capture.output(
+                                custom_download(
+                                    download_url,
+                                    destfile = file.path(
+                                        path,
+                                        paste0(
+                                            local.org,
+                                            "_cds_from_genomic_",
+                                            db,
+                                            ".fna.gz"
+                                        )
+                                    ),
+                                    mode = "wb"
+                                )
+                            )
+                        }, error = function(e)
+                            stop(
+                                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' 
+                                cannot be reached. Are you connected to the 
+                                internet? Is the the FTP site '",
+                                download_url,
+                                "' currently available?",
+                                call. = FALSE
+                            ))
+                    }
+                    
+                    docFile(
+                        file.name = paste0(
+                            local.org,
+                            "_cds_from_genomic_",
+                            db,
+                            ".fna.gz"
+                        ),
+                        organism  = organism,
+                        url       = download_url,
+                        database  = db,
+                        path      = path,
+                        refseq_category = FoundOrganism$refseq_category,
+                        assembly_accession = FoundOrganism$assembly_accession,
+                        bioproject = FoundOrganism$bioproject,
+                        biosample = FoundOrganism$biosample,
+                        taxid = FoundOrganism$taxid,
+                        infraspecific_name = FoundOrganism$infraspecific_name,
+                        version_status = FoundOrganism$version_status,
+                        release_type = FoundOrganism$release_type,
+                        genome_rep = FoundOrganism$genome_rep,
+                        seq_rel_date = FoundOrganism$seq_rel_date,
+                        submitter = FoundOrganism$submitter
+                    )
+                    
+                    message(
+                        paste0(
+                            "The genomic CDS of '",
+                            organism,
+                            "' has been downloaded to '",
+                            path,
+                            "' and has been named '",
+                            paste0(
+                                local.org,
+                                "_cds_from_genomic_",
+                                db,
+                                ".fna.gz"
+                            ),
+                            "' ."
+                        )
+                    )
+                    
+                    return(file.path(
+                        path,
+                        paste0(
+                            local.org,
+                            "_cds_from_genomic_",
+                            db,
+                            ".fna.gz"
+                        )
+                    ))
+                } else {
+                    stop(
+                        "File: ",
+                        download_url,
+                        " could not be loaded properly... 
+                        Are you connected to the internet?",
+                        call. = FALSE
+                    )
+                }
+            }
+        }
+        
+        if (db == "ensembl") {
+            # create result folder
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
             }
             
-            if (nrow(FoundOrganism) == 1) {
-                if (file.exists(file.path(
-                        path,
-                        paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")
-                ))) {
-                        message("File ",
-                                file.path(
-                                        path,
-                                        paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")
-                                ),
-                                " exists already. Thus, download has been skipped.")
-                } else {
-                        tryCatch({
-                                utils::capture.output(custom_download(
-                                        download_url,
-                                        destfile = file.path(
-                                                path,
-                                                paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")
-                                        ),
-                                        mode = "wb"
-                                ))
-                        }, error = function(e)
-                                stop(
-                                        "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
-                                        download_url,
-                                        "' currently available?",
-                                        call. = FALSE
-                                ))  
-                }   
-                    
-                docFile(
-                    file.name = paste0(local.org, "_cds_from_genomic_", db, ".fna.gz"),
-                    organism  = organism,
-                    url       = download_url,
-                    database  = db,
-                    path      = path,
-                    refseq_category = FoundOrganism$refseq_category,
-                    assembly_accession = FoundOrganism$assembly_accession,
-                    bioproject = FoundOrganism$bioproject,
-                    biosample = FoundOrganism$biosample,
-                    taxid = FoundOrganism$taxid,
-                    infraspecific_name = FoundOrganism$infraspecific_name,
-                    version_status = FoundOrganism$version_status,
-                    release_type = FoundOrganism$release_type,
-                    genome_rep = FoundOrganism$genome_rep,
-                    seq_rel_date = FoundOrganism$seq_rel_date,
-                    submitter = FoundOrganism$submitter
+            # download CDS sequence from ENSEMBL
+            cds.path <-
+                getENSEMBL.Seq(organism, type = "cds", id.type = "all", path)
+            
+            if (is.logical(cds.path)) {
+                invisible(return(TRUE))
+            } else {
+                new.organism <- stringr::str_replace_all(organism, " ", "_")
+                
+                # test proper API access
+                tryCatch({
+                    json.qry.info <-
+                        jsonlite::fromJSON(
+                            paste0(
+                                "http://rest.ensembl.org/info/assembly/",
+                                new.organism,
+                                "?content-type=application/json"
+                            )
+                        )
+                }, error = function(e)
+                    stop(
+                    "The API 'http://rest.ensembl.org' does not seem to work
+                    properly. Are you connected to the internet? Is the 
+                    homepage 'http://rest.ensembl.org' currently available?",
+                        call. = FALSE
+                    ))
+                
+                # generate CDS documentation
+                sink(file.path(
+                    path,
+                    paste0("doc_", new.organism, "_db_", db, ".txt")
+                ))
+                
+                cat(paste0("File Name: ", cds.path))
+                cat("\n")
+                cat(paste0("Organism Name: ", new.organism))
+                cat("\n")
+                cat(paste0("Database: ", db))
+                cat("\n")
+                cat(paste0("Download_Date: ", date()))
+                cat("\n")
+                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                cat("\n")
+                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                cat("\n")
+                cat(
+                    paste0(
+                        "genebuild_last_geneset_update: ",
+                        json.qry.info$genebuild_last_geneset_update
+                    )
                 )
+                cat("\n")
+                cat(paste0(
+                    "assembly_accession: ",
+                    json.qry.info$assembly_accession
+                ))
+                cat("\n")
+                cat(
+                    paste0(
+                        "genebuild_initial_release_date: ",
+                        json.qry.info$genebuild_initial_release_date
+                    )
+                )
+                
+                sink()
                 
                 message(
                     paste0(
-                        "The genomic CDS of '",
+                        "The CDS of '",
                         organism,
                         "' has been downloaded to '",
                         path,
                         "' and has been named '",
-                        paste0(local.org, "_cds_from_genomic_", db, ".fna.gz"),
-                        "' ."
+                        basename(cds.path),
+                        "'."
                     )
                 )
                 
-                return(file.path(
-                    path,
-                    paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")
-                ))
-            } else {
-                stop(
-                    "File: ",
-                    download_url,
-                    " could not be loaded properly... Are you connected to the internet?", call. = FALSE
-                )
+                return(cds.path)
             }
-          }
-    }
-    
-    if (db == "ensembl") {
-        
-        # create result folder
-        if (!file.exists(path)) {
-            dir.create(path, recursive = TRUE)
         }
         
-        # download CDS sequence from ENSEMBL
-        cds.path <- getENSEMBL.Seq(organism, type = "cds", id.type = "all", path)
-        
-        if (is.logical(cds.path)) {
-            invisible(return(TRUE))
-        } else {
-            new.organism <- stringr::str_replace_all(organism," ","_")
+        if (db == "ensemblgenomes") {
+            # create result folder
+            if (!file.exists(path)) {
+                dir.create(path, recursive = TRUE)
+            }
             
-            # test proper API access
-            tryCatch({
-                json.qry.info <-
-                    jsonlite::fromJSON(
-                        paste0(
-                            "http://rest.ensembl.org/info/assembly/",
-                            new.organism,
-                            "?content-type=application/json"
+            # download CDS sequence from ENSEMBLGENOMES
+            cds.path <-
+                getENSEMBLGENOMES.Seq(organism, type = "cds", 
+                                      id.type = "all", path)
+            
+            if (is.logical(cds.path)) {
+                invisible(return(TRUE))
+            } else {
+                new.organism <- stringr::str_replace_all(organism, " ", "_")
+                
+                # test proper API access
+                tryCatch({
+                    json.qry.info <-
+                        jsonlite::fromJSON(
+                            paste0(
+                                "http://rest.ensemblgenomes.org/info/assembly/",
+                                new.organism,
+                                "?content-type=application/json"
+                            )
                         )
-                    )
-            }, error = function(e)
-                stop(
-                    "The API 'http://rest.ensembl.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensembl.org' currently available?", call. = FALSE
-                ))
-        
-            # generate CDS documentation
-            sink(file.path(path, paste0("doc_",new.organism,"_db_",db,".txt")))
-            
-            cat(paste0("File Name: ", cds.path))
-            cat("\n")
-            cat(paste0("Organism Name: ", new.organism))
-            cat("\n")
-            cat(paste0("Database: ", db))
-            cat("\n")
-            cat(paste0("Download_Date: ", date()))
-            cat("\n")
-            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
-            cat("\n")
-            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
-            cat("\n")
-            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
-            cat("\n")
-            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
-            cat("\n")
-            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
-            
-            sink()
-            
-            message(
-                paste0(
-                    "The CDS of '",
-                    organism,
-                    "' has been downloaded to '",
+                }, error = function(e)
+                    stop(
+                        "The API 'http://rest.ensemblgenomes.org' does not seem 
+                        to work properly. Are you connected to the internet? 
+                        Is the homepage 'http://rest.ensemblgenomes.org' 
+                        currently available?",
+                        call. = FALSE
+                    ))
+                
+                # generate CDS documentation
+                sink(file.path(
                     path,
-                    "' and has been named '",
-                    basename(cds.path),
-                    "'."
+                    paste0("doc_", new.organism, "_db_", db, ".txt")
+                ))
+                
+                cat(paste0("File Name: ", cds.path))
+                cat("\n")
+                cat(paste0("Organism Name: ", new.organism))
+                cat("\n")
+                cat(paste0("Database: ", db))
+                cat("\n")
+                cat(paste0("Download_Date: ", date()))
+                cat("\n")
+                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                cat("\n")
+                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                cat("\n")
+                cat(
+                    paste0(
+                        "genebuild_last_geneset_update: ",
+                        json.qry.info$genebuild_last_geneset_update
+                    )
                 )
-            )
+                cat("\n")
+                cat(paste0(
+                    "assembly_accession: ",
+                    json.qry.info$assembly_accession
+                ))
+                cat("\n")
+                cat(
+                    paste0(
+                        "genebuild_initial_release_date: ",
+                        json.qry.info$genebuild_initial_release_date
+                    )
+                )
+                
+                sink()
+                
+                message(
+                    paste0(
+                        "The CDS of '",
+                        organism,
+                        "' has been downloaded to '",
+                        path,
+                        "' and has been named '",
+                        basename(cds.path),
+                        "'."
+                    )
+                )
+                
+                return(cds.path)
+            }
             
-            return(cds.path)   
         }
     }
-    
-    if (db == "ensemblgenomes") {
-        
-        # create result folder
-        if (!file.exists(path)) {
-            dir.create(path, recursive = TRUE)
-        }
-        
-        # download CDS sequence from ENSEMBLGENOMES
-        cds.path <- getENSEMBLGENOMES.Seq(organism, type = "cds", id.type = "all", path)
-        
-        if (is.logical(cds.path)) {
-            invisible(return(TRUE))
-        } else {
-            
-            new.organism <- stringr::str_replace_all(organism," ","_")
-            
-            # test proper API access
-            tryCatch({
-                json.qry.info <-
-                    jsonlite::fromJSON(
-                        paste0(
-                            "http://rest.ensemblgenomes.org/info/assembly/",
-                            new.organism,
-                            "?content-type=application/json"
-                        )
-                    )
-            }, error = function(e)
-                stop(
-                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-                ))
-            
-            # generate CDS documentation
-            sink(file.path(path, paste0("doc_",new.organism,"_db_",db,".txt")))
-            
-            cat(paste0("File Name: ", cds.path))
-            cat("\n")
-            cat(paste0("Organism Name: ", new.organism))
-            cat("\n")
-            cat(paste0("Database: ", db))
-            cat("\n")
-            cat(paste0("Download_Date: ", date()))
-            cat("\n")
-            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
-            cat("\n")
-            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
-            cat("\n")
-            cat(paste0("genebuild_last_geneset_update: ", json.qry.info$genebuild_last_geneset_update))
-            cat("\n")
-            cat(paste0("assembly_accession: ", json.qry.info$assembly_accession))
-            cat("\n")
-            cat(paste0("genebuild_initial_release_date: ", json.qry.info$genebuild_initial_release_date))
-            
-            sink()
-        
-            message(
-                paste0(
-                    "The CDS of '",
-                    organism,
-                    "' has been downloaded to '",
-                    path,
-                    "' and has been named '",
-                    basename(cds.path),
-                    "'."
-                )
-            )
-            
-            return(cds.path)
-        }   
-        
-    }
-}
 
 
 
