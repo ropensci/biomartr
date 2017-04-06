@@ -16,8 +16,8 @@
 #' }
 #' @seealso \code{\link{download.database}}, \code{\link{listDatabases}}
 #' @export
-download.database.all <- function(db, path) {
-    
-    sapply(listDatabases(db = db), download.database, path = path)
-    
+download.database.all <- function(db, path = "database") {
+    message("Starting download of the files: ",paste0(listDatabases(db = db), collapse = ", "), " ...")
+    sapply(listNCBIDatabases(db = db), download.database, path = path)
+    message("Download process is finished and files are stored in '", path, "'.")
 }
