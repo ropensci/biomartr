@@ -23,6 +23,8 @@ biomartr 0.5.0
 
 - all `get*()` retrieval functions now skip the download of a particular file if it already exists in the specified file path
 
+- `download.database()` and `download.database.all()` now internally perform md5 check sum checks to make sure that the file download was successful
+
 
 biomartr 0.4.0
 ===========
