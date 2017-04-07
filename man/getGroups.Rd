@@ -7,18 +7,20 @@
 getGroups(kingdom, db = "refseq")
 }
 \arguments{
-\item{kingdom}{a character string specifying for which kingdom of life groups shall be retrieved. See \code{\link{getKingdoms}} for details.}
+\item{kingdom}{a character string specifying for which kingdom of life 
+groups shall be retrieved. See \code{\link{getKingdoms}} for details.}
 
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}.
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}.
 Default is \code{db = "refseq"}.}
 }
 \description{
 A short list of available groups for a kingdom of life.
 }
 \examples{
-\dontrun{ 
 # get possible kigdom names
 getKingdoms(db = "refseq")
+\dontrun{
 # retrieve subgroups for vertebrate_mammalian available from refseq
 getGroups(kingdom = "vertebrate_mammalian", db = "refseq")
 
@@ -29,7 +31,8 @@ getGroups(kingdom = "vertebrate_mammalian",db = "genbank")
 }
 }
 \seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getKingdoms}}
+\code{\link{meta.retrieval}}, \code{\link{getGenome}}, 
+\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getKingdoms}}
 }
 \author{
 Hajk-Georg Drost
