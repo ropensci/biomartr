@@ -2,53 +2,56 @@
 % Please edit documentation in R/organismFilters.R
 \name{organismFilters}
 \alias{organismFilters}
-\title{Retrieve Biomart Filters for an Organism}
+\title{Retrieve Ensembl Biomart filters for a qyery organism}
 \usage{
 organismFilters(organism, update = FALSE, topic = NULL)
 }
 \arguments{
-\item{organism}{a character string specifying the scientific name of a query organism.}
+\item{organism}{a character string specifying the scientific name of a 
+query organism.}
 
-\item{update}{a logical value specifying whether or not the local listMart.txt, listDatasets.txt,
-and listFilters_organism.txt files shall be updated by remote access to BioMart.}
+\item{update}{a logical value specifying whether or not the local 
+listMart.txt, listDatasets.txt, and listFilters_organism.txt files shall be 
+updated by remote access to BioMart.}
 
-\item{topic}{a character string specifying a topic (category) of filters, e.g. \code{topic} = \code{"id"}.}
+\item{topic}{a character string specifying a topic (category) of filters, 
+e.g. \code{topic} = \code{"id"}.}
 }
 \value{
-a data.frame storing corresponding filter names, description, datasets, and marts.
+a data.frame storing corresponding filter names, description, 
+datasets, and marts.
 }
 \description{
-In addition to the \code{\link{organismBM}} and \code{\link{organismAttributes}} functions, this function
-returns all available filters that can be accessed through different marts and datasets 
-for a given query organism.
+In addition to the \code{\link{organismBM}} and 
+\code{\link{organismAttributes}} functions, this function
+returns all available filters that can be accessed through different marts 
+and datasets for a given query organism.
 }
 \details{
-For a given query organism, this function retrieves all available filters that 
-can be accessed through different marts and datasets.
+For a given query organism, this function retrieves all available 
+filters that can be accessed through different marts and datasets.
 
-Sometimes the same filter names correspond to different datasets and marts causing
-problems when using \code{\link{getMarts}}. The approach introduced by this function
-provides (again) a organism centric way of accessing organism specific filters.
+Sometimes the same filter names correspond to different datasets and 
+marts causing problems when using \code{\link{getMarts}}. 
+The approach introduced by this function provides (again) a organism centric 
+way of accessing organism specific filters.
 
-The \code{topic} argument allows the user to search for specific filters topics/categories
-for faster selection.
+The \code{topic} argument allows the user to search for specific filters 
+topics/categories for faster selection.
 }
 \note{
-When you run this function for the first time, the data retrieval procedure will take some time,
-due to the remote access to BioMart. The corresponding result is then saved in a *.txt file within the \code{\link{tempdir}}
-directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and "_biomart/listFilters_organism.txt",
-allowing subsequent queries to perform much faster.
+When you run this function for the first time, the data retrieval procedure 
+will take some time, due to the remote access to BioMart. The corresponding 
+result is then saved in a *.txt file within the \code{\link{tempdir}}
+directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and 
+"_biomart/listFilters_organism.txt", allowing subsequent queries to perform 
+much faster.
 }
 \examples{
-\dontrun{
-
 # return available filters for "Homo sapiens"
 head(organismFilters("Homo sapiens"), 20)
-
 # search for filter topic "id" 
 head(organismFilters("Homo sapiens", topic = "id"), 20)
-
-}
 }
 \references{
 \url{http://biomart.org/}
@@ -63,8 +66,9 @@ Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 3439-3440 (2005).
 }
 \seealso{
-\code{\link{organismBM}}, \code{\link{organismAttributes}}, \code{\link{getAttributes}},
-\code{\link{getDatasets}}, \code{\link{getMarts}}
+\code{\link{organismBM}}, \code{\link{organismAttributes}}, 
+\code{\link{getAttributes}}, \code{\link{getDatasets}}, 
+\code{\link{getMarts}}
 }
 \author{
 Hajk-Georg Drost
