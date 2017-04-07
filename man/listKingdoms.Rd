@@ -7,31 +7,30 @@
 listKingdoms(db = "refseq")
 }
 \arguments{
-\item{db}{a character string specifying the database for which genome availability shall be checked, 
-e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.}
+\item{db}{a character string specifying the database for which genome 
+availability shall be checked, 
+e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, 
+\code{db = "ensemblgenomes"}.}
 }
 \description{
-Users can retrieve the available number of sequenced genomes per kingdom.
+Users can retrieve the available number of sequenced 
+genomes per kingdom.
 }
 \examples{
-
 \dontrun{
 # list number of available genomes in refseq for each kingdom of life
 listKingdoms(db = "refseq")
-
 # example for genbank
 listKingdoms(db = "genbank")
-
 # example for ensembl
 listKingdoms(db = "ensembl")
-
 # example for ensemblgenomes
 listKingdoms(db = "ensemblgenomes")
 }
-
 }
 \seealso{
-\code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listGroups}}
+\code{\link{listGenomes}}, \code{\link{is.genome.available}}, 
+\code{\link{listGroups}}
 }
 \author{
 Hajk-Georg Drost
