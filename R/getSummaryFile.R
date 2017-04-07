@@ -16,7 +16,8 @@
 getSummaryFile <- function(db,kingdom){
     
     if (!is.element(db, c("refseq", "genbank")))
-        stop("Please select one of the available data bases: 'refseq' or 'genbank'")
+        stop("Please select one of the available data bases: 'refseq' 
+             or 'genbank'")
     
     if (!is.element(kingdom, getKingdoms(db = db)))
         stop(paste0(
@@ -45,7 +46,8 @@ getSummaryFile <- function(db,kingdom){
             ))
         }, error = function(e)
             stop(
-                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. 
+                Are you connected to the internet? Is the the FTP site '",
                 paste0(
                     "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
                     db,
@@ -64,7 +66,8 @@ getSummaryFile <- function(db,kingdom){
                              readr::read_delim(
                                  file.path(
                                      tempdir(),
-                                     paste0("assembly_summary_", kingdom, "_", db, ".txt")
+                                     paste0("assembly_summary_", kingdom, "_", 
+                                            db, ".txt")
                                  ),
                                  comment = "#",
                                  delim = "\t",
@@ -94,7 +97,7 @@ getSummaryFile <- function(db,kingdom){
                                      "excluded_from_refseq"
                                  ),
                                  col_types = readr::cols(
-                                     assembly_accession = readr::col_character(),
+                                    assembly_accession = readr::col_character(),
                                      bioproject = readr::col_character(),
                                      biosample = readr::col_character(),
                                      wgs_master = readr::col_character(),
@@ -102,7 +105,7 @@ getSummaryFile <- function(db,kingdom){
                                      taxid = readr::col_integer(),
                                      species_taxid = readr::col_integer(),
                                      organism_name = readr::col_character(),
-                                     infraspecific_name = readr::col_character(),
+                                    infraspecific_name = readr::col_character(),
                                      isolate = readr::col_character(),
                                      version_status = readr::col_character(),
                                      assembly_level = readr::col_character(),
@@ -114,7 +117,7 @@ getSummaryFile <- function(db,kingdom){
                                      gbrs_paired_asm = readr::col_character(),
                                      paired_asm_comp = readr::col_character(),
                                      ftp_path = readr::col_character(),
-                                     excluded_from_refseq = readr::col_character()
+                                   excluded_from_refseq = readr::col_character()
                                  )
                              )
                          )
