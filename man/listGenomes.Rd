@@ -7,39 +7,45 @@
 listGenomes(db = "refseq", type = "all", subset = NULL, details = FALSE)
 }
 \arguments{
-\item{db}{a character string specifying the database for which genome availability shall be checked, 
-e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.}
+\item{db}{a character string specifying the database for which genome 
+availability shall be checked, e.g. \code{db = "refseq"}, 
+\code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.}
 
-\item{type}{a character string specifying a potential filter of available genomes. Options are \code{type = "all"}, \code{type = "kingdom"}, \code{type = "group"}, \code{type = "subgroup"}.}
+\item{type}{a character string specifying a potential filter of available 
+genomes. Options are \code{type = "all"}, \code{type = "kingdom"}, 
+\code{type = "group"}, \code{type = "subgroup"}.}
 
-\item{subset}{a character string or character vector specifying a subset of \code{type}. E.g. if users are interested in retrieving all
-\code{Eukaryota} species, they can specify: \code{type = "kingdom"} and \code{subset = "Eukaryota"}.}
+\item{subset}{a character string or character vector specifying a subset of 
+\code{type}. E.g. if users are interested in retrieving all
+\code{Eukaryota} species, they can specify: \code{type = "kingdom"} and 
+\code{subset = "Eukaryota"}.}
 
-\item{details}{a boolean value specifying whether only the scientific names of stored genomes shall be returned
-(details = FALSE) or all information such as \code{organism_name},\code{kingdoms}, \code{group}, \code{subgroup}, \code{file_size_MB}, etc.}
+\item{details}{a boolean value specifying whether only the scientific names 
+of stored genomes shall be returned (details = FALSE) or all information such
+as \code{organism_name},\code{kingdoms}, \code{group}, \code{subgroup}, 
+\code{file_size_MB}, etc.}
 }
 \description{
-This function retrieves the names of all genomes available on the NCBI ftp:// server and stores
-the results in a file named 'overview.txt' inside the directory '_ncbi_downloads' that
-is built inside the workspace.
+This function retrieves the names of all genomes available on 
+the NCBI ftp:// server and stores the results in a file named 'overview.txt' 
+inside the directory _ncbi_downloads' that is built inside the workspace.
 }
 \details{
-Internally this function loads the the overview.txt file from NCBI and creates a directory '_ncbi_downloads' in the \code{temdir()}
-folder to store the overview.txt file for future processing. In case the overview.txt file already exists within the
-'_ncbi_downloads' folder and is accessible within the workspace, no download process will be performed again.
+Internally this function loads the the overview.txt file from NCBI 
+and creates a directory '_ncbi_downloads' in the \code{temdir()}
+folder to store the overview.txt file for future processing. In case the 
+overview.txt file already exists within the '_ncbi_downloads' folder and is 
+accessible within the workspace, no download process will be performed again.
 }
 \note{
-Please note that the ftp:// connection relies on the NCBI or ENSEMBL server and cannot be
-accurately accessed via a proxy.
+Please note that the ftp:// connection relies on the NCBI or ENSEMBL server 
+and cannot be accurately accessed via a proxy.
 }
 \examples{
-
 \dontrun{
 # print details for refseq
 listGenomes(db = "refseq") 
-
 }
-
 }
 \author{
 Hajk-Georg Drost
