@@ -1,5 +1,6 @@
 #' @title Transform 1st character of a string to upper case
-#' @description Helper function to only transform 1st character of a string to upper case.
+#' @description Helper function to only transform 1st character of a string
+#' to upper case.
 #' @param string character string that shall be transformed.
 #' @author Hajk-Georg Drost
 #' @noRd
