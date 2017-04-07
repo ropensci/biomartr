@@ -1,34 +1,31 @@
 #' @title List number of available genomes in each group
-#' @description Users can retrieve the available number of sequenced genomes per group.
-#' Only available for \code{db = "refseq"} and \code{db = "genbank"}.
-#' @param db a character string specifying the database for which genome availability shall be checked,
-#' e.g. \code{db = "refseq"} and \code{db = "genbank"}.
-#' @param kingdom a kingdom specification retrieved by \code{\link{getKingdoms}}.
-#' @param details shall all species corresponding to the specified \code{kingdom} be returned? Default is \code{details = FALSE}.
+#' @description Users can retrieve the available number of sequenced 
+#' genomes per group. Only available for \code{db = "refseq"} and 
+#' \code{db = "genbank"}.
+#' @param db a character string specifying the database for which genome 
+#' availability shall be checked, e.g. \code{db = "refseq"} and 
+#' \code{db = "genbank"}.
+#' @param kingdom a kingdom specification retrieved by 
+#' \code{\link{getKingdoms}}.
+#' @param details shall all species corresponding to the specified 
+#' \code{kingdom} be returned? Default is \code{details = FALSE}.
 #' @author Hajk-Georg Drost
 #' @examples
-#'
 #' \dontrun{
 #' # example for refseq
 #' listGroups(db = "refseq")
-#'
 #' # example for genbank
 #' listGroups(db = "genbank")
-#'
 #' ### in case groups should be specified by kingdom
 #' # first, retrieve available kingdom names
 #' listKingdoms()
-#'
 #' # now we choose kingdom "bacteria"
 #' listGroups(db = "refseq", kingdom = "bacteria")
-#'
 #' # or
-#'
 #' listGroups(db = "genbank", kingdom = "bacteria")
-#'
 #' }
-#'
-#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, \code{\link{listKingdoms}}
+#' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, 
+#' \code{\link{listKingdoms}}
 #' @export
 
 listGroups <-
@@ -36,11 +33,13 @@ listGroups <-
              kingdom = "all",
              details = FALSE) {
         if (!is.element(db, c("refseq", "genbank")))
-            stop("Unfortunately, only db = 'refseq' and db = 'genbank' provide group information.")
+            stop("Unfortunately, only db = 'refseq' and db = 'genbank' 
+                 provide group information.")
         
         if (!is.element(kingdom, c(getKingdoms(), "all")))
             stop(
-                "Please choose a kingdom that is supported by NCBI RefSeq or NCBI Genbank. See getKingdoms() for details.",
+                "Please choose a kingdom that is supported by NCBI RefSeq or 
+                NCBI Genbank. See getKingdoms() for details.",
                 call. = FALSE
             )
         
@@ -93,7 +92,8 @@ listGroups <-
                             listgenomes.data,
                             kingdoms == "Eukaryota",
                             group == "Animals",
-                            subgroup %in% c("Amphibians", "Birds", "Fishes", "Reptiles")
+                            subgroup %in% c("Amphibians", "Birds", "Fishes", 
+                                            "Reptiles")
                         )
                 }
             }
@@ -143,8 +143,6 @@ listGroups <-
             
             # change only first character to upper upper case
             #kingdom <- toupper_first_char(kingdom)
-            
-            
             
             if (nrow(listgenomes.data) == 0)
                 stop("Unfortunately, no group is available for ",
