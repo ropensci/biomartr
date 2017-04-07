@@ -9,13 +9,15 @@ getMetaGenomes(name, path = file.path("_ncbi_downloads", "metagenome"))
 \arguments{
 \item{name}{metagenome name retrieved by \code{\link{listMetaGenomes}}.}
 
-\item{path}{a character string specifying the location (a folder) in which the corresponding
-metagenome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","metagenome")}.}
+\item{path}{a character string specifying the location (a folder) in 
+which the corresponding metagenome shall be stored. 
+Default is \code{path} = \code{file.path("_ncbi_downloads","metagenome")}.}
 }
 \description{
-Retrieve available metagenomes from NCBI Genbank. NCBI Genbank allows users
-to download entire metagenomes of several metagenome projects. This function downloads
- available metagenomes that can then be downloaded via \code{\link{getMetaGenomes}}.
+Retrieve available metagenomes from NCBI Genbank. 
+NCBI Genbank allows users to download entire metagenomes of several 
+metagenome projects. This function downloads available metagenomes that can 
+then be downloaded via \code{\link{getMetaGenomes}}.
 }
 \examples{
 \dontrun{
@@ -27,7 +29,8 @@ getMetaGenomes(name = "human gut metagenome")
 }
 }
 \seealso{
-\code{\link{getMetaGenomeAnnotations}}, \code{\link{listMetaGenomes}}
+\code{\link{getMetaGenomeAnnotations}}, 
+\code{\link{listMetaGenomes}}
 }
 \author{
 Hajk-Georg Drost
