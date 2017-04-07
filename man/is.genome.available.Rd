@@ -7,30 +7,34 @@
 is.genome.available(organism, details = FALSE, db = "refseq")
 }
 \arguments{
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+\item{organism}{a character string specifying the scientific name of the 
+organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
-\item{details}{a logical value specifying whether or not details on genome size, kingdom, etc. shall be printed to the
-console intead of a boolean value.}
+\item{details}{a logical value specifying whether or not details on genome 
+size, kingdom, etc. shall be printed to the console intead of a 
+boolean value.}
 
-\item{db}{a character string specifying the database for which genome availability shall be checked,
-e.g. \code{db = "refseq"},\code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}, or \code{db =  "all"}.}
+\item{db}{a character string specifying the database for which genome 
+availability shall be checked,
+e.g. \code{db = "refseq"},\code{db = "genbank"}, \code{db = "ensembl"}, 
+\code{db = "ensemblgenomes"}, or \code{db =  "all"}.}
 }
 \value{
-a logical value specifing whether or not the genome of the input organism
-is available. In case \code{details} = \code{TRUE} only a character string specifying the
-genome details is being returned.
+a logical value specifing whether or not the genome of the input 
+organism is available. In case \code{details} = \code{TRUE} only a character 
+string specifying the genome details is being returned.
 }
 \description{
-This function checks the availability of a given genome on the NBCI servers specified
-as scientific name.
+This function checks the availability of a given genome on the 
+NBCI servers specified as scientific name.
 }
 \details{
-Internally this function calls the \code{\link{listGenomes}} function to detect all available genomes
-and checks whether or not the specified organism is available for download.
+Internally this function calls the \code{\link{listGenomes}} function to 
+detect all available genomes and checks whether or not the specified organism
+is available for download.
 }
 \examples{
 \dontrun{
-
 # checking whether the Homo sapiens genome is stored on NCBI
 is.genome.available(organism = "Homo sapiens", db = "refseq")
 
@@ -41,7 +45,9 @@ is.genome.available(organism = "Homo sapiens", db = "refseq", details = TRUE)
 is.genome.available(organism = "Homo sapiens", db = "ensembl")
 
 # and printing details
-is.genome.available(organism = "Homo sapiens", details = TRUE, db = "ensembl")
+is.genome.available(organism = "Homo sapiens",
+                    details = TRUE, 
+                    db = "ensembl")
 }
 }
 \author{
