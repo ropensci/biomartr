@@ -7,17 +7,17 @@
 getMetaGenomeSummary()
 }
 \description{
-Retrieval function of the assembly_summary.txt file from NCBI genbank metagenomes.
+Retrieval function of the assembly_summary.txt file 
+from NCBI genbank metagenomes.
 This files stores all available metagenome projects on NCBI Genbank.
 }
 \examples{
-\dontrun{
 test <- getMetaGenomeSummary()
 test
-} 
 }
 \seealso{
-\code{\link{getKingdomAssemblySummary}}, \code{\link{getSummaryFile}}
+\code{\link{getKingdomAssemblySummary}}, 
+\code{\link{getSummaryFile}}
 }
 \author{
 Hajk-Georg Drost
