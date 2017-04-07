@@ -1,7 +1,9 @@
 #' @title Retrieve NCBI GENOME_REPORTS file
-#' @description Retrieves NCBI GENOME_REPORTS file from ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
+#' @description Retrieves NCBI GENOME_REPORTS file from 
+#' ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
 #' @author Hajk-Georg Drost
 #' @export
+
 getGENOMEREPORT <- function() {
     
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
@@ -9,15 +11,19 @@ getGENOMEREPORT <- function() {
     }
     
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads", "overview.txt"))) {
-        
-        
-        tryCatch({downloader::download(
-            "ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
-            file.path(tempdir(), "_ncbi_downloads", "overview.txt"),
-            mode = "wb"
-        )}, error = function(e)
+        tryCatch({
+            downloader::download(
+               "ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+                file.path(tempdir(), "_ncbi_downloads", "overview.txt"),
+                mode = "wb"
+            )
+        }, error = function(e)
             stop(
-                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt' cannot be reached. Are you connected to the internet? Is the the FTP site 'ftp://ftp.ncbi.nlm.nih.gov' currently available?", call. = FALSE
+                "The FTP site 
+                'ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt'
+                cannot be reached. Are you connected to the internet? Is the the
+                FTP site 'ftp://ftp.ncbi.nlm.nih.gov' currently available?",
+                call. = FALSE
             ))
         
         # NCBI limits requests to three per second
@@ -55,6 +61,5 @@ getGENOMEREPORT <- function() {
     )
     
     return(ncbi_overview)
-    
 }
 
