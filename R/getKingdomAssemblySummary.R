@@ -1,5 +1,7 @@
-#' @title Retrieve and summarise the assembly_summary.txt files from NCBI for all kingdoms
-#' @description Retrieval function of the assembly_summary.txt file from NCBI for all kingdoms.
+#' @title Retrieve and summarise the assembly_summary.txt files from 
+#' NCBI for all kingdoms
+#' @description Retrieval function of the assembly_summary.txt file 
+#' from NCBI for all kingdoms.
 #' The assembly_summary.txt files store available species on NCBI. 
 #' @param db database name. E.g. \code{refseq} or \code{genbank}.
 #' @author Hajk-Georg Drost
@@ -10,14 +12,15 @@
 #' }
 #' @seealso \code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}} 
 #' @export
+
 getKingdomAssemblySummary <- function(db) {
-    
     if (!is.element(db, c("refseq", "genbank")))
-        stop ("Please select one of the available data bases: 'refseq' or 'genbank'")
+        stop("Please select one of the available data bases:
+             'refseq' or 'genbank'")
     
     if (is.element(db, c("refseq", "genbank"))) {
-        # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded then use the local version
-        # stored in temp()
+        # if AssemblyFilesAllKingdoms.txt file was already generated/downloaded
+        # then use the local version stored in temp()
         if (file.exists(file.path(
             tempdir(),
             paste0("AssemblyFilesAllKingdoms_", db, ".txt")
@@ -60,7 +63,8 @@ getKingdomAssemblySummary <- function(db) {
                     )
             )
         } else {
-            # otherwise download all assembly_summary.txt files for all kingdoms and store the AssemblyFilesAllKingdoms.txt file locally
+            # otherwise download all assembly_summary.txt files for all kingdoms
+            # and store the AssemblyFilesAllKingdoms.txt file locally
             # retrieve the assembly_summary.txt files for all kingdoms
             kgdoms <- getKingdoms(db = db)
             storeAssemblyFiles <- vector("list", length(kgdoms))
@@ -81,9 +85,12 @@ getKingdomAssemblySummary <- function(db) {
         }
     }
     
-    orgs <- stringr::str_replace_all(AssemblyFilesAllKingdoms$organism_name,"\\(","")
-    orgs <- stringr::str_replace_all(orgs,"\\)","")
+    orgs <-
+        stringr::str_replace_all(AssemblyFilesAllKingdoms$organism_name, 
+                                 "\\(", "")
+    orgs <- stringr::str_replace_all(orgs, "\\)", "")
     
-    AssemblyFilesAllKingdoms <- dplyr::mutate(AssemblyFilesAllKingdoms, organism_name = orgs)
+    AssemblyFilesAllKingdoms <-
+        dplyr::mutate(AssemblyFilesAllKingdoms, organism_name = orgs)
     return(AssemblyFilesAllKingdoms)
 }
