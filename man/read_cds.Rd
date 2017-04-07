@@ -8,43 +8,45 @@ read_cds(file, format = "fasta", obj.type = "Biostrings",
   delete_corrupt = FALSE, ...)
 }
 \arguments{
-\item{file}{a character string specifying the path to the file storing the CDS.}
+\item{file}{a character string specifying the path to the file storing 
+the CDS.}
 
-\item{format}{a character string specifying the file format used to store the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
+\item{format}{a character string specifying the file format used to store 
+the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
 
-\item{obj.type}{a character string specifying the object stype in which the genomic sequence shall be represented. 
-Either as \code{obj.type = "Biostrings"} (default) or as \code{obj.type = "data.table"}.}
+\item{obj.type}{a character string specifying the object stype in which the 
+genomic sequence shall be represented. 
+Either as \code{obj.type = "Biostrings"} (default) or as 
+\code{obj.type = "data.table"}.}
 
-\item{delete_corrupt}{a logical value specifying whether potential CDS sequences that cannot be divided by 3 shall be
+\item{delete_corrupt}{a logical value specifying whether potential CDS 
+sequences that cannot be divided by 3 shall be
 be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
 
-\item{...}{additional arguments that are used by the seqinr::read.fasta() function.}
+\item{...}{additional arguments that are used by
+\code{\link[seqinr]{read.fasta()}}.}
 }
 \value{
-A data.table storing the gene id in the first column and the corresponding
-sequence as string in the second column.
+A data.table storing the gene id in the first column and the 
+corresponding sequence as string in the second column.
 }
 \description{
-This function reads an organism specific CDS stored in a defined file format.
+This function reads an organism specific CDS stored in a 
+defined file format.
 }
 \details{
-The \code{read.cds} function takes a string specifying the path to the cds file
-of interest as first argument.
+The \code{read.cds} function takes a string specifying the path 
+to the cds file of interest as first argument.
 
-It is possible to read in different proteome file standards such as \emph{fasta} or \emph{genebank}.
+It is possible to read in different proteome file standards such as 
+\emph{fasta} or \emph{genebank}.
 
-CDS stored in fasta files can be downloaded from http://www.ensembl.org/info/data/ftp/index.html.
-}
-\examples{
-\dontrun{
-# reading a cds file stored in fasta format
-Ath.cds <- read_cds(system.file('seqs/ortho_thal_cds.fasta', package = 'orthologr'),
-                    format = "fasta")
-}
-
+CDS stored in fasta files can be downloaded from 
+http://www.ensembl.org/info/data/ftp/index.html.
 }
 \seealso{
-\code{\link{getCDS}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_gff}}, \code{\link{read_rna}}
+\code{\link{getCDS}}, \code{\link{read_genome}}, 
+\code{\link{read_proteome}}, \code{\link{read_gff}}, \code{\link{read_rna}}
 }
 \author{
 Hajk-Georg Drost
