@@ -8,57 +8,80 @@ meta.retrieval(kingdom, group = NULL, db = "refseq", type = "genome",
   combine = FALSE, path = NULL)
 }
 \arguments{
-\item{kingdom}{a character string specifying the kingdom of the organisms of interest,
-e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", "protozoa", "vertebrate_mammalian", or "vertebrate_other".
+\item{kingdom}{a character string specifying the kingdom of the organisms 
+of interest, e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", 
+"protozoa", "vertebrate_mammalian", or "vertebrate_other".
 Available kingdoms can be retrieved with \code{\link{getKingdoms}}.}
 
-\item{group}{only species belonging to this subgroup will be downloaded. Groups can be retrieved with \code{\link{getGroups}}.}
+\item{group}{only species belonging to this subgroup will be downloaded. 
+Groups can be retrieved with \code{\link{getGroups}}.}
 
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.}
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, 
+\code{db = "emsembl"} or \code{db = "ensemblgenomes"}.}
 
 \item{type}{type of sequences that shall be retrieved. Options are:
 \itemize{
- \item \code{type = "genome"} (for genome assembly retrieval; see also \code{\link{getGenome}}), 
- \item \code{type = "proteome"} (for proteome retrieval; see also \code{\link{getProteome}}),
- \item \code{type = "CDS"} (for coding sequence retrieval; see also \code{\link{getCDS}}),
- \item \code{type = "gff"} (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
- \item \code{type = "rna"} (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
- \item \code{type = "assemblystats"} (for genome assembly quality stats file retrieval; see also \code{\link{getAssemblyStats}}).
+ \item \code{type = "genome"} :
+ (for genome assembly retrieval; see also \code{\link{getGenome}}), 
+ \item \code{type = "proteome"} :
+ (for proteome retrieval; see also \code{\link{getProteome}}),
+ \item \code{type = "CDS"} :
+ (for coding sequence retrieval; see also \code{\link{getCDS}}),
+ \item \code{type = "gff"} :
+(for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
+ \item \code{type = "rna"} :
+ (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
+ \item \code{type = "assemblystats"} :
+ (for genome assembly quality stats file retrieval; 
+ see also \code{\link{getAssemblyStats}}).
  }}
 
-\item{combine}{just in case \code{type = "assemblystats"} is specified, shall assemby stats of individual species be imported and combined to a \code{\link{data.frame}}?}
+\item{combine}{just in case \code{type = "assemblystats"} is specified, shall
+assemby stats of individual species be imported and combined to a 
+\code{\link{data.frame}}?}
 
-\item{path}{path to the folder in which downloaded genomes shall be stored. By default the
-kingdom name is used to name the output folder.}
+\item{path}{path to the folder in which downloaded genomes shall be stored. 
+By default the kingdom name is used to name the output folder.}
 }
 \description{
-Download genomes, proteomes, cds, gff, rna, or assembly stats files of all species within a kingdom of life.
+Download genomes, proteomes, cds, gff, rna, or assembly stats 
+files of all species within a kingdom of life.
 }
 \details{
-This function aims to perform bulk retrieval of the genomes, proteomes, cds, etc. of species
-that belong to the same kingdom of life or to the same subgroup.
+This function aims to perform bulk retrieval of the genomes, 
+proteomes, cds, etc. of species that belong to the same kingdom of life or 
+to the same subgroup.
 }
 \examples{
 \dontrun{
 # get all available kingdoms for refseq
 getKingdoms(db = "refseq")
 # download all vertebrate genomes from refseq
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "vertebrate_mammalian", 
+               db = "refseq", 
+               type = "genome")
 
 # get all available kingdoms for genbank
 getKingdoms(db = "genbank")
 # download all vertebrate genomes from genbank
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "vertebrate_mammalian", 
+               db = "genbank", 
+               type = "genome")
 
 # get all available kingdoms for ensemblgenomes
 getKingdoms(db = "ensemblgenomes")
 # download all vertebrate genomes from ensemblgenomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "ensemblgenomes", type = "genome")
+meta.retrieval(kingdom = "vertebrate_mammalian", 
+               db = "ensemblgenomes", 
+               type = "genome")
 
 # In case users do not wish to retrieve genomes from an entire kingdom, 
-# but rather from a subgoup (e.g. from species belonging to the Gammaproteobacteria class,
-# a subgroup of the bacteria kingdom), they can use the following workflow"
-# First, users can again consult the getKingdoms() function to retrieve kingdom information.
+# but rather from a subgoup (e.g. from species belonging to the 
+# Gammaproteobacteria class, a subgroup of the bacteria kingdom), 
+# they can use the following workflow"
+# First, users can again consult the getKingdoms() function to retrieve 
+# kingdom information.
 getKingdoms(db = "refseq")
 
 # In this example, we will choose the bacteria kingdom. 
