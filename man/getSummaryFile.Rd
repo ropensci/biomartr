@@ -9,7 +9,8 @@ getSummaryFile(db, kingdom)
 \arguments{
 \item{db}{database name. E.g. \code{refseq} or \code{genbank}.}
 
-\item{kingdom}{kingdom for which assembly_summary.txt file shall be retrieved. See also \code{\link{getKingdoms}}.}
+\item{kingdom}{kingdom for which assembly_summary.txt file shall be 
+retrieved. See also \code{\link{getKingdoms}}.}
 }
 \description{
 Retrieval function of the assembly_summary.txt file from NCBI.
@@ -21,7 +22,8 @@ test
 }
 }
 \seealso{
-\code{\link{getKingdomAssemblySummary}}, \code{\link{getMetaGenomeSummary}}
+\code{\link{getKingdomAssemblySummary}}, 
+\code{\link{getMetaGenomeSummary}}
 }
 \author{
 Hajk-Georg Drost
