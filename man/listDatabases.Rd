@@ -10,34 +10,35 @@ listDatabases(db = "nr", update = FALSE)
 listNCBIDatabases(db = "nr", update = FALSE)
 }
 \arguments{
-\item{db}{a character string specifying the name of the database that shall be searched for.}
+\item{db}{a character string specifying the name of the database that shall 
+be searched for.}
 
-\item{update}{a logical value specifying whether or not the local listDatabases.txt file shall be updated by remote access to NCBI.}
+\item{update}{a logical value specifying whether or not the local 
+listDatabases.txt file shall be updated by remote access to NCBI.}
 }
 \description{
-This function allows you to retrieve a list of database names and versions
-that can be downloaded from correspondning servers.
+This function allows you to retrieve a list of database names 
+and versions that can be downloaded from correspondning servers.
 
 Database retrieval is crucial for most biological studies and analyses.
-There is a vast diversity of databases that can be accessed remotely or that can be downloaded
-to your local machine. This function provides an interface to databases that can be downloaded 
-from NCBI servers and lists all available databases and their database version to be able to
-select an appropriate database for download with \code{\link{download.database}}.
+There is a vast diversity of databases that can be accessed remotely or that 
+can be downloaded to your local machine. This function provides an interface 
+to databases that can be downloaded from NCBI servers and lists all available
+databases and their database version to be able to select an appropriate 
+database for download with \code{\link{download.database}}.
 }
 \examples{
-
 # retrieve all versions of the NCBI 'nr' database that can be downloaded
-# listNCBIDatabases(db = "nr")
+listNCBIDatabases(db = "nr")
 
 # analogous:
 # listNCBIDatabases(db = "cdd")
 # listNCBIDatabases(db = "nt")
 # listNCBIDatabases(db = "gss")
 # listNCBIDatabases(db = "refseq_protein")
-
 }
 \seealso{
-\code{\link{download.database}}
+\code{\link{download.database}}, \code{\link{download.database.all}}
 }
 \author{
 Hajk-Georg Drost
