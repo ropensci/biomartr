@@ -7,8 +7,9 @@
 refseqOrganisms()
 }
 \description{
-This function extracts all organism names (scientific names) for which genomes,
-proteomes, and CDS files are stored on the NCBI refseq server.
+This function extracts all organism names (scientific names)
+for which genomes, proteomes, and CDS files are stored on 
+the NCBI refseq server.
 }
 \author{
 Hajk-Georg Drost
