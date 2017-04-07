@@ -7,7 +7,8 @@
 getENSEMBLGENOMESInfo()
 }
 \description{
-Retrieve species and genome information from http://rest.ensemblgenomes.org/info/species?content-type=application/json/.
+Retrieve species and genome information from 
+http://rest.ensemblgenomes.org/info/species?content-type=application/json/.
 }
 \author{
 Hajk-Georg Drost
