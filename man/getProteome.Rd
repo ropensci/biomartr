@@ -8,20 +8,26 @@ getProteome(db = "refseq", organism, path = file.path("_ncbi_downloads",
   "proteomes"))
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or \code{db = "ensemblgenomes"}.}
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, 
+\code{db = "ensembl"} or \code{db = "ensemblgenomes"}.}
 
-\item{organism}{a character string specifying the scientific name of the organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+\item{organism}{a character string specifying the scientific name of the 
+organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
-\item{path}{a character string specifying the location (a folder) in which the corresponding
-proteome shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.}
+\item{path}{a character string specifying the location (a folder) in which 
+the corresponding proteome shall be stored. Default is 
+\code{path} = \code{file.path("_ncbi_downloads","proteomes")}.}
 }
 \value{
 File path to downloaded proteome.
 }
 \description{
 Main proteome retrieval function for an organism of interest.
-By specifying the scientific name of an organism of interest the corresponding fasta-file storing the proteome of the organism of interest
-can be downloaded and stored locally. Proteome files can be retrieved from several databases.
+By specifying the scientific name of an organism of interest the 
+corresponding fasta-file storing the proteome of the organism of interest
+can be downloaded and stored locally. Proteome files can be retrieved from 
+several databases.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
@@ -54,7 +60,9 @@ Ath_proteome <- read_proteome(file_path, format = "fasta")
 }
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, \code{\link{read_proteome}}
+\code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}},
+\code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
+\code{\link{read_proteome}}
 }
 \author{
 Hajk-Georg Drost
