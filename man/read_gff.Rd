@@ -7,20 +7,23 @@
 read_gff(file)
 }
 \arguments{
-\item{file}{a character string specifying the path to the file storing the CDS.}
+\item{file}{a character string specifying the path to the file 
+storing the CDS.}
 }
 \value{
 Either a \code{Biostrings} or \code{data.table} object.
 }
 \description{
-This function reads an organism specific CDS stored in a defined file format.
+This function reads an organism specific CDS stored 
+in a defined file format.
 }
 \details{
 This function takes a string specifying the path to the GFF file
 of interest (e.g. the path returned by \code{\link{getGFF}}).
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_rna}}
+\code{\link{getGenome}}, \code{\link{read_genome}}, 
+\code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_rna}}
 }
 \author{
 Hajk-Georg Drost
