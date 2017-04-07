@@ -7,19 +7,25 @@
 read_assemblystats(file, type = "raw")
 }
 \arguments{
-\item{file}{a character string specifying the path to the file storing the Genome Assembly Stats file.}
+\item{file}{a character string specifying the path to the file storing 
+the Genome Assembly Stats file.}
 
-\item{type}{either \code{type = "raw"} to import the entire genome assembly stats file or \code{type = "stats"} to import overall statistics including all chromosomes, mitochondria and plastids.}
+\item{type}{either \code{type = "raw"} to import the entire genome assembly 
+stats file or \code{type = "stats"} to import overall statistics including 
+all chromosomes, mitochondria and plastids.}
 }
 \description{
-This function reads an organism specific Genome Assembly Stats file that was retrieved with \code{\link{getAssemblyStats}}.
+This function reads an organism specific Genome Assembly 
+Stats file that was retrieved with \code{\link{getAssemblyStats}}.
 }
 \details{
-This function takes a string specifying the path to the Genome Assembly Stats file
-of interest (e.g. the path returned by \code{\link{getAssemblyStats}}) and imports it.
+This function takes a string specifying the path to the Genome 
+Assembly Stats file of interest (e.g. the path returned by 
+\code{\link{getAssemblyStats}}) and imports it.
 }
 \seealso{
-\code{\link{getAssemblyStats}}, \code{\link{read_genome}}, \code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_gff}}
+\code{\link{getAssemblyStats}}, \code{\link{read_genome}}, 
+\code{\link{read_proteome}}, \code{\link{read_cds}}, \code{\link{read_gff}}
 }
 \author{
 Hajk-Georg Drost
