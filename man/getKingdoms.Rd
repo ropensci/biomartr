@@ -7,23 +7,24 @@
 getKingdoms(db = "refseq")
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, 
+\code{db = "ensembl"}, \code{db = "ensemblgenomes"}. 
 Default is \code{db = "refseq"}.}
 }
 \description{
 A short list of available kingdoms of life
 }
 \examples{
-\dontrun{ 
 # retrieve kingdoms available from refseq
 getKingdoms(db = "refseq")
 
 # retrieve kingdoms available from genbank
 getKingdoms(db = "genbank")
 }
-}
 \seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGroups}}
+\code{\link{meta.retrieval}}, \code{\link{getGenome}}, 
+\code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGroups}}
 }
 \author{
 Hajk-Georg Drost
