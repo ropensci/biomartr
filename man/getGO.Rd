@@ -7,46 +7,43 @@
 getGO(organism, genes, filters, database = "BioMart", email = NULL, ...)
 }
 \arguments{
-\item{organism}{a character string specifying the scientific name of a query organism.}
+\item{organism}{a character string specifying the scientific name 
+of a query organism.}
 
-\item{genes}{a character vector storing the gene ids of a organisms of interest to be queried against BioMart.}
+\item{genes}{a character vector storing the gene ids of a organisms 
+of interest to be queried against Ensembl Biomart.}
 
-\item{filters}{a character vector specifying the filter (query key) for the BioMart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.}
+\item{filters}{a character vector specifying the filter (query key) for 
+the Ensembl Biomart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.}
 
-\item{database}{a cahracter string specifying the database from which GO information shall be retrieved.
-Possible choices are: \code{database} = \code{"BioMart"} and \code{database} = \code{"DAVID"}.}
-
-\item{email}{a character string specifying the email address for your \code{DAVID} account. This
-parameter is only used to query \code{DAVID} web services and by default is \code{email} = \code{NULL}.}
-
-\item{...}{additional parameters that can be passed to the \code{\link{biomart}} function.}
+\item{...}{additional parameters that can be passed to the 
+\code{\link{biomart}} function.}
 }
 \description{
-This function takes a gene id as character vector from a given query organism and returns the 
-corresponding GO terms and additional GO information.
+This function takes a gene id as character vector from a given 
+query organism and returns the corresponding GO terms and additional GO 
+information.
 }
 \details{
-This function takes the scientific name of a query organism, a set of genes for which GO terms
-and additional information shall be retrieved, and a filter argument that specifies the attribute
-for the query genes.
+This function takes the scientific name of a query organism, a set of genes 
+for which GO terms and additional information shall be retrieved, and a 
+filter argument that specifies the attribute for the query genes.
 }
 \examples{
-\dontrun{
-
+\dontrun{ 
 GO_tbl <- getGO(organism = "Arabidopsis thaliana", 
-                genes    = c("AT1G06090", "AT1G06100", 
-                             "AT1G06110", "AT1G06120", 
-                             "AT1G06130", "AT1G06200"),
-                filters  = "tair_locus")
+                genes    = c("AT1G06090", "AT1G06100"),
+                filters  = "ensembl_gene_id")
 
 # look at the result
-head(GO_tbl[ , c("tair_locus","go_accession","go_name_1006")])
-
+head(GO_tbl)
 }
 }
 \seealso{
-\code{\link{biomart}}, \code{\link{organismFilters}}, \code{\link{organismBM}}, \code{\link[biomaRt]{getBM}}, \code{\link{getMarts}},
-\code{\link{getDatasets}}, \code{\link{getFilters}}
+\code{\link{biomart}}, \code{\link{organismFilters}}, 
+\code{\link{organismBM}}, \code{\link[biomaRt]{getBM}}, 
+\code{\link{getMarts}}, \code{\link{getDatasets}}, 
+\code{\link{getFilters}}
 }
 \author{
 Hajk-Georg Drost
