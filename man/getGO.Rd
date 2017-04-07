@@ -4,7 +4,7 @@
 \alias{getGO}
 \title{Gene Ontology Query}
 \usage{
-getGO(organism, genes, filters, database = "BioMart", email = NULL, ...)
+getGO(organism, genes, filters, ...)
 }
 \arguments{
 \item{organism}{a character string specifying the scientific name 
