@@ -1,14 +1,16 @@
 #' @title Helper function to retrieve the assembly_summary.txt file from NCBI
 #' @description Retrieval function of the assembly_summary.txt file from NCBI.
 #' @param db database name. E.g. \code{refseq} or \code{genbank}.
-#' @param kingdom kingdom for which assembly_summary.txt file shall be retrieved. See also \code{\link{getKingdoms}}.
+#' @param kingdom kingdom for which assembly_summary.txt file shall be 
+#' retrieved. See also \code{\link{getKingdoms}}.
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{ 
 #' test <- getSummaryFile("refseq","plant")
 #' test
 #' }
-#' @seealso \code{\link{getKingdomAssemblySummary}}, \code{\link{getMetaGenomeSummary}}
+#' @seealso \code{\link{getKingdomAssemblySummary}}, 
+#' \code{\link{getMetaGenomeSummary}}
 #' @export
  
 getSummaryFile <- function(db,kingdom){
@@ -26,27 +28,33 @@ getSummaryFile <- function(db,kingdom){
         tempdir(),
         paste0("assembly_summary_", kingdom, "_", db, ".txt")
     ))) {
-        tryCatch({suppressMessages(downloader::download(
-            paste0(
-                "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
-                db,
-                "/",
-                kingdom,
-                "/assembly_summary.txt"
-            ),
-            destfile = file.path(
-                tempdir(),
-                paste0("assembly_summary_", kingdom, "_", db, ".txt")
-            ), mode = "wb"
-        ))}, error = function(e)
-            stop(
-                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",paste0(
+        tryCatch({
+            suppressMessages(downloader::download(
+                paste0(
                     "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
                     db,
                     "/",
                     kingdom,
                     "/assembly_summary.txt"
-                ),"' currently available?", call. = FALSE
+                ),
+                destfile = file.path(
+                    tempdir(),
+                    paste0("assembly_summary_", kingdom, "_", db, ".txt")
+                ),
+                mode = "wb"
+            ))
+        }, error = function(e)
+            stop(
+                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+                paste0(
+                    "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
+                    db,
+                    "/",
+                    kingdom,
+                    "/assembly_summary.txt"
+                ),
+                "' currently available?",
+                call. = FALSE
             ))
         Sys.sleep(0.4)
     }
