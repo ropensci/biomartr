@@ -1,5 +1,4 @@
 
-
 clean.str.brackets <- function(string) {
     
     str.new <- stringr::str_replace(string,"\\(","\\\\\\\\(")
