@@ -1,28 +1,36 @@
 #' @title Retrieve the assembly_summary.txt file from NCBI genbank metagenomes
-#' @description Retrieval function of the assembly_summary.txt file from NCBI genbank metagenomes.
+#' @description Retrieval function of the assembly_summary.txt file 
+#' from NCBI genbank metagenomes.
 #' This files stores all available metagenome projects on NCBI Genbank.
 #' @author Hajk-Georg Drost
 #' @examples
-#' \dontrun{
 #' test <- getMetaGenomeSummary()
 #' test
-#' } 
-#' @seealso \code{\link{getKingdomAssemblySummary}}, \code{\link{getSummaryFile}}
+#' @seealso \code{\link{getKingdomAssemblySummary}}, 
+#' \code{\link{getSummaryFile}}
 #' @export
  
 getMetaGenomeSummary <- function() {
     
     if (!file.exists(file.path(tempdir(),
                                "assembly_summary_metagenomes_genbank.txt"))) {
-        tryCatch({suppressMessages(
-            downloader::download(
-                "ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt",
-                destfile = file.path(tempdir(),
-                                     "assembly_summary_metagenomes_genbank.txt")
+        tryCatch({
+            suppressMessages(
+                downloader::download(
+  "ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt",
+                    destfile = file.path(
+                        tempdir(),
+                        "assembly_summary_metagenomes_genbank.txt"
+                    )
+                )
             )
-        )}, error = function(e)
+        }, error = function(e)
             stop(
-                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt' cannot be reached. Are you connected to the internet? Is the homepage 'ftp://ftp.ncbi.nlm.nih.gov/' currently available?", call. = FALSE
+                "The FTP site 
+   'ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt'
+                cannot be reached. Are you connected to the internet? Is the 
+                homepage 'ftp://ftp.ncbi.nlm.nih.gov/' currently available?",
+                call. = FALSE
             ))
         Sys.sleep(0.33)
     }
@@ -31,7 +39,7 @@ getMetaGenomeSummary <- function() {
                          tibble::as_tibble(
                              readr::read_delim(
                                  file.path(tempdir(),
-                                           "assembly_summary_metagenomes_genbank.txt"),
+                                    "assembly_summary_metagenomes_genbank.txt"),
                                  comment = "#",
                                  delim = "\t",
                                  quote = "\"",
@@ -60,7 +68,7 @@ getMetaGenomeSummary <- function() {
                                      "excluded_from_refseq"
                                  ),
                                  col_types = readr::cols(
-                                     assembly_accession = readr::col_character(),
+                                    assembly_accession = readr::col_character(),
                                      bioproject = readr::col_character(),
                                      biosample = readr::col_character(),
                                      wgs_master = readr::col_character(),
@@ -68,7 +76,7 @@ getMetaGenomeSummary <- function() {
                                      taxid = readr::col_integer(),
                                      species_taxid = readr::col_integer(),
                                      organism_name = readr::col_character(),
-                                     infraspecific_name = readr::col_character(),
+                                    infraspecific_name = readr::col_character(),
                                      isolate = readr::col_character(),
                                      version_status = readr::col_character(),
                                      assembly_level = readr::col_character(),
@@ -80,7 +88,7 @@ getMetaGenomeSummary <- function() {
                                      gbrs_paired_asm = readr::col_character(),
                                      paired_asm_comp = readr::col_character(),
                                      ftp_path = readr::col_character(),
-                                     excluded_from_refseq = readr::col_character()
+                                excluded_from_refseq = readr::col_character()
                                  )
                              )
                          ))
