@@ -7,40 +7,37 @@
 read_proteome(file, format = "fasta", obj.type = "Biostrings", ...)
 }
 \arguments{
-\item{file}{a character string specifying the path to the file storing the proteome.}
+\item{file}{a character string specifying the path to the file storing 
+the proteome.}
 
-\item{format}{a character string specifying the file format used to store the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
+\item{format}{a character string specifying the file format used to store the 
+genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
 
-\item{obj.type}{a character string specifying the object stype in which the genomic sequence shall be represented. 
-Either as \code{obj.type = "Biostrings"} (default) or as \code{obj.type = "data.table"}.}
+\item{obj.type}{a character string specifying the object stype in which the 
+genomic sequence shall be represented. 
+Either as \code{obj.type = "Biostrings"} (default) or as 
+\code{obj.type = "data.table"}.}
 
-\item{...}{additional arguments that are used by the \code{seqinr::read.fasta()} function.}
+\item{...}{additional arguments that are used by
+\code{\link[seqinr]{read.fasta()}}.}
 }
 \value{
 Either a \code{Biostrings} or \code{data.table} object.
 }
 \description{
-This function reads an organism specific proteome stored in a defined file format.
+This function reads an organism specific proteome stored in a 
+defined file format.
 }
 \details{
-This function takes a string specifying the path to the proteome file
-of interest as first argument.
+This function takes a string specifying the path to the 
+proteome file of interest as first argument.
 
-It is possible to read in different proteome file standards such as \emph{fasta} or \emph{genebank}.
-}
-\examples{
-\dontrun{
-# import a proteome stored as fasta
-Ath.proteome <- read_proteome(system.file('seqs/ortho_thal_aa.fasta', package = 'orthologr'),
-                               format = "fasta",
-                               obj.type = "Biostrings")
-         
-Ath.proteome
-}
-
+It is possible to read in different proteome file standards such as 
+\emph{fasta} or \emph{genebank}.
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{read_genome}}, \code{\link{read_gff}}, \code{\link{read_cds}}, \code{\link{read_rna}}
+\code{\link{getProteome}}, \code{\link{read_genome}}, 
+\code{\link{read_gff}}, \code{\link{read_cds}}, \code{\link{read_rna}}
 }
 \author{
 Hajk-Georg Drost
