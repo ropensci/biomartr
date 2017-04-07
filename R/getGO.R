@@ -34,8 +34,6 @@ getGO <-
     function(organism,
              genes,
              filters,
-             database = "BioMart",
-             email = NULL,
              ...) {
         
     name  <- NULL
