@@ -10,25 +10,29 @@ getMetaGenomeAnnotations(name, path = file.path("_ncbi_downloads",
 \arguments{
 \item{name}{metagenome name retrieved by \code{\link{listMetaGenomes}}.}
 
-\item{path}{a character string specifying the location (a folder) in which the corresponding
-metagenome annotations shall be stored. Default is \code{path} = \code{file.path("_ncbi_downloads","metagenome","annotations")}.}
+\item{path}{a character string specifying the location (a folder) 
+in which the corresponding metagenome annotations shall be stored. 
+Default is
+\code{path} = \code{file.path("_ncbi_downloads","metagenome","annotations")}.}
 }
 \description{
-Retrieve available annotation *.gff files for metagenomes from NCBI Genbank. NCBI Genbank allows users
-to download entire metagenomes and their annotations of several metagenome projects. This function downloads
- available metagenomes that can then be downloaded via \code{\link{getMetaGenomes}}.
+Retrieve available annotation *.gff files for metagenomes 
+from NCBI Genbank. NCBI Genbank allows users
+to download entire metagenomes and their annotations of several metagenome 
+projects. This function downloads available metagenomes that can then be 
+downloaded via \code{\link{getMetaGenomes}}.
 }
 \examples{
-\dontrun{
 # Frist, retrieve a list of available metagenomes
 listMetaGenomes()
-
+\dontrun{
 # Now, retrieve the 'human gut metagenome'
 getMetaGenomeAnnotations(name = "human gut metagenome")
 }
 }
 \seealso{
-\code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}}, \code{\link{getGFF}}
+\code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}}, 
+\code{\link{getGFF}}
 }
 \author{
 Hajk-Georg Drost
