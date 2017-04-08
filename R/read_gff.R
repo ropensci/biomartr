@@ -38,8 +38,8 @@ read_gff <- function(file) {
                   "phase",
                   "attribute")
     
-    names(gff.input)[1:ncol(gff.input)] <-
-        gffNames[1:ncol(gff.input)]
+    names(gff.input)[seq_len(ncol(gff.input))] <-
+        gffNames[seq_len(ncol(gff.input))]
     
     return(gff.input)
 }
