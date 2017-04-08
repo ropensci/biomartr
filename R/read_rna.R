@@ -13,7 +13,7 @@
 #' sequences that cannot be divided by 3 shall be be excluded from the the 
 #' dataset. Default is \code{delete_corrupt = FALSE}.
 #' @param ... additional arguments that are used by 
-#' \code{\link[seqinr]{read.fasta()}}.
+#' \code{\link[seqinr]{read.fasta}}.
 #' @author Hajk-Georg Drost
 #' @details This function takes a string specifying the path to the RNA file
 #' of interest as first argument. It is possible to read in different proteome 
@@ -76,7 +76,7 @@ read_rna <-
                                                  format = format, ...)
                 
                 RNA_names <-
-                    as.vector(unlist(sapply(RNA_file@ranges@NAMES, function(x) {
+                    as.vector(unlist(lapply(RNA_file@ranges@NAMES, function(x) {
                         return(strsplit(x, " ")[[1]][1])
                     })))
                 
