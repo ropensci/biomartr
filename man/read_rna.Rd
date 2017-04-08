@@ -24,7 +24,7 @@ sequences that cannot be divided by 3 shall be be excluded from the the
 dataset. Default is \code{delete_corrupt = FALSE}.}
 
 \item{...}{additional arguments that are used by 
-\code{\link[seqinr]{read.fasta()}}.}
+\code{\link[seqinr]{read.fasta}}.}
 }
 \value{
 A data.table storing the gene id in the first column and the 
