@@ -59,7 +59,7 @@ organismAttributes <-
              topic = NULL) {
         
     
-    name <- description <- mart <- dataset <- NULL
+    mart <- dataset <- NULL
     
     # retrieve all available marts for the organism of interest
     orgBM <- organismBM(organism = organism, update = update)
@@ -83,7 +83,7 @@ organismAttributes <-
             
             
             mart_tbl <-
-                do.call(rbind, lapply(1:nrow(mart),
+                do.call(rbind, lapply(seq_len(nrow(mart)),
                                       function(dataset) {
                                           attr_tbl <- 
                                 getAttributes(dataset = mart$dataset[dataset],
@@ -134,8 +134,8 @@ organismAttributes <-
     
     if (!is.null(topic)) {
         findTopic <-
-            which(sapply(attributeTable$name, function(x)
-                stringr::str_detect(x, topic)))
+            which(unlist(lapply(attributeTable$name, function(x)
+                stringr::str_detect(x, topic))))
         
         if (dim(attributeTable[findTopic , ])[1] == 0)
             stop("Unfortunately the topic '", topic , "' could not be found.")
