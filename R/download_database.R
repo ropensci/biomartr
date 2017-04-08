@@ -30,7 +30,7 @@ download.database <- function(db, path = "database") {
     connected.to.internet()
     
     message("Starting download process of file: ", db, " ...")
-    db.name <- names(table(unlist(sapply(db, function(x)
+    db.name <- names(table(unlist(lapply(db, function(x)
         unlist(stringr::str_split(x, "[.]"))[1]))))
     
     if (!is.element(db.name, listNCBIDatabases(db = "all")))
