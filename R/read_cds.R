@@ -13,7 +13,7 @@
 #' sequences that cannot be divided by 3 shall be
 #' be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.
 #' @param ... additional arguments that are used by
-#' \code{\link[seqinr]{read.fasta()}}.
+#' \code{\link[seqinr]{read.fasta}}.
 #' @author Hajk-Georg Drost
 #' @details The \code{read.cds} function takes a string specifying the path 
 #' to the cds file of interest as first argument.
@@ -81,7 +81,7 @@ read_cds <-
                                                format = format, ...)
                 
                 cds_names <-
-                    as.vector(unlist(sapply(cds_file@ranges@NAMES, function(x) {
+                    as.vector(unlist(lapply(cds_file@ranges@NAMES, function(x) {
                         return(strsplit(x, " ")[[1]][1])
                     })))
                 
