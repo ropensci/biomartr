@@ -103,7 +103,7 @@ getAttributes <- function(mart, dataset){
                          )), 1, function(x)
                              unlist(strsplit(x, "\t")))))
     
-    colnames(rawDF) <- paste0("V", 1:ncol(rawDF))
+    colnames(rawDF) <- paste0("V", seq_len(ncol(rawDF)))
     
     attrBioMart <-
         as.data.frame(rawDF[, c("V1", "V2")],
