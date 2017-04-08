@@ -76,12 +76,12 @@ listDatabases <- function(db = "nr", update = FALSE) {
     if (db == "all") {
         listDBs2 <- listDBs[[1]]
         all_databases <-
-            listDBs2[-which(sapply(listDBs2, function(x)
-                stringr::str_detect(x, ".md5")))]
+            listDBs2[-which(unlist(lapply(listDBs2, function(x)
+                stringr::str_detect(x, ".md5"))))]
         # available DBs
         dbs <-
             as.vector(names(table(unlist(
-                sapply(all_databases, function(x)
+                lapply(all_databases, function(x)
                     unlist(stringr::str_split(x, "[.]"))[1])
             ))))
         return(dbs[-which(dbs == "README")])
@@ -90,8 +90,8 @@ listDatabases <- function(db = "nr", update = FALSE) {
         listDBs2 <- listDBs[[1]]
         # select all database versions of 'db'
         DBName <-
-            listDBs2[sapply(listDBs2, function(x)
-                stringr::str_detect(x, paste0("^", db)))]
+            listDBs2[unlist(lapply(listDBs2, function(x)
+                stringr::str_detect(x, paste0("^", db))))]
         
         if (length(DBName) == 0)
             stop("No entries for db = '", db, "' could not be found.", 
@@ -102,8 +102,8 @@ listDatabases <- function(db = "nr", update = FALSE) {
             Sys.sleep(0.33)
         
         # delete md5 entries
-        return(as.vector(DBName[-which(sapply(DBName, function(x)
-            stringr::str_detect(x, ".md5")))]))
+        return(as.vector(DBName[-which(unlist(lapply(DBName, function(x)
+            stringr::str_detect(x, ".md5"))))]))
     }
 }
 
