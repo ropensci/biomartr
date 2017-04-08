@@ -10,7 +10,7 @@
 #' \code{obj.type = "Biostrings"} (default) or 
 #' as \code{obj.type = "data.table"}.
 #' @param ... additional arguments that are used by the 
-#' \code{\link[seqinr]{read.fasta()}} function.
+#' \code{\link[seqinr]{read.fasta}} function.
 #' @author Hajk-Georg Drost
 #' @details This function takes a string specifying the path to the genome file
 #' of interest as first argument (e.g. the path returned by 
@@ -69,7 +69,7 @@ read_genome <-
                     Biostrings::readDNAStringSet(filepath = file, 
                                                  format = format, ...)
                 genome_names <-
-                    as.vector(unlist(sapply(genome@ranges@NAMES, function(x) {
+                    as.vector(unlist(lapply(genome@ranges@NAMES, function(x) {
                         return(strsplit(x, " ")[[1]][1])
                     })))
                 genome.dt <-
