@@ -1,5 +1,7 @@
-#' @title Helper function for retrieving biological sequence files from ENSEMBLGENOMES
-#' @description This function downloads gff files of query organisms from ENSEMBLGENOMES
+#' @title Helper function for retrieving biological sequence files from 
+#' ENSEMBLGENOMES
+#' @description This function downloads gff files of query organisms from 
+#' ENSEMBLGENOMES
 #' @param organism scientific name of the organism of interest.
 #' @param type biological sequence type.
 #' @param id.type id type.
@@ -95,7 +97,7 @@ getENSEMBLGENOMES.Seq <-
                 "Unfortunately organism '",
                 organism,
                 "' is not available at ENSEMBLGENOMES. Please check whether or 
-                not the organism name is typed correctly. Thus, download of this
+            not the organism name is typed correctly. Thus, download of this
                 species has been omitted."
             )
             return(FALSE)
@@ -139,7 +141,7 @@ getENSEMBLGENOMES.Seq <-
                         "The API 'http://rest.ensemblgenomes.org' does not seem 
                         to work properly. Are you connected to the internet? 
                         Is the homepage 
- 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' 
+'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' 
                         currently available?",
                         call. = FALSE
                     )
