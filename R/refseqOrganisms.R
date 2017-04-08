@@ -19,7 +19,7 @@ refseqOrganisms <- function() {
     
     
     all_refseqOrgs <-
-        as.vector(unlist(sapply(refseq_kingdoms, function(kingdom)
+        as.vector(unlist(lapply(refseq_kingdoms, function(kingdom)
             strsplit(
                 RCurl::getURL(
                     paste0(
