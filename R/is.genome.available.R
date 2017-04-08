@@ -233,7 +233,7 @@ is.genome.available <-
             }
             
             if (!any(unlist(
-                sapply(ensembl.available.organisms$name, function(x)
+                lapply(ensembl.available.organisms$name, function(x)
                     stringr::str_detect(x, stringr::str_to_lower(new.organism)))
             )))
                 stop(
@@ -332,7 +332,7 @@ is.genome.available <-
             }
             
             if (!any(unlist(
-                sapply(ensembl.available.organisms$name, function(x)
+                lapply(ensembl.available.organisms$name, function(x)
                     stringr::str_detect(x, stringr::str_to_lower(new.organism)))
             )))
                 stop(
