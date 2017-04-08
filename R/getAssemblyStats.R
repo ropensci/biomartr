@@ -174,7 +174,8 @@ getAssemblyStats <-
                                 download_url,
                                 destfile = file.path(
                                     path,
-                                    paste0(local.org, "_assembly_stats_", db, ".txt")
+                                    paste0(local.org, "_assembly_stats_", db, 
+                                           ".txt")
                                 ),
                                 mode = "wb"
                             )
@@ -209,7 +210,7 @@ getAssemblyStats <-
                     seq_rel_date = FoundOrganism$seq_rel_date,
                     submitter = FoundOrganism$submitter
                 )
-                
+
                 message(
                     paste0(
                         "The assembly statistics file of '",
@@ -221,7 +222,7 @@ getAssemblyStats <-
                         "'."
                     )
                 )
-                
+
                 if (type == "download")
                     return(file.path(
                         path,
