@@ -78,7 +78,7 @@ organismFilters <- function(organism,
             mart <- as.data.frame(mart)
             
             mart_tbl <-
-                do.call(rbind, lapply(1:nrow(mart),
+                do.call(rbind, lapply(seq_len(nrow(mart)),
                                       function(dataset) {
                                           filters_tbl <- 
                                     getFilters(dataset = mart$dataset[dataset],
@@ -129,8 +129,8 @@ organismFilters <- function(organism,
     
     if (!is.null(topic)) {
         findTopic <-
-            which(sapply(filterTable$name, function(x)
-                stringr::str_detect(x, topic)))
+            which(unlist(lapply(filterTable$name, function(x)
+                stringr::str_detect(x, topic))))
         
         if (dim(filterTable[findTopic , ])[1] == 0)
             stop("Unfortunately the topic '", topic , "' could not be found.")
