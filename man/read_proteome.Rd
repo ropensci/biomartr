@@ -19,7 +19,7 @@ Either as \code{obj.type = "Biostrings"} (default) or as
 \code{obj.type = "data.table"}.}
 
 \item{...}{additional arguments that are used by
-\code{\link[seqinr]{read.fasta()}}.}
+\code{\link[seqinr]{read.fasta}}.}
 }
 \value{
 Either a \code{Biostrings} or \code{data.table} object.
