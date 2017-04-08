@@ -19,7 +19,7 @@ the genomic sequence shall be represented. Either as
 as \code{obj.type = "data.table"}.}
 
 \item{...}{additional arguments that are used by the 
-\code{\link[seqinr]{read.fasta()}} function.}
+\code{\link[seqinr]{read.fasta}} function.}
 }
 \value{
 Either a \code{Biostrings} or \code{data.table} object.
