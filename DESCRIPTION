@@ -19,7 +19,6 @@ Depends:
 Imports:
     biomaRt,
     Biostrings,
-    stringi,
     curl,
     tibble,
     jsonlite,
