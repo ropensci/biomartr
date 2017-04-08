@@ -10,7 +10,7 @@
 #' Either as \code{obj.type = "Biostrings"} (default) or as 
 #' \code{obj.type = "data.table"}.
 #' @param ... additional arguments that are used by  
-#' \code{\link[seqinr]{read.fasta()}}.
+#' \code{\link[seqinr]{read.fasta}}.
 #' @author Hajk-Georg Drost
 #' @details This function takes a string specifying the path to the 
 #' proteome file of interest as first argument.
@@ -72,7 +72,7 @@ read_proteome <-
                     Biostrings::readAAStringSet(filepath = file, 
                                                 format = format, ...)
                 proteome_names <-
-                    as.vector(unlist(sapply(proteome@ranges@NAMES, function(x) {
+                    as.vector(unlist(lapply(proteome@ranges@NAMES, function(x) {
                         return(strsplit(x, " ")[[1]][1])
                     })))
                 proteome.dt <-
