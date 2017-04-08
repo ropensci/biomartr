@@ -104,7 +104,7 @@ getMetaGenomes <-
         
         file.paths <- file.path(path, list.files(path = path))
         # return only file paths without "*.txt"
-        return(file.paths[!unlist(sapply(file.paths, function(x)
+        return(file.paths[!unlist(lapply(file.paths, function(x)
             stringr::str_detect(x, "[.]txt")))])
     }
 
