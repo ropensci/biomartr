@@ -49,7 +49,7 @@ read_assemblystats <- function(file, type = "raw") {
     )
     
     if (type == "stats") {
-        # select all features (including chromosomes, mitochondria, and plastids)
+    # select all features (including chromosomes, mitochondria, and plastids)
         assemblystats_file.all.features <-
             dplyr::filter(assemblystats_file,
                           unit_name == "all",
