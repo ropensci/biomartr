@@ -23,7 +23,8 @@ getDatasets <- function(mart) {
         datasetPage <-
             httr::handle(
                 paste0(
-"http://www.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",
+paste0("http://www.ensembl.org/biomart/martservice?",
+       "type=datasets&requestid=biomart&mart=", collapse = ""),
                     mart
                 )
             )
@@ -33,7 +34,8 @@ getDatasets <- function(mart) {
         datasetPage <-
             httr::handle(
                 paste0(
-"http://plants.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",
+paste0("http://plants.ensembl.org/biomart/martservice?",
+"type=datasets&requestid=biomart&mart=", collapse = ""),
                     mart
                 )
             )
@@ -43,7 +45,8 @@ getDatasets <- function(mart) {
         datasetPage <-
             httr::handle(
                 paste0(
-"http://fungi.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",
+                    paste0("http://fungi.ensembl.org/biomart/martservice?",
+"type=datasets&requestid=biomart&mart=", collapse = ""),
                     mart
                 )
             )
@@ -53,7 +56,8 @@ getDatasets <- function(mart) {
         datasetPage <-
             httr::handle(
                 paste0(
-"http://protists.ensembl.org/biomart/martservice?type=datasets&requestid=biomart&mart=",
+paste0("http://protists.ensembl.org/biomart/martservice?",
+"type=datasets&requestid=biomart&mart=", collapse = ""),
                     mart
                 )
             )
@@ -63,7 +67,8 @@ getDatasets <- function(mart) {
         datasetPage <-
             httr::handle(
                 paste0(
-"http://metazoa.ensembl.org:80/biomart/martservice?type=datasets&requestid=biomart&mart=",
+paste0("http://metazoa.ensembl.org:80/biomart/martservice?",
+"type=datasets&requestid=biomart&mart=", collapse = ""),
                     mart
                 )
             )
@@ -85,7 +90,7 @@ getDatasets <- function(mart) {
             )), 1, function(x)
                 unlist(strsplit(x, "\t"))))
         
-        colnames(rawDF) <- paste0("V", 1:ncol(rawDF))
+        colnames(rawDF) <- paste0("V", seq_len(ncol(rawDF)))
         
         if (dim(rawDF)[1] > 2)
             # store available datasets
