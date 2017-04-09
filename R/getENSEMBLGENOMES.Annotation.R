@@ -97,7 +97,7 @@ getENSEMBLGENOMES.Annotation <-
                 "Unfortunately organism '",
                 organism,
                 "' is not available at ENSEMBL. Please check whether or not the 
-                organism name is typed correctly. Thus, download of this species
+            organism name is typed correctly. Thus, download of this species
                 has been omitted."
             )
             return(FALSE)
@@ -132,7 +132,7 @@ getENSEMBLGENOMES.Annotation <-
         tryCatch({
             eg_version <-
                 jsonlite::fromJSON(
-  "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+ "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
                 )
         }, error = function(e)
             stop(
@@ -291,7 +291,7 @@ getENSEMBLGENOMES.Annotation <-
             if (stringr::str_detect(get.files, "abinitio")) {
                 ensembl.qry <-
                     paste0(
-                      "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
+                     "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/gff3/",
                         paste0(unlist(
                             stringr::str_split(bacteria.info$core_db[1], "_")
                         )[1:3], collapse = "_"),
@@ -367,7 +367,7 @@ getENSEMBLGENOMES.Annotation <-
                                         paste0(
                                             new.organism,
                                             ".",
-                                            json.qry.info$default_coord_system_version,
+                                   json.qry.info$default_coord_system_version,
                                             ".",
                                             eg_version,
                                             "_ensemblgenomes",
