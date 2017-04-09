@@ -17,31 +17,36 @@ getSubMarts <- function(submart = "ensembl") {
     if (submart == "ensembl")
         # connect to BioMart API
         biomartPage <- httr::handle(
-"http://www.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart"
+paste0("http://www.ensembl.org:80/biomart/martservice?",
+       "type=registry&requestid=biomart", collapse = "")
         )
     
     if (submart == "plants")
         # connect to BioMart API
         biomartPage <- httr::handle(
-"http://plants.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart"
+paste0("http://plants.ensembl.org:80/biomart/martservice?",
+       "type=registry&requestid=biomart", collapse = "")
         )
     
     if (submart == "fungi")
         # connect to BioMart API
         biomartPage <- httr::handle(
-"http://fungi.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart"
+paste0("http://fungi.ensembl.org:80/biomart/martservice?",
+       "type=registry&requestid=biomart", collapse = "")
         )
     
     if (submart == "protists")
         # connect to BioMart API
         biomartPage <- httr::handle(
-"http://protists.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart"
+paste0("http://protists.ensembl.org:80/biomart/martservice?",
+       "type=registry&requestid=biomart", collapse = "")
         )
     
     if (submart == "metazoa")
         # connect to BioMart API
         biomartPage <- httr::handle(
-"http://metazoa.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart"
+paste0("http://metazoa.ensembl.org:80/biomart/martservice?",
+       "type=registry&requestid=biomart", collapse = "")
         )
 
     xmlContentMarts <- httr::GET(handle = biomartPage)
