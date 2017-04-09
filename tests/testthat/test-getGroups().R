@@ -102,7 +102,8 @@ test_that("The getGroups() interface works properly... test: protozoa",{
     )
 })
 
-test_that("The getGroups() interface works properly... test: vertebrate_mammalian",{
+test_that("The getGroups() interface works properly... test: 
+          vertebrate_mammalian",{
     testthat::equals(
         getGroups("vertebrate_mammalian", db = "refseq"),
         c(
@@ -111,7 +112,8 @@ test_that("The getGroups() interface works properly... test: vertebrate_mammalia
     )
 })
 
-test_that("The getGroups() interface works properly... test: vertebrate_other",{
+test_that("The getGroups() interface works properly... 
+          test: vertebrate_other",{
     testthat::equals(
         getGroups("vertebrate_other", db = "refseq"),
         c(
