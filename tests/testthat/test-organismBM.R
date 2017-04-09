@@ -1,6 +1,5 @@
 context("Test: organismBM()")
 
-
 equal_lists <- function(df1, df2) {
         isTRUE(all.equal(df1, df2))
 }
