@@ -25,6 +25,9 @@ biomartr 0.5.0
 
 - `download.database()` and `download.database.all()` now internally perform md5 check sum checks to make sure that the file download was successful
 
+- `download.database()` and `download.database.all()` now return the file paths of the downloaded file so that it is easier to use these
+functions when constructing pipelines, e.g. `download.database() %>% ...` or `download.database.all() %>% ...`.
+
 
 biomartr 0.4.0
 ===========
