@@ -9,7 +9,13 @@ getAssemblyStats(db = "refseq", organism, type = "download",
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
-shall be retrieved: \code{db = "refseq"} or \code{db = "genbank"}.}
+shall be retrieved:
+\itemize{
+\item \code{db = "refseq"}
+\item \code{db = "genbank"}
+\item \code{db = "ensembl"}
+\item \code{db = "ensemblgenomes"}
+}}
 
 \item{organism}{a character string specifying the scientific name of the 
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
