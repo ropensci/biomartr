@@ -81,8 +81,14 @@ test_that("The getAssemblyStats() throws error when undefined 'db' is selected
 })
 
 
-
-
+test_that("The getAssemblyStats() throws error when undefined 'organism' is selected
+          ..",{ 
+              
+              expect_message(getAssemblyStats(
+                  db = "refseq",
+                  organism = "somethingelse",
+                  type = "download"))
+})
 
 
 
