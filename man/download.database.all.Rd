@@ -15,6 +15,9 @@ the corresponding
 database shall be stored. In case this folder does not exist yet,
 it will be created.}
 }
+\value{
+A character vector storing the file paths of the downloaded databases.
+}
 \description{
 The \code{\link{download.database}} functions allows users to
 retrieve individual packages of a NCBI database. This function is designed to
