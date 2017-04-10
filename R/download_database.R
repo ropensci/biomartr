@@ -23,25 +23,25 @@
 #'   download.database(db = "nr.27.tar.gz")
 #' }
 #' @seealso \code{\link{download.database.all}}, \code{\link{listDatabases}}
+#' @return File path to the downloaded database file.
 #' @export
 
 download.database <- function(db, path = "database") {
     # test if internet connection is available
     connected.to.internet()
-    
-    message("Starting download process of file: ", db, " ...")
-    db.name <- names(table(unlist(lapply(db, function(x)
-        unlist(stringr::str_split(x, "[.]"))[1]))))
-    
-    if (!is.element(db.name, listNCBIDatabases(db = "all")))
+
+    if (!is.element(db, listNCBIDatabases(db = db)))
         stop(
-            "The specified database '",
+            paste0("The specified database '",
             db,
-            "' could not be found on NCBI.
-            Please use the listNCBIDatabases() command to retrieve available 
-            databases or check if the name was written correctly.",
+            "' could not be found on NCBI.",
+            "Please use the listNCBIDatabases() command to retrieve available ", 
+            "databases or check if the name was written correctly.", 
+            collapse = ""),
             call. = FALSE
         )
+    
+    message("Starting download process of file: ", db, " ...")
     
     if (!file.exists(path))
         dir.create(path)
@@ -63,10 +63,11 @@ download.database <- function(db, path = "database") {
         )
     }, error = function(e)
         stop(
-            "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/",
+            paste0("The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/",
             db,
-            "' cannot be reached. Are you connected to the internet or did 
-            something go wrong with the connection to the NCBI server?",
+            "' cannot be reached. Are you connected to the internet or did ",
+            "something go wrong with the connection to the NCBI server?", 
+            collapse = ""),
             call. = FALSE
         ))
     
@@ -78,14 +79,15 @@ download.database <- function(db, path = "database") {
     message("Checking md5 hash of file: ", db , " ...")
     if (!(tools::md5sum(file.path(path, db)) == md5_sum))
         stop(
-            "Please download the file '",
+            paste0("Please download the file '",
             db,
-            "' again. The md5 hash between the downloaded file and the file 
-            stored at NCBI do not match."
+            "' again. The md5 hash between the downloaded file and the file ", 
+            "stored at NCBI do not match.", collapse = "")
         )
     unlink(file.path(path, paste0(db, ".md5")))
     message("The md5 hash of file '", db, "' matches!")
     message("File '",
             file.path(path, db),
             " has successfully been retrieved.")
+    return(file.path(path, db))
 }
