@@ -18,12 +18,15 @@
 #'   download.database.all(name = "nr", path = "nr")
 #' }
 #' @seealso \code{\link{download.database}}, \code{\link{listNCBIDatabases}}
+#' @return A character vector storing the file paths of the downloaded databases.
 #' @export
+
 download.database.all <- function(db, path = "database") {
     message("Starting download of the files: ",
             paste0(listDatabases(db = db), collapse = ", "),
             " ...")
-    lapply(listNCBIDatabases(db = db), download.database, path = path)
+    dld_paths <- unlist(lapply(listNCBIDatabases(db = db), download.database, path = path))
     message("Download process is finished and files are stored in '",
             path, "'.")
+    return(dld_paths)
 }
