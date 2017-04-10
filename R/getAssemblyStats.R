@@ -47,7 +47,7 @@
 #' # download the genome assembly stats file of Saccharomyces cerevisiae
 #' # from NCBI RefSeq 
 #' # and import overall statistics of the genome assembly
-#' Hsapiens.stats.import <- getAssemblyStats( db = "refseq", 
+#' Scerevisiae.stats.import <- getAssemblyStats( db = "refseq", 
 #'                  organism = "Saccharomyces cerevisiae",
 #'                  type = "import", 
 #'                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
@@ -63,24 +63,26 @@ getAssemblyStats <-
              organism,
              type = "download",
              path = file.path("_ncbi_downloads", "genomeassembly_stats")) {
+        
+        
         if (!is.element(db, c("refseq", "genbank")))
-            stop("Please select one of the available data bases:
-                 'refseq' and 'genbank'.",
+            stop(paste0("Please select one of the available data bases: ",
+                 "'refseq' and 'genbank'."),
                  call. = FALSE)
         
+        if (!is.element(type, c("download", "import")))
+            stop(
+                paste0("Please choose either type = 'download' ",
+                       "(if you would like to ",
+                       "download the genome assembly stats file) or ",
+                       "type = 'import' (if you would like to download and import the ",
+                       "genome assembly stats file).", collapse = ""),
+                call. = FALSE
+            )
         
         # get Kingdom Assembly Summary file
         AssemblyFilesAllKingdoms <-
             getKingdomAssemblySummary(db = db)
-        
-        if (!is.element(type, c("download", "import")))
-            stop(
-                "Please choose either type = 'download' (if you would like to
-                download the genome assembly stats file) or
-                type = 'import' (if you would like to download and import the
-                genome assembly stats file).",
-                call. = FALSE
-                )
         
         species <- organism
         # test wheter or not genome is available
@@ -109,8 +111,8 @@ getAssemblyStats <-
         if (nrow(FoundOrganism) == 0) {
             message(
                 paste0(
-                    "----------> No genome assembly stats file for a reference
-                    genome or representative genome was found for '",
+                "----------> No genome assembly stats file for a reference ",
+                    "genome or representative genome was found for '",
                     organism,
                     "'. Thus, download for this species has been omitted."
                 )
