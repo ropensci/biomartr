@@ -65,7 +65,7 @@ Scerevisiae.stats <- read_assemblystats(file_path, type = "raw")
 # download the genome assembly stats file of Saccharomyces cerevisiae
 # from NCBI RefSeq 
 # and import overall statistics of the genome assembly
-Hsapiens.stats.import <- getAssemblyStats( db = "refseq", 
+Scerevisiae.stats.import <- getAssemblyStats( db = "refseq", 
                  organism = "Saccharomyces cerevisiae",
                  type = "import", 
                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
