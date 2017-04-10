@@ -214,10 +214,12 @@ meta.retrieval <- function(kingdom,
             )
         )
     
+    paths <- vector("character", length(FinalOrganisms))
+    
     if (type == "genome") {
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getGenome(db       = db,
+                paths[i] <- getGenome(db       = db,
                           organism = FinalOrganisms[i],
                           path     = kingdom)
             }
@@ -225,7 +227,7 @@ meta.retrieval <- function(kingdom,
         
         if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getGenome(db       = db,
+                paths[i] <- getGenome(db       = db,
                           organism = FinalOrganisms[i],
                           path     = path)
             }
@@ -235,7 +237,7 @@ meta.retrieval <- function(kingdom,
     if (type == "proteome") {
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getProteome(db       = db,
+                paths[i] <- getProteome(db       = db,
                             organism = FinalOrganisms[i],
                             path     = kingdom)
             }
@@ -243,7 +245,7 @@ meta.retrieval <- function(kingdom,
         
         if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getProteome(db       = db,
+                paths[i] <- getProteome(db       = db,
                             organism = FinalOrganisms[i],
                             path     = path)
             }
@@ -253,7 +255,7 @@ meta.retrieval <- function(kingdom,
     if (type == "CDS") {
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getCDS(db       = db,
+                paths[i] <- getCDS(db       = db,
                        organism = FinalOrganisms[i],
                        path     = kingdom)
             }
@@ -261,7 +263,7 @@ meta.retrieval <- function(kingdom,
         
         if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getCDS(db       = db,
+                paths[i] <- getCDS(db       = db,
                        organism = FinalOrganisms[i],
                        path     = path)
             }
@@ -271,7 +273,7 @@ meta.retrieval <- function(kingdom,
     if (type == "gff") {
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getGFF(db       = db,
+                paths[i] <- getGFF(db       = db,
                        organism = FinalOrganisms[i],
                        path     = kingdom)
             }
@@ -279,7 +281,7 @@ meta.retrieval <- function(kingdom,
         
         if (!is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getGFF(db       = db,
+                paths[i] <- getGFF(db       = db,
                        organism = FinalOrganisms[i],
                        path     = path)
             }
@@ -289,7 +291,7 @@ meta.retrieval <- function(kingdom,
     if (type == "rna") {
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
-                getRNA(db       = db,
+                paths[i] <- getRNA(db       = db,
                        organism = FinalOrganisms[i],
                        path     = kingdom)
             }
@@ -319,7 +321,7 @@ meta.retrieval <- function(kingdom,
                         )
                     )
                 } else {
-                    getAssemblyStats(
+                    paths[i] <- getAssemblyStats(
                         db       = db,
                         organism = FinalOrganisms[i],
                         path     = kingdom
@@ -340,7 +342,7 @@ meta.retrieval <- function(kingdom,
                         )
                     )
                 } else {
-                    getAssemblyStats(
+                    paths[i] <- getAssemblyStats(
                         db       = db,
                         organism = FinalOrganisms[i],
                         path     = path
@@ -352,10 +354,12 @@ meta.retrieval <- function(kingdom,
     
     if (combine) {
         stats.files <- dplyr::bind_rows(stats.files)
+        message("Finished meta retieval process.")
         return(stats.files)
     }
     
     message("Finished meta retieval process.")
+    return(paths[paths != "FALSE"])
 }
 
 
