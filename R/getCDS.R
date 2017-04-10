@@ -6,11 +6,15 @@
 #' of interest can be downloaded and stored locally. CDS files can be retrieved 
 #' from several databases.
 #' @param db a character string specifying the database from which the genome 
-#' shall be retrieved: 
-#' \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"} or
-#' \code{db = "ensemblgenomes"}.
+#' shall be retrieved:
+#' \itemize{
+#' \item \code{db = "refseq"}
+#' \item \code{db = "genbank"}
+#' \item \code{db = "ensembl"}
+#' \item \code{db = "ensemblgenomes"}
+#' } 
 #' @param organism a character string specifying the scientific name of the 
-#' organism of interest,\code{organism = "Homo sapiens"}.
+#' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) 
 #' in which the corresponding CDS file shall be stored. 
 #' Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
@@ -75,8 +79,8 @@ getCDS <-
             if (nrow(FoundOrganism) == 0) {
                 message(
                     paste0(
-                        "----------> No reference genome or representative 
-                        genome was found for '",
+                        "----------> No reference genome or representative ",
+                        "genome was found for '",
                         organism,
                         "'. Thus, download for this species has been omitted."
                     )
