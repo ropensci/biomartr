@@ -28,6 +28,10 @@ biomartr 0.5.0
 - `download.database()` and `download.database.all()` now return the file paths of the downloaded file so that it is easier to use these
 functions when constructing pipelines, e.g. `download.database() %>% ...` or `download.database.all() %>% ...`.
 
+- `meta.retrieval()` and `meta.retrieval.all()` now return the file paths of the downloaded file so that it is easier to use these
+functions when constructing pipelines, e.g. `meta.retrieval() %>% ...` or `meta.retrieval() %>% ...`.
+
+
 
 biomartr 0.4.0
 ===========
