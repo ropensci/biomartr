@@ -15,6 +15,9 @@ which the corresponding database shall be stored.
 Default is \code{path = "database"}.
 In case this folder does not exist yet, it will be created.}
 }
+\value{
+File path to the downloaded database file.
+}
 \description{
 This function allows users to download a database selected by
 \code{\link{listDatabases}} to their local hard drive.
