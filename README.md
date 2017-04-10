@@ -12,7 +12,7 @@ on the molecular level and how this information changes over evolutionary time.
 The first step, however, of any genome based study is to retrieve genomes from databases. To automate the
 retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
 
-In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data. Furthermore, an interface to the [BioMart](http://www.biomart.org/) database allows users to retrieve functional annotation for genomic loci.
+In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data. Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci.
 Users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
 Hence, the `biomartr` package is designed to achieve the highest degree of computational reproducibility in genomics research.
@@ -22,7 +22,7 @@ Hence, the `biomartr` package is designed to achieve the highest degree of compu
 **Please cite the following paper when using `biomartr` for your own research. This will allow me to continue
 working on this software tool and will motivate me to extend its functionality and usability in the next years. Many thanks in advance :)**
 
-> Hajk-Georg Drost, Jerzy Paszkowski; [Biomartr: genomic data retrieval with R](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R). *Bioinformatics* 2017 btw821. doi: 10.1093/bioinformatics/btw821
+> Drost HG, Paszkowski J. 2017. __Biomartr: genomic data retrieval with R__. *Bioinformatics* [doi:10.1093/bioinformatics/btw821](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R).
 
 ### Platforms
 
@@ -55,6 +55,17 @@ Getting Started with `biomartr`:
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
 - [BioMart Examples](https://github.com/HajkD/biomartr/tree/master/vignettes/BioMart_Examples.Rmd)
 
+
+Users can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
+
+```r
+# source the biomartr package
+library(biomartr)
+
+# look for all tutorials (vignettes) available in the biomartr package
+# this will open your web browser
+browseVignettes("biomartr")
+```
 
 ## Installation
 
