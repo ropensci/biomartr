@@ -5,7 +5,13 @@
 #' the organism of interest can be downloaded and stored locally. 
 #' Genome assembly stats files can be retrieved from several databases.
 #' @param db a character string specifying the database from which the genome 
-#' shall be retrieved: \code{db = "refseq"} or \code{db = "genbank"}.
+#' shall be retrieved:
+#' \itemize{
+#' \item \code{db = "refseq"}
+#' \item \code{db = "genbank"}
+#' \item \code{db = "ensembl"}
+#' \item \code{db = "ensemblgenomes"}
+#' }
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param type shall only the file be retrieved (default) 
