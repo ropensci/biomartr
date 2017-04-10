@@ -20,3 +20,25 @@ test_that("The getAttributes() interface works properly..",{
     
     expect_equal(attrib[1 , 1], "ensembl_gene_id")
 })
+
+test_that("The getAttributes() throws error when wrong mart is selected",{
+    
+    skip_on_cran()
+    
+    getAttributes(mart = "somethingelse",
+                  dataset = "hsapiens_gene_ensembl")
+    
+})
+
+test_that("The getAttributes() throws error when wrong dataset is selected",{
+    
+    skip_on_cran()
+    
+    getAttributes(mart = "hsapiens_gene_ensembl",
+                  dataset = "somethingelse")
+    
+})
+
+
+
+
