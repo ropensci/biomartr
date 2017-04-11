@@ -10,6 +10,10 @@ getENSEMBLInfo()
 Retrieve species and genome information from 
 http://rest.ensembl.org/info/species?content-type=application/json/.
 }
+\examples{
+info.file <- getENSEMBLInfo()
+info.file
+}
 \author{
 Hajk-Georg Drost
 }
