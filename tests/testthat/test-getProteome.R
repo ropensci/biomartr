@@ -1,47 +1,80 @@
 context("Test: getProteome()")
 
-test_that("The getProteome() interface works properly..", {
+test_that("The getProteome() interface to NCBI RefSeq works properly..", {
     skip_on_cran()
     
     # test proper download
-    Ath_Proteome <-
+    Proteome <-
         read_proteome(
             getProteome(
                 db       = "refseq",
-                organism = "Arabidopsis thaliana",
+                organism = "Saccharomyces cerevisiae",
                 path     = tempdir()
             ),
             format = "fasta"
         )
     
     # test proper use of internal referece files when command is repeated
-    Ath_Proteome <-
+    Proteome <-
         read_proteome(
             getProteome(
                 db       = "refseq",
-                organism = "Arabidopsis thaliana",
+                organism = "Saccharomyces cerevisiae",
                 path     = tempdir()
             ),
             format = "fasta"
         )
+})
+
+test_that("The getProteome() interface to NCBI Genbank works properly..", {
+    skip_on_cran()
     
     # test proper download from genbank
-    Ath_Proteome <-
+    Proteome <-
         read_proteome(
             getProteome(
                 db       = "genbank",
-                organism = "Arabidopsis thaliana",
+                organism = "Saccharomyces cerevisiae",
                 path     = tempdir()
             ),
             format = "fasta"
         )
     
     # test proper use of internal referece files when command is repeated
-    Ath_Proteome <-
+    Proteome <-
         read_proteome(
             getProteome(
                 db       = "genbank",
-                organism = "Arabidopsis thaliana",
+                organism = "Saccharomyces cerevisiae",
+                path     = tempdir()
+            ),
+            format = "fasta"
+        )
+    
+})
+
+
+test_that("The getProteome() interface to Ensembl works properly..", {
+    skip_on_cran()
+    Proteome <-
+        read_proteome(
+            getProteome(
+                db       = "ensembl",
+                organism = "Saccharomyces cerevisiae",
+                path     = tempdir()
+            ),
+            format = "fasta"
+        )
+    
+})
+
+test_that("The getProteome() interface to EnsemblGenomes works properly..", {
+    skip_on_cran()
+    Proteome <-
+        read_proteome(
+            getProteome(
+                db       = "ensemblgenomes",
+                organism = "Saccharomyces cerevisiae",
                 path     = tempdir()
             ),
             format = "fasta"
