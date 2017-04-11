@@ -4,8 +4,8 @@
 #' This files stores all available metagenome projects on NCBI Genbank.
 #' @author Hajk-Georg Drost
 #' @examples
-#' test <- getMetaGenomeSummary()
-#' test
+#' meta.summary <- getMetaGenomeSummary()
+#' meta.summary
 #' @seealso \code{\link{getKingdomAssemblySummary}}, 
 #' \code{\link{getSummaryFile}}
 #' @export
