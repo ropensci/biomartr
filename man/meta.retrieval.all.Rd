@@ -28,6 +28,9 @@ or \code{db = "ensemblgenomes"}.}
  file retrieval; see also \code{\link{getAssemblyStats}}).
  }}
 }
+\value{
+a character vector storing the file paths of the retrieved files.
+}
 \description{
 Download genomes, proteomes, cds, gff, rna, or assembly stats 
 files of individual species of all kingdoms of life.
