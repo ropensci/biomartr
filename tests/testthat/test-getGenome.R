@@ -7,7 +7,7 @@ test_that("The getGenome() interface works properly for NCBI RefSeq..", {
     Ath_Genome <- read_genome(
         getGenome(
             db       = "refseq",
-            organism = "Arabidopsis thaliana",
+            organism = "Saccharomyces cerevisiae",
             path     = tempdir()
         ),
         format = "fasta"
@@ -17,7 +17,7 @@ test_that("The getGenome() interface works properly for NCBI RefSeq..", {
     Ath_Genome <- read_genome(
         getGenome(
             db       = "refseq",
-            organism = "Arabidopsis thaliana",
+            organism = "Saccharomyces cerevisiae",
             path     = tempdir()
         ),
         format = "fasta"
@@ -31,7 +31,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank..", {
     Ath_Genome <- read_genome(
         getGenome(
             db       = "genbank",
-            organism = "Arabidopsis thaliana",
+            organism = "Saccharomyces cerevisiae",
             path     = tempdir()
         ),
         format = "fasta"
@@ -41,7 +41,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank..", {
     Ath_Genome <- read_genome(
         getGenome(
             db       = "genbank",
-            organism = "Arabidopsis thaliana",
+            organism = "Saccharomyces cerevisiae",
             path     = tempdir()
         ),
         format = "fasta"
@@ -72,7 +72,7 @@ test_that("The getGenome() interface works properly for ENSEMBL..", {
         read_genome(
             getGenome(
                 db       = "ensemblgenomes",
-                organism = "Arabidopsis thaliana",
+                organism = "Saccharomyces cerevisiae",
                 path     = tempdir()
             ),
             format = "fasta"
@@ -87,7 +87,7 @@ test_that("The getGenome() interface works properly for ENSEMBL..", {
         read_genome(
             getGenome(
                 db       = "ensemblgenomes",
-                organism = "Arabidopsis thaliana",
+                organism = "Saccharomyces cerevisiae",
                 path     = tempdir()
             ),
             format = "fasta"
