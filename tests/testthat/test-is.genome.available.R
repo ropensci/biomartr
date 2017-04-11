@@ -1,51 +1,62 @@
 context("Test: is.genome.available()")
 
-test_that("The is.genome.available() interface works properly..", {
+test_that("The is.genome.available() interface to NCBI RefSeq 
+          works properly..", {
     skip_on_cran()
     
     # test whether interface to 'refseq' works properly
     g <-
         is.genome.available(db = "refseq",
-                            organism = "Arabidopsis thaliana",
+                            organism = "Saccharomyces cerevisiae",
                             details = TRUE)
-    expect_identical(g$organism_name, "Arabidopsis thaliana")
+    expect_identical(g$organism_name, "Saccharomyces cerevisiae")
     
-    # test with a second run using locally stored information
-    is.genome.available(organism = "Homo sapiens", details = TRUE)
+    # test whether it works properly a second time based on the internal files
+    is.genome.available(db = "refseq",
+                        organism = "Saccharomyces cerevisiae",
+                        details = TRUE)
     
-    # test with a second run using locally stored information without details
-    is.genome.available(organism = "Homo sapiens")
-    
+})
+
+test_that("The is.genome.available() interface to NCBI Genbank 
+          works properly..", {
+              skip_on_cran()
+        
     # test whether interface to 'genbank' works properly
     is.genome.available(db = "genbank",
-                        organism = "Homo sapiens",
+                        organism = "Saccharomyces cerevisiae",
                         details = TRUE)
     
     # test whether it works properly a second time based on the internal files
     is.genome.available(db = "genbank",
-                        organism = "Arabidopsis thaliana",
+                        organism = "Saccharomyces cerevisiae",
                         details = TRUE)
     
-    # test whether it works properly a second time based on the internal 
-    # files without details
-    is.genome.available(db = "genbank", organism = "Arabidopsis thaliana")
-    
+})
+
+test_that("The is.genome.available() interface to Ensembl 
+          works properly..", {
+              skip_on_cran()
     # test whether interface to 'ensembl' works properly
     is.genome.available(db = "ensembl",
-                        organism = "Homo sapiens",
+                        organism = "Saccharomyces cerevisiae",
                         details = TRUE)
     
     # test whether interface to 'ensembl' works properly without details
-    is.genome.available(db = "ensembl", organism = "Homo sapiens")
-    
+    is.genome.available(db = "ensembl", organism = "Saccharomyces cerevisiae")
+})
+
+test_that("The is.genome.available() interface to EnsemblGenomes 
+          works properly..", {
+              skip_on_cran()
     # test whether interface to 'ensemblgenomes' works properly
     is.genome.available(db = "ensemblgenomes",
-                        organism = "Arabidopsis thaliana",
+                        organism = "Saccharomyces cerevisiae",
                         details = TRUE)
     
     # test whether interface to 'ensemblgenomes' works properly without details
     is.genome.available(db = "ensemblgenomes", 
-                        organism = "Arabidopsis thaliana")
+                        organism = "Saccharomyces cerevisiae")
     
 })
 
