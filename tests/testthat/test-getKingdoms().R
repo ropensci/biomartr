@@ -2,8 +2,6 @@ context("Test: getKingdoms()")
 
 test_that("The getKingdoms() interface works properly..",{
     
-    skip_on_cran()
-    skip_on_travis()
     testthat::equals(
         getKingdoms(),
         c(
