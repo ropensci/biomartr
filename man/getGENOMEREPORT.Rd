@@ -10,6 +10,10 @@ getGENOMEREPORT()
 Retrieves NCBI GENOME_REPORTS file from 
 ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
 }
+\examples{
+report <- getGENOMEREPORT()
+report
+}
 \author{
 Hajk-Georg Drost
 }
