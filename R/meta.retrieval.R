@@ -79,6 +79,7 @@
 #'    type = "genome")
 #' }
 #' @seealso \code{\link{meta.retrieval.all}}
+#' @return a character vector storing the file paths of the retrieved files.
 #' @export
 
 meta.retrieval <- function(kingdom,
