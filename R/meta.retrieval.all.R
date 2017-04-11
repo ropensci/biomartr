@@ -32,6 +32,7 @@
 #' # download all vertebrate genomes from ensemblgenomes
 #' meta.retrieval.all(db = "genbank", type = "ensemblgenomes")
 #' }
+#' @return a character vector storing the file paths of the retrieved files.
 #' @export
 
 meta.retrieval.all <- function(db = "refseq", type = "genome") {
