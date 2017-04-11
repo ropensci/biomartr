@@ -25,10 +25,10 @@ getMetaGenomes <-
              path = file.path("_ncbi_downloads", "metagenome")) {
         if (!is.element(name, listMetaGenomes(details = FALSE)))
             stop(
-                "Unfortunately, the metagenome '",
+                paste0("Unfortunately, the metagenome '",
                 name,
-                "' is not available. Please consult the listMetaGenomes() 
-                function for available metagenomes."
+                "' is not available. Please consult the listMetaGenomes() ",
+                "function for available metagenomes.")
             )
         
         if (!file.exists(path)) {
