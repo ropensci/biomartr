@@ -4,7 +4,7 @@
 #' corresponding fasta-file storing the genome of the organism of interest
 #' can be downloaded and stored locally. Genome files can be retrieved from 
 #' several databases.
-#' @param db  a character string specifying the database from which the genome 
+#' @param db a character string specifying the database from which the genome 
 #' shall be retrieved:
 #' \itemize{
 #' \item \code{db = "refseq"}
