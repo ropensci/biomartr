@@ -59,8 +59,8 @@
 #'                  path = file.path("_ncbi_downloads","genomeassembly_stats"))
 #' }
 #' 
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}},
-#' \code{\link{getGFF}}, \code{\link{meta.retrieval}}, 
+#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}},
+#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
 #' \code{\link{read_assemblystats}}
 #' @export
 
@@ -81,7 +81,7 @@ getAssemblyStats <-
                 paste0("Please choose either type = 'download' ",
                        "(if you would like to ",
                        "download the genome assembly stats file) or ",
-                       "type = 'import' (if you would like to download and import the ",
+               "type = 'import' (if you would like to download and import the ",
                        "genome assembly stats file).", collapse = ""),
                 call. = FALSE
             )
