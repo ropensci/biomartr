@@ -5,11 +5,11 @@ test_that("The download.database() interface works properly..",{
     
     skip_on_cran()
     skip_on_travis()
-    
+
     # download example NCBI nr file          
-    download.database(db = "nr.00.tar.gz", path = getwd())          
+    # download.database(db = "nr.00.tar.gz", path = getwd())          
     # test if file was successfully downloaded          
-    expect_true(file.exists(file.path(getwd(), "nr.00.tar.gz")))
+    # expect_true(file.exists(file.path(getwd(), "nr.00.tar.gz")))
     
 })
 
