@@ -44,6 +44,9 @@ assemby stats of individual species be imported and combined to a
 \item{path}{path to the folder in which downloaded genomes shall be stored. 
 By default the kingdom name is used to name the output folder.}
 }
+\value{
+a character vector storing the file paths of the retrieved files.
+}
 \description{
 Download genomes, proteomes, cds, gff, rna, or assembly stats 
 files of all species within a kingdom of life.
