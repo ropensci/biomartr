@@ -5,8 +5,13 @@
 #' can be downloaded and stored locally. Proteome files can be retrieved from 
 #' several databases.
 #' @param db a character string specifying the database from which the genome 
-#' shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, 
-#' \code{db = "ensembl"} or \code{db = "ensemblgenomes"}.
+#' shall be retrieved:
+#' \itemize{
+#' \item \code{db = "refseq"}
+#' \item \code{db = "genbank"}
+#' \item \code{db = "ensembl"}
+#' \item \code{db = "ensemblgenomes"}
+#' }
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param path a character string specifying the location (a folder) in which 
