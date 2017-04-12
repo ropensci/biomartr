@@ -8,6 +8,7 @@
 #' @author Hajk-Georg Drost
 #' @noRd
 
+
 getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     
     if (!is.element(type, c("dna", "cds", "pep", "ncrna")))
