@@ -166,6 +166,47 @@ getGFF <-
                                     mode = "wb"
                                 )
                             )
+                            
+                            # download md5checksum file for organism of interest
+                            custom_download(
+                            paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
+                                file.path(path, 
+                                     paste0(local.org, "_md5checksums.txt")),
+                                mode = "wb"
+                            )
+                            
+                            # test check sum
+                            md5_file_path <- file.path(path, 
+                                                       paste0(local.org, 
+                                                        "_md5checksums.txt"))
+                            md5_file <-
+                                read_md5file(md5_file_path)
+                            
+                            md5_sum <- dplyr::filter(md5_file,
+                                            file_name == paste0("./", paste0(
+                                            basename(FoundOrganism$ftp_path),
+                                                         "_genomic.gff.gz"
+                                                     )))$md5
+                            
+                            message("Checking md5 hash of file: ", 
+                                    md5_file_path , " ...")
+                            
+                            if (!(tools::md5sum(file.path(
+                                path,
+                                paste0(local.org, "_genomic_", db, ".gff.gz")
+                            )) == md5_sum))
+                                stop(
+                                    paste0(
+                                        "Please download the file '",
+                                        md5_file_path,
+            "' again. The md5 hash between the downloaded file and the file ",
+                                        "stored at NCBI do not match.",
+                                        collapse = ""
+                                    )
+                                )
+                            unlink(md5_file_path)
+               message("The md5 hash of file '", md5_file_path, "' matches!")
+                            
                         }, error = function(e)
                             stop(
                                 "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' 
