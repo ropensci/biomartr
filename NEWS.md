@@ -31,7 +31,8 @@ functions when constructing pipelines, e.g. `download.database() %>% ...` or `do
 - `meta.retrieval()` and `meta.retrieval.all()` now return the file paths of the downloaded file so that it is easier to use these
 functions when constructing pipelines, e.g. `meta.retrieval() %>% ...` or `meta.retrieval() %>% ...`.
 
-
+- `getGenome()`, `getProteome()`, `getCDS()`, `getRNA()`, `getGFF()`, and `getAssemblyStats()` now internally perform md5 checksum tests
+to make sure that files are retrieved intact.
 
 biomartr 0.4.0
 ===========
