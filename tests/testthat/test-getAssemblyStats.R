@@ -30,8 +30,6 @@ test_that("The getAssemblyStats() downloads assembly stats file and reads raw
               
     skip_on_cran() 
     
-    library(magrittr)
-    
     Scerevisiae.stats <- getAssemblyStats(
         db = "genbank",
         organism = "Saccharomyces cerevisiae",
@@ -39,11 +37,9 @@ test_that("The getAssemblyStats() downloads assembly stats file and reads raw
                          "genomeassembly_stats")
     ) 
     
-    raw <- Scerevisiae.stats %>%
-        read_assemblystats(type = "raw")
+    raw <- read_assemblystats(Scerevisiae.stats, type = "raw")
     
-    stats <- Scerevisiae.stats %>%
-        read_assemblystats(type = "stats")
+    stats <- read_assemblystats(Scerevisiae.stats, type = "stats")
     
 })
 
