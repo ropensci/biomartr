@@ -177,6 +177,8 @@ getRNA <-
                             md5_file <-
                                 read_md5file(md5_file_path)
                             
+                            file_name <- NULL
+                            
                             md5_sum <- dplyr::filter(md5_file,
                                             file_name == paste0("./", paste0(
                                              basename(FoundOrganism$ftp_path),
