@@ -196,47 +196,6 @@ getAssemblyStats <-
                             mode = "wb"
                         )
                         
-                        # test check sum
-                        md5_file_path <- file.path(path, 
-                                                   paste0(local.org, 
-                                                          "_md5checksums.txt"))
-                        md5_file <-
-                            read_md5file(md5_file_path)
-                        
-                        file_name <- NULL
-                        
-                        md5_sum <- dplyr::filter(md5_file,
-               file_name == paste0("./", paste0(
-                   basename(FoundOrganism$ftp_path),
-                   "_assembly_stats.txt"
-               )))$md5
-                        
-             message("Checking md5 hash of file: ", file.path(
-                 path,
-                 paste0(local.org, "_assembly_stats_", db, ".txt")
-             ) , " ...")
-                        if (!(tools::md5sum(file.path(
-                            path,
-                            paste0(local.org, "_assembly_stats_", db, ".txt")
-                        )) == md5_sum))
-                            stop(
-                                paste0(
-                                    "Please download the file '",
-                                    file.path(
-                                        path,
-                            paste0(local.org, "_assembly_stats_", db, ".txt")
-                                    ),
-            "' again. The md5 hash between the downloaded file and the file ",
-                                    "stored at NCBI do not match.",
-                                    collapse = ""
-                                )
-                            )
-                        unlink(md5_file_path)
-                message("The md5 hash of file '", file.path(
-                    path,
-                    paste0(local.org, "_assembly_stats_", db, ".txt")
-                ), "' matches!")
-                  
                   
                     }, error = function(e)
                         stop(
