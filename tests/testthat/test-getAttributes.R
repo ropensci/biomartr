@@ -25,8 +25,8 @@ test_that("The getAttributes() throws error when wrong mart is selected",{
     
     skip_on_cran()
     
-    getAttributes(mart = "somethingelse",
-                  dataset = "hsapiens_gene_ensembl")
+    expect_error(getAttributes(mart = "somethingelse",
+                  dataset = "hsapiens_gene_ensembl"))
     
 })
 
@@ -34,8 +34,8 @@ test_that("The getAttributes() throws error when wrong dataset is selected",{
     
     skip_on_cran()
     
-    getAttributes(mart = "hsapiens_gene_ensembl",
-                  dataset = "somethingelse")
+    expect_error(getAttributes(mart = "hsapiens_gene_ensembl",
+                  dataset = "somethingelse"))
     
 })
 
