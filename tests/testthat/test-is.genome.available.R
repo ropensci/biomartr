@@ -9,8 +9,7 @@ test_that("The is.genome.available() interface to NCBI RefSeq
         is.genome.available(db = "refseq",
                             organism = "Saccharomyces cerevisiae",
                             details = TRUE)
-    expect_identical(g$organism_name, "Saccharomyces cerevisiae")
-    
+
     # test whether it works properly a second time based on the internal files
     is.genome.available(db = "refseq",
                         organism = "Saccharomyces cerevisiae",
@@ -74,8 +73,6 @@ test_that("The is.genome.available() error messages work properly..", {
                      FALSE)
     # test unknown organism error handling for 'ensembl'
     expect_error(
-        is.genome.available(organism = "Hrmo sapi", db = "ensembl"),
-        "Unfortunately organism 'Hrmo sapi' is not available at ENSEMBL. 
-        Please check whether or not the organism name is typed correctly."
+        is.genome.available(organism = "Hrmo sapi", db = "ensembl")
     )
 })
