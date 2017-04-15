@@ -29,6 +29,7 @@ test_that("The getAssemblyStats() downloads assembly stats file and reads raw
           input: NCBI Genbank ..",{
               
     skip_on_cran() 
+    skip_on_travis()
     
     Scerevisiae.stats <- getAssemblyStats(
         db = "genbank",
@@ -48,6 +49,7 @@ test_that("The getAssemblyStats() downloads assembly stats file and imports file
           ..",{ 
     
               skip_on_cran()
+              skip_on_travis()          
               Scerevisiae.stats <- getAssemblyStats(
                   db = "refseq",
                   organism = "Saccharomyces cerevisiae",
