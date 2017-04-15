@@ -12,6 +12,7 @@ test_that("The getCDS() interface to NCBI RefSeq works properly..",{
 test_that("The getCDS() interface to NCBI Genbank works properly..",{
     
     skip_on_cran()
+    skip_on_travis()
     read_cds(getCDS( db       = "genbank",
                      organism = "Saccharomyces cerevisiae",
                      path     = tempdir()), format = "fasta")
@@ -21,6 +22,7 @@ test_that("The getCDS() interface to NCBI Genbank works properly..",{
 test_that("The getCDS() interface to Ensembl works properly..",{
     
     skip_on_cran()
+    skip_on_travis()
     read_cds(getCDS( db       = "ensembl",
                      organism = "Saccharomyces cerevisiae",
                      path     = tempdir()), format = "fasta")
@@ -31,6 +33,7 @@ test_that("The getCDS() interface to Ensembl works properly..",{
 test_that("The getCDS() interface to EnsemblGenomes works properly..",{
     
     skip_on_cran()
+    skip_on_travis()
     read_cds(getCDS( db       = "ensemblgenomes",
                      organism = "Saccharomyces cerevisiae",
                      path     = tempdir()), format = "fasta")
