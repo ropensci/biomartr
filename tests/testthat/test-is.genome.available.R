@@ -3,7 +3,7 @@ context("Test: is.genome.available()")
 test_that("The is.genome.available() interface to NCBI RefSeq 
           works properly..", {
     skip_on_cran()
-    
+    skip_on_travis()
     # test whether interface to 'refseq' works properly
     g <-
         is.genome.available(db = "refseq",
@@ -20,7 +20,7 @@ test_that("The is.genome.available() interface to NCBI RefSeq
 test_that("The is.genome.available() interface to NCBI Genbank 
           works properly..", {
               skip_on_cran()
-        
+                  skip_on_travis()  
     # test whether interface to 'genbank' works properly
     is.genome.available(db = "genbank",
                         organism = "Saccharomyces cerevisiae",
@@ -36,6 +36,7 @@ test_that("The is.genome.available() interface to NCBI Genbank
 test_that("The is.genome.available() interface to Ensembl 
           works properly..", {
               skip_on_cran()
+                  skip_on_travis()
     # test whether interface to 'ensembl' works properly
     is.genome.available(db = "ensembl",
                         organism = "Saccharomyces cerevisiae",
@@ -48,6 +49,7 @@ test_that("The is.genome.available() interface to Ensembl
 test_that("The is.genome.available() interface to EnsemblGenomes 
           works properly..", {
               skip_on_cran()
+                  skip_on_travis()
     # test whether interface to 'ensemblgenomes' works properly
     is.genome.available(db = "ensemblgenomes",
                         organism = "Saccharomyces cerevisiae",
@@ -62,7 +64,7 @@ test_that("The is.genome.available() interface to EnsemblGenomes
 
 test_that("The is.genome.available() error messages work properly..", {
     skip_on_cran()
-    
+        skip_on_travis()
     # test unknown organism error handling for 'refseq'
     expect_identical(is.genome.available(organism = "Hrmo sapi", 
                                          db = "refseq"),
