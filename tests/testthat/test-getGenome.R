@@ -2,7 +2,7 @@ context("Test: getGenome()")
 
 test_that("The getGenome() interface works properly for NCBI RefSeq..", {
     skip_on_cran()
-    
+    skip_on_travis()
     # test proper download from genbank
     Ath_Genome <- read_genome(
         getGenome(
@@ -26,7 +26,7 @@ test_that("The getGenome() interface works properly for NCBI RefSeq..", {
 
 test_that("The getGenome() interface works properly for NCBI Genbank..", {
     skip_on_cran()
-    
+    skip_on_travis()
     # test proper download from genbank
     Ath_Genome <- read_genome(
         getGenome(
@@ -51,7 +51,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank..", {
 test_that("The getGenome() interface works properly for ENSEMBL..",{
         
         skip_on_cran()
-        
+        skip_on_travis()    
     # test proper download from ENSEMBL
     Scerevisiae_Genome <-
         read_genome(
@@ -66,7 +66,7 @@ test_that("The getGenome() interface works properly for ENSEMBL..",{
 
 test_that("The getGenome() interface works properly for ENSEMBL..", {
     skip_on_cran()
-    
+    skip_on_travis()
     # test proper download from ENSEMBLGENOMES
     Ath_Genome <-
         read_genome(
@@ -81,7 +81,7 @@ test_that("The getGenome() interface works properly for ENSEMBL..", {
 
 test_that("The getGenome() interface works properly for ENSEMBL..", {
     skip_on_cran()
-    
+    skip_on_travis()
     # test proper use of internal referece files when command is repeated
     Ath_Genome <-
         read_genome(
