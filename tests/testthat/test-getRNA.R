@@ -3,7 +3,7 @@ context("Test: getRNA()")
 test_that("The getRNA() interface to NCBI RefSeq works properly..",{
     
     skip_on_cran()
-
+    skip_on_travis()
     # test proper download
     RNA <- read_rna(getRNA( db       = "refseq",
                                 organism = "Saccharomyces cerevisiae",
@@ -18,6 +18,7 @@ test_that("The getRNA() interface to NCBI RefSeq works properly..",{
 test_that("The getRNA() interface to NCBI Genbank works properly..",{
     
     skip_on_cran()
+    skip_on_travis()    
     # test proper download from genbank
     RNA <- read_rna(getRNA( db       = "genbank",
                                 organism = "Saccharomyces cerevisiae",
@@ -34,6 +35,7 @@ test_that("The getRNA() interface to NCBI Genbank works properly..",{
 test_that("The getRNA() interface to Ensembl works properly..",{
     
     skip_on_cran()
+    skip_on_travis()    
     # test proper download from ensemblgenomes
     RNA <- read_rna(getRNA( db       = "ensembl",
                             organism = "Saccharomyces cerevisiae",
@@ -44,6 +46,7 @@ test_that("The getRNA() interface to Ensembl works properly..",{
 test_that("The getRNA() interface to EnsemblGenomes works properly..",{
     
     skip_on_cran()
+    skip_on_travis()
 # test proper download from ensemblgenomes
 RNA <- read_rna(getRNA( db       = "ensemblgenomes",
                         organism = "Saccharomyces cerevisiae",
