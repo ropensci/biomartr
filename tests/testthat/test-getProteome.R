@@ -2,7 +2,7 @@ context("Test: getProteome()")
 
 test_that("The getProteome() interface to NCBI RefSeq works properly..", {
     skip_on_cran()
-    
+    skip_on_travis()
     # test proper download
     Proteome <-
         read_proteome(
@@ -28,7 +28,7 @@ test_that("The getProteome() interface to NCBI RefSeq works properly..", {
 
 test_that("The getProteome() interface to NCBI Genbank works properly..", {
     skip_on_cran()
-    
+    skip_on_travis() 
     # test proper download from genbank
     Proteome <-
         read_proteome(
@@ -56,6 +56,7 @@ test_that("The getProteome() interface to NCBI Genbank works properly..", {
 
 test_that("The getProteome() interface to Ensembl works properly..", {
     skip_on_cran()
+    skip_on_travis()
     Proteome <-
         read_proteome(
             getProteome(
@@ -70,6 +71,7 @@ test_that("The getProteome() interface to Ensembl works properly..", {
 
 test_that("The getProteome() interface to EnsemblGenomes works properly..", {
     skip_on_cran()
+    skip_on_travis()    
     Proteome <-
         read_proteome(
             getProteome(
@@ -84,6 +86,7 @@ test_that("The getProteome() interface to EnsemblGenomes works properly..", {
 
 test_that("The getProteome() error messages work properly..", {
     skip_on_cran()
+    skip_on_travis()     
     expect_warning(getProteome(
         db       = "ensembl",
         organism = "Saccharomyces cerevisi",
