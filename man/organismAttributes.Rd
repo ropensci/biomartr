@@ -47,12 +47,8 @@ directory named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and
 perform much faster.
 }
 \examples{
-# return available attributes for Homo sapiens
-head(organismAttributes("Homo sapiens"), 20)
 # search for attribute topic id
 head(organismAttributes("Homo sapiens", topic = "id"), 20)
-# search for attribute topic homolog 
-head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 }
 \references{
 \url{http://biomart.org/}
