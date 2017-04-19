@@ -31,12 +31,8 @@
 #' "_biomart/listAttributes_organism.txt", allowing subsequent queries to 
 #' perform much faster.
 #' @examples 
-#' # return available attributes for Homo sapiens
-#' head(organismAttributes("Homo sapiens"), 20)
 #' # search for attribute topic id
 #' head(organismAttributes("Homo sapiens", topic = "id"), 20)
-#' # search for attribute topic homolog 
-#' head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 #' @references
 #' \url{http://biomart.org/}
 #' 
