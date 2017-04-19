@@ -48,8 +48,6 @@ directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and
 much faster.
 }
 \examples{
-# return available filters for "Homo sapiens"
-head(organismFilters("Homo sapiens"), 20)
 # search for filter topic "id" 
 head(organismFilters("Homo sapiens", topic = "id"), 20)
 }
