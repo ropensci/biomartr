@@ -75,9 +75,9 @@ paste0("http://metazoa.ensembl.org:80/biomart/martservice?",
         XML::xmlGetAttr(x, "visible")))
     
     dbBioMart <- tibble::tibble(
-        mart = as.character(databases[, 1]),
-        version = as.character(displayNames[, 1]),
-        visible = as.character(visible[, 1])
+        mart = as.character(databases[ , 1]),
+        version = as.character(displayNames[ , 1]),
+        visible = as.character(visible[ , 1])
     )
     
     mart <- version <- NULL
