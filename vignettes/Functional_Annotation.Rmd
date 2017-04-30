@@ -237,11 +237,11 @@ accurate BioMart queries. Here the functions `organismAttributes()` and `organis
 concepts to obtain this information.
 
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # return available attributes for "Homo sapiens"
-head(organismAttributes("Homo sapiens"), 20)
+head(biomartr::organismAttributes("Homo sapiens"), 20)
 ```
 
 Users will observe that the `organismAttributes()` function returns a data.frame storing attribute names, datasets, and marts which
@@ -251,7 +251,7 @@ when certain marts provided bt Ensembl do not work properly, yet.
 
 An additional feature provided by `organismAttributes()` is the `topic` argument. The `topic` argument allows users to to search for specific attributes,  topics, or categories for faster filtering.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # search for attribute topic "id"
@@ -262,7 +262,7 @@ Now, all `attribute names` having `id` as part of their `name` are being returne
 
 Another example is `topic = "homolog"`.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # search for attribute topic "homolog"
@@ -271,7 +271,7 @@ head(organismAttributes("Homo sapiens", topic = "homolog"), 20)
 
 Or `topic = "dn"` and `topic = "ds"` for `dn` and `ds` value retrieval.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # search for attribute topic "dn"
@@ -279,7 +279,7 @@ head(organismAttributes("Homo sapiens", topic = "dn"))
 ```
 
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # search for attribute topic "ds"
@@ -289,7 +289,7 @@ head(organismAttributes("Homo sapiens", topic = "ds"))
 Analogous to the `organismAttributes()` function, the `organismFilters()` function returns
 all filters that are available for a query organism of interest.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # return available filters for "Homo sapiens"
@@ -299,7 +299,7 @@ head(organismFilters("Homo sapiens"), 20)
 The `organismFilters()` function also allows users to search for filters that correspond to
 a specific topic or category.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # search for filter topic "id"
@@ -318,14 +318,14 @@ is `biomart()`.
 
 For the following examples we will assume that we are interested in the annotation of specific genes from the _Homo sapiens_ proteome. We want to map the corresponding refseq gene id to a set of other gene ids used in other databases. For this purpose, first we need consult the `organismAttributes()` function.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 
 head(organismAttributes("Homo sapiens", topic = "id"))
 ```
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # retrieve the proteome of Homo sapiens from refseq
@@ -367,7 +367,7 @@ First, the scientific name of the `organism` of interest needs to be specified. 
 `gene ids` as well as their corresponding `filter` notation (`GUCA2A` gene ids have `filter` notation `hgnc_symbol`; see `organismFilters()` for details)
 need to be specified. The `database` argument then defines the database from which GO information shall be retrieved.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # search for GO terms of an example Homo sapiens gene
