@@ -5,6 +5,12 @@ biomartr
 
 ## Genomic Data Retrieval with R
 
+### Motivation:
+
+This package is born out of my frustration to automate the genomic data retrieval process to create computationally reproducible scripts for large-scale genomics studies. Since I couldn't find easy-to-use and fully reproducible software libraries that would allow others and me to write transparent and easy to reproduce code, I sat down and tried to implement a framework that would enable anyone to automate the genomic data retrieval process. Personally, I strongly support and believe in reproducible research, and I truly hope that this package might be useful to others as well and that it helps to promote reproducible research in genomics studies.
+
+### Short package description:
+
 The vastly growing number of sequenced genomes allows us to perform a new type of biological research.
 Using a comparative approach these genomes provide us with new insights on how biological information is encoded 
 on the molecular level and how this information changes over evolutionary time.
