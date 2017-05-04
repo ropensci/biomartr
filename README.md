@@ -157,21 +157,7 @@ The current status of the package as well as a detailed history of the functiona
 * `getGO()` : Function to retrieve GO terms for a given set of genes
 
 
-## Download Developer Version
-
-The developer version of `biomartr` might include more functionality than the stable version on CRAN.
-
-### On Unix Based Systems
-
-Now you can use the `devtools` package to install biomartr from GitHub.
-
-```r
-# install the current version of biomartr on your system
-source("http://bioconductor.org/biocLite.R")
-biocLite("HajkD/biomartr")
-```
-
-### On Windows Systems
+## Download Developer Version On Windows Systems
 
 ```r
 # On Windows, this won't work - see ?build_github_devtools
