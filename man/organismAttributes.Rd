@@ -47,8 +47,10 @@ directory named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and
 perform much faster.
 }
 \examples{
+\dontrun{ 
 # search for attribute topic id
 head(organismAttributes("Homo sapiens", topic = "id"), 20)
+}
 }
 \references{
 \url{http://biomart.org/}
