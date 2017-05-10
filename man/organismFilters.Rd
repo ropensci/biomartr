@@ -48,8 +48,10 @@ directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and
 much faster.
 }
 \examples{
+\dontrun{ 
 # search for filter topic "id" 
 head(organismFilters("Homo sapiens", topic = "id"), 20)
+}
 }
 \references{
 \url{http://biomart.org/}
