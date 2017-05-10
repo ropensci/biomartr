@@ -65,7 +65,9 @@ getGenome <-
                 'genbank', 'ensembl', or 'ensemblgenomes'.",
                 call. = FALSE
             )
-        
+            
+        message("Starting retrieval of ", organism," ...")
+            
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
