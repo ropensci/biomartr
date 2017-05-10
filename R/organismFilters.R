@@ -31,9 +31,11 @@
 #' directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and 
 #' "_biomart/listFilters_organism.txt", allowing subsequent queries to perform 
 #' much faster.
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # search for filter topic "id" 
 #' head(organismFilters("Homo sapiens", topic = "id"), 20)
+#' }
 #' @references
 #' \url{http://biomart.org/}
 #' 
