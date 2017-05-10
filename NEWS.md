@@ -21,6 +21,8 @@ biomartr 0.5.0
 
 - function name `listDatabases()` has been renamed `listNCBIDatabases()`. In `biomartr` version 0.6.0 the function name `listDatabases()` will be depreciated
 
+- `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of GTF files for `type = 'ensembl'` and `type = 'esnemblgenomes'` via `type = "gtf"`. See `getGTF()` for more details.
+
 - `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of RNA files via `type = "rna"`. See `getRNA()` for more details.
 
 - all `get*()` retrieval functions now skip the download of a particular file if it already exists in the specified file path
@@ -35,6 +37,7 @@ functions when constructing pipelines, e.g. `meta.retrieval() %>% ...` or `meta.
 
 - `getGenome()`, `getProteome()`, `getCDS()`, `getRNA()`, `getGFF()`, and `getAssemblyStats()` now internally perform md5 checksum tests
 to make sure that files are retrieved intact.
+
 
 biomartr 0.4.0
 ===========
