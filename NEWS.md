@@ -8,6 +8,8 @@ biomartr 0.5.0
 
 ### New Functions
 
+- new function `getGTF()` for genome annotation retrieval from `ensembl` and `ensemblgenomes` in `gtf` format (Thanks for suggesting it Ge Tan)
+
 - new function `getRNA()` to perform RNA Sequence Retrieval from NCBI and ENSEMBL databases (Thanks for suggesting it @carlo-berg)
 
 - new function `read_rna()` for importing RNA downloaded with `getRNA()` as Biostrings or data.table object
