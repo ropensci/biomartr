@@ -1,4 +1,4 @@
-#' @title Genome Annotation Retrieval
+#' @title Genome Annotation Retrieval (GFF3)
 #' @description  Main retrieval function for GFF files of an 
 #' organism of interest. By specifying the scientific name of an organism of 
 #' interest the corresponding gff file storing the annotation  for the organism 
@@ -60,6 +60,8 @@ getGFF <-
                 'genbank', 'ensembl', 'ensemblgenomes'."
             )
         
+        message("Starting retrieval of ", organism," ...")
+            
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
