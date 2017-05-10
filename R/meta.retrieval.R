@@ -20,6 +20,8 @@
 #'  (for coding sequence retrieval; see also \code{\link{getCDS}}),
 #'  \item \code{type = "gff"} :
 #' (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
+#' \item \code{type = "gtf"} :
+#' (for annotation file retrieval in gtf format (only for ensembl and ensemblgenomes); see also \code{\link{getGTF}})
 #'  \item \code{type = "rna"} :
 #'  (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
 #'  \item \code{type = "assemblystats"} :
@@ -117,10 +119,11 @@ meta.retrieval <- function(kingdom,
     
     if (!is.element(type,
                     c("genome", "proteome", "CDS", "gff", 
-                      "rna", "assemblystats")))
+                      "rna", "assemblystats", "gtf")))
         stop(
         "Please choose either type: type = 'genome', type = 'proteome', 
-        type = 'CDS', type = 'gff', type = 'rna', or type = 'assemblystats'.",
+        type = 'CDS', type = 'gff', type = 'gtf',
+        type = 'rna', or type = 'assemblystats'.",
             call. = FALSE
         )
     
@@ -134,6 +137,9 @@ meta.retrieval <- function(kingdom,
     if ((type == "CDS") && (db == "genbank"))
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.",
              call. = FALSE)
+    
+    if ((type == "gtf") && (is.element(db, c("genbank", "refseq"))))
+            stop("GTF files are only available for type = 'ensembl' and type = 'ensemblgebomes'.")
     
     if (type == "assemblystats" &&
         !is.element(db, c("refseq", "genbank")))
@@ -287,6 +293,24 @@ meta.retrieval <- function(kingdom,
                        path     = path)
             }
         }
+    }
+    
+    if (type == "gtf") {
+            if (is.null(path)) {
+                    for (i in seq_len(length(FinalOrganisms))) {
+                            paths[i] <- getGTF(db       = db,
+                                               organism = FinalOrganisms[i],
+                                               path     = kingdom)
+                    }
+            }
+            
+            if (!is.null(path)) {
+                    for (i in seq_len(length(FinalOrganisms))) {
+                            paths[i] <- getGTF(db       = db,
+                                               organism = FinalOrganisms[i],
+                                               path     = path)
+                    }
+            }
     }
     
     if (type == "rna") {
