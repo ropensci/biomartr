@@ -30,9 +30,11 @@
 #' directory named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and 
 #' "_biomart/listAttributes_organism.txt", allowing subsequent queries to 
 #' perform much faster.
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # search for attribute topic id
 #' head(organismAttributes("Homo sapiens", topic = "id"), 20)
+#' }
 #' @references
 #' \url{http://biomart.org/}
 #' 
