@@ -2,7 +2,7 @@
 % Please edit documentation in R/getGFF.R
 \name{getGFF}
 \alias{getGFF}
-\title{Genome Annotation Retrieval}
+\title{Genome Annotation Retrieval (GFF3)}
 \usage{
 getGFF(db = "refseq", organism, path = file.path("_ncbi_downloads",
   "annotation"))
