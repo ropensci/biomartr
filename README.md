@@ -117,7 +117,8 @@ The current status of the package as well as a detailed history of the functiona
 * `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
 * `getCDS()` : Download a specific CDS file (genome) stored on NCBI and ENSEMBL servers
 * `getRNA()` : Download a specific RNA file stored on NCBI and ENSEMBL servers
-* `getGFF()` : Genome Annotation Retrieval (`*.gff`) from NCBI and ENSEMBL servers
+* `getGFF()` : Genome Annotation Retrieval from NCBI (`*.gff`) and ENSEMBL (`*.gff3`) servers
+* `getGTF()` : Genome Annotation Retrieval (`*.gtf`) from ENSEMBL servers
 * `getAssemblyStats()` : Genome Assembly Stats Retrieval from NCBI
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
