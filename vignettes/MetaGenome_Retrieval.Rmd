@@ -519,6 +519,23 @@ Example `Genbank`:
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "gff")
 ```
 
+### Retrieve GTF files
+
+Download all mammalian vertebrate gtf files.
+
+Example `ENSEMBL`:
+```{r,eval=FALSE}
+# download all vertebrate gff files
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "gtf")
+```
+
+
+Example `ENSEMBLGENOMES`:
+```{r,eval=FALSE}
+# download all vertebrate gtf files
+meta.retrieval(kingdom = "EnsemblPlants", db = "ensemblgenomes", type = "gtf")
+```
+
 
 Users can obtain alternative kingdoms using `getKingdoms()`.
 
