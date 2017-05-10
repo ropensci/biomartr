@@ -23,17 +23,17 @@ The `biomartr` package allows users to retrieve biological sequences in a very s
 
 Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
-* `getGenome()`
-* `getProteome()`
-* `getCDS()`
-* `getRNA()`
-* `getGFF()`
-* `getAssemblyStats()`
+* [Genome retrieval with `getGenome()`](#genome-retrieval)
+* [Proteome retrieval with `getProteome()`](#proteome-retrieval)
+* [Coding sequence retrieval with `getCDS()`](#cds-retrieval)
+* [RNA retrieval with `getRNA()`](#rna-retrieval)
+* [GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
+* [GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
 
 
 ## Getting Started with Sequence Retrieval
 
-First users can check whether or not the genome, proteome, CDS, RNA, GFF, or genome assembly statistics of their interest is available for download.
+First users can check whether or not the genome, proteome, CDS, RNA, GFF, GTF, or genome assembly statistics of their interest is available for download.
 
 Using the scientific name of the organism of interest, users can check whether the 
 corresponding genome is available via the `is.genome.available()` function.
@@ -1353,7 +1353,7 @@ Cress_rna
 
 ### Retrieve the annotation file of a particular genome
 
-Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` function.
+Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` or alternatively for `ensembl` and `ensemblgenomes` the `getGTF()` function.
 
 Example `RefSeq`:
 
@@ -1410,7 +1410,7 @@ Human_GFF <- read_gff(file = HS.gff.genbank)
 
 ```{r,eval=FALSE}
 # show all elements of the data.frame
-options(tibble.print_max = Inf)
+# options(tibble.print_max = Inf)
 Human_GFF
 ```
 
@@ -1433,10 +1433,10 @@ Example `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download the GFF file of Homo sapiens from ENSEMBL
-# and store the corresponding file in '_ncbi_downloads/annotation'
+# and store the corresponding file in 'ensembl/annotation'
 HS.gff.ensembl <- getGFF( db       = "ensembl", 
                          organism = "Homo sapiens", 
-                         path = file.path("_ncbi_downloads","annotation"))
+                         path = file.path("ensembl","annotation"))
 ```
 
 After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
@@ -1448,7 +1448,7 @@ Human_GFF <- read_gff(file = HS.gff.ensembl)
 
 ```{r,eval=FALSE}
 # show all elements of the data.frame
-options(tibble.print_max = Inf)
+# options(tibble.print_max = Inf)
 Human_GFF
 ```
 
@@ -1467,6 +1467,16 @@ Human_GFF
 10     1      . biological_region 10737     10744   0.999      +     0
 ```
 
+Alternatively for `getGTF()`:
+
+```{r,eval=FALSE}
+# download the GTF file of Homo sapiens from ENSEMBL
+# and store the corresponding file in 'ensembl/annotation'
+HS.gtf.ensembl <- getGTF( db       = "ensembl", 
+                         organism = "Homo sapiens", 
+                         path = file.path("ensembl","annotation"))
+```
+
 Example `ENSEMBLGENOMES`:
 
 Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
@@ -1474,10 +1484,10 @@ as example.
 
 ```{r,eval=FALSE}
 # download the GFF file of Arabidopsis thaliana from ENSEMBLGENOMES
-# and store the corresponding file in '_ncbi_downloads/annotation'
+# and store the corresponding file in 'ensemblgenomes/annotation'
 AT.gff.ensemblgenomes <- getGFF( db       = "ensemblgenomes", 
                                  organism = "Arabidopsis thaliana", 
-                                 path = file.path("_ncbi_downloads","annotation"))
+                                 path = file.path("ensemblgenomes","annotation"))
 ```
 
 After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
@@ -1508,9 +1518,18 @@ Cress_GFF
 10     1   tair            CDS  4486     4605     0      +     0
 ```
 
-Taken together, `getGFF()` in combination with `getGenome()`, `getProteome()` and `getCDS()` allows users to retrieve the genome information together with the
-corresponding `.gff` annotation file to make sure that they both have the same version and origin.
+Alternatively for `getGTF()`:
 
+```{r,eval=FALSE}
+# download the GTF file of Arabidopsis thaliana from ENSEMBLGENOMES
+# and store the corresponding file in 'ensemblgenomes/annotation'
+AT.gtf.ensemblgenomes <- getGTF( db       = "ensemblgenomes", 
+                                 organism = "Arabidopsis thaliana", 
+                                 path = file.path("ensemblgenomes","annotation"))
+```
+
+Taken together, `getGFF()` or `getGTF()` in combination with `getGenome()`, `getProteome()`, `getRNA()` and `getCDS()` allows users to retrieve the genome information together with the
+corresponding `.gff` or `gtf` annotation file to make sure that they both have the same version and origin.
 
 
 
