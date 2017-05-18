@@ -221,9 +221,18 @@ meta.retrieval <- function(kingdom,
             )
         )
     
+    if (!is.null(path)) {
+        if (!file.exists(path)) {
+            message("Generating folder ", path, " ...")
+            dir.create(path, recursive = TRUE)
+        }
+    }
+    
     paths <- vector("character", length(FinalOrganisms))
     
     if (type == "genome") {
+        
+    
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 paths[i] <- getGenome(db       = db,
@@ -384,7 +393,7 @@ meta.retrieval <- function(kingdom,
     }
     
     message("Finished meta retieval process.")
-    return(paths[paths != "FALSE"])
+    return(paths[!is.element(paths, c("FALSE", "Not available"))])
 }
 
 
