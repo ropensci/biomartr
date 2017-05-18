@@ -59,6 +59,7 @@ getGenome <-
     function(db = "refseq",
              organism,
              path = file.path("_ncbi_downloads", "genomes")) {
+        
        if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
             stop(
                 "Please select one of the available data bases: 'refseq',
@@ -107,6 +108,7 @@ getGenome <-
                         "'. Thus, download for this species has been omitted."
                     )
                 )
+                return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
