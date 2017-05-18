@@ -13,7 +13,7 @@ custom_download <- function(...) {
         downloader::download(
             ...,
             method = "curl",
-            extra = "--connect-timeout 120 --retry 3",
+            extra = "--retry 3",
             cacheOK = FALSE,
             quiet = TRUE
         )
@@ -24,7 +24,7 @@ custom_download <- function(...) {
         downloader::download(
             ...,
             method = "wget",
-            extra = "--timeout 120 --tries 3 --continue",
+            extra = "--tries 3 --continue",
             cacheOK = FALSE,
             quiet = TRUE
         )
