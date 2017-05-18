@@ -29,13 +29,14 @@ Imports:
     RCurl (>= 1.95-4.5),
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
-    stringr (>= 0.6.2)
+    stringr (>= 0.6.2),
 Suggests:
     knitr (>= 1.6),
     rmarkdown (>= 0.3.3),
     devtools (>= 1.6.1),
-    testthat
-License: GPL-3
+    testthat,
+    seqinr
+License: GPL-2
 LazyData: true
 URL: https://github.com/HajkD/biomartr
 BugReports: https://github.com/HajkD/biomartr/issues
