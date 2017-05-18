@@ -81,6 +81,7 @@ getRNA <-
                         "'. Thus, download for this species has been omitted."
                     )
                 )
+                return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
