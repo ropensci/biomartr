@@ -9,8 +9,6 @@ biomartr
 
 This package is born out of my own frustration to automate the genomic data retrieval process to create computationally reproducible scripts for large-scale genomics studies. Since I couldn't find easy-to-use and fully reproducible software libraries that would allow others and me to write transparent and easy to reproduce code, I sat down and tried to implement a framework that would enable anyone to automate the genomic data retrieval process. Personally, I strongly support and believe in reproducible research, and I truly hope that this package might be useful to others as well and that it helps to promote reproducible research in genomics studies.
 
-This package is far from being perfect or finished. Currently, I am struggeling with the fact that the ENSEMBL and NCBI servers limit the number of queries which sometimes makes it hard to retrieve hundreds of genomes in one seamless run (see also issue https://github.com/HajkD/biomartr/issues/12). However, I am working on this issue and try to find a way around it and I hope that with the help of the community `biomartr` can grow to become a useful genomics tool and a basis for reproducible genomics studies.
-
 I happily welcome anyone who wishes to contribute to this project :) Just drop me an email.
 
 ### Short package description:
