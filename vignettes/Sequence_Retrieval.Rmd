@@ -29,6 +29,7 @@ Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, a
 * [RNA retrieval with `getRNA()`](#rna-retrieval)
 * [GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
 * [GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
+* [Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
 
 
 ## Getting Started with Sequence Retrieval
@@ -1530,6 +1531,34 @@ AT.gtf.ensemblgenomes <- getGTF( db       = "ensemblgenomes",
 
 Taken together, `getGFF()` or `getGTF()` in combination with `getGenome()`, `getProteome()`, `getRNA()` and `getCDS()` allows users to retrieve the genome information together with the
 corresponding `.gff` or `gtf` annotation file to make sure that they both have the same version and origin.
+
+## Repeat Masker Retrieval
+
+In addition to genome, proteome, CDS, etc. information NCBI RefSeq and NCBI Genbank store also 
+transposon annotations files generated with Repeat Masker. To retrieve and import
+these transposon annotations files, `biomartr` implements the `getRepeatMasker()`
+and `read_rm()` functions.
+
+
+```{r,eval=FALSE}
+# download repeat masker annotation file for A. thaliana
+AT.rm.refseq <- getRepeatMasker( db       = "refseq", 
+                                 organism = "Arabidopsis thaliana", 
+                                 path = file.path("refseq","TEannotation"))
+```
+
+Now users can import the TE annotation file using `read_rm()`.
+
+```{r,eval=FALSE}
+# import TE annotation file
+AT.rm.refseq.anno <- read_rm(AT.rm.refseq)
+# look at data
+AT.rm.refseq.anno
+```
+
+
+
+
 
 
 
