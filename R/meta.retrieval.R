@@ -21,9 +21,13 @@
 #'  \item \code{type = "gff"} :
 #' (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
 #' \item \code{type = "gtf"} :
-#' (for annotation file retrieval in gtf format (only for ensembl and ensemblgenomes); see also \code{\link{getGTF}})
+#' (for annotation file retrieval in gtf format (only for ensembl and
+#'  ensemblgenomes); see also \code{\link{getGTF}})
 #'  \item \code{type = "rna"} :
 #'  (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
+#'  \item \code{type = "rm"} :
+#'  (for Repeat Masker output file retrieval; see also 
+#'  \code{\link{getRepeatMasker}}),
 #'  \item \code{type = "assemblystats"} :
 #'  (for genome assembly quality stats file retrieval; 
 #'  see also \code{\link{getAssemblyStats}}).
@@ -119,11 +123,11 @@ meta.retrieval <- function(kingdom,
     
     if (!is.element(type,
                     c("genome", "proteome", "CDS", "gff", 
-                      "rna", "assemblystats", "gtf")))
+                      "rna", "assemblystats", "gtf", "rm")))
         stop(
         "Please choose either type: type = 'genome', type = 'proteome', 
         type = 'CDS', type = 'gff', type = 'gtf',
-        type = 'rna', or type = 'assemblystats'.",
+        type = 'rna', type = 'rm', or type = 'assemblystats'.",
             call. = FALSE
         )
     
@@ -155,6 +159,11 @@ meta.retrieval <- function(kingdom,
             specify: type = 'assemblystats' and combine = TRUE.",
             call. = FALSE
         )
+    
+    if ((type == "rm") && (!is.element(db, c("refseq", "genbank"))))
+        stop("Repeat Masker output files can only be retrieved from 'refseq'",
+             " or 'genbank'.")
+    
     
     if (is.element(db, c("refseq", "genbank"))) {
         if (is.null(group)) {
@@ -320,6 +329,24 @@ meta.retrieval <- function(kingdom,
                                                path     = path)
                     }
             }
+    }
+    
+    if (type == "rm") {
+        if (is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                paths[i] <- getRepeatMasker(db       = db,
+                                   organism = FinalOrganisms[i],
+                                   path     = kingdom)
+            }
+        }
+        
+        if (!is.null(path)) {
+            for (i in seq_len(length(FinalOrganisms))) {
+                paths[i] <- getRepeatMasker(db       = db,
+                                   organism = FinalOrganisms[i],
+                                   path     = path)
+            }
+        }
     }
     
     if (type == "rna") {
