@@ -20,6 +20,9 @@
 #' (only for ensembl and ensemblgenomes); see also \code{\link{getGTF}}),
 #'  \item \code{type = "rna"} :
 #'  (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
+#'  \item \code{type = "rm"} :
+#'  (for Repeat Masker output file retrieval; see also 
+#'  \code{\link{getRepeatMasker}}),
 #'  \item \code{type = "assemblystats"} (for genome assembly quality stats 
 #'  file retrieval; see also \code{\link{getAssemblyStats}}).
 #'  }
