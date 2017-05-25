@@ -31,9 +31,13 @@ shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"},
  \item \code{type = "gff"} :
 (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
 \item \code{type = "gtf"} :
-(for annotation file retrieval in gtf format (only for ensembl and ensemblgenomes); see also \code{\link{getGTF}})
+(for annotation file retrieval in gtf format (only for ensembl and
+ ensemblgenomes); see also \code{\link{getGTF}})
  \item \code{type = "rna"} :
  (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
+ \item \code{type = "rm"} :
+ (for Repeat Masker output file retrieval; see also 
+ \code{\link{getRepeatMasker}}),
  \item \code{type = "assemblystats"} :
  (for genome assembly quality stats file retrieval; 
  see also \code{\link{getAssemblyStats}}).
