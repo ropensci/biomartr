@@ -4,8 +4,7 @@
 \alias{read_rna}
 \title{Import RNA as Biostrings or data.table object}
 \usage{
-read_rna(file, format = "fasta", obj.type = "Biostrings",
-  delete_corrupt = FALSE, ...)
+read_rna(file, format = "fasta", obj.type = "Biostrings", ...)
 }
 \arguments{
 \item{file}{a character string specifying the path to the file 
@@ -18,10 +17,6 @@ genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
 genomic sequence shall be represented. 
 Either as \code{obj.type = "Biostrings"} (default) or 
 as \code{obj.type = "data.table"}.}
-
-\item{delete_corrupt}{a logical value specifying whether potential RNA 
-sequences that cannot be divided by 3 shall be be excluded from the the 
-dataset. Default is \code{delete_corrupt = FALSE}.}
 
 \item{...}{additional arguments that are used by 
 \code{\link[seqinr]{read.fasta}}.}
