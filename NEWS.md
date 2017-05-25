@@ -6,18 +6,25 @@ biomartr 0.5.0
 - fixing a bug in `exists.ftp.file()` and `getENSEMBLGENOMES.Seq()` that caused bacterial genome, proteome, etc retrieval to fail due to the wrong construction of a query ftp request https://github.com/HajkD/biomartr/issues/7
 (Many thanks to @dbsseven)
 
-- fix a major bug in which organisms having no representative genome would generate NULL paths that subsequently crashed the `meta.retrieval()` function when it tried to print out the result paths,
+- fix a major bug in which organisms having no representative genome would generate NULL paths that subsequently crashed the `meta.retrieval()` function when it tried to print out the result paths.
 
 ### New Functions
+
+- new function `getRepeatMasker()` for retrieval of Repeat Masker output files  
 
 - new function `getGTF()` for genome annotation retrieval from `ensembl` and `ensemblgenomes` in `gtf` format (Thanks for suggesting it Ge Tan)
 
 - new function `getRNA()` to perform RNA Sequence Retrieval from NCBI and ENSEMBL databases (Thanks for suggesting it @carlo-berg)
 
-- new function `read_rna()` for importing RNA downloaded with `getRNA()` as Biostrings or data.table object
+- new function `read_rna()` for importing Repeat Masker output files downloaded with `getRepeatMasker()`
+
+- new function `read_rm()` for importing RNA downloaded with `getRNA()` as Biostrings or data.table object
 
 - new helper function `custom_download()` that aims to make the download process more robust and stable
--> In detail, the download process is now adapting to the operating system, e.g. using either `curl` (macOS), `wget` (Linux), or `wininet` (Windows).
+-> In detail, the download process is now adapting to the operating system, e.g. using either `curl` (macOS), `wget` (Linux), or `wininet` (Windows)
+
+
+
 
 ### Function changes
 
@@ -26,6 +33,8 @@ biomartr 0.5.0
 - `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of GTF files for `type = 'ensembl'` and `type = 'esnemblgenomes'` via `type = "gtf"`. See `getGTF()` for more details.
 
 - `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of RNA files via `type = "rna"`. See `getRNA()` for more details.
+
+- `meta.retieval()` and `meta.retieval.all()` now allow the bulk retrieval of Repeat Masker output files via `type = "rm"`. See `getRepeatMasker()` for more details.
 
 - all `get*()` retrieval functions now skip the download of a particular file if it already exists in the specified file path
 
