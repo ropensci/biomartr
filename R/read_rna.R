@@ -9,9 +9,6 @@
 #' genomic sequence shall be represented. 
 #' Either as \code{obj.type = "Biostrings"} (default) or 
 #' as \code{obj.type = "data.table"}.
-#' @param delete_corrupt a logical value specifying whether potential RNA 
-#' sequences that cannot be divided by 3 shall be be excluded from the the 
-#' dataset. Default is \code{delete_corrupt = FALSE}.
 #' @param ... additional arguments that are used by 
 #' \code{\link[seqinr]{read.fasta}}.
 #' @author Hajk-Georg Drost
@@ -29,7 +26,6 @@ read_rna <-
     function(file,
              format = "fasta",
              obj.type = "Biostrings",
-             delete_corrupt = FALSE,
              ...) {
         if (!is.element(format, c("fasta", "gbk")))
             stop("Please choose a file format that is supported 
@@ -43,7 +39,7 @@ read_rna <-
                 call. = FALSE
             )
         
-        geneids <- seqs <- NULL
+        geneids <- NULL
         
         if (obj.type == "Biostrings") {
             tryCatch({
@@ -88,24 +84,7 @@ read_rna <-
                 
                 data.table::setkey(RNA.dt, geneids)
                 
-                mod3 <-
-                    function(x) {
-                        return((nchar(x) %% 3) == 0)
-                    }
-                
-                all_triplets <- RNA.dt[, mod3(seqs)]
-                
-                if (!all(all_triplets)) {
-                    warning(
-                        paste0(
-                            "There have been ",
-                            length(which(!all_triplets)),
-                            " genes found that cannot be divided by 3. 
-                            To delete these sequences please specify the 
-                            'delete_corrupt = TRUE' argument."
-                        )
-                    )
-                }
+    
             }, error = function(e) {
                 stop(
                     paste0(
@@ -121,16 +100,6 @@ read_rna <-
                     call. = FALSE
                 )
             })
-            
-            if (!all(all_triplets)) {
-                if (delete_corrupt)
-                    return(RNA.dt[-which(!all_triplets) , list(geneids, seqs)])
-                
-                if (!delete_corrupt)
-                    return(RNA.dt)
-                
-            } else {
                 return(RNA.dt)
-            }
         }
     }
