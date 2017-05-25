@@ -121,6 +121,7 @@ The current status of the package as well as a detailed history of the functiona
 * `getRNA()` : Download a specific RNA file stored on NCBI and ENSEMBL servers
 * `getGFF()` : Genome Annotation Retrieval from NCBI (`*.gff`) and ENSEMBL (`*.gff3`) servers
 * `getGTF()` : Genome Annotation Retrieval (`*.gtf`) from ENSEMBL servers
+* `getRepeatMasker() :` Repeat Masker TE Annotation Retrieval
 * `getAssemblyStats()` : Genome Assembly Stats Retrieval from NCBI
 * `getKingdomAssemblySummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI for all kingdoms
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt files from NCBI genbank metagenomes
@@ -134,6 +135,7 @@ The current status of the package as well as a detailed history of the functiona
 * `read_cds()` : Import CDS as Biostrings or data.table object
 * `read_gff()` : Import GFF file
 * `read_rna()` : Import RNA file
+* `read_rm()` : Import Repeat Masker output file
 * `read_assemblystats()` : Import Genome Assembly Stats File
 
 #### Database Retrieval
