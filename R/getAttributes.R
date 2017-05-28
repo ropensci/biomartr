@@ -8,6 +8,7 @@
 #' attributes shall be listed.
 #' @author Hajk-Georg Drost
 #' @examples
+#' \dontrun{
 #' # search for available datasets
 #' getMarts()
 #' 
@@ -18,7 +19,7 @@
 #' # choose dataset: "hsapiens_gene_ensembl"
 #' head(getAttributes(mart = "ENSEMBL_MART_ENSEMBL", 
 #'                    dataset = "hsapiens_gene_ensembl") , 5)
-#' 
+#' }
 #' @seealso \code{\link{getMarts}}, \code{\link{getDatasets}},
 #' \code{\link{getFilters}}, \code{\link{organismBM}}, 
 #' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
