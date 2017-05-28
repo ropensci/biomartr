@@ -14,9 +14,9 @@
 #' database then stored in this folder.
 #' @author Hajk-Georg Drost
 #' @examples
+#' \dontrun{
 #'   # search for available NCBI nr databases
 #'   listNCBIDatabases(db = "nr")
-#' \dontrun{
 #'   # select NCBI nr version 27 =  "nr.27.tar.gz"
 #'   # and download it to your hard drive
 #'   # -> please note that large databases take some time for download!
