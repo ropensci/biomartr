@@ -1,9 +1,7 @@
 biomartr
 ========
 
-[![Travis-CI Build Status](https://travis-ci.org/HajkD/biomartr.svg?branch=master)](https://travis-ci.org/HajkD/biomartr)
-
-[![rpackages.io rank](https://www.rpackages.io/badge/biomartr.svg)](https://www.rpackages.io/package/biomartr)
+[![Travis-CI Build Status](https://travis-ci.org/HajkD/biomartr.svg?branch=master)](https://travis-ci.org/HajkD/biomartr) [![rpackages.io rank](https://www.rpackages.io/badge/biomartr.svg)](https://www.rpackages.io/package/biomartr)
 
 ## Genomic Data Retrieval with R
 
