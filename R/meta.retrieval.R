@@ -240,8 +240,6 @@ meta.retrieval <- function(kingdom,
     paths <- vector("character", length(FinalOrganisms))
     
     if (type == "genome") {
-        
-    
         if (is.null(path)) {
             for (i in seq_len(length(FinalOrganisms))) {
                 paths[i] <- getGenome(db       = db,
