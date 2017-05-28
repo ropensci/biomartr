@@ -22,7 +22,7 @@
 #' implemented by Steffen Durinck et al.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # 1) select a mart
 #' getMarts()
 #'
@@ -43,7 +43,7 @@
 #'         dataset    = "athaliana_eg_gene",
 #'         attributes = c("start_position","end_position","description"),
 #'         filters    = "ensembl_gene_id")
-#'
+#'}
 #'
 #' @return A data.table storing the initial query gene vector in 
 #' the first column, the output
