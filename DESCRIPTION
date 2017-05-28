@@ -1,6 +1,6 @@
 Package: biomartr
 Title: Genomic Data Retrieval
-Version: 0.5.0
+Version: 0.5.1
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Description: Perform metagenomic data retrieval and functional annotation
