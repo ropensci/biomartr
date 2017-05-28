@@ -18,6 +18,7 @@ This funcion queries the BioMart Interface and returns a table
 storing all available attributes for a specific dataset.
 }
 \examples{
+\dontrun{
 # search for available datasets
 getMarts()
 
@@ -28,7 +29,7 @@ head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
 # choose dataset: "hsapiens_gene_ensembl"
 head(getAttributes(mart = "ENSEMBL_MART_ENSEMBL", 
                    dataset = "hsapiens_gene_ensembl") , 5)
-
+}
 }
 \seealso{
 \code{\link{getMarts}}, \code{\link{getDatasets}},
