@@ -23,9 +23,10 @@ projects. This function downloads available metagenomes that can then be
 downloaded via \code{\link{getMetaGenomes}}.
 }
 \examples{
+\dontrun{
 # Frist, retrieve a list of available metagenomes
 listMetaGenomes()
-\dontrun{
+
 # Now, retrieve the 'human gut metagenome'
 getMetaGenomeAnnotations(name = "human gut metagenome")
 }
