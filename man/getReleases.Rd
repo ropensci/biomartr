@@ -20,10 +20,12 @@ Retrieve available database releases or versions of
 ENSEMBL and ENSEMBLGENOMES.
 }
 \examples{
+\dontrun{ 
 # retrieve available resease versions of ENSEMBL
 getReleases("ensembl")
 # retrieve available resease versions of ENSEMBLGENOMES
 getReleases("ensemblgenomes")
+}
 }
 \author{
 Hajk-Georg Drost
