@@ -1,4 +1,10 @@
-biomartr 0.5.0
+biomartr 0.6.0
+===========
+
+### New Functions
+
+
+biomartr 0.5.1
 ===========
 
 ### Bug fixes
