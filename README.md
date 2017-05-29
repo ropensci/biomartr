@@ -78,7 +78,7 @@ browseVignettes("biomartr")
 ## Installation
 
 ```r
-# install biomartr 0.4.0
+# install biomartr 0.5.1
 source("http://bioconductor.org/biocLite.R")
 biocLite('biomartr')
 ```
