@@ -38,7 +38,7 @@ Suggests:
     seqinr
 License: GPL-2
 LazyData: true
-URL: https://github.com/HajkD/biomartr
-BugReports: https://github.com/HajkD/biomartr/issues
+URL: https://github.com/ropensci/biomartr
+BugReports: https://github.com/ropensci/biomartr/issues
 RoxygenNote: 6.0.1
 Encoding: UTF-8
