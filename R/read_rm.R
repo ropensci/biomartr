@@ -39,8 +39,8 @@ read_rm <- function(file) {
     )
     
     rm_file <- dplyr::mutate(rm_file,
-                             qry_start = as.numeric(qry_start),
-                             qry_end = as.numeric(qry_end))
+                             qry_start = as.integer(qry_start),
+                             qry_end = as.integer(qry_end))
     
     rm_file <-
         dplyr::filter(
@@ -52,7 +52,7 @@ read_rm <- function(file) {
     rm_file <-
         dplyr::mutate(
             rm_file,
-            qry_width = qry_end - qry_start + 1)
+            qry_width = as.integer(qry_end - qry_start + 1L))
     return(rm_file)
 }
 
