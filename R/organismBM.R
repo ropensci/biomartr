@@ -19,7 +19,8 @@
 #' result is then saved in a *.txt file named "_biomart/listDatasets.txt" in the
 #' \code{\link{tempdir}} directory, allowing subsequent queries to perform
 #'  much faster.
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # returning all available biomart connections
 #' head(organismBM(), 20)
 #' # retrieving all available datasets and biomart connections for
@@ -28,6 +29,7 @@
 #' # you can also update the downloaded version using 
 #' # the "update = TRUE" argument
 #' head(organismBM(update = TRUE), 20)
+#' }
 #' @references
 #' 
 #' \url{http://biomart.org/}

@@ -33,6 +33,7 @@ result is then saved in a *.txt file named "_biomart/listDatasets.txt" in the
  much faster.
 }
 \examples{
+\dontrun{ 
 # returning all available biomart connections
 head(organismBM(), 20)
 # retrieving all available datasets and biomart connections for
@@ -41,6 +42,7 @@ organismBM(organism = "Homo sapiens")
 # you can also update the downloaded version using 
 # the "update = TRUE" argument
 head(organismBM(update = TRUE), 20)
+}
 }
 \references{
 \url{http://biomart.org/}

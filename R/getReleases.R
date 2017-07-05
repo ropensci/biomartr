@@ -9,11 +9,13 @@
 #' \item \code{db = "ensemblgenomes"}
 #' }
 #' @author Hajk-Georg Drost
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' # retrieve available resease versions of ENSEMBL
 #' getReleases("ensembl")
 #' # retrieve available resease versions of ENSEMBLGENOMES
 #' getReleases("ensemblgenomes")
+#' }
 #' @export
 getReleases <- function(db = "refseq") {
     

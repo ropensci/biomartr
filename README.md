@@ -1,7 +1,7 @@
 biomartr
 ========
 
-[![Travis-CI Build Status](https://travis-ci.org/HajkD/biomartr.svg?branch=master)](https://travis-ci.org/HajkD/biomartr)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/biomartr.svg?branch=master)](https://travis-ci.org/ropensci/biomartr) [![rpackages.io rank](https://www.rpackages.io/badge/biomartr.svg)](https://www.rpackages.io/package/biomartr)
 
 ## Genomic Data Retrieval with R
 
@@ -78,7 +78,7 @@ browseVignettes("biomartr")
 ## Installation
 
 ```r
-# install biomartr 0.4.0
+# install biomartr 0.5.1
 source("http://bioconductor.org/biocLite.R")
 biocLite('biomartr')
 ```

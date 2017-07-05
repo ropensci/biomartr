@@ -11,9 +11,10 @@
 #' \code{path} = \code{file.path("_ncbi_downloads","metagenome","annotations")}.
 #' @author Hajk-Georg Drost
 #' @examples
+#' \dontrun{
 #' # Frist, retrieve a list of available metagenomes
 #' listMetaGenomes()
-#' \dontrun{
+#'
 #' # Now, retrieve the 'human gut metagenome'
 #' getMetaGenomeAnnotations(name = "human gut metagenome")
 #' }

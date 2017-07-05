@@ -44,7 +44,7 @@ on the \pkg{biomaRt} package
 implemented by Steffen Durinck et al.
 }
 \examples{
-
+\dontrun{
 # 1) select a mart
 getMarts()
 
@@ -65,7 +65,7 @@ biomart(genes      = c("AT1G06090", "AT1G06100",
         dataset    = "athaliana_eg_gene",
         attributes = c("start_position","end_position","description"),
         filters    = "ensembl_gene_id")
-
+}
 
 }
 \seealso{

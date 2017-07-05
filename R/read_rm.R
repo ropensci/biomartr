@@ -37,7 +37,7 @@ read_rm <- function(file) {
         "in_repeat_start",
         "in_repeat_end"
     )
-    
+    qry_end <- qry_start <- NULL
     rm_file <- dplyr::mutate(rm_file,
                              qry_start = as.integer(qry_start),
                              qry_end = as.integer(qry_end))
@@ -53,6 +53,7 @@ read_rm <- function(file) {
         dplyr::mutate(
             rm_file,
             qry_width = as.integer(qry_end - qry_start + 1L))
+
     return(rm_file)
 }
 
