@@ -146,7 +146,7 @@ might reveal that the dataset `ENSEMBL_MART_ENSEMBL` has changed.__
 
 The `getMarts()` function allows users to list all available databases that can be accessed through BioMart interfaces.
 
-```{r,eval=FALSE}
+```{r,eval=TRUE}
 # load the biomartr package
 library(biomartr)
 
