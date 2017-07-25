@@ -2,6 +2,7 @@ biomartr
 ========
 
 [![Travis-CI Build Status](https://travis-ci.org/ropensci/biomartr.svg?branch=master)](https://travis-ci.org/ropensci/biomartr) [![rpackages.io rank](https://www.rpackages.io/badge/biomartr.svg)](https://www.rpackages.io/package/biomartr)
+[![](https://badges.ropensci.org/93_status.svg)](https://github.com/ropensci/onboarding/issues/93)
 
 ## Genomic Data Retrieval with R
 
