@@ -108,7 +108,7 @@ getAssemblyStats <-
             dplyr::filter(
                 AssemblyFilesAllKingdoms,
                 stringr::str_detect(organism_name, organism),
-                ((refseq_category == "representative genome") ||
+                ((refseq_category == "representative genome") |
                      (refseq_category == "reference genome")
                 ),
                 (version_status == "latest")
