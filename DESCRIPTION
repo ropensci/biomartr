@@ -1,8 +1,10 @@
 Package: biomartr
 Title: Genomic Data Retrieval
 Version: 0.6.0.9000
-Author: Hajk-Georg Drost
-Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
+Authors@R: person("Hajk-Georg", "Drost",
+                role = c("aut", "cre"),
+                email = "hgd23@cam.ac.uk",
+                comment = c(ORCID = "http://orcid.org/0000-0002-1567-306X"))
 Description: Perform metagenomic data retrieval and functional annotation
     retrieval. In detail, this package aims to provide users with a standardized
     way to automate genome, proteome, coding sequence ('CDS'), 'GFF', and metagenome
@@ -42,3 +44,6 @@ URL: https://github.com/ropensci/biomartr
 BugReports: https://github.com/ropensci/biomartr/issues
 RoxygenNote: 6.0.1
 Encoding: UTF-8
+X-schema.org-keywords: BioMart, genomic-data-retrieval, annotation-retrieval, database-retrieval, NCBI, ENSEMBL, biological-data-retrieval 
+X-schema.org-applicationCategory: Data Access 
+X-schema.org-isPartof: "ropensci.org"
