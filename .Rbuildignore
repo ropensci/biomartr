@@ -9,3 +9,4 @@ README.Rmd
 ^\.httr-oauth$
 ^CONDUCT\.md$
 ^FAQs\.md$
+^codemeta\.json$
