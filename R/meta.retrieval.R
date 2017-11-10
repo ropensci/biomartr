@@ -229,6 +229,7 @@ meta.retrieval <- function(kingdom,
                 "'."
             )
         )
+    message("\n")
     
     if (!is.null(path)) {
         if (!file.exists(path)) {
@@ -239,186 +240,253 @@ meta.retrieval <- function(kingdom,
     
     paths <- vector("character", length(FinalOrganisms))
     
-    if (type == "genome") {
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getGenome(db       = db,
-                          organism = FinalOrganisms[i],
-                          path     = kingdom)
-            }
-        }
+    
+    if (is.element(db, c("refseq", "genbank"))) {
+        if (type == "genome") internal_type <- "genomic"
+        if (type == "proteome") internal_type <- "protein"
+        if (type == "CDS") internal_type <- "cds"
+        if (type == "gff") internal_type <- "genomic"
+        if (type == "gtf") internal_type <- db
+        if (type == "rna") internal_type <- "rna"
+        if (type == "rm") internal_type <- "rm"
+        if (type == "assemblystats") internal_type <- "assembly"
+        
         
         if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getGenome(db       = db,
-                          organism = FinalOrganisms[i],
-                          path     = path)
-            }
+            .existingOrgs <- existingOrganisms(path = path, .type = internal_type)   
+        } else {
+            .existingOrgs <- existingOrganisms(path = kingdom, .type = internal_type)
+        }
+        
+    }
+    
+    
+    if (db == "ensembl") {
+        
+        if (type == "genome") internal_type <- "dna"
+        if (type == "proteome") internal_type <- "pep"
+        if (type == "CDS") internal_type <- "cds"
+        if (type == "gff") internal_type <- "ensembl"
+        if (type == "gtf") internal_type <- "ensembl"
+        if (type == "rna") internal_type <- "ncrna"
+        
+        
+        if (!is.null(path)) {
+            .existingOrgs <- existingOrganisms_ensembl(path = path, .type = internal_type)   
+        } else {
+            .existingOrgs <- existingOrganisms_ensembl(path = kingdom, .type = internal_type)
         }
     }
     
-    if (type == "proteome") {
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getProteome(db       = db,
-                            organism = FinalOrganisms[i],
-                            path     = kingdom)
-            }
-        }
+    if (db == "ensemblgenomes") {
+        if (type == "genome") internal_type <- "dna"
+        if (type == "proteome") internal_type <- "pep"
+        if (type == "CDS") internal_type <- "cds"
+        if (type == "gff") internal_type <- "ensemblgenomes"
+        if (type == "gtf") internal_type <- "ensemblgenomes"
+        if (type == "rna") internal_type <- "ncrna"
         
         if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getProteome(db       = db,
-                            organism = FinalOrganisms[i],
-                            path     = path)
-            }
-        }
-    }
-    
-    if (type == "CDS") {
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getCDS(db       = db,
-                       organism = FinalOrganisms[i],
-                       path     = kingdom)
-            }
+            .existingOrgs <- existingOrganisms_ensembl(path = path, .type = internal_type)   
+        } else {
+            .existingOrgs <- existingOrganisms_ensembl(path = kingdom, .type = internal_type)
         }
         
-        if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getCDS(db       = db,
-                       organism = FinalOrganisms[i],
-                       path     = path)
-            }
-        }
     }
     
-    if (type == "gff") {
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getGFF(db       = db,
-                       organism = FinalOrganisms[i],
-                       path     = kingdom)
-            }
-        }
+    if (length(.existingOrgs) > 0) {
+        message("Skipping already downloaded species: ", paste0(.existingOrgs, collapse = ", "))
+        FinalOrganisms <- dplyr::setdiff(FinalOrganisms, .existingOrgs)
+        message("\n")
+    }
+
+    if (length(FinalOrganisms) > 0) {
         
-        if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getGFF(db       = db,
-                       organism = FinalOrganisms[i],
-                       path     = path)
-            }
-        }
-    }
-    
-    if (type == "gtf") {
+        if (type == "genome") {
             if (is.null(path)) {
-                    for (i in seq_len(length(FinalOrganisms))) {
-                            paths[i] <- getGTF(db       = db,
-                                               organism = FinalOrganisms[i],
-                                               path     = kingdom)
-                    }
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getGenome(db       = db,
+                                          organism = FinalOrganisms[i],
+                                          path     = kingdom)
+                }
             }
             
             if (!is.null(path)) {
-                    for (i in seq_len(length(FinalOrganisms))) {
-                            paths[i] <- getGTF(db       = db,
-                                               organism = FinalOrganisms[i],
-                                               path     = path)
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getGenome(db       = db,
+                                          organism = FinalOrganisms[i],
+                                          path     = path)
+                }
+            }
+        }
+        
+        if (type == "proteome") {
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getProteome(db       = db,
+                                            organism = FinalOrganisms[i],
+                                            path     = kingdom)
+                }
+            }
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getProteome(db       = db,
+                                            organism = FinalOrganisms[i],
+                                            path     = path)
+                }
+            }
+        }
+        
+        if (type == "CDS") {
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getCDS(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = kingdom)
+                }
+            }
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getCDS(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = path)
+                }
+            }
+        }
+        
+        if (type == "gff") {
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getGFF(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = kingdom)
+                }
+            }
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getGFF(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = path)
+                }
+            }
+        }
+        
+        if (type == "gtf") {
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getGTF(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = kingdom)
+                }
+            }
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getGTF(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = path)
+                }
+            }
+        }
+        
+        if (type == "rm") {
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getRepeatMasker(db       = db,
+                                                organism = FinalOrganisms[i],
+                                                path     = kingdom)
+                }
+            }
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getRepeatMasker(db       = db,
+                                                organism = FinalOrganisms[i],
+                                                path     = path)
+                }
+            }
+        }
+        
+        if (type == "rna") {
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    paths[i] <- getRNA(db       = db,
+                                       organism = FinalOrganisms[i],
+                                       path     = kingdom)
+                }
+            }
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    getRNA(db       = db,
+                           organism = FinalOrganisms[i],
+                           path     = path)
+                }
+            }
+        }
+        
+        if (type == "assemblystats") {
+            stats.files <- vector("list", length(FinalOrganisms))
+            
+            if (is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    if (combine) {
+                        stats.files[i] <- list(
+                            getAssemblyStats(
+                                db       = db,
+                                organism = FinalOrganisms[i],
+                                path     = kingdom,
+                                type     = "import"
+                            )
+                        )
+                    } else {
+                        paths[i] <- getAssemblyStats(
+                            db       = db,
+                            organism = FinalOrganisms[i],
+                            path     = kingdom
+                        )
                     }
+                }
             }
-    }
-    
-    if (type == "rm") {
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getRepeatMasker(db       = db,
-                                   organism = FinalOrganisms[i],
-                                   path     = kingdom)
-            }
-        }
-        
-        if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getRepeatMasker(db       = db,
-                                   organism = FinalOrganisms[i],
-                                   path     = path)
-            }
-        }
-    }
-    
-    if (type == "rna") {
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                paths[i] <- getRNA(db       = db,
-                       organism = FinalOrganisms[i],
-                       path     = kingdom)
-            }
-        }
-        
-        if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                getRNA(db       = db,
-                       organism = FinalOrganisms[i],
-                       path     = path)
-            }
-        }
-    }
-    
-    if (type == "assemblystats") {
-        stats.files <- vector("list", length(FinalOrganisms))
-        
-        if (is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                if (combine) {
-                    stats.files[i] <- list(
-                        getAssemblyStats(
+            
+            if (!is.null(path)) {
+                for (i in seq_len(length(FinalOrganisms))) {
+                    if (combine) {
+                        stats.files[i] <- list(
+                            getAssemblyStats(
+                                db       = db,
+                                organism = FinalOrganisms[i],
+                                path     = path,
+                                type     = "import"
+                            )
+                        )
+                    } else {
+                        paths[i] <- getAssemblyStats(
                             db       = db,
                             organism = FinalOrganisms[i],
-                            path     = kingdom,
-                            type     = "import"
+                            path     = path
                         )
-                    )
-                } else {
-                    paths[i] <- getAssemblyStats(
-                        db       = db,
-                        organism = FinalOrganisms[i],
-                        path     = kingdom
-                    )
+                    }
                 }
             }
         }
         
-        if (!is.null(path)) {
-            for (i in seq_len(length(FinalOrganisms))) {
-                if (combine) {
-                    stats.files[i] <- list(
-                        getAssemblyStats(
-                            db       = db,
-                            organism = FinalOrganisms[i],
-                            path     = path,
-                            type     = "import"
-                        )
-                    )
-                } else {
-                    paths[i] <- getAssemblyStats(
-                        db       = db,
-                        organism = FinalOrganisms[i],
-                        path     = path
-                    )
-                }
-            }
+        if (combine) {
+            stats.files <- dplyr::bind_rows(stats.files)
+            message("Finished meta retieval process.")
+            return(stats.files)
         }
-    }
-    
-    if (combine) {
-        stats.files <- dplyr::bind_rows(stats.files)
+        
         message("Finished meta retieval process.")
-        return(stats.files)
+        return(paths[!is.element(paths, c("FALSE", "Not available"))])
+    } else {
+        message("The ", type,"s of all species have already been downloaded! You are up to date!")
     }
     
-    message("Finished meta retieval process.")
-    return(paths[!is.element(paths, c("FALSE", "Not available"))])
+    
 }
 
 
