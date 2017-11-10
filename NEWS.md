@@ -1,7 +1,15 @@
 biomartr 0.6.0
 ===========
 
+### Function changes
 
+- the function `meta.retrieval()` will now pick up the download at the organism
+where it left off
+
+### New Functions
+
+- new internal functions `existingOrganisms()` and `existingOrganisms_ensembl()`
+which check the organisms that have already been downloaded
 
 biomartr 0.5.2
 ===========
