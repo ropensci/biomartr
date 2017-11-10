@@ -32,6 +32,7 @@ Imports:
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
     stringr (>= 0.6.2),
+    purrr
 Suggests:
     knitr (>= 1.6),
     rmarkdown (>= 0.3.3),
