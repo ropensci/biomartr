@@ -48,7 +48,7 @@ getCDS <-
                 call. = FALSE
             )
             
-        message("Starting retrieval of ", organism," ...")
+        message("Starting CDS retrieval of ", organism," ...")
             
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
