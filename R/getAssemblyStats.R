@@ -86,6 +86,8 @@ getAssemblyStats <-
                 call. = FALSE
             )
         
+        message("Starting assembly quality stats retrieval of ", organism," ...")
+            
         # get Kingdom Assembly Summary file
         AssemblyFilesAllKingdoms <-
             getKingdomAssemblySummary(db = db)
