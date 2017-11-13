@@ -60,7 +60,7 @@ getGFF <-
                 'genbank', 'ensembl', 'ensemblgenomes'."
             )
         
-        message("Starting retrieval of ", organism," ...")
+        message("Starting gff retrieval of ", organism," ...")
             
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
