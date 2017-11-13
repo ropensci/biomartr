@@ -51,7 +51,8 @@ getGTF <-
                                 "Please select one of the available data bases: 
                                 'ensembl' or 'ensemblgenomes'."
                         )
-                message("Starting retrieval of ", organism," ...")
+                
+                message("Starting gtf retrieval of ", organism," ...")
                 
                 if (db == "ensembl") {
                         # create result folder
