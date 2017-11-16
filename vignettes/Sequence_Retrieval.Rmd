@@ -24,10 +24,10 @@ The `biomartr` package allows users to retrieve biological sequences in a very s
 Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
 * [1. Genome retrieval with `getGenome()`](#genome-retrieval)
-    - [1.1 from NCBI RefSeq]()
-    - [1.2 from NCBI Genbank]()
-    - [1.3 from ENSEMBL]()
-    - [1.4 from ENSEMBLGENOMES]()
+    - [1.1 from NCBI RefSeq](#example-ncbi-refseq)
+    - [1.2 from NCBI Genbank](#example-ncbi-genbank)
+    - [1.3 from ENSEMBL](#example-ensembl)
+    - [1.4 from ENSEMBLGENOMES](#example-ensemblgenomes)
 * [2. Proteome retrieval with `getProteome()`](#proteome-retrieval)
     - [2.1 from NCBI RefSeq]()
     - [2.2 from NCBI Genbank]()
@@ -584,7 +584,7 @@ Human_Genome
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
 ```
 
-Example `Genbank`:
+### Example NCBI Genbank:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from Genbank
@@ -622,7 +622,7 @@ Human_Genome
 ```
 
 
-Example `ENSEMBL`:
+### Example ENSEMBL:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from ENSEMBL
@@ -659,7 +659,7 @@ Human_Genome
 [524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...
 ```
 
-Example `ENSEMBLGENOMES`:
+### Example ENSEMBLGENOMES:
 
 Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
@@ -714,7 +714,7 @@ Furthermore, again users need to specify the scientific name of the organism of 
 Finally, the `path` argument specifies the folder path in which the corresponding proteome shall be locally stored. In case users would like to store the proteome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
-Example `RefSeq`:
+### Example NCBI RefSeq:
 
 ```{r,eval=FALSE}
 # download the proteome of Homo sapiens from refseq
