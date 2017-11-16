@@ -66,6 +66,10 @@ getKingdomAssemblySummary <- function(db) {
             # otherwise download all assembly_summary.txt files for all kingdoms
             # and store the AssemblyFilesAllKingdoms.txt file locally
             # retrieve the assembly_summary.txt files for all kingdoms
+            message("It seems that this is the first time you run this command for ",db,".")
+            message("Thus, 'assembly_summary.txt' files for all kingdoms will be retrieved from ",db,". ")
+            message("Don't worry this has to be done only once if you don't restart your R session.")
+            message("\n")
             kgdoms <- getKingdoms(db = db)
             storeAssemblyFiles <- vector("list", length(kgdoms))
             
@@ -82,6 +86,10 @@ getKingdomAssemblySummary <- function(db) {
                                  tempdir(),
                                  paste0("AssemblyFilesAllKingdoms_", db, ".txt")
                              ))
+            
+            message("\n")
+            message("Completed!")
+            message("Now continue with species download ...")
         }
     }
     
@@ -92,5 +100,6 @@ getKingdomAssemblySummary <- function(db) {
     
     AssemblyFilesAllKingdoms <-
         dplyr::mutate(AssemblyFilesAllKingdoms, organism_name = orgs)
+    
     return(AssemblyFilesAllKingdoms)
 }
