@@ -15,6 +15,7 @@
 #' } 
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param path a character string specifying the location (a folder) 
 #' in which the corresponding CDS file shall be stored. 
 #' Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
@@ -39,6 +40,7 @@
 getCDS <-
     function(db = "refseq",
              organism,
+             reference = TRUE,
              path = file.path("_ncbi_downloads", "CDS")) {
         if (!is.element(db, c("refseq", "genbank", 
                               "ensembl", "ensemblgenomes")))
@@ -48,8 +50,9 @@ getCDS <-
                 call. = FALSE
             )
             
-        message("Starting CDS retrieval of ", organism," ...")
-            
+        message("Starting CDS retrieval '", organism, "' from ", db, " ...")
+        message("\n")
+        
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
@@ -69,25 +72,34 @@ getCDS <-
             organism <-
                 stringr::str_replace_all(organism, "\\)", "")
             
-            FoundOrganism <- dplyr::filter(
-                AssemblyFilesAllKingdoms,
-                stringr::str_detect(organism_name, organism),
-                ((refseq_category == "representative genome") |
-                     (refseq_category == "reference genome")
-                ),
-                (version_status == "latest")
-            )
+            if (reference) {
+                    FoundOrganism <-
+                            dplyr::filter(
+                                    AssemblyFilesAllKingdoms,
+                                    stringr::str_detect(organism_name, organism),
+                                    ((refseq_category == "representative genome") |
+                                             (refseq_category == "reference genome")
+                                    ),
+                                    (version_status == "latest")
+                            ) 
+            } else {
+                    FoundOrganism <-
+                            dplyr::filter(
+                                    AssemblyFilesAllKingdoms,
+                                    stringr::str_detect(organism_name, organism),
+                                    (version_status == "latest")
+                            ) 
+            }
             
             if (nrow(FoundOrganism) == 0) {
-                message(
-                    paste0(
-                        "----------> No reference genome or representative ",
-                        "genome was found for '",
-                        organism,
-                        "'. Thus, download for this species has been omitted."
+                    message(
+                            paste0(
+                                    "----------> No reference genome or representative genome was found for '",
+                                    organism, "'. Thus, download for this species has been omitted.",
+                                    " Have you tried to specify 'reference = FALSE' ?"
+                            )
                     )
-                )
-                return("Not available")
+                    return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
@@ -169,6 +181,8 @@ getCDS <-
                                 )
                             )
                             
+                         message("CDS download is completed!")
+                                
                             # download md5checksum file for organism of interest
                             custom_download(
                             paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
