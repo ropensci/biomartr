@@ -32,6 +32,7 @@
 #'  (for genome assembly quality stats file retrieval; 
 #'  see also \code{\link{getAssemblyStats}}).
 #'  }
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param combine just in case \code{type = "assemblystats"} is specified, shall
 #' assemby stats of individual species be imported and combined to a 
 #' \code{\link{data.frame}}? 
@@ -92,6 +93,7 @@ meta.retrieval <- function(kingdom,
                            group = NULL,
                            db         = "refseq",
                            type       = "genome",
+                           reference  = TRUE,
                            combine    = FALSE,
                            path = NULL) {
     # test internet connection
@@ -305,9 +307,10 @@ meta.retrieval <- function(kingdom,
         if (type == "genome") {
             if (is.null(path)) {
                 for (i in seq_len(length(FinalOrganisms))) {
-                    paths[i] <- getGenome(db       = db,
-                                          organism = FinalOrganisms[i],
-                                          path     = kingdom)
+                    paths[i] <- getGenome(db        = db,
+                                          organism  = FinalOrganisms[i],
+                                          reference = reference,
+                                          path      = kingdom)
                 }
             }
             
@@ -315,6 +318,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getGenome(db       = db,
                                           organism = FinalOrganisms[i],
+                                          reference = reference,
                                           path     = path)
                 }
             }
@@ -325,6 +329,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getProteome(db       = db,
                                             organism = FinalOrganisms[i],
+                                            reference = reference,
                                             path     = kingdom)
                 }
             }
@@ -333,6 +338,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getProteome(db       = db,
                                             organism = FinalOrganisms[i],
+                                            reference = reference,
                                             path     = path)
                 }
             }
@@ -343,6 +349,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getCDS(db       = db,
                                        organism = FinalOrganisms[i],
+                                       reference = reference,
                                        path     = kingdom)
                 }
             }
@@ -351,6 +358,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getCDS(db       = db,
                                        organism = FinalOrganisms[i],
+                                       reference = reference,
                                        path     = path)
                 }
             }
@@ -361,6 +369,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getGFF(db       = db,
                                        organism = FinalOrganisms[i],
+                                       reference = reference,
                                        path     = kingdom)
                 }
             }
@@ -369,6 +378,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getGFF(db       = db,
                                        organism = FinalOrganisms[i],
+                                       reference = reference,
                                        path     = path)
                 }
             }
@@ -397,6 +407,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getRepeatMasker(db       = db,
                                                 organism = FinalOrganisms[i],
+                                                reference = reference,
                                                 path     = kingdom)
                 }
             }
@@ -405,6 +416,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getRepeatMasker(db       = db,
                                                 organism = FinalOrganisms[i],
+                                                reference = reference,
                                                 path     = path)
                 }
             }
@@ -415,6 +427,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getRNA(db       = db,
                                        organism = FinalOrganisms[i],
+                                       reference = reference,
                                        path     = kingdom)
                 }
             }
@@ -423,6 +436,7 @@ meta.retrieval <- function(kingdom,
                 for (i in seq_len(length(FinalOrganisms))) {
                     getRNA(db       = db,
                            organism = FinalOrganisms[i],
+                           reference = reference,
                            path     = path)
                 }
             }
@@ -438,6 +452,7 @@ meta.retrieval <- function(kingdom,
                             getAssemblyStats(
                                 db       = db,
                                 organism = FinalOrganisms[i],
+                                reference = reference,
                                 path     = kingdom,
                                 type     = "import"
                             )
@@ -446,6 +461,7 @@ meta.retrieval <- function(kingdom,
                         paths[i] <- getAssemblyStats(
                             db       = db,
                             organism = FinalOrganisms[i],
+                            reference = reference,
                             path     = kingdom
                         )
                     }
@@ -459,6 +475,7 @@ meta.retrieval <- function(kingdom,
                             getAssemblyStats(
                                 db       = db,
                                 organism = FinalOrganisms[i],
+                                reference = reference,
                                 path     = path,
                                 type     = "import"
                             )
@@ -466,6 +483,7 @@ meta.retrieval <- function(kingdom,
                     } else {
                         paths[i] <- getAssemblyStats(
                             db       = db,
+                            reference = reference,
                             organism = FinalOrganisms[i],
                             path     = path
                         )
