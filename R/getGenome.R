@@ -14,6 +14,7 @@
 #' }
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome. 
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding genome shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
@@ -58,6 +59,7 @@
 getGenome <-
     function(db = "refseq",
              organism,
+             reference = TRUE,
              path = file.path("_ncbi_downloads", "genomes")) {
         
        if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
@@ -66,9 +68,14 @@ getGenome <-
                 'genbank', 'ensembl', or 'ensemblgenomes'.",
                 call. = FALSE
             )
-            
-        message("Starting genome retrieval of ", organism," ...")
-            
+        
+        if (!is.logical(reference))
+            stop("Please specify 'reference' as either TRUE or FALSE.", call. = FALSE)
+                
+                
+        message("Starting genome retrieval of '", organism, "' from ", db, " ...")
+        message("\n")
+        
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
@@ -89,36 +96,41 @@ getGenome <-
             organism <-
                 stringr::str_replace_all(organism, "\\)", "")
             
-            FoundOrganism <-
-                dplyr::filter(
-                    AssemblyFilesAllKingdoms,
-                    stringr::str_detect(organism_name, organism),
-                    ((refseq_category == "representative genome") |
-                         (refseq_category == "reference genome")
-                    ),
-                    (version_status == "latest")
-                )
+            if (reference) {
+                    FoundOrganism <-
+                            dplyr::filter(
+                                    AssemblyFilesAllKingdoms,
+                                    stringr::str_detect(organism_name, organism),
+                                    ((refseq_category == "representative genome") |
+                                             (refseq_category == "reference genome")
+                                    ),
+                                    (version_status == "latest")
+                            ) 
+            } else {
+                    FoundOrganism <-
+                            dplyr::filter(
+                                    AssemblyFilesAllKingdoms,
+                                    stringr::str_detect(organism_name, organism),
+                                    (version_status == "latest")
+                            ) 
+            }
             
             if (nrow(FoundOrganism) == 0) {
                 message(
                     paste0(
-                        "----------> No reference genome or representative 
-                        genome was found for '",
-                        organism,
-                        "'. Thus, download for this species has been omitted."
+                        "----------> No reference genome or representative genome was found for '",
+                        organism, "'. Thus, download for this species has been omitted.",
+                        " Have you tried to specify 'reference = FALSE' ?"
                     )
                 )
-                return("Not available")
+                 return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
                         "More than one entry has been found for '",
-                        organism,
-                        "'. Only the first entry '",
-                        FoundOrganism[1, 1],
-                        "' has been used for subsequent genome retrieval."
+                        organism, "'. Only the first entry '", FoundOrganism[1, 1], "' has been used for subsequent genome retrieval."
                     )
-                    FoundOrganism <- FoundOrganism[1,]
+                    FoundOrganism <- FoundOrganism[1, ]
                 }
                 
                 organism <-
@@ -136,8 +148,7 @@ getGenome <-
                                      file.path = download_url)) {
                     message(
                    "Unfortunately no genome file could be found for organism '",
-                        organism,
-                      "'. Thus, the download of this organism has been omitted."
+                        organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
                     )
                     return(FALSE)
                 }
@@ -185,6 +196,8 @@ getGenome <-
                                 mode = "wb"
                             )
                             
+                            message("Genome download is completed!")
+                            
                             # test check sum
                             md5_file_path <- file.path(path, 
                                                        paste0(local.org, 
@@ -210,8 +223,7 @@ getGenome <-
                                     paste0(
                                         "Please download the file '",
                                         md5_file_path,
-            "' again. The md5 hash between the downloaded file and the file ",
-                                        "stored at NCBI do not match.",
+            "' again. The md5 hash between the downloaded file and the file ", "stored at NCBI do not match.",
                                         collapse = ""
                                     )
                                 )
@@ -220,11 +232,8 @@ getGenome <-
                             
                         }, error = function(e)
                             stop(
-                                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' 
-                                cannot be reached. Are you connected to the 
-                                internet? Is the the FTP site '",
-                                download_url,
-                                "' currently available?",
+                                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+                                download_url, "' currently available?",
                                 call. = FALSE
                             ))
                     }
@@ -248,6 +257,30 @@ getGenome <-
                         seq_rel_date = FoundOrganism$seq_rel_date,
                         submitter = FoundOrganism$submitter
                     )
+                    
+                    
+                    doc <- tibble::tibble(
+                            file_name = paste0(local.org, "_genomic_", db,
+                                               ".fna.gz"),
+                            organism  = organism,
+                            url       = download_url,
+                            database  = db,
+                            path      = path,
+                            refseq_category = FoundOrganism$refseq_category,
+                            assembly_accession = FoundOrganism$assembly_accession,
+                            bioproject = FoundOrganism$bioproject,
+                            biosample = FoundOrganism$biosample,
+                            taxid = FoundOrganism$taxid,
+                            infraspecific_name = FoundOrganism$infraspecific_name,
+                            version_status = FoundOrganism$version_status,
+                            release_type = FoundOrganism$release_type,
+                            genome_rep = FoundOrganism$genome_rep,
+                            seq_rel_date = FoundOrganism$seq_rel_date,
+                            submitter = FoundOrganism$submitter
+                            
+                    )
+                    
+                    readr::write_tsv(doc, path = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
                     
                     message(
                         paste0(
@@ -306,9 +339,8 @@ getGenome <-
                 }, error = function(e)
                     stop(
                         "The API 'http://rest.ensembl.org' does not seem to work
-                        properly. Are you connected to the internet? 
-                        Is the homepage 'http://rest.ensembl.org' currently 
-                        available?",
+                        properly.","Are you connected to the internet?",  
+                        "Is the homepage 'http://rest.ensembl.org' currently available?",
                         call. = FALSE
                     ))
                 
@@ -350,6 +382,24 @@ getGenome <-
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                        file_name = genome.path,
+                        organism = new.organism,
+                        database = db,
+                        download_data = date(),
+                        assembly_name = json.qry.info$assembly_name,
+                        assembly_date = json.qry.info$assembly_date,
+                        genebuild_last_geneset_update = json.qry.info$genebuild_last_geneset_update,
+                        assembly_accession = json.qry.info$assembly_accession,
+                        genebuild_initial_release_date = json.qry.info$genebuild_initial_release_date
+                        
+                )
+                
+                readr::write_tsv(doc, file.path(
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                        )
                 
                 message(
                     paste0(
@@ -395,10 +445,7 @@ getGenome <-
                         )
                 }, error = function(e)
                     stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem 
-                        to work properly. Are you connected to the internet? 
-                        Is the homepage 'http://rest.ensemblgenomes.org' 
-                        currently available?",
+                        "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?",
                         call. = FALSE
                     ))
                 
@@ -440,6 +487,24 @@ getGenome <-
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                        file_name = genome.path,
+                        organism = new.organism,
+                        database = db,
+                        download_data = date(),
+                        assembly_name = json.qry.info$assembly_name,
+                        assembly_date = json.qry.info$assembly_date,
+                        genebuild_last_geneset_update = json.qry.info$genebuild_last_geneset_update,
+                        assembly_accession = json.qry.info$assembly_accession,
+                        genebuild_initial_release_date = json.qry.info$genebuild_initial_release_date
+                        
+                )
+                
+                readr::write_tsv(doc, file.path(
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
                 
                 message(
                     paste0(
