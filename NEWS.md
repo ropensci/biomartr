@@ -6,6 +6,8 @@ biomartr 0.6.0
 - the function `meta.retrieval()` will now pick up the download at the organism
 where it left off
 
+- all `get*()` functions and the `meta.retrieval()` function receive a new argument `reference` which allows users to retrieve not-reference or not-representative genome versions when downloading from NCBI RefSeq or NCBI Genbank
+
 ### New Functions
 
 - new internal functions `existingOrganisms()` and `existingOrganisms_ensembl()`
