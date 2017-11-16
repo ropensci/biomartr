@@ -5,7 +5,7 @@
 \title{Perform Meta-Genome Retieval}
 \usage{
 meta.retrieval(kingdom, group = NULL, db = "refseq", type = "genome",
-  combine = FALSE, path = NULL)
+  reference = TRUE, combine = FALSE, path = NULL)
 }
 \arguments{
 \item{kingdom}{a character string specifying the kingdom of the organisms 
@@ -42,6 +42,8 @@ shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"},
  (for genome assembly quality stats file retrieval; 
  see also \code{\link{getAssemblyStats}}).
  }}
+
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{combine}{just in case \code{type = "assemblystats"} is specified, shall
 assemby stats of individual species be imported and combined to a 
