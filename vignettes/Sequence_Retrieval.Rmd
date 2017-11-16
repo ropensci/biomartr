@@ -23,13 +23,41 @@ The `biomartr` package allows users to retrieve biological sequences in a very s
 
 Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
-* [Genome retrieval with `getGenome()`](#genome-retrieval)
-* [Proteome retrieval with `getProteome()`](#proteome-retrieval)
-* [Coding sequence retrieval with `getCDS()`](#cds-retrieval)
-* [RNA retrieval with `getRNA()`](#rna-retrieval)
-* [GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
-* [GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
-* [Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
+* [1. Genome retrieval with `getGenome()`](#genome-retrieval)
+    - [1.1 from NCBI RefSeq]()
+    - [1.2 from NCBI Genbank]()
+    - [1.3 from ENSEMBL]()
+    - [1.4 from ENSEMBLGENOMES]()
+* [2. Proteome retrieval with `getProteome()`](#proteome-retrieval)
+    - [2.1 from NCBI RefSeq]()
+    - [2.2 from NCBI Genbank]()
+    - [2.3 from ENSEMBL]()
+    - [2.4 from ENSEMBLGENOMES]()
+* [3. Coding sequence retrieval with `getCDS()`](#cds-retrieval)
+    - [3.1 from NCBI RefSeq]()
+    - [3.2 from NCBI Genbank]()
+    - [3.3 from ENSEMBL]()
+    - [3.4 from ENSEMBLGENOMES]()
+* [4. RNA retrieval with `getRNA()`](#rna-retrieval)
+    - [4.1 from NCBI RefSeq]()
+    - [4.2 from NCBI Genbank]()
+    - [4.3 from ENSEMBL]()
+    - [4.4 from ENSEMBLGENOMES]()
+* [5. GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
+    - [5.1 from NCBI RefSeq]()
+    - [5.2 from NCBI Genbank]()
+    - [5.3 from ENSEMBL]()
+    - [5.4 from ENSEMBLGENOMES]()
+* [6. GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
+    - [6.1 from NCBI RefSeq]()
+    - [6.2 from NCBI Genbank]()
+    - [6.3 from ENSEMBL]()
+    - [6.4 from ENSEMBLGENOMES]()
+* [7. Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
+    - [7.1 from NCBI RefSeq]()
+    - [7.2 from NCBI Genbank]()
+    - [7.3 from ENSEMBL]()
+    - [7.4 from ENSEMBLGENOMES]()
 
 
 ## Getting Started with Sequence Retrieval
@@ -443,7 +471,7 @@ Furthermore, users need to specify the scientific name of the organism of intere
 Finally, the `path` argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
-Example `RefSeq`:
+### Example NCBI RefSeq:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from refseq
