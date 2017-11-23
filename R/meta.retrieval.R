@@ -1,4 +1,4 @@
-#' @title Perform Meta-Genome Retieval
+#' @title Perform Meta-Genome Retrieval
 #' @description Download genomes, proteomes, cds, gff, rna, or assembly stats 
 #' files of all species within a kingdom of life.
 #' @param kingdom a character string specifying the kingdom of the organisms 
