@@ -2,7 +2,7 @@
 % Please edit documentation in R/meta.retrieval.R
 \name{meta.retrieval}
 \alias{meta.retrieval}
-\title{Perform Meta-Genome Retieval}
+\title{Perform Meta-Genome Retrieval}
 \usage{
 meta.retrieval(kingdom, group = NULL, db = "refseq", type = "genome",
   reference = TRUE, combine = FALSE, path = NULL)
