@@ -98,6 +98,7 @@ test_that("The getGenome() interface works properly for ENSEMBL..", {
 test_that("The getGenome() error messages work properly for ENSEMBLGENOMES..",
           {
               skip_on_cran()
+              skip_on_travis()
               expect_warning(
                   getGenome(
                       db       = "ensemblgenomes",
@@ -109,6 +110,8 @@ test_that("The getGenome() error messages work properly for ENSEMBLGENOMES..",
 
 test_that("The getGenome() error messages work properly for ENSEMBL..", {
     skip_on_cran()
+    skip_on_travis()
+    
     expect_warning(getGenome(
         db       = "ensembl",
         organism = "Saccharomyces cerevisi",
@@ -118,6 +121,8 @@ test_that("The getGenome() error messages work properly for ENSEMBL..", {
 
 test_that("The getGenome() error messages work properly for NCBI RefSeq", {
     skip_on_cran()
+    skip_on_travis()
+    
     expect_message(getGenome(
         db       = "refseq",
         organism = "Saccharomycesi",
