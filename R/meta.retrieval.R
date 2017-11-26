@@ -1,16 +1,61 @@
 #' @title Perform Meta-Genome Retrieval
 #' @description Download genomes, proteomes, cds, gff, rna, or assembly stats 
 #' files of all species within a kingdom of life.
+#' @param db a character string specifying the database from which the genome 
+#' shall be retrieved:
+#' 
+#' \itemize{
+#' \item \code{db = "refseq"}
+#' \item \code{db = "genbank"} 
+#' \item \code{db = "emsembl"}
+#' \item \code{db = "ensemblgenomes"}
+#' }
 #' @param kingdom a character string specifying the kingdom of the organisms 
-#' of interest, e.g. "archaea","bacteria", "fungi", "invertebrate", "plant", 
-#' "protozoa", "vertebrate_mammalian", or "vertebrate_other".
+#' of interest, e.g. 
+#' 
+#' \itemize{
+#' \item For \code{NCBI RefSeq}:
+#' \itemize{
+#' \item \code{kingdom = "archaea"}
+#' \item \code{kingdom = "bacteria"}
+#' \item \code{kingdom = "fungi"}
+#' \item \code{kingdom = "invertebrate"}
+#' \item \code{kingdom = "plant"}
+#' \item \code{kingdom = "protozoa"}
+#' \item \code{kingdom = "viral"}
+#' \item \code{kingdom = "vertebrate_mammalian"}
+#' \item \code{kingdom = "vertebrate_other"}
+#' }
+#' \item For \code{NCBI Genbank}:
+#' \itemize{
+#' \item \code{kingdom = "archaea"}
+#' \item \code{kingdom = "bacteria"}
+#' \item \code{kingdom = "fungi"}
+#' \item \code{kingdom = "invertebrate"}
+#' \item \code{kingdom = "plant"}
+#' \item \code{kingdom = "protozoa"}
+#' \item \code{kingdom = "vertebrate_mammalian"}
+#' \item \code{kingdom = "vertebrate_other"}
+#' }
+#' \item For \code{ENSEMBL}:
+#' \itemize{
+#' \item \code{kingdom = "Ensembl"}
+#' }
+#' \item For \code{ENSEMBLGENOMES}
+#' \itemize{
+#' \item \code{kingdom = "EnsemblBacteria"}
+#' \item \code{kingdom = "EnsemblFungi"}
+#' \item \code{kingdom = "EnsemblMetazoa"}
+#' \item \code{kingdom = "EnsemblPlants"}
+#' \item \code{kingdom = "EnsemblProtists"}
+#' }
+#' }
+#' 
 #' Available kingdoms can be retrieved with \code{\link{getKingdoms}}.
 #' @param group only species belonging to this subgroup will be downloaded. 
 #' Groups can be retrieved with \code{\link{getGroups}}.
-#' @param db a character string specifying the database from which the genome 
-#' shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, 
-#' \code{db = "emsembl"} or \code{db = "ensemblgenomes"}.
 #' @param type type of sequences that shall be retrieved. Options are:
+#' 
 #' \itemize{
 #'  \item \code{type = "genome"} :
 #'  (for genome assembly retrieval; see also \code{\link{getGenome}}), 
@@ -32,6 +77,7 @@
 #'  (for genome assembly quality stats file retrieval; 
 #'  see also \code{\link{getAssemblyStats}}).
 #'  }
+#'  
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param combine just in case \code{type = "assemblystats"} is specified, shall
 #' assemby stats of individual species be imported and combined to a 
@@ -89,9 +135,9 @@
 #' @return a character vector storing the file paths of the retrieved files.
 #' @export
 
-meta.retrieval <- function(kingdom,
+meta.retrieval <- function(db         = "refseq",
+                           kingdom,
                            group = NULL,
-                           db         = "refseq",
                            type       = "genome",
                            reference  = TRUE,
                            combine    = FALSE,
