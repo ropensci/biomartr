@@ -17,19 +17,38 @@ knitr::opts_chunk$set(
 ```
 
 
+- [1. Perform Meta-Genome Retrieval for Specific Kingdoms of Life](#perform-meta-genome-retrieval)
+    - [1.1 Retrieve Genomic Sequences](#retrieve-genomic-sequences)
+        - [1.1.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq)
+        - [1.1.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank)
+- [2. Retrieve groups or subgroups of species ](#retrieve-groups-or-subgroups-of-species)
+
 ## Perform Meta-Genome Retrieval
 
-The number of genome assemblies generated and stored in sequence databases is growing exponentially every year. With the availability of this growing amount of data, meta-genomics studies become more and more popular. By using this bulk of genomes for comparing them to thousands of other genomes
+The number of genome assemblies generated and stored in sequence databases is growing exponentially every year. With the availability of this growing amount of genomic data, meta-genomics studies become more and more popular. By using this bulk of genomes for comparing them to thousands of other genomes
 new structural patterns and evolutionary insights can be obtained.
 However, the first step in any meta-genomics study is the retrieval of the genomes, proteomes, coding sequences or annotation files that shall be compared
-and investigated. 
+and investigated. For this purpose, the `meta.retrieval()` and `meta.retrieval.all()` functions allows users to perform straightforward meta-genome retrieval of hundreds of genomes, proteomes, CDS, etc in R.
 
-For this purpose, the `meta.retrieval()` function allows users to perform straightforward meta-genome retrieval in R.
+#### Getting Started
 
-The `getKingdoms()` function stores a list of all available kingdoms of life. Using the argument `db` users can specify from which database
-kingdom information shall be retrieved.
+The `meta.retrieval()` and `meta.retrieval.all()` functions aim to simplify the genome retrieval process for subsequent meta-genomics studies. Both functions allow to either download genomes, proteomes, CDS, etc for species within a specific kinngdom or subgroup of life (`meta.retrieval()`) or of all species of all kingdoms. Usually this step is performed with `shell` scripts. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing workflows.
 
-Example `RefSeq`:
+For example, the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package can be used with
+`meta.retrieval()` and `meta.retrieval.all()` as follows.
+
+```{r,eval=FALSE}
+# download all vertebrate genomes, then apply ...
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome") %>% ...
+```
+
+Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval()` enables the pipelining methodology for meta-genomics. 
+
+### Retrieve Genomic Sequences
+
+To retrieve a list of all available kingdoms stored in the `NCBI RefSeq`,  `NCBI Genbank`, `ENSEMBL`, and `ENSEMBLGENOMES` databases users can consult the `getKingdoms()` function which stores a list of all available kingdoms of life for the corresponding database. 
+
+### Example `NCBI RefSeq`:
 
 ```{r, eval=FALSE}
 getKingdoms(db = "refseq")
@@ -41,7 +60,7 @@ getKingdoms(db = "refseq")
 [9] "viral"
 ```
 
-Example `Genbank`:
+### Example `NCBI Genbank`:
 
 ```{r, eval=FALSE}
 getKingdoms(db = "genbank")
@@ -55,30 +74,40 @@ getKingdoms(db = "genbank")
 
 In these examples the difference betwenn `db = "refseq"` and `db = "genbank"` is that `db = "genbank"` does not store `viral` information.
 
-These kingdoms can be specified in `meta.retrieval()`.
 
-The `meta.retrieval()` function aims to simplify the genome retrieval process
-for subsequent meta-genomics studies.
+### Example `ENSEMBL`
 
-Usually this step is performed with `shell` scripts. However, since many
-meta-genomics packages exist for the R programming language, I implemented
-this functionality for easy integration into existing workflows.
-
-For example, the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package can be used with
-`meta.retrieval()`.
-
-```{r,eval=FALSE}
-# download all vertebrate genomes, then apply ...
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome") %>% ...
+```{r, eval=FALSE}
+getKingdoms(db = "ensembl")
 ```
 
-Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval()` enables the pipelining methodology for meta-genomics. 
+```
+[1] "Ensembl"
+```
 
-The `meta.retrieval()` function can retrieve genomes, proteomes, and CDS files.
+The `ENSEMBL` database does not differentiate between different kingdoms, but specialized on storing high-quality reference genomes of diverse biological disciplines.
 
-#### Retrieve Genomic Sequences
+### Example `ENSEMBLGENOMES`
 
-Download all mammalian vertebrate genomes from RefSeq.
+
+```{r, eval=FALSE}
+getKingdoms(db = "ensemblgenomes")
+```
+
+```
+[1] "EnsemblBacteria" "EnsemblFungi"    "EnsemblMetazoa"  "EnsemblPlants"  
+[5] "EnsemblProtists"
+```
+
+The databse `ENSEMBLGENOMES` is divided into the specialised sub-databases `EnsemblBacteria`, `EnsemblFungi`, `EnsemblMetazoa`, `EnsemblPlants`, and `EnsemblProtists`.
+
+When chosing from which database species shall be retrieved (e.g. `db = "refseq"`),
+the `kingdom` argument specification must match the available kingdoms retrieved with e.g. `getKingdoms(db = "refseq")` 
+
+
+#### Retrieval from `NCBI RefSeq`
+
+Download all mammalian vertebrate genomes from `NCBI RefSeq`.
 
 ```{r,eval=FALSE}
 # download all vertebrate genomes
@@ -131,7 +160,9 @@ Example `Protozoa`
 meta.retrieval(kingdom = "protozoa", db = "refseq", type = "genome")
 ```
 
-Alternatively, download all mammalian vertebrate genomes from Genbank, e.g.
+#### Retrieval from `NCBI Genbank`
+
+Alternatively, download all mammalian vertebrate genomes from `NCBI Genbank`, e.g.
 
 ```{r,eval=FALSE}
 # download all vertebrate genomes
@@ -139,12 +170,12 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome"
 ```
 
 
-#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI RefSeq`:
+### Retrieve groups or subgroups of species 
 
 In case users do not wish to retrieve genomes from an entire kingdom, but rather from
-a subgoup (e.g. from species belonging to the `Gammaproteobacteria` class, a subgroup of the `bacteria` kingdom),
-they can use the following workflow:
+a group or subgoup (e.g. from species belonging to the `Gammaproteobacteria` class, a subgroup of the `bacteria` kingdom), they can use the following workflow.
 
+#### Example retrieval of all `Gammaproteobacteria` genomes from `NCBI RefSeq`:
 
 First, users can again consult the `getKingdoms()` function to retrieve kingdom information.
 
