@@ -169,6 +169,60 @@ Alternatively, download all mammalian vertebrate genomes from `NCBI Genbank`, e.
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
 ```
 
+Example `Bacteria`
+```{r,eval=FALSE}
+# download all bacteria genomes
+meta.retrieval(kingdom = "bacteria", db = "genbank", type = "genome")
+```
+
+Example `Archaea`
+```{r,eval=FALSE}
+# download all archaea genomes
+meta.retrieval(kingdom = "archaea", db = "genbank", type = "genome")
+```
+
+Example `Fungi`
+```{r,eval=FALSE}
+# download all fungi genomes
+meta.retrieval(kingdom = "fungi", db = "genbank", type = "genome")
+```
+
+Example `Plants`
+```{r,eval=FALSE}
+# download all plant genomes
+meta.retrieval(kingdom = "plant", db = "genbank", type = "genome")
+```
+
+Example `Invertebrates`
+```{r,eval=FALSE}
+# download all invertebrate genomes
+meta.retrieval(kingdom = "invertebrate", db = "genbank", type = "genome")
+```
+
+Example `Protozoa`
+```{r,eval=FALSE}
+# download all invertebrate genomes
+meta.retrieval(kingdom = "protozoa", db = "genbank", type = "genome")
+```
+
+#### Retrieval from `ENSEMBLGENOMES`
+
+Alternatively, download all species for a particular group from `ENSEBLGENOMES`
+
+Example Metazoa:
+```{r,eval=FALSE}
+# download all metazoa genomes
+meta.retrieval(kingdom = "EnsemblMetazoa", db = "ensemblgenomes", type = "genome")
+```
+
+Example Fungi:
+```{r,eval=FALSE}
+# download all fungi genomes
+meta.retrieval(kingdom = "EnsemblFungi", db = "ensemblgenomes", type = "genome")
+```
+
+EnsemblBacteria, EnsemblFungi, EnsemblMetazoa, EnsemblPlants, EnsemblProtists
+
 
 ### Retrieve groups or subgroups of species 
 
