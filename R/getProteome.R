@@ -331,30 +331,48 @@ getProteome <-
                 cat("\n")
                 cat(paste0("Download_Date: ", date()))
                 cat("\n")
-                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                cat(paste0("assembly_name: ", ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none")))
                 cat("\n")
-                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                cat(paste0("assembly_date: ", ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none")))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_last_geneset_update: ",
-                        json.qry.info$genebuild_last_geneset_update
-                    )
+                        paste0(
+                                "genebuild_last_geneset_update: ",
+                                ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none")
+                        )
                 )
                 cat("\n")
                 cat(paste0(
-                    "assembly_accession: ",
-                    json.qry.info$assembly_accession
+                        "assembly_accession: ",
+                        ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none")
                 ))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_initial_release_date: ",
-                        json.qry.info$genebuild_initial_release_date
-                    )
+                        paste0(
+                                "genebuild_initial_release_date: ",
+                                ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        )
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                        file_name = proteome.path,
+                        organism = new.organism,
+                        database = db,
+                        download_data = date(),
+                        assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                        assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                        genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"), 
+                        assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
+                        genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        
+                )
+                
+                readr::write_tsv(doc, file.path(
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
                 
                 message(
                     paste0(
@@ -409,8 +427,8 @@ getProteome <-
                 
                 # generate Proteome documentation
                 sink(file.path(
-                    path,
-                    paste0("doc_", new.organism, "_db_", db, ".txt")
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".txt")
                 ))
                 
                 cat(paste0("File Name: ", proteome.path))
@@ -421,30 +439,48 @@ getProteome <-
                 cat("\n")
                 cat(paste0("Download_Date: ", date()))
                 cat("\n")
-                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                cat(paste0("assembly_name: ", ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none")))
                 cat("\n")
-                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                cat(paste0("assembly_date: ", ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none")))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_last_geneset_update: ",
-                        json.qry.info$genebuild_last_geneset_update
-                    )
+                        paste0(
+                                "genebuild_last_geneset_update: ",
+                                ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none")
+                        )
                 )
                 cat("\n")
                 cat(paste0(
-                    "assembly_accession: ",
-                    json.qry.info$assembly_accession
+                        "assembly_accession: ",
+                        ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none")
                 ))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_initial_release_date: ",
-                        json.qry.info$genebuild_initial_release_date
-                    )
+                        paste0(
+                                "genebuild_initial_release_date: ",
+                                ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        )
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                        file_name = proteome.path,
+                        organism = new.organism,
+                        database = db,
+                        download_data = date(),
+                        assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                        assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                        genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
+                        assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"), 
+                        genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        
+                )
+                
+                readr::write_tsv(doc, file.path(
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
                 
                 message(
                     paste0(
