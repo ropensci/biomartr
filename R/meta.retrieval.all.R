@@ -42,7 +42,7 @@
 #' @export
 
 meta.retrieval.all <- function(db = "refseq", type = "genome") {
-    message("Starting meta retrieval process...")
+    message("Starting ", type, " meta retrieval process of all species individually from database: ", db," ...")
     # retrieve all genomes from all kingdoms of life
     paths <- unlist(lapply(getKingdoms(db = db), 
                            function(x) meta.retrieval(x, type = type, 
