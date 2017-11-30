@@ -21,7 +21,32 @@ knitr::opts_chunk$set(
     - [1.1 Retrieve Genomic Sequences](#retrieve-genomic-sequences)
         - [1.1.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq)
         - [1.1.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank)
+        - [1.1.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl)
+        - [1.1.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes)
+    - [1.2 Retrieve Protein Sequences](#retrieve-protein-sequences)
+    - [1.3 Retrieve CDS Sequences](#retrieve-cds-sequences)
+        - [1.3.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-1)
+        - [1.3.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-1)
+        - [1.3.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-1)
+        - [1.3.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-1)
+    - [1.4 Retrieve GFF files](#retrieve-gff-files)
+    - [1.5 Retrieve GTF files](#retrieve-gtf-files)
+    - [1.6 Retrieve RNA sequences](#retrieve-rna-sequences)
+        - [1.6.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-2)
+        - [1.6.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-2)
+        - [1.6.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-2)
+        - [1.6.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-2)
+    - [1.7 Retrieve Repeat Masker Repeat Annotation File](#retrieve-repeat-masker-sequences)
+        - [1.7.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-3)
+        - [1.7.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-3)
 - [2. Retrieve groups or subgroups of species ](#retrieve-groups-or-subgroups-of-species)
+    - [2.1 Example retrieval of all `Gammaproteobacteria` genomes from `NCBI RefSeq`](#example-retrieval-of-all-gammaproteobacteria-genomes-from-ncbi-refseq)
+    - [2.2 Example retrieval of all `Adenoviridae` genomes from `NCBI RefSeq`](#example-retrieval-of-all-adenoviridae-genomes-from-ncbi-refseq)
+- [3. Meta retrieval of genome assembly quality information](#meta-retrieval-of-genome-assembly-quality-information)
+- [4. Retrieve data from metagenome projects such as `human gut metagenome` project from `NCBI Genbank`](#metagenome-project-retrieval-from-ncbi-genbank)
+- [5. Retrieve Individual Genomes for all Species in the Tree of Life](#retrieve-individual-genomes-for-all-species-in-the-tree-of-life)
+    - [5.1 Example: Genome Retrieval](#genome-retrieval)
+    - [5.2 Example: Proteome Retrieval](#proteome-retrieval)
 
 ## Perform Meta-Genome Retrieval
 
@@ -205,6 +230,14 @@ Example `Protozoa`
 meta.retrieval(kingdom = "protozoa", db = "genbank", type = "genome")
 ```
 
+#### Retrieval from `ENSEMBL`
+
+```{r,eval=FALSE}
+# download all genomes from ENSEMBL
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "genome")
+```
+
+
 #### Retrieval from `ENSEMBLGENOMES`
 
 Alternatively, download all species for a particular group from `ENSEBLGENOMES`
@@ -385,7 +418,8 @@ grasp the genome assembly quality, the NCBI databases store genome assembly stat
 species for which genome assemblies are available. An example assembly statistics report can
 be found at: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt. 
 
-The `biomartr` package allows users to retrieve these genome assembly stats file in an automated way.
+The `biomartr` package allows users to retrieve these genome assembly stats file in an automated way by specifying the argument `type = "assemblystats"` and `combine = TRUE`.
+Please make sure that `combine = TRUE` when selecting `type = "assemblystats"`.
 
 ```{r, eval=FALSE}
 # show all elements of the data.frame
@@ -418,7 +452,7 @@ mammals.gc
 #   molecule_count <int>, top_level_count <int>
 ```
 
-Analogous, for each kingdom available at `getKingdoms()` this information can be retrieved.
+Analogously, this information can be retrieved for each kingdom other than `kingdom = "vertebrate_mammalian"`. Please consult `getKingdoms()` for available kingdoms.
 
 ### Metagenome project retrieval from NCBI Genbank
 
@@ -558,14 +592,14 @@ as input for the `read.gff()` function in the [seqreadr](https://github.com/Hajk
 
 Download all mammalian vertebrate proteomes.
 
-Example `RefSeq`:
+Example `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "proteome")
 ```
 
 
-Example `Genbank`:
+Example `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteome")
@@ -575,30 +609,45 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteom
 
 Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS data).
 
-Example `RefSeq`:
+#### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "CDS")
 ```
 
-Example `Genbank`:
+#### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "CDS")
+```
+
+#### Retrieval from `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download all Ensembl CDS sequneces
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "CDS")
+```
+
+
+#### Retrieval from `ENSEMBLGENOMES`:
+
+```{r,eval=FALSE}
+# download all EnsemblGenomes Bacteria CDS sequneces
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "CDS")
 ```
 
 ### Retrieve GFF files
 
 Download all mammalian vertebrate gff files.
 
-Example `RefSeq`:
+Example `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate gff files
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "gff")
 ```
 
 
-Example `Genbank`:
+Example `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate gff files
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "gff")
@@ -622,9 +671,57 @@ meta.retrieval(kingdom = "EnsemblPlants", db = "ensemblgenomes", type = "gtf")
 ```
 
 
+### Retrieve RNA sequences
+
+Download all mammalian vertebrate RNA sequences from `NCBI RefSeq` and `NCBI Genbank`.
+
+#### Retrieval from `NCBI RefSeq`:
+```{r,eval=FALSE}
+# download all vertebrate RNA sequneces
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "rna")
+```
+
+#### Retrieval from `NCBI Genbank`:
+```{r,eval=FALSE}
+# download all vertebrate RNA sequneces
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rna")
+```
+
+#### Retrieval from `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download all Ensembl RNA sequneces
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "rna")
+```
+
+
+#### Retrieval from `ENSEMBLGENOMES`:
+
+```{r,eval=FALSE}
+# download all EnsemblGenomes Bacteria RNA sequneces
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "rna")
+```
+
+
+### Retrieve Repeat Masker Sequences
+
+Download all mammalian vertebrate Repeat Masker Annotation files from `NCBI RefSeq` and `NCBI Genbank`.
+
+#### Retrieval from `NCBI RefSeq`:
+```{r,eval=FALSE}
+# download all vertebrate RNA sequneces
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "rm")
+```
+
+#### Retrieval from `NCBI Genbank`:
+```{r,eval=FALSE}
+# download all vertebrate RNA sequneces
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rm")
+```
+
 Users can obtain alternative kingdoms using `getKingdoms()`.
 
-## Retrieve Genomes for all kingdoms of life
+## Retrieve Individual Genomes for all Species in the Tree of Life
 
 If users wish to download the all genomes, proteome, CDS, or gff files for all species
 available in RefSeq or Genbank, they can use the `meta.retrieval.all()` function for this purpose.
