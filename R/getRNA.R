@@ -86,12 +86,10 @@ getRNA <-
             }
             
             if (nrow(FoundOrganism) == 0) {
-                    message(
-                            paste0(
-                                    "----------> No reference genome or representative genome was found for '",
-                                    organism, "'. Thus, download for this species has been omitted.",
-                                    " Have you tried to specify 'reference = FALSE' ?"
-                            )
+                    message("----------> No reference genome or representative genome was found for '",
+                      organism, "'. Thus, download for this species has been omitted.",
+                      " Have you tried to specify 'reference = FALSE' or have you tried to re-run the function yet?"
+                            
                     )
                     return("Not available")
             } else {
