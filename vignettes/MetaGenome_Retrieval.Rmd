@@ -24,21 +24,25 @@ knitr::opts_chunk$set(
         - [1.1.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl)
         - [1.1.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes)
     - [1.2 Retrieve Protein Sequences](#retrieve-protein-sequences)
+        - [1.2.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-1)
+        - [1.2.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-1)
+        - [1.2.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-1)
+        - [1.2.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-1)
     - [1.3 Retrieve CDS Sequences](#retrieve-cds-sequences)
-        - [1.3.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-1)
-        - [1.3.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-1)
-        - [1.3.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-1)
-        - [1.3.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-1)
+        - [1.3.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-2)
+        - [1.3.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-2)
+        - [1.3.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-2)
+        - [1.3.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-2)
     - [1.4 Retrieve GFF files](#retrieve-gff-files)
     - [1.5 Retrieve GTF files](#retrieve-gtf-files)
     - [1.6 Retrieve RNA sequences](#retrieve-rna-sequences)
-        - [1.6.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-2)
-        - [1.6.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-2)
-        - [1.6.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-2)
-        - [1.6.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-2)
+        - [1.6.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-3)
+        - [1.6.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-3)
+        - [1.6.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-3)
+        - [1.6.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-3)
     - [1.7 Retrieve Repeat Masker Repeat Annotation File](#retrieve-repeat-masker-sequences)
-        - [1.7.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-3)
-        - [1.7.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-3)
+        - [1.7.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-4)
+        - [1.7.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-4)
 - [2. Retrieve groups or subgroups of species ](#retrieve-groups-or-subgroups-of-species)
     - [2.1 Example retrieval of all `Gammaproteobacteria` genomes from `NCBI RefSeq`](#example-retrieval-of-all-gammaproteobacteria-genomes-from-ncbi-refseq)
     - [2.2 Example retrieval of all `Adenoviridae` genomes from `NCBI RefSeq`](#example-retrieval-of-all-adenoviridae-genomes-from-ncbi-refseq)
@@ -592,18 +596,36 @@ as input for the `read.gff()` function in the [seqreadr](https://github.com/Hajk
 
 Download all mammalian vertebrate proteomes.
 
-Example `NCBI RefSeq`:
+#### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "proteome")
 ```
 
 
-Example `NCBI Genbank`:
+#### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteome")
 ```
+
+
+#### Retrieval from `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download all Ensembl proteome sequneces
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "proteome")
+```
+
+
+#### Retrieval from `ENSEMBLGENOMES`:
+
+```{r,eval=FALSE}
+# download all EnsemblGenomes Bacteria proteome sequneces
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "proteome")
+```
+
+
 
 #### Retrieve CDS Sequences
 
