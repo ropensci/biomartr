@@ -108,9 +108,7 @@ For downloading only single files users can type:
 ```{r, eval=FALSE}
 # select NCBI nr version 27 =  "nr.27.tar.gz"
 # and download it into the folder
-biomartr::download.database(db        = "nr.27.tar.gz", 
-                  path      = "nr")
-
+biomartr::download.database(db = "nr.27.tar.gz", path = "nr")
 ```
 
 Using this command first a folder named `nr` is created and the
