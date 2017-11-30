@@ -67,11 +67,10 @@ getMetaGenomes <-
                 ))
             }, error = function(e)
                 stop(
-                    "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot 
-                    be reached. Are you connected to the internet? 
-                    Is the the FTP site '",
-                    download_url,
-                    "' currently available?"
+                    "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached.",
+                    " Are you connected to the internet? Is the the FTP site '",
+                    download_url,"' currently available? Please try to re-run this function ",
+                    "and see if it might work then ..."
                 ))
             
             docFile(
@@ -94,13 +93,13 @@ getMetaGenomes <-
             )
         }
         
-        print(paste0(
+        message(
             "The metagenome of '",
             name,
             "' has been downloaded to '",
             path,
             "'."
-        ))
+        )
         
         file.paths <- file.path(path, list.files(path = path))
         # return only file paths without "*.txt"
