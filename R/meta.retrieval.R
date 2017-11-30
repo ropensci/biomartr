@@ -261,8 +261,9 @@ meta.retrieval <- function(db         = "refseq",
         message(paste0(
             "Starting meta retrieval of all ",
             type,
-            " files for ",
+            " files for kingdom: ",
             kingdom,
+            " from database: ", db,
             "."
         ))
     if (!is.null(group))
@@ -273,8 +274,10 @@ meta.retrieval <- function(db         = "refseq",
                 " files within kingdom '",
                 kingdom,
                 "' and subgroup '",
-                group,
-                "'."
+                group,"' ",
+                " from database: ",
+                db,
+                "."
             )
         )
     message("\n")
