@@ -1,17 +1,21 @@
-#' @title Perform Meta-Genome Retieval of all organisms in all kingdoms of life
+#' @title Perform Meta-Genome Retrieval of all organisms in all kingdoms of life
 #' @description Download genomes, proteomes, cds, gff, rna, or assembly stats 
 #' files of individual species of all kingdoms of life.
 #' @param db a character string specifying the database from which the genome 
 #' shall be retrieved: 
-#' \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} 
-#' or \code{db = "ensemblgenomes"}.
+#' \itemize{
+#' \item \code{db = "refseq"}
+#' \item \code{db = "genbank"} 
+#' \item \code{db = "emsembl"}
+#' \item \code{db = "ensemblgenomes"}
+#' }
 #' @param type type of sequences that shall be retrieved. Options are:
 #' \itemize{
 #'  \item \code{type = "genome"} :
 #'  for genome assembly retrieval; see also \code{\link{getGenome}}), 
 #'  \item \code{type = "proteome"} :
 #'  (for proteome retrieval; see also \code{\link{getProteome}}),
-#'  \item \code{type = "CDS"} :
+#'  \item \code{type = "cds"} :
 #'  (for coding sequence retrieval; see also \code{\link{getCDS}}),
 #'  \item \code{type = "gff"} :
 #' (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
@@ -39,6 +43,7 @@
 #' meta.retrieval.all(db = "genbank", type = "ensemblgenomes")
 #' }
 #' @return a character vector storing the file paths of the retrieved files.
+#' @seealso \code{\link{meta.retrieval}}
 #' @export
 
 meta.retrieval.all <- function(db = "refseq", type = "genome") {
