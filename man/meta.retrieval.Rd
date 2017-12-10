@@ -71,7 +71,7 @@ Groups can be retrieved with \code{\link{getGroups}}.}
  (for genome assembly retrieval; see also \code{\link{getGenome}}), 
  \item \code{type = "proteome"} :
  (for proteome retrieval; see also \code{\link{getProteome}}),
- \item \code{type = "CDS"} :
+ \item \code{type = "cds"} :
  (for coding sequence retrieval; see also \code{\link{getCDS}}),
  \item \code{type = "gff"} :
 (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
