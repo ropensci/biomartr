@@ -2,15 +2,19 @@
 % Please edit documentation in R/meta.retrieval.all.R
 \name{meta.retrieval.all}
 \alias{meta.retrieval.all}
-\title{Perform Meta-Genome Retieval of all organisms in all kingdoms of life}
+\title{Perform Meta-Genome Retrieval of all organisms in all kingdoms of life}
 \usage{
 meta.retrieval.all(db = "refseq", type = "genome")
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
 shall be retrieved: 
-\code{db = "refseq"}, \code{db = "genbank"}, \code{db = "emsembl"} 
-or \code{db = "ensemblgenomes"}.}
+\itemize{
+\item \code{db = "refseq"}
+\item \code{db = "genbank"} 
+\item \code{db = "emsembl"}
+\item \code{db = "ensemblgenomes"}
+}}
 
 \item{type}{type of sequences that shall be retrieved. Options are:
 \itemize{
@@ -18,7 +22,7 @@ or \code{db = "ensemblgenomes"}.}
  for genome assembly retrieval; see also \code{\link{getGenome}}), 
  \item \code{type = "proteome"} :
  (for proteome retrieval; see also \code{\link{getProteome}}),
- \item \code{type = "CDS"} :
+ \item \code{type = "cds"} :
  (for coding sequence retrieval; see also \code{\link{getCDS}}),
  \item \code{type = "gff"} :
 (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
@@ -54,6 +58,9 @@ meta.retrieval.all(db = "genbank", type = "genome")
 # download all vertebrate genomes from ensemblgenomes
 meta.retrieval.all(db = "genbank", type = "ensemblgenomes")
 }
+}
+\seealso{
+\code{\link{meta.retrieval}}
 }
 \author{
 Hajk-Georg Drost
