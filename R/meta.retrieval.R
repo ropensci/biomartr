@@ -61,7 +61,7 @@
 #'  (for genome assembly retrieval; see also \code{\link{getGenome}}), 
 #'  \item \code{type = "proteome"} :
 #'  (for proteome retrieval; see also \code{\link{getProteome}}),
-#'  \item \code{type = "CDS"} :
+#'  \item \code{type = "cds"} :
 #'  (for coding sequence retrieval; see also \code{\link{getCDS}}),
 #'  \item \code{type = "gff"} :
 #' (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
@@ -170,7 +170,7 @@ meta.retrieval <- function(db         = "refseq",
             )
     
     if (!is.element(type,
-                    c("genome", "proteome", "CDS", "gff", 
+                    c("genome", "proteome", "CDS","cds", "gff", 
                       "rna", "assemblystats", "gtf", "rm")))
         stop(
         "Please choose either type: type = 'genome', type = 'proteome', 
@@ -186,7 +186,7 @@ meta.retrieval <- function(db         = "refseq",
             call. = FALSE
         )
     
-    if ((type == "CDS") && (db == "genbank"))
+    if ((stringr::str_to_upper(type) == "CDS") && (db == "genbank"))
         stop("Genbank does not store CDS data. Please choose 'db = 'refseq''.",
              call. = FALSE)
     
@@ -295,7 +295,7 @@ meta.retrieval <- function(db         = "refseq",
     if (is.element(db, c("refseq", "genbank"))) {
         if (type == "genome") internal_type <- "genomic"
         if (type == "proteome") internal_type <- "protein"
-        if (type == "CDS") internal_type <- "cds"
+        if (stringr::str_to_upper(type) == "CDS") internal_type <- "cds"
         if (type == "gff") internal_type <- "genomic"
         if (type == "gtf") internal_type <- db
         if (type == "rna") internal_type <- "rna"
@@ -316,7 +316,7 @@ meta.retrieval <- function(db         = "refseq",
         
         if (type == "genome") internal_type <- "dna"
         if (type == "proteome") internal_type <- "pep"
-        if (type == "CDS") internal_type <- "cds"
+        if (stringr::str_to_upper(type) == "CDS") internal_type <- "cds"
         if (type == "gff") internal_type <- "ensembl"
         if (type == "gtf") internal_type <- "ensembl"
         if (type == "rna") internal_type <- "ncrna"
@@ -332,7 +332,7 @@ meta.retrieval <- function(db         = "refseq",
     if (db == "ensemblgenomes") {
         if (type == "genome") internal_type <- "dna"
         if (type == "proteome") internal_type <- "pep"
-        if (type == "CDS") internal_type <- "cds"
+        if (stringr::str_to_upper(type) == "CDS") internal_type <- "cds"
         if (type == "gff") internal_type <- "ensemblgenomes"
         if (type == "gtf") internal_type <- "ensemblgenomes"
         if (type == "rna") internal_type <- "ncrna"
@@ -393,7 +393,7 @@ meta.retrieval <- function(db         = "refseq",
             }
         }
         
-        if (type == "CDS") {
+        if (stringr::str_to_upper(type) == "CDS") {
             if (is.null(path)) {
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getCDS(db       = db,
