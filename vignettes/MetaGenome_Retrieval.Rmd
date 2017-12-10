@@ -321,7 +321,7 @@ meta.retrieval(kingdom = "bacteria", group = "Gammaproteobacteria", db = "refseq
 Using this command, all bacterial (`kingdom = "bacteria"`) genomes (`type = "genome"`) that belong to the group `Gammaproteobacteria` (`group = "Gammaproteobacteria"`) will be retrieved from NCBI RefSeq (`db = "refseq"`).
 
 Alternatively, `Gammaproteobacteria` genomes can be retrieved from NCBI Genbank by exchanging `db = "refseq"` to `db = "genbank"`.
-If users wish to download proteome, CDS, or GFF files instead of genomes, they can specify the argument: `type = "proteome"`, `type = "CDS"`, or `type = "gff"`.
+If users wish to download proteome, CDS, or GFF files instead of genomes, they can specify the argument: `type = "proteome"`, `type = "cds"`, or `type = "gff"`.
 
 #### Example retrieval of all `Adenoviridae` genomes from `NCBI RefSeq`:
 
@@ -400,7 +400,7 @@ Now we can choose `Adenoviridae` as group argument for the `meta.retrieval()` fu
 meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = "genome")
 ```
 
-Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "CDS"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve proteome, CDS, RNA, genome assembly statistics or GFF files instead of genomes.
+Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "cds"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve proteome, CDS, RNA, genome assembly statistics or GFF files instead of genomes.
 
 
 ### Meta retrieval of genome assembly quality information
@@ -634,20 +634,20 @@ Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS da
 #### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "CDS")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "cds")
 ```
 
 #### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "CDS")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "cds")
 ```
 
 #### Retrieval from `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download all Ensembl CDS sequneces
-meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "CDS")
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "cds")
 ```
 
 
@@ -655,7 +655,7 @@ meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "CDS")
 
 ```{r,eval=FALSE}
 # download all EnsemblGenomes Bacteria CDS sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "CDS")
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "cds")
 ```
 
 ### Retrieve GFF files
@@ -776,5 +776,5 @@ Example `Genbank`:
 meta.retrieval.all(db = "genbank", type = "proteome")
 ```
 
-Again, by exchanging `type = "proteome"` by either `type = "genome"`, `type = "CDS"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve genome, CDS, RNA, genome assembly statistics or GFF files instead of proteomes
+Again, by exchanging `type = "proteome"` by either `type = "genome"`, `type = "cds"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve genome, CDS, RNA, genome assembly statistics or GFF files instead of proteomes
 
