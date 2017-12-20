@@ -6,6 +6,9 @@ equal_lists <- function(df1, df2) {
 
 
 test_that("The biomart() interface works properly..",{
+
+        skip_on_cran()
+        skip_on_travis()
         
     marts <- getMarts()[, "mart"]
     ex_mart <-
