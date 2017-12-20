@@ -16,7 +16,7 @@ storing all available datasets for a selected BioMart databases.
 }
 \examples{
 # search for available datasets
-getMarts()
+# getMarts()
 # choose database: "ENSEMBL_MART_ENSEMBL"
 head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
 }
