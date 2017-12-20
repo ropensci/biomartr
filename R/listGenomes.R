@@ -109,7 +109,7 @@ listGenomes <-
                             table(joined.df$kingdoms)
                         ))))
                             stop(
-                                "Unfortunately, not all memebrs of your 
+                                "Unfortunately, not all members of your 
                                 specified subset '",
                                 paste0(subset, ", '"),
                                 " could be found. Search terms are case 
@@ -131,7 +131,7 @@ listGenomes <-
                             table(joined.df$kingdoms)
                         ))))
                             stop(
-                                "Unfortunately, not all memebrs of your 
+                                "Unfortunately, not all members of your 
                                 specified subset '",
                                 paste0(subset, ", '"),
                                 " could be found. Search terms are case 
