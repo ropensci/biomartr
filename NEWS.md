@@ -1,4 +1,8 @@
-biomartr 0.6.0
+biomartr 0.8.0
+===========
+
+
+biomartr 0.7.0
 ===========
 
 ### Function changes
