@@ -2,7 +2,7 @@ biomartr 0.8.0
 ===========
 
 
-biomartr 0.7.0
+[biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
 ===========
 
 ### Function changes
