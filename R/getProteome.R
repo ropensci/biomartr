@@ -11,6 +11,7 @@
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
 #' \item \code{db = "ensemblgenomes"}
+#' \item \code{db = "uniprot"}
 #' }
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.

@@ -15,6 +15,7 @@ shall be retrieved:
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
 \item \code{db = "ensemblgenomes"}
+\item \code{db = "uniprot"}
 }}
 
 \item{organism}{a character string specifying the scientific name of the 
