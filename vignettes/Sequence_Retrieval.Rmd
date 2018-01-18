@@ -33,6 +33,7 @@ Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, a
     - [2.2 from NCBI Genbank](#example-ncbi-genbank-1)
     - [2.3 from ENSEMBL](#example-ensembl-1)
     - [2.4 from ENSEMBLGENOMES](#example-ensemblgenomes-1)
+    - [2.5 from UniProt](#example-uniprot)
 * [3. Coding sequence retrieval with `getCDS()`](#cds-retrieval)
     - [3.1 from NCBI RefSeq](#example-ncbi-refseq-2)
     - [3.2 from NCBI Genbank](#example-ncbi-genbank-2)
@@ -898,6 +899,45 @@ Cress_Proteome
 [35385]   563 MSLTKKASEPKLSGTSIKPTTLNPH...VAVQRYLLEEEGLDYSEPQAGLLR AT2G26280.1 pep:k...
 [35386]   453 MGVSLLKQQHRITNQADTFSRFMER...NHQQQQQQQRSELRVENGLANNVI AT4G32600.1 pep:k...
 ```
+
+### Example `Uniprot`:
+
+Another  way of retrieving proteome sequences is from the [UniProt](http://www.uniprot.org/) database.
+
+```{r,eval=FALSE}
+# download the proteome of Mus musculus from UniProt
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+Mm.proteome.uniprot<- getProteome( db       = "uniprot", 
+                                   organism = "Mus musculus",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Mouse_Proteome <- read_proteome(file = Mm.proteome.uniprot)
+```
+
+```{r,eval=FALSE}
+Mouse_Proteome
+```
+
+```
+A AAStringSet instance of length 84522
+        width seq                                  names               
+    [1]   781 MATQADLMELDMAMEPD...LPPGDSNQLAWFDTDL sp|Q02248|CTNB1_M...
+    [2]  2531 MPRLLTPLLCLTLLPAL...PTTMPSQITHIPEAFK sp|Q01705|NOTC1_M...
+    [3]   437 MLLLLARCFLVILASSL...LDSETMHPLGMAVKSS sp|Q62226|SHH_MOU...
+    [4]   380 MKKPIGILSPGVALGTA...VKCKKCTEIVDQFVCK sp|P22725|WNT5A_M...
+    [5]   387 MEESQSDISLELPLSQE...SRHKKTMVKKVGPDSD sp|P02340|P53_MOU...
+    ...   ... ...
+[84518]   459 MLKIILPSLMLLPLTWL...LILLTTSPKLITGLTM tr|A0A0F6PZ84|A0A...
+[84519]   380 MTNMRKTHPLFKIINHS...LMPISGIIEDKMLKLY tr|U3TEV9|U3TEV9_...
+[84520]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PXN8|A0A...
+[84521]   172 MNNYIFVLSSLFLVGCL...WSLFAGIFIIIEITRD tr|A0A0F6PXK9|A0A...
+[84522]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PYR5|A0A...
+```
+
 
 ### CDS Retrieval
 
