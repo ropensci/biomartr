@@ -1,6 +1,10 @@
 biomartr 0.8.0
 ===========
 
+### New Functionality
+
+- `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`
+
 
 [biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
 ===========
