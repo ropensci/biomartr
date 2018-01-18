@@ -57,10 +57,10 @@ getProteome <-
              reference = TRUE,
              path = file.path("_ncbi_downloads", "proteomes")) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "ensemblgenomes")))
+                              "ensembl", "ensemblgenomes", "uniprot")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl' or 'ensemblgenomes'.",
+                'refseq', 'genbank', 'ensembl',  'ensemblgenomes', 'uniprot'.",
                 call. = FALSE
             )
             
@@ -497,6 +497,14 @@ getProteome <-
                 return(proteome.path)
             }
         }
+        
+        if (db == "uniprot") {
+                if (!file.exists(path)) {
+                        dir.create(path, recursive = TRUE)
+                }
+                getUniProtSeq(organism = organism, path = path, update = TRUE)
+        }
+
     }
 
 
