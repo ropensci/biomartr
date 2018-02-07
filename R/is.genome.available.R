@@ -156,15 +156,49 @@ is.genome.available <-
                               stringr::str_detect(organism_name, organism))
             
             if (nrow(FoundOrganism) == 0) {
+                message(
+                    "Unfortunatey, no entry for '",
+                    organism,
+                    "' was found in the '",
+                    db,
+                    "' database. ",
+                    "Please consider specifying ",
+                    paste0("'db = ", dplyr::setdiff(
+                        c("refseq", "genbank", "ensembl", "ensemblgenomes"),db
+                    ), collapse = "' or "),
+                    " to check whether '",organism,"' is available in those databases."
+                )
                 return(FALSE)
             }
             
             if (nrow(FoundOrganism) > 0) {
-                if (!details)
-                    return(TRUE)
+                if (!details) {
                 
-                if (details)
+                    
+                    if (all(FoundOrganism$refseq_category == "na")) {
+                        message("Only a non-reference genome assembly is available for '", organism, "'.",
+                                " Please make sure to specify the argument 'reference = FALSE' when running any get*() function.")
+                    } else {
+                        message("A reference or representative genome assembly is available for '", organism, "'.")
+                    }
+                    
+                    if (nrow(FoundOrganism) > 1) {
+                        message("More than one entry was found for '", organism, "'.",
+                                " Please consider to re-run this funtion and specify 'details = TRUE'.",
+                                " This will allow you to select the 'assembly_accession' identifier that can then be ",
+                                "specified in all get*() functions.")
+                    }
+                    return(TRUE)
+                }
+                    
+                
+                if (details) {
+                    if (all(FoundOrganism$refseq_category == "na")) {
+                        message("Only a non-reference genome assembly is available for '", organism, "'.",
+                                " Please make sure to specify the argument 'reference = FALSE' when running any get*() function.")
+                    }
                     return(FoundOrganism)
+                }
             }
         }
         
