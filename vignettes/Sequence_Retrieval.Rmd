@@ -74,22 +74,56 @@ Example `refseq`:
 ```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
-is.genome.available("Homo sapiens", db = "refseq")
+is.genome.available(organism = "Homo sapiens", db = "refseq")
 ```
 
 ```
+A reference or representative genome assembly is available for 'Homo sapiens'.
+More than one entry was found for 'Homo sapiens'. 
+Please consider to re-run this funtion and specify 'details = TRUE'. 
+This will allow you to select the 'assembly_accession' identifier that
+can then be specified in all get*() functions.
 [1] TRUE
 ```
+
+In the case of the human genome, there are more than one entry in the NCBI RefSeq
+database (see message). By specifying the argument 'details = TRUE' users can
+retrieve all information for 'Homo sapiens' that is stored in NCBI RefSeq.
+
+```r
+# checking whether or not the Homo sapiens 
+# genome is avaialable for download
+is.genome.available(organism = "Homo sapiens", db = "refseq", details = TRUE)
+```
+
+```
+  assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse… rele…
+  <chr>  <chr>  <chr>  <chr>  <chr> <int> <int> <chr> <chr> <chr> <chr> <chr> <chr>
+1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro… Patch
+2 GCF_0… PRJNA… SAMN0… AMYH0… na     9606  9606 Homo… NA    CHM1  late… Chro… Major
+# ... with 8 more variables: genome_rep <chr>, seq_rel_date <date>, asm_name <chr>,
+#   submitter <chr>, gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
+#   excluded_from_refseq <chr>
+```
+
+Here, we find two possible versions of the human genome: one having the `assembly_accession`
+ID `GCF_000001405.37` and another one having the ID `GCF_000306695.2`.
+
 
 Example `genbank`: 
 
 ```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
-is.genome.available("Homo sapiens", db = "genbank")
+is.genome.available(organism = "Homo sapiens", db = "genbank")
 ```
 
 ```
+A reference or representative genome assembly is available for 'Homo sapiens'.
+More than one entry was found for 'Homo sapiens'. 
+Please consider to re-run this funtion and specify 'details = TRUE'. 
+This will allow you to select the 'assembly_accession' identifier 
+that can then be specified in all get*() functions.
 [1] TRUE
 ```
 
@@ -104,18 +138,18 @@ and `file.path(tempdir(), "ensemblgenomes_summary.txt")`.
 
 Example `ENSEMBL`: 
 
-```{r,eval=FALSE}
+```r
 # cheking whether Homo sapiens is available in the ENSEMBL database
-is.genome.available("Homo sapiens", db = "ensembl")
+is.genome.available(organism = "Homo sapiens", db = "ensembl")
 ```
 
 ```
 [1] TRUE
 ```
 
-```{r,eval=FALSE}
+```r
 # retrieve details for Homo sapiens
-is.genome.available("Homo sapiens", db = "ensembl", details = TRUE)
+is.genome.available(organism = "Homo sapiens", db = "ensembl", details = TRUE)
 ```
 
 ```
