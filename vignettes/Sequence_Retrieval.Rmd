@@ -71,7 +71,7 @@ and then stored locally. All further runs are then much faster.
 
 Example `refseq`: 
 
-```{r,eval=FALSE}
+```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
 is.genome.available("Homo sapiens", db = "refseq")
@@ -83,7 +83,7 @@ is.genome.available("Homo sapiens", db = "refseq")
 
 Example `genbank`: 
 
-```{r,eval=FALSE}
+```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
 is.genome.available("Homo sapiens", db = "genbank")
@@ -204,7 +204,7 @@ length(listGenomes(db = "refseq"))
 ```
 
 ```
-[1] 7879
+[1] 13689
 ```
 
 Example `genbank`: 
@@ -214,7 +214,7 @@ length(listGenomes(db = "genbank"))
 ```
 
 ```
-[1] 8568
+[1] 20484
 ```
 
 Example `ensembl`: 
@@ -224,7 +224,7 @@ length(listGenomes(db = "ensembl"))
 ```
 
 ```
-[1] 85
+[1] 112
 ```
 
 Example `ensemblgenomes`: 
@@ -234,10 +234,10 @@ length(listGenomes(db = "ensemblgenomes"))
 ```
 
 ```
-[1] 42529
+[1] 45170
 ```
 
-Hence, currently 7879 genomes (including all kingdoms of life) are stored on NCBI RefSeq.
+Hence, currently 13689 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 07/02/2018).
 
 ### Retrieving kingdom, group and subgroup information
 
@@ -251,8 +251,8 @@ listKingdoms(db = "refseq")
 ```
 
 ```
-  Archaea  Bacteria Eukaryota   Viroids   Viruses 
-       78      1627       425        46      5703
+    Archaea  Bacteria Eukaryota   Viroids   Viruses 
+      163      5777       541        47      7161
 ```
 
 Example `genbank`:
@@ -264,7 +264,7 @@ listKingdoms(db = "genbank")
 
 ```
   Archaea  Bacteria Eukaryota 
-      392      6651      1525
+     1129     17235      2120
 ```
 
 Example `ENSEMBL`:
@@ -276,7 +276,7 @@ listKingdoms(db = "ensembl")
 
 ```
 Ensembl 
-     85
+    112
 ```
 
 Example `ENSEMBLGENOMES`:
@@ -287,10 +287,8 @@ listKingdoms(db = "ensemblgenomes")
 ```
 
 ```
-EnsemblBacteria    EnsemblFungi  EnsemblMetazoa   EnsemblPlants 
-          41610             634              65              44 
-EnsemblProtists 
-            176
+EnsemblBacteria    EnsemblFungi  EnsemblMetazoa   EnsemblPlants EnsemblProtists 
+          44048             811              69              53             189
 ```
 
 ### Analogous computations can be performed for `groups` and `subgroups`
