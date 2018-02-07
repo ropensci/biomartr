@@ -1,18 +1,12 @@
 biomartr 0.8.0
 ===========
 
-### Function changes
-
-- the function `meta.retrieval()` will now pick up the download at the organism
-where it left off
-
-### New Functions
-
-=======
 ### New Functionality
 
-- `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`
+- `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`.
+An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-uniprot)
 
+- `is.genome.available()` now prints out more useful interactive messages when searching for available organisms 
 
 [biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
 ===========
