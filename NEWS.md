@@ -1,10 +1,33 @@
-biomartr 0.6.0
+biomartr 0.8.0
 ===========
 
 ### Function changes
 
 - the function `meta.retrieval()` will now pick up the download at the organism
 where it left off
+
+### New Functions
+
+=======
+### New Functionality
+
+- `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`
+
+
+[biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
+===========
+
+### Function changes
+
+- the function `meta.retrieval()` will now pick up the download at the organism
+where it left off and will report which species have already been retrieved 
+
+- all `get*()` functions and the `meta.retrieval()` function receive a new argument `reference` which allows users to retrieve not-reference or not-representative genome versions when downloading from NCBI RefSeq or NCBI Genbank
+
+- the argument order in `meta.retrieval()` changed from `meta.retrieval(kingdom, group, db, ...)` to `meta.retrieval(db,kingdom, group, ...)` to make the argument order more consistent with the `get*()` functions
+
+- the argument order in `getGroups()` changed from `getGroups(kingdom, db)` to `getGroups(db, kingdom)` to make the argument order more consistent with the `get*()` and `meta.retrieval()` functions
+
 
 ### New Functions
 

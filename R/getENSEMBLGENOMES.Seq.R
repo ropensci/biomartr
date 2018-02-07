@@ -66,10 +66,9 @@ getENSEMBLGENOMES.Seq <-
                     )
             }, error = function(e) {
                 warning(
-                    "The API 'http://rest.ensemblgenomes.org' does not seem to 
-                    work properly. Are you connected to the internet? 
-                    Is the homepage 'http://rest.ensemblgenomes.org' 
-                    currently available?",
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to ",
+                    "work properly. Are you connected to the internet? ",
+                    "Is the homepage 'http://rest.ensemblgenomes.org' currently available?",
                     call. = FALSE
                 )
                 return(FALSE)
@@ -96,9 +95,9 @@ getENSEMBLGENOMES.Seq <-
             warning(
                 "Unfortunately organism '",
                 organism,
-                "' is not available at ENSEMBLGENOMES. Please check whether or 
-            not the organism name is typed correctly. Thus, download of this
-                species has been omitted."
+                "' is not available at ENSEMBLGENOMES. Please check whether or ",
+                "not the organism name is typed correctly or try db = 'ensembl'. ",
+                "Thus, download of this species has been omitted.", call. = FALSE
             )
             return(FALSE)
         }
@@ -115,9 +114,9 @@ getENSEMBLGENOMES.Seq <-
                 )
         }, error = function(e) {
             warning(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work 
-                properly. Are you connected to the internet? Is the homepage 
-                'http://rest.ensemblgenomes.org' currently available?"
+                "The API 'http://rest.ensemblgenomes.org' does not seem to work ",
+                "properly. Are you connected to the internet? Is the homepage ",
+                "'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
             )
             return(FALSE)
         })
@@ -138,11 +137,10 @@ getENSEMBLGENOMES.Seq <-
                     )
                 }, error = function(e) {
                     warning(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem 
-                        to work properly. Are you connected to the internet? 
-                        Is the homepage 
-'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' 
-                        currently available?",
+                        "The API 'http://rest.ensemblgenomes.org' does not seem ",
+                        "to work properly. Are you connected to the internet? ",
+                        "Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' ",
+                        "currently available?",
                         call. = FALSE
                     )
                     return(FALSE)
@@ -215,8 +213,8 @@ getENSEMBLGENOMES.Seq <-
                 warning(
                     "Unfortunately organism '",
                     organism,
-                    "' could not be found. Thus download for this 
-                    species is omitted.",
+                    "' could not be found. Have you tried another database yet? ",
+                    "E.g. db = 'ensembl'? Thus, download for this species is omitted.",
                     call. = FALSE
                 )
                 return(FALSE)
@@ -344,12 +342,12 @@ getENSEMBLGENOMES.Seq <-
                                 mode = "wb")
             }, error = function(e) {
                 warning(
-                    "The FTP site of ENSEMBLGENOMES 
-                    'ftp://ftp.ensemblgenomes.org/current/fasta' 
-                    does not seem to work properly. 
-                    Are you connected to the internet? 
-                    Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or
-                    'http://rest.ensemblgenomes.org' currently available?",
+                    "The FTP site of ENSEMBLGENOMES ",
+                    "'ftp://ftp.ensemblgenomes.org/current/fasta' ",
+                    "does not seem to work properly. ",
+                    "Are you connected to the internet? ",
+                    "Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or ",
+                    "'http://rest.ensemblgenomes.org' currently available?",
                     call. = FALSE
                 )
                 return(FALSE)

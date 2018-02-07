@@ -108,9 +108,7 @@ For downloading only single files users can type:
 ```{r, eval=FALSE}
 # select NCBI nr version 27 =  "nr.27.tar.gz"
 # and download it into the folder
-biomartr::download.database(db        = "nr.27.tar.gz", 
-                  path      = "nr")
-
+biomartr::download.database(db = "nr.27.tar.gz", path = "nr")
 ```
 
 Using this command first a folder named `nr` is created and the
@@ -144,4 +142,4 @@ biomartr::download.database.all(db = "refseq_protein", path = "refseq_protein")
 biomartr::download.database.all(db = "pdb", path = "pdb")
 ```
 
-__Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.__
+__Please notice that most of these databases are very large, so users should take of of providing a stable internet connection throughout the download process.__

@@ -210,9 +210,9 @@ is.genome.available <-
                         )
                 }, error = function(e)
                     stop(
-                        "The API 'http://rest.ensembl.org' does not seem to work
-                        properly. Are you connected to the internet? Is the 
-                       homepage 'http://rest.ensembl.org' currently available?",
+                        "The API 'http://rest.ensembl.org' does not seem to work ",
+                        "properly. Are you connected to the internet? Is the ",
+                       "homepage 'http://rest.ensembl.org' currently available?",
                         call. = FALSE
                     ))
                 
@@ -239,9 +239,9 @@ is.genome.available <-
                 stop(
                     "Unfortunately organism '",
                     organism,
-                    "' is not available at ENSEMBL. Please check whether or not 
-                    the organism name is typed correctly or try to use 
-                    db = 'ensemblgenomes'.",
+                    "' is not available at ENSEMBL. Please check whether or not ",
+                    "the organism name is typed correctly or try to use ",
+                    "db = 'ensemblgenomes'.",
                     call. = FALSE
                 )
             
@@ -309,10 +309,10 @@ is.genome.available <-
                         )
                 }, error = function(e)
                     stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem 
-                        to work properly. Are you connected to the internet? 
-                        Is the homepage 'http://rest.ensemblgenomes.org' 
-                        currently available?"
+                        "The API 'http://rest.ensemblgenomes.org' does not seem ",
+                        "to work properly. Are you connected to the internet? ",
+                        "Is the homepage 'http://rest.ensemblgenomes.org' ",
+                        "currently available?", call. = FALSE
                     ))
                 
                 # transform list object returned by 'fromJSON' to tibble
@@ -338,8 +338,8 @@ is.genome.available <-
                 stop(
                     "Unfortunately organism '",
                     organism,
-                    "' is not available at ENSEMBLGENOMES. Please check whether 
-                    or not the organism name is typed correctly.",
+                    "' is not available at ENSEMBLGENOMES. Please check whether ",
+                    "or not the organism name is typed correctly.",
                     call. = FALSE
                 )
             

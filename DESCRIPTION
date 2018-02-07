@@ -1,6 +1,6 @@
 Package: biomartr
 Title: Genomic Data Retrieval
-Version: 0.6.0.9000
+Version: 0.7.0.9000
 Authors@R: person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hgd23@cam.ac.uk",
@@ -32,6 +32,7 @@ Imports:
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
     stringr (>= 0.6.2),
+    purrr
 Suggests:
     knitr (>= 1.6),
     rmarkdown (>= 0.3.3),

@@ -23,14 +23,40 @@ The `biomartr` package allows users to retrieve biological sequences in a very s
 
 Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
-* [Genome retrieval with `getGenome()`](#genome-retrieval)
-* [Proteome retrieval with `getProteome()`](#proteome-retrieval)
-* [Coding sequence retrieval with `getCDS()`](#cds-retrieval)
-* [RNA retrieval with `getRNA()`](#rna-retrieval)
-* [GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
-* [GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
-* [Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
-
+* [1. Genome retrieval with `getGenome()`](#genome-retrieval)
+    - [1.1 from NCBI RefSeq](#example-ncbi-refseq)
+    - [1.2 from NCBI Genbank](#example-ncbi-genbank)
+    - [1.3 from ENSEMBL](#example-ensembl)
+    - [1.4 from ENSEMBLGENOMES](#example-ensemblgenomes)
+* [2. Proteome retrieval with `getProteome()`](#proteome-retrieval)
+    - [2.1 from NCBI RefSeq](#example-ncbi-refseq-1)
+    - [2.2 from NCBI Genbank](#example-ncbi-genbank-1)
+    - [2.3 from ENSEMBL](#example-ensembl-1)
+    - [2.4 from ENSEMBLGENOMES](#example-ensemblgenomes-1)
+    - [2.5 from UniProt](#example-uniprot)
+* [3. Coding sequence retrieval with `getCDS()`](#cds-retrieval)
+    - [3.1 from NCBI RefSeq](#example-ncbi-refseq-2)
+    - [3.2 from NCBI Genbank](#example-ncbi-genbank-2)
+    - [3.3 from ENSEMBL](#example-ensembl-2)
+    - [3.4 from ENSEMBLGENOMES](#example-ensemblgenomes-2)
+* [4. RNA retrieval with `getRNA()`](#rna-retrieval)
+    - [4.1 from NCBI RefSeq](#example-ncbi-refseq-3)
+    - [4.2 from NCBI Genbank](#example-ncbi-genbank-3)
+    - [4.3 from ENSEMBL](#example-ensembl-3)
+    - [4.4 from ENSEMBLGENOMES](#example-ensemblgenomes-3)
+* [5. GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
+    - [5.1 from NCBI RefSeq](#example-ncbi-refseq-4)
+    - [5.2 from NCBI Genbank](#example-ncbi-genbank-4)
+    - [5.3 from ENSEMBL](#example-ensembl-4)
+    - [5.4 from ENSEMBLGENOMES](#example-ensemblgenomes-4)
+* [6. GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
+    - [6.1 from NCBI RefSeq](#example-ncbi-refseq-5)
+    - [6.2 from NCBI Genbank](#example-ncbi-genbank-5)
+    - [6.3 from ENSEMBL](#example-ensembl-5)
+    - [6.4 from ENSEMBLGENOMES](#example-ensemblgenomes-5)
+* [7. Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
+    - [7.1 from NCBI RefSeq](#example-ncbi-refseq-6)
+    
 
 ## Getting Started with Sequence Retrieval
 
@@ -443,7 +469,7 @@ Furthermore, users need to specify the scientific name of the organism of intere
 Finally, the `path` argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
-Example `RefSeq`:
+### Example NCBI RefSeq:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from refseq
@@ -556,7 +582,7 @@ Human_Genome
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
 ```
 
-Example `Genbank`:
+### Example NCBI Genbank:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from Genbank
@@ -594,7 +620,7 @@ Human_Genome
 ```
 
 
-Example `ENSEMBL`:
+### Example ENSEMBL:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from ENSEMBL
@@ -631,7 +657,7 @@ Human_Genome
 [524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...
 ```
 
-Example `ENSEMBLGENOMES`:
+### Example ENSEMBLGENOMES:
 
 Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
@@ -686,7 +712,7 @@ Furthermore, again users need to specify the scientific name of the organism of 
 Finally, the `path` argument specifies the folder path in which the corresponding proteome shall be locally stored. In case users would like to store the proteome file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
-Example `RefSeq`:
+### Example `NCBI RefSeq`:
 
 ```{r,eval=FALSE}
 # download the proteome of Homo sapiens from refseq
@@ -760,7 +786,7 @@ Human_Proteome
 [109018]   380 MTPMRKTNPLMKLINHSFIDLPTP...LYFTTILILMPTISLIENKMLKWA YP_003024038.1 cy...
 ```
 
-Example `Genbank`:
+### Example `NCBI Genbank`:
 
 ```{r,eval=FALSE}
 # download the proteome of Homo sapiens from genbank
@@ -797,7 +823,7 @@ Human_Proteome
 [13]   380 MTPMRKTNPLMKLINHSFIDLPTPSN...SVLYFTTILILMPTISLIENKMLKWA AAB58955.3 cytoch...
 ```
 
-Example `ENSEMBL`:
+### Example `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download the proteome of Homo sapiens from ENSEMBL
@@ -834,7 +860,7 @@ Human_Proteome
 ```
 
 
-Example `ENSEMBLGENOMES`:
+### Example `ENSEMBLGENOMES`:
 
 Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
@@ -874,6 +900,45 @@ Cress_Proteome
 [35386]   453 MGVSLLKQQHRITNQADTFSRFMER...NHQQQQQQQRSELRVENGLANNVI AT4G32600.1 pep:k...
 ```
 
+### Example `Uniprot`:
+
+Another  way of retrieving proteome sequences is from the [UniProt](http://www.uniprot.org/) database.
+
+```{r,eval=FALSE}
+# download the proteome of Mus musculus from UniProt
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+Mm.proteome.uniprot<- getProteome( db       = "uniprot", 
+                                   organism = "Mus musculus",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Mouse_Proteome <- read_proteome(file = Mm.proteome.uniprot)
+```
+
+```{r,eval=FALSE}
+Mouse_Proteome
+```
+
+```
+A AAStringSet instance of length 84522
+        width seq                                  names               
+    [1]   781 MATQADLMELDMAMEPD...LPPGDSNQLAWFDTDL sp|Q02248|CTNB1_M...
+    [2]  2531 MPRLLTPLLCLTLLPAL...PTTMPSQITHIPEAFK sp|Q01705|NOTC1_M...
+    [3]   437 MLLLLARCFLVILASSL...LDSETMHPLGMAVKSS sp|Q62226|SHH_MOU...
+    [4]   380 MKKPIGILSPGVALGTA...VKCKKCTEIVDQFVCK sp|P22725|WNT5A_M...
+    [5]   387 MEESQSDISLELPLSQE...SRHKKTMVKKVGPDSD sp|P02340|P53_MOU...
+    ...   ... ...
+[84518]   459 MLKIILPSLMLLPLTWL...LILLTTSPKLITGLTM tr|A0A0F6PZ84|A0A...
+[84519]   380 MTNMRKTHPLFKIINHS...LMPISGIIEDKMLKLY tr|U3TEV9|U3TEV9_...
+[84520]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PXN8|A0A...
+[84521]   172 MNNYIFVLSSLFLVGCL...WSLFAGIFIIIEITRD tr|A0A0F6PXK9|A0A...
+[84522]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PYR5|A0A...
+```
+
+
 ### CDS Retrieval
 
 The `getCDS()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
@@ -893,7 +958,7 @@ Furthermore, again users need to specify the scientific name of the organism of 
 Finally, the `path` argument specifies the folder path in which the corresponding CDS file shall be locally stored. In case users would like to store the CDS file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
-Example `RefSeq`:
+### Example `NCBI RefSeq`:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from refseq
@@ -996,7 +1061,7 @@ Human_CDS
 [114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...
 ```
 
-Example `Genbank`:
+### Example `NCBI Genbank`:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from genbank
@@ -1034,7 +1099,7 @@ Human_CDS
 [13]  1141 ATGACCCCAATACGCAAAACTAACCC...TGAAAACAAAATACTCAAATGGGCCT lcl|J01415.2_cds_...
 ```
 
-Example `ENSEMBL`:
+### Example `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from ensembl
@@ -1072,7 +1137,7 @@ Human_CDS
 [102915]    559 ATGCGGAGATGCTACTGCCACTGC...CCTCACCTGCCATGTGGACTTCT ENST00000530476.1...
 ```
 
-Example `ENSEMBLGENOMES`:
+### Example `ENSEMBLGENOMES`:
 
 Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
@@ -1133,7 +1198,7 @@ Furthermore, again users need to specify the scientific name of the organism of 
 Finally, the `path` argument specifies the folder path in which the corresponding RNA file shall be locally stored. In case users would like to store the RNA file at a different location,
 they can specify the `path = file.path("put","your","path","here")` argument.
 
-Example `RefSeq`:
+### Example `NCBI RefSeq`:
 
 ```{r,eval=FALSE}
 # download the RNA of Homo sapiens from refseq
@@ -1235,7 +1300,7 @@ Human_rna
 [164136]     68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                      lcl|NC_012920.1_t...
 ```
 
-Example `Genbank`:
+### Example `NCBI Genbank`:
 
 ```{r,eval=FALSE}
 # download the RNA of Homo sapiens from genbank
@@ -1273,7 +1338,7 @@ Human_rna
 [24]    68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                           lcl|J01415.2_trna...
 ```
 
-Example `ENSEMBL`:
+### Example `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download the RNA of Homo sapiens from ensembl
@@ -1311,7 +1376,7 @@ Human_rna
 [36701]    172 TTGAAGGCGTGGAGACTGAAGTCCTCTCTATATCCACAGAACAG...AAGAGGGCTGTTCAGTCTCCATGCCCTTCAATCCTTGGCTACT ENST00000615087.1...
 ```
 
-Example `ENSEMBLGENOMES`:
+### Example `ENSEMBLGENOMES`:
 
 Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
@@ -1356,7 +1421,7 @@ Cress_rna
 
 Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` or alternatively for `ensembl` and `ensemblgenomes` the `getGTF()` function.
 
-Example `RefSeq`:
+### Example `NCBI RefSeq`:
 
 ```{r,eval=FALSE}
 # download the GFF file of Homo sapiens from refseq
@@ -1392,7 +1457,7 @@ Human_GFF
 10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0
 ```
 
-Example `Genbank`:
+### Example `NCBI Genbank`:
 
 ```{r,eval=FALSE}
 # download the GFF file of Homo sapiens from genbank
@@ -1430,7 +1495,7 @@ Human_GFF
 10 KI270713.1 Genbank     region         1     40745     0      +     0
 ```
 
-Example `ENSEMBL`:
+### Example `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download the GFF file of Homo sapiens from ENSEMBL
@@ -1478,7 +1543,7 @@ HS.gtf.ensembl <- getGTF( db       = "ensembl",
                          path = file.path("ensembl","annotation"))
 ```
 
-Example `ENSEMBLGENOMES`:
+### Example `ENSEMBLGENOMES`:
 
 Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
 as example.
@@ -1539,7 +1604,7 @@ transposon annotations files generated with Repeat Masker. To retrieve and impor
 these transposon annotations files, `biomartr` implements the `getRepeatMasker()`
 and `read_rm()` functions.
 
-
+### Example `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download repeat masker annotation file for A. thaliana
 AT.rm.refseq <- getRepeatMasker( db       = "refseq", 
@@ -1556,7 +1621,10 @@ AT.rm.refseq.anno <- read_rm(AT.rm.refseq)
 AT.rm.refseq.anno
 ```
 
+For `NCBI Genbank`, `ENSEMBL`, and `ENSEMBLGENOMES` users can specify the `db` argument analogously as shown above.
 
+
+## Genome Assembly Stats Retrieval
 
 
 

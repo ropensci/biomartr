@@ -4,8 +4,9 @@
 \alias{getAssemblyStats}
 \title{Genome Assembly Stats Retrieval}
 \usage{
-getAssemblyStats(db = "refseq", organism, type = "download",
-  path = file.path("_ncbi_downloads", "genomeassembly_stats"))
+getAssemblyStats(db = "refseq", organism, reference = TRUE,
+  type = "download", path = file.path("_ncbi_downloads",
+  "genomeassembly_stats"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -19,6 +20,8 @@ shall be retrieved:
 
 \item{organism}{a character string specifying the scientific name of the 
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{type}{shall only the file be retrieved (default) 
 \code{type = "download"} or should the corresponding file be downloaded and 

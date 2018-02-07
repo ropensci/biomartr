@@ -26,10 +26,10 @@ getMetaGenomeSummary <- function() {
             )
         }, error = function(e)
             stop(
-                "The FTP site 
-   'ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt'
-                cannot be reached. Are you connected to the internet? Is the 
-                homepage 'ftp://ftp.ncbi.nlm.nih.gov/' currently available?",
+                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt'",
+                " cannot be reached. Are you connected to the internet? Is the ", 
+                "homepage 'ftp://ftp.ncbi.nlm.nih.gov/' currently available?",
+                " Please try to re-run this function and see if it works then ...",
                 call. = FALSE
             ))
         Sys.sleep(0.33)

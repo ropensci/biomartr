@@ -28,91 +28,6 @@ and introduces a more organism centered annotation retrieval concept.
 The following sections will introduce users to the functionality and data retrieval precedures of `biomartr` and will show how `biomartr`
 extends the functionality of the initial [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package.
 
-### Getting Started with biomaRt
-
-The best way to get started with the methodology presented by the established [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package is to understand the workflow
-of data retrieval. The database provided by [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart) is organized in so called:
-`marts`, `datasets`, and `attributes`. So when users want to retrieve information for a specific organism
-of interest, first they need to specify the `marts` and `datasets` in which the information of the corresponding
-organism can be found. Subsequently they can specify the `attributes` argument that is ought to be returned for the corresponding organism.
-
-The availability of `marts`, `datasets`, and `attributes` can be checked by the following functions:
-
-```{r,eval=TRUE}
-# install the biomaRt package
-# source("http://bioconductor.org/biocLite.R")
-# biocLite("biomaRt")
-
-# load biomaRt
-library(biomaRt)
-
-# look at top 10 databases
-head(listMarts(host = "www.ensembl.org"), 10)
-```
-
-Users will observe that several `marts` providing annotation for
-specific classes of organisms or groups of organisms are available.
-
-For our example, we will choose the `hsapiens_gene_ensembl` `mart` and list all available
-datasets that are element of this `mart`.
-
-```{r,eval=TRUE}
-head(listDatasets(useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")), 10)
-```
-
-The `useMart()` function is a wrapper function provided by `biomaRt` to connect a selected BioMart
-database (`mart`) with a corresponding dataset stored within this `mart`.
-
-We select dataset `hsapiens_gene_ensembl` and now check for available attributes (annotation data)
-that can be accessed for `Homo sapiens` genes.
-
-```{r,eval=TRUE}
-head(listAttributes(useDataset(dataset = "hsapiens_gene_ensembl", 
-                               mart    = useMart("ENSEMBL_MART_ENSEMBL",
-                               host    = "www.ensembl.org"))), 10)
-```
-
-Please note the nested structure of this attribute query. For an attribute query procedure
-an additional wrapper function named `useDataset()` is needed in which `useMart()` and a corresponding 
-dataset needs to be specified. The result is a table storing the name of available attributes for
-_Homo sapiens_ as well as a short description.
-
-Furthermore, users can retrieve all filters for _Homo sapiens_ that can be specified by the actual BioMart query process.
-
-```{r,eval=TRUE}
-head(listFilters(useDataset(dataset = "hsapiens_gene_ensembl", 
-                            mart    = useMart("ENSEMBL_MART_ENSEMBL",
-                            host    = "www.ensembl.org"))), 10)
-```
-
-After accumulating all this information, it is now possible to perform an actual BioMart query
-by using the `getBM()` function.
-
-In this example we will retrieve attributes: `start_position`,`end_position` and `description`
-for the _Homo sapiens_ gene `"GUCA2A"`.
-
-Since the input genes are `ensembl gene ids`, we need to specify the `filters` argument `filters = "hgnc_symbol"`.
-
-```{r,eval=TRUE}
-# 1) select a mart and data set
-mart <- useDataset(dataset = "hsapiens_gene_ensembl", 
-                   mart    = useMart("ENSEMBL_MART_ENSEMBL",
-                   host    = "www.ensembl.org"))
-
-# 2) run a biomart query using the getBM() function
-# and specify the attributes and filter arguments
-geneSet <- "GUCA2A"
-
-resultTable <- getBM(attributes = c("start_position","end_position","description"),
-                     filters    = "hgnc_symbol", 
-                     values     = geneSet, 
-                     mart       = mart)
-
-resultTable 
-```
-
-When using `getBM()` users can pass all attributes retrieved by `listAttributes()` to the `attributes` argument
-of the `getBM()` function.
 
 # Getting Started with `biomartr`
 
@@ -146,7 +61,7 @@ might reveal that the dataset `ENSEMBL_MART_ENSEMBL` has changed.__
 
 The `getMarts()` function allows users to list all available databases that can be accessed through BioMart interfaces.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # load the biomartr package
 library(biomartr)
 
@@ -154,19 +69,20 @@ library(biomartr)
 getMarts()
 ```
 
+
 ### Retrieve Available Datasets from a Specific Mart
 
 Now users can select a specific database to list all available datasets
 that can be accessed through this database. In this example we choose
 the `ENSEMBL_MART_ENSEMBL` database.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL") , 5)
 ```
 
 Now you can select the dataset `hsapiens_gene_ensembl` and list all available attributes that can be retrieved from this dataset.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 tail(getDatasets(mart = "ENSEMBL_MART_ENSEMBL") , 38)
 ```
 
@@ -175,7 +91,7 @@ tail(getDatasets(mart = "ENSEMBL_MART_ENSEMBL") , 38)
 Now that you have selected a database (`hsapiens_gene_ensembl`) and a dataset (`hsapiens_gene_ensembl`),
 users can list all available attributes for this dataset using the `getAttributes()` function.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # list all available attributes for dataset: hsapiens_gene_ensembl
@@ -189,7 +105,7 @@ head( getAttributes(mart    = "ENSEMBL_MART_ENSEMBL",
 Finally, the `getFilters()` function allows users to list available filters
 for a specific dataset that can be used for a `biomart()` query.
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # list all available filters for dataset: hsapiens_gene_ensembl
@@ -214,7 +130,7 @@ This concept of locally storing all organism specific database linking informati
 an internal file allows users to significantly speed up subsequent retrieval queries for that particular organism.
 
 
-```{r,eval=TRUE}
+```{r,eval=FALSE}
 # show all elements of the data.frame
 options(tibble.print_max = Inf)
 # retrieving all available datasets and biomart connections for

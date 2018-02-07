@@ -4,8 +4,8 @@
 \alias{getGenome}
 \title{Genome Retrieval}
 \usage{
-getGenome(db = "refseq", organism, path = file.path("_ncbi_downloads",
-  "genomes"))
+getGenome(db = "refseq", organism, reference = TRUE,
+  path = file.path("_ncbi_downloads", "genomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -19,6 +19,8 @@ shall be retrieved:
 
 \item{organism}{a character string specifying the scientific name of the 
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding genome shall be stored. Default is 

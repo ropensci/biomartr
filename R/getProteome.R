@@ -11,9 +11,11 @@
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
 #' \item \code{db = "ensemblgenomes"}
+#' \item \code{db = "uniprot"}
 #' }
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding proteome shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
@@ -53,17 +55,19 @@
 getProteome <-
     function(db = "refseq",
              organism,
+             reference = TRUE,
              path = file.path("_ncbi_downloads", "proteomes")) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "ensemblgenomes")))
+                              "ensembl", "ensemblgenomes", "uniprot")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl' or 'ensemblgenomes'.",
+                'refseq', 'genbank', 'ensembl',  'ensemblgenomes', 'uniprot'.",
                 call. = FALSE
             )
             
-        message("Starting retrieval of ", organism," ...")
-            
+        message("Starting proteome retrieval of '", organism, "' from ", db, " ...")
+        message("\n")
+        
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
@@ -83,26 +87,34 @@ getProteome <-
             organism <-
                 stringr::str_replace_all(organism, "\\)", "")
             
-            FoundOrganism <-
-                dplyr::filter(
-                    AssemblyFilesAllKingdoms,
-                    stringr::str_detect(organism_name, organism),
-                    ((refseq_category == "representative genome") |
-                         (refseq_category == "reference genome")
-                    ),
-                    (version_status == "latest")
-                )
+            if (reference) {
+                    FoundOrganism <-
+                            dplyr::filter(
+                                    AssemblyFilesAllKingdoms,
+                                    stringr::str_detect(organism_name, organism),
+                                    ((refseq_category == "representative genome") |
+                                             (refseq_category == "reference genome")
+                                    ),
+                                    (version_status == "latest")
+                            ) 
+            } else {
+                    FoundOrganism <-
+                            dplyr::filter(
+                                    AssemblyFilesAllKingdoms,
+                                    stringr::str_detect(organism_name, organism),
+                                    (version_status == "latest")
+                            ) 
+            }
             
             if (nrow(FoundOrganism) == 0) {
-                message(
-                    paste0(
-                        "----------> No reference genome or representative 
-                        genome was found for '",
-                        organism,
-                        "'. Thus, download for this species has been omitted."
+                    message(
+                            paste0(
+                                    "----------> No reference genome or representative genome was found for '",
+                                    organism, "'. Thus, download for this species has been omitted.",
+                                    " Have you tried to specify 'reference = FALSE' ?"
+                            )
                     )
-                )
-                return("Not available")
+                    return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
@@ -170,6 +182,8 @@ getProteome <-
                                 )
                             )
                             
+                          message("Proteome download is completed!")
+                                
                             # download md5checksum file for organism of interest
                             custom_download(
                             paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
@@ -318,30 +332,48 @@ getProteome <-
                 cat("\n")
                 cat(paste0("Download_Date: ", date()))
                 cat("\n")
-                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                cat(paste0("assembly_name: ", ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none")))
                 cat("\n")
-                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                cat(paste0("assembly_date: ", ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none")))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_last_geneset_update: ",
-                        json.qry.info$genebuild_last_geneset_update
-                    )
+                        paste0(
+                                "genebuild_last_geneset_update: ",
+                                ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none")
+                        )
                 )
                 cat("\n")
                 cat(paste0(
-                    "assembly_accession: ",
-                    json.qry.info$assembly_accession
+                        "assembly_accession: ",
+                        ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none")
                 ))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_initial_release_date: ",
-                        json.qry.info$genebuild_initial_release_date
-                    )
+                        paste0(
+                                "genebuild_initial_release_date: ",
+                                ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        )
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                        file_name = proteome.path,
+                        organism = new.organism,
+                        database = db,
+                        download_data = date(),
+                        assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                        assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                        genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"), 
+                        assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
+                        genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        
+                )
+                
+                readr::write_tsv(doc, file.path(
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
                 
                 message(
                     paste0(
@@ -396,8 +428,8 @@ getProteome <-
                 
                 # generate Proteome documentation
                 sink(file.path(
-                    path,
-                    paste0("doc_", new.organism, "_db_", db, ".txt")
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".txt")
                 ))
                 
                 cat(paste0("File Name: ", proteome.path))
@@ -408,30 +440,48 @@ getProteome <-
                 cat("\n")
                 cat(paste0("Download_Date: ", date()))
                 cat("\n")
-                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                cat(paste0("assembly_name: ", ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none")))
                 cat("\n")
-                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                cat(paste0("assembly_date: ", ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none")))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_last_geneset_update: ",
-                        json.qry.info$genebuild_last_geneset_update
-                    )
+                        paste0(
+                                "genebuild_last_geneset_update: ",
+                                ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none")
+                        )
                 )
                 cat("\n")
                 cat(paste0(
-                    "assembly_accession: ",
-                    json.qry.info$assembly_accession
+                        "assembly_accession: ",
+                        ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none")
                 ))
                 cat("\n")
                 cat(
-                    paste0(
-                        "genebuild_initial_release_date: ",
-                        json.qry.info$genebuild_initial_release_date
-                    )
+                        paste0(
+                                "genebuild_initial_release_date: ",
+                                ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        )
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                        file_name = proteome.path,
+                        organism = new.organism,
+                        database = db,
+                        download_data = date(),
+                        assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                        assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                        genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
+                        assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"), 
+                        genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                        
+                )
+                
+                readr::write_tsv(doc, file.path(
+                        path,
+                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
                 
                 message(
                     paste0(
@@ -448,6 +498,14 @@ getProteome <-
                 return(proteome.path)
             }
         }
+        
+        if (db == "uniprot") {
+                if (!file.exists(path)) {
+                        dir.create(path, recursive = TRUE)
+                }
+                getUniProtSeq(organism = organism, path = path, update = TRUE)
+        }
+
     }
 
 

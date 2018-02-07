@@ -58,10 +58,10 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
            "http://rest.ensembl.org/info/species?content-type=application/json")
         }, error = function(e) {
             warning(
-                "The API 'http://rest.ensembl.org' does not seem to work 
-                properly. Are you connected to the internet? Is the homepage
-                'http://rest.ensembl.org' currently available? 
-                Do you have a fast and stable internet connection?", 
+                "The API 'http://rest.ensembl.org' does not seem to work properly.",
+                " Are you connected to the internet? Is the homepage ",
+                "'http://rest.ensembl.org' currently available? ",
+                "Do you have a fast and stable internet connection?", 
                 call. = FALSE
             )
             return(FALSE)
@@ -85,9 +85,9 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
         warning(
             "Unfortunately organism '",
             organism,
-            "' is not available at ENSEMBL. Please check whether or not 
-            the organism name is typed correctly. Thus, download of this 
-            species has been omitted."
+            "' is not available at ENSEMBL. Please check whether or not ",
+            "the organism name is typed correctly or try db = 'ensemblgenomes'. Thus, download of this ",
+            "species has been omitted.", call. = FALSE
         )
         return(FALSE)
     }
@@ -104,9 +104,9 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             )
     }, error = function(e) {
         warning(
-            "The API 'http://rest.ensembl.org' does not seem to work properly. 
-            Are you connected to the internet? Is the homepage 
-            'http://rest.ensembl.org' currently available?"
+            "The API 'http://rest.ensembl.org' does not seem to work properly. ", 
+            "Are you connected to the internet? Is the homepage ",
+            "'http://rest.ensembl.org' currently available?", call. = FALSE
         )
         return(FALSE)
     }
@@ -184,10 +184,10 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                             mode = "wb")
         }, error = function(e) {
             warning(
-                "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/' does not 
-                seem to work properly. Are you connected to the internet? 
-                Is the site 'ftp://ftp.ensembl.org/pub/' or 
-                'http://rest.ensembl.org' currently available?"
+                "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/' does not ",
+                "seem to work properly. Are you connected to the internet? ",
+                "Is the site 'ftp://ftp.ensembl.org/pub/' or ",
+                "'http://rest.ensembl.org' currently available?", call. = FALSE
             )
             return(FALSE)
         })

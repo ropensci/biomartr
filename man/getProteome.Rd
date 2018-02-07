@@ -4,8 +4,8 @@
 \alias{getProteome}
 \title{Proteome Retrieval}
 \usage{
-getProteome(db = "refseq", organism, path = file.path("_ncbi_downloads",
-  "proteomes"))
+getProteome(db = "refseq", organism, reference = TRUE,
+  path = file.path("_ncbi_downloads", "proteomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -15,10 +15,13 @@ shall be retrieved:
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
 \item \code{db = "ensemblgenomes"}
+\item \code{db = "uniprot"}
 }}
 
 \item{organism}{a character string specifying the scientific name of the 
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding proteome shall be stored. Default is 
