@@ -18,14 +18,14 @@ The vastly growing number of sequenced genomes allows us to perform a new type o
 Using a comparative approach these genomes provide us with new insights on how biological information is encoded 
 on the molecular level and how this information changes over evolutionary time.
 
-The first step, however, of any genome based study is to retrieve genomes from databases. To automate the
-retrieval process on a meta-genomic scale, the `biomartr` package provides interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.
+The first step, however, of any genome based study is to retrieve genomes and their annotation from databases. To automate the
+retrieval process of this information on a meta-genomic scale, the `biomartr` package provides interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.
 In addition, `biomartr` aims to address the `genome version crisis`. With `biomartr` users can now control and be informed 
 about the genome versions they retrieve automatically. Many large scale genomics studies lack this information
 and thus, reproducibility and data interpretation become nearly impossible when documentation of genome version information
 gets neglected.
 
-In detail, `biomartr` automates genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data retrieval from the major biological databases such as [NCBI RefSeq](https://www.ncbi.nlm.nih.gov/refseq/), [NCBI Genbank](https://www.ncbi.nlm.nih.gov/genbank/), [ENSEMBL](https://www.ensembl.org/index.html), [ENSEMBLGENOMES](http://ensemblgenomes.org), and [UniProt](http://www.uniprot.org). Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy.
+In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (annotation), genome assembly quality, and metagenome project data retrieval from the major biological databases such as [NCBI RefSeq](https://www.ncbi.nlm.nih.gov/refseq/), [NCBI Genbank](https://www.ncbi.nlm.nih.gov/genbank/), [ENSEMBL](https://www.ensembl.org/index.html), [ENSEMBLGENOMES](http://ensemblgenomes.org), and [UniProt](http://www.uniprot.org). Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy.
 In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
 
@@ -45,7 +45,7 @@ who don't believe in developing basic tools such as biomartr that usefulness can
 
 Please find [all FAQs here](FAQs.md).
 
-## Discussions and Bug Reports
+### Discussions and Bug Reports
 
 I would be very happy to learn more about potential improvements of the concepts and functions
 provided in this package.
