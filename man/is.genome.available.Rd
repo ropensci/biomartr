@@ -7,17 +7,26 @@
 is.genome.available(organism, details = FALSE, db = "refseq")
 }
 \arguments{
-\item{organism}{a character string specifying the scientific name of the 
-organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+\item{organism}{there are three options to characterize an organism: 
+\itemize{
+\item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+\item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+\item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+}}
 
 \item{details}{a logical value specifying whether or not details on genome 
 size, kingdom, etc. shall be printed to the console intead of a 
 boolean value.}
 
-\item{db}{a character string specifying the database for which genome 
-availability shall be checked,
-e.g. \code{db = "refseq"},\code{db = "genbank"}, \code{db = "ensembl"}, 
-\code{db = "ensemblgenomes"}, or \code{db =  "all"}.}
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved:
+\itemize{
+\item \code{db = "refseq"}
+\item \code{db = "genbank"}
+\item \code{db = "ensembl"}
+\item \code{db = "ensemblgenomes"}
+\item \code{db = "uniprot"}
+}}
 }
 \value{
 a logical value specifing whether or not the genome of the input 
