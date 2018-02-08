@@ -69,7 +69,7 @@ Please note that the first time you run this command it might take a while, beca
 during the initial execution of this function all necessary information is retrieved from NCBI
 and then stored locally. All further runs are then much faster.
 
-Example `refseq`: 
+### Example `NCBI RefSeq`: 
 
 ```r
 # checking whether or not the Homo sapiens 
@@ -109,8 +109,69 @@ is.genome.available(organism = "Homo sapiens", db = "refseq", details = TRUE)
 Here, we find two possible versions of the human genome: one having the `assembly_accession`
 ID `GCF_000001405.37` and another one having the ID `GCF_000306695.2`.
 
+When retrieving a genome with e.g. `getGenome()` the `organism` argument can
+also be specified using the `assembly_accession` ID instead of the scientific name of the 
+organism. This is true for all `get*()` functions. Hence, instead of writing
+`getGenome(db = "refseq", organism = "Homo sapiens")`, users can specify 
+`getGenome(db = "refseq", organism = "GCF_000001405.37")`. 
+This is particularly useful when more than one entry is available for one organism.
 
-Example `genbank`: 
+
+#### A small negative example
+
+In some cases your organism of interest will not be available in `NCBI RefSeq`.
+Here an example:
+
+```r
+# check genome availability for Candida glabrata
+is.genome.available("Candida glabrata", db = "refseq")
+```
+
+```r
+Unfortunatey, no entry for 'Candida glabrata' was found in the 'refseq' database. 
+Please consider specifying 'db = genbank' or 'db = ensembl' or 'db = ensemblgenomes 
+to check whether 'Candida glabrata' is availabe in these databases.
+[1] FALSE
+```
+
+When now checking the availability in `NCBI Genbank` we find that indeed
+'Candida glabrata' is availabe:
+
+```r
+# check genome availability for Candida glabrata
+is.genome.available("Candida glabrata", db = "genbank")
+```
+
+```
+Only a non-reference genome assembly is available for 'Candida glabrata'. 
+Please make sure to specify the argument 'reference = FALSE' when running any get*() function.
+[1] TRUE
+```
+
+Although, an entry is available the `is.genome.available()` warns us that
+only a non-reference genome is available for 'Candida glabrata'.
+To then retrieve the e.g. genome etc. files users need to speficy the
+`reference = FALSE` argument in the `get*()` functions.
+
+For example:
+
+```r
+# retrieve non-reference genome 
+getGenome(db = "genbank", organism = "Candida glabrata", reference = FALSE)
+```
+
+```
+Only a non-reference genome assembly is available for 'Candida glabrata'. 
+Please make sure to specify the argument 'reference = FALSE' when running any get*() function.
+Genome download is completed!
+Checking md5 hash of file: _ncbi_downloads/genomes/Candida_glabrata_md5checksums.txt ...
+The md5 hash of file '_ncbi_downloads/genomes/Candida_glabrata_md5checksums.txt' matches!
+The genome of 'Candida_glabrata' has been downloaded to '_ncbi_downloads/genomes' 
+and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
+[1] "_ncbi_downloads/genomes/Candida_glabrata_genomic_genbank.fna.gz"
+```
+
+### Example `NCBI Genbank`: 
 
 ```r
 # checking whether or not the Homo sapiens 
