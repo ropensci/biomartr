@@ -10,6 +10,7 @@ An example can be found [here](https://github.com/ropensci/biomartr/blob/master/
 
 - `is.genome.available()` can now handle `taxids` and `assembly_accession ids` in addition to the scientific name when
 specifying argument `organism`
+An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-ncbi-refseq)
 
 - `is.genome.available()` can now check for organism availability in the UniProt database
 
