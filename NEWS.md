@@ -8,6 +8,13 @@ An example can be found [here](https://github.com/ropensci/biomartr/blob/master/
 
 - `is.genome.available()` now prints out more useful interactive messages when searching for available organisms 
 
+- `is.genome.available()` can now handle `taxids` and `assembly_accession ids` in addition to the scientific name when
+specifying argument `organism`
+
+- `is.genome.available()` can now check for organism availability in the UniProt database
+
+
+
 [biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
 ===========
 
