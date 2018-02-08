@@ -8,7 +8,7 @@ biomartr
 
 ### Motivation:
 
-This package is born out of my own frustration to automate the genomic data retrieval process to create computationally reproducible scripts for large-scale genomics studies. Since I couldn't find easy-to-use and fully reproducible software libraries that would allow others and me to write transparent and easy to reproduce code, I sat down and tried to implement a framework that would enable anyone to automate the genomic data retrieval process. Personally, I strongly support and believe in reproducible research, and I truly hope that this package might be useful to others as well and that it helps to promote reproducible research in genomics studies.
+This package is born out of my own frustration to automate the genomic data retrieval process to create computationally reproducible scripts for large-scale genomics studies. Since I couldn't find easy-to-use and fully reproducible software libraries I sat down and tried to implement a framework that would enable anyone to automate the genomic data retrieval process. I hope that this package is useful to others as well and that it helps to promote reproducible research in genomics studies.
 
 I happily welcome anyone who wishes to contribute to this project :) Just drop me an email.
 
@@ -19,17 +19,21 @@ Using a comparative approach these genomes provide us with new insights on how b
 on the molecular level and how this information changes over evolutionary time.
 
 The first step, however, of any genome based study is to retrieve genomes from databases. To automate the
-retrieval process on a meta-genomic scale, the `biomartr` package provides useful interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.  
+retrieval process on a meta-genomic scale, the `biomartr` package provides interface functions for genomic sequence retrieval and functional annotation retrieval. The major aim of `biomartr` is to facilitate computational reproducibility and large-scale handling of genomic data for (meta-)genomic analyses.
+In addition, `biomartr` aims to address the `genome version crisis`. With `biomartr` users can now control and be informed 
+about the genome versions they retrieve automatically. Many large scale genomics studies lack this information
+and thus, reproducibility and data interpretation become nearly impossible when documentation of genome version information
+gets neglected.
 
-In detail, `biomartr` aims to provide users with an easy to use framework to obtain genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data. Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci.
-Users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
+In detail, `biomartr` automates genome, proteome, CDS, GFF (annotation), genome assembly quality, and metagenome project data retrieval from the major biological databases such as [NCBI RefSeq](https://www.ncbi.nlm.nih.gov/refseq/), [NCBI Genbank](https://www.ncbi.nlm.nih.gov/genbank/), [ENSEMBL](https://www.ensembl.org/index.html), [ENSEMBLGENOMES](http://ensemblgenomes.org), and [UniProt](http://www.uniprot.org). Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy.
+In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
-Hence, the `biomartr` package is designed to achieve the highest degree of computational reproducibility in genomics research.
 
 ### Citation
 
-**Please cite the following paper when using `biomartr` for your own research. This will allow me to continue
-working on this software tool and will motivate me to extend its functionality and usability in the next years. Many thanks in advance :)**
+**I would be very greatful if you could cite the following paper in case `biomartr` was useful for your own research. I plan on vastly extending 
+the biomartr functionality and usability in the next years and I aim to convince people
+who don't believe in developing basic tools such as biomartr that usefulness can also contribute to scientific impact. Many thanks in advance :)**
 
 > Drost HG, Paszkowski J. __Biomartr: genomic data retrieval with R__. *Bioinformatics* (2017) 33(8): 1216-1217. [doi:10.1093/bioinformatics/btw821](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R).
 
