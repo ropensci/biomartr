@@ -116,6 +116,45 @@ organism. This is true for all `get*()` functions. Hence, instead of writing
 `getGenome(db = "refseq", organism = "GCF_000001405.37")`. 
 This is particularly useful when more than one entry is available for one organism.
 
+#### Using the NCBI Taxonomy ID instead of the scientific name to screen for organism availability 
+
+Instead of specifying the `scientific name` of the organism of interest users can specify the [NCBI Taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy) identifier (= `taxid`)
+of the corresponding organism. For example, the `taxid` of `Homo sapiens` is `9606`.
+Now users can specify `organism = "9606"` to retrieve entries for `Homo sapiens`:
+
+```r
+# checking availability for Homo sapiens using its taxid
+is.genome.available(organism = "9606", db = "refseq", details = TRUE)
+```
+
+```
+ assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse…
+  <chr>  <chr>  <chr>  <chr>  <chr> <int> <int> <chr> <chr> <chr> <chr> <chr>
+1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro…
+2 GCF_0… PRJNA… SAMN0… AMYH0… na     9606  9606 Homo… NA    CHM1  late… Chro…
+# ... with 9 more variables: release_type <chr>, genome_rep <chr>,
+#   seq_rel_date <date>, asm_name <chr>, submitter <chr>, gbrs_paired_asm
+#   <chr>, paired_asm_comp <chr>, ftp_path <chr>, excluded_from_refseq <chr>
+```
+
+#### Using the accession ID instead of the scientific name or taxid to screen for organism availability
+
+Finally, instead of specifying either the `scientific name` of the organism of interest nor the `taxid`,
+users can specify the accession ID of the organism of interest.
+In the following example we use the accession ID of `Homo sapiens` (= `GCF_000001405.37`):
+```r
+# checking availability for Homo sapiens using its taxid
+is.genome.available(organism = "GCF_000001405.37", db = "refseq", details = TRUE)
+```
+
+```
+  assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse…
+  <chr>  <chr>  <chr>  <chr>  <chr> <int> <int> <chr> <chr> <chr> <chr> <chr>
+1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro…
+# ... with 9 more variables: release_type <chr>, genome_rep <chr>,
+#   seq_rel_date <date>, asm_name <chr>, submitter <chr>, gbrs_paired_asm
+#   <chr>, paired_asm_comp <chr>, ftp_path <chr>, excluded_from_refseq <chr
+```
 
 #### A small negative example
 
@@ -205,6 +244,7 @@ is.genome.available(organism = "Homo sapiens", db = "ensembl")
 ```
 
 ```
+A reference or representative genome assembly is available for 'Homo sapiens'.
 [1] TRUE
 ```
 
@@ -222,6 +262,33 @@ is.genome.available(organism = "Homo sapiens", db = "ensembl", details = TRUE)
 1 core, cdna, vega, otherfeatures, rnaseq, variation, funcgen   GRCh38
 ```
 
+Again, users can either specify the `taxid` or `accession id` when searching for organism entries.
+
+```r
+# retrieve details for Homo sapiens using taxid
+is.genome.available(organism = "9606", db = "ensembl", details = TRUE)
+```
+
+```
+ division taxon_id name         release display_name accession common… asse…
+  <chr>       <int> <chr>          <int> <chr>        <chr>     <chr>   <chr>
+1 Ensembl      9606 homo_sapiens      91 Human        GCA_0000… NA      human
+> 
+```
+
+```r
+# retrieve details for Homo sapiens using accession id
+is.genome.available(organism = "GCA_000001405.25", db = "ensembl", details = TRUE)
+```
+
+```
+ division taxon_id name         release display_name accession common… asse…
+  <chr>       <int> <chr>          <int> <chr>        <chr>     <chr>   <chr>
+1 Ensembl      9606 homo_sapiens      91 Human        GCA_0000… NA      human
+> 
+```
+
+
 Example `ENSEMBLGENOMES`: 
 
 For example, some species that cannot be found at `db = "ensembl"` might be available at `db = "ensemblgenomes"`
@@ -231,64 +298,48 @@ __not__ at `db = "ensemblgenomes"` whereas the genome of `"Arabidopsis thaliana"
 but __not__ at `db = "ensembl"`.
 
 
-```{r,eval=FALSE}
+```r
 # cheking whether Homo sapiens is available in the ENSEMBLGENOMES database
 is.genome.available("Homo sapiens", db = "ensemblgenomes")
-    ```
-
-```
-Error: Unfortunately organism 'Homo sapiens' is not available at ENSEMBLGENOMES. 
-Please check whether or not the organism name is typed correctly.
 ```
 
-```{r,eval=FALSE}
+```
+Unfortunatey, no entry for 'Homo sapiens' was found in the 'ensemblgenomes' database.
+Please consider specifying 'db = refseq' or 'db = genbank' or 'db = ensembl' or 'db = uniprot' 
+to check whether 'Homo sapiens' is available in these databases.
+[1] FALSE
+```
+
+```r
 # cheking whether Arabidopsis thaliana is available in the ENSEMBLGENOMES database
 is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes")
 ```
 
 ```
+A reference or representative genome assembly is available for 'Arabidopsis thaliana'.
 [1] TRUE
 ```
 
-```{r,eval=FALSE}
+```r
 # show details for Arabidopsis thaliana
 is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRUE)
 ```
 
 ```
-       division taxon_id                 name release         display_name
-          <chr>    <int>                <chr>   <int>                <chr>
-1 EnsemblPlants     3702 arabidopsis_thaliana      85 Arabidopsis thaliana
+ division      taxon_id name                 release disp… acce… comm… asse…
+  <chr>            <int> <chr>                  <int> <chr> <chr> <chr> <chr>
+1 EnsemblPlants     3702 arabidopsis_thaliana      91 Arab… GCA_… NA    thal…
 ```
 
 Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
 
 
-By specifying the `details = TRUE` argument, the genome file size as well as 
-additional information can be printed to the console.
-
-```{r,eval=FALSE}
-# printing details to the console
-is.genome.available("Homo sapiens", details = TRUE, db = "refseq")
-```
-
-```
-  assembly_accession  bioproject    biosample     wgs_master
-               <chr>       <chr>        <chr>          <chr>
-1   GCF_000001405.35    PRJNA168         <NA>           <NA>
-2    GCF_000306695.2 PRJNA178030 SAMN02205338 AMYH00000000.2
- with 25 more variables: refseq_category <chr>, taxid <int>,
-   species_taxid <int>, organism_name <chr>, infraspecific_name <chr>,
-   isolate <chr>, version_status <chr>, assembly_level <chr>,
-   release_type <chr>, genome_rep <chr>, seq_rel_date <date>,
-   asm_name <chr>, submitter <chr>, gbrs_paired_asm <chr>,
-   paired_asm_comp <chr>, ftp_path <chr>, excluded_from_refseq <chr>,
-   kingdoms <chr>, group <chr>, subgroup <chr>, file_size_MB <dbl>,
-   chrs <int>, organelles <int>, plasmids <int>, bio_projects <int>
-```
-
-The argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `ensemblgenomes`) organism
+In general, the argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `ensemblgenomes`, `uniprot`) organism
 information shall be retrieved.
+
+### Listing the total number of available genomes 
+
+In some cases it might be useful to check how many genomes (in total) are available in the different databases.
 
 Users can determine the total number of available genomes using the `listGenomes()` function.
 
