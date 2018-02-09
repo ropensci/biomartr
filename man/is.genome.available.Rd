@@ -4,9 +4,19 @@
 \alias{is.genome.available}
 \title{Check Genome Availability}
 \usage{
-is.genome.available(organism, details = FALSE, db = "refseq")
+is.genome.available(db = "refseq", organism, details = FALSE)
 }
 \arguments{
+\item{db}{a character string specifying the database from which the genome 
+shall be retrieved:
+\itemize{
+\item \code{db = "refseq"}
+\item \code{db = "genbank"}
+\item \code{db = "ensembl"}
+\item \code{db = "ensemblgenomes"}
+\item \code{db = "uniprot"}
+}}
+
 \item{organism}{there are three options to characterize an organism: 
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
@@ -17,16 +27,6 @@ is.genome.available(organism, details = FALSE, db = "refseq")
 \item{details}{a logical value specifying whether or not details on genome 
 size, kingdom, etc. shall be printed to the console intead of a 
 boolean value.}
-
-\item{db}{a character string specifying the database from which the genome 
-shall be retrieved:
-\itemize{
-\item \code{db = "refseq"}
-\item \code{db = "genbank"}
-\item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
-\item \code{db = "uniprot"}
-}}
 }
 \value{
 a logical value specifing whether or not the genome of the input 
