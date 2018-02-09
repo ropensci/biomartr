@@ -16,6 +16,10 @@ An example can be found [here](https://github.com/ropensci/biomartr/blob/master/
 
 - `getGenome()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
 
+- `getProteome()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve proteome assemblies 
+
+- `getCDS()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve CDS assemblies 
+
 - `is.genome.available()`: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent
 with all `get*()` functions
 
