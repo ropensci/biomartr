@@ -117,7 +117,7 @@ getRNA <-
                         "----------> No reference RNA or representative RNA was found for '",
                         organism, "'. Thus, download for this organism has been omitted.",
                         " Have you tried to specify getRNA(db = '",db,"', organism = '",organism,"' , reference = FALSE) ?",
-                        " Alternatively, you can retrieve CDS using the NCBI accession ID or NCBI Taxonomy ID.",
+                        " Alternatively, you can retrieve RNA using the NCBI accession ID or NCBI Taxonomy ID.",
                         " See '?'is.genome.available' for examples."
                     )
                 )
