@@ -13,8 +13,12 @@
 #' \item \code{db = "ensemblgenomes"}
 #' \item \code{db = "uniprot"}
 #' }
-#' @param organism a character string specifying the scientific name of the 
-#' organism of interest, e.g. \code{organism = "Homo sapiens"}.
+#' @param organism there are three options to characterize an organism: 
+#' \itemize{
+#' \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+#' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+#' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+#' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding proteome shall be stored. Default is 
@@ -74,13 +78,13 @@ getProteome <-
                 getKingdomAssemblySummary(db = db)
             
             # test wheter or not genome is available
-            is.genome.available(organism = organism, db = db)
+            suppressMessages(is.genome.available(organism = organism, db = db))
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
             }
             
-            organism_name <-
+            organism_name <- assembly_accession <- taxid <- 
                 refseq_category <- version_status <- NULL
             organism <-
                 stringr::str_replace_all(organism, "\\(", "")
@@ -88,41 +92,64 @@ getProteome <-
                 stringr::str_replace_all(organism, "\\)", "")
             
             if (reference) {
+                if (!is.taxid(organism)) {
                     FoundOrganism <-
-                            dplyr::filter(
-                                    AssemblyFilesAllKingdoms,
-                                    stringr::str_detect(organism_name, organism),
-                                    ((refseq_category == "representative genome") |
-                                             (refseq_category == "reference genome")
-                                    ),
-                                    (version_status == "latest")
-                            ) 
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            stringr::str_detect(organism_name, organism) | 
+                                stringr::str_detect(assembly_accession, organism),
+                            ((refseq_category == "representative genome") |
+                                 (refseq_category == "reference genome")
+                            ),
+                            (version_status == "latest")
+                        ) 
+                } else {
+                    FoundOrganism <-
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            taxid == as.integer(organism),
+                            ((refseq_category == "representative genome") |
+                                 (refseq_category == "reference genome")
+                            ),
+                            (version_status == "latest"))
+                }
             } else {
+                if (!is.taxid(organism)) {
                     FoundOrganism <-
-                            dplyr::filter(
-                                    AssemblyFilesAllKingdoms,
-                                    stringr::str_detect(organism_name, organism),
-                                    (version_status == "latest")
-                            ) 
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            stringr::str_detect(organism_name, organism) |
+                                stringr::str_detect(assembly_accession, organism),
+                            (version_status == "latest")
+                        ) 
+                } else {
+                    FoundOrganism <-
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            taxid == as.integer(organism),
+                            (version_status == "latest")
+                        ) 
+                }
             }
             
             if (nrow(FoundOrganism) == 0) {
-                    message(
-                            paste0(
-                                    "----------> No reference genome or representative genome was found for '",
-                                    organism, "'. Thus, download for this species has been omitted.",
-                                    " Have you tried to specify 'reference = FALSE' ?"
-                            )
+                message(
+                    paste0(
+                        "----------> No reference proteome or representative proteome was found for '",
+                        organism, "'. Thus, download for this organism has been omitted.",
+                        " Have you tried to specify getProteome(db = '",db,"', organism = '",organism,"' , reference = FALSE) ?",
+                        " Alternatively, you can retrieve proteomes using the NCBI accession ID or NCBI Taxonomy ID.",
+                        " See '?'is.genome.available' for examples."
                     )
+                )
                     return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
                         "More than one entry has been found for '",
-                        organism,
-                        "'. Only the first entry '",
-                        FoundOrganism[1, 1],
-                        "' has been used for subsequent proteome retrieval."
+                        organism, "'. Only the first entry '", FoundOrganism[1, 1], "' has been used for subsequent proteome retrieval.",
+                        " If you wish to download a different version, please use the NCBI accession ID when specifying the 'organism' argument.",
+                        " See ?is.genome.available for examples."
                     )
                     FoundOrganism <- FoundOrganism[1, ]
                 }
