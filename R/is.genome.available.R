@@ -1,15 +1,6 @@
 #' @title Check Genome Availability
 #' @description This function checks the availability of a given genome on the 
 #' NBCI servers specified as scientific name.
-#' @param organism there are three options to characterize an organism: 
-#' \itemize{
-#' \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
-#' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
-#' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
-#' }
-#' @param details a logical value specifying whether or not details on genome 
-#' size, kingdom, etc. shall be printed to the console intead of a 
-#' boolean value.
 #' @param db a character string specifying the database from which the genome 
 #' shall be retrieved:
 #' \itemize{
@@ -19,6 +10,15 @@
 #' \item \code{db = "ensemblgenomes"}
 #' \item \code{db = "uniprot"}
 #' }
+#' @param organism there are three options to characterize an organism: 
+#' \itemize{
+#' \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+#' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+#' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+#' }
+#' @param details a logical value specifying whether or not details on genome 
+#' size, kingdom, etc. shall be printed to the console intead of a 
+#' boolean value.
 #' @details
 #' Internally this function calls the \code{\link{listGenomes}} function to 
 #' detect all available genomes and checks whether or not the specified organism
@@ -45,9 +45,11 @@
 #' @export
 
 is.genome.available <-
-    function(organism,
-             details = FALSE,
-             db = "refseq") {
+    function(
+             db = "refseq",
+             organism,
+             details = FALSE
+             ) {
         if (!is.element(db, c("refseq", "genbank", 
                               "ensembl", "ensemblgenomes","uniprot")))
             stop(
