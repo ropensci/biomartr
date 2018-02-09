@@ -12,8 +12,12 @@
 #' \item \code{db = "ensembl"}
 #' \item \code{db = "ensemblgenomes"}
 #' }
-#' @param organism a character string specifying the scientific name of the 
-#' organism of interest, e.g. \code{organism = "Homo sapiens"}.
+#' @param organism there are three options to characterize an organism: 
+#' \itemize{
+#' \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+#' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+#' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+#' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome. 
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding genome shall be stored. Default is 
@@ -82,14 +86,14 @@ getGenome <-
                 getKingdomAssemblySummary(db = db)
             
             # test wheter or not genome is available
-            is.genome.available(organism = organism, db = db)
+            suppressMessages(is.genome.available(organism = organism, db = db))
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
             }
             
-            organism_name <-
-                refseq_category <- version_status <- NULL
+            organism_name <- taxid <-
+                refseq_category <- version_status <- assembly_accession <- NULL
             
             organism <-
                 stringr::str_replace_all(organism, "\\(", "")
@@ -97,22 +101,44 @@ getGenome <-
                 stringr::str_replace_all(organism, "\\)", "")
             
             if (reference) {
+                if (!is.taxid(organism)) {
                     FoundOrganism <-
-                            dplyr::filter(
-                                    AssemblyFilesAllKingdoms,
-                                    stringr::str_detect(organism_name, organism),
-                                    ((refseq_category == "representative genome") |
-                                             (refseq_category == "reference genome")
-                                    ),
-                                    (version_status == "latest")
-                            ) 
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            stringr::str_detect(organism_name, organism) | 
+                            stringr::str_detect(assembly_accession, organism),
+                            ((refseq_category == "representative genome") |
+                                 (refseq_category == "reference genome")
+                            ),
+                            (version_status == "latest")
+                        ) 
+                } else {
+                    FoundOrganism <-
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            taxid == as.integer(organism),
+                            ((refseq_category == "representative genome") |
+                                 (refseq_category == "reference genome")
+                            ),
+                            (version_status == "latest"))
+                }
             } else {
+                if (!is.taxid(organism)) {
                     FoundOrganism <-
-                            dplyr::filter(
-                                    AssemblyFilesAllKingdoms,
-                                    stringr::str_detect(organism_name, organism),
-                                    (version_status == "latest")
-                            ) 
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            stringr::str_detect(organism_name, organism) |
+                            stringr::str_detect(assembly_accession, organism),
+                            (version_status == "latest")
+                        ) 
+                } else {
+                    FoundOrganism <-
+                        dplyr::filter(
+                            AssemblyFilesAllKingdoms,
+                            taxid == as.integer(organism),
+                            (version_status == "latest")
+                        ) 
+                }
             }
             
             if (nrow(FoundOrganism) == 0) {
@@ -120,7 +146,9 @@ getGenome <-
                     paste0(
                         "----------> No reference genome or representative genome was found for '",
                         organism, "'. Thus, download for this species has been omitted.",
-                        " Have you tried to specify 'reference = FALSE' ?"
+                        " Have you tried to specify getGenome(db = '",db,"', organism = '",organism,"' , reference = FALSE) ?",
+                        " Alternatively, you can retrieve genome assemblies using the NCBI accession ID or NCBI Taxonomy ID.",
+                        " See '?'is.genome.available' for examples."
                     )
                 )
                  return("Not available")
@@ -128,7 +156,9 @@ getGenome <-
                 if (nrow(FoundOrganism) > 1) {
                     warnings(
                         "More than one entry has been found for '",
-                        organism, "'. Only the first entry '", FoundOrganism[1, 1], "' has been used for subsequent genome retrieval."
+                        organism, "'. Only the first entry '", FoundOrganism[1, 1], "' has been used for subsequent genome retrieval.",
+                        " If you wish to download a different version, please use the NCBI accession ID when specifying the 'organism' argument.",
+                        " See ?is.genome.available for examples."
                     )
                     FoundOrganism <- FoundOrganism[1, ]
                 }
@@ -239,7 +269,7 @@ getGenome <-
                     }
                     
                     docFile(
-                        file.name = paste0(local.org, "_genomic_", db, 
+                        file.name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db, 
                                            ".fna.gz"),
                         organism  = organism,
                         url       = download_url,
@@ -260,7 +290,7 @@ getGenome <-
                     
                     
                     doc <- tibble::tibble(
-                            file_name = paste0(local.org, "_genomic_", db,
+                            file_name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
                                                ".fna.gz"),
                             organism  = organism,
                             url       = download_url,
@@ -324,8 +354,9 @@ getGenome <-
             if (is.logical(genome.path)) {
                 invisible(return(TRUE))
             } else {
-                new.organism <- stringr::str_replace_all(organism, " ", "_")
                 
+                ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensembl", details = TRUE))
+                new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
                 # test proper API access
                 tryCatch({
                     json.qry.info <-
@@ -431,7 +462,14 @@ getGenome <-
             if (is.logical(genome.path)) {
                 invisible(return(TRUE))
             } else {
-                new.organism <- stringr::str_replace_all(organism, " ", "_")
+                if ( !suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = FALSE)) ) {
+                    warning("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
+                            "Please check whether or not the organism name is typed correctly or try db = 'ensembl'.",
+                            " Thus, download of this species has been omitted. ")
+                } else {
+                    ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = TRUE))
+                    new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
+                }
                 
                 # test proper API access
                 tryCatch({
