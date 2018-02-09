@@ -74,7 +74,7 @@ and then stored locally. All further runs are then much faster.
 ```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
-is.genome.available(organism = "Homo sapiens", db = "refseq")
+is.genome.available(db = "refseq", organism = "Homo sapiens")
 ```
 
 ```
@@ -93,7 +93,7 @@ retrieve all information for 'Homo sapiens' that is stored in NCBI RefSeq.
 ```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
-is.genome.available(organism = "Homo sapiens", db = "refseq", details = TRUE)
+is.genome.available(db = "refseq", organism = "Homo sapiens", details = TRUE)
 ```
 
 ```
@@ -124,7 +124,7 @@ Now users can specify `organism = "9606"` to retrieve entries for `Homo sapiens`
 
 ```r
 # checking availability for Homo sapiens using its taxid
-is.genome.available(organism = "9606", db = "refseq", details = TRUE)
+is.genome.available(db = "refseq", organism = "9606", details = TRUE)
 ```
 
 ```
@@ -144,7 +144,7 @@ users can specify the accession ID of the organism of interest.
 In the following example we use the accession ID of `Homo sapiens` (= `GCF_000001405.37`):
 ```r
 # checking availability for Homo sapiens using its taxid
-is.genome.available(organism = "GCF_000001405.37", db = "refseq", details = TRUE)
+is.genome.available(db = "refseq", organism = "GCF_000001405.37", details = TRUE)
 ```
 
 ```
@@ -163,7 +163,7 @@ Here an example:
 
 ```r
 # check genome availability for Candida glabrata
-is.genome.available("Candida glabrata", db = "refseq")
+is.genome.available(db = "refseq", organism = "Candida glabrata")
 ```
 
 ```r
@@ -178,7 +178,7 @@ When now checking the availability in `NCBI Genbank` we find that indeed
 
 ```r
 # check genome availability for Candida glabrata
-is.genome.available("Candida glabrata", db = "genbank")
+is.genome.available(db = "genbank", organism = "Candida glabrata")
 ```
 
 ```
@@ -215,7 +215,7 @@ and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
 ```r
 # checking whether or not the Homo sapiens 
 # genome is avaialable for download
-is.genome.available(organism = "Homo sapiens", db = "genbank")
+is.genome.available(db = "genbank", organism = "Homo sapiens")
 ```
 
 ```
@@ -240,7 +240,7 @@ Example `ENSEMBL`:
 
 ```r
 # cheking whether Homo sapiens is available in the ENSEMBL database
-is.genome.available(organism = "Homo sapiens", db = "ensembl")
+is.genome.available(db = "ensembl", organism = "Homo sapiens")
 ```
 
 ```
@@ -250,7 +250,7 @@ A reference or representative genome assembly is available for 'Homo sapiens'.
 
 ```r
 # retrieve details for Homo sapiens
-is.genome.available(organism = "Homo sapiens", db = "ensembl", details = TRUE)
+is.genome.available(db = "ensembl", organism = "Homo sapiens", details = TRUE)
 ```
 
 ```
@@ -266,7 +266,7 @@ Again, users can either specify the `taxid` or `accession id` when searching for
 
 ```r
 # retrieve details for Homo sapiens using taxid
-is.genome.available(organism = "9606", db = "ensembl", details = TRUE)
+is.genome.available(db = "ensembl", organism = "9606", details = TRUE)
 ```
 
 ```
@@ -300,7 +300,7 @@ but __not__ at `db = "ensembl"`.
 
 ```r
 # cheking whether Homo sapiens is available in the ENSEMBLGENOMES database
-is.genome.available("Homo sapiens", db = "ensemblgenomes")
+is.genome.available(db = "ensemblgenomes", organism = "Homo sapiens")
 ```
 
 ```
@@ -312,7 +312,7 @@ to check whether 'Homo sapiens' is available in these databases.
 
 ```r
 # cheking whether Arabidopsis thaliana is available in the ENSEMBLGENOMES database
-is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes")
+is.genome.available(db = "ensemblgenomes", organism = "Arabidopsis thaliana")
 ```
 
 ```
@@ -322,7 +322,7 @@ A reference or representative genome assembly is available for 'Arabidopsis thal
 
 ```r
 # show details for Arabidopsis thaliana
-is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRUE)
+is.genome.available(db = "ensemblgenomes", organism = "Arabidopsis thaliana", details = TRUE)
 ```
 
 ```
@@ -333,6 +333,18 @@ is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRU
 
 Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
 
+Also for `ENSEMBLGENOMES` users can specify `taxid` or `accession id` instead of the `scientific name` in the argument `organism`:
+
+```r
+# retrieve information 
+is.genome.available(db = "ensemblgenomes", "3702", details = TRUE)
+```
+
+```
+  division      taxon_id name     relea… display… access… strai… comm… stra… asse…
+  <chr>         <chr>    <chr>     <int> <chr>    <chr>   <chr>  <chr> <chr> <chr>
+1 EnsemblPlants 3702     arabido…     91 Arabido… GCA_00… NA     thal… NA    TAIR…
+```
 
 In general, the argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `ensemblgenomes`, `uniprot`) organism
 information shall be retrieved.
