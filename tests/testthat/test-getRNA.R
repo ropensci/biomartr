@@ -56,7 +56,7 @@ RNA <- read_rna(getRNA( db       = "ensemblgenomes",
 
 test_that("The getRNA() error messages work properly..",{
     skip_on_cran()
-    
+    skip_on_travis()
     expect_warning(getRNA( db       = "ensembl",
                         organism = "Saccharomyces cerevisi",
                         path     = tempdir()))
