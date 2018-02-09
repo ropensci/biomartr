@@ -17,81 +17,15 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     
     new.organism <- stringr::str_replace_all(organism, " ", "_")
     
-    # test if REST API is responding
-    is.ensembl.alive()
-    if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-        suppressWarnings(ensembl.available.organisms <-
-                             readr::read_delim(
-                                 file.path(tempdir(), "ensembl_summary.txt"),
-                                 delim = "\t",
-                                 quote = "\"",
-                                 escape_backslash = FALSE,
-                                 col_names = c(
-                                     "division",
-                                     "taxon_id",
-                                     "name",
-                                     "release",
-                                     "display_name",
-                                     "accession",
-                                     "common_name",
-                                     "assembly"
-                                 ),
-                                 col_types = readr::cols(
-                                     division = readr::col_character(),
-                                     taxon_id = readr::col_integer(),
-                                     name = readr::col_character(),
-                                     release = readr::col_integer(),
-                                     display_name = readr::col_character(),
-                                     accession = readr::col_character(),
-                                     common_name = readr::col_character(),
-                                     assembly = readr::col_character()
-                                 ),
-                                 comment = "#"
-                             ))
+    if ( !suppressMessages(is.genome.available(organism = organism, db = "ensembl", details = FALSE)) ) {
+        stop("Unfortunately organism '", organism, "' is not available at ENSEMBL. ",
+                "Please check whether or not the organism name is typed correctly or try db = 'ensemblgenomes'.",
+                " Thus, download of this species has been omitted. ", call. = FALSE)
+    } else {
+        ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensembl", details = TRUE))
+        new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
     }
     
-    if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-        # check if organism is available on ENSEMBL
-        tryCatch({
-            ensembl.available.organisms <-
-                jsonlite::fromJSON(
-           "http://rest.ensembl.org/info/species?content-type=application/json")
-        }, error = function(e) {
-            warning(
-                "The API 'http://rest.ensembl.org' does not seem to work properly.",
-                " Are you connected to the internet? Is the homepage ",
-                "'http://rest.ensembl.org' currently available? ",
-                "Do you have a fast and stable internet connection?", 
-                call. = FALSE
-            )
-            return(FALSE)
-        }
-            )
-        
-        aliases <- groups <- NULL
-        
-        # transform list object returned by 'fromJSON' to tibble
-        ensembl.available.organisms <-
-            tibble::as_tibble(dplyr::select(ensembl.available.organisms$species,
-                                            -aliases, -groups))
-        
-        readr::write_tsv(ensembl.available.organisms,
-                         file.path(tempdir(), "ensembl_summary.txt"))
-    }
-    
-    if (!is.element(stringr::str_to_lower(new.organism),
-                    ensembl.available.organisms$name)) {
-        
-        warning(
-            "Unfortunately organism '",
-            organism,
-            "' is not available at ENSEMBL. Please check whether or not ",
-            "the organism name is typed correctly or try db = 'ensemblgenomes'. Thus, download of this ",
-            "species has been omitted.", call. = FALSE
-        )
-        return(FALSE)
-    }
-        
     # test proper API access
     tryCatch({
         json.qry.info <-
@@ -109,8 +43,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             "'http://rest.ensembl.org' currently available?", call. = FALSE
         )
         return(FALSE)
-    }
-        )
+    })
     
     # construct retrieval query
     ensembl.qry <-
