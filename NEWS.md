@@ -14,6 +14,8 @@ An example can be found [here](https://github.com/ropensci/biomartr/blob/master/
 
 - `is.genome.available()` can now check for organism availability in the UniProt database
 
+- `getGenome()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
+
 
 
 [biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
