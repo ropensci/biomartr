@@ -236,7 +236,7 @@ execution of this function in following runs. The corresponding information file
 and `file.path(tempdir(), "ensemblgenomes_summary.txt")`.
 
 
-Example `ENSEMBL`: 
+### Example `ENSEMBL`: 
 
 ```r
 # cheking whether Homo sapiens is available in the ENSEMBL database
@@ -289,7 +289,7 @@ is.genome.available(organism = "GCA_000001405.25", db = "ensembl", details = TRU
 ```
 
 
-Example `ENSEMBLGENOMES`: 
+### Example `ENSEMBLGENOMES`: 
 
 For example, some species that cannot be found at `db = "ensembl"` might be available at `db = "ensemblgenomes"`
 and vice versa. So I recommend users to to check in both databases ENSEMBL and ESEMBLGENOMES whether or not a
@@ -344,6 +344,51 @@ is.genome.available(db = "ensemblgenomes", "3702", details = TRUE)
   division      taxon_id name     relea… display… access… strai… comm… stra… asse…
   <chr>         <chr>    <chr>     <int> <chr>    <chr>   <chr>  <chr> <chr> <chr>
 1 EnsemblPlants 3702     arabido…     91 Arabido… GCA_00… NA     thal… NA    TAIR…
+```
+
+### Example `UniProt`
+
+Users can also check the availability of proteomes in the [UniProt database](http://www.uniprot.org)
+by specifying:
+
+
+```r
+# retrieve information from UniProt
+is.genome.available(db = "uniprot", "Homo sapiens", details = FALSE)
+```
+
+```
+A reference or representative genome assembly is available for 'Homo sapiens'.
+More than one entry was found for 'Homo sapiens'. Please consider to run the function
+'is.genome.available()' and specify 
+'is.genome.available(organism = Homo sapiens, db = uniprot, details = TRUE)'. 
+This will allow you to select the 'assembly_accession' identifier that 
+can then be specified in all get*() functions.
+[1] TRUE
+```
+
+or with details:
+
+```r
+# retrieve information from UniProt
+is.genome.available(db = "uniprot", "Homo sapiens", details = TRUE)
+```
+
+```
+   name   descr… isRe… isRe… dbRe… comp… refe… upid  modifi… taxon… sour…
+ * <chr>  <chr>  <lgl> <lgl> <lis> <lis> <lis> <chr>   <dbl>  <int> <chr>
+ 1 Homo … Homo … T     T     <dat… <dat… <dat… UP00… 1.51e¹²   9606 Ense…
+ 2 Human… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  11250 ENA/…
+ 3 Enter… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  39054 ENA/…
+ 4 Enter… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹² 138951 ENA/…
+ 5 Human… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  11250 ENA/…
+ 6 Human… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  42789 ENA/…
+ 7 Human… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹² 162145 ENA/…
+ 8 Enter… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  39054 ENA/…
+ 9 Enter… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  39054 ENA/…
+10 Enter… NA     F     F     <NUL… <dat… <dat… UP00… 1.51e¹²  39054 ENA/…
+# ... with 1,167 more rows, and 2 more variables: sourceTaxonomy <int>,
+#   superregnum <chr>
 ```
 
 In general, the argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `ensemblgenomes`, `uniprot`) organism
@@ -621,9 +666,9 @@ Options are:
 - `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
 - `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
 
-Furthermore, users need to specify the scientific name of the organism of interest for which a genome assembly shall be downloaded, e.g. `organism = "Homo sapiens"`.
+Furthermore, users need to specify the `scientific name`, the `taxid` (= [NCBI Taxnonomy](https://www.ncbi.nlm.nih.gov/taxonomy) identifier), or the `accession identifier` of the organism of interest for which a genome assembly shall be downloaded, e.g. `organism = "Homo sapiens"` or `organism = "9606"` or `organism = "GCF_000001405.37"`.
 Finally, the `path` argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location,
-they can specify the `path = file.path("put","your","path","here")` argument.
+they can specify the `path = file.path("put","your","path","here")` argument (e.g. `file.path("_ncbi_downloads","genomes")`).
 
 ### Example NCBI RefSeq:
 
@@ -852,7 +897,7 @@ Cress_Genome
 ### Proteome Retrieval
 
 The `getProteome()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
-[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+[ENSEMBL](http://www.ensembl.org/index.html), [ENSEMBLGENOMES](http://ensemblgenomes.org/), and [UniProt](http://uniprot.org/) databases from
 which corresponding proteomes can be retrieved. It works analogous to `getGenome()`. 
 
 The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
@@ -863,6 +908,8 @@ Options are:
 - `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
 - `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
 - `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+- `db = "uniprot" ` for retrieval from [UniProt](http://uniprot.org/)
+
 
 Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
 Finally, the `path` argument specifies the folder path in which the corresponding proteome shall be locally stored. In case users would like to store the proteome file at a different location,
@@ -1062,10 +1109,10 @@ Another  way of retrieving proteome sequences is from the [UniProt](http://www.u
 
 ```{r,eval=FALSE}
 # download the proteome of Mus musculus from UniProt
-# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+# and store the corresponding proteome file in '_uniprot_downloads/proteomes'
 Mm.proteome.uniprot<- getProteome( db       = "uniprot", 
                                    organism = "Mus musculus",
-                                   path     = file.path("_ncbi_downloads","proteomes"))
+                                   path     = file.path("_uniprot_downloads","proteomes"))
 ```
 
 
