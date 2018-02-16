@@ -34,6 +34,7 @@ such as
 \item \code{NCBI nt}
 \item \code{Ensembl}
 \item \code{Ensembl Genomes}
+\item \code{UniProt}
 }
 }
 
