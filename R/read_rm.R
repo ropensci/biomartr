@@ -39,11 +39,13 @@ read_rm <- function(file) {
     )
     qry_end <- qry_start <- NULL
     
-    
+    nrow_before_filtering <- nrow(rm_file)
+        
     suppressWarnings(rm_file <- dplyr::mutate(rm_file,
                              qry_start = as.integer(qry_start),
                              qry_end = as.integer(qry_end)))
-
+    
+    
     rm_file <-
         dplyr::filter(
             rm_file,
@@ -56,6 +58,13 @@ read_rm <- function(file) {
             rm_file,
             qry_width = as.integer(qry_end - qry_start + 1L))
 
+    nrow_after_filtering <- nrow(rm_file)
+    
+    
+    if ((nrow_before_filtering - nrow_after_filtering) > 0)
+        message((nrow_before_filtering - nrow_after_filtering) + 1 , " out of ",nrow_before_filtering," rows = ", round(((nrow_before_filtering - nrow_after_filtering) + 1) / nrow_before_filtering, 3) , "% were removed from the imported RepeatMasker file, ",
+                "because they contained 'NA' values in either 'qry_start' or 'qry_end'.")
+    
     return(rm_file)
 }
 
