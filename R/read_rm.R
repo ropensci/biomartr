@@ -62,7 +62,7 @@ read_rm <- function(file) {
     
     
     if ((nrow_before_filtering - nrow_after_filtering) > 0)
-        message((nrow_before_filtering - nrow_after_filtering) + 1 , " out of ",nrow_before_filtering," rows = ", round(((nrow_before_filtering - nrow_after_filtering) + 1) / nrow_before_filtering, 3) , "% were removed from the imported RepeatMasker file, ",
+        message((nrow_before_filtering - nrow_after_filtering) + 1 , " out of ",nrow_before_filtering," rows ~ ", round(((nrow_before_filtering - nrow_after_filtering) + 1) / nrow_before_filtering, 3) , "% were removed from the imported RepeatMasker file, ",
                 "because they contained 'NA' values in either 'qry_start' or 'qry_end'.")
     
     return(rm_file)
