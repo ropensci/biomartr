@@ -94,7 +94,7 @@ Some bug fixes or new functionality will not be available on CRAN yet, but in th
 ```r
 # install the current version of biomartr on your system
 source("http://bioconductor.org/biocLite.R")
-biocLite("HajkD/biomartr")
+biocLite("ropensci/biomartr")
 ```
 
 
