@@ -122,7 +122,7 @@ Alternatively, users can retrieve all `nr` files with one command by typing:
 biomartr::download.database.all(db = "nr", path = "nr")
 ```
 
-Using this command, all `NCBI nr` files are loaded into the `nr` folder (`path = "nr"`).
+Using this command, all `NCBI nr` files are loaded into the `nr` folder (`path = "nr"`). For each data package, `biomartr` checks the `md5checksum` of the downloaded file and the file stored online to make sure that internet connection losses didn't currupt the file. In case you see a warning message notifying you about not-matching `md5checksum` values, please re-download the corresponding data package. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.
 
 
 The same approach can be applied to all other databases mentioned above, e.g.:
@@ -141,5 +141,7 @@ biomartr::download.database.all(db = "refseq_protein", path = "refseq_protein")
 # download the entire NCBI PDB database
 biomartr::download.database.all(db = "pdb", path = "pdb")
 ```
+
+For each data package, `biomartr` checks the `md5checksum` of the downloaded file and the file stored online to make sure that internet connection losses didn't currupt the file. In case you see a warning message notifying you about not-matching `md5checksum` values, please re-download the corresponding data package. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.
 
 __Please notice that most of these databases are very large, so users should take of of providing a stable internet connection throughout the download process.__
