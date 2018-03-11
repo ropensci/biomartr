@@ -61,8 +61,7 @@ For Bug Reports: Please send me an [issue](https://github.com/HajkD/biomartr/iss
 
 Getting Started with `biomartr`:
 
-- [Introduction](https://github.com/HajkD/biomartr/tree/master/vignettes/Introduction.Rmd)
-- [Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
+- [NCBI Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
 - [Genomic Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
 - [Meta-Genome Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/MetaGenome_Retrieval.Rmd)
 - [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
