@@ -70,11 +70,47 @@ test_that("The getCDS() throws error when wrong 'organism' is selected..",{
 
 
 
+test_that("getCDS() interface to EnsemblGenomes works with taxid..",{
+        
+        skip_on_cran()
+        skip_on_travis()
+        read_cds(getCDS( db       = "ensemblgenomes",
+                         organism = "559292",
+                         path     = tempdir()), format = "fasta")
+        
+})
 
 
+test_that("getCDS() interface to EnsemblGenomes works with accession id..",{
+        
+        skip_on_cran()
+        skip_on_travis()
+        read_cds(getCDS( db       = "ensemblgenomes",
+                         organism = "GCA_000146045.2",
+                         path     = tempdir()), format = "fasta")
+        
+})
+
+test_that("getCDS() interface to EnsemblGenomes works with taxid..",{
+        
+        skip_on_cran()
+        skip_on_travis()
+        read_cds(getCDS( db       = "ensembl",
+                         organism = "559292",
+                         path     = tempdir()), format = "fasta")
+        
+})
 
 
-
+test_that("getCDS() interface to EnsemblGenomes works with accession id..",{
+        
+        skip_on_cran()
+        skip_on_travis()
+        read_cds(getCDS( db       = "ensembl",
+                         organism = "GCA_000146045.2",
+                         path     = tempdir()), format = "fasta")
+        
+})
 
 
 
