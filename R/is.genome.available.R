@@ -286,7 +286,7 @@ is.genome.available <-
                 )
             }
             
-            name <- accession <- taxon_id <- NULL
+            name <- accession <- assembly <- taxon_id <- NULL
             
             if (!is.taxid(organism)) {
                 selected.organism <-
@@ -294,12 +294,12 @@ is.genome.available <-
                         ensembl.available.organisms,
                         stringr::str_detect(name, 
                                             stringr::str_to_lower(new.organism)) |
-                            stringr::str_detect(accession, organism)
+                            stringr::str_detect(accession, organism), !is.na(assembly)
                     )
             } else {
                 selected.organism <-
                     dplyr::filter(
-                        ensembl.available.organisms, taxon_id == organism)
+                        ensembl.available.organisms, taxon_id == organism, !is.na(assembly))
                 
             }
             
@@ -416,12 +416,12 @@ is.genome.available <-
                         ensembl.available.organisms,
                         stringr::str_detect(name, 
                                             stringr::str_to_lower(new.organism)) |
-                            stringr::str_detect(accession, organism)
+                            stringr::str_detect(accession, organism), !is.na(assembly)
                     )
             } else {
                 selected.organism <-
                     dplyr::filter(
-                        ensembl.available.organisms, taxon_id == organism)
+                        ensembl.available.organisms, taxon_id == organism, !is.na(assembly))
                 
             }
             
