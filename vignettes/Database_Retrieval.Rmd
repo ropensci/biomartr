@@ -25,10 +25,26 @@ The `download.database()` and `download.database.all()` functions implemented in
 
 Before downloading specific databases from NCBI users might want to list available databases. Using the `listNCBIDatabases()` function users can retrieve a list of  available databases stored on NCBI.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 # retrieve a list of available sequence databases at NCBI
 biomartr::listNCBIDatabases(db = "all")
 ```
+
+```
+[1] "16SMicrobial"            "cdd_delta"               "cloud"                  
+ [4] "env_nr"                  "env_nt"                  "est"                    
+ [7] "est_human"               "est_mouse"               "est_others"             
+[10] "FASTA"                   "gene_info"               "gss"                    
+[13] "gss_annot"               "htgs"                    "human_genomic"          
+[16] "landmark"                "nr"                      "nt"                     
+[19] "other_genomic"           "pataa"                   "patnt"                  
+[22] "pdbaa"                   "pdbnt"                   "ref_prok_rep_genomes"   
+[25] "ref_viroids_rep_genomes" "ref_viruses_rep_genomes" "refseq_genomic"         
+[28] "refseq_protein"          "refseq_rna"              "refseqgene"             
+[31] "sts"                     "swissprot"               "taxdb"                  
+[34] "tsa_nr"                  "tsa_nt"                  "vector"
+```
+
 
 However, in case users already know which database they would like to retrieve
 they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the `NCBI nr` database shall be retrieved.
