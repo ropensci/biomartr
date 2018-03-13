@@ -22,8 +22,17 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                 "Please check whether or not the organism name is typed correctly or try db = 'ensemblgenomes'.",
                 " Thus, download of this species has been omitted. ", call. = FALSE)
     } else {
-        ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensembl", details = TRUE))
-        new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
+            ensembl_summary <-
+                    suppressMessages(is.genome.available(
+                            organism = organism,
+                            db = "ensembl",
+                            details = TRUE
+                    ))
+            new.organism <-
+                    paste0(
+                            stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                            stringr::str_sub(new.organism, 2, nchar(new.organism))
+                    )
     }
     
     # test proper API access
