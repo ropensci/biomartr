@@ -29,8 +29,43 @@ getENSEMBLGENOMES.Seq <-
                     "Please check whether or not the organism name is typed correctly or try db = 'ensembl'.",
                     " Thus, download of this species has been omitted. ", call. = FALSE)
         } else {
-            ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = TRUE))
-            new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
+                ensembl_summary <-
+                        suppressMessages(is.genome.available(
+                                organism = organism,
+                                db = "ensemblgenomes",
+                                details = TRUE
+                        ))
+                
+                if (nrow(ensembl_summary) > 1) {
+                        
+                        if (is.taxid(organism)) {
+                                ensembl_summary <-
+                                        dplyr::filter(ensembl_summary, taxon_id == organism, !is.na(assembly))
+                        } else {
+                        
+                                ensembl_summary <-
+                                        dplyr::filter(ensembl_summary,
+                                                      (name == stringr::str_to_lower(new.organism)) |
+                                                              (accession == organism),
+                                                      !is.na(assembly)) }
+                        
+                        message("Several entries were found for '", organism, "' ... The first entry '", ensembl_summary$name,"' with accession id '",ensembl_summary$accession,"' was selected for download.")
+                        message("In case you wish to retrieve another genome version please consult is.genome.available(organism = '", organism,"', details = TRUE, db = 'ensemblgenomes') and specify another accession id as organism argument.")
+                        message("\n")
+                        # select only first entry
+                }
+                
+                if(nrow(ensembl_summary) == 0)
+                        stop("The accession id or taxid you used did not have a reference genome in the ENSEMBLGENOMES database. Please check is.genome.available() to retrieve accession ids and taxids of available genome assemblies.", call. = FALSE)
+                
+                new.organism <-
+                        paste0(
+                                stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
+                                stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
+                        )
+                
+                # retrieve detailed information for organism of interest
+                get.org.info <- ensembl_summary
         }
         
         # test proper API access
@@ -44,19 +79,13 @@ getENSEMBLGENOMES.Seq <-
                     )
                 )
         }, error = function(e) {
-            warning(
+            stop(
                 "The API 'http://rest.ensemblgenomes.org' does not seem to work ",
                 "properly. Are you connected to the internet? Is the homepage ",
                 "'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
             )
-            return(FALSE)
         })
         
-        # retrieve detailed information for organism of interest
-        get.org.info <-
-            is.genome.available(organism = organism,
-                                details = TRUE,
-                                db = "ensemblgenomes")
         
         if (get.org.info$division == "EnsemblBacteria") {
             if (!file.exists(file.path(tempdir(), "EnsemblBacteria.txt"))) {
@@ -74,7 +103,6 @@ getENSEMBLGENOMES.Seq <-
                         "currently available?",
                         call. = FALSE
                     )
-                    return(FALSE)
                 })
             }
             
