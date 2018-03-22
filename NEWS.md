@@ -4,7 +4,7 @@ biomartr 0.8.0
 ### New Functionality
 
 - `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`.
-An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-uniprot)
+An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-retrieval-uniprot)
 
 - `is.genome.available()` now prints out more useful interactive messages when searching for available organisms 
 
