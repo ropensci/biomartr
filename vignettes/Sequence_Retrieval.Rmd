@@ -33,7 +33,7 @@ Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, a
     - [2.2 from NCBI Genbank](#example-ncbi-genbank-1)
     - [2.3 from ENSEMBL](#example-ensembl-1)
     - [2.4 from ENSEMBLGENOMES](#example-ensemblgenomes-1)
-    - [2.5 from UniProt](#example-uniprot)
+    - [2.5 from UniProt](#example-retrieval-uniprot)
 * [3. Coding sequence retrieval with `getCDS()`](#cds-retrieval)
     - [3.1 from NCBI RefSeq](#example-ncbi-refseq-2)
     - [3.2 from NCBI Genbank](#example-ncbi-genbank-2)
@@ -1103,7 +1103,7 @@ Cress_Proteome
 [35386]   453 MGVSLLKQQHRITNQADTFSRFMER...NHQQQQQQQRSELRVENGLANNVI AT4G32600.1 pep:k...
 ```
 
-### Example `Uniprot`:
+### Example Retrieval `Uniprot`:
 
 Another  way of retrieving proteome sequences is from the [UniProt](http://www.uniprot.org/) database.
 
