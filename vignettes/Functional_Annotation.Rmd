@@ -1,5 +1,5 @@
 ---
-title: "Functional Annotation with Ensembl Biomart, GO, and KeGG"
+title: "Functional Annotation with biomartr"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
