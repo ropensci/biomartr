@@ -25,9 +25,80 @@ about the genome versions they retrieve automatically. Many large scale genomics
 and thus, reproducibility and data interpretation become nearly impossible when documentation of genome version information
 gets neglected.
 
-In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (annotation), genome assembly quality, and metagenome project data retrieval from the major biological databases such as [NCBI RefSeq](https://www.ncbi.nlm.nih.gov/refseq/), [NCBI Genbank](https://www.ncbi.nlm.nih.gov/genbank/), [ENSEMBL](https://www.ensembl.org/index.html), [ENSEMBLGENOMES](http://ensemblgenomes.org), and [UniProt](http://www.uniprot.org). Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy.
-In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
+In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (annotation), genome assembly quality, and metagenome project data retrieval from the major biological databases such as
 
+- [NCBI RefSeq](https://www.ncbi.nlm.nih.gov/refseq/)
+- [NCBI Genbank](https://www.ncbi.nlm.nih.gov/genbank/)
+- [ENSEMBL](https://www.ensembl.org/index.html)
+- [ENSEMBLGENOMES](http://ensemblgenomes.org)
+- [UniProt](http://www.uniprot.org)
+
+Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
+
+## Installation
+
+```r
+# install biomartr 0.7.0
+source("http://bioconductor.org/biocLite.R")
+biocLite('biomartr')
+```
+
+### Example
+
+```r
+# download the genome of Homo sapiens from refseq
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+HS.genome.refseq <- getGenome( db       = "refseq", 
+                               organism = "Homo sapiens")
+```
+
+Subsequently, users can use the read_genome() function to import the genome into the R session. Users can choose to work with the genome sequence in R either as Biostrings object (`obj.type = "Biostrings"`) or data.table object (`obj.type = "data.table"`) by specifying the obj.type argument of the read_genome() function.
+
+```r
+# import downloaded genome as Biostrings object
+Human_Genome <- read_genome(file     = HS.genome.refseq, 
+                            obj.type = "Biostrings")
+```
+
+```
+# look at the Biostrings object
+Human_Genome
+  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
+```
+
+Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
+
+```
+File Name: Homo_sapiens_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_genomic.fna.gz
+Download_Date: Sat Oct 22 12:41:07 2016
+refseq_category: reference genome
+assembly_accession: GCF_000001405.35
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-09-26
+submitter: Genome Reference Consortium
+```
 
 ### Citation
 
@@ -57,15 +128,16 @@ of this package, please let me know:
 
 For Bug Reports: Please send me an [issue](https://github.com/HajkD/biomartr/issues).
 
+
 ## Tutorials
 
 Getting Started with `biomartr`:
 
-- [NCBI Database Retrieval](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd)
-- [Genomic Sequence Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/Sequence_Retrieval.Rmd)
-- [Meta-Genome Retrieval](https://github.com/HajkD/biomartr/tree/master/vignettes/MetaGenome_Retrieval.Rmd)
-- [Functional Annotation](https://github.com/HajkD/biomartr/tree/master/vignettes/Functional_Annotation.Rmd)
-- [BioMart Examples](https://github.com/HajkD/biomartr/tree/master/vignettes/BioMart_Examples.Rmd)
+- [NCBI Database Retrieval](https://ropensci.github.io/biomartr/articles/Database_Retrieval.html)
+- [Genomic Sequence Retrieval](https://ropensci.github.io/biomartr/articles/Sequence_Retrieval.html)
+- [Meta-Genome Retrieval](https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html)
+- [Functional Annotation](https://ropensci.github.io/biomartr/articles/Functional_Annotation.html)
+- [BioMart Examples](https://ropensci.github.io/biomartr/articles/BioMart_Examples.html)
 
 
 Users can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
@@ -79,13 +151,9 @@ library(biomartr)
 browseVignettes("biomartr")
 ```
 
-## Installation
+## NEWS
+The current status of the package as well as a detailed history of the functionality of each version of `biomartr` can be found in the [NEWS](https://ropensci.github.io/biomartr/news/index.html) section.
 
-```r
-# install biomartr 0.7.0
-source("http://bioconductor.org/biocLite.R")
-biocLite('biomartr')
-```
 
 ## Install Developer Version
 Some bug fixes or new functionality will not be available on CRAN yet, but in the developer version here on GitHub. To download and install the most recent version of `biomartr` run:
@@ -95,10 +163,6 @@ Some bug fixes or new functionality will not be available on CRAN yet, but in th
 source("http://bioconductor.org/biocLite.R")
 biocLite("ropensci/biomartr")
 ```
-
-
-## NEWS
-The current status of the package as well as a detailed history of the functionality of each version of `biomartr` can be found in the [NEWS](https://github.com/HajkD/biomartr/blob/master/NEWS.md) section.
 
 ## Genomic Data Retrieval
 
