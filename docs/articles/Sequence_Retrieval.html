@@ -180,9 +180,9 @@
 <p>First users can check whether or not the genome, proteome, CDS, RNA, GFF, GTF, or genome assembly statistics of their interest is available for download.</p>
 <p>Using the scientific name of the organism of interest, users can check whether the corresponding genome is available via the <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> function.</p>
 <p>Please note that the first time you run this command it might take a while, because during the initial execution of this function all necessary information is retrieved from NCBI and then stored locally. All further runs are then much faster.</p>
-<div id="example-ncbi-refseq" class="section level3">
+<div id="example-ncbi-refseq-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<a href="#example-ncbi-refseq-is-genome-available" class="anchor"></a>Example <code>NCBI RefSeq</code> (?is.genome.available):</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
@@ -262,9 +262,9 @@ and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
 [1] "_ncbi_downloads/genomes/Candida_glabrata_genomic_genbank.fna.gz"</code></pre>
 </div>
 </div>
-<div id="example-ncbi-genbank" class="section level3">
+<div id="example-ncbi-genbank-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-genbank" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
+<a href="#example-ncbi-genbank-is-genome-available" class="anchor"></a>Example <code>NCBI Genbank</code> (?is.genome.available):</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
@@ -280,9 +280,9 @@ that can then be specified in all get*() functions.
 <a href="#using-is-genome-available-with-ensembl-and-ensemblgenomes" class="anchor"></a>Using <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> with ENSEMBL and ENSEMBLGENOMES</h3>
 <p>Users can also specify <code>db = "ensembl"</code> or <code>db = "ensemblgenomes"</code> to retrieve available organisms provided by ENSEMBL or ENSEMBLGENOMES. Again, users might experience a delay in the execution of this function when running it for the first time. This is due to the download of ENSEMBL or ENSEMBLGENOMES information which is then stored internally to enable a much faster execution of this function in following runs. The corresponding information files are stored at <code>file.path(tempdir(), "ensembl_summary.txt")</code> and <code>file.path(tempdir(), "ensemblgenomes_summary.txt")</code>.</p>
 </div>
-<div id="example-ensembl" class="section level3">
+<div id="example-ensembl-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensembl" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
+<a href="#example-ensembl-is-genome-available" class="anchor"></a>Example <code>ENSEMBL</code> (?is.genome.available):</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cheking whether Homo sapiens is available in the ENSEMBL database</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
@@ -309,9 +309,9 @@ that can then be specified in all get*() functions.
 1 Ensembl      9606 homo_sapiens      91 Human        GCA_0000… NA      human
 &gt; </code></pre>
 </div>
-<div id="example-ensemblgenomes" class="section level3">
+<div id="example-ensemblgenomes-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensemblgenomes" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
+<a href="#example-ensemblgenomes-is-genome-available" class="anchor"></a>Example <code>ENSEMBLGENOMES</code> (?is.genome.available):</h3>
 <p>For example, some species that cannot be found at <code>db = "ensembl"</code> might be available at <code>db = "ensemblgenomes"</code> and vice versa. So I recommend users to to check in both databases ENSEMBL and ESEMBLGENOMES whether or not a particular species is present. In case of <code>"Homo sapiens"</code>, the genome is available at <code>db = "ensembl"</code> but <strong>not</strong> at <code>db = "ensemblgenomes"</code> whereas the genome of <code>"Arabidopsis thaliana"</code> is available at <code>db = "ensemblgenomes"</code> but <strong>not</strong> at <code>db = "ensembl"</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cheking whether Homo sapiens is available in the ENSEMBLGENOMES database</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"ensemblgenomes"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
@@ -336,10 +336,9 @@ to check whether 'Homo sapiens' is available in these databases.
   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 EnsemblPlants 3702     arabido…     91 Arabido… GCA_00… NA     thal… NA    TAIR…</code></pre>
 </div>
-<div id="example-uniprot" class="section level3">
+<div id="example-uniprot-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-uniprot" class="anchor"></a>Example <code>UniProt</code>
-</h3>
+<a href="#example-uniprot-is-genome-available" class="anchor"></a>Example <code>UniProt</code> (?is.genome.available):</h3>
 <p>Users can also check the availability of proteomes in the <a href="http://www.uniprot.org">UniProt database</a> by specifying:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve information from UniProt</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, <span class="dt">details =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -553,9 +552,9 @@ Apple fruit crinkle viroid
 </ul>
 <p>Furthermore, users need to specify the <code>scientific name</code>, the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a> identifier), or the <code>accession identifier</code> of the organism of interest for which a genome assembly shall be downloaded, e.g. <code>organism = "Homo sapiens"</code> or <code>organism = "9606"</code> or <code>organism = "GCF_000001405.37"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument (e.g. <code>file.path("_ncbi_downloads","genomes")</code>).</p>
 </div>
-<div id="example-ncbi-refseq-1" class="section level3">
+<div id="example-ncbi-refseq" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq-1" class="anchor"></a>Example NCBI RefSeq:</h3>
+<a href="#example-ncbi-refseq" class="anchor"></a>Example NCBI RefSeq:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 HS.genome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
@@ -628,9 +627,9 @@ Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 [550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...</code></pre>
 </div>
-<div id="example-ncbi-genbank-1" class="section level3">
+<div id="example-ncbi-genbank" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-genbank-1" class="anchor"></a>Example NCBI Genbank:</h3>
+<a href="#example-ncbi-genbank" class="anchor"></a>Example NCBI Genbank:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from Genbank</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 HS.genome.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
@@ -655,9 +654,9 @@ Human_Genome</code></pre></div>
 [550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC GL000209.2 Homo s...
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG J01415.2 Homo sap...</code></pre>
 </div>
-<div id="example-ensembl-1" class="section level3">
+<div id="example-ensembl" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensembl-1" class="anchor"></a>Example ENSEMBL:</h3>
+<a href="#example-ensembl" class="anchor"></a>Example ENSEMBL:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 HS.genome.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, 
@@ -682,9 +681,9 @@ Human_Genome</code></pre></div>
 [523]       971 ATTTGCGATGTGTGTTCTCAACTA...TTGGATAGCTTTGAAGTTTTCGT KI270392.1 dna:sc...
 [524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...</code></pre>
 </div>
-<div id="example-ensemblgenomes-1" class="section level3">
+<div id="example-ensemblgenomes" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensemblgenomes-1" class="anchor"></a>Example ENSEMBLGENOMES:</h3>
+<a href="#example-ensemblgenomes" class="anchor"></a>Example ENSEMBLGENOMES:</h3>
 <p>Due to the unavailability of <code>"Homo sapiens"</code> at <code>db = "ensemblgenomes"</code> here we choose <code>"Arabidopsis thaliana"</code> as example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Arabidopsis thaliana from ENSEMBLGENOMES</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
@@ -731,9 +730,9 @@ Cress_Genome</code></pre></div>
 </ul>
 <p>Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. <code>organism = "Homo sapiens"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding proteome shall be locally stored. In case users would like to store the proteome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument.</p>
 </div>
-<div id="example-ncbi-refseq-2" class="section level3">
+<div id="example-ncbi-refseq-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq-2" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<a href="#example-ncbi-refseq-1" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the proteome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
 HS.proteome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
@@ -780,9 +779,9 @@ Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 [109017]   174 MMYALFLLSVGLVMGFVGFSSKPS...WLVVVTGWTLFVGVYIVIEIARGN YP_003024037.1 NA...
 [109018]   380 MTPMRKTNPLMKLINHSFIDLPTP...LYFTTILILMPTISLIENKMLKWA YP_003024038.1 cy...</code></pre>
 </div>
-<div id="example-ncbi-genbank-2" class="section level3">
+<div id="example-ncbi-genbank-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-genbank-2" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
+<a href="#example-ncbi-genbank-1" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the proteome of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
 HS.proteome.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
@@ -806,9 +805,9 @@ Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 [12]   174 MMYALFLLSVGLVMGFVGFSSKPSPI...GRWLVVVTGWTLFVGVYIVIEIARGN AAB58954.1 NADH d...
 [13]   380 MTPMRKTNPLMKLINHSFIDLPTPSN...SVLYFTTILILMPTISLIENKMLKWA AAB58955.3 cytoch...</code></pre>
 </div>
-<div id="example-ensembl-2" class="section level3">
+<div id="example-ensembl-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensembl-2" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
+<a href="#example-ensembl-1" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the proteome of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
 HS.proteome.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, 
@@ -832,9 +831,9 @@ Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 [102914]   155 MLLPLLLSSLLGVLSFTPRPQDHN...SGRYTCRAENRLGSQQRALDLSVQ ENSP00000435281.1...
 [102915]   186 MRRCYCHCCCPRCWADWTGSTPAY...HFSVLSFTPRPQDHNTDLTCHVDF ENSP00000433838.1...</code></pre>
 </div>
-<div id="example-ensemblgenomes-2" class="section level3">
+<div id="example-ensemblgenomes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensemblgenomes-2" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
+<a href="#example-ensemblgenomes-1" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
 <p>Due to the unavailability of <code>"Homo sapiens"</code> at <code>db = "ensemblgenomes"</code> here we choose <code>"Arabidopsis thaliana"</code> as example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the proteome of Arabidopsis thaliana from ENSEMBLGENOMES</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
@@ -907,9 +906,9 @@ Mouse_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 </ul>
 <p>Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. <code>organism = "Homo sapiens"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding CDS file shall be locally stored. In case users would like to store the CDS file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument.</p>
 </div>
-<div id="example-ncbi-refseq-3" class="section level3">
+<div id="example-ncbi-refseq-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq-3" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<a href="#example-ncbi-refseq-2" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
 HS.cds.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
@@ -976,9 +975,9 @@ Human_CDS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/g
 [114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
 [114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...</code></pre>
 </div>
-<div id="example-ncbi-genbank-3" class="section level3">
+<div id="example-ncbi-genbank-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-genbank-3" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
+<a href="#example-ncbi-genbank-2" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
 HS.cds.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
@@ -1003,9 +1002,9 @@ Human_CDS</code></pre></div>
 [12]   525 ATGATGTATGCTTTGTTTCTGTTGAG...TAATTGAGATTGCTCGGGGGAATAGG lcl|J01415.2_cds_...
 [13]  1141 ATGACCCCAATACGCAAAACTAACCC...TGAAAACAAAATACTCAAATGGGCCT lcl|J01415.2_cds_...</code></pre>
 </div>
-<div id="example-ensembl-3" class="section level3">
+<div id="example-ensembl-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensembl-3" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
+<a href="#example-ensembl-2" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from ensembl</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
 HS.cds.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, 
@@ -1030,9 +1029,9 @@ Human_CDS</code></pre></div>
 [102914]    466 ATGCTACTGCCACTGCTGCTGTCC...AGCCCTGGACCTCTCTGTGCAGT ENST00000529627.1...
 [102915]    559 ATGCGGAGATGCTACTGCCACTGC...CCTCACCTGCCATGTGGACTTCT ENST00000530476.1...</code></pre>
 </div>
-<div id="example-ensemblgenomes-3" class="section level3">
+<div id="example-ensemblgenomes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensemblgenomes-3" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
+<a href="#example-ensemblgenomes-2" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
 <p>Due to the inavailability of <code>"Homo sapiens"</code> at <code>db = "ensemblgenomes"</code> here we choose <code>"Arabidopsis thaliana"</code> as example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from ensemblgenomes</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
@@ -1080,9 +1079,9 @@ Cress_CDS</code></pre></div>
 </ul>
 <p>Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. <code>organism = "Homo sapiens"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding RNA file shall be locally stored. In case users would like to store the RNA file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument.</p>
 </div>
-<div id="example-ncbi-refseq-4" class="section level3">
+<div id="example-ncbi-refseq-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq-4" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<a href="#example-ncbi-refseq-3" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the RNA of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding RNA file in '_ncbi_downloads/RNA'</span>
 HS.rna.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
@@ -1148,9 +1147,9 @@ Human_rna &lt;-<span class="st"> </span><span class="kw"><a href="../reference/g
 [164135]     66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                        lcl|NC_012920.1_t...
 [164136]     68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                      lcl|NC_012920.1_t...</code></pre>
 </div>
-<div id="example-ncbi-genbank-4" class="section level3">
+<div id="example-ncbi-genbank-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-genbank-4" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
+<a href="#example-ncbi-genbank-3" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the RNA of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span>
 HS.rna.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
@@ -1175,9 +1174,9 @@ Human_rna</code></pre></div>
 [23]    66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                             lcl|J01415.2_trna...
 [24]    68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                           lcl|J01415.2_trna...</code></pre>
 </div>
-<div id="example-ensembl-4" class="section level3">
+<div id="example-ensembl-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensembl-4" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
+<a href="#example-ensembl-3" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the RNA of Homo sapiens from ensembl</span>
 <span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span>
 HS.rna.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, 
@@ -1202,9 +1201,9 @@ Human_rna</code></pre></div>
 [36700]    293 GGATATGAGGGCGATCTGGCAGGGACATCTGTCACCCCACTGAT...AAAATTAGCTGGGCATAGTGGCGTGCACCTGTCGTCCTAGCTA ENST00000365097.1...
 [36701]    172 TTGAAGGCGTGGAGACTGAAGTCCTCTCTATATCCACAGAACAG...AAGAGGGCTGTTCAGTCTCCATGCCCTTCAATCCTTGGCTACT ENST00000615087.1...</code></pre>
 </div>
-<div id="example-ensemblgenomes-4" class="section level3">
+<div id="example-ensemblgenomes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensemblgenomes-4" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
+<a href="#example-ensemblgenomes-3" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
 <p>Due to the inavailability of <code>"Homo sapiens"</code> at <code>db = "ensemblgenomes"</code> here we choose <code>"Arabidopsis thaliana"</code> as example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Arabidopsis thaliana from ensemblgenomes</span>
 <span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span>
@@ -1235,9 +1234,9 @@ Cress_rna</code></pre></div>
 <a href="#retrieve-the-annotation-file-of-a-particular-genome" class="anchor"></a>Retrieve the annotation file of a particular genome</h3>
 <p>Finally, users can download the corresponding annotation <code>.gff</code> files for particular genomes of interest using the <code><a href="../reference/getGFF.html">getGFF()</a></code> or alternatively for <code>ensembl</code> and <code>ensemblgenomes</code> the <code><a href="../reference/getGTF.html">getGTF()</a></code> function.</p>
 </div>
-<div id="example-ncbi-refseq-5" class="section level3">
+<div id="example-ncbi-refseq-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq-5" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<a href="#example-ncbi-refseq-4" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the GFF file of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span>
 HS.gff.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
@@ -1260,9 +1259,9 @@ Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/r
 9  NC_000001.11 BestRefSeq       exon 29321     29370     0      -     0
 10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0</code></pre>
 </div>
-<div id="example-ncbi-genbank-5" class="section level3">
+<div id="example-ncbi-genbank-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-genbank-5" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
+<a href="#example-ncbi-genbank-4" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the GFF file of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span>
 HS.gff.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
@@ -1287,9 +1286,9 @@ Human_GFF</code></pre></div>
 9  KI270712.1 Genbank     region         1    176043     0      +     0
 10 KI270713.1 Genbank     region         1     40745     0      +     0</code></pre>
 </div>
-<div id="example-ensembl-5" class="section level3">
+<div id="example-ensembl-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensembl-5" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
+<a href="#example-ensembl-4" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the GFF file of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding file in 'ensembl/annotation'</span>
 HS.gff.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, 
@@ -1320,9 +1319,9 @@ HS.gtf.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../refere
                          <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, 
                          <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</code></pre></div>
 </div>
-<div id="example-ensemblgenomes-5" class="section level3">
+<div id="example-ensemblgenomes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ensemblgenomes-5" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
+<a href="#example-ensemblgenomes-4" class="anchor"></a>Example <code>ENSEMBLGENOMES</code>:</h3>
 <p>Due to the inavailability of <code>"Homo sapiens"</code> at <code>db = "ensemblgenomes"</code> here we choose <code>"Arabidopsis thaliana"</code> as example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the GFF file of Arabidopsis thaliana from ENSEMBLGENOMES</span>
 <span class="co"># and store the corresponding file in 'ensemblgenomes/annotation'</span>
@@ -1360,9 +1359,9 @@ AT.gtf.ensemblgenomes &lt;-<span class="st"> </span><span class="kw"><a href="..
 <h2 class="hasAnchor">
 <a href="#repeat-masker-retrieval" class="anchor"></a>Repeat Masker Retrieval</h2>
 <p>In addition to genome, proteome, CDS, etc. information NCBI RefSeq and NCBI Genbank store also transposon annotations files generated with Repeat Masker. To retrieve and import these transposon annotations files, <code>biomartr</code> implements the <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> and <code><a href="../reference/read_rm.html">read_rm()</a></code> functions.</p>
-<div id="example-ncbi-refseq-6" class="section level3">
+<div id="example-ncbi-refseq-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example-ncbi-refseq-6" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<a href="#example-ncbi-refseq-5" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download repeat masker annotation file for A. thaliana</span>
 AT.rm.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
                                  <span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, 
