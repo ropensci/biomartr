@@ -69,7 +69,7 @@ Please note that the first time you run this command it might take a while, beca
 during the initial execution of this function all necessary information is retrieved from NCBI
 and then stored locally. All further runs are then much faster.
 
-### Example `NCBI RefSeq`: 
+### Example `NCBI RefSeq` (?is.genome.available): 
 
 ```r
 # checking whether or not the Homo sapiens 
@@ -210,7 +210,7 @@ and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
 [1] "_ncbi_downloads/genomes/Candida_glabrata_genomic_genbank.fna.gz"
 ```
 
-### Example `NCBI Genbank`: 
+### Example `NCBI Genbank` (?is.genome.available): 
 
 ```r
 # checking whether or not the Homo sapiens 
@@ -236,7 +236,7 @@ execution of this function in following runs. The corresponding information file
 and `file.path(tempdir(), "ensemblgenomes_summary.txt")`.
 
 
-### Example `ENSEMBL`: 
+### Example `ENSEMBL` (?is.genome.available): 
 
 ```r
 # cheking whether Homo sapiens is available in the ENSEMBL database
@@ -289,7 +289,7 @@ is.genome.available(organism = "GCA_000001405.25", db = "ensembl", details = TRU
 ```
 
 
-### Example `ENSEMBLGENOMES`: 
+### Example `ENSEMBLGENOMES` (?is.genome.available): 
 
 For example, some species that cannot be found at `db = "ensembl"` might be available at `db = "ensemblgenomes"`
 and vice versa. So I recommend users to to check in both databases ENSEMBL and ESEMBLGENOMES whether or not a
@@ -346,7 +346,7 @@ is.genome.available(db = "ensemblgenomes", "3702", details = TRUE)
 1 EnsemblPlants 3702     arabido…     91 Arabido… GCA_00… NA     thal… NA    TAIR…
 ```
 
-### Example `UniProt`
+### Example `UniProt` (?is.genome.available):
 
 Users can also check the availability of proteomes in the [UniProt database](http://www.uniprot.org)
 by specifying:
