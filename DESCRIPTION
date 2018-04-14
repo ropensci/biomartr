@@ -5,24 +5,7 @@ Authors@R: person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hgd23@cam.ac.uk",
                 comment = c(ORCID = "http://orcid.org/0000-0002-1567-306X"))
-Description: The vastly growing number of sequenced genomes allows us to perform
-                a new type of biological research. Using a comparative approach these genomes 
-                provide us with new insights on how biological information is encoded on the 
-                molecular level and how this information changes over evolutionary time.
-                The first step, however, of any genome based study is to retrieve genomes and 
-                their annotation from databases. 
-                To automate the retrieval process of this information on a meta-genomic scale, 
-                this package provides interface functions for genomic sequence retrieval and
-                functional annotation retrieval. The major aim of this package is to facilitate
-                computational reproducibility and large-scale handling of genomic data for
-                meta-genomic analyses. In addition, biomartr aims to address the genome version
-                crisis. With 'biomartr' users can now control and be informed about the genome
-                versions they retrieve automatically. Many large scale genomics studies lack this
-                information and thus, reproducibility and data interpretation become nearly 
-                impossible when documentation of genome version information gets neglected.
-                In detail, biomartr automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (annotation), 
-                genome assembly quality, and metagenome project data retrieval from the major 
-                In detail, this package aims to provide users with a standardized
+Description: This package aims to provide users with a standardized
                 way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
                 retrieval from 'NCBI RefSeq', 'NCBI Genbank', 'ENSEMBL', 'ENSEMBLGENOMES',
                 and 'UniProt' databases. Furthermore, an interface to the 'BioMart' database
