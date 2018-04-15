@@ -133,17 +133,17 @@
 <p>Users will observe that several <code>marts</code> providing annotation for specific classes of organisms or groups of organisms are available.</p>
 <p>For our example, we will choose the <code>hsapiens_gene_ensembl</code> <code>mart</code> and list all available datasets that are element of this <code>mart</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)), <span class="dv">10</span>)     </code></pre></div>
-<pre><code>#&gt;                       dataset                                   description     version
-#&gt; 1       pbairdii_gene_ensembl Northern American deer mouse genes (Pman_1.0)    Pman_1.0
-#&gt; 2     ogarnettii_gene_ensembl                      Bushbaby genes (OtoGar3)     OtoGar3
-#&gt; 3    nleucogenys_gene_ensembl                       Gibbon genes (Nleu_3.0)    Nleu_3.0
-#&gt; 4    mnemestrina_gene_ensembl           Pig-tailed macaque genes (Mnem_1.0)    Mnem_1.0
-#&gt; 5  dnovemcinctus_gene_ensembl                   Armadillo genes (Dasnov3.0)   Dasnov3.0
-#&gt; 6         rbieti_gene_ensembl   Black snub-nosed monkey genes (ASM169854v1) ASM169854v1
-#&gt; 7     ttruncatus_gene_ensembl                       Dolphin genes (turTru1)     turTru1
-#&gt; 8       cjacchus_gene_ensembl                  Marmoset genes (ASM275486v1) ASM275486v1
-#&gt; 9      pcapensis_gene_ensembl                         Hyrax genes (proCap1)     proCap1
-#&gt; 10       panubis_gene_ensembl                 Olive baboon genes (Panu_3.0)    Panu_3.0</code></pre>
+<pre><code>#&gt;                       dataset                                                  description       version
+#&gt; 1       hsapiens_gene_ensembl                                     Human genes (GRCh38.p12)    GRCh38.p12
+#&gt; 2   sboliviensis_gene_ensembl                   Bolivian squirrel monkey genes (SaiBol1.0)     SaiBol1.0
+#&gt; 3   mochrogaster_gene_ensembl                               Prairie vole genes (MicOch1.0)     MicOch1.0
+#&gt; 4        panubis_gene_ensembl                                Olive baboon genes (Panu_3.0)      Panu_3.0
+#&gt; 5      oprinceps_gene_ensembl                                   Pika genes (OchPri2.0-Ens) OchPri2.0-Ens
+#&gt; 6        ngalili_gene_ensembl Upper Galilee mountains blind mole rat genes (S.galili_v1.0) S.galili_v1.0
+#&gt; 7       mspretus_gene_ensembl                          Algerian mouse genes (SPRET_EiJ_v1)  SPRET_EiJ_v1
+#&gt; 8  dnovemcinctus_gene_ensembl                                  Armadillo genes (Dasnov3.0)     Dasnov3.0
+#&gt; 9      oanatinus_gene_ensembl                                       Platypus genes (OANA5)         OANA5
+#&gt; 10    ttruncatus_gene_ensembl                                      Dolphin genes (turTru1)       turTru1</code></pre>
 <p>The <code><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart()</a></code> function is a wrapper function provided by <code>biomaRt</code> to connect a selected BioMart database (<code>mart</code>) with a corresponding dataset stored within this <code>mart</code>.<br>
 We select dataset <code>hsapiens_gene_ensembl</code> and now check for available attributes (annotation data) that can be accessed for <code>Homo sapiens</code> genes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(
