@@ -35,6 +35,11 @@ In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (an
 
 Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
+
+__I truly value your opinion and improvement suggestions. Hence, I would be extremely grateful if you could take this 1 minute 
+ and 3 question survey (https://goo.gl/forms/Qaoxxjb1EnNSLpM02) so that I can learn how to improve `biomartr` in the best possible way. Many many thanks in advance.__
+
+
 ## Installation
 
 ```r
