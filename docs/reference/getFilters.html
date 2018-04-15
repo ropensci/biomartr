@@ -95,9 +95,6 @@ storing all available filters for a specific dataset." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
-    <li>
-      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -179,18 +176,18 @@ shall be listed.</p></td>
 #&gt; 14 metazoa_mart          Ensembl Metazoa Genes 38      
 #&gt; 15 metazoa_variations    Ensembl Metazoa Variations 38 </div><div class='input'><span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
 <span class='fu'>head</span>(<span class='fu'><a href='getDatasets.html'>getDatasets</a></span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 3
-#&gt;    dataset                        description                        version   
-#&gt;    &lt;chr&gt;                          &lt;chr&gt;                              &lt;chr&gt;     
-#&gt;  1 itridecemlineatus_gene_ensembl Squirrel genes (SpeTri2.0)         SpeTri2.0 
-#&gt;  2 mmurinus_gene_ensembl          Mouse Lemur genes (Mmur_3.0)       Mmur_3.0  
-#&gt;  3 trubripes_gene_ensembl         Fugu genes (FUGU 4.0)              FUGU 4.0  
-#&gt;  4 anancymaae_gene_ensembl        Ma's night monkey genes (Anan_2.0) Anan_2.0  
-#&gt;  5 hsapiens_gene_ensembl          Human genes (GRCh38.p12)           GRCh38.p12
-#&gt;  6 cintestinalis_gene_ensembl     C.intestinalis genes (KH)          KH        
-#&gt;  7 ppaniscus_gene_ensembl         Bonobo genes (panpan1.1)           panpan1.1 
-#&gt;  8 mleucophaeus_gene_ensembl      Drill genes (Mleu.le_1.0)          Mleu.le_1…
-#&gt;  9 fdamarensis_gene_ensembl       Damara mole rat genes (DMR_v1.0)   DMR_v1.0  
-#&gt; 10 fcatus_gene_ensembl            Cat genes (Felis_catus_8.0)        Felis_cat…</div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
+#&gt;    dataset                     description                        version      
+#&gt;    &lt;chr&gt;                       &lt;chr&gt;                              &lt;chr&gt;        
+#&gt;  1 dordii_gene_ensembl         Kangaroo rat genes (Dord_2.0)      Dord_2.0     
+#&gt;  2 scerevisiae_gene_ensembl    Saccharomyces cerevisiae genes (R… R64-1-1      
+#&gt;  3 hmale_gene_ensembl          Naked mole-rat male genes (HetGla… HetGla_1.0   
+#&gt;  4 chircus_gene_ensembl        Goat genes (ARS1)                  ARS1         
+#&gt;  5 hfemale_gene_ensembl        Naked mole-rat female genes (HetG… HetGla_femal…
+#&gt;  6 oniloticus_gene_ensembl     Tilapia genes (Orenil1.0)          Orenil1.0    
+#&gt;  7 csabaeus_gene_ensembl       Vervet-AGM genes (ChlSab1.1)       ChlSab1.1    
+#&gt;  8 aplatyrhynchos_gene_ensembl Duck genes (BGI_duck_1.0)          BGI_duck_1.0 
+#&gt;  9 amexicanus_gene_ensembl     Cave fish genes (AstMex102)        AstMex102    
+#&gt; 10 csavignyi_gene_ensembl      C.savignyi genes (CSAV 2.0)        CSAV 2.0     </div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
 <span class='fu'>head</span>(<span class='fu'>getFilters</span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>,
                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span>) , <span class='fl'>5</span>)</div><div class='output co'>#&gt;              name              description
 #&gt; 1 chromosome_name Chromosome/scaffold name
