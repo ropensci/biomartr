@@ -1,7 +1,12 @@
 biomartr 0.8.0
 ===========
 
-### New Functionality
+### New Functions
+
+- new function `getCollection()` for retrieval and quality control of the genome sequence,
+protein sequences, gff files, etc for a particular species
+
+### New Functionality of Existing Functions 
 
 - `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`.
 An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-retrieval-uniprot)
