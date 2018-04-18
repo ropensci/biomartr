@@ -188,6 +188,7 @@ biocLite("ropensci/biomartr")
 * `getKingdoms()` : Retrieve available kingdoms of life
 * `getGroups()` : Retrieve available groups for a kingdom of life
 * `is.genome.available()` : Check Genome Availability  NCBI and ENSEMBL servers
+* `getCollection()` : Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats
 * `getGenome()` : Download a specific genome stored on NCBI and ENSEMBL servers
 * `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
 * `getCDS()` : Download a specific CDS file (genome) stored on NCBI and ENSEMBL servers
