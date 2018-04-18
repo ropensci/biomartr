@@ -125,9 +125,16 @@
 <h1 class="page-header">
 <a href="#biomartr-0-8-0" class="anchor"></a>biomartr 0.8.0<small> Unreleased </small>
 </h1>
-<div id="new-functionality" class="section level3">
+<div id="new-functions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functionality" class="anchor"></a>New Functionality</h3>
+<a href="#new-functions" class="anchor"></a>New Functions</h3>
+<ul>
+<li>new function <code><a href="../reference/getCollection.html">getCollection()</a></code> for retrieval and quality control of the genome sequence, protein sequences, gff files, etc for a particular species</li>
+</ul>
+</div>
+<div id="new-functionality-of-existing-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-functionality-of-existing-functions" class="anchor"></a>New Functionality of Existing Functions</h3>
 <ul>
 <li><p><code><a href="../reference/getProteome.html">getProteome()</a></code> can now retrieve proteomes from the <a href="http://www.uniprot.org/">UniProt</a> database by specifying <code><a href="../reference/getProteome.html">getProteome(db = "uniprot")</a></code>. An example can be found <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-retrieval-uniprot">here</a></p></li>
 <li><p><code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> now prints out more useful interactive messages when searching for available organisms</p></li>
@@ -155,9 +162,9 @@
 <li><p>the argument order in <code><a href="../reference/getGroups.html">getGroups()</a></code> changed from <code><a href="../reference/getGroups.html">getGroups(kingdom, db)</a></code> to <code><a href="../reference/getGroups.html">getGroups(db, kingdom)</a></code> to make the argument order more consistent with the <code>get*()</code> and <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> functions</p></li>
 </ul>
 </div>
-<div id="new-functions" class="section level3">
+<div id="new-functions-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New Functions</h3>
+<a href="#new-functions-1" class="anchor"></a>New Functions</h3>
 <ul>
 <li>new internal functions <code>existingOrganisms()</code> and <code>existingOrganisms_ensembl()</code> which check the organisms that have already been downloaded</li>
 </ul>
@@ -187,9 +194,9 @@
 <li><p>fix a major bug in which organisms having no representative genome would generate NULL paths that subsequently crashed the <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> function when it tried to print out the result paths.</p></li>
 </ul>
 </div>
-<div id="new-functions-1" class="section level3">
+<div id="new-functions-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New Functions</h3>
+<a href="#new-functions-2" class="anchor"></a>New Functions</h3>
 <ul>
 <li><p>new function <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> for retrieval of Repeat Masker output files</p></li>
 <li><p>new function <code><a href="../reference/getGTF.html">getGTF()</a></code> for genome annotation retrieval from <code>ensembl</code> and <code>ensemblgenomes</code> in <code>gtf</code> format (Thanks for suggesting it Ge Tan)</p></li>
@@ -226,9 +233,9 @@
 <li>fixing a major bug <a href="https://github.com/HajkD/biomartr/issues/6" class="uri">https://github.com/HajkD/biomartr/issues/6</a> that caused that in all <code>get*()</code> (genome, proteome, gff, etc.) and <code>meta.retrieval*()</code> functions the meta retrieval process errored and terminated whenever NCBI or ENSEMBL didn’t store all types of sequences for a particular organism: genome, proteome, cds, etc. This has been fixed now and function calls such as <code><a href="../reference/meta.retrieval.html">meta.retrieval(kingdom = "bacteria", db = "genbank", type = "proteome")</a></code> should work properly now (Thanks to <a href='http://github.com/ARamesh123'>@ARamesh123</a> for making me aware if this bug). Hence, this bug affected all attempts to download all proteome sequences e.g. for bacteria and viruses, because NCBI does not store genome AND proteome information for all bacterial or viral species.</li>
 </ul>
 </div>
-<div id="new-functions-2" class="section level3">
+<div id="new-functions-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New Functions</h3>
+<a href="#new-functions-3" class="anchor"></a>New Functions</h3>
 <ul>
 <li><p>new function <code><a href="../reference/getAssemblyStats.html">getAssemblyStats()</a></code> allows users to retrieve the genome assembly stats file from NCBI RefSeq or Genbank, e.g. <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt</a></p></li>
 <li><p>new function <code><a href="../reference/read_assemblystats.html">read_assemblystats()</a></code> allows to import the genome assembly stats file from NCBI RefSeq or Genbank that was retrieved using the <code><a href="../reference/getAssemblyStats.html">getAssemblyStats()</a></code> function</p></li>
@@ -283,9 +290,9 @@
 <a href="#biomartr-0-2-0" class="anchor"></a>biomartr 0.2.0<small> 2016-11-22 </small>
 </h1>
 <p>In this version, <code>biomartr</code> was extended to now retrieve genome, proteome, CDS, GFF and meta-genome data also from <a href="http://www.ensembl.org/index.html">ENSEMBL</a> and <a href="http://ensemblgenomes.org/">ENSEMLGENOMES</a>. Furthermore, all NCBI retrieval functions were updated to the new server folder structure standards of NCBI.</p>
-<div id="new-functions-3" class="section level3">
+<div id="new-functions-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functions-3" class="anchor"></a>New Functions</h3>
+<a href="#new-functions-4" class="anchor"></a>New Functions</h3>
 <ul>
 <li><p>new meta-retrieval function <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> allows users to download all individual genomes of all kingdoms of life with one command</p></li>
 <li><p>new metagenome retrieval function <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code> allows users to retrieve metagenome projects from NCBI Genbank</p></li>

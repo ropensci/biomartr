@@ -176,18 +176,18 @@ shall be listed.</p></td>
 #&gt; 14 metazoa_mart          Ensembl Metazoa Genes 38      
 #&gt; 15 metazoa_variations    Ensembl Metazoa Variations 38 </div><div class='input'><span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
 <span class='fu'>head</span>(<span class='fu'><a href='getDatasets.html'>getDatasets</a></span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 3
-#&gt;    dataset                   description                             version   
-#&gt;    &lt;chr&gt;                     &lt;chr&gt;                                   &lt;chr&gt;     
-#&gt;  1 oprinceps_gene_ensembl    Pika genes (OchPri2.0-Ens)              OchPri2.0…
-#&gt;  2 ngalili_gene_ensembl      Upper Galilee mountains blind mole rat… S.galili_…
-#&gt;  3 mspretus_gene_ensembl     Algerian mouse genes (SPRET_EiJ_v1)     SPRET_EiJ…
-#&gt;  4 panubis_gene_ensembl      Olive baboon genes (Panu_3.0)           Panu_3.0  
-#&gt;  5 mochrogaster_gene_ensembl Prairie vole genes (MicOch1.0)          MicOch1.0 
-#&gt;  6 hsapiens_gene_ensembl     Human genes (GRCh38.p12)                GRCh38.p12
-#&gt;  7 sboliviensis_gene_ensembl Bolivian squirrel monkey genes (SaiBol… SaiBol1.0 
-#&gt;  8 anancymaae_gene_ensembl   Ma's night monkey genes (Anan_2.0)      Anan_2.0  
-#&gt;  9 ogarnettii_gene_ensembl   Bushbaby genes (OtoGar3)                OtoGar3   
-#&gt; 10 oaries_gene_ensembl       Sheep genes (Oar_v3.1)                  Oar_v3.1  </div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
+#&gt;    dataset                   description                            version    
+#&gt;    &lt;chr&gt;                     &lt;chr&gt;                                  &lt;chr&gt;      
+#&gt;  1 rbieti_gene_ensembl       Black snub-nosed monkey genes (ASM169… ASM169854v1
+#&gt;  2 psinensis_gene_ensembl    Chinese softshell turtle genes (PelSi… PelSin_1.0 
+#&gt;  3 ptroglodytes_gene_ensembl Chimpanzee genes (Pan_tro_3.0)         Pan_tro_3.0
+#&gt;  4 csabaeus_gene_ensembl     Vervet-AGM genes (ChlSab1.1)           ChlSab1.1  
+#&gt;  5 pmarinus_gene_ensembl     Lamprey genes (Pmarinus_7.0)           Pmarinus_7…
+#&gt;  6 cjacchus_gene_ensembl     Marmoset genes (ASM275486v1)           ASM275486v1
+#&gt;  7 ocuniculus_gene_ensembl   Rabbit genes (OryCun2.0)               OryCun2.0  
+#&gt;  8 gmorhua_gene_ensembl      Cod genes (gadMor1)                    gadMor1    
+#&gt;  9 amexicanus_gene_ensembl   Cave fish genes (AstMex102)            AstMex102  
+#&gt; 10 caperea_gene_ensembl      Brazilian guinea pig genes (CavAp1.0)  CavAp1.0   </div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
 <span class='fu'>head</span>(<span class='fu'>getFilters</span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>,
                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span>) , <span class='fl'>5</span>)</div><div class='output co'>#&gt;              name              description
 #&gt; 1 chromosome_name Chromosome/scaffold name

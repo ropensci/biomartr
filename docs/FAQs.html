@@ -123,8 +123,22 @@
 <div id="faqs" class="section level1">
 
 <ul>
-<li><a href="https://github.com/HajkD/biomartr/issues/12">Why do I get FTP errors when I download hundreds or thousands of genomes (e.g. bacteria or viruses) with biomartr?</a></li>
-<li><a href="https://github.com/HajkD/biomartr/issues/11">How is the <code>biomartr</code> package different from the <code>BiomaRt</code> package that I have been using so far?</a></li>
+<li>
+<a href="https://github.com/HajkD/biomartr/issues/12">Why do I get FTP errors when I download hundreds or thousands of genomes (e.g. bacteria or viruses) with biomartr?</a>
+<ul>
+<li><blockquote>
+<p>Short Answer: NCBI and Ensembl limit the server access for individual connections. Hence, when hundreds of retrieval queries are sent to download hundreds of genomes, it may happen that some of the queries get cancelled after a certain count. In that case, simply re-run the corresponding <code>meta.retrieval</code> function and it will pick up where it left off.</p>
+</blockquote></li>
+</ul>
+</li>
+<li>
+<a href="https://github.com/HajkD/biomartr/issues/11">How is the <code>biomartr</code> package different from the <code>BiomaRt</code> package that I have been using so far?</a>
+<ul>
+<li><blockquote>
+<p>Short Answer: <code>biomartr</code> is designed for the retrieval of big datasets such as multiple genomes, proteomes, annotation, etc whereas <code>biomaRt</code> is designed for the retrieval of small data such as sequences of individual genes</p>
+</blockquote></li>
+</ul>
+</li>
 <li><a href="https://github.com/HajkD/biomartr/issues/5">How can I retrieve GO terms for human genes using ensembl gene IDs?</a></li>
 <li><a href="https://www.biostars.org/p/9202/#235962">How can I download coding sequences or protein sequences for all sequenced species?</a></li>
 <li><a href="https://www.biostars.org/p/1796/#236039">Where can I Download the human reference genome in fasta format?</a></li>
