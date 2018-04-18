@@ -102,23 +102,25 @@ getCollection <-
                         path = path
                 )
         
-        # retrieve RepeatMasker output
-        species_rm <-
-                getRepeatMasker(
-                        db = db,
-                        organism = organism,
-                        reference = reference,
-                        path = path
-                )
-        
-        # retrieve assembly stats
-        species_stats <-
-                getAssemblyStats(
-                        db = db,
-                        organism = organism,
-                        reference = reference,
-                        path = path
-                )
+        if (is.element(db, c("refseq", "genbank"))) {
+                # retrieve RepeatMasker output
+                species_rm <-
+                        getRepeatMasker(
+                                db = db,
+                                organism = organism,
+                                reference = reference,
+                                path = path
+                        )
+                
+                # retrieve assembly stats
+                species_stats <-
+                        getAssemblyStats(
+                                db = db,
+                                organism = organism,
+                                reference = reference,
+                                path = path
+                        )
+        }
         
         if (!file.exists(file.path(getwd(), path, "doc"))) {
                 dir.create(file.path(getwd(), path, "doc"))
@@ -132,49 +134,83 @@ getCollection <-
         
         doc_tsv <- doc_files[stringr::str_detect(doc_files, "[.]tsv")]
         
-        tsv_file <-
-                readr::read_tsv(
-                        file.path(getwd(), path, "doc", doc_tsv),
-                        col_types = readr::cols(
-                                file_name = readr::col_character(),
-                                organism = readr::col_character(),
-                                url = readr::col_character(),
-                                database = readr::col_character(),
-                                path = readr::col_character(),
-                                refseq_category = readr::col_character(),
-                                assembly_accession = readr::col_character(),
-                                bioproject = readr::col_character(),
-                                biosample = readr::col_character(),
-                                taxid = readr::col_integer(),
-                                infraspecific_name = readr::col_character(),
-                                version_status = readr::col_character(),
-                                release_type = readr::col_character(),
-                                genome_rep = readr::col_character(),
-                                seq_rel_date = readr::col_date(format = ""),
-                                submitter = readr::col_character()
+        if (is.element(db, c("refseq", "genbank"))) {
+                tsv_file <-
+                        readr::read_tsv(
+                                file.path(getwd(), path, "doc", doc_tsv),
+                                col_types = readr::cols(
+                                        file_name = readr::col_character(),
+                                        organism = readr::col_character(),
+                                        url = readr::col_character(),
+                                        database = readr::col_character(),
+                                        path = readr::col_character(),
+                                        refseq_category = readr::col_character(),
+                                        assembly_accession = readr::col_character(),
+                                        bioproject = readr::col_character(),
+                                        biosample = readr::col_character(),
+                                        taxid = readr::col_integer(),
+                                        infraspecific_name = readr::col_character(),
+                                        version_status = readr::col_character(),
+                                        release_type = readr::col_character(),
+                                        genome_rep = readr::col_character(),
+                                        seq_rel_date = readr::col_date(format = ""),
+                                        submitter = readr::col_character()
+                                )
                         )
-                )
+                
+                
+                message("Collection retrieval finished successfully!")
+                message("\n")
+                
+                cat(paste0(
+                        "We retrieved the genome assembly and checked the annotation for '",
+                        organism,
+                        "' (taxid: ",
+                        tsv_file$taxid,
+                        ", ",
+                        tsv_file$infraspecific_name,") from '",
+                        tsv_file$url,
+                        "' (accession: ",
+                        tsv_file$assembly_accession,
+                        ", bioproject: ",
+                        tsv_file$bioproject,
+                        ", biosample: ",
+                        tsv_file$biosample,
+                        ") using the biomartr R package (Drost and Paszkowski, 2017)."
+                ))
+        }
         
-        
-        message("Collection retrieval finished successfully!")
-        message("\n")
-        
-        cat(paste0(
-                "We retrieved the genome assembly and checked the annotation for '",
-                organism,
-                "' (taxid: ",
-                tsv_file$taxid,
-                ", ",
-                tsv_file$infraspecific_name,") from '",
-                tsv_file$url,
-                "' (accession: ",
-                tsv_file$assembly_accession,
-                ", bioproject: ",
-                tsv_file$bioproject,
-                ", biosample: ",
-                tsv_file$biosample,
-                ") using the biomartr R package (Drost and Paszkowski, 2017)."
-        ))
+        if (is.element(db, c("ensembl", "ensemblgenomes"))) {
+                tsv_file <-
+                        readr::read_tsv(
+                                file.path(getwd(), path, "doc", doc_tsv),
+                                col_types = readr::cols(
+                                        file_name = readr::col_character(),
+                                        organism = readr::col_character(),
+                                        database = readr::col_character(),
+                                        download_data = readr::col_character(),
+                                        assembly_name = readr::col_character(),
+                                        assembly_date = readr::col_character(),
+                                        genebuild_last_geneset_update = readr::col_character(),
+                                        assembly_accession = readr::col_character(),
+                                        genebuild_initial_release_date = readr::col_character()
+                                )
+                        )
+                
+                
+                message("Collection retrieval finished successfully!")
+                message("\n")
+                
+                cat(paste0(
+                        "We retrieved the genome assembly and checked the annotation for '",
+                        organism,
+                        "' (database: ",
+                        tsv_file$database,
+                        ", accession: ",
+                        tsv_file$assembly_accession,
+                        ") using the biomartr R package (Drost and Paszkowski, 2017)."
+                ))
+        }
         
         
         }
