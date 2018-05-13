@@ -1165,7 +1165,84 @@ Human_Genome
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
 ```
 
+#### Use `taxid` id for genome retrieval
+
+Alternatively, instead of specifying the scientific name in the argument `organism`
+users can specify the `taxonomy` id of the corresponding organism. Here, we specify
+the taxonomy id `4932` which encodes the species `Saccharomyces cerevisiae`.
+
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import genome as Biostrings object
+Scerevisiae_Genome <- getGenome(
+            db       = "refseq",
+            organism = "559292") %>%
+    read_genome()
+```
+
+```{r,eval=FALSE}
+Scerevisiae_Genome
+```
+
+
+```
+A DNAStringSet instance of length 17
+       width seq                                      names               
+ [1]  230218 CCACACCACACCCACACAC...GGGTGTGGTGTGTGTGGG NC_001133.9 Sacch...
+ [2]  813184 AAATAGCCCTCATGTACGT...TGTGGTGTGTGGGTGTGT NC_001134.8 Sacch...
+ [3]  316620 CCCACACACCACACCCACA...GTGGGTGTGGTGTGTGTG NC_001135.5 Sacch...
+ [4] 1531933 ACACCACACCCACACCACA...GTAGTAAGTAGCTTTTGG NC_001136.10 Sacc...
+ [5]  576874 CGTCTCCTCCAAGCCCTGT...ATTTTCATTTTTTTTTTT NC_001137.3 Sacch...
+ ...     ... ...
+[13]  924431 CCACACACACACCACACCC...TGTGGTGTGTGTGTGGGG NC_001145.3 Sacch...
+[14]  784333 CCGGCTTTCTGACCGAAAT...TGTGGGTGTGGTGTGGGT NC_001146.8 Sacch...
+[15] 1091291 ACACCACACCCACACCACA...TGTGTGGGTGTGGTGTGT NC_001147.6 Sacch...
+[16]  948066 AAATAGCCCTCATGTACGT...TTTAATTTCGGTCAGAAA NC_001148.4 Sacch...
+[17]   85779 TTCATAATTAATTTTTTAT...TATAATATAATATCCATA NC_001224.1 Sacch...
+```
+
+#### Use `assembly_accession` id for genome retrieval
+
+Alternatively, instead of specifying the scientific name or taxonomy in the argument `organism`
+users can specify the `assembly_accession` id of the corresponding organism. Here, we specify
+the `assembly_accession` id `GCF_000146045.2` which encodes the species `Saccharomyces cerevisiae`.
+
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import genome as Biostrings object
+Scerevisiae_Genome <- getGenome(
+            db       = "refseq",
+            organism = "GCF_000146045.2") %>%
+    read_genome()
+```
+
+```{r,eval=FALSE}
+Scerevisiae_Genome
+```
+
+```
+ A DNAStringSet instance of length 17
+       width seq                                                    names               
+ [1]  230218 CCACACCACACCCACACACCCACACA...GTGGTGTGGGTGTGGTGTGTGTGGG NC_001133.9 Sacch...
+ [2]  813184 AAATAGCCCTCATGTACGTCTCCTCC...GTGTGGGTGTGGTGTGTGGGTGTGT NC_001134.8 Sacch...
+ [3]  316620 CCCACACACCACACCCACACCACACC...GGGTGTGGTGGGTGTGGTGTGTGTG NC_001135.5 Sacch...
+ [4] 1531933 ACACCACACCCACACCACACCCACAC...AATAAAGGTAGTAAGTAGCTTTTGG NC_001136.10 Sacc...
+ [5]  576874 CGTCTCCTCCAAGCCCTGTTGTCTCT...GGGTTTCATTTTCATTTTTTTTTTT NC_001137.3 Sacch...
+ ...     ... ...
+[13]  924431 CCACACACACACCACACCCACACCAC...GTGTGGGTGTGGTGTGTGTGTGGGG NC_001145.3 Sacch...
+[14]  784333 CCGGCTTTCTGACCGAAATTAAAAAA...GGGTGTGTGTGGGTGTGGTGTGGGT NC_001146.8 Sacch...
+[15] 1091291 ACACCACACCCACACCACACCCACAC...GAGAGAGTGTGTGGGTGTGGTGTGT NC_001147.6 Sacch...
+[16]  948066 AAATAGCCCTCATGTACGTCTCCTCC...TTTTTTTTTTAATTTCGGTCAGAAA NC_001148.4 Sacch...
+[17]   85779 TTCATAATTAATTTTTTATATATATA...GCTTAATTATAATATAATATCCATA NC_001224.1 Sacch...
+```
+
 ### Example NCBI Genbank:
+
+Genome retrieval from `NCBI Genbank`.
 
 ```{r,eval=FALSE}
 # download the genome of Homo sapiens from Genbank
@@ -1177,8 +1254,7 @@ HS.genome.genbank <- getGenome( db       = "genbank",
 
 ```{r,eval=FALSE}
 # import downloaded genome as Biostrings object
-Human_Genome <- read_genome(file     = HS.genome.genbank, 
-                            obj.type = "Biostrings")
+Human_Genome <- read_genome(file     = HS.genome.genbank)
 ```
 
 ```{r,eval=FALSE}
@@ -1203,6 +1279,82 @@ Human_Genome
 ```
 
 
+#### Use `taxonomy` id for genome retrieval
+
+Alternatively, instead of specifying the scientific name in the argument `organism`
+users can specify the `taxonomy` id of the corresponding organism. Here, we specify
+the taxonomy id `4932` which encodes the species `Saccharomyces cerevisiae`.
+
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import genome as Biostrings object
+Scerevisiae_Genome <- getGenome(
+            db       = "genbank",
+            organism = "559292") %>%
+    read_genome()
+```
+
+```{r,eval=FALSE}
+Scerevisiae_Genome
+```
+
+```
+A DNAStringSet instance of length 16
+       width seq                                names               
+ [1]  230218 CCACACCACACCCACA...TGTGGTGTGTGTGGG BK006935.2 TPA_in...
+ [2]  813184 AAATAGCCCTCATGTA...GGTGTGTGGGTGTGT BK006936.2 TPA_in...
+ [3]  316620 CCCACACACCACACCC...GGTGTGGTGTGTGTG BK006937.2 TPA_in...
+ [4] 1531933 ACACCACACCCACACC...GTAAGTAGCTTTTGG BK006938.2 TPA_in...
+ [5]  576874 CGTCTCCTCCAAGCCC...TTCATTTTTTTTTTT BK006939.2 TPA_in...
+ ...     ... ...
+[12] 1078177 CACACACACACACCAC...ACATGAGGGCTATTT BK006945.2 TPA_in...
+[13]  924431 CCACACACACACCACA...GGTGTGTGTGTGGGG BK006946.2 TPA_in...
+[14]  784333 CCGGCTTTCTGACCGA...GGGTGTGGTGTGGGT BK006947.3 TPA_in...
+[15] 1091291 ACACCACACCCACACC...GTGGGTGTGGTGTGT BK006948.2 TPA_in...
+[16]  948066 AAATAGCCCTCATGTA...AATTTCGGTCAGAAA BK006949.2 TPA_in...
+```
+
+#### Use `assembly_accession` id for genome retrieval
+
+
+Alternatively, instead of specifying the scientific name or taxonomy in the argument `organism`
+users can specify the `assembly_accession` id of the corresponding organism. Here, we specify
+the `assembly_accession` id `GCA_000146045.2` which encodes the species `Saccharomyces cerevisiae`.
+
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import genome as Biostrings object
+Scerevisiae_Genome <- getGenome(
+            db       = "genbank",
+            organism = "GCA_000146045.2") %>%
+    read_genome()
+```
+
+```{r,eval=FALSE}
+Scerevisiae_Genome
+```
+
+```
+A DNAStringSet instance of length 16
+       width seq                                  names               
+ [1]  230218 CCACACCACACCCACAC...GTGTGGTGTGTGTGGG BK006935.2 TPA_in...
+ [2]  813184 AAATAGCCCTCATGTAC...TGGTGTGTGGGTGTGT BK006936.2 TPA_in...
+ [3]  316620 CCCACACACCACACCCA...GGGTGTGGTGTGTGTG BK006937.2 TPA_in...
+ [4] 1531933 ACACCACACCCACACCA...AGTAAGTAGCTTTTGG BK006938.2 TPA_in...
+ [5]  576874 CGTCTCCTCCAAGCCCT...TTTCATTTTTTTTTTT BK006939.2 TPA_in...
+ ...     ... ...
+[12] 1078177 CACACACACACACCACC...TACATGAGGGCTATTT BK006945.2 TPA_in...
+[13]  924431 CCACACACACACCACAC...TGGTGTGTGTGTGGGG BK006946.2 TPA_in...
+[14]  784333 CCGGCTTTCTGACCGAA...TGGGTGTGGTGTGGGT BK006947.3 TPA_in...
+[15] 1091291 ACACCACACCCACACCA...TGTGGGTGTGGTGTGT BK006948.2 TPA_in...
+[16]  948066 AAATAGCCCTCATGTAC...TAATTTCGGTCAGAAA BK006949.2 TPA_in...
+```
+
+
 ### Example ENSEMBL:
 
 ```{r,eval=FALSE}
@@ -1215,8 +1367,7 @@ HS.genome.ensembl <- getGenome( db       = "ensembl",
 
 ```{r,eval=FALSE}
 # import downloaded genome as Biostrings object
-Human_Genome <- read_genome(file     = HS.genome.ensembl, 
-                            obj.type = "Biostrings")
+Human_Genome <- read_genome(file     = HS.genome.ensembl)
 ```
 
 ```{r,eval=FALSE}
