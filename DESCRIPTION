@@ -38,7 +38,8 @@ Suggests:
     rmarkdown (>= 0.3.3),
     devtools (>= 1.6.1),
     testthat,
-    seqinr
+    seqinr,
+    magrittr
 License: GPL-2
 LazyData: true
 URL: https://github.com/ropensci/biomartr
