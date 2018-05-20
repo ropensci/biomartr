@@ -79,10 +79,6 @@ is.genome.available(db = "refseq", organism = "Homo sapiens")
 
 ```
 A reference or representative genome assembly is available for 'Homo sapiens'.
-More than one entry was found for 'Homo sapiens'. 
-Please consider to re-run this funtion and specify 'details = TRUE'. 
-This will allow you to select the 'assembly_accession' identifier that
-can then be specified in all get*() functions.
 [1] TRUE
 ```
 
@@ -97,24 +93,102 @@ is.genome.available(db = "refseq", organism = "Homo sapiens", details = TRUE)
 ```
 
 ```
-  assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse… rele…
-  <chr>  <chr>  <chr>  <chr>  <chr> <int> <int> <chr> <chr> <chr> <chr> <chr> <chr>
-1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro… Patch
-2 GCF_0… PRJNA… SAMN0… AMYH0… na     9606  9606 Homo… NA    CHM1  late… Chro… Major
-# ... with 8 more variables: genome_rep <chr>, seq_rel_date <date>, asm_name <chr>,
-#   submitter <chr>, gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
+  assembly_accessi… bioproject biosample wgs_master refseq_category taxid
+  <chr>             <chr>      <chr>     <chr>      <chr>           <int>
+1 GCF_000001405.38  PRJNA168   NA        NA         reference geno…  9606
+# ... with 15 more variables: species_taxid <int>, organism_name <chr>,
+#   infraspecific_name <chr>, isolate <chr>, version_status <chr>,
+#   assembly_level <chr>, release_type <chr>, genome_rep <chr>,
+#   seq_rel_date <date>, asm_name <chr>, submitter <chr>,
+#   gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
 #   excluded_from_refseq <chr>
 ```
 
-Here, we find two possible versions of the human genome: one having the `assembly_accession`
-ID `GCF_000001405.37` and another one having the ID `GCF_000306695.2`.
+Here, we find one possible versions of the human genome having the `assembly_accession`
+ID `GCF_000001405.38`.
 
 When retrieving a genome with e.g. `getGenome()` the `organism` argument can
 also be specified using the `assembly_accession` ID instead of the scientific name of the 
 organism. This is true for all `get*()` functions. Hence, instead of writing
 `getGenome(db = "refseq", organism = "Homo sapiens")`, users can specify 
-`getGenome(db = "refseq", organism = "GCF_000001405.37")`. 
+`getGenome(db = "refseq", organism = "GCF_000001405.38")`. 
 This is particularly useful when more than one entry is available for one organism.
+
+__Please note that the `assembly_accession` id might change internally in external databases such as NCBI RefSeq. Thus when
+writing automated scripts using the `assembly_accession` id they might stop working due to the
+internal change of ids at RefSeq. Recently, I had the case where the `assembly_accession` id was changed
+at RefSeq from `GCF_000001405.37` to `GCF_000001405.38`. Thus, scripts based on screening for entries with `is.genome.available()`
+stopped working, because the id `GCF_000001405.37` couldn't be found anymore.__
+
+In some cases users will find several entries for the same scientific name.
+This might be due to the fact that ecotypes, strains, or other types of sub-species
+are available in the respective databases.
+
+For example. when we search for the bacterium `Mycobacterium tuberculosis` in NCBI RefSeq we get 5377 hits.
+
+
+```r
+is.genome.available(organism = "Mycobacterium tuberculosis", db = "refseq", details = TRUE)
+```
+
+```
+A tibble: 5,377 x 21
+   assembly_accessi… bioproject biosample wgs_master refseq_category  taxid
+   <chr>             <chr>      <chr>     <chr>      <chr>            <int>
+ 1 GCF_000008585.1   PRJNA2241… SAMN0260… NA         na               83331
+ 2 GCF_000016145.1   PRJNA2241… SAMN0260… NA         na              419947
+ 3 GCF_000016925.1   PRJNA2241… SAMN0010… NA         na              336982
+ 4 GCF_000023625.1   PRJNA2241… SAMN0076… NA         na              478434
+ 5 GCF_000152105.1   PRJNA2241… SAMN0259… ADHQ00000… na              675512
+ 6 GCF_000153685.2   PRJNA2241… SAMN0308… NA         na              395095
+ 7 GCF_000154585.2   PRJNA2241… SAMN0308… NA         na              478433
+ 8 GCF_000154605.2   PRJNA2241… SAMN0010… NA         na              478435
+ 9 GCF_000155795.1   PRJNA2241… SAMN0259… ABVM00000… na              555461
+10 GCF_000159755.1   PRJNA2241… SAMN0259… ACHP00000… na              611303
+# ... with 5,367 more rows, and 15 more variables: species_taxid <int>,
+#   organism_name <chr>, infraspecific_name <chr>, isolate <chr>,
+#   version_status <chr>, assembly_level <chr>, release_type <chr>,
+#   genome_rep <chr>, seq_rel_date <date>, asm_name <chr>, submitter <chr>,
+#   gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
+#   excluded_from_refseq <chr>
+```
+
+When looking at the names of these organisms we see that they consist of different strains of `Mycobacterium tuberculosis`.
+
+```r
+head(is.genome.available(organism = "Mycobacterium tuberculosis", 
+                         db = "refseq", 
+                         details = TRUE)$organism_name)
+```
+
+```
+[1] "Mycobacterium tuberculosis CDC1551"     
+[2] "Mycobacterium tuberculosis H37Ra"       
+[3] "Mycobacterium tuberculosis F11"         
+[4] "Mycobacterium tuberculosis KZN 1435"    
+[5] "Mycobacterium tuberculosis SUMu001"     
+[6] "Mycobacterium tuberculosis str. Haarlem"
+```
+
+Now we can use the `assembly_accession` id to retrieve the `Mycobacterium tuberculosis`
+strain we are interested in, e.g. `Mycobacterium tuberculosis CDC1551`.
+
+```r
+MtbCDC1551 <- getGenome(db = "refseq", 
+                        organism = "GCF_000008585.1",  
+                        path   = file.path("_ncbi_downloads","genomes"), 
+                        reference = FALSE)
+                        
+MtbCDC1551_genome <- read_genome(MtbCDC1551)
+
+MtbCDC1551_genome
+```
+
+```
+A DNAStringSet instance of length 1
+      width seq                             names               
+[1] 4403837 TTGACCGATGACCC...AGGGAGATACGTCG NC_002755.2 Mycob...
+```
 
 #### Using the NCBI Taxonomy ID instead of the scientific name to screen for organism availability 
 
