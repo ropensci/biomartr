@@ -92,7 +92,7 @@ getGenome <-
                 dir.create(path, recursive = TRUE)
             }
             
-            organism_name <- taxid <-
+            organism_name <- species_taxid <-
                 refseq_category <- version_status <- assembly_accession <- NULL
             
             organism <-
@@ -116,7 +116,7 @@ getGenome <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            taxid == as.integer(organism),
+                            species_taxid == as.integer(organism),
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
@@ -135,7 +135,7 @@ getGenome <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            taxid == as.integer(organism),
+                            species_taxid == as.integer(organism),
                             (version_status == "latest")
                         ) 
                 }
