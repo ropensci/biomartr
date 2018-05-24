@@ -78,13 +78,7 @@ getENSEMBLGENOMES.Seq <-
                         "?content-type=application/json"
                     )
                 )
-        }, error = function(e) {
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work ",
-                "properly. Are you connected to the internet? Is the homepage ",
-                "'http://rest.ensemblgenomes.org' currently available?", call. = FALSE
-            )
-        })
+        }, error = function(e) {message("No entry for organism '",new.organism,"' has been found.")})
         
         
         if (get.org.info$division == "EnsemblBacteria") {
