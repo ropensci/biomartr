@@ -257,18 +257,20 @@ is.genome.available <-
             
             if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
                 # check if organism is available on ENSEMBL
-                tryCatch({
-                    ensembl.available.organisms <-
-                        jsonlite::fromJSON(
-            "http://rest.ensembl.org/info/species?content-type=application/json"
-                        )
-                }, error = function(e)
+                
+                rest_url <- "http://rest.ensembl.org/info/species?content-type=application/json"
+                
+                if (curl_fetch_memory(rest_url)$status_code != 200) {
                     stop(
                         "The API 'http://rest.ensembl.org' does not seem to work ",
                         "properly. Are you connected to the internet? Is the ",
-                       "homepage 'http://rest.ensembl.org' currently available?",
+                        "homepage 'http://rest.ensembl.org' currently available?",
                         call. = FALSE
-                    ))
+                    )               
+                }
+
+                    ensembl.available.organisms <-
+                        jsonlite::fromJSON(rest_url)
                 
                 # transform list object returned by 'fromJSON' to tibble
                 ensembl.available.organisms <-
@@ -378,18 +380,19 @@ is.genome.available <-
             if (!file.exists(file.path(tempdir(), 
                                        "ensemblgenomes_summary.txt"))) {
                 # check if organism is available on ENSEMBL
-                tryCatch({
-                    ensembl.available.organisms <-
-                        jsonlite::fromJSON(
-     "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
-                        )
-                }, error = function(e)
+                rest_url <- "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
+                
+                if (curl_fetch_memory(rest_url)$status_code != 200) {
                     stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem ",
-                        "to work properly. Are you connected to the internet? ",
-                        "Is the homepage 'http://rest.ensemblgenomes.org' ",
-                        "currently available?", call. = FALSE
-                    ))
+                        "The API 'http://rest.ensemblgenomes.org' does not seem to work ",
+                        "properly. Are you connected to the internet? Is the ",
+                        "homepage 'http://rest.ensemblgenomes.org' currently available?",
+                        call. = FALSE
+                    )               
+                }
+                
+                ensembl.available.organisms <-
+                    jsonlite::fromJSON(rest_url)
                 
                 # transform list object returned by 'fromJSON' to tibble
                 ensembl.available.organisms <-
@@ -467,20 +470,24 @@ is.genome.available <-
             
             organism_new <- stringr::str_replace_all(organism, " ", "%20")
             
-            tryCatch({
-                uniprot_species_info <-
-                    tibble::as_tibble(jsonlite::fromJSON(
-                        paste0(
-                            "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&name=",
-                            organism_new
-                        )
-                    ))
-            }, error = function(e)
+            unipreot_rest_url <- paste0(
+                "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&name=",
+                organism_new
+            )
+            
+            rest_status_test <- curl_fetch_memory(unipreot_rest_url)
+            
+            if (rest_status_test$status_code != 200) {
                 stop(
                     "The API 'https://www.ebi.ac.uk/proteins/api/proteomes'",
                     " does not seem to work properly. Are you connected to the ", " internet? Is the homepage 'https://www.ebi.ac.uk/' currently available?",
                     call. = FALSE
-                ))
+                )
+            }
+                uniprot_species_info <-
+                    tibble::as_tibble(jsonlite::fromJSON(
+                        unipreot_rest_url 
+                    ))
             
             if (!details) {
                 if (nrow(uniprot_species_info) == 0) {
@@ -533,7 +540,6 @@ is.genome.available <-
                 
             }
         }
-        
         
         if (details)
             return(uniprot_species_info)
