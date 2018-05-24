@@ -27,20 +27,24 @@ get.ensembl.info <- function(update = FALSE) {
         )
         
     } else {
-        tryCatch({
-            ensembl.info <-
-                tibble::as_tibble(
-                    jsonlite::fromJSON(
-            "http://rest.ensembl.org/info/species?content-type=application/json"
-                    )$species
-                )
-        }, error = function(e)
+        
+        rest_url <- "http://rest.ensembl.org/info/species?content-type=application/json"
+        rest_api_status <- curl::curl_fetch_memory(rest_url)
+        if (rest_api_status$status_code != 200) {
             stop(
                 "The API 'http://rest.ensembl.org' does not seem to
                 work properly. Are you connected to the internet?
                 Is the homepage 'http://rest.ensembl.org' currently available?",
                 call. = FALSE
-            ))
+            )
+        }
+    
+            ensembl.info <-
+                tibble::as_tibble(
+                    jsonlite::fromJSON(
+                        rest_url
+                    )$species
+                )
         
         aliases <- groups <- NULL
         ensembl.info <-
