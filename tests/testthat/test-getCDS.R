@@ -10,21 +10,72 @@ test_that("The getCDS() interface to NCBI RefSeq works properly..",{
     
 })        
 
+test_that("The getCDS() interface to NCBI RefSeq works properly and skips download when file already exists..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "refseq",
+                     organism = "Saccharomyces cerevisiae",
+                     path     = tempdir()), format = "fasta")
+    
+    read_cds(getCDS( db       = "refseq",
+                     organism = "Saccharomyces cerevisiae",
+                     path     = tempdir()), format = "fasta")
+})
+
+
+test_that("The getCDS() interface to NCBI RefSeq works properly with taxid..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "refseq",
+                     organism = "4932",
+                     path     = tempdir()), format = "fasta")
+    
+})  
+
+test_that("The getCDS() interface to NCBI RefSeq works properly with taxid and skips download when file already exists..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "refseq",
+                     organism = "4932",
+                     path     = tempdir()), format = "fasta")
+    
+    read_cds(getCDS( db       = "refseq",
+                     organism = "4932",
+                     path     = tempdir()), format = "fasta")
+})
+
+
+test_that("The getCDS() interface to NCBI RefSeq works properly with assembly id..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "refseq",
+                     organism = "GCF_000146045.2",
+                     path     = tempdir()), format = "fasta")
+    
+})  
+
+test_that("The getCDS() interface to NCBI RefSeq works properly with assembly id and skips download when file already exists..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "refseq",
+                     organism = "GCF_000146045.2",
+                     path     = tempdir()), format = "fasta")
+    
+    read_cds(getCDS( db       = "refseq",
+                     organism = "GCF_000146045.2",
+                     path     = tempdir()), format = "fasta")
+    
+})  
 test_that("The getCDS() interface to NCBI Genbank works properly..",{
     
     skip_on_cran()
     skip_on_travis()
     read_cds(getCDS( db       = "genbank",
-                     organism = "Saccharomyces cerevisiae",
-                     path     = tempdir()), format = "fasta")
-    
-})
-
-test_that("The getCDS() interface to Ensembl works properly..",{
-    
-    skip_on_cran()
-    skip_on_travis()
-    read_cds(getCDS( db       = "ensembl",
                      organism = "Saccharomyces cerevisiae",
                      path     = tempdir()), format = "fasta")
     
@@ -45,7 +96,7 @@ test_that("The getCDS() interface to EnsemblGenomes works properly..",{
 test_that("The getCDS() error messages work properly..",{
         skip_on_cran()
         skip_on_travis()
-    expect_warning(getCDS( db       = "ensembl",
+    expect_true(getCDS( db       = "ensembl",
                         organism = "Saccharomyces cerevisi",
                         path     = tempdir()))
 })
@@ -91,27 +142,77 @@ test_that("getCDS() interface to EnsemblGenomes works with accession id..",{
         
 })
 
-test_that("getCDS() interface to EnsemblGenomes works with taxid..",{
+
+test_that("The getCDS() interface to Ensembl works properly..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "Saccharomyces cerevisiae",
+                     path     = tempdir()), format = "fasta")
+    
+})
+
+
+test_that("The getCDS() interface to Ensembl skips download when file already exists..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "Saccharomyces cerevisiae",
+                     path     = tempdir()), format = "fasta")
+    
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "Saccharomyces cerevisiae",
+                     path     = tempdir()), format = "fasta")
+    
+})
+
+test_that("getCDS() interface to Ensembl works with taxid..",{
         
         skip_on_cran()
         skip_on_travis()
         read_cds(getCDS( db       = "ensembl",
-                         organism = "559292",
+                         organism = "6239",
+                         path     = tempdir()), format = "fasta")
+        
+})
+
+test_that("getCDS() interface to Ensembl works with taxid and skips download when file already exists....",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "6239",
+                     path     = tempdir()), format = "fasta")
+    
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "6239",
+                     path     = tempdir()), format = "fasta")
+    
+})
+
+test_that("getCDS() interface to Ensembl works with accession id..",{
+        
+        skip_on_cran()
+        skip_on_travis()
+        read_cds(getCDS( db       = "ensembl",
+                         organism = "GCA_000002985.3",
                          path     = tempdir()), format = "fasta")
         
 })
 
 
-test_that("getCDS() interface to EnsemblGenomes works with accession id..",{
-        
-        skip_on_cran()
-        skip_on_travis()
-        read_cds(getCDS( db       = "ensembl",
-                         organism = "GCA_000146045.2",
-                         path     = tempdir()), format = "fasta")
-        
+test_that("getCDS() interface to Ensembl works with accession id and skips download when file already exists....",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "GCA_000002985.3",
+                     path     = tempdir()), format = "fasta")
+    read_cds(getCDS( db       = "ensembl",
+                     organism = "GCA_000002985.3",
+                     path     = tempdir()), format = "fasta")
+    
 })
-
-
-
 
