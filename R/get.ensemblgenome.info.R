@@ -28,20 +28,25 @@ get.ensemblgenome.info <- function(update = FALSE) {
         )
     
     } else {
-        tryCatch({
-            ensemblgenome.info <-
-                tibble::as_tibble(
-                    jsonlite::fromJSON(
-    "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
-                    )$species
-                )
-        }, error = function(e)
+        
+        rest_url <- "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
+        rest_api_status <- curl::curl_fetch_memory(rest_url)
+        
+        if (rest_api_status$status_code != 200) {
             stop(
                 "The API 'http://rest.ensemblgenomes.org' does not 
                 seem to work properly. Are you connected to the internet? 
                 Is the homepage 'http://rest.ensemblgenomes.org' 
-                currently available?"
-            ))
+                currently available?", call. = FALSE
+            )
+        }
+        
+            ensemblgenome.info <-
+                tibble::as_tibble(
+                    jsonlite::fromJSON(
+                        rest_url
+                    )$species
+                )
         
         aliases <- groups <- NULL
         ensemblgenome.info <-
