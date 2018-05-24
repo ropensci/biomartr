@@ -69,7 +69,7 @@ getCDS <-
                 dir.create(path, recursive = TRUE)
             }
             
-            organism_name <- assembly_accession <- taxid <-
+            organism_name <- assembly_accession <- species_taxid <-
                 refseq_category <- version_status <- NULL
             organism <-
                 stringr::str_replace_all(organism, "\\(", "")
@@ -92,7 +92,7 @@ getCDS <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            taxid == as.integer(organism),
+                            species_taxid == as.integer(organism),
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
@@ -111,7 +111,7 @@ getCDS <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            taxid == as.integer(organism),
+                            species_taxid == as.integer(organism),
                             (version_status == "latest")
                         ) 
                 }
@@ -336,10 +336,40 @@ getCDS <-
                 getENSEMBL.Seq(organism, type = "cds", id.type = "all", path)
             
             if (is.logical(cds.path)) {
-                invisible(return(TRUE))
+                if (!cds.path)
+                    return(FALSE)
             } else {
-                new.organism <- stringr::str_replace_all(organism, " ", "_")
+                ensembl_summary <-
+                    suppressMessages(is.genome.available(
+                        organism = organism,
+                        db = "ensembl",
+                        details = TRUE
+                    ))
                 
+                if (nrow(ensembl_summary) > 1) {
+                    if (is.taxid(organism)) {
+                        ensembl_summary <-
+                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                    } else {
+                        
+                        ensembl_summary <-
+                            dplyr::filter(
+                                ensembl_summary,
+                                (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                    (accession == organism) |
+                                    !is.na(assembly)
+                            )
+                    }
+                }
+                
+                
+                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
+                organism <- ensembl_summary$display_name
+                new.organism <-
+                    paste0(
+                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                        stringr::str_sub(new.organism, 2, nchar(new.organism))
+                    )                
                 # test proper API access
                 tryCatch({
                     json.qry.info <-
