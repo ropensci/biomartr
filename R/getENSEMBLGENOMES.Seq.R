@@ -25,10 +25,13 @@ getENSEMBLGENOMES.Seq <-
         is.ensemblgenomes.alive()
         
         if ( !suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = FALSE)) ) {
-            stop("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
+            warning("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
                     "Please check whether or not the organism name is typed correctly or try db = 'ensembl'.",
                     " Thus, download of this species has been omitted. ", call. = FALSE)
         } else {
+            
+            taxon_id <- assembly <- accession <- NULL
+            
                 ensembl_summary <-
                         suppressMessages(is.genome.available(
                                 organism = organism,
@@ -55,7 +58,7 @@ getENSEMBLGENOMES.Seq <-
                         # select only first entry
                 }
                 
-                if(nrow(ensembl_summary) == 0)
+                if (nrow(ensembl_summary) == 0)
                         stop("The accession id or taxid you used did not have a reference genome in the ENSEMBLGENOMES database. Please check is.genome.available() to retrieve accession ids and taxids of available genome assemblies.", call. = FALSE)
                 
                 new.organism <-
@@ -68,19 +71,17 @@ getENSEMBLGENOMES.Seq <-
                 get.org.info <- ensembl_summary
         }
         
-        # test proper API access
-        tryCatch({
-            json.qry.info <-
-                jsonlite::fromJSON(
-                    paste0(
-                        "http://rest.ensemblgenomes.org/info/assembly/",
-                        new.organism,
-                        "?content-type=application/json"
-                    )
-                )
-        }, error = function(e) {message("No entry for organism '",new.organism,"' has been found.")})
+        rest_url <- paste0(
+            "http://rest.ensemblgenomes.org/info/assembly/",
+            new.organism,
+            "?content-type=application/json"
+        )
         
-        
+        rest_api_status <- test_url_status(url = rest_url, organism = organism)   
+        if (is.logical(rest_api_status)) {
+            return(FALSE)
+        } else {
+            
         if (get.org.info$division == "EnsemblBacteria") {
             if (!file.exists(file.path(tempdir(), "EnsemblBacteria.txt"))) {
                 tryCatch({
@@ -199,7 +200,7 @@ getENSEMBLGENOMES.Seq <-
                     paste0(
                         new.organism,
                         ".",
-                        json.qry.info$default_coord_system_version,
+                        rest_api_status$default_coord_system_version,
                         ".",
                         type,
                         ifelse(id.type == "none", "", "."),
@@ -225,7 +226,7 @@ getENSEMBLGENOMES.Seq <-
                     paste0(
                         new.organism,
                         ".",
-                        json.qry.info$default_coord_system_version,
+                        rest_api_status$default_coord_system_version,
                         ".",
                         type,
                         ifelse(id.type == "none", "", "."),
@@ -251,7 +252,7 @@ getENSEMBLGENOMES.Seq <-
             paste0(
                 new.organism,
                 ".",
-                json.qry.info$default_coord_system_version,
+                rest_api_status$default_coord_system_version,
                 ".",
                 type,
                 ifelse(id.type == "none", "", "."),
@@ -284,7 +285,7 @@ getENSEMBLGENOMES.Seq <-
                                     paste0(
                                         new.organism,
                                         ".",
-                                     json.qry.info$default_coord_system_version,
+                                        rest_api_status$default_coord_system_version,
                                         ".",
                                         type,
                                         ifelse(id.type == "none", "", "."),
@@ -312,7 +313,7 @@ getENSEMBLGENOMES.Seq <-
             paste0(
                 new.organism,
                 ".",
-                json.qry.info$default_coord_system_version,
+                rest_api_status$default_coord_system_version,
                 ".",
                 type,
                 ifelse(id.type == "none", "", "."),
@@ -320,4 +321,5 @@ getENSEMBLGENOMES.Seq <-
                 ".fa.gz"
             )
         ))
+        }
     }
