@@ -23,6 +23,8 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             details = TRUE
         ))
     
+    taxon_id <- assembly <- name <- accession <- NULL
+    
     if (nrow(ensembl_summary) > 1) {
         if (is.taxid(organism)) {
             ensembl_summary <-
