@@ -53,16 +53,14 @@ biocLite('biomartr')
 ```r
 # download the genome of Homo sapiens from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-HS.genome.refseq <- getGenome( db       = "refseq", 
-                               organism = "Homo sapiens")
+HS.genome.refseq <- getGenome( db       = "refseq", organism = "Homo sapiens")
 ```
 
 Subsequently, users can use the read_genome() function to import the genome into the R session. Users can choose to work with the genome sequence in R either as Biostrings object (`obj.type = "Biostrings"`) or data.table object (`obj.type = "data.table"`) by specifying the obj.type argument of the read_genome() function.
 
 ```r
 # import downloaded genome as Biostrings object
-Human_Genome <- read_genome(file     = HS.genome.refseq, 
-                            obj.type = "Biostrings")
+Human_Genome <- read_genome(file     = HS.genome.refseq)
 ```
 
 ```
@@ -104,6 +102,11 @@ genome_rep: Full
 seq_rel_date: 2016-09-26
 submitter: Genome Reference Consortium
 ```
+
+In an ideal world this reference file could then be included as supplementary information in any
+life science publication that relies on genomic information so that
+reproducibility of experiments and analyses becomes achievable.
+
 
 ### Citation
 
