@@ -339,6 +339,9 @@ getCDS <-
                 if (!cds.path)
                     return(FALSE)
             } else {
+                
+                taxon_id <- assembly <- name <- accession <- NULL
+                
                 ensembl_summary <-
                     suppressMessages(is.genome.available(
                         organism = organism,
@@ -454,32 +457,43 @@ getCDS <-
                 getENSEMBLGENOMES.Seq(organism, type = "cds", 
                                       id.type = "all", path)
             
-            if (!file.exists(cds.path)) {
-                invisible(return(TRUE))
+            if (is.logical(cds.path)) {
+                if (!cds.path)
+                    return(FALSE)
             } else {
-                    ensembl_summary <-
-                            suppressMessages(is.genome.available(
-                                    organism = organism,
-                                    db = "ensemblgenomes",
-                                    details = TRUE
-                            ))
-                    
-                    if (nrow(ensembl_summary) > 1) {
-                            if (is.taxid(organism)) {
-                                    ensembl_summary <-
-                                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
-                            } else {
-                                    ensembl_summary <-
-                                            dplyr::filter(
-                                                    ensembl_summary,
-                                                    (name == stringr::str_to_lower(new.organism)) |
-                                                            (accession == organism) |
-                                                    !is.na(assembly)
-                                            )
-                            }
+                
+                taxon_id <- assembly <- name <- accession <- NULL
+                
+                ensembl_summary <-
+                    suppressMessages(is.genome.available(
+                        organism = organism,
+                        db = "ensemblgenomes",
+                        details = TRUE
+                    ))
+                
+                if (nrow(ensembl_summary) > 1) {
+                    if (is.taxid(organism)) {
+                        ensembl_summary <-
+                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                    } else {
+                        
+                        ensembl_summary <-
+                            dplyr::filter(
+                                ensembl_summary,
+                                (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                    (accession == organism) |
+                                    !is.na(assembly)
+                            )
                     }
-            
-            new.organism <- ensembl_summary$name
+                }
+                
+                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
+                organism <- ensembl_summary$display_name
+                new.organism <-
+                    paste0(
+                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                        stringr::str_sub(new.organism, 2, nchar(new.organism))
+                    )          
                 # test proper API access
                 tryCatch({
                     json.qry.info <-
