@@ -51,14 +51,14 @@ Internally this function loads the the overview.txt file from NCBI:
 and creates a directory '_ncbi_downloads/collection' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
-'_ncbi_downloads/genomes' folder and is accessible within the workspace,
+'_ncbi_downloads/collection' folder and is accessible within the workspace,
 no download process will be performed.
 }
 \examples{
 \dontrun{
 
 # download the collection of Arabidopsis thaliana from refseq
-# and store the corresponding genome file in '_ncbi_downloads/genomes'
+# and store the corresponding genome file in '_ncbi_downloads/collection'
  getCollection( db       = "refseq", 
              organism = "Arabidopsis thaliana", 
              path = file.path("_ncbi_downloads","collection"))
