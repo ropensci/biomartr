@@ -6,12 +6,11 @@
 #' @author Hajk-Georg Drost
 #' @noRd
 connected.to.internet <- function() {
-    if (is.character(RCurl::getURL("www.google.com"))) {
-        TRUE
+    if (curl::curl_fetch_memory("www.google.com")$status_code == 200) {
+        return(TRUE)
     } else {
         stop(
-            "It seems that you are not connected to the internet.
-            Could you please check?",
+            "It seems that you are not connected to the internet. Could you please check?",
             call. = FALSE
         )
     }
