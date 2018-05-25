@@ -352,11 +352,43 @@ getGenome <-
                                id.type = "toplevel", path)
             
             if (is.logical(genome.path)) {
-                invisible(return(TRUE))
+                if (!genome.path)
+                    return(FALSE)
             } else {
                 
-                ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensembl", details = TRUE))
-                new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
+                taxon_id <- assembly <- name <- accession <- NULL
+                
+                ensembl_summary <-
+                    suppressMessages(is.genome.available(
+                        organism = organism,
+                        db = "ensembl",
+                        details = TRUE
+                    ))
+                
+                if (nrow(ensembl_summary) > 1) {
+                    if (is.taxid(organism)) {
+                        ensembl_summary <-
+                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                    } else {
+                        
+                        ensembl_summary <-
+                            dplyr::filter(
+                                ensembl_summary,
+                                (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                    (accession == organism) |
+                                    !is.na(assembly)
+                            )
+                    }
+                }
+                
+                
+                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
+                organism <- ensembl_summary$display_name
+                new.organism <-
+                    paste0(
+                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                        stringr::str_sub(new.organism, 2, nchar(new.organism))
+                    )     
                 # test proper API access
                 tryCatch({
                     json.qry.info <-
@@ -460,16 +492,42 @@ getGenome <-
                                       id.type = "toplevel", path)
             
             if (is.logical(genome.path)) {
-                invisible(return(TRUE))
+                if (!genome.path)
+                    return(FALSE)
             } else {
-                if ( !suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = FALSE)) ) {
-                    warning("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
-                            "Please check whether or not the organism name is typed correctly or try db = 'ensembl'.",
-                            " Thus, download of this species has been omitted. ")
-                } else {
-                    ensembl_summary <- suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = TRUE))
-                    new.organism <- paste0(stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)), stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name)))
+                
+                taxon_id <- assembly <- name <- accession <- NULL
+                
+                ensembl_summary <-
+                    suppressMessages(is.genome.available(
+                        organism = organism,
+                        db = "ensemblgenomes",
+                        details = TRUE
+                    ))
+                
+                if (nrow(ensembl_summary) > 1) {
+                    if (is.taxid(organism)) {
+                        ensembl_summary <-
+                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                    } else {
+                        
+                        ensembl_summary <-
+                            dplyr::filter(
+                                ensembl_summary,
+                                (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                    (accession == organism) |
+                                    !is.na(assembly)
+                            )
+                    }
                 }
+                
+                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
+                organism <- ensembl_summary$display_name
+                new.organism <-
+                    paste0(
+                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                        stringr::str_sub(new.organism, 2, nchar(new.organism))
+                    ) 
                 
                 # test proper API access
                 tryCatch({
