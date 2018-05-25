@@ -147,7 +147,7 @@ is.genome.available <-
                                  ))
             }
             
-            organism_name <- assembly_accession <- taxid <- NULL
+            organism_name <- assembly_accession <- species_taxid <- NULL
             
             orgs <-
                 stringr::str_replace_all(AssemblyFilesAllKingdoms$organism_name,
@@ -172,7 +172,7 @@ is.genome.available <-
             } else {
                 FoundOrganism <-
                     dplyr::filter(AssemblyFilesAllKingdoms,
-                                  taxid == as.integer(organism))
+                                  species_taxid == as.integer(organism))
             }
             
             if (nrow(FoundOrganism) == 0) {
