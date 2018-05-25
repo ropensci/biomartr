@@ -1,10 +1,10 @@
 context("Test: getGenome()")
 
-test_that("The getGenome() interface works properly for NCBI RefSeq..", {
+test_that("The getGenome() interface works properly for NCBI RefSeq (including when command is repeated)..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    Ath_Genome <- read_genome(
+    read_genome(
         getGenome(
             db       = "refseq",
             organism = "Saccharomyces cerevisiae",
@@ -14,7 +14,7 @@ test_that("The getGenome() interface works properly for NCBI RefSeq..", {
     )
     
     # test proper use of internal referece files when command is repeated
-    Ath_Genome <- read_genome(
+    read_genome(
         getGenome(
             db       = "refseq",
             organism = "Saccharomyces cerevisiae",
@@ -24,11 +24,42 @@ test_that("The getGenome() interface works properly for NCBI RefSeq..", {
     )
 })
 
-test_that("The getGenome() interface works properly for NCBI Genbank..", {
+
+test_that("The getGenome() interface works properly for NCBI RefSeq using taxid..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    Ath_Genome <- read_genome(
+    read_genome(
+        getGenome(
+            db       = "refseq",
+            organism = "4932",
+            path     = tempdir()
+        ),
+        format = "fasta"
+    )
+})
+
+test_that("The getGenome() interface works properly for NCBI RefSeq using assembly id..", {
+    skip_on_cran()
+    skip_on_travis()
+    # test proper download from genbank
+    read_genome(
+        getGenome(
+            db       = "refseq",
+            organism = "GCF_000146045.2",
+            path     = tempdir()
+        ),
+        format = "fasta"
+    )
+})
+
+
+
+test_that("The getGenome() interface works properly for NCBI Genbank (including when command is repeated)..", {
+    skip_on_cran()
+    skip_on_travis()
+    # test proper download from genbank
+    read_genome(
         getGenome(
             db       = "genbank",
             organism = "Saccharomyces cerevisiae",
@@ -38,7 +69,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank..", {
     )
     
     # test proper use of internal referece files when command is repeated
-    Ath_Genome <- read_genome(
+    read_genome(
         getGenome(
             db       = "genbank",
             organism = "Saccharomyces cerevisiae",
@@ -64,11 +95,10 @@ test_that("The getGenome() interface works properly for ENSEMBL..",{
         )
 })
 
-test_that("The getGenome() interface works properly for ENSEMBL..", {
+test_that("The getGenome() interface works properly for ENSEMBLGENOMES..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from ENSEMBLGENOMES
-    Ath_Genome <-
         read_genome(
             getGenome(
                 db       = "ensemblgenomes",
@@ -79,11 +109,10 @@ test_that("The getGenome() interface works properly for ENSEMBL..", {
         )
 })
 
-test_that("The getGenome() interface works properly for ENSEMBL..", {
+test_that("The getGenome() interface works properly for ENSEMBLGENOMES..", {
     skip_on_cran()
     skip_on_travis()
     # test proper use of internal referece files when command is repeated
-    Ath_Genome <-
         read_genome(
             getGenome(
                 db       = "ensemblgenomes",
@@ -99,35 +128,34 @@ test_that("The getGenome() error messages work properly for ENSEMBLGENOMES..",
           {
               skip_on_cran()
               skip_on_travis()
-              expect_warning(
                   getGenome(
                       db       = "ensemblgenomes",
                       organism = "Saccharomyces cerevisi",
                       path     = tempdir()
                   )
-              )
+              
           })
 
 test_that("The getGenome() error messages work properly for ENSEMBL..", {
     skip_on_cran()
     skip_on_travis()
     
-    expect_warning(getGenome(
+    getGenome(
         db       = "ensembl",
         organism = "Saccharomyces cerevisi",
         path     = tempdir()
-    ))
+    )
 })
 
 test_that("The getGenome() error messages work properly for NCBI RefSeq", {
     skip_on_cran()
     skip_on_travis()
     
-    expect_message(getGenome(
+    expect_equal(getGenome(
         db       = "refseq",
         organism = "Saccharomycesi",
         path     = tempdir()
-    ))
+    ), "Not available")
 })
 
 
