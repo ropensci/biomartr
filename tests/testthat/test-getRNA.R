@@ -1,6 +1,6 @@
 context("Test: getRNA()")
 
-test_that("The getRNA() interface to NCBI RefSeq works properly..",{
+test_that("The getRNA() interface to NCBI RefSeq works properly (including when command is repeated)..",{
     
     skip_on_cran()
     skip_on_travis()
@@ -15,7 +15,31 @@ test_that("The getRNA() interface to NCBI RefSeq works properly..",{
                                 path     = tempdir()), format = "fasta")
 })
 
-test_that("The getRNA() interface to NCBI Genbank works properly..",{
+
+test_that("The getRNA() interface to NCBI RefSeq works properly uding taxids ..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    # test proper download
+    RNA <- read_rna(getRNA( db       = "refseq",
+                            organism = "4932",
+                            path     = tempdir()), format = "fasta")
+    
+})
+
+test_that("The getRNA() interface to NCBI RefSeq works properly using assembly ids ..",{
+    
+    skip_on_cran()
+    skip_on_travis()
+    # test proper download
+    RNA <- read_rna(getRNA( db       = "refseq",
+                            organism = "GCF_000146045.2",
+                            path     = tempdir()), format = "fasta")
+    
+})
+
+
+test_that("The getRNA() interface to NCBI Genbank works properly (including when command is repeated)..",{
     
     skip_on_cran()
     skip_on_travis()    
@@ -29,6 +53,17 @@ test_that("The getRNA() interface to NCBI Genbank works properly..",{
                                 organism = "Saccharomyces cerevisiae",
                                 path     = tempdir()), format = "fasta")
 
+})
+
+test_that("The getRNA() interface to NCBI Genbank works properly using taxids..",{
+    
+    skip_on_cran()
+    skip_on_travis()    
+    # test proper download from genbank
+    RNA <- read_rna(getRNA( db       = "genbank",
+                            organism = "4932",
+                            path     = tempdir()), format = "fasta")
+    
 })
 
 
