@@ -19,7 +19,6 @@ getENSEMBLGENOMES.Seq <-
             stop("Please a 'type' argument supported by this function: 
                  'dna', 'cds', 'pep', 'ncrna'.")
         
-        new.organism <- stringr::str_replace_all(organism, " ", "_")
         name <- NULL
         # test if REST API is responding
         is.ensemblgenomes.alive()
@@ -28,9 +27,12 @@ getENSEMBLGENOMES.Seq <-
             warning("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
                     "Please check whether or not the organism name is typed correctly or try db = 'ensembl'.",
                     " Thus, download of this species has been omitted. ", call. = FALSE)
+            return(FALSE)
         } else {
             
             taxon_id <- assembly <- accession <- NULL
+            
+            new.organism <- stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
             
                 ensembl_summary <-
                         suppressMessages(is.genome.available(
@@ -58,9 +60,11 @@ getENSEMBLGENOMES.Seq <-
                         # select only first entry
                 }
                 
-                if (nrow(ensembl_summary) == 0)
-                        stop("The accession id or taxid you used did not have a reference genome in the ENSEMBLGENOMES database. Please check is.genome.available() to retrieve accession ids and taxids of available genome assemblies.", call. = FALSE)
-                
+                if (nrow(ensembl_summary) == 0) {
+                    warning("The accession id or taxid you used did not have a reference genome in the ENSEMBLGENOMES database. Please check is.genome.available() to retrieve accession ids and taxids of available genome assemblies.", call. = FALSE)
+                    return(FALSE)
+                }
+
                 new.organism <-
                         paste0(
                                 stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
@@ -68,8 +72,9 @@ getENSEMBLGENOMES.Seq <-
                         )
                 
                 # retrieve detailed information for organism of interest
-                get.org.info <- ensembl_summary
         }
+        
+        get.org.info <- ensembl_summary
         
         rest_url <- paste0(
             "http://rest.ensemblgenomes.org/info/assembly/",
@@ -158,10 +163,10 @@ getENSEMBLGENOMES.Seq <-
             organism <-
                 stringr::str_replace_all(organism, "\\)", "")
             
+            assembly <- NULL
             bacteria.info <-
                 dplyr::filter(bacteria.info,
-                              stringr::str_detect(name, 
-                              stringr::coll(organism, ignore_case = TRUE)))
+                              assembly == get.org.info$assembly)
             
             if (nrow(bacteria.info) == 0) {
                 warning(
