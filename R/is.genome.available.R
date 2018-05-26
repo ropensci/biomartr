@@ -223,73 +223,13 @@ is.genome.available <-
         }
         
         if (db == "ensembl") {
+            name <- accession <- accession <- assembly <- taxon_id <- NULL
+            
             new.organism <- stringr::str_replace_all(organism, " ", "_")
             
-            if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-                suppressWarnings(
-                    ensembl.available.organisms <-
-                        readr::read_tsv(
-                            file.path(tempdir(), "ensembl_summary.txt"),
-                            col_names = c(
-                                "division",
-                                "taxon_id",
-                                "name",
-                                "release",
-                                "display_name",
-                                "accession",
-                                "common_name",
-                                "assembly"
-                            ),
-                            col_types = readr::cols(
-                                division = readr::col_character(),
-                                taxon_id = readr::col_integer(),
-                                name = readr::col_character(),
-                                release = readr::col_integer(),
-                                display_name = readr::col_character(),
-                                accession = readr::col_character(),
-                                common_name = readr::col_character(),
-                                assembly = readr::col_character()
-                            ),
-                            comment = "#"
-                        )
-                )
-            }
-            
-            if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-                # check if organism is available on ENSEMBL
-                
-                rest_url <- "http://rest.ensembl.org/info/species?content-type=application/json"
-                
-                if (curl_fetch_memory(rest_url)$status_code != 200) {
-                    stop(
-                        "The API 'http://rest.ensembl.org' does not seem to work ",
-                        "properly. Are you connected to the internet? Is the ",
-                        "homepage 'http://rest.ensembl.org' currently available?",
-                        call. = FALSE
-                    )               
-                }
+            ensembl.available.organisms <- get.ensembl.info()
+            ensembl.available.organisms <- dplyr::filter(ensembl.available.organisms, !is.na(assembly))
 
-                    ensembl.available.organisms <-
-                        jsonlite::fromJSON(rest_url)
-                
-                # transform list object returned by 'fromJSON' to tibble
-                ensembl.available.organisms <-
-                    tibble::as_tibble(
-                        dplyr::select(
-                            ensembl.available.organisms$species,
-                            -aliases,
-                            -groups
-                        )
-                    )
-                
-                readr::write_tsv(
-                    ensembl.available.organisms,
-                    file.path(tempdir(), "ensembl_summary.txt")
-                )
-            }
-            
-            name <- accession <- assembly <- taxon_id <- NULL
-            
             if (!is.taxid(organism)) {
                 selected.organism <-
                     dplyr::filter(
@@ -346,72 +286,10 @@ is.genome.available <-
         if (db == "ensemblgenomes") {
             new.organism <- stringr::str_replace_all(organism, " ", "_")
             
-            if (file.exists(file.path(tempdir(), 
-                                      "ensemblgenomes_summary.txt"))) {
-                suppressWarnings(
-                    ensembl.available.organisms <-
-                        readr::read_tsv(
-                            file.path(tempdir(), "ensemblgenomes_summary.txt"),
-                            col_names = c(
-                                "division",
-                                "taxon_id",
-                                "name",
-                                "release",
-                                "display_name",
-                                "accession",
-                                "common_name",
-                                "assembly"
-                            ),
-                            col_types = readr::cols(
-                                division = readr::col_character(),
-                                taxon_id = readr::col_integer(),
-                                name = readr::col_character(),
-                                release = readr::col_integer(),
-                                display_name = readr::col_character(),
-                                accession = readr::col_character(),
-                                common_name = readr::col_character(),
-                                assembly = readr::col_character()
-                            ),
-                            comment = "#"
-                        )
-                )
-            }
+            name <- accession <- assembly <- taxon_id <- NULL
             
-            if (!file.exists(file.path(tempdir(), 
-                                       "ensemblgenomes_summary.txt"))) {
-                # check if organism is available on ENSEMBL
-                rest_url <- "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
-                
-                if (curl_fetch_memory(rest_url)$status_code != 200) {
-                    stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem to work ",
-                        "properly. Are you connected to the internet? Is the ",
-                        "homepage 'http://rest.ensemblgenomes.org' currently available?",
-                        call. = FALSE
-                    )               
-                }
-                
-                ensembl.available.organisms <-
-                    jsonlite::fromJSON(rest_url)
-                
-                # transform list object returned by 'fromJSON' to tibble
-                ensembl.available.organisms <-
-                    tibble::as_tibble(
-                        dplyr::select(
-                            ensembl.available.organisms$species,
-                            -aliases,
-                            -groups
-                        )
-                    )
-                
-                readr::write_tsv(
-                    ensembl.available.organisms,
-                    file.path(tempdir(), "ensemblgenomes_summary.txt")
-                )
-            }
-            
-     
-            name <- accession <- taxon_id <- NULL
+            ensembl.available.organisms <- get.ensemblgenome.info()
+            ensembl.available.organisms <- dplyr::filter(ensembl.available.organisms, !is.na(assembly))
             
             if (!is.taxid(organism)) {
                 selected.organism <-
