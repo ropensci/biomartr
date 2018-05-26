@@ -68,9 +68,16 @@ getProteome <-
                 'refseq', 'genbank', 'ensembl',  'ensemblgenomes', 'uniprot'.",
                 call. = FALSE
             )
-            
-        message("Starting proteome retrieval of '", organism, "' from ", db, " ...")
-        message("\n")
+        
+        if (db == "ensemblgenomes") {
+            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name
+            message("Starting proteome retrieval of '", organism_name, "' from ", db, " ...")
+            message("\n")
+        } else {
+            message("Starting proteome retrieval of '", organism, "' from ", db, " ...")
+            message("\n")
+        }
+        
         
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
@@ -439,7 +446,7 @@ getProteome <-
                 message(
                     paste0(
                         "The proteome of '",
-                        organism,
+                        ensembl_summary$display_name,
                         "' has been downloaded to '",
                         path,
                         "' and has been named '",
@@ -460,8 +467,7 @@ getProteome <-
             
             # download proteome sequence from ENSEMBLGENOMES
             proteome.path <-
-                getENSEMBLGENOMES.Seq(organism, type = "pep", id.type = "all", 
-                                      path)
+                getENSEMBLGENOMES.Seq(organism, type = "pep", id.type = "all", path)
             
             if (is.logical(proteome.path)) {
                 if (!proteome.path)
@@ -493,32 +499,36 @@ getProteome <-
                     }
                 }
                 
-                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
+                new.organism <-
+                    paste0(
+                        stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
+                        stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
+                    )
+                
                 organism <- ensembl_summary$display_name
                 new.organism <-
                     paste0(
-                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
-                        stringr::str_sub(new.organism, 2, nchar(new.organism))
-                    ) 
-                # test proper API access
-                tryCatch({
-                    json.qry.info <-
-                        jsonlite::fromJSON(
-                            paste0(
-                                "http://rest.ensemblgenomes.org/info/assembly/",
-                                new.organism,
-                                "?content-type=application/json"
-                            )
-                        )
-                }, error = function(e)
-                    stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem 
-                        to work properly. Are you connected to the internet? 
-                        Is the homepage 'http://rest.ensemblgenomes.org' 
-                        currently available?",
-                        call. = FALSE
-                    ))
+                        stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
+                        stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
+                    )
                 
+                
+                rest_url <- paste0(
+                    "http://rest.ensemblgenomes.org/info/assembly/",
+                    new.organism,
+                    "?content-type=application/json"
+                )
+                
+                if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
+                    warning(
+                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
+                        call. = FALSE)
+                }
+                
+                # test proper API access
+              json.qry.info <-
+                    jsonlite::fromJSON(rest_url)
+              
                 # generate Proteome documentation
                 sink(file.path(
                         path,
@@ -579,7 +589,7 @@ getProteome <-
                 message(
                     paste0(
                         "The proteome of '",
-                        organism,
+                        ensembl_summary$display_name,
                         "' has been downloaded to '",
                         path,
                         "' and has been named '",
