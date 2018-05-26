@@ -8,7 +8,7 @@
 #' @import curl
 exists.ftp.file <- function(url, file.path) {
     
-    test_connection <- curl::curl_fetch_memory(url = url)
+    tryCatch({test_connection <- curl::curl_fetch_memory(url = url)}, error = return(FALSE)) 
     
     if (test_connection$status_code == 226) {
         con <-
