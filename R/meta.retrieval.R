@@ -153,7 +153,7 @@ meta.retrieval <- function(db         = "refseq",
         stop(paste0(
             "Please select a valid kingdom: ",
             paste0(subfolders, collapse = ", ")
-        ))
+        ), call. = FALSE)
     
     if (!is.null(group))
         if (!is.element(group, getGroups(kingdom = kingdom, db = db)))
@@ -210,7 +210,7 @@ meta.retrieval <- function(db         = "refseq",
     
     if ((type == "rm") && (!is.element(db, c("refseq", "genbank"))))
         stop("Repeat Masker output files can only be retrieved from 'refseq'",
-             " or 'genbank'.")
+             " or 'genbank'.", call. = FALSE)
     
     
     if (is.element(db, c("refseq", "genbank"))) {
@@ -249,11 +249,11 @@ meta.retrieval <- function(db         = "refseq",
         summary.file <- get.ensemblgenome.info()
         summary.file <-
             dplyr::filter(summary.file, division == kingdom)
-        FinalOrganisms <- unique(summary.file$name)
-        FinalOrganisms <-
-            stringr::str_replace_all(FinalOrganisms, "_", " ")
-        stringr::str_sub(FinalOrganisms, 1, 1) <-
-            stringr::str_to_upper(stringr::str_sub(FinalOrganisms, 1, 1))
+        FinalOrganisms <- unique(summary.file$accession)
+    #     FinalOrganisms <-
+    #         stringr::str_replace_all(FinalOrganisms, "_", " ")
+    #     stringr::str_sub(FinalOrganisms, 1, 1) <-
+    #         stringr::str_to_upper(stringr::str_sub(FinalOrganisms, 1, 1))
     }
     
     
