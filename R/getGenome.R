@@ -86,7 +86,13 @@ getGenome <-
                 getKingdomAssemblySummary(db = db)
             
             # test wheter or not genome is available
-            suppressMessages(is.genome.available(organism = organism, db = db))
+            if(!suppressMessages(is.genome.available(organism = organism, db = db))){
+                    message(
+                            "Unfortunately no genome file could be found for organism '",
+                            organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
+                    )
+                    return("Not available")
+            }
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
@@ -154,11 +160,11 @@ getGenome <-
                  return("Not available")
             } else {
                 if (nrow(FoundOrganism) > 1) {
-                    warnings(
+                    warning(
                         "More than one entry has been found for '",
-                        organism, "'. Only the first entry '", FoundOrganism[1, 1], "' has been used for subsequent genome retrieval.",
+                        organism, "'. Only the first entry '", FoundOrganism$organism_name[1], "' has been used for subsequent genome retrieval.",
                         " If you wish to download a different version, please use the NCBI accession ID when specifying the 'organism' argument.",
-                        " See ?is.genome.available for examples."
+                        " See ?is.genome.available for examples.", call. = FALSE
                     )
                     FoundOrganism <- FoundOrganism[1, ]
                 }
@@ -174,14 +180,7 @@ getGenome <-
                                "_genomic.fna.gz"
                            ))
                 
-                if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path, "/"),
-                                     file.path = download_url)) {
-                    message(
-                   "Unfortunately no genome file could be found for organism '",
-                        organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
-                    )
-                    return(FALSE)
-                }
+                
                 
                 # download_url <- paste0(query$ftp_path,query$`
                 # assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
