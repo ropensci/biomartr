@@ -171,7 +171,7 @@ getENSEMBLGENOMES.Seq <-
             if (nrow(bacteria.info) == 0) {
                 warning(
                     "Unfortunately organism '",
-                    organism,
+                    ensembl_summary$display_name,
                     "' could not be found. Have you tried another database yet? ",
                     "E.g. db = 'ensembl'? Thus, download for this species is omitted.",
                     call. = FALSE
@@ -182,7 +182,7 @@ getENSEMBLGENOMES.Seq <-
             if (is.na(bacteria.info$core_db[1])) {
                 warning(
                     "Unfortunately organism '",
-                    organism,
+                    ensembl_summary$display_name,
                     "' was not assigned to a bacteria collection. 
                     Thus download for this species is omitted.",
                     call. = FALSE
@@ -241,16 +241,16 @@ getENSEMBLGENOMES.Seq <-
                 )
         }
         
-        if (!exists.ftp.file(url = ensembl.qry, file.path = ensembl.qry)) {
-            message(
-                "Unfortunately no ",
-                type,
-                " file could be found for organism '",
-                organism,
-                "'. Thus, the download of this organism has been omitted."
-            )
-            return(FALSE)
-        }
+        # if (!exists.ftp.file(url = ensembl.qry, file.path = ensembl.qry)) {
+        #     message(
+        #         "Unfortunately no ",
+        #         type,
+        #         " file could be found for organism '",
+        #         organism,
+        #         "'. Thus, the download of this organism has been omitted."
+        #     )
+        #     return(FALSE)
+        # }
         
         if (file.exists(file.path(
             path,
