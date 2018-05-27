@@ -85,8 +85,13 @@ getProteome <-
                 getKingdomAssemblySummary(db = db)
             
             # test wheter or not genome is available
-            suppressMessages(is.genome.available(organism = organism, db = db))
-            
+            if(!suppressMessages(is.genome.available(organism = organism, db = db))){
+                    message(
+                            "Unfortunately no proteome file could be found for organism '",
+                            organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
+                    )
+                    return("Not available")
+            }
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
             }
@@ -177,18 +182,18 @@ getProteome <-
                 local.org <-
                     stringr::str_replace_all(organism, "\\/", "_")
                 
-                if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path, "/"),
-                                     file.path = download_url)) {
-                    message(
-                        "Unfortunately no proteome file could be found 
-                        for organism '",
-                        organism,
-                        "'. Thus, the download of this organism has 
-                        been omitted."
-                    )
-                    return(FALSE)
-                }
-                
+                # if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path, "/"),
+                #                      file.path = download_url)) {
+                #     message(
+                #         "Unfortunately no proteome file could be found 
+                #         for organism '",
+                #         organism,
+                #         "'. Thus, the download of this organism has 
+                #         been omitted."
+                #     )
+                #     return(FALSE)
+                # }
+                # 
                 if (nrow(FoundOrganism) == 1) {
                     if (file.exists(file.path(
                         path,
@@ -523,6 +528,7 @@ getProteome <-
                     warning(
                         "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
                         call. = FALSE)
+                        return(FALSE)
                 }
                 
                 # test proper API access
