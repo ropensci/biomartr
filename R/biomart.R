@@ -59,6 +59,9 @@ biomart <- function(genes,
                     attributes,
                     filters,
                     ...) {
+        
+        message("Starting BioMart query ...")
+        
     if (stringr::str_detect(mart, "ENSEMBL"))
         # connect to BioMart API
         m <- biomaRt::useMart(mart, host = "www.ensembl.org")
