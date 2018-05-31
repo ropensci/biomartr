@@ -32,7 +32,7 @@ test_that("The getGenome() interface works properly for NCBI RefSeq using taxid.
     read_genome(
         getGenome(
             db       = "refseq",
-            organism = "4932",
+            organism = "559292",
             path     = tempdir()
         ),
         format = "fasta"
