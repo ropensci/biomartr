@@ -28,21 +28,20 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
     if (nrow(ensembl_summary) > 1) {
         if (is.taxid(organism)) {
             ensembl_summary <-
-                dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
         } else {
             
             ensembl_summary <-
                 dplyr::filter(
                     ensembl_summary,
                     (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                        (accession == organism) |
+                        (accession == organism),
                         !is.na(assembly)
                 )
         }
     }
     
-    new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
-    organism <- ensembl_summary$display_name
+    new.organism <- ensembl_summary$name
     new.organism <-
         paste0(
             stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
@@ -81,13 +80,13 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                 )
             )
         
-        if (!exists.ftp.file(url = ensembl.qry, file.path = ensembl.qry)) {
-            message("Unfortunately no ",type," file could be found for organism '",
-                    organism,
-                    "'. Thus, the download of this organism has been omitted.")
-            return(FALSE) 
-        }
-        
+        # if (!exists.ftp.file(url = ensembl.qry, file.path = ensembl.qry)) {
+        #     message("Unfortunately no ",type," file could be found for organism '",
+        #             organism,
+        #             "'. Thus, the download of this organism has been omitted.")
+        #     return(FALSE)
+        # }
+
         if (file.exists(file.path(
             path,
             paste0(
