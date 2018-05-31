@@ -86,7 +86,7 @@ getGenome <-
                 getKingdomAssemblySummary(db = db)
             
             # test wheter or not genome is available
-            if(!suppressMessages(is.genome.available(organism = organism, db = db))){
+            if (!suppressMessages(is.genome.available(organism = organism, db = db))) {
                     message(
                             "Unfortunately no genome file could be found for organism '",
                             organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
@@ -98,7 +98,7 @@ getGenome <-
                 dir.create(path, recursive = TRUE)
             }
             
-            organism_name <- species_taxid <-
+            organism_name <- taxid <-
                 refseq_category <- version_status <- assembly_accession <- NULL
             
             organism <-
@@ -112,7 +112,7 @@ getGenome <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
                             stringr::str_detect(organism_name, organism) | 
-                            stringr::str_detect(assembly_accession, organism),
+                                assembly_accession ==  organism,
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
@@ -122,7 +122,7 @@ getGenome <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            species_taxid == as.integer(organism),
+                            taxid == as.integer(organism),
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
@@ -134,18 +134,20 @@ getGenome <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
                             stringr::str_detect(organism_name, organism) |
-                            stringr::str_detect(assembly_accession, organism),
+                                assembly_accession == organism,
                             (version_status == "latest")
                         ) 
                 } else {
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            species_taxid == as.integer(organism),
+                            taxid == as.integer(organism),
                             (version_status == "latest")
                         ) 
                 }
             }
+            
+            print(FoundOrganism)
             
             if (nrow(FoundOrganism) == 0) {
                 message(
