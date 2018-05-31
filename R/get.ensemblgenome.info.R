@@ -29,6 +29,8 @@ get.ensemblgenome.info <- function(update = FALSE) {
     
     } else {
         
+        message("Starting retrieval of information for all species stored in ENSEMBLGENOMES... This needs to be done only once.")
+        
         rest_url <- "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
         rest_api_status <- curl::curl_fetch_memory(rest_url)
         
