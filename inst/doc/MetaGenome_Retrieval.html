@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="date" content="2016-10-28" />
+
+<title>Meta-Genome Retrieval</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Meta-Genome Retrieval</h1>
+<h4 class="date"><em>2016-10-28</em></h4>
+
+
+
+<div id="perform-meta-genome-retrieval" class="section level2">
+<h2>Perform Meta-Genome Retrieval</h2>
+<p>The number of genome sequences generated and stored in sequence databases is growing exponentially every day. With the availability of this growing amount of data, meta-genomics studies become more popular and useful for finding patterns within genomes by comparing them to thousands of other genomes. However, the first step in any meta-genomics study is the retrieval of the genomes that shall be compared or investigated.</p>
+<p>For this purpose, I implemented the <code>meta.retrieval()</code> function to allow users to perform easy meta-genome retrieval in R.</p>
+<p>The <code>getKingdoms()</code> function stores a list of all available kingdoms of life. Using the argument <code>db</code> users can specify from which database kingdom information shall be retrieved.</p>
+<p>Example <code>RefSeq</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getKingdoms</span>(<span class="dt">db =</span> <span class="st">&quot;refseq&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;archaea&quot;              &quot;bacteria&quot;             &quot;fungi&quot;                &quot;invertebrate&quot;        
+[5] &quot;plant&quot;                &quot;protozoa&quot;             &quot;vertebrate_mammalian&quot; &quot;vertebrate_other&quot;    
+[9] &quot;viral&quot;</code></pre>
+<p>Example <code>Genbank</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getKingdoms</span>(<span class="dt">db =</span> <span class="st">&quot;genbank&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;archaea&quot;              &quot;bacteria&quot;             &quot;fungi&quot;               
+[4] &quot;invertebrate&quot;         &quot;plant&quot;                &quot;protozoa&quot;            
+[7] &quot;vertebrate_mammalian&quot; &quot;vertebrate_other&quot;</code></pre>
+<p>In these examples the difference betwenn <code>db = &quot;refseq&quot;</code> and <code>db = &quot;genbank&quot;</code> is that <code>db = &quot;genbank&quot;</code> does not store <code>viral</code> information.</p>
+<p>These kingdoms can be specified in <code>meta.retrieval()</code>.</p>
+<p>The <code>meta.retrieval()</code> function aims to simplify the genome retrieval process for subsequent meta-genomics studies.</p>
+<p>Usually this step is performed with <code>shell</code> scripts. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing workflows.</p>
+<p>For example, the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package can be used with <code>meta.retrieval()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes, then apply ...</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="dt">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;genome&quot;</span>) %&gt;%<span class="st"> </span>...</code></pre></div>
+<p>Here <code>...</code> denotes any subsequent meta-genomics analysis. Hence, <code>meta.retrieval()</code> enables the pipelining methodology for meta-genomics.</p>
+<p>The <code>meta.retrieval()</code> function can retrieve genomes, proteomes, and CDS files.</p>
+<div id="retrieve-genomic-sequences" class="section level4">
+<h4>Retrieve Genomic Sequences</h4>
+<p>Download all mammalian vertebrate genomes from RefSeq.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="dt">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;genome&quot;</span>)</code></pre></div>
+<p>All geneomes are stored in the folder named according to the kingdom. In this case <code>vertebrate_mammalian</code>. Alternatively, users can specify the <code>out.folder</code> argument to define a custom output folder path.</p>
+<p>Alternatively, download all mammalian vertebrate genomes from genbank</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="dt">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;genome&quot;</span>)</code></pre></div>
+<p>Alternative use cases are to download all bacterial or viral genomes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all bacteria genomes</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;bacteria&quot;</span>, <span class="dt">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;genome&quot;</span>)</code></pre></div>
+</div>
+<div id="metagenome-project-retrieval-from-ncbi-genbank" class="section level3">
+<h3>Metagenome project retrieval from NCBI Genbank</h3>
+<p>NCBI Genbank stores <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/">metagenome projects</a> in addition to species specific genome, proteome or CDS sequences. To retrieve these metagenomes users can perform the following combination of commands:</p>
+<p>First, users can list the project names of available metagenomes by typing</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># list available metagenomes at NCBI Genbank</span>
+<span class="kw">listMetaGenomes</span>()</code></pre></div>
+<pre><code>[1] &quot;metagenome&quot;                     &quot;human gut metagenome&quot;           &quot;epibiont metagenome&quot;           
+ [4] &quot;marine metagenome&quot;              &quot;soil metagenome&quot;                &quot;mine drainage metagenome&quot;      
+ [7] &quot;mouse gut metagenome&quot;           &quot;marine sediment metagenome&quot;     &quot;termite gut metagenome&quot;        
+[10] &quot;hot springs metagenome&quot;         &quot;human lung metagenome&quot;          &quot;fossil metagenome&quot;             
+[13] &quot;freshwater metagenome&quot;          &quot;saltern metagenome&quot;             &quot;stromatolite metagenome&quot;       
+[16] &quot;coral metagenome&quot;               &quot;mosquito metagenome&quot;            &quot;fish metagenome&quot;               
+[19] &quot;bovine gut metagenome&quot;          &quot;chicken gut metagenome&quot;         &quot;wastewater metagenome&quot;         
+[22] &quot;microbial mat metagenome&quot;       &quot;freshwater sediment metagenome&quot; &quot;human metagenome&quot;              
+[25] &quot;hydrothermal vent metagenome&quot;   &quot;compost metagenome&quot;             &quot;wallaby gut metagenome&quot;        
+[28] &quot;groundwater metagenome&quot;         &quot;gut metagenome&quot;                 &quot;sediment metagenome&quot;           
+[31] &quot;ant fungus garden metagenome&quot;   &quot;food metagenome&quot;                &quot;hypersaline lake metagenome&quot;   
+[34] &quot;hydrocarbon metagenome&quot;         &quot;activated sludge metagenome&quot;    &quot;viral metagenome&quot;              
+[37] &quot;bioreactor metagenome&quot;          &quot;wasp metagenome&quot;                &quot;permafrost metagenome&quot;         
+[40] &quot;sponge metagenome&quot;              &quot;aquatic metagenome&quot;             &quot;insect gut metagenome&quot;         
+[43] &quot;activated carbon metagenome&quot;    &quot;anaerobic digester metagenome&quot;  &quot;rock metagenome&quot;               
+[46] &quot;terrestrial metagenome&quot;         &quot;rock porewater metagenome&quot;      &quot;seawater metagenome&quot;           
+[49] &quot;scorpion gut metagenome&quot;        &quot;soda lake metagenome&quot;           &quot;glacier metagenome&quot;</code></pre>
+<p>Internally the <code>listMetaGenomes()</code> function downloads the assembly_summary.txt file from <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/</a> to retrieve available metagenome information. This procedure might take a few seconds during the first run of <code>listMetaGenomes()</code>. Subsequently, the assembly_summary.txt file will be stored in the <code>tempdir()</code> directory to achieve a much faster access of this information during following uses of <code>listMetaGenomes()</code>.</p>
+<p>In case users wish to retrieve detailed information about available metagenome projects they can specify the <code>details = TRUE</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># detailed information on available metagenomes at NCBI Genbank</span>
+<span class="kw">listMetaGenomes</span>(<span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code># A tibble: 857 x 21
+   assembly_accession bioproject    biosample     wgs_master refseq_category  taxid species_taxid
+                &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;  &lt;int&gt;         &lt;int&gt;
+1     GCA_000206185.1 PRJNA32359 SAMN02954317 AAGA00000000.1              na 256318        256318
+2     GCA_000206205.1 PRJNA32355 SAMN02954315 AAFZ00000000.1              na 256318        256318
+3     GCA_000206225.1 PRJNA32357 SAMN02954316 AAFY00000000.1              na 256318        256318
+4     GCA_000208265.2 PRJNA17779 SAMN02954240 AASZ00000000.1              na 256318        256318
+5     GCA_000208285.1 PRJNA17657 SAMN02954268 AATO00000000.1              na 256318        256318
+6     GCA_000208305.1 PRJNA17659 SAMN02954269 AATN00000000.1              na 256318        256318
+7     GCA_000208325.1 PRJNA16729 SAMN02954263 AAQL00000000.1              na 256318        256318
+8     GCA_000208345.1 PRJNA16729 SAMN02954262 AAQK00000000.1              na 256318        256318
+9     GCA_000208365.1 PRJNA13699 SAMN02954283 AAFX00000000.1              na 256318        256318
+10    GCA_900010595.1 PRJEB11544 SAMEA3639840 CZPY00000000.1              na 256318        256318
+# ... with 847 more rows, and 14 more variables: organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;,
+#   isolate &lt;chr&gt;, version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;, gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;,
+#   ftp_path &lt;chr&gt;, excluded_from_refseq &lt;chr&gt;</code></pre>
+<p>Finally, users can retrieve available metagenomes using <code>getMetaGenomes()</code>. The <code>name</code> argument receives the metagenome project name retrieved with <code>listMetaGenomes()</code>. The <code>path</code> argument specifies the folder path in which corresponding genomes shall be stored.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span>
+<span class="kw">getMetaGenomes</span>(<span class="dt">name =</span> <span class="st">&quot;human gut metagenome&quot;</span>, <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;human_gut&quot;</span>))</code></pre></div>
+<pre><code>1] &quot;The metagenome of 'human gut metagenome' has been downloaded to '_ncbi_downloads/human_gut'.&quot;
+  [1] &quot;_ncbi_downloads/human_gut/GCA_000205525.2_ASM20552v2_genomic.fna.gz&quot;
+  [2] &quot;_ncbi_downloads/human_gut/GCA_000205765.1_ASM20576v1_genomic.fna.gz&quot;
+  [3] &quot;_ncbi_downloads/human_gut/GCA_000205785.1_ASM20578v1_genomic.fna.gz&quot;
+  [4] &quot;_ncbi_downloads/human_gut/GCA_000207925.1_ASM20792v1_genomic.fna.gz&quot;
+  [5] &quot;_ncbi_downloads/human_gut/GCA_000207945.1_ASM20794v1_genomic.fna.gz&quot;
+  [6] &quot;_ncbi_downloads/human_gut/GCA_000207965.1_ASM20796v1_genomic.fna.gz&quot;
+  [7] &quot;_ncbi_downloads/human_gut/GCA_000207985.1_ASM20798v1_genomic.fna.gz&quot;
+  [8] &quot;_ncbi_downloads/human_gut/GCA_000208005.1_ASM20800v1_genomic.fna.gz&quot;
+  [9] &quot;_ncbi_downloads/human_gut/GCA_000208025.1_ASM20802v1_genomic.fna.gz&quot;
+ [10] &quot;_ncbi_downloads/human_gut/GCA_000208045.1_ASM20804v1_genomic.fna.gz&quot;
+ [11] &quot;_ncbi_downloads/human_gut/GCA_000208065.1_ASM20806v1_genomic.fna.gz&quot;
+ [12] &quot;_ncbi_downloads/human_gut/GCA_000208085.1_ASM20808v1_genomic.fna.gz&quot;
+ [13] &quot;_ncbi_downloads/human_gut/GCA_000208105.1_ASM20810v1_genomic.fna.gz&quot;
+ [14] &quot;_ncbi_downloads/human_gut/GCA_000208125.1_ASM20812v1_genomic.fna.gz&quot;
+ [15] &quot;_ncbi_downloads/human_gut/GCA_000208145.1_ASM20814v1_genomic.fna.gz&quot;
+ [16] &quot;_ncbi_downloads/human_gut/GCA_000208165.1_ASM20816v1_genomic.fna.gz&quot;
+ ...</code></pre>
+<p>Internally, <code>getMetaGenomes()</code> creates a folder specified in the <code>path</code> argument. Genomes associated with the metagenomes project specified in the <code>name</code> argument will then be downloaded and stored in this folder. As return value <code>getMetaGenomes()</code> returns the file paths to the genome files which can then be used as input to the <code>read*()</code> functions.</p>
+<p>Alternatively or subsequent to the metagenome retrieval, users can retrieve annotation files of genomes belonging to a metagenome project selected with <code>listMetaGenomes()</code> by using the <code>getMetaGenomeAnnotations()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span>
+<span class="kw">getMetaGenomeAnnotations</span>(<span class="dt">name =</span> <span class="st">&quot;human gut metagenome&quot;</span>, <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;human_gut&quot;</span>,<span class="st">&quot;annotations&quot;</span>))</code></pre></div>
+<pre><code>[1] &quot;The annotations of metagenome 'human gut metagenome' have been downloaded and stored at '_ncbi_downloads/human_gut/annotations'.&quot;
+  [1] &quot;_ncbi_downloads/human_gut/annotations/GCA_000205525.2_ASM20552v2_genomic.gff.gz&quot;
+  [2] &quot;_ncbi_downloads/human_gut/annotations/GCA_000205765.1_ASM20576v1_genomic.gff.gz&quot;
+  [3] &quot;_ncbi_downloads/human_gut/annotations/GCA_000205785.1_ASM20578v1_genomic.gff.gz&quot;
+  [4] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207925.1_ASM20792v1_genomic.gff.gz&quot;
+  [5] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207945.1_ASM20794v1_genomic.gff.gz&quot;
+  [6] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207965.1_ASM20796v1_genomic.gff.gz&quot;
+  [7] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207985.1_ASM20798v1_genomic.gff.gz&quot;
+  [8] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208005.1_ASM20800v1_genomic.gff.gz&quot;
+  [9] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208025.1_ASM20802v1_genomic.gff.gz&quot;
+ [10] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208045.1_ASM20804v1_genomic.gff.gz&quot;
+ [11] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208065.1_ASM20806v1_genomic.gff.gz&quot;
+ [12] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208085.1_ASM20808v1_genomic.gff.gz&quot;
+ [13] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208105.1_ASM20810v1_genomic.gff.gz&quot;
+ [13] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208105.1_ASM20810v1_genomic.gff.gz&quot;
+ [14] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208125.1_ASM20812v1_genomic.gff.gz&quot;
+ [15] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208145.1_ASM20814v1_genomic.gff.gz&quot;
+ [16] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208165.1_ASM20816v1_genomic.gff.gz&quot;
+ ...</code></pre>
+<p>The file paths of the downloaded <code>*.gff</code> are retured by <code>getMetaGenomeAnnotations()</code> and can be used as input for the <code>read.gff()</code> function in the <a href="https://github.com/HajkD/seqreadr">seqreadr</a> package.</p>
+<div id="retrieve-protein-sequences" class="section level4">
+<h4>Retrieve Protein Sequences</h4>
+<p>Download all mammalian vertebrate proteomes from RefSeq.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="dt">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;proteome&quot;</span>)</code></pre></div>
+<p>Alternatively, download all mammalian vertebrate proteomes from genbank</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="dt">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;proteome&quot;</span>)</code></pre></div>
+</div>
+<div id="retrieve-cds-sequences" class="section level4">
+<h4>Retrieve CDS Sequences</h4>
+<p>Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS data).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
+<span class="kw">meta.retrieval</span>(<span class="dt">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;CDS&quot;</span>)</code></pre></div>
+<p>Users can obtain alternative kingdoms using <code>getKingdoms()</code>.</p>
+</div>
+<div id="retrieve-genomes-for-all-kingdoms-of-life-stored-in-refseq" class="section level4">
+<h4>Retrieve Genomes for all kingdoms of life stored in RefSeq</h4>
+<p>Finally, users can download all genomes stored in the RefSeq database with one command:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all geneomes stored in RefSeq</span>
+<span class="kw">meta.retrieval.all</span>(<span class="dt">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;genome&quot;</span>)</code></pre></div>
+<p>Analogously, proteomes or CDS files can be retrieved by exchanging <code>type = &quot;genome&quot;</code> by <code>type = &quot;proteome&quot;</code> or <code>type = &quot;CDS&quot;</code>.</p>
+</div>
+<div id="retrieve-genomes-for-all-kingdoms-of-life-stored-in-genbank" class="section level4">
+<h4>Retrieve Genomes for all kingdoms of life stored in GenBank</h4>
+<p>Users can download all genomes stored in the Genbank database with one command:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all geneomes stored in Genbank</span>
+<span class="kw">meta.retrieval.all</span>(<span class="dt">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;genome&quot;</span>)</code></pre></div>
+<p>Analogously, proteomes or CDS files can be retrieved by exchanging <code>type = &quot;genome&quot;</code> by <code>type = &quot;proteome&quot;</code>.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

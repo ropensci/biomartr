@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="date" content="2016-10-28" />
+
+<title>NCBI Database Retrieval</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">NCBI Database Retrieval</h1>
+<h4 class="date"><em>2016-10-28</em></h4>
+
+
+
+<div id="retrieve-sequence-databases-from-ncbi" class="section level1">
+<h1>Retrieve Sequence Databases from NCBI</h1>
+<p>NCBI stores a variety of specialized database such as <a href="https://www.ncbi.nlm.nih.gov/guide/data-software/">Genbank, RefSeq, Taxonomy, SNP, etc.</a> on their servers. The <code>download.database()</code> and <code>download.database.all()</code> functions implemented in <code>biomartr</code> allows users to download these databases from NCBI.</p>
+<div id="search-for-available-databases" class="section level2">
+<h2>Search for available databases</h2>
+<p>Before downloading specific databases from NCBI users might want to list available databases. Using the <code>listDatabases()</code> function users can retrieve a list of available databases stored on NCBI.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;biomartr&quot;</span>)
+
+<span class="co"># retrieve a list of available sequence databases at NCBI</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;all&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;16SMicrobial&quot;             &quot;cdd_delta&quot;                &quot;cloud&quot;                    &quot;env_nr&quot;
+ [5] &quot;env_nt&quot;                   &quot;est&quot;                      &quot;est_human&quot;                &quot;est_mouse&quot;
+ [9] &quot;est_others&quot;               &quot;FASTA&quot;                    &quot;gene_info&quot;                &quot;gss&quot;
+[13] &quot;gss_annot&quot;                &quot;htgs&quot;                     &quot;human_genomic&quot;            &quot;human_genomic_transcript&quot;
+[17] &quot;landmark&quot;                 &quot;mouse_genomic_transcript&quot; &quot;nr&quot;                       &quot;nt&quot;
+[21] &quot;other_genomic&quot;            &quot;pataa&quot;                    &quot;patnt&quot;                    &quot;pdbaa&quot;
+[25] &quot;pdbnt&quot;                    &quot;refseq_genomic&quot;           &quot;refseq_protein&quot;           &quot;refseq_rna&quot;
+[29] &quot;refseqgene&quot;               &quot;Representative_Genomes&quot;   &quot;sts&quot;                      &quot;swissprot&quot;
+[33] &quot;taxdb&quot;                    &quot;tsa_nr&quot;                   &quot;tsa_nt&quot;                   &quot;vector&quot;</code></pre>
+<p>However, in case users already know which database they would like to retrieve they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the <code>NCBI nr</code> database shall be retrieved.</p>
+<p>First, the <code>listDatabases(db = &quot;nr&quot;)</code> allows to list all files corresponding to the <code>nr</code> database.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI nr files</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;nr&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;nr.00.tar.gz&quot; &quot;nr.01.tar.gz&quot; &quot;nr.02.tar.gz&quot; &quot;nr.03.tar.gz&quot; &quot;nr.04.tar.gz&quot; &quot;nr.05.tar.gz&quot;
+ [7] &quot;nr.16.tar.gz&quot; &quot;nr.06.tar.gz&quot; &quot;nr.15.tar.gz&quot; &quot;nr.30.tar.gz&quot; &quot;nr.07.tar.gz&quot; &quot;nr.08.tar.gz&quot;
+[13] &quot;nr.09.tar.gz&quot; &quot;nr.10.tar.gz&quot; &quot;nr.11.tar.gz&quot; &quot;nr.12.tar.gz&quot; &quot;nr.13.tar.gz&quot; &quot;nr.14.tar.gz&quot;
+[19] &quot;nr.28.tar.gz&quot; &quot;nr.29.tar.gz&quot; &quot;nr.31.tar.gz&quot; &quot;nr.17.tar.gz&quot; &quot;nr.18.tar.gz&quot; &quot;nr.19.tar.gz&quot;
+[25] &quot;nr.20.tar.gz&quot; &quot;nr.21.tar.gz&quot; &quot;nr.22.tar.gz&quot; &quot;nr.23.tar.gz&quot; &quot;nr.32.tar.gz&quot; &quot;nr.24.tar.gz&quot;
+[31] &quot;nr.25.tar.gz&quot; &quot;nr.26.tar.gz&quot; &quot;nr.27.tar.gz&quot; &quot;nr.33.tar.gz&quot; &quot;nr.34.tar.gz&quot; &quot;nr.35.tar.gz&quot;
+[37] &quot;nr.36.tar.gz&quot; &quot;nr.37.tar.gz&quot; &quot;nr.38.tar.gz&quot; &quot;nr.39.tar.gz&quot; &quot;nr.40.tar.gz&quot; &quot;nr.41.tar.gz&quot;</code></pre>
+<p>The output illustrates that the <code>NCBI nr</code> database has been separated into 41 files.</p>
+<p>Further examples are:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI nt files</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;nt&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;nt.00.tar.gz&quot; &quot;nt.01.tar.gz&quot; &quot;nt.02.tar.gz&quot; &quot;nt.03.tar.gz&quot; &quot;nt.04.tar.gz&quot; &quot;nt.05.tar.gz&quot;
+ [7] &quot;nt.06.tar.gz&quot; &quot;nt.07.tar.gz&quot; &quot;nt.08.tar.gz&quot; &quot;nt.09.tar.gz&quot; &quot;nt.10.tar.gz&quot; &quot;nt.11.tar.gz&quot;
+[13] &quot;nt.12.tar.gz&quot; &quot;nt.13.tar.gz&quot; &quot;nt.14.tar.gz&quot; &quot;nt.15.tar.gz&quot; &quot;nt.16.tar.gz&quot; &quot;nt.26.tar.gz&quot;
+[19] &quot;nt.27.tar.gz&quot; &quot;nt.17.tar.gz&quot; &quot;nt.18.tar.gz&quot; &quot;nt.28.tar.gz&quot; &quot;nt.29.tar.gz&quot; &quot;nt.19.tar.gz&quot;
+[25] &quot;nt.20.tar.gz&quot; &quot;nt.21.tar.gz&quot; &quot;nt.22.tar.gz&quot; &quot;nt.23.tar.gz&quot; &quot;nt.24.tar.gz&quot; &quot;nt.25.tar.gz&quot;
+[31] &quot;nt.30.tar.gz&quot; &quot;nt.31.tar.gz&quot; &quot;nt.32.tar.gz&quot; &quot;nt.33.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI ESTs others</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;est_others&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;est_others.00.tar.gz&quot; &quot;est_others.01.tar.gz&quot; &quot;est_others.02.tar.gz&quot; &quot;est_others.03.tar.gz&quot;
+ [5] &quot;est_others.04.tar.gz&quot; &quot;est_others.05.tar.gz&quot; &quot;est_others.06.tar.gz&quot; &quot;est_others.07.tar.gz&quot;
+ [9] &quot;est_others.08.tar.gz&quot; &quot;est_others.09.tar.gz&quot; &quot;est_others.10.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI RefSeq (only genomes)</span>
+<span class="kw">head</span>(<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;refseq_genomic&quot;</span>), <span class="dv">20</span>)</code></pre></div>
+<pre><code> [1] &quot;refseq_genomic.00.tar.gz&quot; &quot;refseq_genomic.01.tar.gz&quot; &quot;refseq_genomic.02.tar.gz&quot;
+ [4] &quot;refseq_genomic.03.tar.gz&quot; &quot;refseq_genomic.04.tar.gz&quot; &quot;refseq_genomic.05.tar.gz&quot;
+ [7] &quot;refseq_genomic.06.tar.gz&quot; &quot;refseq_genomic.07.tar.gz&quot; &quot;refseq_genomic.08.tar.gz&quot;
+[10] &quot;refseq_genomic.09.tar.gz&quot; &quot;refseq_genomic.10.tar.gz&quot; &quot;refseq_genomic.11.tar.gz&quot;
+[13] &quot;refseq_genomic.12.tar.gz&quot; &quot;refseq_genomic.13.tar.gz&quot; &quot;refseq_genomic.14.tar.gz&quot;
+[16] &quot;refseq_genomic.15.tar.gz&quot; &quot;refseq_genomic.16.tar.gz&quot; &quot;refseq_genomic.17.tar.gz&quot;
+[19] &quot;refseq_genomic.18.tar.gz&quot; &quot;refseq_genomic.19.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI RefSeq (only proteomes)</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;refseq_protein&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;refseq_protein.00.tar.gz&quot; &quot;refseq_protein.01.tar.gz&quot; &quot;refseq_protein.02.tar.gz&quot;
+ [4] &quot;refseq_protein.03.tar.gz&quot; &quot;refseq_protein.04.tar.gz&quot; &quot;refseq_protein.05.tar.gz&quot;
+ [7] &quot;refseq_protein.06.tar.gz&quot; &quot;refseq_protein.07.tar.gz&quot; &quot;refseq_protein.08.tar.gz&quot;
+[10] &quot;refseq_protein.09.tar.gz&quot; &quot;refseq_protein.14.tar.gz&quot; &quot;refseq_protein.15.tar.gz&quot;
+[13] &quot;refseq_protein.16.tar.gz&quot; &quot;refseq_protein.10.tar.gz&quot; &quot;refseq_protein.11.tar.gz&quot;
+[16] &quot;refseq_protein.17.tar.gz&quot; &quot;refseq_protein.12.tar.gz&quot; &quot;refseq_protein.13.tar.gz&quot;
+[19] &quot;refseq_protein.18.tar.gz&quot; &quot;refseq_protein.19.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI RefSeq (only RNA)</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;refseq_rna&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;refseq_rna.00.tar.gz&quot; &quot;refseq_rna.01.tar.gz&quot; &quot;refseq_rna.02.tar.gz&quot; &quot;refseq_rna.05.tar.gz&quot;
+[5] &quot;refseq_rna.03.tar.gz&quot; &quot;refseq_rna.06.tar.gz&quot; &quot;refseq_rna.04.tar.gz&quot; &quot;refseq_rna.07.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show NCBI swissprot</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;swissprot&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;swissprot.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show NCBI PDB</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;pdb&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;pdbnt.00.tar.gz&quot; &quot;pdbnt.26.tar.gz&quot; &quot;pdbnt.27.tar.gz&quot; &quot;pdbnt.01.tar.gz&quot; &quot;pdbnt.02.tar.gz&quot;
+ [6] &quot;pdbnt.03.tar.gz&quot; &quot;pdbnt.04.tar.gz&quot; &quot;pdbnt.05.tar.gz&quot; &quot;pdbnt.06.tar.gz&quot; &quot;pdbnt.07.tar.gz&quot;
+[11] &quot;pdbnt.08.tar.gz&quot; &quot;pdbnt.09.tar.gz&quot; &quot;pdbnt.10.tar.gz&quot; &quot;pdbnt.11.tar.gz&quot; &quot;pdbnt.12.tar.gz&quot;
+[16] &quot;pdbnt.13.tar.gz&quot; &quot;pdbnt.14.tar.gz&quot; &quot;pdbnt.15.tar.gz&quot; &quot;pdbnt.16.tar.gz&quot; &quot;pdbnt.17.tar.gz&quot;
+[21] &quot;pdbnt.18.tar.gz&quot; &quot;pdbnt.28.tar.gz&quot; &quot;pdbnt.19.tar.gz&quot; &quot;pdbnt.20.tar.gz&quot; &quot;pdbnt.21.tar.gz&quot;
+[26] &quot;pdbnt.22.tar.gz&quot; &quot;pdbnt.23.tar.gz&quot; &quot;pdbnt.24.tar.gz&quot; &quot;pdbnt.29.tar.gz&quot; &quot;pdbnt.25.tar.gz&quot;
+[31] &quot;pdbaa.tar.gz&quot;    &quot;pdbnt.30.tar.gz&quot; &quot;pdbnt.31.tar.gz&quot; &quot;pdbnt.32.tar.gz&quot; &quot;pdbnt.33.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show NCBI Human database</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;human&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;human_genomic.00.tar.gz&quot;         &quot;human_genomic.01.tar.gz&quot;        
+ [3] &quot;human_genomic.02.tar.gz&quot;         &quot;human_genomic.03.tar.gz&quot;        
+ [5] &quot;human_genomic.04.tar.gz&quot;         &quot;human_genomic.05.tar.gz&quot;        
+ [7] &quot;human_genomic.06.tar.gz&quot;         &quot;human_genomic.07.tar.gz&quot;        
+ [9] &quot;human_genomic.08.tar.gz&quot;         &quot;human_genomic_transcript.tar.gz&quot;
+[11] &quot;human_genomic.10.tar.gz&quot;         &quot;human_genomic.11.tar.gz&quot;        
+[13] &quot;human_genomic.12.tar.gz&quot;         &quot;human_genomic.13.tar.gz&quot;        
+[15] &quot;human_genomic.14.tar.gz&quot;         &quot;human_genomic.15.tar.gz&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show NCBI EST databases</span>
+<span class="kw">listDatabases</span>(<span class="dt">db =</span> <span class="st">&quot;est&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;est.tar.gz&quot;           &quot;est_human.00.tar.gz&quot;  &quot;est_human.01.tar.gz&quot;  &quot;est_mouse.tar.gz&quot;    
+ [5] &quot;est_others.00.tar.gz&quot; &quot;est_others.01.tar.gz&quot; &quot;est_others.02.tar.gz&quot; &quot;est_others.03.tar.gz&quot;
+ [9] &quot;est_others.04.tar.gz&quot; &quot;est_others.05.tar.gz&quot; &quot;est_others.06.tar.gz&quot; &quot;est_others.07.tar.gz&quot;
+[13] &quot;est_others.08.tar.gz&quot; &quot;est_others.09.tar.gz&quot; &quot;est_others.10.tar.gz&quot;</code></pre>
+<p><strong>Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.</strong></p>
+<p>In a next step users can use the <code>listDatabases()</code> and <code>download.database.all()</code> functions to retrieve all files corresponding to a specific NCBI database.</p>
+</div>
+<div id="download-available-databases" class="section level2">
+<h2>Download available databases</h2>
+<p>Using the same search strategy by specifying the database name as described above, users can now download these databases using the <code>download.database()</code> function.</p>
+<p>For downloading only single files users can type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select NCBI nr version 27 =  &quot;nr.27.tar.gz&quot;</span>
+<span class="co"># and download it into the folder</span>
+<span class="kw">download.database</span>(<span class="dt">db        =</span> <span class="st">&quot;nr.27.tar.gz&quot;</span>, 
+                  <span class="dt">path      =</span> <span class="st">&quot;nr&quot;</span>)</code></pre></div>
+<p>Using this command first a folder named <code>nr</code> is created and the file <code>nr.27.tar.gz</code> is downloaded to this folder. This command will download the pre-formatted (by makeblastdb formatted) database version is retrieved.</p>
+<p>Alternatively, users can retrieve all <code>nr</code> files with one command by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI nr database</span>
+<span class="kw">download.database.all</span>(<span class="dt">db =</span> <span class="st">&quot;nr&quot;</span>, <span class="dt">path =</span> <span class="st">&quot;nr&quot;</span>)</code></pre></div>
+<p>Using this command, all <code>NCBI nr</code> files are loaded into the <code>nr</code> folder (<code>path = &quot;nr&quot;</code>).</p>
+<p>The same approach can be applied to all other databases mentioned above, e.g.:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI nt database</span>
+<span class="kw">download.database.all</span>(<span class="dt">db =</span> <span class="st">&quot;nt&quot;</span>, <span class="dt">path =</span> <span class="st">&quot;nt&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI refseq (protein) database</span>
+<span class="kw">download.database.all</span>(<span class="dt">db =</span> <span class="st">&quot;refseq_protein&quot;</span>, <span class="dt">path =</span> <span class="st">&quot;refseq_protein&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI PDB database</span>
+<span class="kw">download.database.all</span>(<span class="dt">db =</span> <span class="st">&quot;pdb&quot;</span>, <span class="dt">path =</span> <span class="st">&quot;pdb&quot;</span>)</code></pre></div>
+<p><strong>Please notice that most of these databases are very large, so users should take of of providing a stable internect connection throughout the download process.</strong></p>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

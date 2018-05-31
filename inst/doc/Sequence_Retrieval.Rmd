@@ -1,0 +1,1241 @@
+---
+title: "Sequence Retrieval"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sequence Retrieval}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message = FALSE}
+options(width = 750)
+knitr::opts_chunk$set(
+  comment = "#>",
+  error = FALSE,
+  tidy = FALSE)
+```
+
+
+## Biological Sequence Retrieval 
+
+The `biomartr` package allows users to retrieve biological sequences in a very simple and intuitive way.
+
+Using `biomartr`, users can retrieve either genomes, proteomes, or CDS data using the specialized functions:
+
+* `getGenome()`
+* `getProteome()`
+* `getCDS()`
+* `getGFF()`
+
+
+## Getting Started with Sequence Retrieval
+
+First users can check whether or not the genome, proteome, or CDS of their interest is available for download.
+
+Using the scientific name of the organism of interest, users can check whether the 
+corresponding genome is available via the `is.genome.available()` function.
+
+Please note that the first time you run this command it might take a while, because
+during the initial execution of this function all necessary information is retrieved from NCBI
+and then stored locally. All further runs are then much faster.
+
+```{r,eval=FALSE}
+# checking whether or not the Homo sapiens 
+# genome is avaialable for download
+is.genome.available("Homo sapiens", db = "refseq")
+```
+
+```
+[1] TRUE
+```
+
+By specifying the `details = TRUE` argument, the genome file size as well as 
+additional information can be printed to the console.
+
+```{r,eval=FALSE}
+# printing details to the console
+is.genome.available("Homo sapiens", details = TRUE, db = "refseq")
+```
+
+```
+  assembly_accession  bioproject    biosample     wgs_master
+               <chr>       <chr>        <chr>          <chr>
+1   GCF_000001405.35    PRJNA168         <NA>           <NA>
+2    GCF_000306695.2 PRJNA178030 SAMN02205338 AMYH00000000.2
+ with 25 more variables: refseq_category <chr>, taxid <int>,
+   species_taxid <int>, organism_name <chr>, infraspecific_name <chr>,
+   isolate <chr>, version_status <chr>, assembly_level <chr>,
+   release_type <chr>, genome_rep <chr>, seq_rel_date <date>,
+   asm_name <chr>, submitter <chr>, gbrs_paired_asm <chr>,
+   paired_asm_comp <chr>, ftp_path <chr>, excluded_from_refseq <chr>,
+   kingdoms <chr>, group <chr>, subgroup <chr>, file_size_MB <dbl>,
+   chrs <int>, organelles <int>, plasmids <int>, bio_projects <int>
+```
+
+Users will observe that the `Homo sapiens` genome file has a size of `3236.34 MB`. 
+The argument `db` specifies from which database (`refseq` or `genbank`) organism
+information shall be retrieved.
+
+Users can determine the total number of available genomes using the `listGenomes()` function.
+
+```{r,eval=FALSE}
+length(listGenomes())
+```
+
+```
+[1] 17461
+```
+
+Hence, currently 17461 genomes (including all kingdoms of life) are stored on [NCBI](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) servers.
+
+
+Optionally, users can also specify the database for which the availability of organisms shall be checked.
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the refseq database
+is.genome.available("Homo sapiens", db = "refseq")
+```
+
+```
+[1] TRUE
+```
+
+Or for `genbank`:
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the genbank database
+is.genome.available("Homo sapiens", db = "genbank")
+```
+
+```
+[1] TRUE
+```
+
+```{r,eval=FALSE}
+# printing details to the console
+is.genome.available("Homo sapiens", details = TRUE, db = "genbank")
+```
+
+```
+     organism_name  kingdoms   group subgroup file_size_MB chrs organelles
+8249  Homo sapiens Eukaryota Animals  Mammals      3238.44   48          1
+     plasmids bio_projects
+8249       NA           44
+```
+
+### Using `is.genome.available()` with ENSEMBL and ENSEMBLGENOMES
+
+Users can also specify `db = "ensembl"` or `db = "ensemblgenomes"` to retrieve available organisms provided by ENSEMBL or ENSEMBLGENOMES.
+Again, users might experience a delay in the execution of this function when running it for the first time.
+This is due to the download of ENSEMBL or ENSEMBLGENOMES information which is then stored internally to enable a much faster
+execution of this function in following runs. The corresponding information files are stored at `file.path(tempdir(), "ensembl_summary.txt")` 
+and `file.path(tempdir(), "ensemblgenomes_summary.txt")`.
+
+
+Example `ENSEMBL`: 
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the ENSEMBL database
+is.genome.available("Homo sapiens", db = "ensembl")
+```
+
+```
+[1] TRUE
+```
+
+```{r,eval=FALSE}
+# retrieve details for Homo sapiens
+is.genome.available("Homo sapiens", db = "ensembl", details = TRUE)
+```
+
+```
+  division taxon_id         name release display_name        accession common_name
+1  Ensembl     9606 homo_sapiens      86        Human GCA_000001405.22       human
+                                                                    aliases
+1 homo, homo sapiens, h_sapiens, enshs, human, hsap, 9606, homsap, hsapiens
+                                                       groups assembly
+1 core, cdna, vega, otherfeatures, rnaseq, variation, funcgen   GRCh38
+```
+
+Example `ENSEMBLGENOMES`: 
+
+For example, some species that cannot be found at `db = "ensembl"` might be available at `db = "ensemblgenomes"`
+and vice versa. So I recommend users to to check in both databases ENSEMBL and ESEMBLGENOMES whether or not a
+particular species is present. In case of `"Homo sapiens"`, the genome is available at `db = "ensembl"` but
+__not__ at `db = "ensemblgenomes"` whereas the genome of `"Arabidopsis thaliana"` is available at `db = "ensemblgenomes"`
+but __not__ at `db = "ensembl"`.
+
+
+```{r,eval=FALSE}
+# cheking whether Homo sapiens is available in the ENSEMBLGENOMES database
+is.genome.available("Homo sapiens", db = "ensemblgenomes")
+    ```
+
+```
+Error: Unfortunately organism 'Homo sapiens' is not available at ENSEMBLGENOMES. 
+Please check whether or not the organism name is typed correctly.
+```
+
+```{r,eval=FALSE}
+# cheking whether Arabidopsis thaliana is available in the ENSEMBLGENOMES database
+is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes")
+```
+
+```
+[1] TRUE
+```
+
+```{r,eval=FALSE}
+# show details for Arabidopsis thaliana
+is.genome.available("Arabidopsis thaliana", db = "ensemblgenomes", details = TRUE)
+```
+
+```
+       division taxon_id                 name release         display_name
+          <chr>    <int>                <chr>   <int>                <chr>
+1 EnsemblPlants     3702 arabidopsis_thaliana      85 Arabidopsis thaliana
+```
+
+Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
+
+
+### Using `listGenomes()` to retrieve names of available genomes stored within NCBI databases
+
+
+
+The following filters can be specified for the `kingdom` argument: `all`, `Archaea`, `Bacteria`, `Eukaryota`, `Viroids`, and `Viruses`.
+
+Furthermore, users can simply count the kingdom specific availability of genomes as following:
+
+```{r,eval=FALSE}
+# the number of genomes available for each kingdom
+ncbi_genomes <- listGenomes(details = TRUE)
+table(ncbi_genomes[ , "kingdoms"])
+```
+
+```
+ Archaea  Bacteria Eukaryota   Viroids   Viruses 
+      586      8932      2029        46      5868
+```
+
+Analogous computations can be performed for `group`, `subgroup`, etc.
+
+```{r,eval=FALSE}
+# the number of genomes available for each group
+ncbi_genomes <- listGenomes(details = TRUE)
+table(ncbi_genomes[ , "group"])
+```
+
+```
+                  Acidobacteria                         Animals 
+                             30                             617 
+                      Aquificae                   Avsunviroidae 
+                             17                               4 
+                    Caldiserica                  Chrysiogenetes 
+                              2                               2 
+                Deferribacteres                      Deltavirus 
+                              6                               1 
+                    Dictyoglomi                     DPANN group 
+                              2                              30 
+    dsDNA viruses, no RNA stage                   dsRNA viruses 
+                           2405                             244 
+                  Elusimicrobia           environmental samples 
+                              3                               7 
+                  Euryarchaeota                       FCB group 
+                            322                             690 
+                          Fungi                    Fusobacteria 
+                            662                              31 
+Nitrospinae/Tectomicrobia group                     Nitrospirae 
+                              3                              19 
+                          Other                          Plants 
+                             18                             179 
+                  Pospiviroidae                  Proteobacteria 
+                             36                            2718 
+                       Protists                       PVC group 
+                            190                             113 
+     Retro-transcribing viruses                      Satellites 
+                            134                             223 
+                   Spirochaetes                   ssDNA viruses 
+                             84                             848 
+                  ssRNA viruses                   Synergistetes 
+                           1389                              23 
+                     TACK group             Terrabacteria group 
+                            130                            3097 
+          Thermodesulfobacteria                     Thermotogae 
+                              9                              28 
+             unassigned viruses            unclassified Archaea 
+                             11                              29 
+  unclassified archaeal viruses           unclassified Bacteria 
+                              3                            1039 
+            unclassified phages            unclassified viroids 
+                             29                               8 
+        unclassified virophages            unclassified viruses 
+                              6                              71 
+```
+
+Users can also order organisms by their file size.
+
+```{r,eval=FALSE}
+# order by file size
+library(dplyr)
+
+ncbi_genomes <- listGenomes(details = TRUE)
+head(arrange(ncbi_genomes, desc(file_size_MB)) , 10)
+```
+
+```
+            organism_name  kingdoms   group    subgroup file_size_MB chrs organelles
+1       Pinus lambertiana Eukaryota  Plants Land Plants     27602.70   NA         NA
+2            Picea glauca Eukaryota  Plants Land Plants     24627.00   NA          1
+3             Pinus taeda Eukaryota  Plants Land Plants     22061.90   NA         NA
+4   Pseudotsuga menziesii Eukaryota  Plants Land Plants     14673.20   NA         NA
+5      Locusta migratoria Eukaryota Animals     Insects      5759.80   NA         NA
+6        Orycteropus afer Eukaryota Animals     Mammals      4444.08   NA          1
+7  Chrysochloris asiatica Eukaryota Animals     Mammals      4210.11   NA          1
+8   Elephantulus edwardii Eukaryota Animals     Mammals      3843.98   NA         NA
+9     Apodemus sylvaticus Eukaryota Animals     Mammals      3758.14   NA         NA
+10        Triticum urartu Eukaryota  Plants Land Plants      3747.05   NA         NA
+   plasmids bio_projects
+1        NA            1
+2        NA            2
+3        NA            1
+4        NA            1
+5        NA            1
+6        NA            1
+7        NA            1
+8        NA            1
+9        NA            1
+10       NA            1
+```
+
+This analysis shows that `Pinus lambertiana` has the largest genome available on the NCBI server.
+
+
+Internally, the `listGenomes()` function downloads the [Genome Reports](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) file
+from NCBI and stores it in a `tempfile()` folder named `_ncbi_downloads/overview.txt`. It is only downloaded once
+and is then accessed from your hard drive. In case users would like to update the [Genome Reports](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) file,
+they can specify the `update = TRUE` argument which allows them to reload the [Genome Reports](ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt) file from 
+the NCBI server.
+
+```{r,eval=FALSE}
+# users can also update the organism table using the 'update' argument
+head(listGenomes(details = TRUE, update = TRUE) , 5)
+```
+
+```
+                                    organism_name kingdoms                       group
+1          'Chrysanthemum coronarium' phytoplasma Bacteria         Terrabacteria group
+2              'Deinococcus soli' Cha et al. 2014 Bacteria         Terrabacteria group
+3 'Echinacea purpurea' witches'-broom phytoplasma Bacteria         Terrabacteria group
+4                          Abaca bunchy top virus  Viruses               ssDNA viruses
+5           Abalone herpesvirus Victoria/AUS/2009  Viruses dsDNA viruses, no RNA stage
+             subgroup file_size_MB chrs organelles plasmids bio_projects
+1         Tenericutes     0.739592   NA         NA       NA            1
+2 Deinococcus-Thermus     3.236980    1         NA       NA            1
+3         Tenericutes     0.545427   NA         NA       NA            1
+4         Nanoviridae     0.006422    6         NA       NA            1
+5        unclassified     0.211518    1         NA       NA            1
+
+```
+
+Again, the `listGenomes()` function can be users to filter for available genome information in refseq.
+
+```{r,eval=FALSE}
+# list all Eukaryota that are stored in refseq
+head(listGenomes(kingdom = "Eukaryota", db = "refseq") , 20)
+```
+
+```
+                    organism_name
+1               Agaricus bisporus
+2           Auricularia subglabra
+3            Komagataella phaffii
+4           Arthroderma benhamiae
+5                Arthroderma otae
+6            Aspergillus clavatus
+7              Aspergillus flavus
+8           Aspergillus fumigatus
+9            Aspergillus nidulans
+10              Aspergillus niger
+11             Aspergillus oryzae
+12            Aspergillus terreus
+13        Phaeoacremonium minimum
+14 Batrachochytrium dendrobatidis
+15            Ordospora colligata
+16               Bipolaris oryzae
+17          Bipolaris sorokiniana
+18              Bipolaris zeicola
+19               Botrytis cinerea
+20               Candida albicans
+```
+
+Or analogous:
+
+
+```{r,eval=FALSE}
+# the number of genomes available for each kingdom stored in refseq
+ncbi_genomes <- listGenomes(details = TRUE, db = "refseq")
+table(ncbi_genomes[ , "kingdoms"])
+```
+
+```
+ Archaea  Bacteria Eukaryota 
+      271      5371       675 
+```
+
+__Note__ that when running the `listGenomes()` function for the first time, it might take a while until
+the function returns any results, because necessary information need to be downloaded from NCBI databases. All subsequent executions of `listGenomes()`
+will then respond very fast, because they will access the corresponding files stored on your hard drive.
+
+## Downloading Biological Sequences and Annotations
+
+After checking for the availability of sequence information for an organism of interest,
+the next step is to download the corresponding genome, proteome, CDS, or GFF file.
+The following functions allow users to download proteomes, genomes, CDS and GFF files from several
+database resources such as: [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/), [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/). When a corresponding proteome, genome, CDS or GFF file was
+loaded to your hard-drive, a documentation `*.txt` file is generated storing `File Name`, `Organism`,
+`Database`, `URL`, `DATE`, `assembly_accession`, `bioproject`, `biosample`, `taxid`, `version_status`, `release_type`,
+`seq_rel_date` etc. information of the retrieved file. This way a better reproducibility of proteome, genome, CDS and GFF versions
+used for subsequent data analyses can be achieved.
+
+
+### Genome Retrieval
+
+The easiest way to download a genome is to use the `getGenome()` function.
+
+In this example we will download the genome of `Homo sapiens`.
+
+The `getGenome()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
+[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+which corresponding genomes can be retrieved.
+
+The `db` argument specifies from which database genome assemblies in `*.fasta` file format shall be retrieved.
+
+Options are:
+
+- `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
+- `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
+- `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
+- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
+Furthermore, users need to specify the scientific name of the organism of interest for which a genome assembly shall be downloaded, e.g. `organism = "Homo sapiens"`.
+Finally, the `path` argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location,
+they can specify the `path = file.path("put","your","path","here")` argument.
+
+Example `RefSeq`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from refseq
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+HS.genome.refseq <- getGenome( db       = "refseq", 
+                               organism = "Homo sapiens",
+                               path     = file.path("_ncbi_downloads","genomes") )
+```
+
+In this example, `getGenome()` creates a directory named `'_ncbi_downloads/genomes'` into which the corresponding genome named `GCF_000001405.34_GRCh38.p8_genomic.fna.gz` is downloaded. The return value of `getGenome()` is the folder path to the downloaded genome file
+that can then be used as input to the `read_genome()` function. The variable `HS.genome.refseq` stores the path to the downloaded genome. 
+Subsequently, users can use the `read_genome()` function to import the genome into the R session. Users can choose to work with the genome sequence in R either as [Biostrings](http://bioconductor.org/packages/release/bioc/html/Biostrings.html) object (`obj.type = "Biostrings"`) or [data.table](https://github.com/Rdatatable/data.table/wiki) object
+(`obj.type = "data.table"`) by specifying the `obj.type` argument of the `read_genome()` function. 
+
+```{r,eval=FALSE}
+# import downloaded genome as Biostrings object
+Human_Genome <- read_genome(file     = HS.genome.refseq, 
+                            obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_Genome
+```
+
+```
+  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
+```
+
+Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
+
+```
+File Name: Homo_sapiens_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_genomic.fna.gz
+Download_Date: Sat Oct 22 12:41:07 2016
+refseq_category: reference genome
+assembly_accession: GCF_000001405.35
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-09-26
+submitter: Genome Reference Consortium
+```
+
+In summary, the `getGenome()` and `read_genome()` functions allow users to retrieve genome assemblies by specifying
+the scientific name of the organism of interest and allow them to import the retrieved genome assembly e.g. as `Biostrings` object.
+Thus, users can then perform the [Biostrings notation](https://web.stanford.edu/class/bios221/labs/biostrings/lab_1_biostrings.html) to work with downloaded genomes and can rely on the log
+file generated by `getGenome()` to better document the source and version of genome assemblies used for subsequent studies.
+
+Alternatively, users can perform the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package:
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import genome as Biostrings object
+Human_Genome <- getGenome( db       = "refseq", 
+                           organism = "Homo sapiens",
+                           path     = file.path("_ncbi_downloads","genomes")) %>%
+    read_genome(obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Genome
+```
+
+```
+  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
+```
+
+Example `Genbank`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from Genbank
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+HS.genome.genbank <- getGenome( db       = "genbank", 
+                                organism = "Homo sapiens",
+                                path     = file.path("_ncbi_downloads","genomes") )
+```
+
+```{r,eval=FALSE}
+# import downloaded genome as Biostrings object
+Human_Genome <- read_genome(file     = HS.genome.genbank, 
+                            obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_Genome
+```
+
+```
+  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN CM000663.2 Homo s...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC KI270706.1 Homo s...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC KI270707.1 Homo s...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC KI270708.1 Homo s...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC KI270709.1 Homo s...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC KI270931.1 Homo s...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC KI270932.1 Homo s...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC KI270933.1 Homo s...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC GL000209.2 Homo s...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG J01415.2 Homo sap...
+```
+
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from ENSEMBL
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+HS.genome.ensembl <- getGenome( db       = "ensembl", 
+                                organism = "Homo sapiens",
+                                path     = file.path("_ncbi_downloads","genomes") )
+```
+
+```{r,eval=FALSE}
+# import downloaded genome as Biostrings object
+Human_Genome <- read_genome(file     = HS.genome.ensembl, 
+                            obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_Genome
+```
+
+```
+  A DNAStringSet instance of length 524
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 1 dna:chromosome ...
+  [2] 242193529 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 2 dna:chromosome ...
+  [3] 198295559 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 3 dna:chromosome ...
+  [4] 190214555 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 4 dna:chromosome ...
+  [5] 181538259 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 5 dna:chromosome ...
+  ...       ... ...
+[520]       993 GCCCCACGTCCGGGAGGGAGGTGG...GAGGGAGGTGGGGGGTCAGCCCT KI270539.1 dna:sc...
+[521]       990 TTTCATAGAGCATGTTTGAAACAC...TCAGAAACTTGTTGTGATGTGTG KI270385.1 dna:sc...
+[522]       981 AGATTTCGTTGGAACGGGATAAAC...TCAGCTTTCAAACACTCTTTTTG KI270423.1 dna:sc...
+[523]       971 ATTTGCGATGTGTGTTCTCAACTA...TTGGATAGCTTTGAAGTTTTCGT KI270392.1 dna:sc...
+[524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...
+```
+
+Example `ENSEMBLGENOMES`:
+
+Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the genome of Arabidopsis thaliana from ENSEMBLGENOMES
+# and store the corresponding genome file in '_ncbi_downloads/genomes'
+AT.genome.ensemblgenomes <- getGenome( db       = "ensemblgenomes", 
+                                       organism = "Arabidopsis thaliana",
+                                       path     = file.path("_ncbi_downloads","genomes") )
+```
+
+```{r,eval=FALSE}
+# import downloaded genome as Biostrings object
+Cress_Genome <- read_genome(file     = AT.genome.ensemblgenomes, 
+                            obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Cress_Genome
+```
+
+```
+  A DNAStringSet instance of length 7
+       width seq                                                   names               
+[1] 30427671 CCCTAAACCCTAAACCCTAAACCCT...AGGGTTTAGGGTTTAGGGTTTAGGG 1 dna:chromosome ...
+[2] 19698289 NNNNNNNNNNNNNNNNNNNNNNNNN...AGGGTTTAGGGTTTAGGGTTTAGGG 2 dna:chromosome ...
+[3] 23459830 NNNNNNNNNNNNNNNNNNNNNNNNN...ACCCTAAACCCTAAACCCTAAACCC 3 dna:chromosome ...
+[4] 18585056 NNNNNNNNNNNNNNNNNNNNNNNNN...AAGGGTTTAGGGTTTAGGGTTTAGG 4 dna:chromosome ...
+[5] 26975502 TATACCATGTACCCTCAACCTTAAA...GTTTAGGATTTAGGGTTTTTAGATC 5 dna:chromosome ...
+[6]   366924 GGATCCGTTCGAAACAGGTTAGCCT...TCGCAGAATGGAAACAAACCGGATT Mt dna:chromosome...
+[7]   154478 ATGGGCGAACGACGGGAATTGAACC...TCATAATAACTTGGTCCCGGGCATC Pt dna:chromosome...
+```
+
+### Proteome Retrieval
+
+The `getProteome()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
+[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+which corresponding proteomes can be retrieved. It works analogous to `getGenome()`. 
+
+The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
+
+Options are:
+
+- `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
+- `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
+- `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
+- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
+Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
+Finally, the `path` argument specifies the folder path in which the corresponding proteome shall be locally stored. In case users would like to store the proteome file at a different location,
+they can specify the `path = file.path("put","your","path","here")` argument.
+
+Example `RefSeq`:
+
+```{r,eval=FALSE}
+# download the proteome of Homo sapiens from refseq
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+HS.proteome.refseq <- getProteome( db       = "refseq", 
+                                   organism = "Homo sapiens",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+In this example, `getProteome()` creates a directory named `'_ncbi_downloads/proteomes'` into which the corresponding genome named `GCF_000001405.34_GRCh38.p8_protein.faa.gz` is downloaded. The return value of `getProteome()` is the folder path to the downloaded proteome file
+that can then be used as input to the `read_proteome()` function. The variable `HS.proteome.refseq` stores the path to the downloaded proteome. 
+Subsequently, users can use the `read_proteome()` function to import the proteome into the R session. Users can choose to work with the proteome sequence in R either as [Biostrings](http://bioconductor.org/packages/release/bioc/html/Biostrings.html) object (`obj.type = "Biostrings"`) or [data.table](https://github.com/Rdatatable/data.table/wiki) object
+(`obj.type = "data.table"`) by specifying the `obj.type` argument of the `read_proteome()` function. 
+
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Human_Proteome <- read_proteome(file = HS.proteome.refseq, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Proteome
+```
+
+```
+  A AAStringSet instance of length 109018
+         width seq                                                 names               
+     [1]  1474 MGKNKLLHPSLVLLLLVLLPTDAS...DYYETDEFAIAEYNAPCSKDLGNA NP_000005.2 alpha...
+     [2]   290 MDIEAYFERIGYKNSRNKLDLETL...LRNIFKISLGRNLVPKPGDGSLTI NP_000006.2 aryla...
+     [3]   421 MAAGFGRCCRVLRSISRFHWRSQH...QIYEGTSQIQRLIVAREHIDKYKN NP_000007.1 mediu...
+     [4]   412 MAAALLARASGPARRALCPRAWRQ...EIYEGTSEIQRLVIAGHLLRSYRS NP_000008.1 short...
+     [5]   655 MQAARMAASLGRQLLRLGGGSSRL...RNFKSISKALVERGGVVTSNPLGF NP_000009.1 very ...
+     ...   ... ...
+[109014]    98 MPLIYMNIMLAFTISLLGMLVYRS...LALLVSISNTYGLDYVHNLNLLQC YP_003024034.1 NA...
+[109015]   459 MLKLIVPTIMLLPLTWLSKKHMIW...LMFMHLSPILLLSLNPDIITGFSS YP_003024035.1 NA...
+[109016]   603 MTMHTTMTTLTLTSLIPPILTTLV...QKGMIKLYFLSFFFPLILTLLLIT YP_003024036.1 NA...
+[109017]   174 MMYALFLLSVGLVMGFVGFSSKPS...WLVVVTGWTLFVGVYIVIEIARGN YP_003024037.1 NA...
+[109018]   380 MTPMRKTNPLMKLINHSFIDLPTP...LYFTTILILMPTISLIENKMLKWA YP_003024038.1 cy...
+```
+
+Alternatively, users can perform the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package:
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import proteome as Biostrings object
+Human_Proteome <- getProteome( db       = "refseq", 
+                               organism = "Homo sapiens",
+                               path     = file.path("_ncbi_downloads","proteomes")) %>%
+    read_proteome(obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Proteome
+```
+
+```
+  A AAStringSet instance of length 109018
+         width seq                                                 names               
+     [1]  1474 MGKNKLLHPSLVLLLLVLLPTDAS...DYYETDEFAIAEYNAPCSKDLGNA NP_000005.2 alpha...
+     [2]   290 MDIEAYFERIGYKNSRNKLDLETL...LRNIFKISLGRNLVPKPGDGSLTI NP_000006.2 aryla...
+     [3]   421 MAAGFGRCCRVLRSISRFHWRSQH...QIYEGTSQIQRLIVAREHIDKYKN NP_000007.1 mediu...
+     [4]   412 MAAALLARASGPARRALCPRAWRQ...EIYEGTSEIQRLVIAGHLLRSYRS NP_000008.1 short...
+     [5]   655 MQAARMAASLGRQLLRLGGGSSRL...RNFKSISKALVERGGVVTSNPLGF NP_000009.1 very ...
+     ...   ... ...
+[109014]    98 MPLIYMNIMLAFTISLLGMLVYRS...LALLVSISNTYGLDYVHNLNLLQC YP_003024034.1 NA...
+[109015]   459 MLKLIVPTIMLLPLTWLSKKHMIW...LMFMHLSPILLLSLNPDIITGFSS YP_003024035.1 NA...
+[109016]   603 MTMHTTMTTLTLTSLIPPILTTLV...QKGMIKLYFLSFFFPLILTLLLIT YP_003024036.1 NA...
+[109017]   174 MMYALFLLSVGLVMGFVGFSSKPS...WLVVVTGWTLFVGVYIVIEIARGN YP_003024037.1 NA...
+[109018]   380 MTPMRKTNPLMKLINHSFIDLPTP...LYFTTILILMPTISLIENKMLKWA YP_003024038.1 cy...
+```
+
+Example `Genbank`:
+
+```{r,eval=FALSE}
+# download the proteome of Homo sapiens from genbank
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+HS.proteome.genbank <- getProteome( db       = "genbank", 
+                                   organism = "Homo sapiens",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Human_Proteome <- read_proteome(file = HS.proteome.genbank, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Proteome
+```
+
+```
+  A AAStringSet instance of length 13
+     width seq                                                     names               
+ [1]   318 MPMANLLLLIVPILIAMAFLMLTERK...FLPLTLALLMWYVSMPITISSIPPQT AAB58943.1 NADH d...
+ [2]   347 MNPLAQPVIYSTIFAGTLITALSSHW...PTPFLPTLIALTTLLLPISPFMLMIL AAB58944.1 NADH d...
+ [3]   513 MFADRWLFSTNHKDIGTLYLLFGAWA...PSMNLEWLYGCPPPYHTFEEPVYMKS AAB58945.1 cytoch...
+ [4]   227 MAHAAQVGLQDATSPIMEELITFHDH...ANHSFMPIVLELIPLKIFEMGPVFTL AAB58946.1 cytoch...
+ [5]    68 MPQLNTTVWPTMITPMLLTLFLITQL...KMKNYNKPWEPKWTKICSLHSLPPQS AAB58947.1 ATPase...
+ ...   ... ...
+ [9]    98 MPLIYMNIMLAFTISLLGMLVYRSHL...VGLALLVSISNTYGLDYVHNLNLLQC AAB58951.1 NADH d...
+[10]   459 MLKLIVPTIMLLPLTWLSKKHMIWIN...NTLMFMHLSPILLLSLNPDIITGFSS AAB58952.1 NADH d...
+[11]   603 MTMHTTMTTLTLTSLIPPILTTLVNP...STQKGMIKLYFLSFFFPLILTLLLIT AAB58953.1 NADH d...
+[12]   174 MMYALFLLSVGLVMGFVGFSSKPSPI...GRWLVVVTGWTLFVGVYIVIEIARGN AAB58954.1 NADH d...
+[13]   380 MTPMRKTNPLMKLINHSFIDLPTPSN...SVLYFTTILILMPTISLIENKMLKWA AAB58955.3 cytoch...
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the proteome of Homo sapiens from ENSEMBL
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+HS.proteome.ensembl <- getProteome( db       = "ensembl", 
+                                   organism = "Homo sapiens",
+                                   path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Human_Proteome <- read_proteome(file = HS.proteome.ensembl, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_Proteome
+```
+
+```
+  A AAStringSet instance of length 102915
+         width seq                                                 names               
+     [1]     4 TGGY                                                ENSP00000452494.1...
+     [2]     4 GTGG                                                ENSP00000488240.1...
+     [3]     4 GTGG                                                ENSP00000487941.1...
+     [4]     3 PSY                                                 ENSP00000451515.1...
+     [5]     2 EI                                                  ENSP00000451042.1...
+     ...   ... ...
+[102911]   554 MLLPLLLSSLLGGSQAMDGRFWIR...GVRPRPEARMPKGTQADYAEVKFQ ENSP00000414324.2...
+[102912]   639 MLLPLLLSSLLGGSQAMDGRFWIR...GVRPRPEARMPKGTQADYAEVKFQ ENSP00000389132.2...
+[102913]   697 MLLPLLLSSLLGGSQAMDGRFWIR...GVRPRPEARMPKGTQADYAEVKFQ ENSP00000345243.4...
+[102914]   155 MLLPLLLSSLLGVLSFTPRPQDHN...SGRYTCRAENRLGSQQRALDLSVQ ENSP00000435281.1...
+[102915]   186 MRRCYCHCCCPRCWADWTGSTPAY...HFSVLSFTPRPQDHNTDLTCHVDF ENSP00000433838.1...
+```
+
+
+Example `ENSEMBLGENOMES`:
+
+Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the proteome of Arabidopsis thaliana from ENSEMBLGENOMES
+# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+AT.proteome.ensemblgenomes <- getProteome( db       = "ensemblgenomes", 
+                                           organism = "Arabidopsis thaliana",
+                                           path     = file.path("_ncbi_downloads","proteomes"))
+```
+
+
+```{r,eval=FALSE}
+# import proteome as Biostrings object
+Cress_Proteome <- read_proteome(file = AT.proteome.ensemblgenomes, 
+                                obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Cress_Proteome
+```
+
+```
+  A AAStringSet instance of length 35386
+        width seq                                                  names               
+    [1]   415 MGRDETETYITVPSFFKCPISLDVM...IKVLKFNSSALAAYETKTTHIMPF AT3G18710.1 pep:k...
+    [2]   855 MATENPIRISGSNERWSNSRKVSVP...YTYGKHIVSRLEQPSIEENQELRR AT4G25880.2 pep:k...
+    [3]   858 MATENPIRISGSNERWSNSRKVSVP...GKHIVSRLEQPSIEGMKFPNKTKN AT4G25880.3 pep:k...
+    [4]   861 MATENPIRISGSNERWSNSRKVSVP...YTYGKHIVSRLEQPSIEENQELRR AT4G25880.1 pep:k...
+    [5]   358 MTKAYSTRVLTFLILISLMAVTLNL...CSARNTQSFMSVLEEGIEEAISMI AT1G71695.1 pep:k...
+    ...   ... ...
+[35382]   374 MHSRSALLYRFLRPASRCFSSSSAV...YKAGEYYIKSMIEADRVASPSTSP AT2G20860.1 pep:k...
+[35383]   392 MADNLNLVSVLGVLLVLTIFHNPII...WEPNNLAIRRRPSRDFYLGLAAYY AT3G14210.1 pep:k...
+[35384]   495 MASLLSPATPTATSAAFHSCSTAGF...LRHPYFLLGGDQAAAVLSKLSFSK AT5G01920.1 pep:k...
+[35385]   563 MSLTKKASEPKLSGTSIKPTTLNPH...VAVQRYLLEEEGLDYSEPQAGLLR AT2G26280.1 pep:k...
+[35386]   453 MGVSLLKQQHRITNQADTFSRFMER...NHQQQQQQQRSELRVENGLANNVI AT4G32600.1 pep:k...
+```
+
+### CDS Retrieval
+
+The `getCDS()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
+[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+which corresponding CDS files can be retrieved. It works analogous to `getGenome()` and `getProteome()`. 
+
+The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
+
+Options are:
+
+- `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
+- `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
+- `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
+- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
+Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
+Finally, the `path` argument specifies the folder path in which the corresponding CDS file shall be locally stored. In case users would like to store the CDS file at a different location,
+they can specify the `path = file.path("put","your","path","here")` argument.
+
+Example `RefSeq`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from refseq
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+HS.cds.refseq <- getCDS( db       = "refseq", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","CDS"))
+```
+
+
+In this example, `getCDS()` creates a directory named `'_ncbi_downloads/CDS'` into which the corresponding genome named `Homo_sapiens_cds_from_genomic_refseq.fna.gz` is downloaded. The return value of `getCDS()` is the folder path to the downloaded genome file
+that can then be used as input to the `read_cds()` function. The variable `HS.cds.refseq` stores the path to the downloaded CDS file. 
+Subsequently, users can use the `read_cds()` function to import the genome into the R session. Users can choose to work with the genome sequence in R either as [Biostrings](http://bioconductor.org/packages/release/bioc/html/Biostrings.html) object (`obj.type = "Biostrings"`) or [data.table](https://github.com/Rdatatable/data.table/wiki) object
+(`obj.type = "data.table"`) by specifying the `obj.type` argument of the `read_cds()` function. 
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Human_CDS <- read_cds(file     = HS.cds.refseq, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_CDS
+```
+
+```
+ A BStringSet instance of length 114967
+          width seq                                                names               
+     [1]    918 ATGGTGACTGAATTCATTTTTCTG...CACATTCTAGTGTAAAGTTTTAG lcl|NC_000001.11_...
+     [2]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [3]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [4]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [5]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     ...    ... ...
+[114963]    297 ATGCCCCTCATTTACATAAATATT...ACCTAAACCTACTCCAATGCTAA lcl|NC_012920.1_c...
+[114964]   1378 ATGCTAAAACTAATCGTCCCAACA...CATCATTACCGGGTTTTCCTCTT lcl|NC_012920.1_c...
+[114965]   1812 ATAACCATGCACACTACTATAACC...TAACCCTACTCCTAATCACATAA lcl|NC_012920.1_c...
+[114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
+[114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...
+```
+
+Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
+
+```
+File Name: Homo_sapiens_cds_from_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_cds_from_genomic.fna.gz
+Download_Date: Sun Oct 23 17:19:05 2016
+refseq_category: reference genome
+assembly_accession: GCF_000001405.35
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-09-26
+submitter: Genome Reference Consortium
+```
+
+In summary, the `getCDS()` and `read_cds()` functions allow users to retrieve CDS files by specifying
+the scientific name of the organism of interest and allow them to import the retrieved CDS file e.g. as `Biostrings` object.
+Thus, users can then perform the [Biostrings notation](https://web.stanford.edu/class/bios221/labs/biostrings/lab_1_biostrings.html) to work with downloaded CDS and can rely on the log
+file generated by `getCDS()` to better document the source and version of CDS used for subsequent studies.
+
+Alternatively, users can perform the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package:
+
+```{r,eval=FALSE}
+# install.packages("magrittr")
+library(magrittr)
+# import CDS as Biostrings object
+Human_CDS <- getCDS( db       = "refseq", 
+                     organism = "Homo sapiens",
+                     path     = file.path("_ncbi_downloads","CDS")) %>%
+    read_cds(obj.type = "Biostrings")
+```
+
+```{r,eval=FALSE}
+Human_CDS
+```
+
+```
+ A BStringSet instance of length 114967
+          width seq                                                names               
+     [1]    918 ATGGTGACTGAATTCATTTTTCTG...CACATTCTAGTGTAAAGTTTTAG lcl|NC_000001.11_...
+     [2]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [3]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [4]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [5]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     ...    ... ...
+[114963]    297 ATGCCCCTCATTTACATAAATATT...ACCTAAACCTACTCCAATGCTAA lcl|NC_012920.1_c...
+[114964]   1378 ATGCTAAAACTAATCGTCCCAACA...CATCATTACCGGGTTTTCCTCTT lcl|NC_012920.1_c...
+[114965]   1812 ATAACCATGCACACTACTATAACC...TAACCCTACTCCTAATCACATAA lcl|NC_012920.1_c...
+[114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
+[114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...
+```
+
+Example `Genbank`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from genbank
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+HS.cds.genbank <- getCDS( db       = "genbank", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","CDS"))
+```
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Human_CDS <- read_cds(file     = HS.cds.genbank, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_CDS
+```
+
+```
+  A BStringSet instance of length 13
+     width seq                                                     names               
+ [1]   956 ATACCCATGGCCAACCTCCTACTCCT...ATCTCCAGCATTCCCCCTCAAACCTA lcl|J01415.2_cds_...
+ [2]  1042 ATTAATCCCCTGGCCCAACCCGTCAT...CTCCCCTTTTATACTAATAATCTTAT lcl|J01415.2_cds_...
+ [3]  1542 ATGTTCGCCGACCGTTGACTATTCTC...AAGAACCCGTATACATAAAATCTAGA lcl|J01415.2_cds_...
+ [4]   684 ATGGCACATGCAGCGCAAGTAGGTCT...AAATAGGGCCCGTATTTACCCTATAG lcl|J01415.2_cds_...
+ [5]   207 ATGCCCCAACTAAATACTACCGTATG...TTCATTCATTGCCCCCACAATCCTAG lcl|J01415.2_cds_...
+ ...   ... ...
+ [9]   297 ATGCCCCTCATTTACATAAATATTAT...ATAACCTAAACCTACTCCAATGCTAA lcl|J01415.2_cds_...
+[10]  1378 ATGCTAAAACTAATCGTCCCAACAAT...CGACATCATTACCGGGTTTTCCTCTT lcl|J01415.2_cds_...
+[11]  1812 ATAACCATGCACACTACTATAACCAC...TCCTAACCCTACTCCTAATCACATAA lcl|J01415.2_cds_...
+[12]   525 ATGATGTATGCTTTGTTTCTGTTGAG...TAATTGAGATTGCTCGGGGGAATAGG lcl|J01415.2_cds_...
+[13]  1141 ATGACCCCAATACGCAAAACTAACCC...TGAAAACAAAATACTCAAATGGGCCT lcl|J01415.2_cds_...
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from ensembl
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+HS.cds.ensembl <- getCDS( db       = "ensembl", 
+                         organism = "Homo sapiens",
+                         path     = file.path("_ncbi_downloads","CDS"))
+```
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Human_CDS <- read_cds(file     = HS.cds.ensembl, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Human_CDS
+```
+
+```
+  A BStringSet instance of length 102915
+          width seq                                                names               
+     [1]     13 ACTGGGGGATACG                                      ENST00000448914.1...
+     [2]     12 GGGACAGGGGGC                                       ENST00000631435.1...
+     [3]     12 GGGACAGGGGGC                                       ENST00000632684.1...
+     [4]      9 CCTTCCTAC                                          ENST00000434970.2...
+     [5]      8 GAAATAGT                                           ENST00000415118.1...
+     ...    ... ...
+[102911]   1665 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000436984.6...
+[102912]   1920 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000439889.6...
+[102913]   2094 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000339313.9...
+[102914]    466 ATGCTACTGCCACTGCTGCTGTCC...AGCCCTGGACCTCTCTGTGCAGT ENST00000529627.1...
+[102915]    559 ATGCGGAGATGCTACTGCCACTGC...CCTCACCTGCCATGTGGACTTCT ENST00000530476.1...
+```
+
+Example `ENSEMBLGENOMES`:
+
+Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the genome of Homo sapiens from ensemblgenomes
+# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
+AT.cds.ensemblgenomes <- getCDS( db       = "ensemblgenomes", 
+                                 organism = "Arabidopsis thaliana",
+                                 path     = file.path("_ncbi_downloads","CDS"))
+```
+
+```{r,eval=FALSE}
+# import downloaded CDS as Biostrings object
+Cress_CDS <- read_cds(file     = AT.cds.ensemblgenomes, 
+                      obj.type = "Biostrings")
+
+```
+
+```{r,eval=FALSE}
+# look at the Biostrings object
+Cress_CDS
+```
+
+```
+  A BStringSet instance of length 35386
+        width seq                                                  names               
+    [1]  1248 ATGGGGAGAGATGAAACAGAGACGT...ACTACTCATATTATGCCTTTTTGA AT3G18710.1 cds:k...
+    [2]  2568 ATGGCAACTGAGAATCCTATTAGGA...GAAAACCAAGAATTGAGGAGATGA AT4G25880.2 cds:k...
+    [3]  2577 ATGGCAACTGAGAATCCTATTAGGA...TTCCCCAATAAAACCAAGAATTGA AT4G25880.3 cds:k...
+    [4]  2586 ATGGCAACTGAGAATCCTATTAGGA...GAAAACCAAGAATTGAGGAGATGA AT4G25880.1 cds:k...
+    [5]  1077 ATGACAAAGGCTTATTCAACACGTG...GAGGAAGCTATTTCCATGATCTAA AT1G71695.1 cds:k...
+    ...   ... ...
+[35382]  1125 ATGCATTCGCGCTCCGCCTTGCTCT...GCTTCTCCTTCTACATCCCCGTAG AT2G20860.1 cds:k...
+[35383]  1179 ATGGCAGACAATTTGAATTTGGTGA...TTGGGCCTCGCCGCCTATTATTAG AT3G14210.1 cds:k...
+[35384]  1488 ATGGCCTCTCTTCTCTCTCCCGCCA...TCAAAGCTCAGTTTCAGCAAGTGA AT5G01920.1 cds:k...
+[35385]  1689 ATGAGTTTAACAAAGAAAGCAAGTG...GAACCACAGGCCGGTCTCCTTAGA AT2G26280.1 cds:k...
+[35386]  1362 ATGGGTGTTTCTCTTCTGAAACAAC...GGTTTGGCCAATAATGTTATCTAG AT4G32600.1 cds:k...
+```
+
+### Retrieve the annotation file of a particular genome
+
+Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` function.
+
+Example `RefSeq`:
+
+```{r,eval=FALSE}
+# download the GFF file of Homo sapiens from refseq
+# and store the corresponding file in '_ncbi_downloads/annotation'
+HS.gff.refseq <- getGFF( db       = "refseq", 
+                         organism = "Homo sapiens", 
+                         path = file.path("_ncbi_downloads","annotation"))
+```
+
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
+
+```{r,eval=FALSE}
+# import downloaded GFF file
+Human_GFF <- read_gff(file = HS.gff.refseq)
+```
+
+```{r,eval=FALSE}
+Human_GFF
+```
+
+```
+          seqid     source       type start       end score strand phase
+          <chr>      <chr>      <chr> <int>     <int> <dbl>  <chr> <dbl>
+1  NC_000001.11     RefSeq     region     1 248956422     0      +     0
+2  NC_000001.11 BestRefSeq       gene 11874     14409     0      +     0
+3  NC_000001.11 BestRefSeq transcript 11874     14409     0      +     0
+4  NC_000001.11 BestRefSeq       exon 11874     12227     0      +     0
+5  NC_000001.11 BestRefSeq       exon 12613     12721     0      +     0
+6  NC_000001.11 BestRefSeq       exon 13221     14409     0      +     0
+7  NC_000001.11 BestRefSeq       gene 14362     29370     0      -     0
+8  NC_000001.11 BestRefSeq transcript 14362     29370     0      -     0
+9  NC_000001.11 BestRefSeq       exon 29321     29370     0      -     0
+10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0
+```
+
+Example `Genbank`:
+
+```{r,eval=FALSE}
+# download the GFF file of Homo sapiens from genbank
+# and store the corresponding file in '_ncbi_downloads/annotation'
+HS.gff.genbank <- getGFF( db       = "genbank", 
+                         organism = "Homo sapiens", 
+                         path = file.path("_ncbi_downloads","annotation"))
+```
+
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
+
+```{r,eval=FALSE}
+# import downloaded GFF file
+Human_GFF <- read_gff(file = HS.gff.genbank)
+```
+
+```{r,eval=FALSE}
+Human_GFF
+```
+
+```
+        seqid  source       type     start       end score strand phase
+        <chr>   <chr>      <chr>     <int>     <int> <dbl>  <chr> <dbl>
+1  CM000663.2 Genbank     region         1 248956422     0      +     0
+2  CM000663.2 Genbank centromere 122026460 125184587     0      +     0
+3  KI270706.1 Genbank     region         1    175055     0      +     0
+4  KI270707.1 Genbank     region         1     32032     0      +     0
+5  KI270708.1 Genbank     region         1    127682     0      +     0
+6  KI270709.1 Genbank     region         1     66860     0      +     0
+7  KI270710.1 Genbank     region         1     40176     0      +     0
+8  KI270711.1 Genbank     region         1     42210     0      +     0
+9  KI270712.1 Genbank     region         1    176043     0      +     0
+10 KI270713.1 Genbank     region         1     40745     0      +     0
+```
+
+Example `ENSEMBL`:
+
+```{r,eval=FALSE}
+# download the GFF file of Homo sapiens from ENSEMBL
+# and store the corresponding file in '_ncbi_downloads/annotation'
+HS.gff.ensembl <- getGFF( db       = "ensembl", 
+                         organism = "Homo sapiens", 
+                         path = file.path("_ncbi_downloads","annotation"))
+```
+
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
+
+```{r,eval=FALSE}
+# import downloaded GFF file
+Human_GFF <- read_gff(file = HS.gff.ensembl)
+```
+
+```{r,eval=FALSE}
+Human_GFF
+```
+
+```
+   seqid source              type start       end   score strand phase
+   <int>  <chr>             <chr> <int>     <int>   <chr>  <chr> <dbl>
+1      1 GRCh38        chromosome     1 248956422       .      .     0
+2      1      . biological_region 10469     11240 1.3e+03      .     0
+3      1      . biological_region 10650     10657   0.999      +     0
+4      1      . biological_region 10655     10657   0.999      -     0
+5      1      . biological_region 10678     10687   0.999      +     0
+6      1      . biological_region 10681     10688   0.999      -     0
+7      1      . biological_region 10707     10716   0.999      +     0
+8      1      . biological_region 10708     10718   0.999      -     0
+9      1      . biological_region 10735     10747   0.999      -     0
+10     1      . biological_region 10737     10744   0.999      +     0
+```
+
+Example `ENSEMBLGENOMES`:
+
+Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
+as example.
+
+```{r,eval=FALSE}
+# download the GFF file of Arabidopsis thaliana from ENSEMBLGENOMES
+# and store the corresponding file in '_ncbi_downloads/annotation'
+AT.gff.ensemblgenomes <- getGFF( db       = "ensemblgenomes", 
+                                 organism = "Arabidopsis thaliana", 
+                                 path = file.path("_ncbi_downloads","annotation"))
+```
+
+After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
+
+```{r,eval=FALSE}
+# import downloaded GFF file
+Cress_GFF <- read_gff(file = AT.gff.ensemblgenomes)
+```
+
+```{r,eval=FALSE}
+Cress_GFF
+```
+
+```
+   seqid source           type start      end score strand phase
+   <int>  <chr>          <chr> <int>    <int> <dbl>  <chr> <dbl>
+1      1   TAIR     chromosome     1 30427671     0      .     0
+2      1   tair           gene  3631     5899     0      +     0
+3      1   tair     transcript  3631     5899     0      +     0
+4      1   tair five_prime_UTR  3631     3759     0      +     0
+5      1   tair           exon  3631     3913     0      +     0
+6      1   tair            CDS  3760     3913     0      +     0
+7      1   tair           exon  3996     4276     0      +     0
+8      1   tair            CDS  3996     4276     0      +     2
+9      1   tair           exon  4486     4605     0      +     0
+10     1   tair            CDS  4486     4605     0      +     0
+```
+
+Taken together, `getGFF()` in combination with `getGenome()`, `getProteome()` and `getCDS()` allows users to retrieve the genome information together with the
+corresponding `.gff` annotation file to make sure that they both have the same version and origin.
+
+
+
+
