@@ -254,26 +254,31 @@ MtbCDC1551_genome</code></pre></div>
 <p>Instead of specifying the <code>scientific name</code> of the organism of interest users can specify the <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy</a> identifier (= <code>taxid</code>) of the corresponding organism. For example, the <code>taxid</code> of <code>Homo sapiens</code> is <code>9606</code>. Now users can specify <code>organism = "9606"</code> to retrieve entries for <code>Homo sapiens</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking availability for Homo sapiens using its taxid</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"9606"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code> assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse…
-  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro…
-2 GCF_0… PRJNA… SAMN0… AMYH0… na     9606  9606 Homo… NA    CHM1  late… Chro…
-# ... with 9 more variables: release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
-#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;, gbrs_paired_asm
-#   &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;, excluded_from_refseq &lt;chr&gt;</code></pre>
+<pre><code>  assembly_accession bioproject biosample wgs_master refseq_category  taxid
+  &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;int&gt;
+1 GCF_000001405.38   PRJNA168   NA        NA         reference genome  9606
+# ... with 15 more variables: species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
 </div>
 <div id="using-the-accession-id-instead-of-the-scientific-name-or-taxid-to-screen-for-organism-availability" class="section level4">
 <h4 class="hasAnchor">
 <a href="#using-the-accession-id-instead-of-the-scientific-name-or-taxid-to-screen-for-organism-availability" class="anchor"></a>Using the accession ID instead of the scientific name or taxid to screen for organism availability</h4>
-<p>Finally, instead of specifying either the <code>scientific name</code> of the organism of interest nor the <code>taxid</code>, users can specify the accession ID of the organism of interest. In the following example we use the accession ID of <code>Homo sapiens</code> (= <code>GCF_000001405.37</code>):</p>
+<p>Finally, instead of specifying either the <code>scientific name</code> of the organism of interest nor the <code>taxid</code>, users can specify the accession ID of the organism of interest. In the following example we use the accession ID of <code>Homo sapiens</code> (= <code>GCF_000001405.38</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking availability for Homo sapiens using its taxid</span>
-<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"GCF_000001405.37"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>  assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse…
-  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro…
-# ... with 9 more variables: release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
-#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;, gbrs_paired_asm
-#   &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;, excluded_from_refseq &lt;chr</code></pre>
+<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"GCF_000001405.38"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>assembly_accession bioproject biosample wgs_master refseq_category  taxid
+  &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;int&gt;
+1 GCF_000001405.38   PRJNA168   NA        NA         reference genome  9606
+# ... with 15 more variables: species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
 </div>
 <div id="a-small-negative-example" class="section level4">
 <h4 class="hasAnchor">
@@ -308,6 +313,7 @@ and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
 <div id="example-ncbi-genbank-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-is-genome-available" class="anchor"></a>Example <code>NCBI Genbank</code> (?is.genome.available):</h3>
+<p>Test whether or not the genome of <code>Homo sapiens</code> is present at NCBI Genbank.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
@@ -317,6 +323,29 @@ Please consider to re-run this funtion and specify 'details = TRUE'.
 This will allow you to select the 'assembly_accession' identifier 
 that can then be specified in all get*() functions.
 [1] TRUE</code></pre>
+<p>Now with <code>details = TRUE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking whether or not the Homo sapiens </span>
+<span class="co"># genome is avaialable for download</span>
+<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code> assembly_accessi… bioproject biosample   wgs_master  refseq_category taxid
+   &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;
+ 1 GCA_000001405.27  PRJNA31257 NA          NA          reference geno…  9606
+ 2 GCA_000002115.2   PRJNA1431  SAMN029812… AADD000000… na               9606
+ 3 GCA_000002125.2   PRJNA19621 SAMN029812… ABBA000000… na               9606
+ 4 GCA_000002135.3   PRJNA10793 NA          NA          na               9606
+ 5 GCA_000004845.2   PRJNA42199 SAMN000033… ADDF000000… na               9606
+ 6 GCA_000005465.1   PRJNA42201 NA          DAAB000000… na               9606
+ 7 GCA_000181135.1   PRJNA28335 SAMN000016… ABKV000000… na               9606
+ 8 GCA_000185165.1   PRJNA59877 SAMN029812… AEKP000000… na               9606
+ 9 GCA_000212995.1   PRJNA19621 SAMN029812… ABSL000000… na               9606
+10 GCA_000252825.1   PRJNA19621 SAMN029812… ABBA000000… na               9606
+# ... with 70 more rows, and 15 more variables: species_taxid &lt;int&gt;,
+#   organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;,
+#   version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;,
+#   genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
+<p>As you can see there are several versions of the <code>Homo sapiens</code> genome available for download from NCBI Genbank. Using the <code>assembly_accession</code> id will now allow to specify which version shall be retrieved.</p>
 </div>
 <div id="using-is-genome-available-with-ensembl-and-ensemblgenomes" class="section level3">
 <h3 class="hasAnchor">
@@ -332,25 +361,25 @@ that can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve details for Homo sapiens</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>  division taxon_id         name release display_name        accession common_name
-1  Ensembl     9606 homo_sapiens      86        Human GCA_000001405.22       human
-                                                                    aliases
-1 homo, homo sapiens, h_sapiens, enshs, human, hsap, 9606, homsap, hsapiens
-                                                       groups assembly
-1 core, cdna, vega, otherfeatures, rnaseq, variation, funcgen   GRCh38</code></pre>
+<pre><code>  division taxon_id name    release display_name accession   strain_collecti…
+  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;           
+1 Ensembl      9606 homo_s…      92 Human        GCA_000001… NA              
+# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;</code></pre>
 <p>Again, users can either specify the <code>taxid</code> or <code>accession id</code> when searching for organism entries.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve details for Homo sapiens using taxid</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>, <span class="dt">organism =</span> <span class="st">"9606"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code> division taxon_id name         release display_name accession common… asse…
-  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
-1 Ensembl      9606 homo_sapiens      91 Human        GCA_0000… NA      human
+<pre><code>division taxon_id name    release display_name accession   strain_collecti…
+  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;           
+1 Ensembl      9606 homo_s…      92 Human        GCA_000001… NA              
+# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;
 &gt; </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve details for Homo sapiens using accession id</span>
-<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">organism =</span> <span class="st">"GCA_000001405.25"</span>, <span class="dt">db =</span> <span class="st">"ensembl"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code> division taxon_id name         release display_name accession common… asse…
-  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
-1 Ensembl      9606 homo_sapiens      91 Human        GCA_0000… NA      human
-&gt; </code></pre>
+<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">organism =</span> <span class="st">"GCA_000001405.27"</span>, <span class="dt">db =</span> <span class="st">"ensembl"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>  division taxon_id name    release display_name accession  strain_collecti…
+  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;           
+1 Ensembl      9606 homo_s…      92 Human        GCA_00000… NA              
+# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;</code></pre>
+<p><strong>Please note that the <code>accession</code> id can change internally at ENSEMBL. E.g. in a recent case the <code>accession</code> id changed from <code>GCA_000001405.25</code> to <code>GCA_000001405.27</code>. Hence, please be careful and take this issue into account when you build automated retrieval scripts that are based on <code>accession</code> ids.</strong></p>
 </div>
 <div id="example-ensemblgenomes-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
@@ -368,16 +397,18 @@ to check whether 'Homo sapiens' is available in these databases.
 [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show details for Arabidopsis thaliana</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"ensemblgenomes"</span>, <span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code> division      taxon_id name                 release disp… acce… comm… asse…
-  &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;                  &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 EnsemblPlants     3702 arabidopsis_thaliana      91 Arab… GCA_… NA    thal…</code></pre>
+<pre><code> division  taxon_id name    release display_name accession strain_collecti…
+  &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;           
+1 EnsemblP…     3702 arabid…      92 Arabidopsis… GCA_0000… NA              
+# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;</code></pre>
 <p>Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI.</p>
 <p>Also for <code>ENSEMBLGENOMES</code> users can specify <code>taxid</code> or <code>accession id</code> instead of the <code>scientific name</code> in the argument <code>organism</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve information </span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"ensemblgenomes"</span>, <span class="st">"3702"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>  division      taxon_id name     relea… display… access… strai… comm… stra… asse…
-  &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 EnsemblPlants 3702     arabido…     91 Arabido… GCA_00… NA     thal… NA    TAIR…</code></pre>
+<pre><code>  division  taxon_id name    release display_name accession strain_collecti…
+  &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;           
+1 EnsemblP…     3702 arabid…      92 Arabidopsis… GCA_0000… NA              
+# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;</code></pre>
 </div>
 <div id="example-uniprot-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
@@ -386,30 +417,40 @@ to check whether 'Homo sapiens' is available in these databases.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve information from UniProt</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, <span class="dt">details =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
-More than one entry was found for 'Homo sapiens'. Please consider to run the function
-'is.genome.available()' and specify 
-'is.genome.available(organism = Homo sapiens, db = uniprot, details = TRUE)'. 
-This will allow you to select the 'assembly_accession' identifier that 
-can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <p>or with details:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve information from UniProt</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>   name   descr… isRe… isRe… dbRe… comp… refe… upid  modifi… taxon… sour…
- * &lt;chr&gt;  &lt;chr&gt;  &lt;lgl&gt; &lt;lgl&gt; &lt;lis&gt; &lt;lis&gt; &lt;lis&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;int&gt; &lt;chr&gt;
- 1 Homo … Homo … T     T     &lt;dat… &lt;dat… &lt;dat… UP00… 1.51e¹²   9606 Ense…
- 2 Human… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  11250 ENA/…
- 3 Enter… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  39054 ENA/…
- 4 Enter… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹² 138951 ENA/…
- 5 Human… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  11250 ENA/…
- 6 Human… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  42789 ENA/…
- 7 Human… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹² 162145 ENA/…
- 8 Enter… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  39054 ENA/…
- 9 Enter… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  39054 ENA/…
-10 Enter… NA     F     F     &lt;NUL… &lt;dat… &lt;dat… UP00… 1.51e¹²  39054 ENA/…
-# ... with 1,167 more rows, and 2 more variables: sourceTaxonomy &lt;int&gt;,
-#   superregnum &lt;chr&gt;</code></pre>
-<p>In general, the argument <code>db</code> specifies from which database (<code>refseq</code>, <code>genbank</code>, <code>ensembl</code> or <code>ensemblgenomes</code>, <code>uniprot</code>) organism information shall be retrieved.</p>
+<pre><code> name   description isReferenceProt… isRepresentativ… dbReference component
+* &lt;chr&gt;  &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;list&gt;      &lt;list&gt;   
+1 Homo … Homo sapie… TRUE             TRUE             &lt;data.fram… &lt;data.fr…
+# ... with 7 more variables: reference &lt;list&gt;, upid &lt;chr&gt;, modified &lt;dbl&gt;,
+#   taxonomy &lt;int&gt;, source &lt;chr&gt;, sourceTaxonomy &lt;int&gt;, superregnum &lt;chr&gt;</code></pre>
+<p>Users can also search available species at UniProt via <code>taxid</code> or <code>upid</code> id.</p>
+<p>Here <code>9606</code> defines the taxonomy id for <code>Homo sapiens</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve information from UniProt</span>
+<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"uniprot"</span>, <span class="st">"9606"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code> name   description isReferenceProt… isRepresentativ… dbReference component
+* &lt;chr&gt;  &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;list&gt;      &lt;list&gt;   
+1 Homo … Homo sapie… TRUE             TRUE             &lt;data.fram… &lt;data.fr…
+# ... with 7 more variables: reference &lt;list&gt;, upid &lt;chr&gt;, modified &lt;dbl&gt;,
+#   taxonomy &lt;int&gt;, source &lt;chr&gt;, sourceTaxonomy &lt;int&gt;, superregnum &lt;chr&gt;</code></pre>
+<p>Here <code>UP000005640</code> defines the <code>upid</code> for <code>Homo sapiens</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve information from UniProt</span>
+<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"uniprot"</span>, <span class="st">"UP000005640"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code> name   description isReferenceProt… isRepresentativ… dbReference component
+* &lt;chr&gt;  &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;list&gt;      &lt;list&gt;   
+1 Homo … Homo sapie… TRUE             TRUE             &lt;data.fram… &lt;data.fr…
+# ... with 7 more variables: reference &lt;list&gt;, upid &lt;chr&gt;, modified &lt;dbl&gt;,
+#   taxonomy &lt;int&gt;, source &lt;chr&gt;, sourceTaxonomy &lt;int&gt;, superregnum &lt;chr&gt;</code></pre>
+<p>In general, the argument <code>db</code> specifies from which database (<code>refseq</code>, <code>genbank</code>, <code>ensembl</code> or <code>ensemblgenomes</code>, <code>uniprot</code>) organism information shall be retrieved. Options are:</p>
+<ul>
+<li><code>db = 'refseq'</code></li>
+<li><code>db = 'genbank'</code></li>
+<li><code>db = 'ensembl'</code></li>
+<li><code>db = 'ensemblgenomes'</code></li>
+<li><code>db = 'uniprot'</code></li>
+</ul>
 </div>
 <div id="listing-the-total-number-of-available-genomes" class="section level3">
 <h3 class="hasAnchor">
@@ -418,17 +459,17 @@ can then be specified in all get*() functions.
 <p>Users can determine the total number of available genomes using the <code><a href="../reference/listGenomes.html">listGenomes()</a></code> function.</p>
 <p>Example <code>refseq</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>))</code></pre></div>
-<pre><code>[1] 13689</code></pre>
+<pre><code>[1] 14264</code></pre>
 <p>Example <code>genbank</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>))</code></pre></div>
-<pre><code>[1] 20484</code></pre>
+<pre><code>[1] 21770</code></pre>
 <p>Example <code>ensembl</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>))</code></pre></div>
-<pre><code>[1] 112</code></pre>
+<pre><code>[1] 113</code></pre>
 <p>Example <code>ensemblgenomes</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"ensemblgenomes"</span>))</code></pre></div>
-<pre><code>[1] 45170</code></pre>
-<p>Hence, currently 13689 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 07/02/2018).</p>
+<pre><code>[1] 45172</code></pre>
+<p>Hence, currently 14264 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 31/05/2018).</p>
 </div>
 <div id="retrieving-kingdom-group-and-subgroup-information" class="section level3">
 <h3 class="hasAnchor">
@@ -438,22 +479,22 @@ can then be specified in all get*() functions.
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="kw"><a href="../reference/listKingdoms.html">listKingdoms</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>)</code></pre></div>
 <pre><code>    Archaea  Bacteria Eukaryota   Viroids   Viruses 
-      163      5777       541        47      7161</code></pre>
+      169      6321       561        47      7166 </code></pre>
 <p>Example <code>genbank</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="kw"><a href="../reference/listKingdoms.html">listKingdoms</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>)</code></pre></div>
 <pre><code>  Archaea  Bacteria Eukaryota 
-     1129     17235      2120</code></pre>
+     1249     18083      2438</code></pre>
 <p>Example <code>ENSEMBL</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="kw"><a href="../reference/listKingdoms.html">listKingdoms</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>)</code></pre></div>
 <pre><code>Ensembl 
-    112</code></pre>
+    113</code></pre>
 <p>Example <code>ENSEMBLGENOMES</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="kw"><a href="../reference/listKingdoms.html">listKingdoms</a></span>(<span class="dt">db =</span> <span class="st">"ensemblgenomes"</span>)</code></pre></div>
 <pre><code>EnsemblBacteria    EnsemblFungi  EnsemblMetazoa   EnsemblPlants EnsemblProtists 
-          44048             811              69              53             189</code></pre>
+          44048             811              71              53             189 </code></pre>
 </div>
 <div id="analogous-computations-can-be-performed-for-groups-and-subgroups" class="section level3">
 <h3 class="hasAnchor">
@@ -463,107 +504,353 @@ can then be specified in all get*() functions.
 <p>Example <code>refseq</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each group</span>
 <span class="kw"><a href="../reference/listGroups.html">listGroups</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>)</code></pre></div>
-<pre><code>                Acidobacteria                       Animals 
-                           11                           293 
-                Avsunviroidae                    Deltavirus 
-                            4                             1 
-  dsDNA viruses, no RNA stage                 dsRNA viruses 
-                         2572                           261 
-                Elusimicrobia                 Euryarchaeota 
-                            1                            64 
-                    FCB group                         Fungi 
-                          155                            34 
-                 Fusobacteria                   Nitrospirae 
-                            6                             3 
-                        Other                        Plants 
-                           10                            62 
-                Pospiviroidae                Proteobacteria 
-                           34                           774 
-                     Protists                     PVC group 
-                           34                            20 
-   Retro-transcribing viruses                    Satellites 
-                          135                           213 
-                 Spirochaetes                 ssDNA viruses 
-                           12                           864 
-                ssRNA viruses                 Synergistetes 
-                         1432                             1 
-                   TACK group           Terrabacteria group 
-                           13                           630 
-        Thermodesulfobacteria                   Thermotogae 
-                            3                             2 
-           unassigned viruses          unclassified Archaea 
-                            9                             1 
-unclassified archaeal viruses         unclassified Bacteria 
-                            3                             9 
-          unclassified phages          unclassified viroids 
-                           23                             8 
-      unclassified virophages          unclassified viruses 
-                            6                           176  </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each subgroup</span>
-<span class="kw">head</span>(<span class="kw">listSubgroups</span>(<span class="dt">db =</span> <span class="st">"refseq"</span>), <span class="dv">15</span>)</code></pre></div>
-<pre><code>         Acidithiobacillia             Acidobacteriia 
-                         2                          8 
-            Actinobacteria               Adenoviridae 
-                       194                         55 
-         Alloherpesviridae          Alphaflexiviridae 
-                         7                         48 
-       Alphaproteobacteria          Alphatetraviridae 
-                       256                          3 
-            Alvernaviridae              Amalgaviridae 
-                         1                          4 
-                Amphibians             Ampullaviridae 
-                         3                          3 
-             Anelloviridae              Apicomplexans 
-                        53                         16 
-Apple fruit crinkle viroid 
-                         1 </code></pre>
+<pre><code>                 Abditibacteriota                                   Acidithiobacillia 
+                                                  1                                                   5 
+                                     Acidobacteriia                                    Ackermannviridae 
+                                                 16                                                  21 
+                                     Actinobacteria                                        Adenoviridae 
+                                               1226                                                  62 
+                                  Alloherpesviridae                                   Alphaflexiviridae 
+                                                  8                                                  56 
+                                Alphaproteobacteria                                   Alphasatellitidae 
+                                                857                                                  67 
+                                  Alphatetraviridae                                      Alvernaviridae 
+                                                  3                                                   1 
+                                      Amalgaviridae                                          Amphibians 
+                                                 10                                                   3 
+                                     Ampullaviridae                                       Anelloviridae 
+                                                  3                                                  61 
+                                      Apicomplexans                          Apple fruit crinkle viroid 
+                                                 18                                                   1 
+          Apple hammerhead viroid-like circular RNA                                         Apscaviroid 
+                                                  1                                                  12 
+                                          Aquificae                                        Archaeoglobi 
+                                                  6                                                   3 
+                                       Arenaviridae                                     Armatimonadetes 
+                                                 37                                                   4 
+                                      Arteriviridae                                         Ascomycetes 
+                                                 13                                                  45 
+                                        Ascoviridae                                        Asfarviridae 
+                                                  4                                                   1 
+                                        Aspiviridae                                        Astroviridae 
+                                                  3                                                  40 
+                                        Avsunviroid                                   Bacilladnaviridae 
+                                                  1                                                   7 
+                           Bacteria candidate phyla                        Bacteroidetes/Chlorobi group 
+                                                  3                                                 654 
+                                      Baculoviridae                                           Balneolia 
+                                                 66                                                   4 
+                                       Barnaviridae                                      Basidiomycetes 
+                                                  1                                                   5 
+                                        Benyviridae                                    Betaflexiviridae 
+                                                  3                                                  92 
+                                 Betaproteobacteria                                      Bicaudaviridae 
+                                                407                                                   4 
+                                              Birds                                        Birnaviridae 
+                                                 54                                                   8 
+                                     Blastocatellia                                        Bornaviridae 
+                                                  1                                                   5 
+                                       Bromoviridae                                       Caliciviridae 
+                                                 35                                                  26 
+                               Candidatus Kryptonia                            Candidatus Micrarchaeota 
+                                                  3                                                   1 
+                           Candidatus Tectomicrobia                                   Carmotetraviridae 
+                                                  1                                                   1 
+                                     Caulimoviridae Cherry leaf scorch small circular viroid-like RNA 1 
+                                                 67                                                   1 
+              Cherry small circular viroid-like RNA                                          Chlamydiae 
+                                                  1                                                  19 
+                                        Chloroflexi                                       Chrysoviridae 
+                                                 23                                                   9 
+                                       Circoviridae                                     Closteroviridae 
+                                                148                                                  40 
+                                        Cocadviroid                                          Coleviroid 
+                                                  4                                                   6 
+                               Coprothermobacterota                                       Coronaviridae 
+                                                  1                                                  47 
+                                     Corticoviridae                                       Crenarchaeota 
+                                                  1                                                   9 
+                Cyanobacteria/Melainabacteria group                                        Cystoviridae 
+                                                 22                                                   5 
+                                Deinococcus-Thermus                          delta/epsilon subdivisions 
+                                                 23                                                 142 
+                                  Deltaflexiviridae                                     Dicistroviridae 
+                                                  1                                                  27 
+                                          Elaviroid                                        Endomicrobia 
+                                                  1                                                   2 
+                                     Endornaviridae                                       Fibrobacteres 
+                                                 29                                                   2 
+                                        Filoviridae                                         Fimoviridae 
+                                                  7                                                   6 
+                                         Firmicutes                                              Fishes 
+                                               1378                                                  52 
+                                          Flatworms                                        Flaviviridae 
+                                                  4                                                 107 
+                                      Fusariviridae                                      Fuselloviridae 
+                                                  7                                                  10 
+                                      Fusobacteriia                                   Gammaflexiviridae 
+                                                 20                                                   1 
+                                Gammaproteobacteria                                       Geminiviridae 
+                                               1285                                                 406 
+                                   Gemmatimonadetes                                       Genomoviridae 
+                                                  2                                                  62 
+                                     Globuloviridae                             Grapevine latent viroid 
+                                                  2                                                   1 
+                                        Green Algae                                        Guttaviridae 
+                                                  8                                                   1 
+                                       Halobacteria                                        Hantaviridae 
+                                                 80                                                  24 
+                                     Hepadnaviridae                                         Hepeviridae 
+                                                 16                                                   3 
+                                      Herpesviridae                                         Hostuviroid 
+                                                 72                                                   2 
+                                  Hydrogenophilalia                                         Hypoviridae 
+                                                  1                                                  15 
+                                     Hytrosaviridae                                         Iflaviridae 
+                                                  2                                                  34 
+                                         Inoviridae                                             Insects 
+                                                 42                                                 110 
+                                       Iridoviridae                                        Kinetoplasts 
+                                                 20                                                   5 
+                                 Kiritimatiellaeota                                         Land Plants 
+                                                  1                                                  80 
+                                      Lavidaviridae                                       Lentisphaerae 
+                                                  2                                                   1 
+                                        Leviviridae                                    Lipothrixviridae 
+                                                 11                                                   8 
+                                       Luteoviridae                                 Malacoherpesviridae 
+                                                 48                                                   2 
+                                            Mammals                                        Marnaviridae 
+                                                100                                                   1 
+                                   Marseilleviridae                                    Megabirnaviridae 
+                                                  6                                                   3 
+                                      Mesoniviridae                                     Methanobacteria 
+                                                  7                                                  18 
+                                       Methanococci                                     Methanomicrobia 
+                                                  2                                                  21 
+                              Methanonatronarchaeia                                        Microviridae 
+                                                  1                                                  42 
+                                        Mimiviridae           Mulberry small circular viroid-like RNA 1 
+                                                  5                                                   1 
+                                      Mymonaviridae                                          Myoviridae 
+                                                  1                                                 516 
+                                       Nairoviridae                                         Nanoviridae 
+                                                 13                                                   8 
+                                       Narnaviridae                                         Nimaviridae 
+                                                 39                                                   1 
+                                         Nitrospira                                         Nodaviridae 
+                                                 10                                                  15 
+                                        Nudiviridae                                        Nyamiviridae 
+                                                  5                                                   4 
+                                        Oligoflexia                                    Orthomyxoviridae 
+                                                  3                                                   6 
+                                              Other                                       Other Animals 
+                                                988                                                  35 
+                                        Other Fungi                                      Other Protists 
+                                                  3                                                  16 
+                                   Papillomaviridae                                     Paramyxoviridae 
+                                                134                                                  54 
+                                     Partitiviridae                                        Parvoviridae 
+                                                 55                                                  90 
+                                       Pelamoviroid                                    Peribunyaviridae 
+                                                  2                                                  32 
+                                Permutotetraviridae                                    Persimmon viroid 
+                                                  1                                                   1 
+                                      Phasmaviridae                                       Phenuiviridae 
+                                                  4                                                  28 
+                                    Phycodnaviridae                                    Picobirnaviridae 
+                                                 26                                                   5 
+                                     Picornaviridae                                        Pithoviridae 
+                                                104                                                   2 
+                                     Planctomycetes                                       Plasmaviridae 
+                                                 18                                                   1 
+                                    Pleolipoviridae                                       Pneumoviridae 
+                                                  8                                                   7 
+                                        Podoviridae                                     Polycipiviridae 
+                                                343                                                   6 
+                                     Polydnaviridae                                      Polyomaviridae 
+                                                  5                                                  83 
+                                        Pospiviroid                                         Potyviridae 
+                                                 11                                                 146 
+                                         Poxviridae                                       Quadriviridae 
+                                                 47                                                   1 
+                                         Reoviridae                                            Reptiles 
+                                                 67                                                  11 
+                                       Retroviridae                                       Rhabdoviridae 
+                                                 52                                                 150 
+                                       Rhodothermia                                         Roniviridae 
+                                                  4                                                   1 
+                                         Roundworms                            Rubber viroid India/2009 
+                                                  8                                                   1 
+                                        Rudiviridae                                         Secoviridae 
+                                                 15                                                  53 
+                                       Siphoviridae                                       Solemoviridae 
+                                               1061                                                  20 
+                                       Solibacteres                                      Solinviviridae 
+                                                  3                                                   2 
+                                 Sphaerolipoviridae                                        Spirochaetia 
+                                                  7                                                  39 
+                                         Sunviridae                                         Synergistia 
+                                                  1                                                   4 
+                                       Tectiviridae                                         Tenericutes 
+                                                  5                                                  69 
+                                     Thaumarchaeota                                         Thermococci 
+                                                  8                                                  19 
+                              Thermodesulfobacteria                                      Thermoplasmata 
+                                                  4                                                   7 
+                                        Thermotogae                                         Togaviridae 
+                                                 10                                                  24 
+                                 Tolecusatellitidae                                       Tombusviridae 
+                                                101                                                  68 
+                                       Tospoviridae                                         Totiviridae 
+                                                 17                                                  66 
+                                   Tristromaviridae                                        Turriviridae 
+                                                  1                                                   2 
+                                        Tymoviridae                                        unclassified 
+                                                 37                                                 606 
+                         unclassified Acidobacteria               unclassified Bacteria (miscellaneous) 
+                                                  1                                                  13 
+                           unclassified Nitrospirae                         unclassified Proteobacteria 
+                                                  1                                                   2 
+                                    Verrucomicrobia                                        Virgaviridae 
+                                                 25                                                  52 
+                                 Zetaproteobacteria 
+                                                  5 </code></pre>
 <p>Example <code>genbank</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each group</span>
 <span class="kw"><a href="../reference/listGroups.html">listGroups</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>)</code></pre></div>
-<pre><code>                   Acidobacteria                         Animals 
-                             47                             655 
-                    Caldiserica                 Deferribacteres 
-                              1                               1 
-                    DPANN group                   Elusimicrobia 
-                             27                              57 
-          environmental samples                   Euryarchaeota 
-                              6                             197 
-                      FCB group                           Fungi 
-                            545                             508 
-                   Fusobacteria Nitrospinae/Tectomicrobia group 
-                              7                              11 
-                    Nitrospirae                           Other 
-                             46                               7 
-                         Plants                  Proteobacteria 
-                            193                            1490 
-                       Protists                       PVC group 
-                            142                             180 
-                   Spirochaetes                   Synergistetes 
-                             26                              12 
-                     TACK group             Terrabacteria group 
-                             73                            1072 
-          Thermodesulfobacteria                     Thermotogae 
-                              3                               9 
-           unclassified Archaea           unclassified Bacteria 
-                             48                            1407</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the number of genomes available for each subgroup</span>
-<span class="kw">head</span>(<span class="kw">listSubgroups</span>(<span class="dt">db =</span> <span class="st">"genbank"</span>), <span class="dv">15</span>)</code></pre></div>
-<pre><code>           Acidithiobacillia               Acidobacteriia 
-                           5                            9 
-              Actinobacteria          Alphaproteobacteria 
-                         313                          411 
-                  Amphibians                Apicomplexans 
-                           4                           32 
-     Archaea candidate phyla                 Archaeoglobi 
-                          25                            3 
-             Armatimonadetes                  Ascomycetes 
-                          10                          361 
-    Bacteria candidate phyla Bacteroidetes/Chlorobi group 
-                        1372                          405 
-              Basidiomycetes           Betaproteobacteria 
-                         122                          268 
-                       Birds 
-                          59 </code></pre>
+<pre><code>                       Abditibacteriota                       Acidithiobacillia 
+                                      1                                       8 
+                         Acidobacteriia                          Actinobacteria 
+                                     24                                    1596 
+                    Alphaproteobacteria                              Amphibians 
+                                   1604                                       6 
+                          Apicomplexans                               Aquificae 
+                                     47                                       7 
+                           Archaeoglobi                         Armatimonadetes 
+                                      5                                      38 
+                            Ascomycetes                Bacteria candidate phyla 
+                                    689                                    3532 
+           Bacteroidetes/Chlorobi group                               Balneolia 
+                                   2247                                      44 
+                         Basidiomycetes                      Betaproteobacteria 
+                                    204                                     751 
+                                  Birds                          Blastocatellia 
+                                     80                                       2 
+                           Caldisericia                  candidate division WS1 
+                                      1                                       1 
+        candidate division Zixibacteria               Candidatus Aegiribacteria 
+                                     17                                       1 
+             Candidatus Aenigmarchaeota               Candidatus Bathyarchaeota 
+                                     14                                      42 
+               Candidatus Cloacimonetes               Candidatus Diapherotrites 
+                                     88                                      11 
+            Candidatus Fermentibacteria            Candidatus Geothermarchaeota 
+                                      8                                       3 
+           Candidatus Heimdallarchaeota              Candidatus Hydrogenedentes 
+                                      4                                      10 
+                Candidatus Korarchaeota                    Candidatus Kryptonia 
+                                      1                                       4 
+        Candidatus Lambdaproteobacteria              Candidatus Latescibacteria 
+                                      6                                      13 
+               Candidatus Lokiarchaeota               Candidatus Marinimicrobia 
+                                      2                                      92 
+               Candidatus Marsarchaeota                Candidatus Micrarchaeota 
+                                     15                                      35 
+                Candidatus Moduliflexus             Candidatus Muproteobacteria 
+                                      1                                      14 
+           Candidatus Nanohaloarchaeota                Candidatus Odinarchaeota 
+                                     16                                       1 
+                Candidatus Omnitrophica                Candidatus Pacearchaeota 
+                                    126                                      41 
+               Candidatus Parvarchaeota                Candidatus Tectomicrobia 
+                                     11                                       6 
+               Candidatus Thorarchaeota                 Candidatus Vecturithrix 
+                                      7                                       1 
+         Candidatus Verstraetearchaeota               Candidatus Woesearchaeota 
+                                      5                                      36 
+                             Chlamydiae                             Chloroflexi 
+                                     43                                     403 
+                         Chrysiogenetes                    Coprothermobacterota 
+                                      1                                       1 
+                          Crenarchaeota     Cyanobacteria/Melainabacteria group 
+                                     54                                     172 
+                        Deferribacteres                     Deinococcus-Thermus 
+                                      8                                      27 
+             delta/epsilon subdivisions                            Dictyoglomia 
+                                    615                                       1 
+                          Elusimicrobia                            Endomicrobia 
+                                      1                                       2 
+                  environmental samples                           Fibrobacteres 
+                                      3                                      15 
+                             Firmicutes                                  Fishes 
+                                   2663                                     168 
+                              Flatworms                           Fusobacteriia 
+                                     35                                      29 
+                    Gammaproteobacteria                        Gemmatimonadetes 
+                                   2041                                      82 
+                            Green Algae                            Hadesarchaea 
+                                     30                                       5 
+                           Halobacteria                              Holophagae 
+                                    162                                       9 
+                      Hydrogenophilalia                                 Insects 
+                                     32                                     280 
+                           Kinetoplasts                      Kiritimatiellaeota 
+                                     33                                       3 
+                            Land Plants                           Lentisphaerae 
+                                    282                                      32 
+                                Mammals                         Methanobacteria 
+                                    145                                      31 
+                           Methanococci                         Methanomicrobia 
+                                      2                                      77 
+                  Methanonatronarchaeia                             Methanopyri 
+                                      2                                       1 
+                          Nanoarchaeota nitrifying bacterium enrichment culture 
+                                     11                                       1 
+                            Nitrospinae                              Nitrospira 
+                                     19                                      31 
+                            Oligoflexia                                   Other 
+                                     87                                      15 
+                          Other Animals                             Other Fungi 
+                                    125                                      58 
+                           Other Plants                          Other Protists 
+                                      1                                     128 
+                         Planctomycetes                                Reptiles 
+                                    171                                      21 
+                           Rhodothermia                              Roundworms 
+                                      4                                      91 
+                           Solibacteres                            Spirochaetia 
+                                      7                                     115 
+                            Synergistia                             Tenericutes 
+                                     43                                     141 
+                         Thaumarchaeota                           Theionarchaea 
+                                     92                                       2 
+                            Thermococci                   Thermodesulfobacteria 
+                                     21                                       7 
+                         Thermoplasmata                             Thermotogae 
+                                    135                                      23 
+             unclassified Acidobacteria    unclassified Archaea (miscellaneous) 
+                                     94                                      52 
+  unclassified Bacteria (miscellaneous)                unclassified Caldiserica 
+                                    197                                      11 
+           unclassified Calditrichaeota              unclassified Elusimicrobia 
+                                      2                                     101 
+             unclassified Euryarchaeota                unclassified Nitrospirae 
+                                    348                                      90 
+            unclassified Proteobacteria            unclassified Rhodothermaeota 
+                                    130                                       4 
+              unclassified Spirochaetes              unclassified Synergistetes 
+                                     37                                       3 
+               unclassified Thermotogae                     uncultured archaeon 
+                                      1                                       1 
+            uncultured archaeon A07HB70             uncultured archaeon A07HN63 
+                                      1                                       1 
+            uncultured archaeon A07HR60             uncultured archaeon A07HR67 
+                                      1                                       1 
+                   uncultured bacterium                         Verrucomicrobia 
+                                      1                                     296 
+                     Zetaproteobacteria 
+                                     41 </code></pre>
 <p><strong>Note</strong> that when running the <code><a href="../reference/listGenomes.html">listGenomes()</a></code> function for the first time, it might take a while until the function returns any results, because necessary information need to be downloaded from NCBI and ENSEMBL databases. All subsequent executions of <code><a href="../reference/listGenomes.html">listGenomes()</a></code> will then respond very fast, because they will access the corresponding files stored on your hard drive.</p>
 </div>
 </div>
@@ -669,18 +956,70 @@ Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 [549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
 [550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...</code></pre>
+<div id="use-taxid-id-for-genome-retrieval" class="section level4">
+<h4 class="hasAnchor">
+<a href="#use-taxid-id-for-genome-retrieval" class="anchor"></a>Use <code>taxid</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>4932</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("magrittr")</span>
+<span class="kw">library</span>(magrittr)
+<span class="co"># import genome as Biostrings object</span>
+Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(
+            <span class="dt">db       =</span> <span class="st">"refseq"</span>,
+            <span class="dt">organism =</span> <span class="st">"559292"</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Scerevisiae_Genome</code></pre></div>
+<pre><code>A DNAStringSet instance of length 17
+       width seq                                      names               
+ [1]  230218 CCACACCACACCCACACAC...GGGTGTGGTGTGTGTGGG NC_001133.9 Sacch...
+ [2]  813184 AAATAGCCCTCATGTACGT...TGTGGTGTGTGGGTGTGT NC_001134.8 Sacch...
+ [3]  316620 CCCACACACCACACCCACA...GTGGGTGTGGTGTGTGTG NC_001135.5 Sacch...
+ [4] 1531933 ACACCACACCCACACCACA...GTAGTAAGTAGCTTTTGG NC_001136.10 Sacc...
+ [5]  576874 CGTCTCCTCCAAGCCCTGT...ATTTTCATTTTTTTTTTT NC_001137.3 Sacch...
+ ...     ... ...
+[13]  924431 CCACACACACACCACACCC...TGTGGTGTGTGTGTGGGG NC_001145.3 Sacch...
+[14]  784333 CCGGCTTTCTGACCGAAAT...TGTGGGTGTGGTGTGGGT NC_001146.8 Sacch...
+[15] 1091291 ACACCACACCCACACCACA...TGTGTGGGTGTGGTGTGT NC_001147.6 Sacch...
+[16]  948066 AAATAGCCCTCATGTACGT...TTTAATTTCGGTCAGAAA NC_001148.4 Sacch...
+[17]   85779 TTCATAATTAATTTTTTAT...TATAATATAATATCCATA NC_001224.1 Sacch...</code></pre>
+</div>
+<div id="use-assembly_accession-id-for-genome-retrieval" class="section level4">
+<h4 class="hasAnchor">
+<a href="#use-assembly_accession-id-for-genome-retrieval" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCF_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("magrittr")</span>
+<span class="kw">library</span>(magrittr)
+<span class="co"># import genome as Biostrings object</span>
+Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(
+            <span class="dt">db       =</span> <span class="st">"refseq"</span>,
+            <span class="dt">organism =</span> <span class="st">"GCF_000146045.2"</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Scerevisiae_Genome</code></pre></div>
+<pre><code> A DNAStringSet instance of length 17
+       width seq                                                    names               
+ [1]  230218 CCACACCACACCCACACACCCACACA...GTGGTGTGGGTGTGGTGTGTGTGGG NC_001133.9 Sacch...
+ [2]  813184 AAATAGCCCTCATGTACGTCTCCTCC...GTGTGGGTGTGGTGTGTGGGTGTGT NC_001134.8 Sacch...
+ [3]  316620 CCCACACACCACACCCACACCACACC...GGGTGTGGTGGGTGTGGTGTGTGTG NC_001135.5 Sacch...
+ [4] 1531933 ACACCACACCCACACCACACCCACAC...AATAAAGGTAGTAAGTAGCTTTTGG NC_001136.10 Sacc...
+ [5]  576874 CGTCTCCTCCAAGCCCTGTTGTCTCT...GGGTTTCATTTTCATTTTTTTTTTT NC_001137.3 Sacch...
+ ...     ... ...
+[13]  924431 CCACACACACACCACACCCACACCAC...GTGTGGGTGTGGTGTGTGTGTGGGG NC_001145.3 Sacch...
+[14]  784333 CCGGCTTTCTGACCGAAATTAAAAAA...GGGTGTGTGTGGGTGTGGTGTGGGT NC_001146.8 Sacch...
+[15] 1091291 ACACCACACCCACACCACACCCACAC...GAGAGAGTGTGTGGGTGTGGTGTGT NC_001147.6 Sacch...
+[16]  948066 AAATAGCCCTCATGTACGTCTCCTCC...TTTTTTTTTTAATTTCGGTCAGAAA NC_001148.4 Sacch...
+[17]   85779 TTCATAATTAATTTTTTATATATATA...GCTTAATTATAATATAATATCCATA NC_001224.1 Sacch...</code></pre>
+</div>
 </div>
 <div id="example-ncbi-genbank" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank" class="anchor"></a>Example NCBI Genbank:</h3>
+<p>Genome retrieval from <code>NCBI Genbank</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from Genbank</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 HS.genome.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,
                                 <span class="dt">path     =</span> <span class="kw">file.path</span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import downloaded genome as Biostrings object</span>
-Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.genbank, 
-                            <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</code></pre></div>
+Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.genbank)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># look at the Biostrings object</span>
 Human_Genome</code></pre></div>
 <pre><code>  A DNAStringSet instance of length 551
@@ -696,6 +1035,58 @@ Human_Genome</code></pre></div>
 [549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC KI270933.1 Homo s...
 [550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC GL000209.2 Homo s...
 [551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG J01415.2 Homo sap...</code></pre>
+<div id="use-taxonomy-id-for-genome-retrieval" class="section level4">
+<h4 class="hasAnchor">
+<a href="#use-taxonomy-id-for-genome-retrieval" class="anchor"></a>Use <code>taxonomy</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>4932</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("magrittr")</span>
+<span class="kw">library</span>(magrittr)
+<span class="co"># import genome as Biostrings object</span>
+Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(
+            <span class="dt">db       =</span> <span class="st">"genbank"</span>,
+            <span class="dt">organism =</span> <span class="st">"559292"</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Scerevisiae_Genome</code></pre></div>
+<pre><code>A DNAStringSet instance of length 16
+       width seq                                names               
+ [1]  230218 CCACACCACACCCACA...TGTGGTGTGTGTGGG BK006935.2 TPA_in...
+ [2]  813184 AAATAGCCCTCATGTA...GGTGTGTGGGTGTGT BK006936.2 TPA_in...
+ [3]  316620 CCCACACACCACACCC...GGTGTGGTGTGTGTG BK006937.2 TPA_in...
+ [4] 1531933 ACACCACACCCACACC...GTAAGTAGCTTTTGG BK006938.2 TPA_in...
+ [5]  576874 CGTCTCCTCCAAGCCC...TTCATTTTTTTTTTT BK006939.2 TPA_in...
+ ...     ... ...
+[12] 1078177 CACACACACACACCAC...ACATGAGGGCTATTT BK006945.2 TPA_in...
+[13]  924431 CCACACACACACCACA...GGTGTGTGTGTGGGG BK006946.2 TPA_in...
+[14]  784333 CCGGCTTTCTGACCGA...GGGTGTGGTGTGGGT BK006947.3 TPA_in...
+[15] 1091291 ACACCACACCCACACC...GTGGGTGTGGTGTGT BK006948.2 TPA_in...
+[16]  948066 AAATAGCCCTCATGTA...AATTTCGGTCAGAAA BK006949.2 TPA_in...</code></pre>
+</div>
+<div id="use-assembly_accession-id-for-genome-retrieval-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#use-assembly_accession-id-for-genome-retrieval-1" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCA_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("magrittr")</span>
+<span class="kw">library</span>(magrittr)
+<span class="co"># import genome as Biostrings object</span>
+Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(
+            <span class="dt">db       =</span> <span class="st">"genbank"</span>,
+            <span class="dt">organism =</span> <span class="st">"GCA_000146045.2"</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Scerevisiae_Genome</code></pre></div>
+<pre><code>A DNAStringSet instance of length 16
+       width seq                                  names               
+ [1]  230218 CCACACCACACCCACAC...GTGTGGTGTGTGTGGG BK006935.2 TPA_in...
+ [2]  813184 AAATAGCCCTCATGTAC...TGGTGTGTGGGTGTGT BK006936.2 TPA_in...
+ [3]  316620 CCCACACACCACACCCA...GGGTGTGGTGTGTGTG BK006937.2 TPA_in...
+ [4] 1531933 ACACCACACCCACACCA...AGTAAGTAGCTTTTGG BK006938.2 TPA_in...
+ [5]  576874 CGTCTCCTCCAAGCCCT...TTTCATTTTTTTTTTT BK006939.2 TPA_in...
+ ...     ... ...
+[12] 1078177 CACACACACACACCACC...TACATGAGGGCTATTT BK006945.2 TPA_in...
+[13]  924431 CCACACACACACCACAC...TGGTGTGTGTGTGGGG BK006946.2 TPA_in...
+[14]  784333 CCGGCTTTCTGACCGAA...TGGGTGTGGTGTGGGT BK006947.3 TPA_in...
+[15] 1091291 ACACCACACCCACACCA...TGTGGGTGTGGTGTGT BK006948.2 TPA_in...
+[16]  948066 AAATAGCCCTCATGTAC...TAATTTCGGTCAGAAA BK006949.2 TPA_in...</code></pre>
+</div>
 </div>
 <div id="example-ensembl" class="section level3">
 <h3 class="hasAnchor">
@@ -706,8 +1097,7 @@ HS.genome.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../ref
                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,
                                 <span class="dt">path     =</span> <span class="kw">file.path</span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import downloaded genome as Biostrings object</span>
-Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.ensembl, 
-                            <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</code></pre></div>
+Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.ensembl)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># look at the Biostrings object</span>
 Human_Genome</code></pre></div>
 <pre><code>  A DNAStringSet instance of length 524

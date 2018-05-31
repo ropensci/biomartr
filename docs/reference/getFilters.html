@@ -163,7 +163,8 @@ shall be listed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># search for available datasets</span>
-<span class='fu'><a href='getMarts.html'>getMarts</a></span>()</div><div class='output co'>#&gt; # A tibble: 15 x 2
+<span class='fu'><a href='getMarts.html'>getMarts</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Failed to parse headers:</span>
+#&gt; <span class='warning'>221 Goodbye.</span></div><div class='output co'>#&gt; # A tibble: 15 x 2
 #&gt;    mart                  version                       
 #&gt;    &lt;chr&gt;                 &lt;chr&gt;                         
 #&gt;  1 ENSEMBL_MART_ENSEMBL  Ensembl Genes 92              
@@ -182,18 +183,18 @@ shall be listed.</p></td>
 #&gt; 14 metazoa_mart          Ensembl Metazoa Genes 39      
 #&gt; 15 metazoa_variations    Ensembl Metazoa Variations 39 </div><div class='input'><span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
 <span class='fu'>head</span>(<span class='fu'><a href='getDatasets.html'>getDatasets</a></span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 3
-#&gt;    dataset                    description                            version   
-#&gt;    &lt;chr&gt;                      &lt;chr&gt;                                  &lt;chr&gt;     
-#&gt;  1 choffmanni_gene_ensembl    Sloth genes (choHof1)                  choHof1   
-#&gt;  2 ggorilla_gene_ensembl      Gorilla genes (gorGor4)                gorGor4   
-#&gt;  3 hmale_gene_ensembl         Naked mole-rat male genes (HetGla_1.0) HetGla_1.0
-#&gt;  4 pmarinus_gene_ensembl      Lamprey genes (Pmarinus_7.0)           Pmarinus_…
-#&gt;  5 mleucophaeus_gene_ensembl  Drill genes (Mleu.le_1.0)              Mleu.le_1…
-#&gt;  6 oniloticus_gene_ensembl    Tilapia genes (Orenil1.0)              Orenil1.0 
-#&gt;  7 cintestinalis_gene_ensembl C.intestinalis genes (KH)              KH        
-#&gt;  8 oanatinus_gene_ensembl     Platypus genes (OANA5)                 OANA5     
-#&gt;  9 xmaculatus_gene_ensembl    Platyfish genes (Xipmac4.4.2)          Xipmac4.4…
-#&gt; 10 mmusculus_gene_ensembl     Mouse genes (GRCm38.p6)                GRCm38.p6 </div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
+#&gt;    dataset                     description                       version       
+#&gt;    &lt;chr&gt;                       &lt;chr&gt;                             &lt;chr&gt;         
+#&gt;  1 nleucogenys_gene_ensembl    Gibbon genes (Nleu_3.0)           Nleu_3.0      
+#&gt;  2 pcoquereli_gene_ensembl     Coquerel's sifaka genes (Pcoq_1.… Pcoq_1.0      
+#&gt;  3 mleucophaeus_gene_ensembl   Drill genes (Mleu.le_1.0)         Mleu.le_1.0   
+#&gt;  4 hfemale_gene_ensembl        Naked mole-rat female genes (Het… HetGla_female…
+#&gt;  5 oniloticus_gene_ensembl     Tilapia genes (Orenil1.0)         Orenil1.0     
+#&gt;  6 ngalili_gene_ensembl        Upper Galilee mountains blind mo… S.galili_v1.0 
+#&gt;  7 pvampyrus_gene_ensembl      Megabat genes (pteVam1)           pteVam1       
+#&gt;  8 aplatyrhynchos_gene_ensembl Duck genes (BGI_duck_1.0)         BGI_duck_1.0  
+#&gt;  9 cintestinalis_gene_ensembl  C.intestinalis genes (KH)         KH            
+#&gt; 10 mfascicularis_gene_ensembl  Crab-eating macaque genes (Macac… Macaca_fascic…</div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
 <span class='fu'>head</span>(<span class='fu'>getFilters</span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>,
                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span>) , <span class='fl'>5</span>)</div><div class='output co'>#&gt;              name              description
 #&gt; 1 chromosome_name Chromosome/scaffold name
