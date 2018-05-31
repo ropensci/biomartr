@@ -74,6 +74,9 @@
     <li>
       <a href="articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -146,12 +149,10 @@
 <a href="#example" class="anchor"></a>Example</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
-HS.genome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
-                               <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
+HS.genome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
 <p>Subsequently, users can use the read_genome() function to import the genome into the R session. Users can choose to work with the genome sequence in R either as Biostrings object (<code>obj.type = "Biostrings"</code>) or data.table object (<code>obj.type = "data.table"</code>) by specifying the obj.type argument of the read_genome() function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import downloaded genome as Biostrings object</span>
-Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.refseq, 
-                            <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</code></pre></div>
+Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.refseq)</code></pre></div>
 <pre><code># look at the Biostrings object
 Human_Genome
   A DNAStringSet instance of length 551
@@ -185,6 +186,7 @@ release_type: Patch
 genome_rep: Full
 seq_rel_date: 2016-09-26
 submitter: Genome Reference Consortium</code></pre>
+<p>In an ideal world this reference file could then be included as supplementary information in any life science publication that relies on genomic information so that reproducibility of experiments and analyses becomes achievable.</p>
 </div>
 <div id="citation" class="section level3">
 <h3 class="hasAnchor">

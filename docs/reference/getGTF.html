@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Genome Annotation Retrieval (GTF) — getGTF" />
 
 <meta property="og:description" content="Main retrieval function for GTF files of an 
@@ -42,8 +45,6 @@ from several databases." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -98,6 +99,9 @@ from several databases." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -125,10 +129,11 @@ from several databases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Genome Annotation Retrieval (GTF)</h1>
-    <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getGTF.R'><code>R/getGTF.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getGTF.R'><code>R/getGTF.R</code></a></small>
     <div class="hidden name"><code>getGTF.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Main retrieval function for GTF files of an 
 organism of interest. By specifying the scientific name of an organism of 
@@ -136,6 +141,7 @@ interest the corresponding GTF file storing the annotation  for the organism
 of interest can be downloaded and stored locally. GTF files can be retrieved 
 from several databases.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>getGTF</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"ensembl"</span>, <span class='no'>organism</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"ensembl"</span>, <span class='st'>"annotation"</span>))</pre>
     

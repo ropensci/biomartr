@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="List available metagenomes on NCBI Genbank — listMetaGenomes" />
 
 <meta property="og:description" content="List available metagenomes on NCBI genbank. NCBI genbank 
@@ -41,8 +44,6 @@ getMetaGenomes." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -97,6 +98,9 @@ getMetaGenomes." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -124,16 +128,18 @@ getMetaGenomes." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>List available metagenomes on NCBI Genbank</h1>
-    <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listMetaGenomes.R'><code>R/listMetaGenomes.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listMetaGenomes.R'><code>R/listMetaGenomes.R</code></a></small>
     <div class="hidden name"><code>listMetaGenomes.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>List available metagenomes on NCBI genbank. NCBI genbank 
 allows users to download entire metagenomes of several metagenome projects. 
 This function lists all available metagenomes that can then be downloaded via
 <code><a href='getMetaGenomes.html'>getMetaGenomes</a></code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>listMetaGenomes</span>(<span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -193,7 +199,7 @@ etc (<code>details = TRUE</code>).</p></td>
 #&gt; [69] "oil field metagenome"           "respiratory tract metagenome"  
 #&gt; [71] "feces metagenome"               "ciliate metagenome"            </div><div class='input'><span class='co'># retrieve detailed information on available metagenome projects </span>
 <span class='co'># at NCBI Genbank</span>
-<span class='fu'>listMetaGenomes</span>(<span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 8,845 x 21
+<span class='fu'>listMetaGenomes</span>(<span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 8,935 x 21
 #&gt;    assembly_accession bioproject biosample  wgs_master   refseq_category  taxid
 #&gt;    &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;            &lt;int&gt;
 #&gt;  1 GCA_000206185.1    PRJNA32359 SAMN02954… AAGA0000000… na              256318
@@ -206,7 +212,7 @@ etc (<code>details = TRUE</code>).</p></td>
 #&gt;  8 GCA_000208345.1    PRJNA16729 SAMN02954… AAQK0000000… na              256318
 #&gt;  9 GCA_000208365.1    PRJNA13699 SAMN02954… AAFX0000000… na              256318
 #&gt; 10 GCA_900007175.1    PRJEB10268 SAMEA3501… CZKA0000000… na              256318
-#&gt; # ... with 8,835 more rows, and 15 more variables: species_taxid &lt;int&gt;,
+#&gt; # ... with 8,925 more rows, and 15 more variables: species_taxid &lt;int&gt;,
 #&gt; #   organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;,
 #&gt; #   version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;,
 #&gt; #   genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,

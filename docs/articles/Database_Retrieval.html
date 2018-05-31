@@ -66,6 +66,9 @@
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -93,9 +96,9 @@
     <div class="page-header toc-ignore">
       <h1>NCBI Database Retrieval</h1>
             
-            <h4 class="date">2018-04-18</h4>
+            <h4 class="date">2018-05-31</h4>
       
-      <small>Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd"><code>vignettes/Database_Retrieval.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd"><code>vignettes/Database_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Database_Retrieval.Rmd</code></div>
 
     </div>
@@ -134,8 +137,8 @@ biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p>Further examples are:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI nt files</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/listDatabases">listNCBIDatabases</a></span>(<span class="dt">db =</span> <span class="st">"nt"</span>)</code></pre></div>
-<pre><code>#&gt;  [1] "nt.00.tar.gz" "nt.01.tar.gz" "nt.02.tar.gz" "nt.03.tar.gz" "nt.04.tar.gz" "nt.05.tar.gz" "nt.06.tar.gz" "nt.07.tar.gz" "nt.08.tar.gz" "nt.09.tar.gz" "nt.10.tar.gz" "nt.40.tar.gz" "nt.11.tar.gz" "nt.41.tar.gz" "nt.42.tar.gz" "nt.43.tar.gz" "nt.44.tar.gz" "nt.45.tar.gz" "nt.46.tar.gz" "nt.47.tar.gz" "nt.48.tar.gz" "nt.49.tar.gz" "nt.50.tar.gz" "nt.12.tar.gz" "nt.51.tar.gz" "nt.52.tar.gz" "nt.13.tar.gz" "nt.14.tar.gz" "nt.53.tar.gz" "nt.54.tar.gz" "nt.55.tar.gz" "nt.56.tar.gz" "nt.15.tar.gz" "nt.16.tar.gz" "nt.26.tar.gz" "nt.27.tar.gz" "nt.17.tar.gz" "nt.18.tar.gz" "nt.28.tar.gz" "nt.29.tar.gz" "nt.19.tar.gz" "nt.20.tar.gz" "nt.21.tar.gz" "nt.22.tar.gz" "nt.23.tar.gz" "nt.24.tar.gz" "nt.25.tar.gz" "nt.30.tar.gz" "nt.31.tar.gz"
-#&gt; [50] "nt.32.tar.gz" "nt.33.tar.gz" "nt.34.tar.gz" "nt.35.tar.gz" "nt.36.tar.gz" "nt.37.tar.gz" "nt.39.tar.gz" "nt.38.tar.gz"</code></pre>
+<pre><code>#&gt;  [1] "nt.00.tar.gz" "nt.01.tar.gz" "nt.02.tar.gz" "nt.03.tar.gz" "nt.04.tar.gz" "nt.05.tar.gz" "nt.06.tar.gz" "nt.07.tar.gz" "nt.08.tar.gz" "nt.09.tar.gz" "nt.10.tar.gz" "nt.40.tar.gz" "nt.11.tar.gz" "nt.41.tar.gz" "nt.42.tar.gz" "nt.43.tar.gz" "nt.44.tar.gz" "nt.45.tar.gz" "nt.46.tar.gz" "nt.47.tar.gz" "nt.48.tar.gz" "nt.49.tar.gz" "nt.50.tar.gz" "nt.12.tar.gz" "nt.51.tar.gz" "nt.52.tar.gz" "nt.13.tar.gz" "nt.14.tar.gz" "nt.53.tar.gz" "nt.54.tar.gz" "nt.55.tar.gz" "nt.56.tar.gz" "nt.57.tar.gz" "nt.15.tar.gz" "nt.16.tar.gz" "nt.26.tar.gz" "nt.27.tar.gz" "nt.17.tar.gz" "nt.18.tar.gz" "nt.28.tar.gz" "nt.29.tar.gz" "nt.19.tar.gz" "nt.20.tar.gz" "nt.21.tar.gz" "nt.22.tar.gz" "nt.23.tar.gz" "nt.24.tar.gz" "nt.25.tar.gz" "nt.30.tar.gz"
+#&gt; [50] "nt.31.tar.gz" "nt.32.tar.gz" "nt.33.tar.gz" "nt.34.tar.gz" "nt.35.tar.gz" "nt.36.tar.gz" "nt.37.tar.gz" "nt.39.tar.gz" "nt.38.tar.gz"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all NCBI ESTs others</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/listDatabases">listNCBIDatabases</a></span>(<span class="dt">db =</span> <span class="st">"est_others"</span>)</code></pre></div>
 <pre><code>#&gt;  [1] "est_others.00.tar.gz" "est_others.01.tar.gz" "est_others.02.tar.gz" "est_others.03.tar.gz" "est_others.04.tar.gz" "est_others.05.tar.gz" "est_others.06.tar.gz" "est_others.07.tar.gz" "est_others.08.tar.gz" "est_others.09.tar.gz" "est_others.10.tar.gz"</code></pre>
@@ -154,8 +157,8 @@ biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <pre><code>#&gt; [1] "swissprot.tar.gz"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show NCBI PDB</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/listDatabases">listNCBIDatabases</a></span>(<span class="dt">db =</span> <span class="st">"pdb"</span>)</code></pre></div>
-<pre><code>#&gt;  [1] "pdbnt.00.tar.gz" "pdbnt.40.tar.gz" "pdbnt.41.tar.gz" "pdbnt.42.tar.gz" "pdbnt.43.tar.gz" "pdbnt.44.tar.gz" "pdbnt.45.tar.gz" "pdbnt.46.tar.gz" "pdbnt.47.tar.gz" "pdbnt.48.tar.gz" "pdbnt.49.tar.gz" "pdbnt.50.tar.gz" "pdbnt.51.tar.gz" "pdbnt.52.tar.gz" "pdbnt.53.tar.gz" "pdbnt.54.tar.gz" "pdbnt.55.tar.gz" "pdbnt.56.tar.gz" "pdbnt.26.tar.gz" "pdbnt.27.tar.gz" "pdbnt.01.tar.gz" "pdbnt.02.tar.gz" "pdbnt.03.tar.gz" "pdbnt.04.tar.gz" "pdbnt.05.tar.gz" "pdbnt.06.tar.gz" "pdbnt.07.tar.gz" "pdbnt.08.tar.gz" "pdbnt.09.tar.gz" "pdbnt.10.tar.gz" "pdbnt.11.tar.gz" "pdbnt.12.tar.gz" "pdbnt.13.tar.gz" "pdbnt.14.tar.gz" "pdbnt.15.tar.gz" "pdbnt.16.tar.gz" "pdbnt.17.tar.gz" "pdbnt.18.tar.gz" "pdbnt.28.tar.gz" "pdbnt.19.tar.gz" "pdbnt.20.tar.gz"
-#&gt; [42] "pdbnt.21.tar.gz" "pdbnt.22.tar.gz" "pdbnt.23.tar.gz" "pdbnt.24.tar.gz" "pdbnt.29.tar.gz" "pdbnt.25.tar.gz" "pdbaa.tar.gz"    "pdbnt.30.tar.gz" "pdbnt.31.tar.gz" "pdbnt.32.tar.gz" "pdbnt.33.tar.gz" "pdbnt.34.tar.gz" "pdbnt.35.tar.gz" "pdbnt.36.tar.gz" "pdbnt.37.tar.gz" "pdbnt.39.tar.gz" "pdbnt.38.tar.gz"</code></pre>
+<pre><code>#&gt;  [1] "pdbnt.00.tar.gz" "pdbnt.40.tar.gz" "pdbnt.41.tar.gz" "pdbnt.42.tar.gz" "pdbnt.43.tar.gz" "pdbnt.44.tar.gz" "pdbnt.45.tar.gz" "pdbnt.46.tar.gz" "pdbnt.47.tar.gz" "pdbnt.48.tar.gz" "pdbnt.49.tar.gz" "pdbnt.50.tar.gz" "pdbnt.51.tar.gz" "pdbnt.52.tar.gz" "pdbnt.53.tar.gz" "pdbnt.54.tar.gz" "pdbnt.55.tar.gz" "pdbnt.56.tar.gz" "pdbnt.57.tar.gz" "pdbnt.26.tar.gz" "pdbnt.27.tar.gz" "pdbnt.01.tar.gz" "pdbnt.02.tar.gz" "pdbnt.03.tar.gz" "pdbnt.04.tar.gz" "pdbnt.05.tar.gz" "pdbnt.06.tar.gz" "pdbnt.07.tar.gz" "pdbnt.08.tar.gz" "pdbnt.09.tar.gz" "pdbnt.10.tar.gz" "pdbnt.11.tar.gz" "pdbnt.12.tar.gz" "pdbnt.13.tar.gz" "pdbnt.14.tar.gz" "pdbnt.15.tar.gz" "pdbnt.16.tar.gz" "pdbnt.17.tar.gz" "pdbnt.18.tar.gz" "pdbnt.28.tar.gz" "pdbnt.19.tar.gz"
+#&gt; [42] "pdbnt.20.tar.gz" "pdbnt.21.tar.gz" "pdbnt.22.tar.gz" "pdbnt.23.tar.gz" "pdbnt.24.tar.gz" "pdbnt.29.tar.gz" "pdbnt.25.tar.gz" "pdbaa.tar.gz"    "pdbnt.30.tar.gz" "pdbnt.31.tar.gz" "pdbnt.32.tar.gz" "pdbnt.33.tar.gz" "pdbnt.34.tar.gz" "pdbnt.35.tar.gz" "pdbnt.36.tar.gz" "pdbnt.37.tar.gz" "pdbnt.39.tar.gz" "pdbnt.38.tar.gz"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show NCBI Human database</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/listDatabases">listNCBIDatabases</a></span>(<span class="dt">db =</span> <span class="st">"human"</span>)</code></pre></div>
 <pre><code>#&gt;  [1] "human_genomic.00.tar.gz" "human_genomic.01.tar.gz" "human_genomic.02.tar.gz" "human_genomic.03.tar.gz" "human_genomic.04.tar.gz" "human_genomic.05.tar.gz" "human_genomic.06.tar.gz" "human_genomic.07.tar.gz" "human_genomic.08.tar.gz" "human_genomic.10.tar.gz" "human_genomic.11.tar.gz" "human_genomic.12.tar.gz" "human_genomic.13.tar.gz" "human_genomic.14.tar.gz" "human_genomic.15.tar.gz" "human_genomic.16.tar.gz" "human_genomic.18.tar.gz" "human_genomic.19.tar.gz" "human_genomic.20.tar.gz" "human_genomic.21.tar.gz" "human_genomic.22.tar.gz"</code></pre>

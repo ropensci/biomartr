@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats — getCollection" />
 
 <meta property="og:description" content="Main collection retrieval function for an organism of interest.
@@ -43,8 +46,6 @@ several databases." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -99,6 +100,9 @@ several databases." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -126,10 +130,11 @@ several databases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats</h1>
-    <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getCollection.R'><code>R/getCollection.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getCollection.R'><code>R/getCollection.R</code></a></small>
     <div class="hidden name"><code>getCollection.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Main collection retrieval function for an organism of interest.
 By specifying the scientific name of an organism of interest a collection consisting of
@@ -138,6 +143,7 @@ file of the organism of interest
 can be downloaded and stored locally. Collections can be retrieved from 
 several databases.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>getCollection</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organism</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"_ncbi_downloads"</span>, <span class='st'>"collection"</span>))</pre>
@@ -187,7 +193,7 @@ the corresponding collection shall be stored. Default is
 <p>and creates a directory '_ncbi_downloads/collection' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
-'_ncbi_downloads/genomes' folder and is accessible within the workspace,
+'_ncbi_downloads/collection' folder and is accessible within the workspace,
 no download process will be performed.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -200,7 +206,7 @@ no download process will be performed.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># download the collection of Arabidopsis thaliana from refseq</span>
-<span class='co'># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
+<span class='co'># and store the corresponding genome file in '_ncbi_downloads/collection'</span>
  <span class='fu'>getCollection</span>( <span class='kw'>db</span>       <span class='kw'>=</span> <span class='st'>"refseq"</span>,
              <span class='kw'>organism</span> <span class='kw'>=</span> <span class='st'>"Arabidopsis thaliana"</span>,
              <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"_ncbi_downloads"</span>,<span class='st'>"collection"</span>))

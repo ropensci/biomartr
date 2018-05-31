@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Genome Assembly Stats Retrieval — getAssemblyStats" />
 
 <meta property="og:description" content="Main genome assembly stats retrieval function for an organism
@@ -42,8 +45,6 @@ Genome assembly stats files can be retrieved from several databases." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -98,6 +99,9 @@ Genome assembly stats files can be retrieved from several databases." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -125,10 +129,11 @@ Genome assembly stats files can be retrieved from several databases." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Genome Assembly Stats Retrieval</h1>
-    <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getAssemblyStats.R'><code>R/getAssemblyStats.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getAssemblyStats.R'><code>R/getAssemblyStats.R</code></a></small>
     <div class="hidden name"><code>getAssemblyStats.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Main genome assembly stats retrieval function for an organism
 of interest. By specifying the scientific name of an organism of interest the
@@ -136,6 +141,7 @@ corresponding  genome assembly stats file storing the assembly statistics of
 the organism of interest can be downloaded and stored locally. 
 Genome assembly stats files can be retrieved from several databases.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>getAssemblyStats</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organism</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"download"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='st'>"_ncbi_downloads"</span>,

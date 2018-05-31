@@ -66,6 +66,9 @@
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -93,9 +96,9 @@
     <div class="page-header toc-ignore">
       <h1>Sequence Retrieval</h1>
             
-            <h4 class="date">2018-04-18</h4>
+            <h4 class="date">2018-05-31</h4>
       
-      <small>Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
 
     </div>
@@ -184,24 +187,67 @@
 <span class="co"># genome is avaialable for download</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
-More than one entry was found for 'Homo sapiens'. 
-Please consider to re-run this funtion and specify 'details = TRUE'. 
-This will allow you to select the 'assembly_accession' identifier that
-can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <p>In the case of the human genome, there are more than one entry in the NCBI RefSeq database (see message). By specifying the argument ‘details = TRUE’ users can retrieve all information for ‘Homo sapiens’ that is stored in NCBI RefSeq.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>  assem… biopr… biosa… wgs_m… refs… taxid spec… orga… infr… isol… vers… asse… rele…
-  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 GCF_0… PRJNA… NA     NA     refe…  9606  9606 Homo… NA    NA    late… Chro… Patch
-2 GCF_0… PRJNA… SAMN0… AMYH0… na     9606  9606 Homo… NA    CHM1  late… Chro… Major
-# ... with 8 more variables: genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;,
-#   submitter &lt;chr&gt;, gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+<pre><code>  assembly_accessi… bioproject biosample wgs_master refseq_category taxid
+  &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt;
+1 GCF_000001405.38  PRJNA168   NA        NA         reference geno…  9606
+# ... with 15 more variables: species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
 #   excluded_from_refseq &lt;chr&gt;</code></pre>
-<p>Here, we find two possible versions of the human genome: one having the <code>assembly_accession</code> ID <code>GCF_000001405.37</code> and another one having the ID <code>GCF_000306695.2</code>.</p>
-<p>When retrieving a genome with e.g. <code><a href="../reference/getGenome.html">getGenome()</a></code> the <code>organism</code> argument can also be specified using the <code>assembly_accession</code> ID instead of the scientific name of the organism. This is true for all <code>get*()</code> functions. Hence, instead of writing <code><a href="../reference/getGenome.html">getGenome(db = "refseq", organism = "Homo sapiens")</a></code>, users can specify <code><a href="../reference/getGenome.html">getGenome(db = "refseq", organism = "GCF_000001405.37")</a></code>. This is particularly useful when more than one entry is available for one organism.</p>
+<p>Here, we find one possible versions of the human genome having the <code>assembly_accession</code> ID <code>GCF_000001405.38</code>.</p>
+<p>When retrieving a genome with e.g. <code><a href="../reference/getGenome.html">getGenome()</a></code> the <code>organism</code> argument can also be specified using the <code>assembly_accession</code> ID instead of the scientific name of the organism. This is true for all <code>get*()</code> functions. Hence, instead of writing <code><a href="../reference/getGenome.html">getGenome(db = "refseq", organism = "Homo sapiens")</a></code>, users can specify <code><a href="../reference/getGenome.html">getGenome(db = "refseq", organism = "GCF_000001405.38")</a></code>. This is particularly useful when more than one entry is available for one organism.</p>
+<p><strong>Please note that the <code>assembly_accession</code> id might change internally in external databases such as NCBI RefSeq. Thus when writing automated scripts using the <code>assembly_accession</code> id they might stop working due to the internal change of ids at RefSeq. Recently, I had the case where the <code>assembly_accession</code> id was changed at RefSeq from <code>GCF_000001405.37</code> to <code>GCF_000001405.38</code>. Thus, scripts based on screening for entries with <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> stopped working, because the id <code>GCF_000001405.37</code> couldn’t be found anymore.</strong></p>
+<p>In some cases users will find several entries for the same scientific name. This might be due to the fact that ecotypes, strains, or other types of sub-species are available in the respective databases.</p>
+<p>For example. when we search for the bacterium <code>Mycobacterium tuberculosis</code> in NCBI RefSeq we get 5377 hits.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">organism =</span> <span class="st">"Mycobacterium tuberculosis"</span>, <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">details =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>A tibble: 5,377 x 21
+   assembly_accessi… bioproject biosample wgs_master refseq_category  taxid
+   &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;int&gt;
+ 1 GCF_000008585.1   PRJNA2241… SAMN0260… NA         na               83331
+ 2 GCF_000016145.1   PRJNA2241… SAMN0260… NA         na              419947
+ 3 GCF_000016925.1   PRJNA2241… SAMN0010… NA         na              336982
+ 4 GCF_000023625.1   PRJNA2241… SAMN0076… NA         na              478434
+ 5 GCF_000152105.1   PRJNA2241… SAMN0259… ADHQ00000… na              675512
+ 6 GCF_000153685.2   PRJNA2241… SAMN0308… NA         na              395095
+ 7 GCF_000154585.2   PRJNA2241… SAMN0308… NA         na              478433
+ 8 GCF_000154605.2   PRJNA2241… SAMN0010… NA         na              478435
+ 9 GCF_000155795.1   PRJNA2241… SAMN0259… ABVM00000… na              555461
+10 GCF_000159755.1   PRJNA2241… SAMN0259… ACHP00000… na              611303
+# ... with 5,367 more rows, and 15 more variables: species_taxid &lt;int&gt;,
+#   organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;,
+#   version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;,
+#   genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
+<p>When looking at the names of these organisms we see that they consist of different strains of <code>Mycobacterium tuberculosis</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">organism =</span> <span class="st">"Mycobacterium tuberculosis"</span>, 
+                         <span class="dt">db =</span> <span class="st">"refseq"</span>, 
+                         <span class="dt">details =</span> <span class="ot">TRUE</span>)<span class="op">$</span>organism_name)</code></pre></div>
+<pre><code>[1] "Mycobacterium tuberculosis CDC1551"     
+[2] "Mycobacterium tuberculosis H37Ra"       
+[3] "Mycobacterium tuberculosis F11"         
+[4] "Mycobacterium tuberculosis KZN 1435"    
+[5] "Mycobacterium tuberculosis SUMu001"     
+[6] "Mycobacterium tuberculosis str. Haarlem"</code></pre>
+<p>Now we can use the <code>assembly_accession</code> id to retrieve the <code>Mycobacterium tuberculosis</code> strain we are interested in, e.g. <code>Mycobacterium tuberculosis CDC1551</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MtbCDC1551 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, 
+                        <span class="dt">organism =</span> <span class="st">"GCF_000008585.1"</span>,  
+                        <span class="dt">path   =</span> <span class="kw">file.path</span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>), 
+                        <span class="dt">reference =</span> <span class="ot">FALSE</span>)
+                        
+MtbCDC1551_genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(MtbCDC1551)
+
+MtbCDC1551_genome</code></pre></div>
+<pre><code>A DNAStringSet instance of length 1
+      width seq                             names               
+[1] 4403837 TTGACCGATGACCC...AGGGAGATACGTCG NC_002755.2 Mycob...</code></pre>
 <div id="using-the-ncbi-taxonomy-id-instead-of-the-scientific-name-to-screen-for-organism-availability" class="section level4">
 <h4 class="hasAnchor">
 <a href="#using-the-ncbi-taxonomy-id-instead-of-the-scientific-name-to-screen-for-organism-availability" class="anchor"></a>Using the NCBI Taxonomy ID instead of the scientific name to screen for organism availability</h4>

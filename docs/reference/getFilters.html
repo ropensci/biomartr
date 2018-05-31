@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Retrieve All Available Filters for a Specific Dataset — getFilters" />
 
 <meta property="og:description" content="This funcion queries the BioMart API and returns a table
@@ -39,8 +42,6 @@ storing all available filters for a specific dataset." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -95,6 +96,9 @@ storing all available filters for a specific dataset." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -122,14 +126,16 @@ storing all available filters for a specific dataset." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve All Available Filters for a Specific Dataset</h1>
-    <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getFilters.R'><code>R/getFilters.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getFilters.R'><code>R/getFilters.R</code></a></small>
     <div class="hidden name"><code>getFilters.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This funcion queries the BioMart API and returns a table
 storing all available filters for a specific dataset.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>getFilters</span>(<span class='no'>mart</span>, <span class='no'>dataset</span>)</pre>
     
@@ -167,27 +173,27 @@ shall be listed.</p></td>
 #&gt;  5 ENSEMBL_MART_GENOMIC  Genomic features 92           
 #&gt;  6 ENSEMBL_MART_SNP      Ensembl Variation 92          
 #&gt;  7 ENSEMBL_MART_FUNCGEN  Ensembl Regulation 92         
-#&gt;  8 plants_mart           Ensembl Plants Genes 38       
-#&gt;  9 plants_variations     Ensembl Plants Variations 38  
-#&gt; 10 fungi_mart            Ensembl Fungi Genes 38        
-#&gt; 11 fungi_variations      Ensembl Fungi Variations 38   
-#&gt; 12 protists_mart         Ensembl Protists Genes 38     
-#&gt; 13 protists_variations   Ensembl Protists Variations 38
-#&gt; 14 metazoa_mart          Ensembl Metazoa Genes 38      
-#&gt; 15 metazoa_variations    Ensembl Metazoa Variations 38 </div><div class='input'><span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
+#&gt;  8 plants_mart           Ensembl Plants Genes 39       
+#&gt;  9 plants_variations     Ensembl Plants Variations 39  
+#&gt; 10 fungi_mart            Ensembl Fungi Genes 39        
+#&gt; 11 fungi_variations      Ensembl Fungi Variations 39   
+#&gt; 12 protists_mart         Ensembl Protists Genes 39     
+#&gt; 13 protists_variations   Ensembl Protists Variations 39
+#&gt; 14 metazoa_mart          Ensembl Metazoa Genes 39      
+#&gt; 15 metazoa_variations    Ensembl Metazoa Variations 39 </div><div class='input'><span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
 <span class='fu'>head</span>(<span class='fu'><a href='getDatasets.html'>getDatasets</a></span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 3
-#&gt;    dataset                   description                            version    
-#&gt;    &lt;chr&gt;                     &lt;chr&gt;                                  &lt;chr&gt;      
-#&gt;  1 rbieti_gene_ensembl       Black snub-nosed monkey genes (ASM169… ASM169854v1
-#&gt;  2 psinensis_gene_ensembl    Chinese softshell turtle genes (PelSi… PelSin_1.0 
-#&gt;  3 ptroglodytes_gene_ensembl Chimpanzee genes (Pan_tro_3.0)         Pan_tro_3.0
-#&gt;  4 csabaeus_gene_ensembl     Vervet-AGM genes (ChlSab1.1)           ChlSab1.1  
-#&gt;  5 pmarinus_gene_ensembl     Lamprey genes (Pmarinus_7.0)           Pmarinus_7…
-#&gt;  6 cjacchus_gene_ensembl     Marmoset genes (ASM275486v1)           ASM275486v1
-#&gt;  7 ocuniculus_gene_ensembl   Rabbit genes (OryCun2.0)               OryCun2.0  
-#&gt;  8 gmorhua_gene_ensembl      Cod genes (gadMor1)                    gadMor1    
-#&gt;  9 amexicanus_gene_ensembl   Cave fish genes (AstMex102)            AstMex102  
-#&gt; 10 caperea_gene_ensembl      Brazilian guinea pig genes (CavAp1.0)  CavAp1.0   </div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
+#&gt;    dataset                    description                            version   
+#&gt;    &lt;chr&gt;                      &lt;chr&gt;                                  &lt;chr&gt;     
+#&gt;  1 choffmanni_gene_ensembl    Sloth genes (choHof1)                  choHof1   
+#&gt;  2 ggorilla_gene_ensembl      Gorilla genes (gorGor4)                gorGor4   
+#&gt;  3 hmale_gene_ensembl         Naked mole-rat male genes (HetGla_1.0) HetGla_1.0
+#&gt;  4 pmarinus_gene_ensembl      Lamprey genes (Pmarinus_7.0)           Pmarinus_…
+#&gt;  5 mleucophaeus_gene_ensembl  Drill genes (Mleu.le_1.0)              Mleu.le_1…
+#&gt;  6 oniloticus_gene_ensembl    Tilapia genes (Orenil1.0)              Orenil1.0 
+#&gt;  7 cintestinalis_gene_ensembl C.intestinalis genes (KH)              KH        
+#&gt;  8 oanatinus_gene_ensembl     Platypus genes (OANA5)                 OANA5     
+#&gt;  9 xmaculatus_gene_ensembl    Platyfish genes (Xipmac4.4.2)          Xipmac4.4…
+#&gt; 10 mmusculus_gene_ensembl     Mouse genes (GRCm38.p6)                GRCm38.p6 </div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
 <span class='fu'>head</span>(<span class='fu'>getFilters</span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>,
                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span>) , <span class='fl'>5</span>)</div><div class='output co'>#&gt;              name              description
 #&gt; 1 chromosome_name Chromosome/scaffold name

@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Retrieve a List of Available NCBI Databases for Download — listDatabases" />
 
 <meta property="og:description" content="This function allows you to retrieve a list of database names 
@@ -45,8 +48,6 @@ database for download with download.database." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -101,6 +102,9 @@ database for download with download.database." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -128,10 +132,11 @@ database for download with download.database." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve a List of Available NCBI Databases for Download</h1>
-    <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listDatabases.R'><code>R/listDatabases.R</code></a>, <a href='https://github.com/ropensci/biomartr/blob/master/R/listNCBIDatabases.R'><code>R/listNCBIDatabases.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listDatabases.R'><code>R/listDatabases.R</code></a>, <a href='https://github.com/ropensci/biomartr/blob/master/R/listNCBIDatabases.R'><code>R/listNCBIDatabases.R</code></a></small>
     <div class="hidden name"><code>listDatabases.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function allows you to retrieve a list of database names 
 and versions that can be downloaded from correspondning servers.</p>
@@ -142,6 +147,7 @@ to databases that can be downloaded from NCBI servers and lists all available
 databases and their database version to be able to select an appropriate 
 database for download with <code><a href='download.database.html'>download.database</a></code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>listDatabases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"nr"</span>, <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
