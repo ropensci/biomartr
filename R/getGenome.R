@@ -147,8 +147,6 @@ getGenome <-
                 }
             }
             
-            print(FoundOrganism)
-            
             if (nrow(FoundOrganism) == 0) {
                 message(
                     paste0(
