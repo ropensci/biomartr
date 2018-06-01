@@ -45,7 +45,7 @@ getENSEMBLGENOMES.Seq <-
                         
                         if (is.taxid(organism)) {
                                 ensembl_summary <-
-                                        dplyr::filter(ensembl_summary, taxon_id == organism, !is.na(assembly))
+                                        dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
                         } else {
                         
                                 ensembl_summary <-
@@ -54,7 +54,8 @@ getENSEMBLGENOMES.Seq <-
                                                               (accession == organism),
                                                       !is.na(assembly)) }
                         
-                        message("Several entries were found for '", organism, "' ... The first entry '", ensembl_summary$name,"' with accession id '",ensembl_summary$accession,"' was selected for download.")
+                        message("Several entries were found for '", organism, "'.")
+                        #    "... The first entry '", ensembl_summary$name[1],"' with accession id '",ensembl_summary$accession[1],"' was selected for download.")
                         message("In case you wish to retrieve another genome version please consult is.genome.available(organism = '", organism,"', details = TRUE, db = 'ensemblgenomes') and specify another accession id as organism argument.")
                         message("\n")
                         # select only first entry
@@ -67,14 +68,14 @@ getENSEMBLGENOMES.Seq <-
 
                 new.organism <-
                         paste0(
-                                stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
-                                stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
+                                stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                                stringr::str_sub(new.organism, 2, nchar(new.organism))
                         )
                 
                 # retrieve detailed information for organism of interest
         }
         
-        get.org.info <- ensembl_summary
+        get.org.info <- ensembl_summary[1, ]
         
         rest_url <- paste0(
             "http://rest.ensemblgenomes.org/info/assembly/",
@@ -100,7 +101,7 @@ getENSEMBLGENOMES.Seq <-
                         "The API 'http://rest.ensemblgenomes.org' does not seem ",
                         "to work properly. Are you connected to the internet? ",
                         "Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' ",
-                        "currently available?",
+                        "currently available? Could it be that the scientific name is mis-spelled or includes special characters such as '.' or '('?",
                         call. = FALSE
                     )
                 })
@@ -171,7 +172,7 @@ getENSEMBLGENOMES.Seq <-
             if (nrow(bacteria.info) == 0) {
                 warning(
                     "Unfortunately organism '",
-                    ensembl_summary$display_name,
+                    ensembl_summary$name[1],
                     "' could not be found. Have you tried another database yet? ",
                     "E.g. db = 'ensembl'? Thus, download for this species is omitted.",
                     call. = FALSE
@@ -182,7 +183,7 @@ getENSEMBLGENOMES.Seq <-
             if (is.na(bacteria.info$core_db[1])) {
                 warning(
                     "Unfortunately organism '",
-                    ensembl_summary$display_name,
+                    ensembl_summary$name[1],
                     "' was not assigned to a bacteria collection. 
                     Thus download for this species is omitted.",
                     call. = FALSE
@@ -283,8 +284,7 @@ getENSEMBLGENOMES.Seq <-
                 " exists already. Thus, download has been skipped."
             )
         } else {
-            tryCatch({
-                custom_download(ensembl.qry,
+                custom_download(url = ensembl.qry,
                                 destfile = file.path(
                                     path,
                                     paste0(
@@ -297,20 +297,7 @@ getENSEMBLGENOMES.Seq <-
                                         ifelse(id.type == "none", "", id.type),
                                         ".fa.gz"
                                     )
-                                ),
-                                mode = "wb")
-            }, error = function(e) {
-                warning(
-                    "The FTP site of ENSEMBLGENOMES ",
-                    "'ftp://ftp.ensemblgenomes.org/current/fasta' ",
-                    "does not seem to work properly. ",
-                    "Are you connected to the internet? ",
-                    "Is the site 'ftp://ftp.ensemblgenomes.org/current/fasta' or ",
-                    "'http://rest.ensemblgenomes.org' currently available?",
-                    call. = FALSE
-                )
-                return(FALSE)
-            })
+                                ))
         }
         
         return(file.path(
