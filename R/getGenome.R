@@ -519,7 +519,7 @@ getGenome <-
                     }
                 }
                 
-                new.organism <- ensembl_summary$name[1]
+                new.organism <- stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
                 new.organism <-
                     paste0(
                         stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
