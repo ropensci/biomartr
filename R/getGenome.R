@@ -348,7 +348,7 @@ getGenome <-
             # download genome sequence from ENSEMBL
             genome.path <-
                 getENSEMBL.Seq(organism, type = "dna", 
-                               id.type = "toplevel", path)
+                               id.type = "toplevel", path = path)
             
             if (is.logical(genome.path)) {
                 if (!genome.path)
@@ -367,44 +367,43 @@ getGenome <-
                 if (nrow(ensembl_summary) > 1) {
                     if (is.taxid(organism)) {
                         ensembl_summary <-
-                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
                     } else {
                         
                         ensembl_summary <-
                             dplyr::filter(
                                 ensembl_summary,
                                 (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                                    (accession == organism) |
+                                    (accession == organism),
                                     !is.na(assembly)
                             )
                     }
                 }
-                
-                
-                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
-                organism <- ensembl_summary$display_name
+            
+                new.organism <- ensembl_summary$name[1]
                 new.organism <-
                     paste0(
                         stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
                         stringr::str_sub(new.organism, 2, nchar(new.organism))
-                    )     
-                # test proper API access
-                tryCatch({
-                    json.qry.info <-
-                        jsonlite::fromJSON(
-                            paste0(
-                                "http://rest.ensembl.org/info/assembly/",
-                                new.organism,
-                                "?content-type=application/json"
-                            )
-                        )
-                }, error = function(e)
-                    stop(
-                        "The API 'http://rest.ensembl.org' does not seem to work
-                        properly.","Are you connected to the internet?",  
-                        "Is the homepage 'http://rest.ensembl.org' currently available?",
-                        call. = FALSE
-                    ))
+                    )
+                
+                url_api <- paste0(
+                    "http://rest.ensembl.org/info/assembly/",
+                    new.organism,
+                    "?content-type=application/json"
+                )
+                
+                # choose only first entry if not specified otherwise
+                if (length(url_api) > 1)
+                    url_api <- url_api[1]
+                
+                if (curl::curl_fetch_memory(url_api)$status_code != 200) {
+                    message("The API call '",url_api,"' did not work. This might be due to a non-existing organism that you specified or a corrupted internet or firewall connection.")
+                    return("Not available")
+                }
+                
+                # retrieve information from API
+                json.qry.info <- jsonlite::fromJSON(url_api)
                 
                 # generate Genome documentation
                 sink(file.path(
@@ -488,7 +487,7 @@ getGenome <-
             # download genome sequence from ENSEMBLGENOMES
             genome.path <-
                 getENSEMBLGENOMES.Seq(organism, type = "dna", 
-                                      id.type = "toplevel", path)
+                                      id.type = "toplevel", path = path)
             
             if (is.logical(genome.path)) {
                 if (!genome.path)
@@ -507,42 +506,43 @@ getGenome <-
                 if (nrow(ensembl_summary) > 1) {
                     if (is.taxid(organism)) {
                         ensembl_summary <-
-                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
                     } else {
                         
                         ensembl_summary <-
                             dplyr::filter(
                                 ensembl_summary,
                                 (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                                    (accession == organism) |
+                                    (accession == organism),
                                     !is.na(assembly)
                             )
                     }
                 }
                 
-                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
-                organism <- ensembl_summary$display_name
+                new.organism <- ensembl_summary$name[1]
                 new.organism <-
                     paste0(
                         stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
                         stringr::str_sub(new.organism, 2, nchar(new.organism))
                     ) 
                 
-                # test proper API access
-                tryCatch({
-                    json.qry.info <-
-                        jsonlite::fromJSON(
-                            paste0(
-                                "http://rest.ensemblgenomes.org/info/assembly/",
-                                new.organism,
-                                "?content-type=application/json"
-                            )
-                        )
-                }, error = function(e)
-                    stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Are you connected to the internet? Is the homepage 'http://rest.ensemblgenomes.org' currently available?",
-                        call. = FALSE
-                    ))
+                url_api <- paste0(
+                    "http://rest.ensemblgenomes.org/info/assembly/",
+                    new.organism,
+                    "?content-type=application/json"
+                )
+                
+                # choose only first entry if not specified otherwise
+                if (length(url_api) > 1)
+                    url_api <- url_api[1]
+                
+                if (curl::curl_fetch_memory(url_api)$status_code != 200) {
+                    message("The API call '",url_api,"' did not work. This might be due to a non-existing organism that you specified or a corrupted internet or firewall connection.")
+                    return("Not available")
+                }
+                
+                # retrieve information from API
+                json.qry.info <- jsonlite::fromJSON(url_api)
                 
                 # generate Genome documentation
                 sink(file.path(
