@@ -41,7 +41,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
         }
     }
     
-    new.organism <- ensembl_summary$name
+    new.organism <- ensembl_summary$name[1]
     new.organism <-
         paste0(
             stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
