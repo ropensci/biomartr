@@ -68,14 +68,14 @@ getENSEMBLGENOMES.Seq <-
 
                 new.organism <-
                         paste0(
-                                stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
-                                stringr::str_sub(new.organism, 2, nchar(new.organism))
+                                stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
+                                stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
                         )
                 
                 # retrieve detailed information for organism of interest
         }
         
-        get.org.info <- ensembl_summary[1, ]
+        get.org.info <- ensembl_summary
         
         rest_url <- paste0(
             "http://rest.ensemblgenomes.org/info/assembly/",
@@ -83,7 +83,9 @@ getENSEMBLGENOMES.Seq <-
             "?content-type=application/json"
         )
         
-        rest_api_status <- test_url_status(url = rest_url, organism = organism)   
+        rest_api_status <- test_url_status(url = rest_url, organism = organism)
+        
+        
         if (is.logical(rest_api_status)) {
             return(FALSE)
         } else {
@@ -172,7 +174,7 @@ getENSEMBLGENOMES.Seq <-
             if (nrow(bacteria.info) == 0) {
                 warning(
                     "Unfortunately organism '",
-                    ensembl_summary$name[1],
+                    ensembl_summary$display_name,
                     "' could not be found. Have you tried another database yet? ",
                     "E.g. db = 'ensembl'? Thus, download for this species is omitted.",
                     call. = FALSE
@@ -183,7 +185,7 @@ getENSEMBLGENOMES.Seq <-
             if (is.na(bacteria.info$core_db[1])) {
                 warning(
                     "Unfortunately organism '",
-                    ensembl_summary$name[1],
+                    ensembl_summary$display_name,
                     "' was not assigned to a bacteria collection. 
                     Thus download for this species is omitted.",
                     call. = FALSE
