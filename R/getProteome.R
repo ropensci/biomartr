@@ -85,7 +85,7 @@ getProteome <-
                 getKingdomAssemblySummary(db = db)
             
             # test wheter or not genome is available
-            if(!suppressMessages(is.genome.available(organism = organism, db = db))){
+            if (!suppressMessages(is.genome.available(organism = organism, db = db))){
                     message(
                             "Unfortunately no proteome file could be found for organism '",
                             organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
@@ -350,7 +350,7 @@ getProteome <-
                 if (nrow(ensembl_summary) > 1) {
                     if (is.taxid(organism)) {
                         ensembl_summary <-
-                            dplyr::filter(ensembl_summary, taxon_id == organism | !is.na(assembly))
+                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism) | !is.na(assembly))
                     } else {
                         
                         ensembl_summary <-
@@ -364,8 +364,7 @@ getProteome <-
                 }
                 
                 
-                new.organism <- stringr::str_replace_all(ensembl_summary$display_name, " ", "_")
-                organism <- ensembl_summary$display_name
+                new.organism <- ensembl_summary$name[1]
                 new.organism <-
                     paste0(
                         stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
@@ -451,7 +450,7 @@ getProteome <-
                 message(
                     paste0(
                         "The proteome of '",
-                        ensembl_summary$display_name,
+                        ensembl_summary$display_name[1],
                         "' has been downloaded to '",
                         path,
                         "' and has been named '",
@@ -504,19 +503,12 @@ getProteome <-
                     }
                 }
                 
+                new.organism <- stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
                 new.organism <-
                     paste0(
-                        stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
-                        stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
-                    )
-                
-                organism <- ensembl_summary$display_name
-                new.organism <-
-                    paste0(
-                        stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
-                        stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
-                    )
-                
+                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                        stringr::str_sub(new.organism, 2, nchar(new.organism))
+                    ) 
                 
                 rest_url <- paste0(
                     "http://rest.ensemblgenomes.org/info/assembly/",
