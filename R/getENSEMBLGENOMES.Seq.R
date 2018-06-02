@@ -23,6 +23,11 @@ getENSEMBLGENOMES.Seq <-
         # test if REST API is responding
         is.ensemblgenomes.alive()
         
+        if (is.taxid(organism))
+            stop("Unfortunately, taxid retrieval is not yet implemented for ENSEMBLGENOMES...", call. = FALSE)
+            
+        
+        
         if ( !suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = FALSE)) ) {
             warning("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
                     "Please check whether or not the organism name is typed correctly or try db = 'ensembl'.",
@@ -68,8 +73,8 @@ getENSEMBLGENOMES.Seq <-
 
                 new.organism <-
                         paste0(
-                                stringr::str_to_upper(stringr::str_sub(ensembl_summary$name, 1, 1)),
-                                stringr::str_sub(ensembl_summary$name, 2, nchar(ensembl_summary$name))
+                                stringr::str_to_upper(stringr::str_sub(ensembl_summary$name[1], 1, 1)),
+                                stringr::str_sub(ensembl_summary$name[1], 2, nchar(ensembl_summary$name[1]))
                         )
                 
                 # retrieve detailed information for organism of interest
