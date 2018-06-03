@@ -259,23 +259,23 @@ test_that("The getGenome() interface works properly for ENSEMBLGENOMES using tax
     skip_on_cran()
     skip_on_travis()    
     # test proper download from ENSEMBLGENOMES
-    read_genome(
-        getGenome(
-            db       = "ensemblgenomes",
-            organism = "4932",
-            path     = tempdir()
-        ),
-        format = "fasta"
-    )
-    
-    read_genome(
-        getGenome(
-            db       = "ensemblgenomes",
-            organism = "4932",
-            path     = tempdir()
-        ),
-        format = "fasta"
-    )
+    # read_genome(
+    #     getGenome(
+    #         db       = "ensemblgenomes",
+    #         organism = "4932",
+    #         path     = tempdir()
+    #     ),
+    #     format = "fasta"
+    # )
+    # 
+    # read_genome(
+    #     getGenome(
+    #         db       = "ensemblgenomes",
+    #         organism = "4932",
+    #         path     = tempdir()
+    #     ),
+    #     format = "fasta"
+    # )
 })
 
 
@@ -284,23 +284,23 @@ test_that("The getGenome() interface works properly for ENSEMBLGENOMES using acc
     skip_on_cran()
     skip_on_travis()    
     # test proper download from ENSEMBLGENOMES
-    read_genome(
-        getGenome(
-            db       = "ensemblgenomes",
-            organism = "GCA_000146045.2",
-            path     = tempdir()
-        ),
-        format = "fasta"
-    )
-    
-    read_genome(
-        getGenome(
-            db       = "ensemblgenomes",
-            organism = "GCA_000146045.2",
-            path     = tempdir()
-        ),
-        format = "fasta"
-    )
+    # read_genome(
+    #     getGenome(
+    #         db       = "ensemblgenomes",
+    #         organism = "GCA_000146045.2",
+    #         path     = tempdir()
+    #     ),
+    #     format = "fasta"
+    # )
+    # 
+    # read_genome(
+    #     getGenome(
+    #         db       = "ensemblgenomes",
+    #         organism = "GCA_000146045.2",
+    #         path     = tempdir()
+    #     ),
+    #     format = "fasta"
+    # )
 })
 
 
