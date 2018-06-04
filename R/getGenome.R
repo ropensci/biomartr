@@ -77,8 +77,14 @@ getGenome <-
             stop("Please specify 'reference' as either TRUE or FALSE.", call. = FALSE)
                 
                 
-        message("Starting genome retrieval of '", organism, "' from ", db, " ...")
-        message("\n")
+        if (db == "ensemblgenomes") {
+            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name
+            message("Starting genome retrieval of '", organism_name, "' from ", db, " ...")
+            message("\n")
+        } else {
+            message("Starting genome retrieval of '", organism, "' from ", db, " ...")
+            message("\n")
+        }
         
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
