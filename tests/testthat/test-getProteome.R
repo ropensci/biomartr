@@ -1,6 +1,6 @@
 context("Test: getProteome()")
 
-test_that("The getProteome() interface to NCBI RefSeq works properly..", {
+test_that("The getProteome() interface to NCBI RefSeq works properly (including repeating command)..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download
@@ -25,6 +25,34 @@ test_that("The getProteome() interface to NCBI RefSeq works properly..", {
             format = "fasta"
         )
 })
+
+
+test_that("The getProteome() interface to NCBI RefSeq works properly using taxid (including repeating command)..", {
+    skip_on_cran()
+    skip_on_travis()
+    # test proper download
+    Proteome <-
+        read_proteome(
+            getProteome(
+                db       = "refseq",
+                organism = "559292",
+                path     = tempdir()
+            ),
+            format = "fasta"
+        )
+    
+    # test proper use of internal referece files when command is repeated
+    Proteome <-
+        read_proteome(
+            getProteome(
+                db       = "refseq",
+                organism = "559292",
+                path     = tempdir()
+            ),
+            format = "fasta"
+        )
+})
+
 
 test_that("The getProteome() interface to NCBI Genbank works properly..", {
     skip_on_cran()
