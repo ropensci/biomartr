@@ -1,4 +1,5 @@
 test_url_status <- function(url, organism) {
+    
     test_status <- curl::curl_fetch_memory(url)
     
     if (test_status$status_code == 200) {

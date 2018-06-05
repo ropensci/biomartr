@@ -78,7 +78,6 @@ getProteome <-
             message("\n")
         }
         
-        
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
@@ -96,7 +95,7 @@ getProteome <-
                 dir.create(path, recursive = TRUE)
             }
             
-            organism_name <- assembly_accession <- species_taxid <- 
+            organism_name <- assembly_accession <- taxid <- 
                 refseq_category <- version_status <- NULL
             organism <-
                 stringr::str_replace_all(organism, "\\(", "")
@@ -119,7 +118,7 @@ getProteome <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            species_taxid == as.integer(organism),
+                            taxid == as.integer(organism),
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
@@ -138,7 +137,7 @@ getProteome <-
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
-                            species_taxid == as.integer(organism),
+                            taxid == as.integer(organism),
                             (version_status == "latest")
                         ) 
                 }
@@ -350,14 +349,14 @@ getProteome <-
                 if (nrow(ensembl_summary) > 1) {
                     if (is.taxid(organism)) {
                         ensembl_summary <-
-                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism) | !is.na(assembly))
+                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
                     } else {
                         
                         ensembl_summary <-
                             dplyr::filter(
                                 ensembl_summary,
                                 (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                                    (accession == organism) |
+                                    (accession == organism),
                                     !is.na(assembly)
                             )
                     }
@@ -503,7 +502,7 @@ getProteome <-
                     }
                 }
                 
-                new.organism <- ensembl_summary$name
+                new.organism <- ensembl_summary$name[1]
                 new.organism <-
                     paste0(
                         stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
