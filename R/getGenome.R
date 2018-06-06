@@ -78,7 +78,7 @@ getGenome <-
                 
                 
         if (db == "ensemblgenomes") {
-            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name
+            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name[1]
             message("Starting genome retrieval of '", organism_name, "' from ", db, " ...")
             message("\n")
         } else {
