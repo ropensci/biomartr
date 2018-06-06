@@ -371,7 +371,6 @@ getCDS <-
                     }
                 }
                 
-                
                 new.organism <- ensembl_summary$name[1]
                 new.organism <-
                     paste0(
@@ -500,20 +499,23 @@ getCDS <-
                         stringr::str_sub(new.organism, 2, nchar(new.organism))
                     ) 
                 
-                url_api <- paste0(
+                rest_url <- paste0(
                     "http://rest.ensemblgenomes.org/info/assembly/",
                     new.organism,
                     "?content-type=application/json"
                 )
                 
-                # choose only first entry if not specified otherwise
-                if (length(url_api) > 1)
-                    url_api <- url_api[1]
-                
-                if (curl::curl_fetch_memory(url_api)$status_code != 200) {
-                    message("The API call '",url_api,"' did not work. This might be due to a non-existing organism that you specified or a corrupted internet or firewall connection.")
-                    return("Not available")
+                if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
+                    warning(
+                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
+                        call. = FALSE)
+                    return(FALSE)
                 }
+                
+                # test proper API access
+                json.qry.info <-
+                    jsonlite::fromJSON(rest_url)
+                
                 
                 # generate CDS documentation
                 sink(file.path(
