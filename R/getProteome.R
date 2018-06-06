@@ -70,7 +70,7 @@ getProteome <-
             )
         
         if (db == "ensemblgenomes") {
-            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name
+            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name[1]
             message("Starting proteome retrieval of '", organism_name, "' from ", db, " ...")
             message("\n")
         } else {
@@ -370,24 +370,23 @@ getProteome <-
                         stringr::str_sub(new.organism, 2, nchar(new.organism))
                     )     
                 
-                # test proper API access
-                tryCatch({
-                    json.qry.info <-
-                        jsonlite::fromJSON(
-                            paste0(
-                                "http://rest.ensembl.org/info/assembly/",
-                                new.organism,
-                                "?content-type=application/json"
-                            )
-                        )
-                }, error = function(e)
-                    stop(
-                        "The API 'http://rest.ensembl.org' does not seem to work
-                        properly. Are you connected to the internet? Is the 
-                        homepage 'http://rest.ensembl.org' currently 
-                        available?",
-                        call. = FALSE
-                    ))
+                url_api <- paste0(
+                    "http://rest.ensembl.org/info/assembly/",
+                    new.organism,
+                    "?content-type=application/json"
+                )
+                
+                # choose only first entry if not specified otherwise
+                if (length(url_api) > 1)
+                    url_api <- url_api[1]
+                
+                if (curl::curl_fetch_memory(url_api)$status_code != 200) {
+                    message("The API call '",url_api,"' did not work. This might be due to a non-existing organism that you specified or a corrupted internet or firewall connection.")
+                    return("Not available")
+                }
+                
+                # retrieve information from API
+                json.qry.info <- jsonlite::fromJSON(url_api)
                 
                 # generate Proteome documentation
                 sink(file.path(
