@@ -256,10 +256,19 @@ test_that("The getRNA() interface to EnsemblGenomes works properly using taxid..
 })
 
 
-test_that("The getRNA() interface to EnsemblGenomes works properly using accession id", {
+test_that("The getRNA() interface to EnsemblGenomes works properly using accession id (including repeating command) ..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from ensemblgenomes
+    read_rna(
+        getRNA(
+            db       = "ensemblgenomes",
+            organism = "GCA_000146045.2",
+            path     = tempdir()
+        ),
+        format = "fasta"
+    )
+    
     read_rna(
         getRNA(
             db       = "ensemblgenomes",
