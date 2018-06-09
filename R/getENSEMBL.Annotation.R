@@ -13,59 +13,70 @@ getENSEMBL.Annotation <-
              type = "dna",
              id.type = "toplevel",
              path) {
+        
         if (!is.element(type, c("dna", "cds", "pep")))
             stop("Please a 'type' argument supported by this function: 
                  'dna', 'cds', 'pep'.")
         
-        # test if REST API is responding
-        is.ensembl.alive()
+        ensembl_summary <-
+            suppressMessages(is.genome.available(
+                organism = organism,
+                db = "ensembl",
+                details = TRUE
+            ))
         
-        new.organism <- stringr::str_replace_all(organism, " ", "_")
+        if (nrow(ensembl_summary) == 0) {
+            message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
+            return(FALSE)
+        }
         
-        # if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-        #     ensembl.available.organisms <-
-        #                          readr::read_delim(
-        #                           file.path(tempdir(), "ensembl_summary.txt"),
-        #                              col_names = c(
-        #                                  "division",
-        #                                  "taxon_id",
-        #                                  "name",
-        #                                  "release",
-        #                                  "display_name",
-        #                                  "accession",
-        #                                  "common_name",
-        #                                  "assembly"
-        #                              ),
-        #                              col_types = readr::cols(
-        #                                  division = readr::col_character(),
-        #                                  taxon_id = readr::col_integer(),
-        #                                  name = readr::col_character(),
-        #                                  release = readr::col_integer(),
-        #                                 display_name = readr::col_character(),
-        #                                  accession = readr::col_character(),
-        #                                  common_name = readr::col_character(),
-        #                                  assembly = readr::col_character()
-        #                              ),
-        #                              comment = "#",
-        #                              delim = "\t"
-        #                          )
-        # }
-        #
-        if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-            # check if organism is available on ENSEMBL
-            tryCatch({
-                ensembl.available.organisms <-
-                    jsonlite::fromJSON(
-            "http://rest.ensembl.org/info/species?content-type=application/json"
+        taxon_id <- assembly <- name <- accession <- NULL
+        
+        if (nrow(ensembl_summary) > 1) {
+            if (is.taxid(organism)) {
+                ensembl_summary <-
+                    dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
+            } else {
+                
+                ensembl_summary <-
+                    dplyr::filter(
+                        ensembl_summary,
+                        (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                            (accession == organism),
+                        !is.na(assembly)
                     )
-            }, error = function(e)
-                stop(
-                    "The API 'http://rest.ensembl.org' does not seem to work 
-                    properly. Are you connected to the internet? 
-                    Is the homepage 'http://rest.ensembl.org' 
-                    currently available?",
-                    call. = FALSE
-                ))
+            }
+        }
+        
+        new.organism <- ensembl_summary$name[1]
+        new.organism <-
+            paste0(
+                stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                stringr::str_sub(new.organism, 2, nchar(new.organism))
+            )
+        
+        
+        rest_url <- paste0(
+            "http://rest.ensembl.org/info/assembly/",
+            new.organism,
+            "?content-type=application/json"
+        )
+        
+        rest_api_status <- test_url_status(url = rest_url, organism = organism)   
+        if (is.logical(rest_api_status)) {
+            return(FALSE)
+        } else {
+        
+            species_api_url <- "http://rest.ensembl.org/info/species?content-type=application/json"
+            if (curl::curl_fetch_memory(species_api_url)$status_code != 200) {
+                message("The API connection to 'http://rest.ensembl.org/info/species?content-type=application/json' was not available.",
+                        " Please make sure that you have a stable internet connection or are not blocked by any firewall.")
+                return(FALSE)
+            }
+            
+            ensembl.available.organisms <-
+                jsonlite::fromJSON(species_api_url)
+            
             
             aliases <- groups <- NULL
             # transform list object returned by 'fromJSON' to tibble
@@ -81,34 +92,9 @@ getENSEMBL.Annotation <-
             # col_names = TRUE, delim = "\t")
         }
         
-        if (!is.element(stringr::str_to_lower(new.organism),
-                        ensembl.available.organisms$name))
-            stop(
-                "Unfortunately organism '",
-                organism,
-                "' is not available at ENSEMBL. Please check whether or not the 
-                organism name is typed correctly.",
-                call. = FALSE
-            )
         
-        # test proper API access
-        tryCatch({
-            json.qry.info <-
-                jsonlite::fromJSON(
-                    paste0(
-                        "http://rest.ensembl.org/info/assembly/",
-                        new.organism,
-                        "?content-type=application/json"
-                    )
-                )
-        }, error = function(e)
-            stop(
-                "The API 'http://rest.ensembl.org' does not seem to work 
-                properly. Are you connected to the internet? 
-                Is the homepage 'http://rest.ensembl.org' currently available?",
-                call. = FALSE
-            ))
-        
+            
+            json.qry.info <- rest_api_status
         # construct retrieval query
         ensembl.qry <-
             paste0(
