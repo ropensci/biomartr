@@ -23,6 +23,11 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             details = TRUE
         ))
     
+    if (nrow(ensembl_summary) == 0) {
+        message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
+        return(FALSE)
+    }
+    
     taxon_id <- assembly <- name <- accession <- NULL
     
     if (nrow(ensembl_summary) > 1) {
