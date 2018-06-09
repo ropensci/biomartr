@@ -35,8 +35,15 @@ In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (an
 
 Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
 
+### Citation
 
-## Feedback
+**I would be very greatful if you could cite the following paper in case `biomartr` was useful for your own research. I plan on vastly extending 
+the biomartr functionality and usability in the next years. Many thanks in advance :)**
+
+> Drost HG, Paszkowski J. __Biomartr: genomic data retrieval with R__. *Bioinformatics* (2017) 33(8): 1216-1217. [doi:10.1093/bioinformatics/btw821](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R).
+
+
+### Feedback
 >__I truly value your opinion and improvement suggestions. Hence, I would be extremely grateful if you could take this 1 minute and 3 question survey (https://goo.gl/forms/Qaoxxjb1EnNSLpM02) so that I can learn how to improve `biomartr` in the best possible way. Many many thanks in advance.__
 
 
@@ -107,14 +114,6 @@ In an ideal world this reference file could then be included as supplementary in
 life science publication that relies on genomic information so that
 reproducibility of experiments and analyses becomes achievable.
 
-
-### Citation
-
-**I would be very greatful if you could cite the following paper in case `biomartr` was useful for your own research. I plan on vastly extending 
-the biomartr functionality and usability in the next years and I aim to convince people
-who don't believe in developing basic tools such as biomartr that usefulness can also contribute to scientific impact. Many thanks in advance :)**
-
-> Drost HG, Paszkowski J. __Biomartr: genomic data retrieval with R__. *Bioinformatics* (2017) 33(8): 1216-1217. [doi:10.1093/bioinformatics/btw821](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R).
 
 ### Platforms
 
