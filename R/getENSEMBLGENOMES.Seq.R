@@ -46,6 +46,11 @@ getENSEMBLGENOMES.Seq <-
                                 details = TRUE
                         ))
                 
+                if (nrow(ensembl_summary) == 0) {
+                    message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
+                    return(FALSE)
+                }
+                
                 if (nrow(ensembl_summary) > 1) {
                         
                         if (is.taxid(organism)) {
@@ -65,11 +70,7 @@ getENSEMBLGENOMES.Seq <-
                         message("\n")
                         # select only first entry
                 }
-                
-                if (nrow(ensembl_summary) == 0) {
-                    warning("The accession id or taxid you used did not have a reference genome in the ENSEMBLGENOMES database. Please check is.genome.available() to retrieve accession ids and taxids of available genome assemblies.", call. = FALSE)
-                    return(FALSE)
-                }
+            
 
                 new.organism <-
                         paste0(
