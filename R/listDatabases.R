@@ -29,7 +29,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
     if (is.element("listDatabases", as.character(match.call()[[1]])))
         warning(
       "Please use listNCBIDatabases() instead of listDatabases(), 
-      in the next version 0.6.0 of biomartr this function will be deprecated.",
+      in the next version 0.8.0 of biomartr this function will be deprecated.",
             call. = FALSE
         )
     
@@ -99,8 +99,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
         
         # limit NCBI queries
         if (!file.exists(db.file.name))
-            Sys.sleep(0.33)
-        
+
         # delete md5 entries
         return(as.vector(DBName[-which(unlist(lapply(DBName, function(x)
             stringr::str_detect(x, ".md5"))))]))
