@@ -11,9 +11,9 @@
 #' it will be created.
 #' @author Hajk-Georg Drost
 #' @examples 
+#' \dontrun{
 #' # search for available NCBI databases
 #'   listNCBIDatabases(db = "all")
-#' \dontrun{  
 #' # choose database NCBI nr and download compelete database
 #'   download.database.all(name = "nr", path = "nr")
 #' }
