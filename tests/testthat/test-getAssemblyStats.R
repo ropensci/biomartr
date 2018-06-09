@@ -5,7 +5,8 @@ test_that("The getAssemblyStats() downloads assembly stats file and reads
           raw input: NCBI RefSeq ..",{ 
               
     skip_on_cran()
-              
+    skip_on_travis()  
+    
     library(magrittr)
     
     Scerevisiae.stats <- getAssemblyStats(
@@ -61,7 +62,9 @@ test_that("The getAssemblyStats() downloads assembly stats file and imports file
 
 test_that("The getAssemblyStats() throws error when undefined 'type' is selected
           ..",{ 
-              
+             
+              skip_on_cran()
+              skip_on_travis()         
               expect_error(getAssemblyStats(
                   db = "refseq",
                   organism = "Saccharomyces cerevisiae",
@@ -72,6 +75,8 @@ test_that("The getAssemblyStats() throws error when undefined 'type' is selected
 test_that("The getAssemblyStats() throws error when undefined 'db' is selected
           ..",{ 
               
+              skip_on_cran()
+              skip_on_travis()          
               expect_error(getAssemblyStats(
                   db = "somethingelse",
                   organism = "Saccharomyces cerevisiae",
@@ -81,7 +86,8 @@ test_that("The getAssemblyStats() throws error when undefined 'db' is selected
 
 test_that("The getAssemblyStats() throws error when undefined 'organism' is selected
           ..",{ 
-              
+              skip_on_cran()
+              skip_on_travis()         
               expect_message(getAssemblyStats(
                   db = "refseq",
                   organism = "somethingelse",
