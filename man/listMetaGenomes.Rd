@@ -19,11 +19,13 @@ This function lists all available metagenomes that can then be downloaded via
 \code{\link{getMetaGenomes}}.
 }
 \examples{
+\dontrun{
 # retrieve available metagenome projects at NCBI Genbank
 listMetaGenomes()
 # retrieve detailed information on available metagenome projects 
 # at NCBI Genbank
 listMetaGenomes(details = TRUE)
+}
 }
 \seealso{
 \code{\link{getMetaGenomes}}, \code{\link{getMetaGenomeSummary}}
