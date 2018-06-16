@@ -32,7 +32,6 @@ getGENOMEREPORT <- function() {
             ))
         
         # NCBI limits requests to three per second
-        Sys.sleep(0.33)
     }
     
     suppressWarnings(
