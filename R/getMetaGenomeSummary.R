@@ -32,7 +32,6 @@ getMetaGenomeSummary <- function() {
                 " Please try to re-run this function and see if it works then ...",
                 call. = FALSE
             ))
-        Sys.sleep(0.33)
     }
     
     suppressWarnings(summary.file <-
