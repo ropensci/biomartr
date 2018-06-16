@@ -12,8 +12,10 @@ from NCBI genbank metagenomes.
 This files stores all available metagenome projects on NCBI Genbank.
 }
 \examples{
+\dontrun{
 meta.summary <- getMetaGenomeSummary()
 meta.summary
+}
 }
 \seealso{
 \code{\link{getKingdomAssemblySummary}}, 
