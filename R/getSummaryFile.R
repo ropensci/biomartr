@@ -58,7 +58,6 @@ getSummaryFile <- function(db,kingdom){
                 "' currently available?",
                 call. = FALSE
             ))
-        Sys.sleep(0.4)
     }
     
     suppressWarnings(summary.file <-
