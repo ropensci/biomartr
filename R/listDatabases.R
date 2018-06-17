@@ -96,9 +96,6 @@ listDatabases <- function(db = "nr", update = FALSE) {
         if (length(DBName) == 0)
             stop("No entries for db = '", db, "' could not be found.", 
                  call. = FALSE)
-        
-        # limit NCBI queries
-        if (!file.exists(db.file.name))
 
         # delete md5 entries
         return(as.vector(DBName[-which(unlist(lapply(DBName, function(x)
