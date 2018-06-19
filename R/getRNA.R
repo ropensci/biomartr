@@ -290,6 +290,29 @@ getRNA <-
                         submitter = FoundOrganism$submitter
                     )
                     
+                    doc <- tibble::tibble(
+                        file_name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
+                                           ".fna.gz"),
+                        organism  = organism,
+                        url       = download_url,
+                        database  = db,
+                        path      = path,
+                        refseq_category = FoundOrganism$refseq_category,
+                        assembly_accession = FoundOrganism$assembly_accession,
+                        bioproject = FoundOrganism$bioproject,
+                        biosample = FoundOrganism$biosample,
+                        taxid = FoundOrganism$taxid,
+                        infraspecific_name = FoundOrganism$infraspecific_name,
+                        version_status = FoundOrganism$version_status,
+                        release_type = FoundOrganism$release_type,
+                        genome_rep = FoundOrganism$genome_rep,
+                        seq_rel_date = FoundOrganism$seq_rel_date,
+                        submitter = FoundOrganism$submitter
+                        
+                    )
+                    
+                    readr::write_tsv(doc, path = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
+                    
                     message(
                         paste0(
                             "The genomic RNA of '",
@@ -432,6 +455,24 @@ getRNA <-
                 
                 sink()
                 
+                doc <- tibble::tibble(
+                    file_name = rna.path,
+                    organism = new.organism,
+                    database = db,
+                    download_data = date(),
+                    assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                    assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                    genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"), 
+                    assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
+                    genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                    
+                )
+                
+                readr::write_tsv(doc, file.path(
+                    path,
+                    paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
+                
                 message(
                     paste0(
                         "The RNA of '",
@@ -551,6 +592,25 @@ getRNA <-
                 )
                 
                 sink()
+                
+                doc <- tibble::tibble(
+                    file_name = rna.path,
+                    organism = new.organism,
+                    database = db,
+                    download_data = date(),
+                    assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                    assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                    genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
+                    assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"), 
+                    genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+                    
+                )
+                
+                readr::write_tsv(doc, file.path(
+                    path,
+                    paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                )
+                
                 
                 message(
                     paste0(
