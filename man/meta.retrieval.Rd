@@ -5,7 +5,8 @@
 \title{Perform Meta-Genome Retrieval}
 \usage{
 meta.retrieval(db = "refseq", kingdom, group = NULL, type = "genome",
-  reference = TRUE, combine = FALSE, path = NULL)
+  restart_at_last = FALSE, reference = TRUE, combine = FALSE,
+  path = NULL)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -87,6 +88,16 @@ Groups can be retrieved with \code{\link{getGroups}}.}
  (for genome assembly quality stats file retrieval; 
  see also \code{\link{getAssemblyStats}}).
  }}
+
+\item{restart_at_last}{a logical value indicating whether or not \code{meta.retrieval} should pick up at the last species when re-running the function.
+\itemize{
+\item If \code{restart_at_last = TRUE} then \code{meta.retrieval} will skip all organisms that are already present in the folder 
+and will start downloading all remaining species. However, this way \code{meta.wretrieval} will not be able to check whether
+already downloaded organism files are corrupted or not by checking the md5 checksum.
+\item If \code{restart_at_last = FALSE} (Default) then \code{meta.retrieval} will start from the beginning and crawl through already downloaded
+organism files and check whether already downloaded organism files are corrupted or not by checking the md5 checksum.
+After checking existing files the function will start downloading all remaining organisms.
+}}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
