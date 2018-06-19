@@ -1,6 +1,5 @@
 biomartr
 ========
-
 [![rpackages.io rank](https://www.rpackages.io/badge/biomartr.svg)](https://www.rpackages.io/package/biomartr)
 [![](https://badges.ropensci.org/93_status.svg)](https://github.com/ropensci/onboarding/issues/93)
 
