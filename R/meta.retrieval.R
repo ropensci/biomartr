@@ -286,10 +286,17 @@ meta.retrieval <- function(db         = "refseq",
         if (!file.exists(path)) {
             message("Generating folder ", path, " ...")
             dir.create(path, recursive = TRUE)
-            
-            if (!file.exists(file.path(path, "doc")))
-            dir.create(file.path(path, "doc"))
         }
+        
+        if (!file.exists(file.path(path, "doc")))
+            dir.create(file.path(path, "doc"))
+    } else {
+        if (!file.exists(kingdom)) {
+            message("Generating folder ", kingdom, " ...")
+            dir.create(kingdom, recursive = TRUE)
+        }
+        if (!file.exists(file.path(kingdom, "doc")))
+            dir.create(file.path(kingdom, "doc"))
     }
     
     paths <- vector("character", length(FinalOrganisms))
@@ -323,7 +330,6 @@ meta.retrieval <- function(db         = "refseq",
         if (type == "gff") internal_type <- "ensembl"
         if (type == "gtf") internal_type <- "ensembl"
         if (type == "rna") internal_type <- "ncrna"
-        
         
         if (!is.null(path)) {
             .existingOrgs <- existingOrganisms_ensembl(path = path, .type = internal_type)   
@@ -544,17 +550,11 @@ meta.retrieval <- function(db         = "refseq",
             }
         }
         
-        if (combine) {
-            stats.files <- dplyr::bind_rows(stats.files)
-            message("Finished meta retieval process.")
-            return(stats.files)
-        }
-        
         
         if (!is.null(path)) {
             meta_files <- list.files(path)
-            meta_files <- meta_files[stringr::str_detect(meta_files, "doc")]
-            file.rename(file.path(path, meta_files), file.path(path, "doc", meta_files))
+            meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
+            file.rename(from = file.path(path, meta_files), to = file.path(path, "doc", meta_files))
             
             doc_tsv_files <- file.path(path,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
@@ -567,8 +567,8 @@ meta.retrieval <- function(db         = "refseq",
             
         } else {
             meta_files <- list.files(kingdom)
-            meta_files <- meta_files[stringr::str_detect(meta_files, "doc")]
-            file.rename(file.path(kingdom, meta_files), file.path(kingdom, "doc", meta_files))
+            meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
+            file.rename(from = file.path(kingdom, meta_files), to = file.path(kingdom, "doc", meta_files))
             
             doc_tsv_files <- file.path(kingdom,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
@@ -581,9 +581,46 @@ meta.retrieval <- function(db         = "refseq",
             
         }
         
+        if (combine) {
+            stats.files <- dplyr::bind_rows(stats.files)
+            message("Finished meta retieval process.")
+            return(stats.files)
+        }
+        
         message("Finished meta retieval process.")
         return(paths[!is.element(paths, c("FALSE", "Not available"))])
     } else {
+        
+        if (!is.null(path)) {
+            meta_files <- list.files(path)
+            meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
+            file.rename(from = file.path(path, meta_files), to = file.path(path, "doc", meta_files))
+            
+            doc_tsv_files <- file.path(path,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            
+            summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+                suppressMessages(readr::read_tsv(data))
+            }))
+            
+            readr::write_excel_csv(summary_log, file.path(path, "doc", paste0(kingdom, "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "doc", paste0(kingdom, "_summary.csv")),"'.")
+            
+        } else {
+            meta_files <- list.files(kingdom)
+            meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
+            file.rename(from = file.path(kingdom, meta_files), to = file.path(kingdom, "doc", meta_files))
+            
+            doc_tsv_files <- file.path(kingdom,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            
+            summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+                suppressMessages(readr::read_tsv(data))
+            }))
+            
+            readr::write_excel_csv(summary_log, file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")),"'.")
+            
+        }
+        
         message("The ", type,"s of all species have already been downloaded! You are up to date!")
     }
     
