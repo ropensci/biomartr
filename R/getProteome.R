@@ -294,6 +294,29 @@ getProteome <-
                         submitter = FoundOrganism$submitter
                     )
                     
+                    doc <- tibble::tibble(
+                        file_name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
+                                           ".fna.gz"),
+                        organism  = organism,
+                        url       = download_url,
+                        database  = db,
+                        path      = path,
+                        refseq_category = FoundOrganism$refseq_category,
+                        assembly_accession = FoundOrganism$assembly_accession,
+                        bioproject = FoundOrganism$bioproject,
+                        biosample = FoundOrganism$biosample,
+                        taxid = FoundOrganism$taxid,
+                        infraspecific_name = FoundOrganism$infraspecific_name,
+                        version_status = FoundOrganism$version_status,
+                        release_type = FoundOrganism$release_type,
+                        genome_rep = FoundOrganism$genome_rep,
+                        seq_rel_date = FoundOrganism$seq_rel_date,
+                        submitter = FoundOrganism$submitter
+                        
+                    )
+                    
+                    readr::write_tsv(doc, path = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
+                    
                     message(
                         paste0(
                             "The proteome of '",
