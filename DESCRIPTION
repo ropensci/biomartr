@@ -5,14 +5,14 @@ Authors@R: person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hgd23@cam.ac.uk",
                 comment = c(ORCID = "http://orcid.org/0000-0002-1567-306X"))
-Description: This package aims to provide users with a standardized
-                way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
+Description: Perform large scale genomic data retrieval and functional annotation retrieval. This package aims to provide users with a standardized
+                way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', RepeatMasker, and metagenome
                 retrieval from 'NCBI RefSeq', 'NCBI Genbank', 'ENSEMBL', 'ENSEMBLGENOMES',
                 and 'UniProt' databases. Furthermore, an interface to the 'BioMart' database
                 (Smedley et al. (2009) <doi:10.1186/1471-2164-10-22>) allows users to retrieve
-                functional annotation for genomic loci. Users can download entire databases such
+                functional annotation for genomic loci. In addition, users can download entire databases such
                 as 'NCBI RefSeq' (Pruitt et al. (2007) <doi:10.1093/nar/gkl842>), 'NCBI nr',
-                'NCBI nt' and 'NCBI Genbank' (Benson et al. (2013) <doi:10.1093/nar/gks1195>) as
+                'NCBI nt', 'NCBI Genbank' (Benson et al. (2013) <doi:10.1093/nar/gks1195>), etc. as
                 well as 'ENSEMBL' and 'ENSEMBLGENOMES' with only one command.
 VignetteBuilder: knitr
 NeedsCompilation: yes
