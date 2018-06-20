@@ -5,7 +5,7 @@
 \title{Perform Meta-Genome Retrieval}
 \usage{
 meta.retrieval(db = "refseq", kingdom, group = NULL, type = "genome",
-  restart_at_last = FALSE, reference = TRUE, combine = FALSE,
+  restart_at_last = TRUE, reference = TRUE, combine = FALSE,
   path = NULL)
 }
 \arguments{
@@ -91,10 +91,10 @@ Groups can be retrieved with \code{\link{getGroups}}.}
 
 \item{restart_at_last}{a logical value indicating whether or not \code{meta.retrieval} should pick up at the last species when re-running the function.
 \itemize{
-\item If \code{restart_at_last = TRUE} then \code{meta.retrieval} will skip all organisms that are already present in the folder 
+\item If \code{restart_at_last = TRUE} (Default) then \code{meta.retrieval} will skip all organisms that are already present in the folder 
 and will start downloading all remaining species. However, this way \code{meta.wretrieval} will not be able to check whether
 already downloaded organism files are corrupted or not by checking the md5 checksum.
-\item If \code{restart_at_last = FALSE} (Default) then \code{meta.retrieval} will start from the beginning and crawl through already downloaded
+\item If \code{restart_at_last = FALSE} then \code{meta.retrieval} will start from the beginning and crawl through already downloaded
 organism files and check whether already downloaded organism files are corrupted or not by checking the md5 checksum.
 After checking existing files the function will start downloading all remaining organisms.
 }}
