@@ -77,7 +77,15 @@
 #'  (for genome assembly quality stats file retrieval; 
 #'  see also \code{\link{getAssemblyStats}}).
 #'  }
-#'  
+#' @param restart_at_last a logical value indicating whether or not \code{meta.retrieval} should pick up at the last species when re-running the function.
+#' \itemize{
+#' \item If \code{restart_at_last = TRUE} (Default) then \code{meta.retrieval} will skip all organisms that are already present in the folder 
+#' and will start downloading all remaining species. However, this way \code{meta.wretrieval} will not be able to check whether
+#' already downloaded organism files are corrupted or not by checking the md5 checksum.
+#' \item If \code{restart_at_last = FALSE} then \code{meta.retrieval} will start from the beginning and crawl through already downloaded
+#' organism files and check whether already downloaded organism files are corrupted or not by checking the md5 checksum.
+#' After checking existing files the function will start downloading all remaining organisms.
+#' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param combine just in case \code{type = "assemblystats"} is specified, shall
 #' assemby stats of individual species be imported and combined to a 
@@ -139,6 +147,7 @@ meta.retrieval <- function(db         = "refseq",
                            kingdom,
                            group = NULL,
                            type       = "genome",
+                           restart_at_last = TRUE,
                            reference  = TRUE,
                            combine    = FALSE,
                            path = NULL) {
@@ -355,9 +364,11 @@ meta.retrieval <- function(db         = "refseq",
     }
     
     if (length(.existingOrgs) > 0) {
-        message("Skipping already downloaded species: ", paste0(.existingOrgs, collapse = ", "))
-        FinalOrganisms <- dplyr::setdiff(FinalOrganisms, .existingOrgs)
-        message("\n")
+        if (restart_at_last) {
+            message("Skipping already downloaded species: ", paste0(.existingOrgs, collapse = ", "))
+            FinalOrganisms <- dplyr::setdiff(FinalOrganisms, .existingOrgs)
+            message("\n")
+        }
     }
 
     if (length(FinalOrganisms) > 0) {
@@ -369,6 +380,7 @@ meta.retrieval <- function(db         = "refseq",
                                           organism  = FinalOrganisms[i],
                                           reference = reference,
                                           path      = kingdom)
+                    message("\n")
                 }
             }
             
@@ -378,6 +390,7 @@ meta.retrieval <- function(db         = "refseq",
                                           organism = FinalOrganisms[i],
                                           reference = reference,
                                           path     = path)
+                    message("\n")
                 }
             }
         }
@@ -389,6 +402,7 @@ meta.retrieval <- function(db         = "refseq",
                                             organism = FinalOrganisms[i],
                                             reference = reference,
                                             path     = kingdom)
+                    message("\n")
                 }
             }
             
@@ -398,6 +412,7 @@ meta.retrieval <- function(db         = "refseq",
                                             organism = FinalOrganisms[i],
                                             reference = reference,
                                             path     = path)
+                    message("\n")
                 }
             }
         }
@@ -409,6 +424,7 @@ meta.retrieval <- function(db         = "refseq",
                                        organism = FinalOrganisms[i],
                                        reference = reference,
                                        path     = kingdom)
+                    message("\n")
                 }
             }
             
@@ -418,6 +434,7 @@ meta.retrieval <- function(db         = "refseq",
                                        organism = FinalOrganisms[i],
                                        reference = reference,
                                        path     = path)
+                    message("\n")
                 }
             }
         }
@@ -429,6 +446,7 @@ meta.retrieval <- function(db         = "refseq",
                                        organism = FinalOrganisms[i],
                                        reference = reference,
                                        path     = kingdom)
+                    message("\n")
                 }
             }
             
@@ -438,6 +456,7 @@ meta.retrieval <- function(db         = "refseq",
                                        organism = FinalOrganisms[i],
                                        reference = reference,
                                        path     = path)
+                    message("\n")
                 }
             }
         }
@@ -448,6 +467,7 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getGTF(db       = db,
                                        organism = FinalOrganisms[i],
                                        path     = kingdom)
+                    message("\n")
                 }
             }
             
@@ -456,6 +476,7 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getGTF(db       = db,
                                        organism = FinalOrganisms[i],
                                        path     = path)
+                    message("\n")
                 }
             }
         }
@@ -467,6 +488,7 @@ meta.retrieval <- function(db         = "refseq",
                                                 organism = FinalOrganisms[i],
                                                 reference = reference,
                                                 path     = kingdom)
+                    message("\n")
                 }
             }
             
@@ -476,6 +498,7 @@ meta.retrieval <- function(db         = "refseq",
                                                 organism = FinalOrganisms[i],
                                                 reference = reference,
                                                 path     = path)
+                    message("\n")
                 }
             }
         }
@@ -487,6 +510,7 @@ meta.retrieval <- function(db         = "refseq",
                                        organism = FinalOrganisms[i],
                                        reference = reference,
                                        path     = kingdom)
+                    message("\n")
                 }
             }
             
@@ -496,6 +520,7 @@ meta.retrieval <- function(db         = "refseq",
                            organism = FinalOrganisms[i],
                            reference = reference,
                            path     = path)
+                    message("\n")
                 }
             }
         }
@@ -515,6 +540,7 @@ meta.retrieval <- function(db         = "refseq",
                                 type     = "import"
                             )
                         )
+                        message("\n")
                     } else {
                         paths[i] <- getAssemblyStats(
                             db       = db,
@@ -522,6 +548,7 @@ meta.retrieval <- function(db         = "refseq",
                             reference = reference,
                             path     = kingdom
                         )
+                        message("\n")
                     }
                 }
             }
@@ -562,8 +589,8 @@ meta.retrieval <- function(db         = "refseq",
                 suppressMessages(readr::read_tsv(data))
             }))
             
-            readr::write_excel_csv(summary_log, file.path(path, paste0(kingdom, "_summary.csv")))
-            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, paste0(kingdom, "_summary.csv")),"'.")
+            readr::write_excel_csv(summary_log, file.path(path, "doc", paste0(kingdom, "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "doc", paste0(kingdom, "_summary.csv")),"'.")
             
         } else {
             meta_files <- list.files(kingdom)
@@ -576,8 +603,8 @@ meta.retrieval <- function(db         = "refseq",
                 suppressMessages(readr::read_tsv(data))
             }))
             
-            readr::write_excel_csv(summary_log, file.path(kingdom, paste0(kingdom, "_summary.csv")))
-            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, paste0(kingdom, "_summary.csv")),"'.")
+            readr::write_excel_csv(summary_log, file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")),"'.")
             
         }
         
@@ -623,8 +650,6 @@ meta.retrieval <- function(db         = "refseq",
         
         message("The ", type,"s of all species have already been downloaded! You are up to date!")
     }
-    
-    
 }
 
 
