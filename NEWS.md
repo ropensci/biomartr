@@ -3,7 +3,7 @@ biomartr 0.8.0
 
 ### New Functions
 
-- new function `getCollection()` for retrieval and quality control of the genome sequence,
+- new function `getCollection()` for retrieval of a collection: the genome sequence,
 protein sequences, gff files, etc for a particular species
 
 ### New Functionality of Existing Functions 
@@ -29,6 +29,8 @@ An example can be found [here](https://github.com/ropensci/biomartr/blob/master/
 
 - `is.genome.available()`: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent
 with all `get*()` functions
+- `meta.retrieval` receives a new argument `restart_at_last` to indicate whether or not the download process when re-running the `meta.retrieval` function
+shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum
 
 
 [biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
