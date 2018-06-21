@@ -165,7 +165,7 @@ meta.retrieval(kingdom = "bacteria",
 }
 }
 \seealso{
-\code{\link{meta.retrieval.all}}
+\code{\link{meta.retrieval.all}}, \code{\link{getCollection}}
 }
 \author{
 Hajk-Georg Drost
