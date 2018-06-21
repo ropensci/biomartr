@@ -139,7 +139,7 @@
 #'    db = "refseq", 
 #'    type = "genome")
 #' }
-#' @seealso \code{\link{meta.retrieval.all}}
+#' @seealso \code{\link{meta.retrieval.all}}, \code{\link{getCollection}}
 #' @return a character vector storing the file paths of the retrieved files.
 #' @export
 
