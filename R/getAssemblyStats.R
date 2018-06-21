@@ -97,7 +97,7 @@ getAssemblyStats <-
         
         species <- organism
         # test wheter or not genome is available
-        is.genome.available(organism = organism, db = db)
+        suppressMessages(is.genome.available(organism = organism, db = db))
         
         if (!file.exists(path)) {
             dir.create(path, recursive = TRUE)
@@ -109,23 +109,47 @@ getAssemblyStats <-
         organism <- stringr::str_replace_all(organism, "\\(", "")
         organism <- stringr::str_replace_all(organism, "\\)", "")
         
+        assembly_accession <- taxid <- NULL
+        
         if (reference) {
+            if (!is.taxid(organism)) {
                 FoundOrganism <-
-                        dplyr::filter(
-                                AssemblyFilesAllKingdoms,
-                                stringr::str_detect(organism_name, organism),
-                                ((refseq_category == "representative genome") |
-                                         (refseq_category == "reference genome")
-                                ),
-                                (version_status == "latest")
-                        ) 
+                    dplyr::filter(
+                        AssemblyFilesAllKingdoms,
+                        stringr::str_detect(organism_name, organism) | 
+                            stringr::str_detect(assembly_accession, organism),
+                        ((refseq_category == "representative genome") |
+                             (refseq_category == "reference genome")
+                        ),
+                        (version_status == "latest")
+                    ) 
+            } else {
+                FoundOrganism <-
+                    dplyr::filter(
+                        AssemblyFilesAllKingdoms,
+                        taxid == as.integer(organism),
+                        ((refseq_category == "representative genome") |
+                             (refseq_category == "reference genome")
+                        ),
+                        (version_status == "latest"))
+            }
         } else {
+            if (!is.taxid(organism)) {
                 FoundOrganism <-
-                        dplyr::filter(
-                                AssemblyFilesAllKingdoms,
-                                stringr::str_detect(organism_name, organism),
-                                (version_status == "latest")
-                        ) 
+                    dplyr::filter(
+                        AssemblyFilesAllKingdoms,
+                        stringr::str_detect(organism_name, organism) |
+                            stringr::str_detect(assembly_accession, organism),
+                        (version_status == "latest")
+                    ) 
+            } else {
+                FoundOrganism <-
+                    dplyr::filter(
+                        AssemblyFilesAllKingdoms,
+                        taxid == as.integer(organism),
+                        (version_status == "latest")
+                    ) 
+            }
         }
         
         if (nrow(FoundOrganism) == 0) {
@@ -165,16 +189,16 @@ getAssemblyStats <-
             local.org <-
                 stringr::str_replace_all(organism, "\\/", "_")
             
-            if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path, "/"),
-                                 file.path = download_url)) {
-                message(
-                    "Unfortunately no assembly stats file could be 
-                    found for organism '",
-                    organism,
-                    "'. Thus, the download of this organism has been omitted."
-                )
-                return(FALSE)
-            }
+            # if (!exists.ftp.file(url = paste0(FoundOrganism$ftp_path, "/"),
+            #                      file.path = download_url)) {
+            #     message(
+            #         "Unfortunately no assembly stats file could be 
+            #         found for organism '",
+            #         organism,
+            #         "'. Thus, the download of this organism has been omitted."
+            #     )
+            #     return(FALSE)
+            # }
             
             if (nrow(FoundOrganism) == 1) {
                 if (file.exists(file.path(
