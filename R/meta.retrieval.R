@@ -86,7 +86,13 @@
 #' organism files and check whether already downloaded organism files are corrupted or not by checking the md5 checksum.
 #' After checking existing files the function will start downloading all remaining organisms.
 #' }
-#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
+#' as either a reference genome or a representative genome. Options are:
+#' \itemize{
+#' \item \code{reference = FALSE} (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.
+#' \item \code{reference = TRUE}: organisms that are downloaded must be either a reference or representative genome. Thus, most genomes which are usually non-reference genomes
+#' will not be downloaded.
+#' }
 #' @param combine just in case \code{type = "assemblystats"} is specified, shall
 #' assemby stats of individual species be imported and combined to a 
 #' \code{\link{data.frame}}? 
@@ -148,7 +154,7 @@ meta.retrieval <- function(db         = "refseq",
                            group = NULL,
                            type       = "genome",
                            restart_at_last = TRUE,
-                           reference  = TRUE,
+                           reference  = FALSE,
                            combine    = FALSE,
                            path = NULL) {
     # test internet connection
