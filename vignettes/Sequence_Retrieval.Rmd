@@ -56,6 +56,14 @@ Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, a
     - [6.4 from ENSEMBLGENOMES](#example-ensemblgenomes-5)
 * [7. Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
     - [7.1 from NCBI RefSeq](#example-ncbi-refseq-6)
+* [8. Genome Assembly Stats Retrieval with `getAssemblyStats()`](#genome-assembly-stats-retrieval)
+    - [8.1 from NCBI RefSeq](#example-ncbi-refseq-7)
+    - [8.2 from NCBI Genbank](#example-ncbi-genbank-6)
+* [9. Collection (Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats) retrieval with `getCollection()`](#collection-retrieval)
+    - [9.1 from NCBI RefSeq](#example-ncbi-refseq-8)
+    - [9.2 from NCBI Genbank](#example-ncbi-genbank-7)
+    - [9.3 from NCBI ENSEMBL](#example-ensembl-6)
+    - [9.4 from NCBI ENSEMBLGENOMES](#example-ensemblgenomes-6)
     
 
 ## Getting Started with Sequence Retrieval
@@ -2406,16 +2414,15 @@ corresponding `.gff` or `gtf` annotation file to make sure that they both have t
 
 ## Repeat Masker Retrieval
 
-In addition to genome, proteome, CDS, etc. information NCBI RefSeq and NCBI Genbank store also 
-transposon annotations files generated with Repeat Masker. To retrieve and import
-these transposon annotations files, `biomartr` implements the `getRepeatMasker()`
-and `read_rm()` functions.
+[Repeat Masker](http://www.repeatmasker.org) is a tool for screening DNA sequences for interspersed repeats and low complexity DNA sequences.
+NCBI stores the `Repeat Masker` for sevel species in their databases and can be retrieved using `getRepeatMasker()` and imported
+via `read_rm()`.
 
 ### Example `NCBI RefSeq`:
 ```{r,eval=FALSE}
-# download repeat masker annotation file for A. thaliana
-AT.rm.refseq <- getRepeatMasker( db       = "refseq", 
-                                 organism = "Arabidopsis thaliana", 
+# download repeat masker annotation file for Homo sapiens
+Hsapiens_rm <- getRepeatMasker( db       = "refseq", 
+                                 organism = "Homo sapiens", 
                                  path = file.path("refseq","TEannotation"))
 ```
 
@@ -2423,17 +2430,172 @@ Now users can import the TE annotation file using `read_rm()`.
 
 ```{r,eval=FALSE}
 # import TE annotation file
-AT.rm.refseq.anno <- read_rm(AT.rm.refseq)
+Hsapiens_rm_import <- read_rm("refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz")
 # look at data
-AT.rm.refseq.anno
+Hsapiens_rm_import
 ```
 
-For `NCBI Genbank`, `ENSEMBL`, and `ENSEMBLGENOMES` users can specify the `db` argument analogously as shown above.
 
 
 ## Genome Assembly Stats Retrieval
 
+By specifying the scientific name of an organism of interest the corresponding genome assembly stats file storing the assembly statistics of the organism of interest can be downloaded and stored locally. 
 
+### Example `NCBI RefSeq`:
+```{r,eval=FALSE}
+# download genome assembly stats file for Homo sapiens
+Hsapiens_stats <- getAssemblyStats( db       = "refseq", 
+                                 organism = "Homo sapiens", 
+                                 path = file.path("refseq","AssemblyStats"))
+```
+
+Now users can import the TE annotation file using `read_rm()`.
+
+```{r,eval=FALSE}
+# import TE annotation file
+Hsapiens_stats_import <- read_assemblystats(Hsapiens_stats)
+# look at data
+Hsapiens_stats_import
+```
+
+```
+ A tibble: 1,196 x 6
+   unit_name molecule_name molecule_type sequence_type statistic         value
+   <chr>     <chr>         <chr>         <chr>         <chr>             <int>
+ 1 all       all           all           all           total-length         NA
+ 2 all       all           all           all           spanned-gaps        661
+ 3 all       all           all           all           unspanned-gaps      349
+ 4 all       all           all           all           region-count        317
+ 5 all       all           all           all           scaffold-count      875
+ 6 all       all           all           all           scaffold-N50   59364414
+ 7 all       all           all           all           scaffold-L50         17
+ 8 all       all           all           all           scaffold-N75   31699399
+ 9 all       all           all           all           scaffold-N90    7557127
+10 all       all           all           all           contig-count       1536
+```
+
+### Example `NCBI Genbank`:
+```{r,eval=FALSE}
+# download genome assembly stats file for Homo sapiens
+Hsapiens_stats <- getAssemblyStats( db       = "genbank", 
+                                 organism = "Homo sapiens", 
+                                 path = file.path("genbank","AssemblyStats"))
+```
+
+Now users can import the TE annotation file using `read_rm()`.
+
+```{r,eval=FALSE}
+# import TE annotation file
+Hsapiens_stats_import <- read_assemblystats(Hsapiens_stats)
+# look at data
+Hsapiens_stats_import
+```
+
+
+```
+ A tibble: 1,196 x 6
+   unit_name molecule_name molecule_type sequence_type statistic         value
+   <chr>     <chr>         <chr>         <chr>         <chr>             <int>
+ 1 all       all           all           all           total-length         NA
+ 2 all       all           all           all           spanned-gaps        661
+ 3 all       all           all           all           unspanned-gaps      349
+ 4 all       all           all           all           region-count        317
+ 5 all       all           all           all           scaffold-count      875
+ 6 all       all           all           all           scaffold-N50   59364414
+ 7 all       all           all           all           scaffold-L50         17
+ 8 all       all           all           all           scaffold-N75   31699399
+ 9 all       all           all           all           scaffold-N90    7557127
+10 all       all           all           all           contig-count       1536
+```
+
+## Collection Retrieval
+
+The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats)
+will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file
+and was generated using the same genome assembly version. One aspect of why genomics studies
+fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files
+used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version.
+To avoid this seemingly trivial mistake we encourage users to retrieve
+genome file collections using the `biomartr` function `getCollection()`
+and attach the corresponding output as Supplementary Data
+to the respective genomics study to ensure computational and biological reproducibility.
+
+
+By specifying the scientific name of an organism of interest a collection consisting of the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats file of the organism of interest can be downloaded and stored locally.
+
+
+### Example `NCBI RefSeq`:
+
+
+```{r,eval=FALSE}
+# download collection for Saccharomyces cerevisiae
+getCollection( db = "refseq", 
+               organism = "Saccharomyces cerevisiae", 
+               path = file.path("refseq","Collections"))
+```
+
+Internally, the `getCollection()` function will now generate a folder named `refseq/Collection/`
+and will store all genome and annotation files for `Saccharomyces cerevisiae` in the same folder.
+In addition, the exact genoem and annotation version will be logged in the `doc` folder.
+
+```
+Genome download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The genome of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_genomic_refseq.fna.gz'.
+Starting proteome retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+Proteome download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The proteome of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_protein_refseq.faa.gz' .
+Starting CDS retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+CDS download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The genomic CDS of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz' .
+Starting GFF retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+GFF download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The *.gff annotation file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_genomic_refseq.gff.gz'.
+Starting RNA retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+RNA download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The genomic RNA of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_rna_from_genomic_refseq.fna.gz' .
+Starting Repeat Masker retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+RepeatMasker download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The Repeat Masker output file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_rm_refseq.out.gz'.
+Starting assembly quality stats retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+Genome assembly quality stats file download completed!
+The assembly statistics file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_assembly_stats_refseq.txt'.
+Collection retrieval finished successfully!
+
+
+We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
+```
+
+Users can now simply attach the output folder `` as supplementary data in their study
+and state in the materials sections:
+
+> We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
+
+This way, computational and biological reproducibility can be standardized and indeed will become trivial
+in the context of genome version and annotation version.
 
 
 
