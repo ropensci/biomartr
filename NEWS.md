@@ -5,6 +5,12 @@ biomartr 0.9.0
 
 - New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output
 
+### New Features of Existing Functions 
+
+- the default value of argument `reference` in `meta.retrieval()` changed from `reference = TRUE` to `reference = FALSE`.
+This way all genomes (reference AND non-reference) genomes will be downloaded by default. This is what users seem to prefer.
+
+
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
 ===========
 
