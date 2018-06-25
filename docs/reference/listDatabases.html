@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -39,6 +41,7 @@ to databases that can be downloaded from NCBI servers and lists all available
 databases and their database version to be able to select an appropriate 
 database for download with download.database." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -184,14 +187,15 @@ listDatabases.txt file shall be updated by remote access to NCBI.</p></td>
 #&gt; [31] "nr.71.tar.gz" "nr.72.tar.gz" "nr.73.tar.gz" "nr.74.tar.gz" "nr.07.tar.gz"
 #&gt; [36] "nr.77.tar.gz" "nr.78.tar.gz" "nr.08.tar.gz" "nr.09.tar.gz" "nr.10.tar.gz"
 #&gt; [41] "nr.79.tar.gz" "nr.80.tar.gz" "nr.81.tar.gz" "nr.82.tar.gz" "nr.84.tar.gz"
-#&gt; [46] "nr.11.tar.gz" "nr.12.tar.gz" "nr.13.tar.gz" "nr.14.tar.gz" "nr.28.tar.gz"
-#&gt; [51] "nr.29.tar.gz" "nr.31.tar.gz" "nr.17.tar.gz" "nr.18.tar.gz" "nr.19.tar.gz"
-#&gt; [56] "nr.20.tar.gz" "nr.21.tar.gz" "nr.22.tar.gz" "nr.23.tar.gz" "nr.32.tar.gz"
-#&gt; [61] "nr.24.tar.gz" "nr.25.tar.gz" "nr.26.tar.gz" "nr.27.tar.gz" "nr.33.tar.gz"
-#&gt; [66] "nr.34.tar.gz" "nr.35.tar.gz" "nr.36.tar.gz" "nr.37.tar.gz" "nr.38.tar.gz"
-#&gt; [71] "nr.39.tar.gz" "nr.40.tar.gz" "nr.41.tar.gz" "nr.42.tar.gz" "nr.43.tar.gz"
-#&gt; [76] "nr.44.tar.gz" "nr.45.tar.gz" "nr.46.tar.gz" "nr.47.tar.gz" "nr.48.tar.gz"
-#&gt; [81] "nr.49.tar.gz" "nr.53.tar.gz" "nr.50.tar.gz" "nr.51.tar.gz" "nr.52.tar.gz"</div><div class='input'>
+#&gt; [46] "nr.11.tar.gz" "nr.12.tar.gz" "nr.85.tar.gz" "nr.13.tar.gz" "nr.86.tar.gz"
+#&gt; [51] "nr.87.tar.gz" "nr.14.tar.gz" "nr.28.tar.gz" "nr.29.tar.gz" "nr.31.tar.gz"
+#&gt; [56] "nr.17.tar.gz" "nr.18.tar.gz" "nr.19.tar.gz" "nr.20.tar.gz" "nr.21.tar.gz"
+#&gt; [61] "nr.22.tar.gz" "nr.23.tar.gz" "nr.32.tar.gz" "nr.24.tar.gz" "nr.25.tar.gz"
+#&gt; [66] "nr.26.tar.gz" "nr.27.tar.gz" "nr.33.tar.gz" "nr.34.tar.gz" "nr.35.tar.gz"
+#&gt; [71] "nr.36.tar.gz" "nr.37.tar.gz" "nr.38.tar.gz" "nr.39.tar.gz" "nr.40.tar.gz"
+#&gt; [76] "nr.41.tar.gz" "nr.42.tar.gz" "nr.43.tar.gz" "nr.44.tar.gz" "nr.45.tar.gz"
+#&gt; [81] "nr.46.tar.gz" "nr.47.tar.gz" "nr.48.tar.gz" "nr.49.tar.gz" "nr.53.tar.gz"
+#&gt; [86] "nr.50.tar.gz" "nr.51.tar.gz" "nr.52.tar.gz"</div><div class='input'>
 # analogous:
 # listNCBIDatabases(db = "cdd")
 # listNCBIDatabases(db = "nt")

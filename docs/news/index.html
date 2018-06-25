@@ -21,14 +21,17 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
 <meta property="og:title" content="Changelog" />
+
 
 
 <!-- mathjax -->
@@ -133,7 +136,7 @@
 <h3 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New Functions</h3>
 <ul>
-<li>new function <code><a href="../reference/getCollection.html">getCollection()</a></code> for retrieval and quality control of the genome sequence, protein sequences, gff files, etc for a particular species</li>
+<li>new function <code><a href="../reference/getCollection.html">getCollection()</a></code> for retrieval of a collection: the genome sequence, protein sequences, gff files, etc for a particular species</li>
 </ul>
 </div>
 <div id="new-functionality-of-existing-functions" class="section level3">
@@ -148,7 +151,9 @@
 <li><p><code><a href="../reference/getProteome.html">getProteome()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve proteomes</p></li>
 <li><p><code><a href="../reference/getCDS.html">getCDS()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve CDS</p></li>
 <li><p><code><a href="../reference/getRNA.html">getRNA()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve RNAs</p></li>
-<li><p><code><a href="../reference/is.genome.available.html">is.genome.available()</a></code>: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent with all <code>get*()</code> functions</p></li>
+<li>
+<code><a href="../reference/is.genome.available.html">is.genome.available()</a></code>: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent with all <code>get*()</code> functions</li>
+<li><p><code>meta.retrieval</code> receives a new argument <code>restart_at_last</code> to indicate whether or not the download process when re-running the <code>meta.retrieval</code> function shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum</p></li>
 </ul>
 </div>
 </div>

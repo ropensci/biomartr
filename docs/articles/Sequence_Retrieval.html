@@ -8,8 +8,8 @@
 <title>Sequence Retrieval • biomartr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Sequence Retrieval">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Sequence Retrieval">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1>Sequence Retrieval</h1>
             
-            <h4 class="date">2018-06-01</h4>
+            <h4 class="date">2018-06-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -170,6 +170,22 @@
 <a href="#repeat-masker-retrieval">7. Repeat Masker Annotation file retrieval with <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code></a>
 <ul>
 <li><a href="#example-ncbi-refseq-6">7.1 from NCBI RefSeq</a></li>
+</ul>
+</li>
+<li>
+<a href="#genome-assembly-stats-retrieval">8. Genome Assembly Stats Retrieval with <code><a href="../reference/getAssemblyStats.html">getAssemblyStats()</a></code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-7">8.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-6">8.2 from NCBI Genbank</a></li>
+</ul>
+</li>
+<li>
+<a href="#collection-retrieval">9. Collection (Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats) retrieval with <code><a href="../reference/getCollection.html">getCollection()</a></code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-8">9.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-7">9.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-6">9.3 from NCBI ENSEMBL</a></li>
+<li><a href="#example-ensemblgenomes-6">9.4 from NCBI ENSEMBLGENOMES</a></li>
 </ul>
 </li>
 </ul>
@@ -1837,25 +1853,145 @@ AT.gtf.ensemblgenomes &lt;-<span class="st"> </span><span class="kw"><a href="..
 <div id="repeat-masker-retrieval" class="section level2">
 <h2 class="hasAnchor">
 <a href="#repeat-masker-retrieval" class="anchor"></a>Repeat Masker Retrieval</h2>
-<p>In addition to genome, proteome, CDS, etc. information NCBI RefSeq and NCBI Genbank store also transposon annotations files generated with Repeat Masker. To retrieve and import these transposon annotations files, <code>biomartr</code> implements the <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> and <code><a href="../reference/read_rm.html">read_rm()</a></code> functions.</p>
+<p><a href="http://www.repeatmasker.org">Repeat Masker</a> is a tool for screening DNA sequences for interspersed repeats and low complexity DNA sequences. NCBI stores the <code>Repeat Masker</code> for sevel species in their databases and can be retrieved using <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> and imported via <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
 <div id="example-ncbi-refseq-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-5" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download repeat masker annotation file for A. thaliana</span>
-AT.rm.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
-                                 <span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download repeat masker annotation file for Homo sapiens</span>
+Hsapiens_rm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
+                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, 
                                  <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">"refseq"</span>,<span class="st">"TEannotation"</span>))</code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import TE annotation file</span>
-AT.rm.refseq.anno &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_rm.html">read_rm</a></span>(AT.rm.refseq)
+Hsapiens_rm_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_rm.html">read_rm</a></span>(<span class="st">"refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz"</span>)
 <span class="co"># look at data</span>
-AT.rm.refseq.anno</code></pre></div>
-<p>For <code>NCBI Genbank</code>, <code>ENSEMBL</code>, and <code>ENSEMBLGENOMES</code> users can specify the <code>db</code> argument analogously as shown above.</p>
+Hsapiens_rm_import</code></pre></div>
 </div>
 </div>
 <div id="genome-assembly-stats-retrieval" class="section level2">
 <h2 class="hasAnchor">
 <a href="#genome-assembly-stats-retrieval" class="anchor"></a>Genome Assembly Stats Retrieval</h2>
+<p>By specifying the scientific name of an organism of interest the corresponding genome assembly stats file storing the assembly statistics of the organism of interest can be downloaded and stored locally.</p>
+<div id="example-ncbi-refseq-6" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-refseq-6" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download genome assembly stats file for Homo sapiens</span>
+Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, 
+                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, 
+                                 <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">"refseq"</span>,<span class="st">"AssemblyStats"</span>))</code></pre></div>
+<p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import TE annotation file</span>
+Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)
+<span class="co"># look at data</span>
+Hsapiens_stats_import</code></pre></div>
+<pre><code> A tibble: 1,196 x 6
+   unit_name molecule_name molecule_type sequence_type statistic         value
+   &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
+ 1 all       all           all           all           total-length         NA
+ 2 all       all           all           all           spanned-gaps        661
+ 3 all       all           all           all           unspanned-gaps      349
+ 4 all       all           all           all           region-count        317
+ 5 all       all           all           all           scaffold-count      875
+ 6 all       all           all           all           scaffold-N50   59364414
+ 7 all       all           all           all           scaffold-L50         17
+ 8 all       all           all           all           scaffold-N75   31699399
+ 9 all       all           all           all           scaffold-N90    7557127
+10 all       all           all           all           contig-count       1536</code></pre>
+</div>
+<div id="example-ncbi-genbank-5" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-genbank-5" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download genome assembly stats file for Homo sapiens</span>
+Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, 
+                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, 
+                                 <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">"genbank"</span>,<span class="st">"AssemblyStats"</span>))</code></pre></div>
+<p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import TE annotation file</span>
+Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)
+<span class="co"># look at data</span>
+Hsapiens_stats_import</code></pre></div>
+<pre><code> A tibble: 1,196 x 6
+   unit_name molecule_name molecule_type sequence_type statistic         value
+   &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
+ 1 all       all           all           all           total-length         NA
+ 2 all       all           all           all           spanned-gaps        661
+ 3 all       all           all           all           unspanned-gaps      349
+ 4 all       all           all           all           region-count        317
+ 5 all       all           all           all           scaffold-count      875
+ 6 all       all           all           all           scaffold-N50   59364414
+ 7 all       all           all           all           scaffold-L50         17
+ 8 all       all           all           all           scaffold-N75   31699399
+ 9 all       all           all           all           scaffold-N90    7557127
+10 all       all           all           all           contig-count       1536</code></pre>
+</div>
+</div>
+<div id="collection-retrieval" class="section level2">
+<h2 class="hasAnchor">
+<a href="#collection-retrieval" class="anchor"></a>Collection Retrieval</h2>
+<p>The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats) will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file and was generated using the same genome assembly version. One aspect of why genomics studies fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version. To avoid this seemingly trivial mistake we encourage users to retrieve genome file collections using the <code>biomartr</code> function <code><a href="../reference/getCollection.html">getCollection()</a></code> and attach the corresponding output as Supplementary Data to the respective genomics study to ensure computational and biological reproducibility.</p>
+<p>By specifying the scientific name of an organism of interest a collection consisting of the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats file of the organism of interest can be downloaded and stored locally.</p>
+<div id="example-ncbi-refseq-7" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-refseq-7" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download collection for Saccharomyces cerevisiae</span>
+<span class="kw"><a href="../reference/getCollection.html">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, 
+               <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>, 
+               <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">"refseq"</span>,<span class="st">"Collections"</span>))</code></pre></div>
+<p>Internally, the <code><a href="../reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
+<pre><code>Genome download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The genome of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_genomic_refseq.fna.gz'.
+Starting proteome retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+Proteome download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The proteome of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_protein_refseq.faa.gz' .
+Starting CDS retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+CDS download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The genomic CDS of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz' .
+Starting GFF retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+GFF download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The *.gff annotation file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_genomic_refseq.gff.gz'.
+Starting RNA retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+RNA download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The genomic RNA of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_rna_from_genomic_refseq.fna.gz' .
+Starting Repeat Masker retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+RepeatMasker download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt' matches!
+The Repeat Masker output file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_rm_refseq.out.gz'.
+Starting assembly quality stats retrieval of 'Saccharomyces cerevisiae' from refseq ...
+
+
+Genome assembly quality stats file download completed!
+The assembly statistics file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_assembly_stats_refseq.txt'.
+Collection retrieval finished successfully!
+
+
+We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).</code></pre>
+<p>Users can now simply attach the output folder `` as supplementary data in their study and state in the materials sections:</p>
+<blockquote>
+<p>We retrieved the genome assembly and checked the annotation for ‘Saccharomyces cerevisiae’ (taxid: 559292, strain=S288C) from ‘<a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt</a>’ (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).</p>
+</blockquote>
+<p>This way, computational and biological reproducibility can be standardized and indeed will become trivial in the context of genome version and annotation version.</p>
+</div>
 </div>
   </div>
 
@@ -1869,6 +2005,7 @@ AT.rm.refseq.anno</code></pre></div>
       <li><a href="#downloading-biological-sequences-and-annotations">Downloading Biological Sequences and Annotations</a></li>
       <li><a href="#repeat-masker-retrieval">Repeat Masker Retrieval</a></li>
       <li><a href="#genome-assembly-stats-retrieval">Genome Assembly Stats Retrieval</a></li>
+      <li><a href="#collection-retrieval">Collection Retrieval</a></li>
       </ul>
 </div>
       </div>
