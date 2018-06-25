@@ -26,7 +26,7 @@ read_assemblystats <- function(file, type = "raw") {
     
     unit_name <- molecule_name <- statistic <- NULL
     
-    assemblystats_file <- readr::read_delim(
+    suppressMessages(assemblystats_file <- readr::read_delim(
         file,
         delim = "\t",
         col_names = c(
@@ -46,7 +46,7 @@ read_assemblystats <- function(file, type = "raw") {
             "value" = readr::col_integer()
         ),
         comment = "#"
-    )
+    ))
     
     if (type == "stats") {
     # select all features (including chromosomes, mitochondria, and plastids)
