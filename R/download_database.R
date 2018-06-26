@@ -77,14 +77,17 @@ download.database <- function(db, path = "database") {
     md5_sum <- unlist(stringr::str_split(md5_file, " "))[1]
     
     message("Checking md5 hash of file: ", db , " ...")
-    if (!(tools::md5sum(file.path(path, db)) == md5_sum))
-        stop(
+    if (!(tools::md5sum(file.path(path, db)) == md5_sum)) {
+        warning(
             paste0("The md5 hash between the downloaded file and the file ", 
                    "stored at NCBI do not match.",
                    " This can happen due to internet connection breaks which corrupt the downloaded file. Please download the file '",
-            db,
-            "' again using ' download.database('",db,"').", collapse = "")
-        )
+                   db,
+                   "' again using ' download.database('",db,"').", collapse = ""))
+        unlink(file.path(path, paste0(db, ".md5")))
+        return(FALSE)
+    }
+        
     unlink(file.path(path, paste0(db, ".md5")))
     message("The md5 hash of file '", db, "' matches!")
     message("File '",
