@@ -56,6 +56,13 @@ getCollection <-
                  path = file.path("_ncbi_downloads","collection")
         ) {
         
+        new_name <- stringr::str_replace_all(organism," ","_")
+            
+        if (!file.exists(file.path(path, new_name)))
+            dir.create(file.path(path, new_name), recursive = TRUE)
+        
+        path <- file.path(path, new_name)
+            
         # retrieve genome assembly
         species_genome <-
                 getGenome(
