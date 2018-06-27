@@ -30,6 +30,13 @@
 #'  \item \code{type = "assemblystats"} (for genome assembly quality stats 
 #'  file retrieval; see also \code{\link{getAssemblyStats}}).
 #'  }
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
+#' as either a reference genome or a representative genome. Options are:
+#' \itemize{
+#' \item \code{reference = FALSE} (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.
+#' \item \code{reference = TRUE}: organisms that are downloaded must be either a reference or representative genome. Thus, most genomes which are usually non-reference genomes
+#' will not be downloaded.
+#' }
 #' @author Hajk-Georg Drost
 #' @details This function aims to perform bulk retrieval of all genomes 
 #' of species for all kingdoms of life.
@@ -46,13 +53,14 @@
 #' @seealso \code{\link{meta.retrieval}}
 #' @export
 
-meta.retrieval.all <- function(db = "refseq", type = "genome") {
+meta.retrieval.all <- function(db = "refseq", type = "genome", reference = FALSE) {
     message("Starting ", type, " meta retrieval process of all species individually from database: ", db," ...")
     # retrieve all genomes from all kingdoms of life
     paths <- unlist(lapply(getKingdoms(db = db), 
                            function(x) meta.retrieval(x, type = type, 
                                                             db = db, 
-                                                            group = NULL)))
+                                                            group = NULL,
+                                                      reference = reference)))
     message("Meta retrieval process... finished!")
     return(paths)
 }
