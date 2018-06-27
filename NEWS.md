@@ -31,6 +31,10 @@ An example can be found [here](https://github.com/ropensci/biomartr/blob/master/
 with all `get*()` functions
 - `meta.retrieval` receives a new argument `restart_at_last` to indicate whether or not the download process when re-running the `meta.retrieval` function
 shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum
+- `meta.retrieval` now generates an csv overview file in the `doc` folder which stores genome version, date, origin, etc information for
+all downloaded organisms and can be directly used as Supplementary Data file in publications to increase computational and biological reproducibility of the genomics study
+- `download.database.all()` can now skip already downloaded files and internally removes corrupted files with non-matching md5checksum. Re-downloading of currupted
+files and be performed by simply re-running the `download.database.all()` command
 
 
 [biomartr 0.7.0](https://github.com/ropensci/biomartr/releases/tag/v0.7.0)
