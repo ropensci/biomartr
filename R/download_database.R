@@ -44,7 +44,12 @@ download.database <- function(db, path = "database") {
     message("Starting download process of file: ", db, " ...")
     
     if (!file.exists(path))
-        dir.create(path)
+        dir.create(path, recursive = TRUE)
+    
+    if (file.exists(file.path(path, db))) {
+        message("The file '", db, " exists already and will not be re-downloaded.")
+        return(file.path(path, db))
+    }
     
     tryCatch({
         custom_download(
@@ -80,11 +85,13 @@ download.database <- function(db, path = "database") {
     if (!(tools::md5sum(file.path(path, db)) == md5_sum)) {
         warning(
             paste0("The md5 hash between the downloaded file and the file ", 
-                   "stored at NCBI do not match.",
+                   "stored at NCBI do not match. Therefore, the currupted file '",file.path(path, db),"' has been removed.",
                    " This can happen due to internet connection breaks which corrupt the downloaded file. Please download the file '",
                    db,
-                   "' again using ' download.database('",db,"').", collapse = ""))
+                   "' again either by re-running the function."))
         unlink(file.path(path, paste0(db, ".md5")))
+        unlink(file.path(path, db, ".md5"))
+        
         return(FALSE)
     }
         
