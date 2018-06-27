@@ -8,9 +8,9 @@
 #' @author Hajk-Georg Drost
 #' @examples
 #' # search for available datasets
-#' getMarts()
+#' # getMarts()
 #' # choose database (mart): "ENSEMBL_MART_ENSEMBL"
-#' head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
+#' # head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
 #' # choose dataset: "hsapiens_gene_ensembl"
 #' head(getFilters(mart = "ENSEMBL_MART_ENSEMBL", 
 #'                 dataset = "hsapiens_gene_ensembl") , 5)
