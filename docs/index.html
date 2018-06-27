@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">biomartr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0</span>
       </span>
     </div>
 
@@ -152,49 +152,45 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install biomartr 0.7.0</span>
 <span class="kw">source</span>(<span class="st">"http://bioconductor.org/biocLite.R"</span>)
 <span class="kw">biocLite</span>(<span class="st">'biomartr'</span>)</code></pre></div>
-<div id="example" class="section level3">
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<div id="collection-retrieval" class="section level3">
 <h3 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the genome of Homo sapiens from refseq</span>
-<span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
-HS.genome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
-<p>Subsequently, users can use the read_genome() function to import the genome into the R session. Users can choose to work with the genome sequence in R either as Biostrings object (<code>obj.type = "Biostrings"</code>) or data.table object (<code>obj.type = "data.table"</code>) by specifying the obj.type argument of the read_genome() function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># import downloaded genome as Biostrings object</span>
-Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_genome.html">read_genome</a></span>(<span class="dt">file     =</span> HS.genome.refseq)</code></pre></div>
-<pre><code># look at the Biostrings object
-Human_Genome
-  A DNAStringSet instance of length 551
-          width seq                                                names               
-  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
-  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
-  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
-  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
-  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
-  ...       ... ...
-[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
-[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
-[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
-[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
-[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...</code></pre>
-<p>Internally, a text file named <code>doc_Homo_sapiens_db_refseq.txt</code> is generated. The information stored in this log file is structured as follows:</p>
-<pre><code>File Name: Homo_sapiens_genomic_refseq.fna.gz
-Organism Name: Homo_sapiens
+<a href="#collection-retrieval" class="anchor"></a>Collection Retrieval</h3>
+<p>The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats) will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file and was generated using the same genome assembly version. One aspect of why genomics studies fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version. To avoid this seemingly trivial mistake we encourage users to retrieve genome file collections using the <code>biomartr</code> function <code><a href="reference/getCollection.html">getCollection()</a></code> and attach the corresponding output as Supplementary Data to the respective genomics study to ensure computational and biological reproducibility.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download collection for Saccharomyces cerevisiae</span>
+<span class="kw"><a href="reference/getCollection.html">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, 
+               <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>, 
+               <span class="dt">path =</span> <span class="kw">file.path</span>(<span class="st">"refseq"</span>,<span class="st">"Collections"</span>))</code></pre></div>
+<p>Internally, the <code><a href="reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/Saccharomyces_cerevisiae</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
+<p>Internally, a text file named <code>doc_Saccharomyces_cerevisiae_db_refseq.txt</code> is generated. The information stored in this log file is structured as follows:</p>
+<pre><code>File Name: Saccharomyces_cerevisiae_assembly_stats_refseq.txt
+Organism Name: Saccharomyces_cerevisiae
 Database: NCBI refseq
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
-GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_genomic.fna.gz
-Download_Date: Sat Oct 22 12:41:07 2016
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt
+Download_Date: Wed Jun 27 15:21:51 2018
 refseq_category: reference genome
-assembly_accession: GCF_000001405.35
-bioproject: PRJNA168
+assembly_accession: GCF_000146045.2
+bioproject: PRJNA128
 biosample: NA
-taxid: 9606
-infraspecific_name: NA
+taxid: 559292
+infraspecific_name: strain=S288C
 version_status: latest
-release_type: Patch
+release_type: Major
 genome_rep: Full
-seq_rel_date: 2016-09-26
-submitter: Genome Reference Consortium</code></pre>
+seq_rel_date: 2014-12-17
+submitter: Saccharomyces Genome Database</code></pre>
 <p>In an ideal world this reference file could then be included as supplementary information in any life science publication that relies on genomic information so that reproducibility of experiments and analyses becomes achievable.</p>
+</div>
+<div id="genome-retrieval-of-hundreds-of-genomes-using-only-one-command" class="section level3">
+<h3 class="hasAnchor">
+<a href="#genome-retrieval-of-hundreds-of-genomes-using-only-one-command" class="anchor"></a>Genome retrieval of hundreds of genomes using only one command</h3>
+<p>Download all mammalian vertebrate genomes from <code>NCBI RefSeq</code> via:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
+<span class="kw"><a href="reference/meta.retrieval.html">meta.retrieval</a></span>(<span class="dt">kingdom =</span> <span class="st">"vertebrate_mammalian"</span>, <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">type =</span> <span class="st">"genome"</span>)</code></pre></div>
+<p>All geneomes are stored in the folder named according to the kingdom. In this case <code>vertebrate_mammalian</code>. Alternatively, users can specify the <code>out.folder</code> argument to define a custom output folder path.</p>
 </div>
 <div id="platforms" class="section level3">
 <h3 class="hasAnchor">

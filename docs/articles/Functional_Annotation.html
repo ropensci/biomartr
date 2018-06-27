@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1>Functional Annotation with biomartr</h1>
             
-            <h4 class="date">2018-06-25</h4>
+            <h4 class="date">2018-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Functional_Annotation.Rmd"><code>vignettes/Functional_Annotation.Rmd</code></a></small>
       <div class="hidden name"><code>Functional_Annotation.Rmd</code></div>
@@ -136,17 +136,17 @@
 <p>Users will observe that several <code>marts</code> providing annotation for specific classes of organisms or groups of organisms are available.</p>
 <p>For our example, we will choose the <code>hsapiens_gene_ensembl</code> <code>mart</code> and list all available datasets that are element of this <code>mart</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)), <span class="dv">10</span>)     </code></pre></div>
-<pre><code>#&gt;                       dataset                                 description     version
-#&gt; 1        sscrofa_gene_ensembl                     Pig genes (Sscrofa11.1) Sscrofa11.1
-#&gt; 2      trubripes_gene_ensembl                       Fugu genes (FUGU 4.0)    FUGU 4.0
-#&gt; 3         oaries_gene_ensembl                      Sheep genes (Oar_v3.1)    Oar_v3.1
-#&gt; 4      psinensis_gene_ensembl Chinese softshell turtle genes (PelSin_1.0)  PelSin_1.0
-#&gt; 5      ppaniscus_gene_ensembl                    Bonobo genes (panpan1.1)   panpan1.1
-#&gt; 6     rroxellana_gene_ensembl    Golden snub-nosed monkey genes (Rrox_v1)     Rrox_v1
-#&gt; 7   amelanoleuca_gene_ensembl                       Panda genes (ailMel1)     ailMel1
-#&gt; 8  acarolinensis_gene_ensembl              Anole lizard genes (AnoCar2.0)   AnoCar2.0
-#&gt; 9     amexicanus_gene_ensembl                 Cave fish genes (AstMex102)   AstMex102
-#&gt; 10        drerio_gene_ensembl                    Zebrafish genes (GRCz11)      GRCz11</code></pre>
+<pre><code>#&gt;                           dataset                                 description         version
+#&gt; 1            mcaroli_gene_ensembl        Ryukyu mouse genes (CAROLI_EIJ_v1.1) CAROLI_EIJ_v1.1
+#&gt; 2          ecaballus_gene_ensembl                     Horse genes (Equ Cab 2)       Equ Cab 2
+#&gt; 3        rnorvegicus_gene_ensembl                        Rat genes (Rnor_6.0)        Rnor_6.0
+#&gt; 4         cpalliatus_gene_ensembl          Angola colobus genes (Cang.pa_1.0)     Cang.pa_1.0
+#&gt; 5  itridecemlineatus_gene_ensembl                  Squirrel genes (SpeTri2.0)       SpeTri2.0
+#&gt; 6              mfuro_gene_ensembl                 Ferret genes (MusPutFur1.0)    MusPutFur1.0
+#&gt; 7          oanatinus_gene_ensembl                      Platypus genes (OANA5)           OANA5
+#&gt; 8         mlucifugus_gene_ensembl                  Microbat genes (Myoluc2.0)       Myoluc2.0
+#&gt; 9            pabelii_gene_ensembl                     Orangutan genes (PPYG2)           PPYG2
+#&gt; 10            rbieti_gene_ensembl Black snub-nosed monkey genes (ASM169854v1)     ASM169854v1</code></pre>
 <p>The <code><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart()</a></code> function is a wrapper function provided by <code>biomaRt</code> to connect a selected BioMart database (<code>mart</code>) with a corresponding dataset stored within this <code>mart</code>.<br>
 We select dataset <code>hsapiens_gene_ensembl</code> and now check for available attributes (annotation data) that can be accessed for <code>Homo sapiens</code> genes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(

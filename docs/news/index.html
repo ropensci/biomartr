@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0</span>
       </span>
     </div>
 
@@ -153,7 +153,11 @@
 <li><p><code><a href="../reference/getRNA.html">getRNA()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve RNAs</p></li>
 <li>
 <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code>: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent with all <code>get*()</code> functions</li>
-<li><p><code>meta.retrieval</code> receives a new argument <code>restart_at_last</code> to indicate whether or not the download process when re-running the <code>meta.retrieval</code> function shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum</p></li>
+<li>
+<code>meta.retrieval</code> receives a new argument <code>restart_at_last</code> to indicate whether or not the download process when re-running the <code>meta.retrieval</code> function shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum</li>
+<li>
+<code>meta.retrieval</code> now generates an csv overview file in the <code>doc</code> folder which stores genome version, date, origin, etc information for all downloaded organisms and can be directly used as Supplementary Data file in publications to increase computational and biological reproducibility of the genomics study</li>
+<li><p><code><a href="../reference/download.database.all.html">download.database.all()</a></code> can now skip already downloaded files and internally removes corrupted files with non-matching md5checksum. Re-downloading of currupted files and be performed by simply re-running the <code><a href="../reference/download.database.all.html">download.database.all()</a></code> command</p></li>
 </ul>
 </div>
 </div>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1>NCBI Database Retrieval</h1>
             
-            <h4 class="date">2018-06-25</h4>
+            <h4 class="date">2018-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd"><code>vignettes/Database_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Database_Retrieval.Rmd</code></div>
@@ -108,10 +108,25 @@
 <div id="retrieve-sequence-databases-from-ncbi" class="section level1">
 <h1 class="hasAnchor">
 <a href="#retrieve-sequence-databases-from-ncbi" class="anchor"></a>Retrieve Sequence Databases from NCBI</h1>
-<p>NCBI stores a variety of specialized database such as <a href="https://www.ncbi.nlm.nih.gov/guide/data-software/">Genbank, RefSeq, Taxonomy, SNP, etc.</a> on their servers. The <code><a href="../reference/download.database.html">download.database()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions implemented in <code>biomartr</code> allows users to download these databases from NCBI.</p>
-<div id="search-for-available-databases" class="section level2">
+<p>NCBI stores a variety of specialized database such as <a href="https://www.ncbi.nlm.nih.gov/guide/data-software/">Genbank, RefSeq, Taxonomy, SNP, etc.</a> on their servers. The <code><a href="../reference/download.database.html">download.database()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions implemented in <code>biomartr</code> allows users to download these databases from NCBI. This process might be very useful for downstream analyses such as sequence searches with e.g. BLAST. For this purpose see the R package <a href="https://github.com/HajkD/metablastr">metablastr</a> which aims to seamlessly inegrate <code>biomartr</code> based genomic data retrieval with downsteam large-scale BLAST searches.</p>
+<ul>
+<li><a href="#ist-available-databases">1. List available NCBI databases with <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code></a></li>
+<li>
+<a href="#download-ncbi-databases">2. Download NCBI databases with <code><a href="../reference/download.database.all.html">download.database.all()</a></code></a>
+<ul>
+<li><a href="#example-ncbi-nr">2.1 Example NCBI nr retrieval</a></li>
+<li><a href="#example-ncbi-nt">2.2 Example NCBI nt retrieval</a></li>
+<li><a href="#example-ncbi-refseq">2.3 Example NCBI RefSeq retrieval</a></li>
+<li><a href="#example-pdb">2.4 Example Protein Database (PDB) retrieval</a></li>
+<li><a href="#example-ncbi-taxonomy">2.5 Example NCBI Taxonomy retrieval</a></li>
+<li><a href="#example-ncbi-swissprot">2.6 Example NCBI Swissprot retrieval</a></li>
+<li><a href="#example-ncbi-cdd-delta">2.7 Example NCBI CDD Delta retrieval</a></li>
+</ul>
+</li>
+</ul>
+<div id="list-available-databases" class="section level2">
 <h2 class="hasAnchor">
-<a href="#search-for-available-databases" class="anchor"></a>Search for available databases</h2>
+<a href="#list-available-databases" class="anchor"></a>List available databases</h2>
 <p>Before downloading specific databases from NCBI users might want to list available databases. Using the <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code> function users can retrieve a list of available databases stored on NCBI.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve a list of available sequence databases at NCBI</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/listDatabases">listNCBIDatabases</a></span>(<span class="dt">db =</span> <span class="st">"all"</span>)</code></pre></div>
@@ -275,28 +290,76 @@ biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p><strong>Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.</strong></p>
 <p>In a next step users can use the <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions to retrieve all files corresponding to a specific NCBI database.</p>
 </div>
-<div id="download-available-databases" class="section level2">
+<div id="download-ncbi-databases" class="section level2">
 <h2 class="hasAnchor">
-<a href="#download-available-databases" class="anchor"></a>Download available databases</h2>
-<p>Using the same search strategy by specifying the database name as described above, users can now download these databases using the <code><a href="../reference/download.database.html">download.database()</a></code> function.</p>
+<a href="#download-ncbi-databases" class="anchor"></a>Download NCBI databases</h2>
+<p>Using the same search strategy by specifying the database name as described above, users can now download these databases using the <code><a href="../reference/download.database.all.html">download.database.all()</a></code> function.</p>
 <p>For downloading only single files users can type:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select NCBI nr version 27 =  "nr.27.tar.gz"</span>
-<span class="co"># and download it into the folder</span>
-biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database">download.database</a></span>(<span class="dt">db =</span> <span class="st">"nr.27.tar.gz"</span>, <span class="dt">path =</span> <span class="st">"nr"</span>)</code></pre></div>
-<p>Using this command first a folder named <code>nr</code> is created and the file <code>nr.27.tar.gz</code> is downloaded to this folder. This command will download the pre-formatted (by makeblastdb formatted) database version is retrieved.</p>
-<p>Alternatively, users can retrieve all <code>nr</code> files with one command by typing:</p>
+<div id="example-ncbi-nr" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-nr" class="anchor"></a>Example NCBI nr</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI nr database</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"nr"</span>, <span class="dt">path =</span> <span class="st">"nr"</span>)</code></pre></div>
-<p>Using this command, all <code>NCBI nr</code> files are loaded into the <code>nr</code> folder (<code>path = "nr"</code>). For each data package, <code>biomartr</code> checks the <code>md5checksum</code> of the downloaded file and the file stored online to make sure that internet connection losses didn’t currupt the file. In case you see a warning message notifying you about not-matching <code>md5checksum</code> values, please re-download the corresponding data package. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.</p>
+<p>This command will download the pre-formatted (by makeblastdb formatted) database version is retrieved.</p>
+<p>Using this command, all <code>NCBI nr</code> files are loaded into the <code>nr</code> folder (<code>path = "nr"</code>). For each data package, <code>biomartr</code> checks the <code>md5checksum</code> of the downloaded file and the file stored online to make sure that internet connection losses didn’t currupt the file. In case you see a warning message notifying you about not-matching <code>md5checksum</code> values, please re-download the corresponding data package by re-running the <code><a href="../reference/download.database.all.html">download.database.all()</a></code> command. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.</p>
+</div>
+<div id="example-ncbi-nt" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-nt" class="anchor"></a>Example NCBI nt</h3>
 <p>The same approach can be applied to all other databases mentioned above, e.g.:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI nt database</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"nt"</span>, <span class="dt">path =</span> <span class="st">"nt"</span>)</code></pre></div>
+</div>
+<div id="example-ncbi-refseq" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-refseq" class="anchor"></a>Example NCBI RefSeq</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI refseq (protein) database</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"refseq_protein"</span>, <span class="dt">path =</span> <span class="st">"refseq_protein"</span>)</code></pre></div>
+</div>
+<div id="example-pdb" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-pdb" class="anchor"></a>Example PDB</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI PDB database</span>
 biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"pdb"</span>, <span class="dt">path =</span> <span class="st">"pdb"</span>)</code></pre></div>
+</div>
+<div id="example-ncbi-taxonomy" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-taxonomy" class="anchor"></a>Example NCBI Taxonomy</h3>
+<p>Download NCBI Taxonomy via:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI taxonomy database</span>
+biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"taxdb"</span>, <span class="dt">path =</span> <span class="st">"taxdb"</span>)</code></pre></div>
+<pre><code>Starting download of the files: taxdb.tar.gz, taxdb.btd, taxdb.bti ...
+This download process may take a while due to the large size of the individual data chunks ...
+Starting download process of file: taxdb.tar.gz ...
+Checking md5 hash of file: taxdb.tar.gz ...
+The md5 hash of file 'taxdb.tar.gz' matches!
+File 'taxdb/taxdb.tar.gz has successfully been retrieved.
+Starting download process of file: taxdb.btd ...
+Checking md5 hash of file: taxdb.btd ...
+The md5 hash of file 'taxdb.btd' matches!
+File 'taxdb/taxdb.btd has successfully been retrieved.
+Starting download process of file: taxdb.bti ...
+Checking md5 hash of file: taxdb.bti ...
+The md5 hash of file 'taxdb.bti' matches!
+File 'taxdb/taxdb.bti has successfully been retrieved.
+Download process is finished and files are stored in 'taxdb'.</code></pre>
+</div>
+<div id="example-ncbi-swissprot" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-swissprot" class="anchor"></a>Example NCBI Swissprot</h3>
+<p>Download NCBI Swissprot via:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI swissprot database</span>
+biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"swissprot"</span>, <span class="dt">path =</span> <span class="st">"swissprot"</span>)</code></pre></div>
+</div>
+<div id="example-ncbi-cdd-delta" class="section level3">
+<h3 class="hasAnchor">
+<a href="#example-ncbi-cdd-delta" class="anchor"></a>Example NCBI CDD Delta</h3>
+<p>Download NCBI CDD Delta via:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the entire NCBI CDD Delta database</span>
+biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomartr/topics/download.database.all">download.database.all</a></span>(<span class="dt">db =</span> <span class="st">"cdd_delta"</span>, <span class="dt">path =</span> <span class="st">"cdd_delta"</span>)</code></pre></div>
 <p>For each data package, <code>biomartr</code> checks the <code>md5checksum</code> of the downloaded file and the file stored online to make sure that internet connection losses didn’t currupt the file. In case you see a warning message notifying you about not-matching <code>md5checksum</code> values, please re-download the corresponding data package. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.</p>
 <p><strong>Please notice that most of these databases are very large, so users should take of of providing a stable internet connection throughout the download process.</strong></p>
+</div>
 </div>
 </div>
   </div>
@@ -308,8 +371,8 @@ biomartr<span class="op">::</span><span class="kw"><a href="http://www.rdocument
       <ul class="nav nav-pills nav-stacked">
 <li>
 <a href="#retrieve-sequence-databases-from-ncbi">Retrieve Sequence Databases from NCBI</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#search-for-available-databases">Search for available databases</a></li>
-      <li><a href="#download-available-databases">Download available databases</a></li>
+<li><a href="#list-available-databases">List available databases</a></li>
+      <li><a href="#download-ncbi-databases">Download NCBI databases</a></li>
       </ul>
 </li>
       </ul>
