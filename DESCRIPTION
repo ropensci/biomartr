@@ -1,6 +1,6 @@
 Package: biomartr
 Title: Genomic Data Retrieval
-Version: 0.8.0.9000
+Version: 0.8.0
 Authors@R: person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hgd23@cam.ac.uk",
