@@ -58,65 +58,69 @@ source("http://bioconductor.org/biocLite.R")
 biocLite('biomartr')
 ```
 
-### Example
+## Example
+
+### Collection Retrieval
+
+The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats)
+will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file
+and was generated using the same genome assembly version. One aspect of why genomics studies
+fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files
+used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version.
+To avoid this seemingly trivial mistake we encourage users to retrieve
+genome file collections using the `biomartr` function `getCollection()`
+and attach the corresponding output as Supplementary Data
+to the respective genomics study to ensure computational and biological reproducibility.
+
 
 ```r
-# download the genome of Homo sapiens from refseq
-# and store the corresponding genome file in '_ncbi_downloads/genomes'
-HS.genome.refseq <- getGenome( db       = "refseq", organism = "Homo sapiens")
+# download collection for Saccharomyces cerevisiae
+getCollection( db = "refseq", 
+               organism = "Saccharomyces cerevisiae", 
+               path = file.path("refseq","Collections"))
 ```
 
-Subsequently, users can use the read_genome() function to import the genome into the R session. Users can choose to work with the genome sequence in R either as Biostrings object (`obj.type = "Biostrings"`) or data.table object (`obj.type = "data.table"`) by specifying the obj.type argument of the read_genome() function.
+Internally, the `getCollection()` function will now generate a folder named `refseq/Collection/Saccharomyces_cerevisiae`
+and will store all genome and annotation files for `Saccharomyces cerevisiae` in the same folder.
+In addition, the exact genoem and annotation version will be logged in the `doc` folder.
 
-```r
-# import downloaded genome as Biostrings object
-Human_Genome <- read_genome(file     = HS.genome.refseq)
-```
-
-```
-# look at the Biostrings object
-Human_Genome
-  A DNAStringSet instance of length 551
-          width seq                                                names               
-  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
-  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
-  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
-  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
-  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
-  ...       ... ...
-[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
-[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
-[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
-[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
-[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...
-```
-
-Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
+Internally, a text file named `doc_Saccharomyces_cerevisiae_db_refseq.txt` is generated. The information stored in this log file is structured as follows:
 
 ```
-File Name: Homo_sapiens_genomic_refseq.fna.gz
-Organism Name: Homo_sapiens
+File Name: Saccharomyces_cerevisiae_assembly_stats_refseq.txt
+Organism Name: Saccharomyces_cerevisiae
 Database: NCBI refseq
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
-GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_genomic.fna.gz
-Download_Date: Sat Oct 22 12:41:07 2016
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt
+Download_Date: Wed Jun 27 15:21:51 2018
 refseq_category: reference genome
-assembly_accession: GCF_000001405.35
-bioproject: PRJNA168
+assembly_accession: GCF_000146045.2
+bioproject: PRJNA128
 biosample: NA
-taxid: 9606
-infraspecific_name: NA
+taxid: 559292
+infraspecific_name: strain=S288C
 version_status: latest
-release_type: Patch
+release_type: Major
 genome_rep: Full
-seq_rel_date: 2016-09-26
-submitter: Genome Reference Consortium
+seq_rel_date: 2014-12-17
+submitter: Saccharomyces Genome Database
 ```
 
 In an ideal world this reference file could then be included as supplementary information in any
 life science publication that relies on genomic information so that
 reproducibility of experiments and analyses becomes achievable.
 
+
+### Genome retrieval of hundreds of genomes using only one command
+
+Download all mammalian vertebrate genomes from `NCBI RefSeq` via:
+
+```r
+# download all vertebrate genomes
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
+```
+All geneomes are stored in the folder named according to the kingdom.
+In this case `vertebrate_mammalian`. Alternatively, users can specify
+the `out.folder` argument to define a custom output folder path.
 
 ### Platforms
 
