@@ -6,7 +6,7 @@ Authors@R: person("Hajk-Georg", "Drost",
                 email = "hgd23@cam.ac.uk",
                 comment = c(ORCID = "http://orcid.org/0000-0002-1567-306X"))
 Description: Perform large scale genomic data retrieval and functional annotation retrieval. This package aims to provide users with a standardized
-                way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', RepeatMasker, and metagenome
+                way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
                 retrieval from 'NCBI RefSeq', 'NCBI Genbank', 'ENSEMBL', 'ENSEMBLGENOMES',
                 and 'UniProt' databases. Furthermore, an interface to the 'BioMart' database
                 (Smedley et al. (2009) <doi:10.1186/1471-2164-10-22>) allows users to retrieve
