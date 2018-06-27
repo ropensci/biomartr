@@ -2534,7 +2534,7 @@ getCollection( db = "refseq",
                path = file.path("refseq","Collections"))
 ```
 
-Internally, the `getCollection()` function will now generate a folder named `refseq/Collection/`
+Internally, the `getCollection()` function will now generate a folder named `refseq/Collection/Saccharomyces_erevisiae`
 and will store all genome and annotation files for `Saccharomyces cerevisiae` in the same folder.
 In addition, the exact genoem and annotation version will be logged in the `doc` folder.
 
