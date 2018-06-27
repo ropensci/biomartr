@@ -281,7 +281,7 @@ getENSEMBLGENOMES.Seq <-
                     paste0(
                         new.organism,
                         ".",
-                        json.qry.info$default_coord_system_version,
+                        rest_api_status$default_coord_system_version,
                         ".",
                         type,
                         ifelse(id.type == "none", "", "."),
