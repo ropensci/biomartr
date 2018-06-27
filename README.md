@@ -53,7 +53,7 @@ the biomartr functionality and usability in the next years. Many thanks in advan
 ## Installation
 
 ```r
-# install biomartr 0.8.0
+# install biomartr 0.8.1
 source("http://bioconductor.org/biocLite.R")
 biocLite('biomartr')
 ```
