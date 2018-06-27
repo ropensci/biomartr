@@ -4,7 +4,7 @@
 \alias{download.database.all}
 \title{Download all elements of an NCBI databse}
 \usage{
-download.database.all(db, path = "database")
+download.database.all(db, path = NULL)
 }
 \arguments{
 \item{db}{a character string specifying the database that shall be downloaded
@@ -29,7 +29,7 @@ corresponding to this database).
 # search for available NCBI databases
   listNCBIDatabases(db = "all")
 # choose database NCBI nr and download compelete database
-  download.database.all(name = "nr", path = "nr")
+  download.database.all(db = "nr", path = "nr")
 }
 }
 \seealso{
