@@ -1,4 +1,4 @@
-biomartr 0.8.0
+biomartr 0.8.1
 ===========
 
 ### New Functions
