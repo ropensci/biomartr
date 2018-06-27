@@ -10,4 +10,5 @@ README.Rmd
 ^CONDUCT\.md$
 ^FAQs\.md$
 ^codemeta\.json$
+inst/doc
 docs/
