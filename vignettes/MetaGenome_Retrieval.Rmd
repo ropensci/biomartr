@@ -59,6 +59,10 @@ new structural patterns and evolutionary insights can be obtained.
 However, the first step in any meta-genomics study is the retrieval of the genomes, proteomes, coding sequences or annotation files that shall be compared
 and investigated. For this purpose, the `meta.retrieval()` and `meta.retrieval.all()` functions allows users to perform straightforward meta-genome retrieval of hundreds of genomes, proteomes, CDS, etc in R.
 
+
+The `meta.retrieval()` function generates an `*.csv` overview file in the `doc` folder which stores genome version, date, origin, etc information for
+all downloaded organisms and can be directly used as Supplementary Data file in publications to increase computational and biological reproducibility in genomics studies.
+
 #### Getting Started
 
 The `meta.retrieval()` and `meta.retrieval.all()` functions aim to simplify the genome retrieval process for subsequent meta-genomics studies. Both functions allow to either download genomes, proteomes, CDS, etc for species within a specific kinngdom or subgroup of life (`meta.retrieval()`) or of all species of all kingdoms. Usually this step is performed with `shell` scripts. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing workflows.
