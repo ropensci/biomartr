@@ -4,7 +4,7 @@
 \alias{meta.retrieval.all}
 \title{Perform Meta-Genome Retrieval of all organisms in all kingdoms of life}
 \usage{
-meta.retrieval.all(db = "refseq", type = "genome")
+meta.retrieval.all(db = "refseq", type = "genome", reference = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -37,6 +37,14 @@ shall be retrieved:
  \item \code{type = "assemblystats"} (for genome assembly quality stats 
  file retrieval; see also \code{\link{getAssemblyStats}}).
  }}
+
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
+as either a reference genome or a representative genome. Options are:
+\itemize{
+\item \code{reference = FALSE} (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.
+\item \code{reference = TRUE}: organisms that are downloaded must be either a reference or representative genome. Thus, most genomes which are usually non-reference genomes
+will not be downloaded.
+}}
 }
 \value{
 a character vector storing the file paths of the retrieved files.
