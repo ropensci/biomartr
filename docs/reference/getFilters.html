@@ -166,37 +166,10 @@ shall be listed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># search for available datasets</span>
-<span class='fu'><a href='getMarts.html'>getMarts</a></span>()</div><div class='output co'>#&gt; # A tibble: 15 x 2
-#&gt;    mart                  version                       
-#&gt;    &lt;chr&gt;                 &lt;chr&gt;                         
-#&gt;  1 ENSEMBL_MART_ENSEMBL  Ensembl Genes 92              
-#&gt;  2 ENSEMBL_MART_MOUSE    Mouse strains 92              
-#&gt;  3 ENSEMBL_MART_SEQUENCE Sequence                      
-#&gt;  4 ENSEMBL_MART_ONTOLOGY Ontology                      
-#&gt;  5 ENSEMBL_MART_GENOMIC  Genomic features 92           
-#&gt;  6 ENSEMBL_MART_SNP      Ensembl Variation 92          
-#&gt;  7 ENSEMBL_MART_FUNCGEN  Ensembl Regulation 92         
-#&gt;  8 plants_mart           Ensembl Plants Genes 39       
-#&gt;  9 plants_variations     Ensembl Plants Variations 39  
-#&gt; 10 fungi_mart            Ensembl Fungi Genes 39        
-#&gt; 11 fungi_variations      Ensembl Fungi Variations 39   
-#&gt; 12 protists_mart         Ensembl Protists Genes 39     
-#&gt; 13 protists_variations   Ensembl Protists Variations 39
-#&gt; 14 metazoa_mart          Ensembl Metazoa Genes 39      
-#&gt; 15 metazoa_variations    Ensembl Metazoa Variations 39 </div><div class='input'><span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
-<span class='fu'>head</span>(<span class='fu'><a href='getDatasets.html'>getDatasets</a></span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; # A tibble: 10 x 3
-#&gt;    dataset                  description                              version   
-#&gt;    &lt;chr&gt;                    &lt;chr&gt;                                    &lt;chr&gt;     
-#&gt;  1 caperea_gene_ensembl     Brazilian guinea pig genes (CavAp1.0)    CavAp1.0  
-#&gt;  2 jjaculus_gene_ensembl    Lesser Egyptian jerboa genes (JacJac1.0) JacJac1.0 
-#&gt;  3 fdamarensis_gene_ensembl Damara mole rat genes (DMR_v1.0)         DMR_v1.0  
-#&gt;  4 chircus_gene_ensembl     Goat genes (ARS1)                        ARS1      
-#&gt;  5 odegus_gene_ensembl      Degu genes (OctDeg1.0)                   OctDeg1.0 
-#&gt;  6 btaurus_gene_ensembl     Cow genes (UMD3.1)                       UMD3.1    
-#&gt;  7 mcaroli_gene_ensembl     Ryukyu mouse genes (CAROLI_EIJ_v1.1)     CAROLI_EI…
-#&gt;  8 ecaballus_gene_ensembl   Horse genes (Equ Cab 2)                  Equ Cab 2 
-#&gt;  9 rnorvegicus_gene_ensembl Rat genes (Rnor_6.0)                     Rnor_6.0  
-#&gt; 10 cpalliatus_gene_ensembl  Angola colobus genes (Cang.pa_1.0)       Cang.pa_1…</div><div class='input'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
+<span class='co'># getMarts()</span>
+<span class='co'># choose database (mart): "ENSEMBL_MART_ENSEMBL"</span>
+<span class='co'># head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)</span>
+<span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
 <span class='fu'>head</span>(<span class='fu'>getFilters</span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>,
                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span>) , <span class='fl'>5</span>)</div><div class='output co'>#&gt;              name              description
 #&gt; 1 chromosome_name Chromosome/scaffold name

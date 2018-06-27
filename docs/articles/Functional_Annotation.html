@@ -136,17 +136,17 @@
 <p>Users will observe that several <code>marts</code> providing annotation for specific classes of organisms or groups of organisms are available.</p>
 <p>For our example, we will choose the <code>hsapiens_gene_ensembl</code> <code>mart</code> and list all available datasets that are element of this <code>mart</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)), <span class="dv">10</span>)     </code></pre></div>
-<pre><code>#&gt;                           dataset                                 description         version
-#&gt; 1            mcaroli_gene_ensembl        Ryukyu mouse genes (CAROLI_EIJ_v1.1) CAROLI_EIJ_v1.1
-#&gt; 2          ecaballus_gene_ensembl                     Horse genes (Equ Cab 2)       Equ Cab 2
-#&gt; 3        rnorvegicus_gene_ensembl                        Rat genes (Rnor_6.0)        Rnor_6.0
-#&gt; 4         cpalliatus_gene_ensembl          Angola colobus genes (Cang.pa_1.0)     Cang.pa_1.0
-#&gt; 5  itridecemlineatus_gene_ensembl                  Squirrel genes (SpeTri2.0)       SpeTri2.0
-#&gt; 6              mfuro_gene_ensembl                 Ferret genes (MusPutFur1.0)    MusPutFur1.0
-#&gt; 7          oanatinus_gene_ensembl                      Platypus genes (OANA5)           OANA5
-#&gt; 8         mlucifugus_gene_ensembl                  Microbat genes (Myoluc2.0)       Myoluc2.0
-#&gt; 9            pabelii_gene_ensembl                     Orangutan genes (PPYG2)           PPYG2
-#&gt; 10            rbieti_gene_ensembl Black snub-nosed monkey genes (ASM169854v1)     ASM169854v1</code></pre>
+<pre><code>#&gt;                       dataset                         description            version
+#&gt; 1    rnorvegicus_gene_ensembl                Rat genes (Rnor_6.0)           Rnor_6.0
+#&gt; 2     xmaculatus_gene_ensembl       Platyfish genes (Xipmac4.4.2)        Xipmac4.4.2
+#&gt; 3         odegus_gene_ensembl              Degu genes (OctDeg1.0)          OctDeg1.0
+#&gt; 4     ccapucinus_gene_ensembl Capuchin genes (Cebus_imitator-1.0) Cebus_imitator-1.0
+#&gt; 5  cintestinalis_gene_ensembl           C.intestinalis genes (KH)                 KH
+#&gt; 6    mnemestrina_gene_ensembl Pig-tailed macaque genes (Mnem_1.0)           Mnem_1.0
+#&gt; 7    xtropicalis_gene_ensembl             Xenopus genes (JGI 4.2)            JGI 4.2
+#&gt; 8    falbicollis_gene_ensembl       Flycatcher genes (FicAlb_1.4)         FicAlb_1.4
+#&gt; 9     mdomestica_gene_ensembl             Opossum genes (monDom5)            monDom5
+#&gt; 10    ogarnettii_gene_ensembl            Bushbaby genes (OtoGar3)            OtoGar3</code></pre>
 <p>The <code><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart()</a></code> function is a wrapper function provided by <code>biomaRt</code> to connect a selected BioMart database (<code>mart</code>) with a corresponding dataset stored within this <code>mart</code>.<br>
 We select dataset <code>hsapiens_gene_ensembl</code> and now check for available attributes (annotation data) that can be accessed for <code>Homo sapiens</code> genes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(
