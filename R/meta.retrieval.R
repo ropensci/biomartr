@@ -596,7 +596,7 @@ meta.retrieval <- function(db         = "refseq",
             }))
             
             readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(kingdom, "_summary.csv")))
-            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "doc", paste0(kingdom, "_summary.csv")),"'.")
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "documentation", paste0(kingdom, "_summary.csv")),"'.")
             
         } else {
             meta_files <- list.files(kingdom)
@@ -610,7 +610,7 @@ meta.retrieval <- function(db         = "refseq",
             }))
             
             readr::write_excel_csv(summary_log, file.path(kingdom, "documentation", paste0(kingdom, "_summary.csv")))
-            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")),"'.")
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "documentation", paste0(kingdom, "_summary.csv")),"'.")
             
         }
         
