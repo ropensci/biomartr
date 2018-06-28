@@ -2,7 +2,7 @@
 % Please edit documentation in R/getGroups.R
 \name{getGroups}
 \alias{getGroups}
-\title{Retrieve available groups for a kingdom of life}
+\title{Retrieve available groups for a kingdom of life (only available for NCBI RefSeq and NCBI Genbank)}
 \usage{
 getGroups(db = "refseq", kingdom)
 }
