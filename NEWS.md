@@ -1,6 +1,9 @@
 biomartr 0.9.0
 ===========
 
+### New Functions
+
+- New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
 ===========
