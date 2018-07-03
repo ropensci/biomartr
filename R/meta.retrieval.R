@@ -297,15 +297,15 @@ meta.retrieval <- function(db         = "refseq",
             dir.create(path, recursive = TRUE)
         }
         
-        if (!file.exists(file.path(path, "doc")))
-            dir.create(file.path(path, "doc"))
+        if (!file.exists(file.path(path, "documentation")))
+            dir.create(file.path(path, "documentation"))
     } else {
         if (!file.exists(kingdom)) {
             message("Generating folder ", kingdom, " ...")
             dir.create(kingdom, recursive = TRUE)
         }
-        if (!file.exists(file.path(kingdom, "doc")))
-            dir.create(file.path(kingdom, "doc"))
+        if (!file.exists(file.path(kingdom, "documentation")))
+            dir.create(file.path(kingdom, "documentation"))
     }
     
     paths <- vector("character", length(FinalOrganisms))
@@ -581,29 +581,29 @@ meta.retrieval <- function(db         = "refseq",
         if (!is.null(path)) {
             meta_files <- list.files(path)
             meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
-            file.rename(from = file.path(path, meta_files), to = file.path(path, "doc", meta_files))
+            file.rename(from = file.path(path, meta_files), to = file.path(path, "documentation", meta_files))
             
-            doc_tsv_files <- file.path(path,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            doc_tsv_files <- file.path(path,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
                 suppressMessages(readr::read_tsv(data))
             }))
             
-            readr::write_excel_csv(summary_log, file.path(path, "doc", paste0(kingdom, "_summary.csv")))
+            readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(kingdom, "_summary.csv")))
             message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "doc", paste0(kingdom, "_summary.csv")),"'.")
             
         } else {
             meta_files <- list.files(kingdom)
             meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
-            file.rename(from = file.path(kingdom, meta_files), to = file.path(kingdom, "doc", meta_files))
+            file.rename(from = file.path(kingdom, meta_files), to = file.path(kingdom, "documentation", meta_files))
             
-            doc_tsv_files <- file.path(kingdom,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            doc_tsv_files <- file.path(kingdom,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
                 suppressMessages(readr::read_tsv(data))
             }))
             
-            readr::write_excel_csv(summary_log, file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")))
+            readr::write_excel_csv(summary_log, file.path(kingdom, "documentation", paste0(kingdom, "_summary.csv")))
             message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")),"'.")
             
         }
@@ -621,30 +621,30 @@ meta.retrieval <- function(db         = "refseq",
         if (!is.null(path)) {
             meta_files <- list.files(path)
             meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
-            file.rename(from = file.path(path, meta_files), to = file.path(path, "doc", meta_files))
+            file.rename(from = file.path(path, meta_files), to = file.path(path, "documentation", meta_files))
             
-            doc_tsv_files <- file.path(path,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            doc_tsv_files <- file.path(path,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
                 suppressMessages(readr::read_tsv(data))
             }))
             
-            readr::write_excel_csv(summary_log, file.path(path, "doc", paste0(kingdom, "_summary.csv")))
-            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "doc", paste0(kingdom, "_summary.csv")),"'.")
+            readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(kingdom, "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(path, "documentation", paste0(kingdom, "_summary.csv")),"'.")
             
         } else {
             meta_files <- list.files(kingdom)
             meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
-            file.rename(from = file.path(kingdom, meta_files), to = file.path(kingdom, "doc", meta_files))
+            file.rename(from = file.path(kingdom, meta_files), to = file.path(kingdom, "documentation", meta_files))
             
-            doc_tsv_files <- file.path(kingdom,"doc", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            doc_tsv_files <- file.path(kingdom,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
                 suppressMessages(readr::read_tsv(data))
             }))
             
-            readr::write_excel_csv(summary_log, file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")))
-            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "doc", paste0(kingdom, "_summary.csv")),"'.")
+            readr::write_excel_csv(summary_log, file.path(kingdom, "documentation", paste0(kingdom, "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all ",kingdom," species has been stored at '",file.path(kingdom, "documentation", paste0(kingdom, "_summary.csv")),"'.")
             
         }
         
