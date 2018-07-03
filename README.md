@@ -187,6 +187,7 @@ biocLite("ropensci/biomartr")
 * `getMetaGenomeAnnotations()` : Retrieve annotation *.gff files for metagenomes from NCBI Genbank
 * `listMetaGenomes()` : List available metagenomes on NCBI Genbank
 * `getMetaGenomeSummary()` : Helper function to retrieve the assembly_summary.txt file from NCBI genbank metagenomes
+* `clean.retrieval()`: Format meta.retrieval output
 
 #### Genome Retrieval
 
