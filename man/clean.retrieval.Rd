@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.retrieval.R
 \name{clean.retrieval}
 \alias{clean.retrieval}
-\title{Format meta.retrieval output}
+\title{Format \code{\link{meta.retrieval}} output}
 \usage{
 clean.retrieval(x, gunzip = TRUE)
 }
