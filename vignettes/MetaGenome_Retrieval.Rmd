@@ -57,15 +57,14 @@ knitr::opts_chunk$set(
 The number of genome assemblies generated and stored in sequence databases is growing exponentially every year. With the availability of this growing amount of genomic data, meta-genomics studies become more and more popular. By using this bulk of genomes for comparing them to thousands of other genomes
 new structural patterns and evolutionary insights can be obtained.
 However, the first step in any meta-genomics study is the retrieval of the genomes, proteomes, coding sequences or annotation files that shall be compared
-and investigated. For this purpose, the `meta.retrieval()` and `meta.retrieval.all()` functions allows users to perform straightforward meta-genome retrieval of hundreds of genomes, proteomes, CDS, etc in R.
+and investigated. For this purpose, the `meta.retrieval()` and `meta.retrieval.all()` functions allows users to perform straightforward meta-genome retrieval of hundreds of genomes, proteomes, CDS, etc in R. Finally, in addition to the retrieved sequence information the `meta.retrieval()` and `meta.retrieval.all()` functions will
+generate a `summary file` which contains information about the genome version, genome status, submitter, etc for each organism to promote
+computational and scientific reproducibility of the meta-genomics study at hand. This `summary file` can for example be attached as `Supplementary Data` to the respective study. 
 
-
-The `meta.retrieval()` function generates an `*.csv` overview file in the `doc` folder which stores genome version, date, origin, etc information for
-all downloaded organisms and can be directly used as Supplementary Data file in publications to increase computational and biological reproducibility in genomics studies.
 
 #### Getting Started
 
-The `meta.retrieval()` and `meta.retrieval.all()` functions aim to simplify the genome retrieval process for subsequent meta-genomics studies. Both functions allow to either download genomes, proteomes, CDS, etc for species within a specific kinngdom or subgroup of life (`meta.retrieval()`) or of all species of all kingdoms. Usually this step is performed with `shell` scripts. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing workflows.
+The `meta.retrieval()` and `meta.retrieval.all()` functions aim to simplify the genome retrieval and computational reproducibility process for meta-genomics studies. Both functions allow users to either download genomes, proteomes, CDS, etc for species within a specific kingdom or subgroup of life (`meta.retrieval()`) or of all species of all kingdoms (`meta.retrieval.all()`). Before `biomartr` users had to write `shell` scripts to download respective genomic data. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing R workflows and for easier reproducibility.
 
 For example, the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package can be used with
 `meta.retrieval()` and `meta.retrieval.all()` as follows.
@@ -144,53 +143,142 @@ Download all mammalian vertebrate genomes from `NCBI RefSeq`.
 
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome", reference = FALSE)
 ```
 
-All geneomes are stored in the folder named according to the kingdom.
-In this case `vertebrate_mammalian`. Alternatively, users can specify
-the `out.folder` argument to define a custom output folder path.
+The argument `kingdom` specifies the kingdom selected with `getKingdoms()` from which
+genomes of organisms shall be retrieved. The `db` argument specifies the database
+from which respective genomes shall be downloaded. The argument `type` specifies
+that `genome assembly` files shall be retrieved. The argument `reference` indicates whether or not a genome shall be downloaded if it isn't marked in the database as either a `reference genome` or a `representative genome`. Options are:
+
+- `reference = FALSE` (__Default__): all organisms (reference, representative, and non-representative genomes) are downloaded.
+- `reference = TRUE`: organisms that are downloaded must be either a `reference` or `representative genome`. Thus, most genomes which are usually non-reference genomes will not be downloaded and the user will retrieve much less organisms than are stored in databases.
+
+When running this command all geneomes are stored in a folder which is either named according to the kingdom
+(in this case `vertebrate_mammalian`). Alternatively, users can specify
+the `out.folder` argument to define a custom output folder path. 
+
+Internally, in this example `meta.retrieval()` will generate a folder named `vertebrate_mammalian`
+in which respective genomes will be stored. In addition, the `vertebrate_mammalian`
+folder contains a folder named `documentation` which stores individual documentation
+files for each individual organism and a `summary file` which stores documentation
+for all retrieved organisms. This `summary file` can then be used as `Supplementary Data`
+in studies to promote computational reproducibility.
+
+An example documentation file of an individual organism looks like this:
+
+```
+File Name: Mus_musculus_genomic_genbank.gff.gz
+Organism Name: Mus_musculus
+Database: NCBI genbank
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/635/GCA_000001635.7_GRCm38.p5/GCA_000001635.7_GRCm38.p5_genomic.gff.gz
+Download_Date: Mon Nov 14 12:43:45 2016
+refseq_category: reference genome
+assembly_accession: GCA_000001635.7
+bioproject: PRJNA20689
+biosample: NA
+taxid: 10090
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-06-29
+submitter: Genome Reference Consortium
+```
+
+
+An example `summary file` of all organism looks like this (here we use 105 Plant species as an example):
+
+```
+# A tibble: 105 x 16
+   file_name     organism   url             database path  refseq_category
+   <chr>         <chr>      <chr>           <chr>    <chr> <chr>          
+ 1 Aegilops_tau… Aegilops_… ftp://ftp.ncbi… refseq   Prot… representative…
+ 2 Amborella_tr… Amborella… ftp://ftp.ncbi… refseq   Prot… representative…
+ 3 Ananas_comos… Ananas_co… ftp://ftp.ncbi… refseq   Prot… representative…
+ 4 Arabidopsis_… Arabidops… ftp://ftp.ncbi… refseq   Prot… representative…
+ 5 Arabidopsis_… Arabidops… ftp://ftp.ncbi… refseq   Prot… reference geno…
+ 6 Arachis_dura… Arachis_d… ftp://ftp.ncbi… refseq   Prot… representative…
+ 7 Arachis_ipae… Arachis_i… ftp://ftp.ncbi… refseq   Prot… representative…
+ 8 Asparagus_of… Asparagus… ftp://ftp.ncbi… refseq   Prot… representative…
+ 9 Auxenochlore… Auxenochl… ftp://ftp.ncbi… refseq   Prot… representative…
+10 Bathycoccus_… Bathycocc… ftp://ftp.ncbi… refseq   Prot… representative…
+# ... with 95 more rows, and 10 more variables: assembly_accession <chr>,
+#   bioproject <chr>, biosample <chr>, taxid <int>,
+#   infraspecific_name <chr>, version_status <chr>, release_type <chr>,
+#   genome_rep <chr>, seq_rel_date <date>, submitter <chr>
+```
+
+#### Restarting a corrupted download
+
+Unfortunately, when downloading large amounts of genomes the NCBI RefSeq database
+limits the number of queries from an individual IP address. This causes
+that the download process might stop or time out at a particular step.
+To overcome this limitation users can simply __re-run__ the `meta.retrieval()` command they previously executed 
+and specify the argument `restart_at_last` which has the following two options:
+
+- If `restart_at_last = TRUE` (__Default__) then `meta.retrieval()` will skip all organisms that are already present in the folder and will start downloading all remaining species (thus will pick up from where the initial download process stopped). However, this way `meta.retrieval()` will not be able to check whether already downloaded organism files are corrupted or not by checking the `md5 checksum` of the respective file. Thus, I recommend to download the last organism before `meta.retrieval()` stopped manually using `getGenome()` to make sure that the respective file is not corrupted.
+- If `restart_at_last = FALSE` then `meta.retrieval()` will start from the beginning and crawl through already downloaded organism files and check whether already downloaded organism files are corrupted or not by checking the `md5 checksum` (this procedure takes longer than `restart_at_last = TRUE`). After checking existing files the function will start downloading all remaining organisms.
+
+#### Un-zipping downloaded files
+
+After downloading genomes users can format the output of `meta.retrieval()` by first un-zipping downloaded files and renaming them for more convenient downstream data analysis (e.g. from `Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz` to `Scerevisiae.fa`).
+
+The easiest way to use 'clean.retrieval()' in combination with `meta.retrieval()` is to use the pipe operator from the `magrittr` package:
+
+```r
+library(magrittr)
+meta.retrieval(kingdom = "vertebrate_mammalian", 
+               db = "refseq", 
+               type = "genome") %>% 
+    clean.retrieval()
+```
+
+In the first step, genome assembly files are downloaded with `meta.retrieval` and
+subsequently (`%>%`) un-zipped and re-named using `clean.retrieval()`.
+
+
 
 Example `Bacteria`
 ```{r,eval=FALSE}
 # download all bacteria genomes
-meta.retrieval(kingdom = "bacteria", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "bacteria", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Viruses`
 ```{r,eval=FALSE}
 # download all virus genomes
-meta.retrieval(kingdom = "viral", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "viral", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Archaea`
 ```{r,eval=FALSE}
 # download all archaea genomes
-meta.retrieval(kingdom = "archaea", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "archaea", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Fungi`
 ```{r,eval=FALSE}
 # download all fungi genomes
-meta.retrieval(kingdom = "fungi", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "fungi", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Plants`
 ```{r,eval=FALSE}
 # download all plant genomes
-meta.retrieval(kingdom = "plant", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "plant", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Invertebrates`
 ```{r,eval=FALSE}
 # download all invertebrate genomes
-meta.retrieval(kingdom = "invertebrate", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "invertebrate", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Protozoa`
 ```{r,eval=FALSE}
 # download all invertebrate genomes
-meta.retrieval(kingdom = "protozoa", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "protozoa", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 #### Retrieval from `NCBI Genbank`
@@ -199,50 +287,50 @@ Alternatively, download all mammalian vertebrate genomes from `NCBI Genbank`, e.
 
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 Example `Bacteria`
 ```{r,eval=FALSE}
 # download all bacteria genomes
-meta.retrieval(kingdom = "bacteria", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "bacteria", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 Example `Archaea`
 ```{r,eval=FALSE}
 # download all archaea genomes
-meta.retrieval(kingdom = "archaea", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "archaea", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 Example `Fungi`
 ```{r,eval=FALSE}
 # download all fungi genomes
-meta.retrieval(kingdom = "fungi", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "fungi", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 Example `Plants`
 ```{r,eval=FALSE}
 # download all plant genomes
-meta.retrieval(kingdom = "plant", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "plant", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 Example `Invertebrates`
 ```{r,eval=FALSE}
 # download all invertebrate genomes
-meta.retrieval(kingdom = "invertebrate", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "invertebrate", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 Example `Protozoa`
 ```{r,eval=FALSE}
 # download all invertebrate genomes
-meta.retrieval(kingdom = "protozoa", db = "genbank", type = "genome")
+meta.retrieval(kingdom = "protozoa", db = "genbank", type = "genome", reference = FALSE)
 ```
 
 #### Retrieval from `ENSEMBL`
 
 ```{r,eval=FALSE}
 # download all genomes from ENSEMBL
-meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "genome")
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "genome", reference = FALSE)
 ```
 
 
@@ -253,13 +341,13 @@ Alternatively, download all species for a particular group from `ENSEBLGENOMES`
 Example Metazoa:
 ```{r,eval=FALSE}
 # download all metazoa genomes
-meta.retrieval(kingdom = "EnsemblMetazoa", db = "ensemblgenomes", type = "genome")
+meta.retrieval(kingdom = "EnsemblMetazoa", db = "ensemblgenomes", type = "genome", reference = FALSE)
 ```
 
 Example Fungi:
 ```{r,eval=FALSE}
 # download all fungi genomes
-meta.retrieval(kingdom = "EnsemblFungi", db = "ensemblgenomes", type = "genome")
+meta.retrieval(kingdom = "EnsemblFungi", db = "ensemblgenomes", type = "genome", reference = FALSE)
 ```
 
 EnsemblBacteria, EnsemblFungi, EnsemblMetazoa, EnsemblPlants, EnsemblProtists
@@ -319,7 +407,7 @@ It is also important that in both cases: `getKingdoms()` and `getGroups()` the s
 Now we choose the group `Gammaproteobacteria` and specify the `group` argument in the `meta.retrieval()` function.
 
 ```{r, eval=FALSE}
-meta.retrieval(kingdom = "bacteria", group = "Gammaproteobacteria", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "bacteria", group = "Gammaproteobacteria", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Using this command, all bacterial (`kingdom = "bacteria"`) genomes (`type = "genome"`) that belong to the group `Gammaproteobacteria` (`group = "Gammaproteobacteria"`) will be retrieved from NCBI RefSeq (`db = "refseq"`).
@@ -401,7 +489,7 @@ getGroups(db = "refseq", kingdom = "viral")
 Now we can choose `Adenoviridae` as group argument for the `meta.retrieval()` function.
 
 ```{r, eval=FALSE}
-meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = "genome")
+meta.retrieval(kingdom = "viral", group = "Adenoviridae", db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Again, by exchanging `type = "genome"` by either `type = "proteome"`, `type = "cds"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve proteome, CDS, RNA, genome assembly statistics or GFF files instead of genomes.
@@ -603,14 +691,14 @@ Download all mammalian vertebrate proteomes.
 #### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "proteome")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "proteome", reference = FALSE)
 ```
 
 
 #### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteome")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteome", reference = FALSE)
 ```
 
 
@@ -618,7 +706,7 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteom
 
 ```{r,eval=FALSE}
 # download all Ensembl proteome sequneces
-meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "proteome")
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "proteome", reference = FALSE)
 ```
 
 
@@ -626,7 +714,7 @@ meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "proteome")
 
 ```{r,eval=FALSE}
 # download all EnsemblGenomes Bacteria proteome sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "proteome")
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "proteome", reference = FALSE)
 ```
 
 
@@ -638,20 +726,20 @@ Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS da
 #### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "cds")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "cds", reference = FALSE)
 ```
 
 #### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate genomes
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "cds")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "cds", reference = FALSE)
 ```
 
 #### Retrieval from `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download all Ensembl CDS sequneces
-meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "cds")
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "cds", reference = FALSE)
 ```
 
 
@@ -659,7 +747,7 @@ meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "cds")
 
 ```{r,eval=FALSE}
 # download all EnsemblGenomes Bacteria CDS sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "cds")
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "cds", reference = FALSE)
 ```
 
 ### Retrieve GFF files
@@ -669,14 +757,14 @@ Download all mammalian vertebrate gff files.
 Example `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate gff files
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "gff")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "gff", reference = FALSE)
 ```
 
 
 Example `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate gff files
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "gff")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "gff", reference = FALSE)
 ```
 
 ### Retrieve GTF files
@@ -686,14 +774,14 @@ Download all mammalian vertebrate gtf files.
 Example `ENSEMBL`:
 ```{r,eval=FALSE}
 # download all vertebrate gff files
-meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "gtf")
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "gtf", reference = FALSE)
 ```
 
 
 Example `ENSEMBLGENOMES`:
 ```{r,eval=FALSE}
 # download all vertebrate gtf files
-meta.retrieval(kingdom = "EnsemblPlants", db = "ensemblgenomes", type = "gtf")
+meta.retrieval(kingdom = "EnsemblPlants", db = "ensemblgenomes", type = "gtf", reference = FALSE)
 ```
 
 
@@ -704,20 +792,20 @@ Download all mammalian vertebrate RNA sequences from `NCBI RefSeq` and `NCBI Gen
 #### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate RNA sequneces
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "rna")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "rna", reference = FALSE)
 ```
 
 #### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate RNA sequneces
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rna")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rna", reference = FALSE)
 ```
 
 #### Retrieval from `ENSEMBL`:
 
 ```{r,eval=FALSE}
 # download all Ensembl RNA sequneces
-meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "rna")
+meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "rna", reference = FALSE)
 ```
 
 
@@ -725,7 +813,7 @@ meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "rna")
 
 ```{r,eval=FALSE}
 # download all EnsemblGenomes Bacteria RNA sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "rna")
+meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "rna", reference = FALSE)
 ```
 
 
@@ -736,13 +824,13 @@ Download all mammalian vertebrate Repeat Masker Annotation files from `NCBI RefS
 #### Retrieval from `NCBI RefSeq`:
 ```{r,eval=FALSE}
 # download all vertebrate RNA sequneces
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "rm")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "rm", reference = FALSE)
 ```
 
 #### Retrieval from `NCBI Genbank`:
 ```{r,eval=FALSE}
 # download all vertebrate RNA sequneces
-meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rm")
+meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rm", reference = FALSE)
 ```
 
 Users can obtain alternative kingdoms using `getKingdoms()`.
@@ -757,13 +845,13 @@ available in RefSeq or Genbank, they can use the `meta.retrieval.all()` function
 Example `RefSeq`:
 ```{r,eval=FALSE}
 # download all geneomes stored in RefSeq
-meta.retrieval.all(db = "refseq", type = "genome")
+meta.retrieval.all(db = "refseq", type = "genome", reference = FALSE)
 ```
 
 Example `Genbank`:
 ```{r,eval=FALSE}
 # download all geneomes stored in Genbank
-meta.retrieval.all(db = "genbank", type = "genome")
+meta.retrieval.all(db = "genbank", type = "genome", reference = FALSE)
 ```
 
 ### Proteome Retrieval
@@ -771,14 +859,22 @@ meta.retrieval.all(db = "genbank", type = "genome")
 Example `RefSeq`:
 ```{r,eval=FALSE}
 # download all proteome stored in RefSeq
-meta.retrieval.all(db = "refseq", type = "proteome")
+meta.retrieval.all(db = "refseq", type = "proteome", reference = FALSE)
 ```
 
 Example `Genbank`:
 ```{r,eval=FALSE}
 # download all proteome stored in Genbank
-meta.retrieval.all(db = "genbank", type = "proteome")
+meta.retrieval.all(db = "genbank", type = "proteome", reference = FALSE)
 ```
 
-Again, by exchanging `type = "proteome"` by either `type = "genome"`, `type = "cds"`, `type = "rna"`, `type = "assemblystats"`, or `type = "gff"`, users can retrieve genome, CDS, RNA, genome assembly statistics or GFF files instead of proteomes
+Again, by exchanging `type = "proteome"` by either 
+
+- `type = "genome"`
+- `type = "cds"`
+- `type = "rna"`
+- `type = "assemblystats"`
+- `type = "gff"`
+
+users can retrieve genome, CDS, RNA, genome assembly statistics or GFF files instead of proteomes.
 
