@@ -140,7 +140,7 @@ files of individual species of all kingdoms of life.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>meta.retrieval.all</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>)</pre>
+    <pre class="usage"><span class='fu'>meta.retrieval.all</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,6 +176,15 @@ shall be retrieved:</p><ul>
  <code><a href='getRepeatMasker.html'>getRepeatMasker</a></code>),</p></li>
 <li><p><code>type = "assemblystats"</code> (for genome assembly quality stats 
  file retrieval; see also <code><a href='getAssemblyStats.html'>getAssemblyStats</a></code>).</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>reference</th>
+      <td><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
+as either a reference genome or a representative genome. Options are:</p><ul>
+<li><p><code>reference = FALSE</code> (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.</p></li>
+<li><p><code>reference = TRUE</code>: organisms that are downloaded must be either a reference or representative genome. Thus, most genomes which are usually non-reference genomes
+will not be downloaded.</p></li>
 </ul></td>
     </tr>
     </table>

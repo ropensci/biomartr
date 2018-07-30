@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format meta.retrieval output — clean.retrieval • biomartr</title>
+<title>Format <code><a href='meta.retrieval.html'>meta.retrieval</a></code> output — clean.retrieval • biomartr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Format meta.retrieval output — clean.retrieval" />
+<meta property="og:title" content="Format <code><a href='meta.retrieval.html'>meta.retrieval</a></code> output — clean.retrieval" />
 
 <meta property="og:description" content="Process the output of meta.retrieval by first
 un-zipping downloaded files and renaming them for more convenient downstream data analysis." />
@@ -128,7 +128,7 @@ un-zipping downloaded files and renaming them for more convenient downstream dat
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format meta.retrieval output</h1>
+    <h1>Format <code><a href='meta.retrieval.html'>meta.retrieval</a></code> output</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/clean.retrieval.R'><code>R/clean.retrieval.R</code></a></small>
     <div class="hidden name"><code>clean.retrieval.Rd</code></div>
     </div>
@@ -165,7 +165,20 @@ This function helps to format the <code><a href='meta.retrieval.html'>meta.retri
 This allows more convenient downstream analyses and visualizations.</p></li>
 </ul>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='meta.retrieval.html'>meta.retrieval</a></code></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># The easiest way to use 'clean.retrieval()' in combination with</span>
+<span class='co'># 'meta.retrieval()' is to use the pipe operator from the 'magrittr' package</span>
+<span class='fu'>library</span>(<span class='no'>magrittr</span>)
+<span class='fu'><a href='meta.retrieval.html'>meta.retrieval</a></span>(<span class='kw'>kingdom</span> <span class='kw'>=</span> <span class='st'>"vertebrate_mammalian"</span>,
+               <span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>,
+               <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>clean.retrieval</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -173,7 +186,11 @@ This allows more convenient downstream analyses and visualizations.</p></li>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1>Functional Annotation with biomartr</h1>
             
-            <h4 class="date">2018-07-03</h4>
+            <h4 class="date">2018-08-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Functional_Annotation.Rmd"><code>vignettes/Functional_Annotation.Rmd</code></a></small>
       <div class="hidden name"><code>Functional_Annotation.Rmd</code></div>
@@ -129,24 +129,24 @@
 <span class="co"># look at top 10 databases      </span>
 <span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listMarts">listMarts</a></span>(<span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>), <span class="dv">10</span>)      </code></pre></div>
 <pre><code>#&gt;                biomart               version
-#&gt; 1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 92
-#&gt; 2   ENSEMBL_MART_MOUSE      Mouse strains 92
-#&gt; 3     ENSEMBL_MART_SNP  Ensembl Variation 92
-#&gt; 4 ENSEMBL_MART_FUNCGEN Ensembl Regulation 92</code></pre>
+#&gt; 1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 93
+#&gt; 2   ENSEMBL_MART_MOUSE      Mouse strains 93
+#&gt; 3     ENSEMBL_MART_SNP  Ensembl Variation 93
+#&gt; 4 ENSEMBL_MART_FUNCGEN Ensembl Regulation 93</code></pre>
 <p>Users will observe that several <code>marts</code> providing annotation for specific classes of organisms or groups of organisms are available.</p>
 <p>For our example, we will choose the <code>hsapiens_gene_ensembl</code> <code>mart</code> and list all available datasets that are element of this <code>mart</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)), <span class="dv">10</span>)     </code></pre></div>
-<pre><code>#&gt;                        dataset                                description      version
-#&gt; 1    sboliviensis_gene_ensembl Bolivian squirrel monkey genes (SaiBol1.0)    SaiBol1.0
-#&gt; 2     xtropicalis_gene_ensembl                    Xenopus genes (JGI 4.2)      JGI 4.2
-#&gt; 3        saraneus_gene_ensembl                      Shrew genes (sorAra1)      sorAra1
-#&gt; 4     nleucogenys_gene_ensembl                    Gibbon genes (Nleu_3.0)     Nleu_3.0
-#&gt; 5          vpacos_gene_ensembl                     Alpaca genes (vicPac1)      vicPac1
-#&gt; 6      pcoquereli_gene_ensembl         Coquerel's sifaka genes (Pcoq_1.0)     Pcoq_1.0
-#&gt; 7  aplatyrhynchos_gene_ensembl                  Duck genes (BGI_duck_1.0) BGI_duck_1.0
-#&gt; 8      lchalumnae_gene_ensembl                 Coelacanth genes (LatCha1)      LatCha1
-#&gt; 9         gmorhua_gene_ensembl                        Cod genes (gadMor1)      gadMor1
-#&gt; 10        panubis_gene_ensembl              Olive baboon genes (Panu_3.0)     Panu_3.0</code></pre>
+<pre><code>#&gt;                       dataset                              description         version
+#&gt; 1       ggorilla_gene_ensembl                  Gorilla genes (gorGor4)         gorGor4
+#&gt; 2   ptroglodytes_gene_ensembl           Chimpanzee genes (Pan_tro_3.0)     Pan_tro_3.0
+#&gt; 3    scerevisiae_gene_ensembl Saccharomyces cerevisiae genes (R64-1-1)         R64-1-1
+#&gt; 4  dmelanogaster_gene_ensembl                   Fruitfly genes (BDGP6)           BDGP6
+#&gt; 5     mgallopavo_gene_ensembl               Turkey genes (Turkey_2.01)     Turkey_2.01
+#&gt; 6        mpahari_gene_ensembl      Shrew mouse genes (PAHARI_EIJ_v1.1) PAHARI_EIJ_v1.1
+#&gt; 7     ogarnettii_gene_ensembl                 Bushbaby genes (OtoGar3)         OtoGar3
+#&gt; 8     amexicanus_gene_ensembl              Cave fish genes (AstMex102)       AstMex102
+#&gt; 9       jjaculus_gene_ensembl Lesser Egyptian jerboa genes (JacJac1.0)       JacJac1.0
+#&gt; 10 dnovemcinctus_gene_ensembl              Armadillo genes (Dasnov3.0)       Dasnov3.0</code></pre>
 <p>The <code><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart()</a></code> function is a wrapper function provided by <code>biomaRt</code> to connect a selected BioMart database (<code>mart</code>) with a corresponding dataset stored within this <code>mart</code>.<br>
 We select dataset <code>hsapiens_gene_ensembl</code> and now check for available attributes (annotation data) that can be accessed for <code>Homo sapiens</code> genes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(
