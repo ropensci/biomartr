@@ -119,7 +119,8 @@ a character vector storing the file paths of the retrieved files.
 }
 \description{
 Download genomes, proteomes, cds, gff, rna, or assembly stats 
-files of all species within a kingdom of life.
+files of all species within a kingdom of life. After downloading users
+can unzip all files using \code{\link{clean.retrieval}}.
 }
 \details{
 This function aims to perform bulk retrieval of the genomes, 
@@ -171,7 +172,7 @@ meta.retrieval(kingdom = "bacteria",
 }
 }
 \seealso{
-\code{\link{meta.retrieval.all}}, \code{\link{getCollection}}
+\code{\link{meta.retrieval.all}}, \code{\link{getCollection}}, \code{\link{clean.retrieval}}
 }
 \author{
 Hajk-Georg Drost
