@@ -18,6 +18,7 @@ This funcion queries the BioMart API and returns a table
 storing all available filters for a specific dataset.
 }
 \examples{
+\dontrun{
 # search for available datasets
 # getMarts()
 # choose database (mart): "ENSEMBL_MART_ENSEMBL"
@@ -25,6 +26,7 @@ storing all available filters for a specific dataset.
 # choose dataset: "hsapiens_gene_ensembl"
 head(getFilters(mart = "ENSEMBL_MART_ENSEMBL", 
                 dataset = "hsapiens_gene_ensembl") , 5)
+}
 }
 \seealso{
 \code{\link{getMarts}}, \code{\link{getDatasets}}, 
