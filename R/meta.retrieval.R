@@ -1,6 +1,7 @@
 #' @title Perform Meta-Genome Retrieval
 #' @description Download genomes, proteomes, cds, gff, rna, or assembly stats 
-#' files of all species within a kingdom of life.
+#' files of all species within a kingdom of life. After downloading users
+#' can unzip all files using \code{\link{clean.retrieval}}.
 #' @param db a character string specifying the database from which the genome 
 #' shall be retrieved:
 #' 
@@ -145,7 +146,7 @@
 #'    db = "refseq", 
 #'    type = "genome")
 #' }
-#' @seealso \code{\link{meta.retrieval.all}}, \code{\link{getCollection}}
+#' @seealso \code{\link{meta.retrieval.all}}, \code{\link{getCollection}}, \code{\link{clean.retrieval}}
 #' @return a character vector storing the file paths of the retrieved files.
 #' @export
 
