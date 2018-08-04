@@ -59,6 +59,11 @@ clean.retrieval <- function(x, gunzip = TRUE, clean.names = TRUE) {
     }  
     
     input_files_without_appendix <- unlist(lapply(input_files, function(x) return(unlist(stringr::str_split(x, "[.]"))[1])))
+    
+    if (gunzip)
+        output_files <- paste0(tidy_name(input_files_without_appendix),".fa")
+    
+    if (!gunzip)
     output_files <- paste0(tidy_name(input_files_without_appendix),".fa.gz")
     
     if (!all(file.exists(file.path(x, input_files))))
