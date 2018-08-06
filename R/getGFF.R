@@ -256,14 +256,16 @@ getGFF <-
                message("The md5 hash of file '", md5_file_path, "' matches!")
                             
                         }, error = function(e)
-                            stop(
-                                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' 
-                                cannot be reached. Are you connected to the 
-                                internet? Is the the FTP site '",
-                                download_url,
-                                "' currently available?",
+                        {
+                            warning(
+                                "The download session seems to have timed out at the FTP site '",
+                                download_url, "'. This could be due to an overload of queries to the databases.",
+                                " Please restart this function to continue the data retrieval process or wait ",
+                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side.",
                                 call. = FALSE
-                            ))
+                            )
+                            return("Not available")
+                        })
                     }
                     
                     
