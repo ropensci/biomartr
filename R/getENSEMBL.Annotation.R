@@ -102,7 +102,7 @@ getENSEMBL.Annotation <-
                 stringr::str_to_lower(new.organism),
                 "/",
                 paste0(
-                    new.organism,
+                    stringr::str_to_title(new.organism, locale = "en"),
                     ".",
                     json.qry.info$default_coord_system_version,
                     ".",
@@ -114,7 +114,7 @@ getENSEMBL.Annotation <-
         if (file.exists(file.path(
             path,
             paste0(
-                new.organism,
+                stringr::str_to_title(new.organism, locale = "en"),
                 ".",
                 json.qry.info$default_coord_system_version,
                 ".",
@@ -128,7 +128,7 @@ getENSEMBL.Annotation <-
                 file.path(
                     path,
                     paste0(
-                        new.organism,
+                        stringr::str_to_title(new.organism, locale = "en"),
                         ".",
                         json.qry.info$default_coord_system_version,
                         ".",
@@ -145,9 +145,9 @@ getENSEMBL.Annotation <-
                                 destfile = file.path(
                                     path,
                                     paste0(
-                                        new.organism,
+                                        stringr::str_to_title(new.organism, locale = "en"),
                                         ".",
-                                json.qry.info$default_coord_system_version,
+                                        json.qry.info$default_coord_system_version,
                                         ".",
                                         ensembl.available.organisms$release[1],
                                         "_ensembl",
@@ -169,7 +169,7 @@ getENSEMBL.Annotation <-
         return(file.path(
             path,
             paste0(
-                new.organism,
+                stringr::str_to_title(new.organism, locale = "en"),
                 ".",
                 json.qry.info$default_coord_system_version,
                 ".",
