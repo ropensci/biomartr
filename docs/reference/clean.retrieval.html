@@ -21,11 +21,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -35,7 +33,6 @@
 <meta property="og:description" content="Process the output of meta.retrieval by first
 un-zipping downloaded files and renaming them for more convenient downstream data analysis." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -99,9 +96,6 @@ un-zipping downloaded files and renaming them for more convenient downstream dat
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
-    <li>
-      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -140,7 +134,7 @@ un-zipping downloaded files and renaming them for more convenient downstream dat
     
     </div>
 
-    <pre class="usage"><span class='fu'>clean.retrieval</span>(<span class='no'>x</span>, <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>clean.retrieval</span>(<span class='no'>x</span>, <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clean.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,6 +146,10 @@ un-zipping downloaded files and renaming them for more convenient downstream dat
     <tr>
       <th>gunzip</th>
       <td><p>a logical value indicating whether or not files should only be renamed (<code>gunzip = FALSE</code>) or renamed AND unzipped (<code>gunzip</code>).</p></td>
+    </tr>
+    <tr>
+      <th>clean.names</th>
+      <td><p>a logical value indicating whether or not file names shall be cleaned (= renamed). <code>clean.names = TRUE</code> (Default).</p></td>
     </tr>
     </table>
     

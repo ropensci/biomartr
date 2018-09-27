@@ -8,8 +8,8 @@
 <title>Genomic Data Retrieval • biomartr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Genomic Data Retrieval">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Genomic Data Retrieval">
 <meta property="og:description" content="Perform large scale genomic data retrieval and functional annotation retrieval. This package aims to provide users with a standardized
                 way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
                 retrieval from 'NCBI RefSeq', 'NCBI Genbank', 'ENSEMBL', 'ENSEMBLGENOMES',
@@ -74,9 +74,6 @@
     <li>
       <a href="articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
-    <li>
-      <a href="articles/repsonse.html">UNKNOWN TITLE</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -137,6 +134,14 @@
 <blockquote>
 <p>Drost HG, Paszkowski J. <strong>Biomartr: genomic data retrieval with R</strong>. <em>Bioinformatics</em> (2017) 33(8): 1216-1217. <a href="https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R">doi:10.1093/bioinformatics/btw821</a>.</p>
 </blockquote>
+</div>
+<div id="similar-work" class="section level3">
+<h3 class="hasAnchor">
+<a href="#similar-work" class="anchor"></a>Similar Work</h3>
+<p>The main difference between the <a href="http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html">BiomaRt</a> package and the <a href="https://ropensci.github.io/biomartr/">biomartr</a> package is that <code>biomartr</code> extends the <code>functional annotation retrieval</code> procedure of <code>BiomaRt</code> and <strong>in addition</strong> provides useful retrieval functions for genomes, proteomes, coding sequences, gff files, RNA sequences, Repeat Masker annotations files, and functions for the retrieval of entire databases such as <code>NCBI nr</code> etc.</p>
+<p>Please consult the <a href="https://ropensci.github.io/biomartr/#tutorials">Tutorials section</a> for more details.</p>
+<p><code>In the context of functional annotation retrieval</code> the <code>biomartr</code> package allows users to screen available marts using only the scientific name of an organism of interest instead of first searching for marts and datasets which support a particular organism of interest (which is required when using the <code>BiomaRt</code> package). Furthermore, <code>biomartr</code> allows you to search for particular topics when searching for attributes and filters. I am aware that the similar naming of the packages is unfortunate, but it arose due to historical reasons (please find a detailed explanation here: <a href="https://github.com/ropensci/biomartr/blob/master/FAQs.html" class="uri">https://github.com/ropensci/biomartr/blob/master/FAQs.md</a> and here #11).</p>
+<p>I also dedicated <a href="https://ropensci.github.io/biomartr/articles/Functional_Annotation.html">an entire vignette to compare</a> the <code>BiomaRt</code> and <code>biomartr</code> package functionality in the context of <code>Functional Annotation</code> (where their functionality overlaps which comprises about only 20% of the overall functionality of the biomartr package).</p>
 </div>
 <div id="feedback" class="section level3">
 <h3 class="hasAnchor">

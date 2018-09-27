@@ -21,11 +21,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -41,7 +39,6 @@ to databases that can be downloaded from NCBI servers and lists all available
 databases and their database version to be able to select an appropriate 
 database for download with download.database." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -104,9 +101,6 @@ database for download with download.database." />
     </li>
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
-    </li>
-    <li>
-      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
     </li>
   </ul>
 </li>
@@ -178,25 +172,32 @@ listDatabases.txt file shall be updated by remote access to NCBI.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># retrieve all versions of the NCBI 'nr' database that can be downloaded</span>
-<span class='fu'>listNCBIDatabases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"nr"</span>)</div><div class='output co'>#&gt;  [1] "nr.00.tar.gz" "nr.83.tar.gz" "nr.75.tar.gz" "nr.01.tar.gz" "nr.02.tar.gz"
-#&gt;  [6] "nr.03.tar.gz" "nr.04.tar.gz" "nr.05.tar.gz" "nr.76.tar.gz" "nr.16.tar.gz"
-#&gt; [11] "nr.54.tar.gz" "nr.55.tar.gz" "nr.56.tar.gz" "nr.06.tar.gz" "nr.15.tar.gz"
-#&gt; [16] "nr.30.tar.gz" "nr.57.tar.gz" "nr.58.tar.gz" "nr.59.tar.gz" "nr.60.tar.gz"
-#&gt; [21] "nr.61.tar.gz" "nr.62.tar.gz" "nr.63.tar.gz" "nr.64.tar.gz" "nr.65.tar.gz"
-#&gt; [26] "nr.66.tar.gz" "nr.67.tar.gz" "nr.68.tar.gz" "nr.69.tar.gz" "nr.70.tar.gz"
-#&gt; [31] "nr.71.tar.gz" "nr.72.tar.gz" "nr.73.tar.gz" "nr.74.tar.gz" "nr.07.tar.gz"
-#&gt; [36] "nr.77.tar.gz" "nr.78.tar.gz" "nr.08.tar.gz" "nr.09.tar.gz" "nr.10.tar.gz"
-#&gt; [41] "nr.79.tar.gz" "nr.80.tar.gz" "nr.81.tar.gz" "nr.82.tar.gz" "nr.84.tar.gz"
-#&gt; [46] "nr.11.tar.gz" "nr.12.tar.gz" "nr.85.tar.gz" "nr.13.tar.gz" "nr.86.tar.gz"
-#&gt; [51] "nr.87.tar.gz" "nr.14.tar.gz" "nr.88.tar.gz" "nr.89.tar.gz" "nr.28.tar.gz"
-#&gt; [56] "nr.29.tar.gz" "nr.31.tar.gz" "nr.90.tar.gz" "nr.17.tar.gz" "nr.18.tar.gz"
-#&gt; [61] "nr.19.tar.gz" "nr.20.tar.gz" "nr.21.tar.gz" "nr.22.tar.gz" "nr.23.tar.gz"
-#&gt; [66] "nr.32.tar.gz" "nr.24.tar.gz" "nr.25.tar.gz" "nr.26.tar.gz" "nr.27.tar.gz"
-#&gt; [71] "nr.33.tar.gz" "nr.34.tar.gz" "nr.35.tar.gz" "nr.36.tar.gz" "nr.37.tar.gz"
-#&gt; [76] "nr.38.tar.gz" "nr.39.tar.gz" "nr.40.tar.gz" "nr.41.tar.gz" "nr.42.tar.gz"
-#&gt; [81] "nr.43.tar.gz" "nr.44.tar.gz" "nr.45.tar.gz" "nr.46.tar.gz" "nr.47.tar.gz"
-#&gt; [86] "nr.48.tar.gz" "nr.49.tar.gz" "nr.53.tar.gz" "nr.50.tar.gz" "nr.51.tar.gz"
-#&gt; [91] "nr.52.tar.gz"</div><div class='input'>
+<span class='fu'>listNCBIDatabases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"nr"</span>)</div><div class='output co'>#&gt;   [1] "nr.00.tar.gz"  "nr.83.tar.gz"  "nr.75.tar.gz"  "nr.01.tar.gz" 
+#&gt;   [5] "nr.02.tar.gz"  "nr.03.tar.gz"  "nr.04.tar.gz"  "nr.05.tar.gz" 
+#&gt;   [9] "nr.76.tar.gz"  "nr.16.tar.gz"  "nr.54.tar.gz"  "nr.55.tar.gz" 
+#&gt;  [13] "nr.56.tar.gz"  "nr.06.tar.gz"  "nr.15.tar.gz"  "nr.30.tar.gz" 
+#&gt;  [17] "nr.57.tar.gz"  "nr.58.tar.gz"  "nr.59.tar.gz"  "nr.60.tar.gz" 
+#&gt;  [21] "nr.61.tar.gz"  "nr.62.tar.gz"  "nr.63.tar.gz"  "nr.64.tar.gz" 
+#&gt;  [25] "nr.65.tar.gz"  "nr.66.tar.gz"  "nr.67.tar.gz"  "nr.68.tar.gz" 
+#&gt;  [29] "nr.69.tar.gz"  "nr.70.tar.gz"  "nr.71.tar.gz"  "nr.72.tar.gz" 
+#&gt;  [33] "nr.73.tar.gz"  "nr.74.tar.gz"  "nr.07.tar.gz"  "nr.77.tar.gz" 
+#&gt;  [37] "nr.78.tar.gz"  "nr.08.tar.gz"  "nr.09.tar.gz"  "nr.10.tar.gz" 
+#&gt;  [41] "nr.79.tar.gz"  "nr.80.tar.gz"  "nr.81.tar.gz"  "nr.82.tar.gz" 
+#&gt;  [45] "nr.84.tar.gz"  "nr.11.tar.gz"  "nr.12.tar.gz"  "nr.85.tar.gz" 
+#&gt;  [49] "nr.13.tar.gz"  "nr.86.tar.gz"  "nr.87.tar.gz"  "nr.14.tar.gz" 
+#&gt;  [53] "nr.88.tar.gz"  "nr.89.tar.gz"  "nr.28.tar.gz"  "nr.29.tar.gz" 
+#&gt;  [57] "nr.31.tar.gz"  "nr.90.tar.gz"  "nr.91.tar.gz"  "nr.92.tar.gz" 
+#&gt;  [61] "nr.93.tar.gz"  "nr.94.tar.gz"  "nr.17.tar.gz"  "nr.18.tar.gz" 
+#&gt;  [65] "nr.19.tar.gz"  "nr.20.tar.gz"  "nr.21.tar.gz"  "nr.22.tar.gz" 
+#&gt;  [69] "nr.23.tar.gz"  "nr.32.tar.gz"  "nr.24.tar.gz"  "nr.95.tar.gz" 
+#&gt;  [73] "nr.96.tar.gz"  "nr.97.tar.gz"  "nr.98.tar.gz"  "nr.100.tar.gz"
+#&gt;  [77] "nr.99.tar.gz"  "nr.25.tar.gz"  "nr.26.tar.gz"  "nr.27.tar.gz" 
+#&gt;  [81] "nr.33.tar.gz"  "nr.34.tar.gz"  "nr.35.tar.gz"  "nr.36.tar.gz" 
+#&gt;  [85] "nr.37.tar.gz"  "nr.38.tar.gz"  "nr.39.tar.gz"  "nr.40.tar.gz" 
+#&gt;  [89] "nr.41.tar.gz"  "nr.42.tar.gz"  "nr.43.tar.gz"  "nr.44.tar.gz" 
+#&gt;  [93] "nr.45.tar.gz"  "nr.46.tar.gz"  "nr.47.tar.gz"  "nr.48.tar.gz" 
+#&gt;  [97] "nr.49.tar.gz"  "nr.53.tar.gz"  "nr.50.tar.gz"  "nr.51.tar.gz" 
+#&gt; [101] "nr.52.tar.gz" </div><div class='input'>
 # analogous:
 # listNCBIDatabases(db = "cdd")
 # listNCBIDatabases(db = "nt")
