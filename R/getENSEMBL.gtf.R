@@ -116,7 +116,8 @@ getENSEMBL.gtf <-
                                 stringr::str_to_lower(new.organism),
                                 "/",
                                 paste0(
-                                        new.organism,
+                                        stringr::str_to_title(string = new.organism, 
+                                                              local = "en"),
                                         ".",
                                         json.qry.info$default_coord_system_version,
                                         ".",
@@ -128,7 +129,8 @@ getENSEMBL.gtf <-
                 if (file.exists(file.path(
                         path,
                         paste0(
-                                new.organism,
+                                stringr::str_to_title(string = new.organism, 
+                                                      locale = "en"),
                                 ".",
                                 json.qry.info$default_coord_system_version,
                                 ".",
@@ -142,7 +144,8 @@ getENSEMBL.gtf <-
                                 file.path(
                                         path,
                                         paste0(
-                                                new.organism,
+                                                stringr::str_to_title(string = new.organism, 
+                                                                      locale = "en"),
                                                 ".",
                                                 json.qry.info$default_coord_system_version,
                                                 ".",
@@ -159,7 +162,8 @@ getENSEMBL.gtf <-
                                                 destfile = file.path(
                                                         path,
                                                         paste0(
-                                                                new.organism,
+                                                                stringr::str_to_title(string = new.organism, 
+                                                                                      local = "en"),
                                                                 ".",
                                                                 json.qry.info$default_coord_system_version,
                                                                 ".",
@@ -183,7 +187,8 @@ getENSEMBL.gtf <-
                 return(file.path(
                         path,
                         paste0(
-                                new.organism,
+                                stringr::str_to_title(string = new.organism, 
+                                                      local = "en"),
                                 ".",
                                 json.qry.info$default_coord_system_version,
                                 ".",

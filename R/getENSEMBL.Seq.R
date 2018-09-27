@@ -74,7 +74,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                 type,
                 "/",
                 paste0(
-                    new.organism,
+                    stringr::str_to_title(new.organism, locale = "en"),
                     ".",
                     rest_api_status$default_coord_system_version,
                     ".",
@@ -95,7 +95,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
         if (file.exists(file.path(
             path,
             paste0(
-                new.organism,
+                stringr::str_to_title(new.organism, locale = "en"),
                 ".",
                 rest_api_status$default_coord_system_version,
                 ".",
@@ -108,7 +108,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             message("File ",file.path(
                 path,
                 paste0(
-                    new.organism,
+                    stringr::str_to_title(new.organism, locale = "en"),
                     ".",
                     rest_api_status$default_coord_system_version,
                     ".",
@@ -121,7 +121,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
             return(file.path(
                 path,
                 paste0(
-                    new.organism,
+                    stringr::str_to_title(new.organism, locale = "en"),
                     ".",
                     rest_api_status$default_coord_system_version,
                     ".",
@@ -151,7 +151,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", path) {
                 return(file.path(
                     path,
                     paste0(
-                        new.organism,
+                        stringr::str_to_title(new.organism, locale = "en"),
                         ".",
                         rest_api_status$default_coord_system_version,
                         ".",
