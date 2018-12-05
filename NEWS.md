@@ -3,13 +3,15 @@ biomartr 0.9.0
 
 ### New Functions
 
-- New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output
+- New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output (find out more here: https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files)
 
 ### New Features of Existing Functions 
 
 - the default value of argument `reference` in `meta.retrieval()` changed from `reference = TRUE` to `reference = FALSE`.
 This way all genomes (reference AND non-reference) genomes will be downloaded by default. This is what users seem to prefer.
-
+- `getCollection()` now also retrieves `GTF` files when `db = 'ensembl'` or `db = 'ensemblgenomes'`
+- `getAssemblyStats()` now also performs md5 checksum test
+- all md5 checksum tests now retrieve the new md5checkfile format from NCBI RefSeq and Genbank
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
 ===========
