@@ -56,13 +56,16 @@ getCollection <-
                  path = file.path("_ncbi_downloads","collection")
         ) {
         
+                
         new_name <- stringr::str_replace_all(organism," ","_")
             
         if (!file.exists(file.path(path, new_name)))
             dir.create(file.path(path, new_name), recursive = TRUE)
         
         path <- file.path(path, new_name)
-            
+        
+        message("Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
+        
         # retrieve genome assembly
         species_genome <-
                 getGenome(
@@ -92,13 +95,22 @@ getCollection <-
                 )
         
         # retrieve corresponding gff file
-        species_cds <-
+        species_gff <-
                 getGFF(
                         db = db,
                         organism = organism,
                         reference = reference,
                         path = path
                 )
+        
+        if (is.element(db, c("ensembl", "ensemblgenomes"))) {
+                species_gtf <-
+                        getGTF(
+                                db = db,
+                                organism = organism,
+                                path = path
+                        )  
+        }
         
         # retrieve RNA
         species_rna <-
@@ -208,15 +220,6 @@ getCollection <-
                 message("Collection retrieval finished successfully!")
                 message("\n")
                 
-                cat(paste0(
-                        "We retrieved the genome assembly and checked the annotation for '",
-                        organism,
-                        "' (database: ",
-                        tsv_file$database,
-                        ", accession: ",
-                        tsv_file$assembly_accession,
-                        ") using the biomartr R package (Drost and Paszkowski, 2017)."
-                ))
         }
         
         
