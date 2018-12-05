@@ -243,13 +243,15 @@ getGenome <-
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                       file_name == paste0("./", paste0(
+                                       file_name == paste0(" ./", paste0(
                                            basename(FoundOrganism$ftp_path),
                                            "_genomic.fna.gz"
                                        )))$md5
                             
                             message("Checking md5 hash of file: ", 
                                     md5_file_path , " ...")
+                            
+                            
                             if (!(tools::md5sum(file.path(
                                 path,
                                 paste0(local.org, "_genomic_", db, ".fna.gz")
@@ -262,9 +264,8 @@ getGenome <-
                                         collapse = ""
                                     )
                                 )
-                            unlink(md5_file_path)
+                   unlink(md5_file_path)         
             message("The md5 hash of file '", md5_file_path, "' matches!")
-                            
                         }, error = function(e) {
                             warning(
                                 "The download session seems to have timed out at the FTP site '",
