@@ -231,7 +231,7 @@ getGFF <-
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                            file_name == paste0("./", paste0(
+                                            file_name == paste0(" ./", paste0(
                                             basename(FoundOrganism$ftp_path),
                                                          "_genomic.gff.gz"
                                                      )))$md5
