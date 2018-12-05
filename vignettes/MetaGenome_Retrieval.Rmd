@@ -224,7 +224,7 @@ and specify the argument `restart_at_last` which has the following two options:
 
 After downloading genomes users can format the output of `meta.retrieval()` by first un-zipping downloaded files and renaming them for more convenient downstream data analysis (e.g. from `Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz` to `Scerevisiae.fa`).
 
-The easiest way to use 'clean.retrieval()' in combination with `meta.retrieval()` is to use the pipe operator from the `magrittr` package:
+The easiest way to use `clean.retrieval()` in combination with `meta.retrieval()` is to use the pipe operator from the `magrittr` package:
 
 ```r
 library(magrittr)
