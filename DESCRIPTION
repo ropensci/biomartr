@@ -33,7 +33,9 @@ Imports:
     httr (>= 0.6.1),
     stringr (>= 0.6.2),
     purrr,
-    R.utils
+    R.utils,
+    philentropy,
+    fs
 Suggests:
     knitr (>= 1.6),
     rmarkdown (>= 0.3.3),
@@ -45,7 +47,7 @@ License: GPL-2
 LazyData: true
 URL: https://github.com/ropensci/biomartr
 BugReports: https://github.com/ropensci/biomartr/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Encoding: UTF-8
 X-schema.org-keywords: BioMart, genomic-data-retrieval, annotation-retrieval, database-retrieval, NCBI, ENSEMBL, biological-data-retrieval 
 X-schema.org-applicationCategory: Data Access 
