@@ -70,7 +70,7 @@ install.packages("biomartr", dependencies = TRUE)
 
 ### Collection Retrieval
 
-The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats)
+The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats files)
 will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file
 and was generated using the same genome assembly version. One aspect of why genomics studies
 fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files
@@ -83,9 +83,7 @@ to the respective genomics study to ensure computational and biological reproduc
 
 ```r
 # download collection for Saccharomyces cerevisiae
-getCollection( db = "refseq", 
-               organism = "Saccharomyces cerevisiae", 
-               path = file.path("refseq","Collections"))
+biomartr::getCollection( db = "refseq", organism = "Saccharomyces cerevisiae")
 ```
 
 Internally, the `getCollection()` function will now generate a folder named `refseq/Collection/Saccharomyces_cerevisiae`
