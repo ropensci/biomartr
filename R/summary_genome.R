@@ -1,6 +1,7 @@
 #' @title Retrieve summary statistics for a genome assembly file
 #' @description A summary statistics of specific genome features is returned.
 #' @param file file path to a genome assembly file in \code{fasta} format.
+#' @param organism character string specifying the organism at hand.
 #' @author Hajk-Georg Drost
 #' @details 
 #' The summary statistics include:
@@ -17,14 +18,10 @@
 #' (median entropy over all individual chromosome entropies)}
 #' @seealso \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
 #' @export 
-genome_summary <- function(file) {
+summary_genome <- function(file,
+                           organism) {
         if (!file.exists(file))
                 stop("Please provide a valid file path to your genome assembly file.", call. = FALSE)
-        
-        organism <- basename(file)
-        stringr::str_replace(organism, "[.]fa","")
-        stringr::str_replace(organism, "[.]fas","")
-        stringr::str_replace(organism, "[.]fasta","")
         
         genome_seq <- Biostrings::readDNAStringSet(filepath = file, format = "fasta")
         # determine letter frequency as probablity distr (relative frequency of nucleotides) 
