@@ -46,6 +46,7 @@ getCDS <-
              organism,
              reference = TRUE,
              path = file.path("_ncbi_downloads", "CDS")) {
+            
         if (!is.element(db, c("refseq", "genbank", 
                               "ensembl", "ensemblgenomes")))
             stop(
@@ -149,16 +150,16 @@ getCDS <-
                 organism <-
                     stringr::str_replace_all(organism, " ", "_")
                 
-                download_url <-
-                    paste0(
-                        FoundOrganism$ftp_path,
-                        "/",
-                        paste0(
-                            basename(FoundOrganism$ftp_path),
-                            "_cds_from_genomic.fna.gz"
-                        )
-                    )
-                
+                        download_url <-
+                                paste0(
+                                        FoundOrganism$ftp_path,
+                                        "/",
+                                        paste0(
+                                                basename(FoundOrganism$ftp_path),
+                                                "_cds_from_genomic.fna.gz"
+                                        )
+                                )
+        
                 local.org <-
                     stringr::str_replace_all(organism, "-", "_")
                 local.org <-
