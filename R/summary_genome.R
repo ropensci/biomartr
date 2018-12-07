@@ -16,6 +16,11 @@
 #' nucleotides in the genome assembly file
 #' \item \code{genome_entropy}: The \code{Shannon Entropy} of the genome assembly file
 #' (median entropy over all individual chromosome entropies)}
+#' \item \code{gc_abs}: The absolute number of GC's 
+#' (over all chromosomes/scaffolds/contigs) in the genome assembly file
+#' \item \code{gc_perc}: The percentage (relative frequency) of GC's 
+#' (over all chromosomes/scaffolds/contigs) compared to the total number of 
+#' nucleotides in the genome assembly file
 #' @seealso \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
 #' @export 
 summary_genome <- function(file,
@@ -34,12 +39,20 @@ summary_genome <- function(file,
         # compute genome size in Mega base pairs
         genome_size_nucl_mbp <-
                 sum(as.numeric(genome_seq@ranges@width)) / 1000000
+        
+        # total number of all nucleotides in the genome
+        length_all_nucl <- sum(as.numeric(genome_seq@ranges@width))
         # count absolute number of NNN's in genome
         NNN_abs <- sum(as.numeric(Biostrings::vcountPattern("N", genome_seq)))
         
         # relative frequency of NNN's in genome
-        NNN_freq <-
-                sum(as.numeric(Biostrings::vcountPattern("N", genome_seq))) / sum(as.numeric(genome_seq@ranges@width))
+        NNN_freq <- NNN_abs / length_all_nucl
+        
+        # count absolute number of GC's in genome
+        GC_abs <- sum(as.numeric(Biostrings::vcountPattern("GC", genome_seq)))
+        
+        # relative frequency of GC's in genome
+        GC_freq <- GC_abs / length_all_nucl
         
         # compute N50 of genome assembly
         genome_N50 <- Biostrings::N50(Biostrings::width(genome_seq)) / 1000000
@@ -50,7 +63,9 @@ summary_genome <- function(file,
                               n_seqs = length(genome_seq),
                               nnn_abs = NNN_abs,
                               nnn_perc = NNN_freq,
-                              genome_entropy = genome_entropy
+                              genome_entropy = genome_entropy,
+                              gc_abs = GC_abs,
+                              gc_perc = GC_freq
                               )
         
         return(res)
