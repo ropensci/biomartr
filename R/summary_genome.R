@@ -9,16 +9,16 @@
 #' \item \code{genome_size_mbp}: Genome size in mega base pairs
 #' \item \code{n50_mbp}: The N50 contig size of the genome assembly in mega base pairs
 #' \item \code{n_seqs}: The number of chromosomes/scaffolds/contigs of the genome assembly file
-#' \item \code{nnn_abs}: The absolute number of NNN's 
+#' \item \code{n_nnn}: The absolute number of NNN's 
 #' (over all chromosomes/scaffolds/contigs) in the genome assembly file
-#' \item \code{nnn_perc}: The percentage (relative frequency) of NNN's 
+#' \item \code{rel_nnn}: The percentage (relative frequency) of NNN's 
 #' (over all chromosomes/scaffolds/contigs) compared to the total number of 
 #' nucleotides in the genome assembly file
 #' \item \code{genome_entropy}: The \code{Shannon Entropy} of the genome assembly file
 #' (median entropy over all individual chromosome entropies)}
-#' \item \code{gc_abs}: The absolute number of GC's 
+#' \item \code{n_gc}: The total number of GC's 
 #' (over all chromosomes/scaffolds/contigs) in the genome assembly file
-#' \item \code{gc_perc}: The percentage (relative frequency) of GC's 
+#' \item \code{rel_gc}: The (relative frequency) of GC's 
 #' (over all chromosomes/scaffolds/contigs) compared to the total number of 
 #' nucleotides in the genome assembly file
 #' @seealso \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
@@ -61,11 +61,11 @@ summary_genome <- function(file,
                               genome_size_mbp = genome_size_nucl_mbp,
                               n50_mbp = genome_N50,
                               n_seqs = length(genome_seq),
-                              nnn_abs = NNN_abs,
-                              nnn_perc = NNN_freq,
+                              n_nnn = NNN_abs,
+                              rel_nnn = NNN_freq,
                               genome_entropy = genome_entropy,
-                              gc_abs = GC_abs,
-                              gc_perc = GC_freq
+                              n_gc = GC_abs,
+                              rel_gc = GC_freq
                               )
         
         return(res)
