@@ -27,6 +27,11 @@ The summary statistics include:
 nucleotides in the genome assembly file
 \item \code{genome_entropy}: The \code{Shannon Entropy} of the genome assembly file
 (median entropy over all individual chromosome entropies)}
+\item \code{gc_abs}: The absolute number of GC's 
+(over all chromosomes/scaffolds/contigs) in the genome assembly file
+\item \code{gc_perc}: The percentage (relative frequency) of GC's 
+(over all chromosomes/scaffolds/contigs) compared to the total number of 
+nucleotides in the genome assembly file
 }
 \seealso{
 \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
