@@ -20,16 +20,16 @@ The summary statistics include:
 \item \code{genome_size_mbp}: Genome size in mega base pairs
 \item \code{n50_mbp}: The N50 contig size of the genome assembly in mega base pairs
 \item \code{n_seqs}: The number of chromosomes/scaffolds/contigs of the genome assembly file
-\item \code{nnn_abs}: The absolute number of NNN's 
+\item \code{n_nnn}: The absolute number of NNN's 
 (over all chromosomes/scaffolds/contigs) in the genome assembly file
-\item \code{nnn_perc}: The percentage (relative frequency) of NNN's 
+\item \code{rel_nnn}: The percentage (relative frequency) of NNN's 
 (over all chromosomes/scaffolds/contigs) compared to the total number of 
 nucleotides in the genome assembly file
 \item \code{genome_entropy}: The \code{Shannon Entropy} of the genome assembly file
 (median entropy over all individual chromosome entropies)}
-\item \code{gc_abs}: The absolute number of GC's 
+\item \code{n_gc}: The total number of GC's 
 (over all chromosomes/scaffolds/contigs) in the genome assembly file
-\item \code{gc_perc}: The percentage (relative frequency) of GC's 
+\item \code{rel_gc}: The (relative frequency) of GC's 
 (over all chromosomes/scaffolds/contigs) compared to the total number of 
 nucleotides in the genome assembly file
 }
