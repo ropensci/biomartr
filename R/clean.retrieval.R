@@ -45,7 +45,7 @@ clean.retrieval <- function(x, gunzip = TRUE, clean.names = TRUE) {
     find_doc <- which(stringr::str_detect(folder_files, "doc_"))
     find_md5 <- which(stringr::str_detect(folder_files, "md5checksum"))
     find_documentaion <- which(stringr::str_detect(folder_files, "documentation"))
-    find_unzipped_files <- which(stringr::str_detect(folder_files, "[.]f*"))
+    find_unzipped_files <- which(stringr::str_detect(folder_files, "[.]*a$"))
         
     if (length(c(find_doc, find_md5, find_documentaion, find_unzipped_files)) > 0) {
         folder_files_reduced <- folder_files[-c(find_doc, find_md5, find_documentaion, find_unzipped_files)]
