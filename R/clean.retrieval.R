@@ -36,7 +36,7 @@ clean.retrieval <- function(x, gunzip = TRUE, clean.names = TRUE) {
     if (!gunzip)
         message("Cleaning file names ...")
     
-    folder_files <- list.files(x)
+    folder_files <- list.files(dirname(x)[1])
     
     if (length(folder_files) == 0)
         stop("Unfortunately, your specified folder '", x, "' does not include any files.", call. = FALSE)
