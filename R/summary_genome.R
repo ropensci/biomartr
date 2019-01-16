@@ -21,6 +21,7 @@
 #' \item \code{rel_gc}: The (relative frequency) of GC's 
 #' (over all chromosomes/scaffolds/contigs) compared to the total number of 
 #' nucleotides in the genome assembly file
+#' }
 #' @seealso \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
 #' @export 
 summary_genome <- function(file,
