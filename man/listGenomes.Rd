@@ -4,8 +4,7 @@
 \alias{listGenomes}
 \title{List All Available Genomes}
 \usage{
-listGenomes(db = "refseq", type = "all", subset = NULL,
-  details = FALSE)
+listGenomes(db = "refseq", type = "all", subset = NULL, details = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database for which genome 
