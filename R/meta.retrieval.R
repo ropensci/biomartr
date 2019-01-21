@@ -372,9 +372,11 @@ meta.retrieval <- function(db         = "refseq",
     
     if (length(.existingOrgs) > 0) {
         if (restart_at_last) {
-            message("Skipping already downloaded species: ", paste0(.existingOrgs, collapse = ", "))
             FinalOrganisms <- dplyr::setdiff(FinalOrganisms, .existingOrgs)
-            message("\n")
+            if (length(FinalOrganisms) > 0) {
+                message("Skipping already downloaded species: ", paste0(.existingOrgs, collapse = ", "))
+                message("\n")   
+            }
         }
     }
 
