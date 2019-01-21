@@ -3,23 +3,19 @@
 #' @param file file path to a genome assembly file in \code{fasta} format.
 #' @param organism character string specifying the organism at hand.
 #' @author Hajk-Georg Drost
-#' @details 
-#' The summary statistics include:
+#' @details The summary statistics include: 
 #' \itemize{
 #' \item \code{genome_size_mbp}: Genome size in mega base pairs
 #' \item \code{n50_mbp}: The N50 contig size of the genome assembly in mega base pairs
 #' \item \code{n_seqs}: The number of chromosomes/scaffolds/contigs of the genome assembly file
-#' \item \code{n_nnn}: The absolute number of NNN's 
-#' (over all chromosomes/scaffolds/contigs) in the genome assembly file
-#' \item \code{rel_nnn}: The percentage (relative frequency) of NNN's 
-#' (over all chromosomes/scaffolds/contigs) compared to the total number of 
+#' \item \code{n_nnn}: The absolute number of NNNs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+#' \item \code{rel_nnn}: The percentage (relative frequency) of NNNs (over all chromosomes or scaffolds or contigs) compared to the total number of 
 #' nucleotides in the genome assembly file
-#' \item \code{genome_entropy}: The \code{Shannon Entropy} of the genome assembly file
-#' (median entropy over all individual chromosome entropies)}
-#' \item \code{n_gc}: The total number of GC's 
-#' (over all chromosomes/scaffolds/contigs) in the genome assembly file
-#' \item \code{rel_gc}: The (relative frequency) of GC's 
-#' (over all chromosomes/scaffolds/contigs) compared to the total number of 
+#' \item \code{genome_entropy}: The \code{Shannon Entropy} of the genome assembly file (median entropy over all individual chromosome entropies)
+#' \item \code{n_gc}: The total number of GCs 
+#' (over all chromosomes or scaffolds or contigs) in the genome assembly file
+#' \item \code{rel_gc}: The (relative frequency) of GCs 
+#' (over all chromosomes or scaffolds or contigs) compared to the total number of 
 #' nucleotides in the genome assembly file
 #' }
 #' @seealso \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
