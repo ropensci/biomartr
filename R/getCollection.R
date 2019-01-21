@@ -74,7 +74,7 @@ getCollection <-
                         reference = reference,
                         path = path
                 )
-        
+        message("\n")
         # retrieve proteome 
         species_proteome <-
                 getProteome(
@@ -84,7 +84,7 @@ getCollection <-
                         path = path
                 )
         
-        
+        message("\n")
         # retrieve coding sequences
         species_cds <-
                 getCDS(
@@ -93,7 +93,7 @@ getCollection <-
                         reference = reference,
                         path = path
                 )
-        
+        message("\n")
         # retrieve corresponding gff file
         species_gff <-
                 getGFF(
@@ -102,14 +102,15 @@ getCollection <-
                         reference = reference,
                         path = path
                 )
-        
+        message("\n")
         if (is.element(db, c("ensembl", "ensemblgenomes"))) {
                 species_gtf <-
                         getGTF(
                                 db = db,
                                 organism = organism,
                                 path = path
-                        )  
+                        )
+                message("\n")
         }
         
         # retrieve RNA
@@ -120,6 +121,7 @@ getCollection <-
                         reference = reference,
                         path = path
                 )
+        message("\n")
         
         if (is.element(db, c("refseq", "genbank"))) {
                 # retrieve RepeatMasker output
@@ -130,6 +132,7 @@ getCollection <-
                                 reference = reference,
                                 path = path
                         )
+                message("\n")
                 
                 # retrieve assembly stats
                 species_stats <-
