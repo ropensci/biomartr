@@ -5,7 +5,7 @@
 \title{Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats}
 \usage{
 getCollection(db = "refseq", organism, reference = TRUE,
-  path = file.path("_ncbi_downloads", "collection"))
+  path = file.path("_db_downloads", "collections"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the collection 
@@ -28,7 +28,7 @@ shall be retrieved:
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding collection shall be stored. Default is 
-\code{path} = \code{file.path("_ncbi_downloads","collection")}.}
+\code{path} = \code{file.path("_db_downloads","collections")}.}
 }
 \value{
 File path to downloaded genome.
@@ -61,7 +61,7 @@ no download process will be performed.
 # and store the corresponding genome file in '_ncbi_downloads/collection'
  getCollection( db       = "refseq", 
              organism = "Arabidopsis thaliana", 
-             path = file.path("_ncbi_downloads","collection"))
+             path = file.path("_db_downloads","collections"))
 }
 
 }
