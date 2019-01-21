@@ -22,7 +22,7 @@
 #' @param reference a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome. 
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding collection shall be stored. Default is 
-#' \code{path} = \code{file.path("_ncbi_downloads","collection")}.
+#' \code{path} = \code{file.path("_db_downloads","collections")}.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -42,7 +42,7 @@
 #' # and store the corresponding genome file in '_ncbi_downloads/collection'
 #'  getCollection( db       = "refseq", 
 #'              organism = "Arabidopsis thaliana", 
-#'              path = file.path("_ncbi_downloads","collection"))
+#'              path = file.path("_db_downloads","collections"))
 #' }
 #' 
 #' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
@@ -53,18 +53,22 @@ getCollection <-
         function(db = "refseq",
                  organism,
                  reference = TRUE,
-                 path = file.path("_ncbi_downloads","collection")
+                 path = file.path("_db_downloads","collections")
         ) {
         
-                
+        message("Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
+            
+        org_exists <- is.genome.available(db = "refseq", organism, details = TRUE)   
+        
+        if (isFALSE(org_exists) || length(org_exists) == 0)
+            stop("No entry was found for organism ",organism,". Could the name be misspelled?",  call. = FALSE)
+        
         new_name <- stringr::str_replace_all(organism," ","_")
             
-        if (!file.exists(file.path(path, new_name)))
-            dir.create(file.path(path, new_name), recursive = TRUE)
+        if (!file.exists(file.path(path, db, new_name)))
+            dir.create(file.path(path, db, new_name), recursive = TRUE)
         
-        path <- file.path(path, new_name)
-        
-        message("Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
+        path <- file.path(path, db, new_name)
         
         # retrieve genome assembly
         species_genome <-
