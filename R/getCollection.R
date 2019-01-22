@@ -56,6 +56,7 @@ getCollection <-
                  path = file.path("_db_downloads","collections")
         ) {
         
+        new_name <- stringr::str_replace_all(organism," ","_")
         message("Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
             
         org_exists <- is.genome.available(db = "refseq", organism, details = TRUE)   
@@ -63,8 +64,7 @@ getCollection <-
         if (isFALSE(org_exists) || length(org_exists) == 0)
             stop("No entry was found for organism ",organism,". Could the name be misspelled?",  call. = FALSE)
         
-        new_name <- stringr::str_replace_all(organism," ","_")
-            
+
         if (!file.exists(file.path(path, db, new_name)))
             dir.create(file.path(path, db, new_name), recursive = TRUE)
         
