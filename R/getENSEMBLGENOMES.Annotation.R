@@ -63,11 +63,8 @@ getENSEMBLGENOMES.Annotation <-
      "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
                     )
             }, error = function(e)
-                stop(
-                    "The API 'http://rest.ensemblgenomes.org' does not seem to 
-                    work properly. Are you connected to the internet? 
-                    Is the homepage 'http://rest.ensemblgenomes.org' 
-                    currently available?",
+                warning(
+                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
                     call. = FALSE
                 ))
             
@@ -96,9 +93,7 @@ getENSEMBLGENOMES.Annotation <-
             warning(
                 "Unfortunately organism '",
                 organism,
-                "' is not available at ENSEMBL. Please check whether or not the 
-            organism name is typed correctly. Thus, download of this species
-                has been omitted."
+                "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly. Thus, download of this species has been omitted."
             )
             return(FALSE)
         }
@@ -114,10 +109,8 @@ getENSEMBLGENOMES.Annotation <-
                     )
                 )
         }, error = function(e)
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work 
-                properly. Are you connected to the internet? Is the homepage 
-                'http://rest.ensemblgenomes.org' currently available?",
+            warning(
+                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
                 call. = FALSE
             ))
         
@@ -135,10 +128,8 @@ getENSEMBLGENOMES.Annotation <-
  "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
                 )
         }, error = function(e)
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work 
-                properly. Are you connected to the internet? Is the homepage 
-                'http://rest.ensemblgenomes.org' currently available?",
+            warning(
+                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
                 call. = FALSE
             ))
         
