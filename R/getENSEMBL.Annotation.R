@@ -140,7 +140,6 @@ getENSEMBL.Annotation <-
                 " exists already. Thus, download has been skipped."
             )
         } else {
-            tryCatch({
                 custom_download(ensembl.qry,
                                 destfile = file.path(
                                     path,
@@ -155,15 +154,6 @@ getENSEMBL.Annotation <-
                                     )
                                 ),
                                 mode = "wb")
-            }, error = function(e)
-                stop(
-                    "The FTP site of ENSEMBL 
-                    'ftp://ftp.ensembl.org/pub/current_gff3/' does not seem to 
-                    work properly. Are you connected to the internet? 
-                    Is the site 'ftp://ftp.ensembl.org/pub/current_gff3/' or 
-                    'http://rest.ensembl.org' currently available?",
-                    call. = FALSE
-                ))
         }
         
         return(file.path(
