@@ -25,8 +25,7 @@ getENSEMBLGENOMES.Seq <-
         
         if (is.taxid(organism))
             stop("Unfortunately, taxid retrieval is not yet implemented for ENSEMBLGENOMES...", call. = FALSE)
-            
-        
+
         
         if ( !suppressMessages(is.genome.available(organism = organism, db = "ensemblgenomes", details = FALSE)) ) {
             warning("Unfortunately organism '", organism, "' is not available at ENSEMBLGENOMES. ",
@@ -321,5 +320,6 @@ getENSEMBLGENOMES.Seq <-
                 ".fa.gz"
             )
         ))
+        
         }
     }
