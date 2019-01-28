@@ -17,97 +17,54 @@ getENSEMBL.gtf <-
                         stop("Please a 'type' argument supported by this function: 
                              'dna', 'cds', 'pep'.")
                 
-                # test if REST API is responding
-                is.ensembl.alive()
-                
-                new.organism <- stringr::str_replace_all(organism, " ", "_")
-                
-                # if (file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-                #     ensembl.available.organisms <-
-                #                          readr::read_delim(
-                #                           file.path(tempdir(), "ensembl_summary.txt"),
-                #                              col_names = c(
-                #                                  "division",
-                #                                  "taxon_id",
-                #                                  "name",
-                #                                  "release",
-                #                                  "display_name",
-                #                                  "accession",
-                #                                  "common_name",
-                #                                  "assembly"
-                #                              ),
-                #                              col_types = readr::cols(
-                #                                  division = readr::col_character(),
-                #                                  taxon_id = readr::col_integer(),
-                #                                  name = readr::col_character(),
-                #                                  release = readr::col_integer(),
-                #                                 display_name = readr::col_character(),
-                #                                  accession = readr::col_character(),
-                #                                  common_name = readr::col_character(),
-                #                                  assembly = readr::col_character()
-                #                              ),
-                #                              comment = "#",
-                #                              delim = "\t"
-                #                          )
-                # }
-                #
-                if (!file.exists(file.path(tempdir(), "ensembl_summary.txt"))) {
-                        # check if organism is available on ENSEMBL
-                        tryCatch({
-                                ensembl.available.organisms <-
-                                        jsonlite::fromJSON(
-                                                "http://rest.ensembl.org/info/species?content-type=application/json"
-                                        )
-                        }, error = function(e)
-                                stop(
-                                        "The API 'http://rest.ensembl.org' does not seem to work 
-                                        properly. Are you connected to the internet? 
-                                        Is the homepage 'http://rest.ensembl.org' 
-                                        currently available?",
-                                        call. = FALSE
-                                ))
-                        
-                        aliases <- groups <- NULL
-                        # transform list object returned by 'fromJSON' to tibble
-                        ensembl.available.organisms <-
-                                tibble::as_tibble(dplyr::select(
-                                        ensembl.available.organisms$species,
-                                        -aliases,
-                                        -groups
-                                ))
-                        
-                        # readr::write_delim(ensembl.available.organisms,
-                        #                  file.path(tempdir(), "ensembl_summary.txt"), 
-                        # col_names = TRUE, delim = "\t")
-                }
-                
-                if (!is.element(stringr::str_to_lower(new.organism),
-                                ensembl.available.organisms$name))
-                        stop(
-                                "Unfortunately organism '",
-                                organism,
-                                "' is not available at ENSEMBL. Please check whether or not the 
-                                organism name is typed correctly.",
-                                call. = FALSE
+            ensembl_summary <-
+                suppressMessages(is.genome.available(
+                    organism = organism,
+                    db = "ensembl",
+                    details = TRUE
+                ))
+            
+            if (nrow(ensembl_summary) == 0) {
+                message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
+                return(FALSE)
+            }
+            
+            taxon_id <- assembly <- name <- accession <- NULL
+            
+            if (nrow(ensembl_summary) > 1) {
+                if (is.taxid(organism)) {
+                    ensembl_summary <-
+                        dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
+                } else {
+                    
+                    ensembl_summary <-
+                        dplyr::filter(
+                            ensembl_summary,
+                            (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                (accession == organism),
+                            !is.na(assembly)
                         )
-                
-                # test proper API access
-                tryCatch({
-                        json.qry.info <-
-                                jsonlite::fromJSON(
-                                        paste0(
-                                                "http://rest.ensembl.org/info/assembly/",
-                                                new.organism,
-                                                "?content-type=application/json"
-                                        )
-                                )
-                }, error = function(e)
-                        stop(
-                                "The API 'http://rest.ensembl.org' does not seem to work 
-                                properly. Are you connected to the internet? 
-                                Is the homepage 'http://rest.ensembl.org' currently available?",
-                                call. = FALSE
-                        ))
+                }
+            }
+            
+            new.organism <- ensembl_summary$name[1]
+            new.organism <-
+                paste0(
+                    stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                    stringr::str_sub(new.organism, 2, nchar(new.organism))
+                )
+            
+            
+            rest_url <- paste0(
+                "http://rest.ensembl.org/info/assembly/",
+                new.organism,
+                "?content-type=application/json"
+            )
+            
+            rest_api_status <- test_url_status(url = rest_url, organism = organism)   
+            if (is.logical(rest_api_status)) {
+                return(FALSE)
+            } else {
                 
                 # construct retrieval query
                 ensembl.qry <-
@@ -116,12 +73,11 @@ getENSEMBL.gtf <-
                                 stringr::str_to_lower(new.organism),
                                 "/",
                                 paste0(
-                                        stringr::str_to_title(string = new.organism, 
-                                                              local = "en"),
+                                        stringr::str_to_title(string = new.organism, locale = "en"),
                                         ".",
-                                        json.qry.info$default_coord_system_version,
+                                        rest_api_status$default_coord_system_version,
                                         ".",
-                                        ensembl.available.organisms$release[1],
+                                        ensembl_summary$release[1],
                                         ".gtf.gz"
                                 )
                         )
@@ -132,9 +88,9 @@ getENSEMBL.gtf <-
                                 stringr::str_to_title(string = new.organism, 
                                                       locale = "en"),
                                 ".",
-                                json.qry.info$default_coord_system_version,
+                                rest_api_status$default_coord_system_version,
                                 ".",
-                                ensembl.available.organisms$release[1],
+                                ensembl_summary$release[1],
                                 "_ensembl",
                                 ".gtf.gz"
                         )
@@ -149,7 +105,7 @@ getENSEMBL.gtf <-
                                                 ".",
                                                 json.qry.info$default_coord_system_version,
                                                 ".",
-                                                ensembl.available.organisms$release[1],
+                                                ensembl_summary$release[1],
                                                 "_ensembl",
                                                 ".gtf.gz"
                                         )
@@ -163,11 +119,11 @@ getENSEMBL.gtf <-
                                                         path,
                                                         paste0(
                                                                 stringr::str_to_title(string = new.organism, 
-                                                                                      local = "en"),
+                                                                                      locale = "en"),
                                                                 ".",
-                                                                json.qry.info$default_coord_system_version,
+                                                                rest_api_status$default_coord_system_version,
                                                                 ".",
-                                                                ensembl.available.organisms$release[1],
+                                                                ensembl_summary$release[1],
                                                                 "_ensembl",
                                                                 ".gtf.gz"
                                                         )
@@ -175,11 +131,7 @@ getENSEMBL.gtf <-
                                                 mode = "wb")
                         }, error = function(e)
                                 stop(
-                                        "The FTP site of ENSEMBL 
-                                        'ftp://ftp.ensembl.org/pub/current_gtf/' does not seem to 
-                                        work properly. Are you connected to the internet? 
-                                        Is the site 'ftp://ftp.ensembl.org/pub/current_gtf/' or 
-                                        'http://rest.ensembl.org' currently available?",
+                                        "The FTP site of ENSEMBL 'ftp://ftp.ensembl.org/pub/current_gtf/' does not seem to work properly. Do you have a stable internet connection?",
                                         call. = FALSE
                                 ))
                 }
@@ -187,14 +139,14 @@ getENSEMBL.gtf <-
                 return(file.path(
                         path,
                         paste0(
-                                stringr::str_to_title(string = new.organism, 
-                                                      local = "en"),
+                                stringr::str_to_title(string = new.organism, locale = "en"),
                                 ".",
-                                json.qry.info$default_coord_system_version,
+                                rest_api_status$default_coord_system_version,
                                 ".",
-                                ensembl.available.organisms$release[1],
+                                ensembl_summary$release[1],
                                 "_ensembl",
                                 ".gtf.gz"
                         )
                 ))
+            }
         }
