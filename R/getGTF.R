@@ -48,8 +48,7 @@ getGTF <-
                  path = file.path("ensembl", "annotation")) {
                 if (!is.element(db, c("ensembl", "ensemblgenomes")))
                         stop(
-                                "Please select one of the available data bases: 
-                                'ensembl' or 'ensemblgenomes'."
+                                "Please select one of the available data bases: db = 'ensembl' or db = 'ensemblgenomes'."
                         )
                 
                 message("Starting gtf retrieval of '", organism, "' from ", db, " ...")
@@ -67,82 +66,128 @@ getGTF <-
                                                       id.type = "toplevel", path)
                         
                         if (is.logical(genome.path)) {
-                                invisible(return(TRUE))
+                            if (!genome.path)
+                                return(FALSE)
                         } else {
-                                new.organism <- stringr::str_replace_all(organism, " ", "_")
-                                
-                                # test proper API access
-                                tryCatch({
-                                        json.qry.info <-
-                                                jsonlite::fromJSON(
-                                                        paste0(
-                                                                "http://rest.ensembl.org/info/assembly/",
-                                                                new.organism,
-                                                                "?content-type=application/json"
-                                                        )
-                                                )
-                                }, error = function(e)
-                                        stop(
-                                                "The API 'http://rest.ensembl.org' does not seem to work
-                                                properly. Are you connected to the internet? 
-                                                Is the homepage '",
-                                                json.qry.info,
-                                                "' currently available?",
-                                                call. = FALSE
-                                        ))
-                                
-                                # generate Genome documentation
-                                sink(file.path(
-                                        path,
-                                        paste0("doc_", new.organism, "_db_", db, ".txt")
+                            
+                            taxon_id <- assembly <- name <- accession <- NULL
+                            
+                            ensembl_summary <-
+                                suppressMessages(is.genome.available(
+                                    organism = organism,
+                                    db = "ensembl",
+                                    details = TRUE
                                 ))
-                                
-                                cat(paste0("File Name: ", genome.path))
-                                cat("\n")
-                                cat(paste0("Organism Name: ", new.organism))
-                                cat("\n")
-                                cat(paste0("Database: ", db))
-                                cat("\n")
-                                cat(paste0("Download_Date: ", date()))
-                                cat("\n")
-                                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
-                                cat("\n")
-                                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
-                                cat("\n")
-                                cat(
-                                        paste0(
-                                                "genebuild_last_geneset_update: ",
-                                                json.qry.info$genebuild_last_geneset_update
+                            
+                            if (nrow(ensembl_summary) > 1) {
+                                if (is.taxid(organism)) {
+                                    ensembl_summary <-
+                                        dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
+                                } else {
+                                    
+                                    ensembl_summary <-
+                                        dplyr::filter(
+                                            ensembl_summary,
+                                            (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                                (accession == organism), !is.na(assembly)
                                         )
+                                }
+                            }
+                            
+                            new.organism <- ensembl_summary$name[1]
+                            new.organism <-
+                                paste0(
+                                    stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                                    stringr::str_sub(new.organism, 2, nchar(new.organism))
+                                ) 
+                            
+                            rest_url <- paste0(
+                                "http://rest.ensembl.org/info/assembly/",
+                                new.organism,
+                                "?content-type=application/json"
+                            )
+                            
+                            if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
+                                warning(
+                                    "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
+                                    call. = FALSE)
+                                return(FALSE)
+                            }
+                            
+                            # test proper API access
+                            json.qry.info <-
+                                jsonlite::fromJSON(rest_url)
+                            
+                            # generate Genome documentation
+                            sink(file.path(
+                                path,
+                                paste0("doc_", new.organism, "_db_", db, ".txt")
+                            ))
+                            
+                            cat(paste0("File Name: ", genome.path))
+                            cat("\n")
+                            cat(paste0("Organism Name: ", new.organism))
+                            cat("\n")
+                            cat(paste0("Database: ", db))
+                            cat("\n")
+                            cat(paste0("Download_Date: ", date()))
+                            cat("\n")
+                            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                            cat("\n")
+                            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                            cat("\n")
+                            cat(
+                                paste0(
+                                    "genebuild_last_geneset_update: ",
+                                    json.qry.info$genebuild_last_geneset_update
                                 )
-                                cat("\n")
-                                cat(paste0(
-                                        "assembly_accession: ",
-                                        json.qry.info$assembly_accession
-                                ))
-                                cat("\n")
-                                cat(
-                                        paste0(
-                                                "genebuild_initial_release_date: ",
-                                                json.qry.info$genebuild_initial_release_date
-                                        )
+                            )
+                            cat("\n")
+                            cat(paste0(
+                                "assembly_accession: ",
+                                json.qry.info$assembly_accession
+                            ))
+                            cat("\n")
+                            cat(
+                                paste0(
+                                    "genebuild_initial_release_date: ",
+                                    json.qry.info$genebuild_initial_release_date
                                 )
+                            )
+                            
+                            sink()
+                            
+                            doc <- tibble::tibble(
+                                file_name = genome.path,
+                                organism = new.organism,
+                                database = db,
+                                download_data = date(),
+                                assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                                assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                                genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"), 
+                                assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
+                                genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
                                 
-                                sink()
-                                
-                                message(
-                                        paste0(
-                                                "The *.gtf annotation file of '",
-                                                organism,
-                                                "' has been downloaded to '",
-                                                genome.path,
-                                                "' and has been named '",
-                                                basename(genome.path),
-                                                "'."
-                                        )
+                            )
+                            
+                            readr::write_tsv(doc, file.path(
+                                path,
+                                paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                            )
+                            
+                            message(
+                                paste0(
+                                    "The *.gtf annotation file of '",
+                                    organism,
+                                    "' has been downloaded to '",
+                                    genome.path,
+                                    "' and has been named '",
+                                    basename(genome.path),
+                                    "'."
                                 )
-                                
-                                return(genome.path)
+                            )
+                            
+                            return(genome.path)
                         }
                 }
                 
@@ -158,81 +203,128 @@ getGTF <-
                                                              id.type = "toplevel", path)
                         
                         if (is.logical(genome.path)) {
-                                invisible(return(TRUE))
+                            if (!genome.path)
+                                return(FALSE)
                         } else {
-                                new.organism <- stringr::str_replace_all(organism, " ", "_")
-                                
-                                # test proper API access
-                                tryCatch({
-                                        json.qry.info <-
-                                                jsonlite::fromJSON(
-                                                        paste0(
-                                                                "http://rest.ensemblgenomes.org/info/assembly/",
-                                                                new.organism,
-                                                                "?content-type=application/json"
-                                                        )
-                                                )
-                                }, error = function(e)
-                                        stop(
-                                                "The API 'http://rest.ensemblgenomes.org' does not seem 
-                                                to work properly. Are you connected to the internet? 
-                                                Is the homepage 'http://rest.ensemblgenomes.org' 
-                                                currently available?",
-                                                call. = FALSE
-                                        ))
-                                
-                                # generate Genome documentation
-                                sink(file.path(
-                                        path,
-                                        paste0("doc_", new.organism, "_db_", db, ".txt")
+                            
+                            taxon_id <- assembly <- name <- accession <- NULL
+                            
+                            ensembl_summary <-
+                                suppressMessages(is.genome.available(
+                                    organism = organism,
+                                    db = "ensemblgenomes",
+                                    details = TRUE
                                 ))
-                                
-                                cat(paste0("File Name: ", genome.path))
-                                cat("\n")
-                                cat(paste0("Organism Name: ", new.organism))
-                                cat("\n")
-                                cat(paste0("Database: ", db))
-                                cat("\n")
-                                cat(paste0("Download_Date: ", date()))
-                                cat("\n")
-                                cat(paste0("assembly_name: ", json.qry.info$assembly_name))
-                                cat("\n")
-                                cat(paste0("assembly_date: ", json.qry.info$assembly_date))
-                                cat("\n")
-                                cat(
-                                        paste0(
-                                                "genebuild_last_geneset_update: ",
-                                                json.qry.info$genebuild_last_geneset_update
+                            
+                            if (nrow(ensembl_summary) > 1) {
+                                if (is.taxid(organism)) {
+                                    ensembl_summary <-
+                                        dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
+                                } else {
+                                    
+                                    ensembl_summary <-
+                                        dplyr::filter(
+                                            ensembl_summary,
+                                            (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                                (accession == organism), !is.na(assembly)
                                         )
+                                }
+                            }
+                            
+                            new.organism <- ensembl_summary$name[1]
+                            new.organism <-
+                                paste0(
+                                    stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                                    stringr::str_sub(new.organism, 2, nchar(new.organism))
+                                ) 
+                            
+                            rest_url <- paste0(
+                                "http://rest.ensemblgenomes.org/info/assembly/",
+                                new.organism,
+                                "?content-type=application/json"
+                            )
+                            
+                            if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
+                                warning(
+                                    "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
+                                    call. = FALSE)
+                                return(FALSE)
+                            }
+                            
+                            # test proper API access
+                            json.qry.info <-
+                                jsonlite::fromJSON(rest_url)
+                            
+                            # generate Genome documentation
+                            sink(file.path(
+                                path,
+                                paste0("doc_", new.organism, "_db_", db, ".txt")
+                            ))
+                            
+                            cat(paste0("File Name: ", genome.path))
+                            cat("\n")
+                            cat(paste0("Organism Name: ", new.organism))
+                            cat("\n")
+                            cat(paste0("Database: ", db))
+                            cat("\n")
+                            cat(paste0("Download_Date: ", date()))
+                            cat("\n")
+                            cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+                            cat("\n")
+                            cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+                            cat("\n")
+                            cat(
+                                paste0(
+                                    "genebuild_last_geneset_update: ",
+                                    json.qry.info$genebuild_last_geneset_update
                                 )
-                                cat("\n")
-                                cat(paste0(
-                                        "assembly_accession: ",
-                                        json.qry.info$assembly_accession
-                                ))
-                                cat("\n")
-                                cat(
-                                        paste0(
-                                                "genebuild_initial_release_date: ",
-                                                json.qry.info$genebuild_initial_release_date
-                                        )
+                            )
+                            cat("\n")
+                            cat(paste0(
+                                "assembly_accession: ",
+                                json.qry.info$assembly_accession
+                            ))
+                            cat("\n")
+                            cat(
+                                paste0(
+                                    "genebuild_initial_release_date: ",
+                                    json.qry.info$genebuild_initial_release_date
                                 )
+                            )
+                            
+                            sink()
+                            
+                            doc <- tibble::tibble(
+                                file_name = genome.path,
+                                organism = new.organism,
+                                database = db,
+                                download_data = date(),
+                                assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+                                assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+                                genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
+                                assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"), 
+                                genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
                                 
-                                sink()
-                                
-                                message(
-                                        paste0(
-                                                "The *.gtf annotation file of '",
-                                                organism,
-                                                "' has been downloaded to '",
-                                                genome.path,
-                                                "' and has been named '",
-                                                basename(genome.path),
-                                                "'."
-                                        )
+                            )
+                            
+                            readr::write_tsv(doc, file.path(
+                                path,
+                                paste0("doc_", new.organism, "_db_", db, ".tsv"))
+                            )
+                            
+                            message(
+                                paste0(
+                                    "The *.gtf annotation file of '",
+                                    organism,
+                                    "' has been downloaded to '",
+                                    genome.path,
+                                    "' and has been named '",
+                                    basename(genome.path),
+                                    "'."
                                 )
-                                
-                                return(genome.path)
+                            )
+                            
+                            return(genome.path)
                         }
                 }
 }
