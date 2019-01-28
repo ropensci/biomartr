@@ -143,11 +143,7 @@ getENSEMBLGENOMES.Annotation <-
                     )
                 }, error = function(e)
                     stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem 
-                        to work properly. Are you connected to the internet? 
-                        Is the homepage 
-'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' 
-                        currently available?",
+                        "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
                         call. = FALSE
                     ))
             }
@@ -368,12 +364,7 @@ getENSEMBLGENOMES.Annotation <-
                                     mode = "wb")
                 }, error = function(e)
                     stop(
-                        "The FTP site of ENSEMBLGENOMES 
-                        'ftp://ftp.ensemblgenomes.org/current/gff3' 
-                        does not seem to work properly. Are you connected to the
-                        internet? Is the site 
-                        'ftp://ftp.ensemblgenomes.org/current/gff3' or 
-                        'http://rest.ensemblgenomes.org' currently available?",
+                        "The FTP site of ENSEMBLGENOMES 'ftp://ftp.ensemblgenomes.org/current/gff3' does not seem to work properly. Do you have a stable internet connection?",
                         call. = FALSE
                     ))
             }
