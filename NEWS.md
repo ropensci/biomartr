@@ -12,6 +12,9 @@ This way all genomes (reference AND non-reference) genomes will be downloaded by
 - `getCollection()` now also retrieves `GTF` files when `db = 'ensembl'` or `db = 'ensemblgenomes'`
 - `getAssemblyStats()` now also performs md5 checksum test
 - all md5 checksum tests now retrieve the new md5checkfile format from NCBI RefSeq and Genbank
+- `getGTF()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
+- `getGFF()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
+- `getMarts()` will now throw an error when BioMart servers cannot be reached (#36)
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
 ===========
