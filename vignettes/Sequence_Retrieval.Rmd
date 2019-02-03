@@ -2580,7 +2580,6 @@ The md5 hash of file 'refseq/Collections/Saccharomyces_cerevisiae_md5checksums.t
 The Repeat Masker output file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_rm_refseq.out.gz'.
 Starting assembly quality stats retrieval of 'Saccharomyces cerevisiae' from refseq ...
 
-
 Genome assembly quality stats file download completed!
 The assembly statistics file of 'Saccharomyces_cerevisiae' has been downloaded to 'refseq/Collections' and has been named 'Saccharomyces_cerevisiae_assembly_stats_refseq.txt'.
 Collection retrieval finished successfully!
@@ -2589,12 +2588,7 @@ Collection retrieval finished successfully!
 We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
 ```
 
-Users can now simply attach the output folder `` as supplementary data in their study
-and state in the materials sections:
-
-> We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
-
-This way, computational and biological reproducibility can be standardized and indeed will become trivial
+Users can now simply attach the output folder `` as supplementary data in their study and state in the materials sections. This way, computational and biological reproducibility can be standardized and indeed will become trivial
 in the context of genome version and annotation version.
 
 
