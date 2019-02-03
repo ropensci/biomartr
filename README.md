@@ -14,6 +14,8 @@ This package is born out of my own frustration to automate the genomic data retr
 
 I happily welcome anyone who wishes to contribute to this project :) Just drop me an email.
 
+Please find a detailed [documentation here](https://ropensci.github.io/biomartr/articles/).
+
 ### Short package description:
 
 The vastly growing number of sequenced genomes allows us to perform a new type of biological research.
@@ -35,7 +37,16 @@ In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (an
 - [ENSEMBLGENOMES](http://ensemblgenomes.org)
 - [UniProt](http://www.uniprot.org)
 
-Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as `NCBI RefSeq`, `NCBI nr`, `NCBI nt`, `NCBI Genbank`, etc. as well as `ENSEMBL` and `ENSEMBLGENOMES` with only one command.
+Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as 
+
+- `NCBI RefSeq` 
+- `NCBI nr` 
+- `NCBI nt`
+- `NCBI Genbank`
+- `ENSEMBL` 
+- `ENSEMBLGENOMES`
+
+with only one command.
 
 ### Citation
 
@@ -51,7 +62,7 @@ The main difference between the [BiomaRt](http://www.bioconductor.org/packages/r
 
 Please consult the [Tutorials section](https://ropensci.github.io/biomartr/#tutorials) for more details.
 
-`In the context of functional annotation retrieval` the `biomartr` package allows users to screen available marts using only the scientific name of an organism of interest instead of first searching for marts and datasets which support a particular organism of interest (which is required when using the `BiomaRt` package). Furthermore, `biomartr` allows you to search for particular topics when searching for attributes and filters. I am aware that the similar naming of the packages is unfortunate, but it arose due to historical reasons (please find a detailed explanation here: https://github.com/ropensci/biomartr/blob/master/FAQs.md and here #11).
+`In the context of functional annotation retrieval` the `biomartr` package allows users to screen available marts using only the scientific name of an organism of interest instead of first searching for marts and datasets which support a particular organism of interest (which is required when using the `BiomaRt` package). Furthermore, `biomartr` allows you to search for particular topics when searching for attributes and filters. I am aware that the similar naming of the packages is unfortunate, but it arose due to historical reasons (please find a detailed explanation here: https://github.com/ropensci/biomartr/blob/master/FAQs.md and here [#11](https://github.com/ropensci/biomartr/issues/11)).
 
 I also dedicated [an entire vignette to compare](https://ropensci.github.io/biomartr/articles/Functional_Annotation.html) the `BiomaRt` and `biomartr` package functionality in the context of `Functional Annotation` (where their functionality overlaps which comprises about only 20% of the overall functionality of the biomartr package).
 
