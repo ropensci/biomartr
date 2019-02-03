@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve Ensembl Biomart filters for a qyery organism — organismFilters • biomartr</title>
+<title>Retrieve summary statistics for a coding sequence (CDS) file — summary_cds • biomartr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,9 @@
 
 
 
-<meta property="og:title" content="Retrieve Ensembl Biomart filters for a qyery organism — organismFilters" />
+<meta property="og:title" content="Retrieve summary statistics for a coding sequence (CDS) file — summary_cds" />
 
-<meta property="og:description" content="In addition to the organismBM and 
-organismAttributes functions, this function
-returns all available filters that can be accessed through different marts 
-and datasets for a given query organism." />
+<meta property="og:description" content="A summary statistics of specific CDS features is returned." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,109 +126,58 @@ and datasets for a given query organism." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve Ensembl Biomart filters for a qyery organism</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/organismFilters.R'><code>R/organismFilters.R</code></a></small>
-    <div class="hidden name"><code>organismFilters.Rd</code></div>
+    <h1>Retrieve summary statistics for a coding sequence (CDS) file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/summary_cds.R'><code>R/summary_cds.R</code></a></small>
+    <div class="hidden name"><code>summary_cds.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>In addition to the <code><a href='organismBM.html'>organismBM</a></code> and 
-<code><a href='organismAttributes.html'>organismAttributes</a></code> functions, this function
-returns all available filters that can be accessed through different marts 
-and datasets for a given query organism.</p>
+    <p>A summary statistics of specific CDS features is returned.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>organismFilters</span>(<span class='no'>organism</span>, <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>topic</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>summary_cds</span>(<span class='no'>file</span>, <span class='no'>organism</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>file</th>
+      <td><p>file path to a CDS file in <code>fasta</code> format.</p></td>
+    </tr>
+    <tr>
       <th>organism</th>
-      <td><p>a character string specifying the scientific name of a 
-query organism.</p></td>
-    </tr>
-    <tr>
-      <th>update</th>
-      <td><p>a logical value specifying whether or not the local 
-listMart.txt, listDatasets.txt, and listFilters_organism.txt files shall be 
-updated by remote access to BioMart.</p></td>
-    </tr>
-    <tr>
-      <th>topic</th>
-      <td><p>a character string specifying a topic (category) of filters, 
-e.g. <code>topic</code> = <code>"id"</code>.</p></td>
+      <td><p>character string specifying the organism at hand.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a data.frame storing corresponding filter names, description, 
-datasets, and marts.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For a given query organism, this function retrieves all available 
-filters that can be accessed through different marts and datasets.</p>
-<p>Sometimes the same filter names correspond to different datasets and 
-marts causing problems when using <code><a href='getMarts.html'>getMarts</a></code>. 
-The approach introduced by this function provides (again) a organism centric 
-way of accessing organism specific filters.</p>
-<p>The <code>topic</code> argument allows the user to search for specific filters 
-topics/categories for faster selection.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>When you run this function for the first time, the data retrieval procedure 
-will take some time, due to the remote access to BioMart. The corresponding 
-result is then saved in a *.txt file within the <code><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></code>
-directory  named "_biomart/listMarts.txt","_biomart/listDatasets.txt", and 
-"_biomart/listFilters_organism.txt", allowing subsequent queries to perform 
-much faster.</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p><a href='http://biomart.org/'>http://biomart.org/</a></p>
-<p>Mapping identifiers for the integration of genomic datasets with the
-R/Bioconductor package biomaRt. Steffen Durinck, Paul T. Spellman, Ewan
-Birney and Wolfgang Huber, Nature Protocols 4, 1184-1191 (2009).</p>
-<p>BioMart and Bioconductor: a powerful link between biological databases and
-microarray data analysis. Steffen Durinck, Yves Moreau, Arek Kasprzyk, Sean
-Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
-3439-3440 (2005).</p>
+    <p>The summary statistics include:</p><ul>
+<li><p><code>total_seqs</code>:</p></li>
+<li><p><code>nnn_abs</code>: The total number of NNN's 
+(over all chromosomes/scaffolds/contigs) in all coding sequences combined</p></li>
+<li><p><code>nnn_perc</code>: The percentage (relative frequency) of NNN's 
+(over all chromosomes/scaffolds/contigs) compared to the total number of 
+nucleotides of all coding sequences</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='organismBM.html'>organismBM</a></code>, <code><a href='organismAttributes.html'>organismAttributes</a></code>, 
-<code><a href='getAttributes.html'>getAttributes</a></code>, <code><a href='getDatasets.html'>getDatasets</a></code>, 
-<code><a href='getMarts.html'>getMarts</a></code></p></div>
+    <div class='dont-index'><p><code><a href='getCollection.html'>getCollection</a></code>, <code><a href='getCDS.html'>getCDS</a></code>, <code><a href='read_cds.html'>read_cds</a></code>, <code><a href='summary_genome.html'>summary_genome</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># search for filter topic "id" </span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>organismFilters</span>(<span class='st'>"Homo sapiens"</span>, <span class='kw'>topic</span> <span class='kw'>=</span> <span class='st'>"id"</span>), <span class='fl'>20</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     <p>Hajk-Georg Drost</p>
