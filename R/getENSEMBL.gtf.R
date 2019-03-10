@@ -103,7 +103,7 @@ getENSEMBL.gtf <-
                                                 stringr::str_to_title(string = new.organism, 
                                                                       locale = "en"),
                                                 ".",
-                                                json.qry.info$default_coord_system_version,
+                                                rest_api_status$default_coord_system_version,
                                                 ".",
                                                 ensembl_summary$release[1],
                                                 "_ensembl",
