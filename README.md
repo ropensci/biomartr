@@ -72,6 +72,22 @@ I also dedicated [an entire vignette to compare](https://ropensci.github.io/biom
 
 ## Installation
 
+The `biomartr` package relies on some [Bioconductor](https://www.bioconductor.org/install/) tools and thus requires
+installation of the following packages:
+
+```r
+# Install core Bioconductor packages
+if (!requireNamespace("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install()
+# Install package dependencies
+BiocManager::install("Biostrings", version = "3.8")
+BiocManager::install("biomaRt", version = "3.8")
+
+```
+
+Now users can install `biomartr` from [CRAN](https://cran.r-project.org/web/packages/biomartr/index.html):
+
 ```r
 # install biomartr 0.8.0
 install.packages("biomartr", dependencies = TRUE)
@@ -191,8 +207,10 @@ Some bug fixes or new functionality will not be available on CRAN yet, but in th
 
 ```r
 # install the current version of biomartr on your system
-source("http://bioconductor.org/biocLite.R")
-biocLite("ropensci/biomartr")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ropensci/biomartr")
 ```
 
 ## Genomic Data Retrieval
