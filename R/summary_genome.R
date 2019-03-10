@@ -31,7 +31,7 @@ summary_genome <- function(file,
         # compute the median rel feq over all chromosomes
         nucl_re_freq <- apply(nucl_feq, 1, philentropy::H)
         # compute the entropy of the nucleotide distributions
-        genome_entropy <- median(nucl_re_freq)
+        genome_entropy <- stats::median(nucl_re_freq)
         
         # compute genome size in Mega base pairs
         genome_size_nucl_mbp <-
