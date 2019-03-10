@@ -165,6 +165,15 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
+<p>The <code>biomartr</code> package relies on some <a href="https://www.bioconductor.org/install/">Bioconductor</a> tools and thus requires installation of the following packages:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install core Bioconductor packages</span>
+<span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>))
+    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>()
+<span class="co"># Install package dependencies</span>
+BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"Biostrings"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)
+BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"biomaRt"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</code></pre></div>
+<p>Now users can install <code>biomartr</code> from <a href="https://cran.r-project.org/web/packages/biomartr/index.html">CRAN</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install biomartr 0.8.0</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"biomartr"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
@@ -255,8 +264,10 @@ submitter: Saccharomyces Genome Database</code></pre>
 <a href="#install-developer-version" class="anchor"></a>Install Developer Version</h2>
 <p>Some bug fixes or new functionality will not be available on CRAN yet, but in the developer version here on GitHub. To download and install the most recent version of <code>biomartr</code> run:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install the current version of biomartr on your system</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/source">source</a></span>(<span class="st">"http://bioconductor.org/biocLite.R"</span>)
-<span class="kw">biocLite</span>(<span class="st">"ropensci/biomartr"</span>)</code></pre></div>
+<span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))
+    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+
+BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"ropensci/biomartr"</span>)</code></pre></div>
 </div>
 <div id="genomic-data-retrieval" class="section level2">
 <h2 class="hasAnchor">
@@ -427,7 +438,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 
   </div>
 
-  <div class="col-md-3" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
@@ -470,13 +481,12 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 </div>
 </div>
 
-
       <footer><div class="copyright">
   <p>Developed by Hajk-Georg Drost.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>
