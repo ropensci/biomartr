@@ -3,6 +3,7 @@
 #' @description This function downloads gff files of query organisms from 
 #' ENSEMBLGENOMES
 #' @param organism scientific name of the organism of interest.
+#' @param release the ENSEMBLGENOMES release. Default is \code{release = NULL} meaning that the current (most recent) version is used.
 #' @param type biological sequence type.
 #' @param id.type id type.
 #' @param path location where file shall be stored.
@@ -11,6 +12,7 @@
 
 getENSEMBLGENOMES.Seq <-
     function(organism,
+             release = NULL,
              type = "dna",
              id.type = "toplevel",
              path) {
@@ -198,10 +200,24 @@ getENSEMBLGENOMES.Seq <-
                 return(FALSE)
             }
             
+            release_api <- jsonlite::fromJSON(
+                    "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+            )
+            
+            if (!is.null(release)){
+                    if (!is.element(release, seq_len(as.integer(release_api))))
+                            stop("Please provide a release number that is supported by ENSEMBLGENOMES.", call. = FALSE)
+            }
+            
             # construct retrieval query
+            if (is.null(release))
+                    core_path <- "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/fasta/"
+               
+            if (!is.null(release))
+                    core_path <- paste0("ftp://ftp.ensemblgenomes.org/pub/release-", release ,"/bacteria/fasta/")
+
             ensembl.qry <-
-                paste0(
-                    "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/fasta/",
+                paste0(core_path,
                     paste0(unlist(
                         stringr::str_split(bacteria.info$core_db[1], "_")
                     )[1:3], collapse = "_"),
@@ -223,10 +239,26 @@ getENSEMBLGENOMES.Seq <-
                 )
             
         } else {
+                
+                release_api <- jsonlite::fromJSON(
+                        "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+                )
+                
+                if (!is.null(release)){
+                        if (!is.element(release, seq_len(as.integer(release_api))))
+                                stop("Please provide a release number that is supported by ENSEMBLGENOMES.", call. = FALSE)
+                }
+                
+                # construct retrieval query
+                if (is.null(release))
+                        core_path <- "ftp://ftp.ensemblgenomes.org/pub/current/"
+                
+                if (!is.null(release))
+                        core_path <- paste0("ftp://ftp.ensemblgenomes.org/pub/release-", release ,"/")
+                
             # construct retrieval query
             ensembl.qry <-
-                paste0(
-                    "ftp://ftp.ensemblgenomes.org/pub/current/",
+                paste0( core_path,
                     stringr::str_to_lower(
                         stringr::str_replace(get.org.info$division[1], 
                                              "Ensembl", "")
@@ -307,7 +339,7 @@ getENSEMBLGENOMES.Seq <-
                                 ))
         }
         
-        return(file.path(
+        return(c(file.path(
             path,
             paste0(
                 new.organism,
@@ -319,7 +351,7 @@ getENSEMBLGENOMES.Seq <-
                 ifelse(id.type == "none", "", id.type),
                 ".fa.gz"
             )
-        ))
+        ), ensembl.qry))
         
         }
     }
