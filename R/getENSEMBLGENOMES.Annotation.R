@@ -18,86 +18,42 @@ getENSEMBLGENOMES.Annotation <-
             stop("Please a 'type' argument supported by this function: 
                  'dna', 'cds', 'pep'.")
         
-        # test if REST API is responding
-        is.ensemblgenomes.alive()
-        
-        name <- NULL
-        
-        new.organism <- stringr::str_replace_all(organism, " ", "_")
-        
-        if (file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
-            suppressWarnings(
-                ensembl.available.organisms <-
-                    readr::read_tsv(
-                        file.path(tempdir(), "ensemblgenomes_summary.txt"),
-                        col_names = c(
-                            "division",
-                            "taxon_id",
-                            "name",
-                            "release",
-                            "display_name",
-                            "accession",
-                            "common_name",
-                            "assembly"
-                        ),
-                        col_types = readr::cols(
-                            division = readr::col_character(),
-                            taxon_id = readr::col_integer(),
-                            name = readr::col_character(),
-                            release = readr::col_integer(),
-                            display_name = readr::col_character(),
-                            accession = readr::col_character(),
-                            common_name = readr::col_character(),
-                            assembly = readr::col_character()
-                        ),
-                        comment = "#"
+            ensemblgenomes_summary <-
+                    suppressMessages(is.genome.available(
+                            organism = organism,
+                            db = "ensemblgenomes",
+                            details = TRUE
+                    ))
+            
+            if (nrow(ensemblgenomes_summary) == 0) {
+                    message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
+                    return(FALSE)
+            }
+            
+            taxon_id <- assembly <- name <- accession <- NULL
+            
+            if (nrow(ensemblgenomes_summary) > 1) {
+                    if (is.taxid(organism)) {
+                            ensemblgenomes_summary <-
+                                    dplyr::filter(ensemblgenomes_summary, taxon_id == as.integer(organism), !is.na(assembly))
+                    } else {
+                            
+                            ensemblgenomes_summary <-
+                                    dplyr::filter(
+                                            ensemblgenomes_summary,
+                                            (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
+                                                    (accession == organism),
+                                            !is.na(assembly)
+                                    )
+                    }
+            }
+            
+            new.organism <- ensemblgenomes_summary$name[1]
+            new.organism <-
+                    paste0(
+                            stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+                            stringr::str_sub(new.organism, 2, nchar(new.organism))
                     )
-            )
-        }
-        
-        if (!file.exists(file.path(tempdir(), "ensemblgenomes_summary.txt"))) {
-            # check if organism is available on ENSEMBL
-            tryCatch({
-                ensembl.available.organisms <-
-                    jsonlite::fromJSON(
-     "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
-                    )
-            }, error = function(e)
-                warning(
-                    "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                    call. = FALSE
-                ))
-            
-            aliases <- groups <- NULL
-            
-            # transform list object returned by 'fromJSON' to tibble
-            ensembl.available.organisms <-
-                tibble::as_tibble(dplyr::select(
-                    ensembl.available.organisms$species,
-                    -aliases,
-                    -groups
-                ))
-            
-            readr::write_tsv(
-                ensembl.available.organisms,
-                file.path(tempdir(), "ensemblgenomes_summary.txt")
-            )
-        }
-        
-        if (!any(
-            stringr::str_detect(
-                stringr::str_to_lower(new.organism),
-                ensembl.available.organisms$name
-            )
-        )) {
-            warning(
-                "Unfortunately organism '",
-                organism,
-                "' is not available at ENSEMBL. Please check whether or not the organism name is typed correctly. Thus, download of this species has been omitted."
-            )
-            return(FALSE)
-        }
-        
         # test proper API access
         tryCatch({
             json.qry.info <-
@@ -115,10 +71,7 @@ getENSEMBLGENOMES.Annotation <-
             ))
         
         # retrieve detailed information for organism of interest
-        get.org.info <-
-            is.genome.available(organism = organism,
-                                details = TRUE,
-                                db = "ensemblgenomes")
+        get.org.info <- ensemblgenomes_summary
         
         # retrieve the Ensembl Genomes version of the 
         # databases backing this service
