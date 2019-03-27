@@ -4,6 +4,7 @@ biomartr 0.9.0
 ### New Functions
 
 - New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output (find out more here: https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files)
+- New function `getGenomeSet()` allows users to easily retrieve genomes of multiple specified species
 
 ### New Features of Existing Functions 
 
@@ -13,7 +14,7 @@ This way all genomes (reference AND non-reference) genomes will be downloaded by
 - `getAssemblyStats()` now also performs md5 checksum test
 - all md5 checksum tests now retrieve the new md5checkfile format from NCBI RefSeq and Genbank
 - `getGTF()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
-- `getGFF()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
+- `getGFF()`: users can now specify the NCBI Taxonomy ID or Accession ID for ENSEMBL in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
 - `getMarts()` will now throw an error when BioMart servers cannot be reached (#36)
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
