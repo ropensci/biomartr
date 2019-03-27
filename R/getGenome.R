@@ -56,8 +56,8 @@
 #' }
 #' 
 #' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
-#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
-#' \code{\link{read_genome}}
+#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
+#' \code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
 #' @export
 
 getGenome <-
