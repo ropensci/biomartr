@@ -49,7 +49,8 @@ Ath_RNA <- read_rna(file_path, format = "fasta")
 }
 \seealso{
 \code{\link{getGenome}}, \code{\link{getProteome}}, 
-\code{\link{getGTF}}, \code{\link{getGFF}}, \code{\link{meta.retrieval}}, 
+\code{\link{getGTF}}, \code{\link{getGFF}}, \code{\link{getRepeatMasker}}, 
+\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, 
 \code{\link{read_cds}}, \code{\link{getCDS}}
 }
 \author{
