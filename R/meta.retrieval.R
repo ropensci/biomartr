@@ -158,8 +158,6 @@ meta.retrieval <- function(db         = "refseq",
                            reference  = FALSE,
                            combine    = FALSE,
                            path = NULL) {
-    # test internet connection
-    connected.to.internet()
     
     division <- subgroup <- NULL
     
