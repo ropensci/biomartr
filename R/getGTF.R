@@ -38,7 +38,8 @@
 #' }
 #' 
 #' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
-#' \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}},
+#' \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
+#' \code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}},
 #' \code{\link{getGFF}} 
 #' @export
 
