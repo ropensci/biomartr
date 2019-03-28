@@ -217,7 +217,7 @@ getCDS <-
                                 )
                             )
                             
-                         message("CDS download is completed!")
+                            message("CDS download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
