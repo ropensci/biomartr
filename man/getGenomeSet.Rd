@@ -2,10 +2,11 @@
 % Please edit documentation in R/getGenomeSet.R
 \name{getGenomeSet}
 \alias{getGenomeSet}
-\title{Genome Retrieval of multiple Species}
+\title{Genome Retrieval of multiple species}
 \usage{
 getGenomeSet(db = "refseq", organisms, reference = TRUE,
-  clean_retrieval = TRUE, gunzip = TRUE, path = "set_genomes")
+  clean_retrieval = TRUE, gunzip = TRUE, update = FALSE,
+  path = "set_genomes")
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome
@@ -31,6 +32,9 @@ in the database as either a reference genome or a representative genome.}
 \item{clean_retrieval}{logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+
+\item{update}{a logical value indicating whether or not files that were already downloaded and are still present in the 
+output folder shall be updated and re-loaded (\code{update = TRUE} or whether the existing file shall be retained \code{update = FALSE} (Default)).}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding genomes shall be stored. Default is
@@ -59,7 +63,9 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-
+biomartr::getGenomeSet("refseq", organisms = c("Arabidopsis thaliana", 
+                                               "Arabidopsis lyrata", 
+                                               "Capsella rubella"))
 }
 
 }
