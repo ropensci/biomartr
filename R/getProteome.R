@@ -221,7 +221,7 @@ getProteome <-
                                 )
                             )
                             
-                          message("Proteome download is completed!")
+                            message("Proteome download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
