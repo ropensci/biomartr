@@ -231,7 +231,7 @@ getGenome <-
                                 mode = "wb"
                             )
                             
-                            message("Genome download is completed!")
+                            message("Genome download of ", organism, " is completed!")
                             
                             # test check sum
                             md5_file_path <- file.path(path, 
