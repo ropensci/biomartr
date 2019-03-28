@@ -235,9 +235,13 @@ BiocManager::install("ropensci/biomartr")
 * `is.genome.available()` : Check Genome Availability  NCBI and ENSEMBL servers
 * `getCollection()` : Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats
 * `getGenome()` : Download a specific genome stored on NCBI and ENSEMBL servers
+* `getGenomeSet()` : Genome Retrieval of multiple species
 * `getProteome()` : Download a specific proteome stored on NCBI and ENSEMBL servers
+* `getProteomeSet()` : Proteome Retrieval of multiple species
 * `getCDS()` : Download a specific CDS file (genome) stored on NCBI and ENSEMBL servers
+* `getCDSSet()` : CDS Retrieval of multiple species
 * `getRNA()` : Download a specific RNA file stored on NCBI and ENSEMBL servers
+* `getRNASet()` : RNA Retrieval of multiple species
 * `getGFF()` : Genome Annotation Retrieval from NCBI (`*.gff`) and ENSEMBL (`*.gff3`) servers
 * `getGTF()` : Genome Annotation Retrieval (`*.gtf`) from ENSEMBL servers
 * `getRepeatMasker() :` Repeat Masker TE Annotation Retrieval
