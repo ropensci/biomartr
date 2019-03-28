@@ -1,4 +1,4 @@
-#' @title Genome Retrieval of multiple Species
+#' @title Genome Retrieval of multiple species
 #' @description Main genome retrieval function for a set of organism of interest.
 #' By specifying the scientific names of the organisms of interest the corresponding fasta-files storing the genome of the organisms of interest
 #' will be downloaded and stored locally. Genome files can be retrieved from several databases.
@@ -21,6 +21,8 @@
 #' in the database as either a reference genome or a representative genome.
 #' @param clean_retrieval logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
+#' @param update a logical value indicating whether or not files that were already downloaded and are still present in the 
+#' output folder shall be updated and re-loaded (\code{update = TRUE} or whether the existing file shall be retained \code{update = FALSE} (Default)).
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding genomes shall be stored. Default is
 #' \code{path} = \code{"set_genomes"}.
@@ -54,6 +56,7 @@ getGenomeSet <-
              reference = TRUE,
              clean_retrieval = TRUE,
              gunzip = TRUE,
+             update = FALSE,
              path = "set_genomes") {
         message(
             "Starting genome retrieval of the following genomes: ",
@@ -68,36 +71,77 @@ getGenomeSet <-
         
         if (!file.exists(file.path(path, "documentation")))
             dir.create(file.path(path, "documentation"))
-        
-        paths <- vector("character", length(organisms))
-        
-        for (i in seq_len(length(organisms))) {
-            paths[i] <- getGenome(db       = db,
-                                  organism = organisms[i],
-                                  reference = reference,
-                                  path     = path)
-            message("\n")
+         
+        clean_names <- clean_species_names_helper(list.files(path), gunzip = gunzip)
+        message("\n")
+        if (length(clean_names) > 0) {
+            for (j in seq_len(length(clean_names))) {
+                if (file.exists(file.path(path, clean_names[j]))) {
+                    if (!update) {
+                        message("The file ", clean_names[j], " seems to exist already in ", path, ".",
+                                "The existing file will be retained. Please specify 'update = TRUE' in case you wish to re-load the file.")
+                    }
+                    
+                    if (update) {
+                        message("The file ", clean_names[j], " seems to exist already in ", path, ".",
+                                "You specified 'update = TRUE', thus the file ", clean_names[j], " will be downloaded again.")
+                        unlink(file.path(path, clean_names[j]), force = TRUE)
+                    }    
+                }
+                    
+            }
+            
         }
         
-        meta_files <- list.files(path)
-        meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
-        file.rename(from = file.path(path, meta_files), to = file.path(path, "documentation", meta_files))
+        if (!update) {
+            organisms_short <- tidy_name2(organisms)
+            clean_names_short <- unlist(sapply(clean_names, function(x) unlist(stringr::str_split(x, "[.]"))))
+            organisms <- as.character(as.vector(dplyr::setdiff(organisms_short, clean_names_short)))
+        }
         
-        doc_tsv_files <- file.path(path,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
-        
-        summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
-            suppressMessages(readr::read_tsv(data))
-        }))
-        
-        readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(basename(path), "_summary.csv")))
-        message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all species has been stored at '",file.path(path, "documentation", paste0(basename(path), "_summary.csv")),"'.")
-        
-        if (clean_retrieval && gunzip)
-            clean.retrieval(paths, gunzip = TRUE)
-        
-        if (clean_retrieval && !gunzip)
-            clean.retrieval(paths, gunzip = FALSE)
-        
-        return(paths)
-        
+        if (length(organisms) > 0) {
+            paths <- vector("character", length(organisms))
+            message("\n")
+            for (i in seq_len(length(organisms))) {
+                paths[i] <- getGenome(db       = db,
+                                      organism = organisms[i],
+                                      reference = reference,
+                                      path     = path)
+                message("\n")
+            }
+            
+            meta_files <- list.files(path)
+            meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
+            file.rename(from = file.path(path, meta_files), to = file.path(path, "documentation", meta_files))
+            
+            doc_tsv_files <- file.path(path,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
+            
+            summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+                suppressMessages(readr::read_tsv(data))
+            }))
+            
+            readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(basename(path), "_summary.csv")))
+            message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all species has been stored at '",file.path(path, "documentation", paste0(basename(path), "_summary.csv")),"'.")
+            
+            if (clean_retrieval) {
+                message("\n")
+                message("Cleaning file names for more convenient downstream processing ...")
+            }
+            
+            if (clean_retrieval && gunzip)
+                clean.retrieval(paths, gunzip = TRUE)
+            
+            if (clean_retrieval && !gunzip)
+                clean.retrieval(paths, gunzip = FALSE)
+            
+            # return file paths of clean names (if selected) and unzipped files (if selected)
+            new_files <- list.files(path)
+            new_files <- new_files[-which(stringr::str_detect(new_files, "documentation"))]
+            
+            return(file.path(path, new_files)) 
+        } else {
+            files <- file.path(path, list.files(path))
+            files <- files[-which(stringr::str_detect(files, "documentation"))]
+            return(files)
+        }
     }
