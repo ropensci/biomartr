@@ -38,7 +38,10 @@ Main genome retrieval function for an organism of interest.
 By specifying the scientific name of an organism of interest the 
 corresponding fasta-file storing the genome of the organism of interest
 can be downloaded and stored locally. Genome files can be retrieved from 
-several databases.
+several databases. In addition, the genome summary statistics for the 
+retrieved species is stored locally to provide users with 
+insights regarding the genome assembly quality (see \code{\link{summary_genome}} for details).
+This is useful when comparing genomes with large difference in genome assembly qualities.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
@@ -78,7 +81,8 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 \seealso{
 \code{\link{getProteome}}, \code{\link{getCDS}}, 
 \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
+\code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, 
+\code{\link{meta.retrieval}}, \code{\link{read_genome}}
 }
 \author{
 Hajk-Georg Drost
