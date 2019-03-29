@@ -97,6 +97,9 @@
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
+    <li>
+      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -136,6 +139,12 @@
 <a href="#new-functions" class="anchor"></a>New Functions</h3>
 <ul>
 <li>New function <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code> enables formatting and automatic unzipping of meta.retrieval output (find out more here: <a href="https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files" class="uri">https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files</a>)</li>
+<li>New function <code><a href="../reference/getGenomeSet.html">getGenomeSet()</a></code> allows users to easily retrieve genomes of multiple specified species. In addition, the genome summary statistics for all retrieved species will be stored as well to provide users with insights regarding the genome assembly quality of each species. This file can be used as Supplementary Information file in publications to facilitate reproducible research.</li>
+<li>New function <code><a href="../reference/getProteomeSet.html">getProteomeSet()</a></code> allows users to easily retrieve proteomes of multiple specified species</li>
+<li>New function <code><a href="../reference/getCDSSet.html">getCDSSet()</a></code> allows users to easily retrieve coding sequences of multiple specified species</li>
+<li>New function <code><a href="../reference/getRNASet.html">getRNASet()</a></code> allows users to easily retrieve RNA sequences of multiple specified species</li>
+<li>New function <code><a href="../reference/summary_genome.html">summary_genome()</a></code> allows users to retrieve summary statistics for a genome assembly file to assess the influence of genome assembly qualities when performing comparative genomics tasks</li>
+<li>New function <code><a href="../reference/summary_cds.html">summary_cds()</a></code> allows users to retrieve summary statistics for a coding sequence (CDS) file. We noticed, that many CDS files stored in NCBI or ENSEMBL databases contain sequences that aren’t divisible by 3 (division into codons). This makes it difficult to divide CDS into codons for e.g. codon alignments or translation into protein sequences. In addition, some CDS files contain a significant amount of sequences that do not start with AUG (start codon). This function enables users to quantify how many of these sequences exist in a downloaded CDS file to process these files according to the analyses at hand.</li>
 </ul>
 </div>
 <div id="new-features-of-existing-functions" class="section level3">
@@ -152,9 +161,11 @@
 <li>
 <code><a href="../reference/getGTF.html">getGTF()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve genome assemblies</li>
 <li>
-<code><a href="../reference/getGFF.html">getGFF()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve genome assemblies</li>
+<code><a href="../reference/getGFF.html">getGFF()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID for ENSEMBL in addition to the scientific name in argument ‘organism’ to retrieve genome assemblies</li>
 <li>
 <code><a href="../reference/getMarts.html">getMarts()</a></code> will now throw an error when BioMart servers cannot be reached (<a href='https://github.com/ropensci/biomartr/issues/36'>#36</a>)</li>
+<li>
+<code><a href="../reference/getGenome.html">getGenome()</a></code> now also stores the genome summary statistics (see <code>?summary_genome()</code>) for the retrieved species in the <code>documentation</code> folder to provide users with insights regarding the genome assembly quality.</li>
 </ul>
 </div>
 </div>
