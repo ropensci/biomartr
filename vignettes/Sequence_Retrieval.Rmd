@@ -1135,6 +1135,34 @@ seq_rel_date: 2016-09-26
 submitter: Genome Reference Consortium
 ```
 
+In addition, the genome summary statistics for the retrieved species is stored locally (`doc_Homo_sapiens_db_refseq_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
+This file can be used as `Supplementary Information` file in publications to facilitate reproducible research.
+Most comparative genomics studies do not consider differences in genome assembly qualities when comparing the genomes of diverse species.
+This way, they expose themselves to technical artifacts that might generate patterns mistaken to be of biological relevance whereas
+in reality they just reflect the difference in genome assembly quality. Considering the quality of genome assemblies when downloading
+the genomic sequences will help researchers to avoid these pitfalls. 
+
+The summary statistics include:
+
+- `genome_size_mbp`: Genome size in mega base pairs
+
+- `n50_mbp`: The N50 contig size of the genome assembly in mega base pairs
+
+- `n_seqs`: The number of chromosomes/scaffolds/contigs of the genome assembly file
+
+- `n_nnn`: The absolute number of NNNs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_nnn`: The percentage (relative frequency) of NNNs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
+- `genome_entropy`: The Shannon Entropy of the genome assembly file (median entropy over all individual chromosome entropies)
+
+- `n_gc`: The total number of GCs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_gc`: The (relative frequency) of GCs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
+
+
+
 In summary, the `getGenome()` and `read_genome()` functions allow users to retrieve genome assemblies by specifying
 the scientific name of the organism of interest and allow them to import the retrieved genome assembly e.g. as `Biostrings` object.
 Thus, users can then perform the `Biostrings notation` to work with downloaded genomes and can rely on the log
