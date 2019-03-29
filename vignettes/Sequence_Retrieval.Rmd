@@ -1389,6 +1389,30 @@ A DNAStringSet instance of length 16
 [16]  948066 AAATAGCCCTCATGTAC...TAATTTCGGTCAGAAA BK006949.2 TPA_in...
 ```
 
+In addition, the genome summary statistics for the retrieved species is stored locally (`doc_saccharomyces_cerevisiae_db_genbank_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
+This file can be used as `Supplementary Information` file in publications to facilitate reproducible research.
+Most comparative genomics studies do not consider differences in genome assembly qualities when comparing the genomes of diverse species.
+This way, they expose themselves to technical artifacts that might generate patterns mistaken to be of biological relevance whereas
+in reality they just reflect the difference in genome assembly quality. Considering the quality of genome assemblies when downloading
+the genomic sequences will help researchers to avoid these pitfalls. 
+
+The summary statistics include:
+
+- `genome_size_mbp`: Genome size in mega base pairs
+
+- `n50_mbp`: The N50 contig size of the genome assembly in mega base pairs
+
+- `n_seqs`: The number of chromosomes/scaffolds/contigs of the genome assembly file
+
+- `n_nnn`: The absolute number of NNNs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_nnn`: The percentage (relative frequency) of NNNs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
+- `genome_entropy`: The Shannon Entropy of the genome assembly file (median entropy over all individual chromosome entropies)
+
+- `n_gc`: The total number of GCs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_gc`: The (relative frequency) of GCs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
 
 ### Example ENSEMBL:
 
@@ -1426,6 +1450,31 @@ Human_Genome
 [524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...
 ```
 
+In addition, the genome summary statistics for the retrieved species is stored locally (`doc_homo_sapiens_db_ensembl_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
+This file can be used as `Supplementary Information` file in publications to facilitate reproducible research.
+Most comparative genomics studies do not consider differences in genome assembly qualities when comparing the genomes of diverse species.
+This way, they expose themselves to technical artifacts that might generate patterns mistaken to be of biological relevance whereas
+in reality they just reflect the difference in genome assembly quality. Considering the quality of genome assemblies when downloading
+the genomic sequences will help researchers to avoid these pitfalls. 
+
+The summary statistics include:
+
+- `genome_size_mbp`: Genome size in mega base pairs
+
+- `n50_mbp`: The N50 contig size of the genome assembly in mega base pairs
+
+- `n_seqs`: The number of chromosomes/scaffolds/contigs of the genome assembly file
+
+- `n_nnn`: The absolute number of NNNs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_nnn`: The percentage (relative frequency) of NNNs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
+- `genome_entropy`: The Shannon Entropy of the genome assembly file (median entropy over all individual chromosome entropies)
+
+- `n_gc`: The total number of GCs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_gc`: The (relative frequency) of GCs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
 #### Use `taxonomy` id for genome retrieval
 
 Alternatively, instead of specifying the scientific name in the argument `organism`
@@ -1437,30 +1486,30 @@ the taxonomy id `4932` which encodes the species `Saccharomyces cerevisiae`.
 # install.packages("magrittr")
 library(magrittr)
 # import genome as Biostrings object
-Scerevisiae_Proteome <- getProteome(
+Scerevisiae_Genome <- getGenome(
             db       = "ensembl",
             organism = "4932") %>%
-    read_proteome()
+    read_genome()
 ```
 
 ```{r,eval=FALSE}
-Scerevisiae_Proteome
+Scerevisiae_Genome
 ```
 
 ```
-  A AAStringSet instance of length 6692
-       width seq                                names               
-   [1]    61 MFSELINFQNEGHECQ...GNKSEETKKSCCSGK YHR055C pep chrom...
-   [2]   657 MSDNGSPAVLPKTEFN...DESKEFQNSDIADLY YPR161C pep chrom...
-   [3]  1341 MSLSPHVENASIPKGS...NEQECPGGCPGVAFI YOL138C pep chrom...
-   [4]   944 MVQEQAILSCIEQTMV...KRDSLQVILEFVSQH YDR395W pep chrom...
-   [5]   215 MDFYKLDEKLKELKRK...KQFNEKLSRESKGSE YGR129W pep chrom...
-   ...   ... ...
-[6688]   869 MTESAIDDQRFNLTKE...EQYIFCTLFIHTQIL YPL268W pep chrom...
-[6689]   166 MSRYGKNLVHYIIVEH...TSQTRRVAARKGKLS YEL035C pep chrom...
-[6690]   106 MSTLLKSAKSIVPLMD...ILFRDAEILAKIAKD YOR020C pep chrom...
-[6691]   152 MWFPQIIAGMAAGGAA...TYVNAEKAAGQKKED YLL053C pep chrom...
-[6692]   692 MAKRLLESSQNDQANR...EYGNVGNNEETLDDH YDR314C pep chrom...
+  A DNAStringSet instance of length 17
+       width seq                            names               
+ [1]  230218 CCACACCACACCCA...TGGTGTGTGTGGG I dna:chromosome ...
+ [2]  813184 AAATAGCCCTCATG...TGTGTGGGTGTGT II dna:chromosome...
+ [3]  316620 CCCACACACCACAC...TGTGGTGTGTGTG III dna:chromosom...
+ [4] 1531933 ACACCACACCCACA...AAGTAGCTTTTGG IV dna:chromosome...
+ [5]  576874 CGTCTCCTCCAAGC...CATTTTTTTTTTT V dna:chromosome ...
+ ...     ... ...
+[13]  924431 CCACACACACACCA...TGTGTGTGTGGGG XIII dna:chromoso...
+[14]  784333 CCGGCTTTCTGACC...GTGTGGTGTGGGT XIV dna:chromosom...
+[15] 1091291 ACACCACACCCACA...GGGTGTGGTGTGT XV dna:chromosome...
+[16]  948066 AAATAGCCCTCATG...TTTCGGTCAGAAA XVI dna:chromosom...
+[17]   85779 TTCATAATTAATTT...TATAATATCCATA Mito dna:chromoso...
 ```
 
 #### Use `assembly_accession` id for genome retrieval
@@ -1537,6 +1586,37 @@ Cress_Genome
 [6]   366924 GGATCCGTTCGAAACAGGTTAGCCT...TCGCAGAATGGAAACAAACCGGATT Mt dna:chromosome...
 [7]   154478 ATGGGCGAACGACGGGAATTGAACC...TCATAATAACTTGGTCCCGGGCATC Pt dna:chromosome...
 ```
+In addition, the genome summary statistics for the retrieved species is stored locally (`doc_homo_sapiens_db_ensemblgenomes_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
+This file can be used as `Supplementary Information` file in publications to facilitate reproducible research.
+Most comparative genomics studies do not consider differences in genome assembly qualities when comparing the genomes of diverse species.
+This way, they expose themselves to technical artifacts that might generate patterns mistaken to be of biological relevance whereas
+in reality they just reflect the difference in genome assembly quality. Considering the quality of genome assemblies when downloading
+the genomic sequences will help researchers to avoid these pitfalls. 
+
+The summary statistics include:
+
+- `genome_size_mbp`: Genome size in mega base pairs
+
+- `n50_mbp`: The N50 contig size of the genome assembly in mega base pairs
+
+- `n_seqs`: The number of chromosomes/scaffolds/contigs of the genome assembly file
+
+- `n_nnn`: The absolute number of NNNs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_nnn`: The percentage (relative frequency) of NNNs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
+- `genome_entropy`: The Shannon Entropy of the genome assembly file (median entropy over all individual chromosome entropies)
+
+- `n_gc`: The total number of GCs (over all chromosomes or scaffolds or contigs) in the genome assembly file
+
+- `rel_gc`: The (relative frequency) of GCs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
+
+#### Use `taxonomy` id for genome retrieval
+
+Alternatively, instead of specifying the scientific name in the argument `organism`
+users can specify the `taxonomy` id of the corresponding organism. Here, we specify
+the taxonomy id `4932` which encodes the species `Saccharomyces cerevisiae`.
+
 
 ### Proteome Retrieval
 
