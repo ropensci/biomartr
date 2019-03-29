@@ -3,7 +3,10 @@
 #' By specifying the scientific name of an organism of interest the 
 #' corresponding fasta-file storing the genome of the organism of interest
 #' can be downloaded and stored locally. Genome files can be retrieved from 
-#' several databases.
+#' several databases. In addition, the genome summary statistics for the 
+#' retrieved species is stored locally to provide users with 
+#' insights regarding the genome assembly quality (see \code{\link{summary_genome}} for details).
+#' This is useful when comparing genomes with large difference in genome assembly qualities.
 #' @param db a character string specifying the database from which the genome 
 #' shall be retrieved:
 #' \itemize{
@@ -57,7 +60,8 @@
 #' 
 #' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
 #' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-#' \code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, \code{\link{read_genome}}
+#' \code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, 
+#' \code{\link{meta.retrieval}}, \code{\link{read_genome}}
 #' @export
 
 getGenome <-
@@ -320,7 +324,12 @@ getGenome <-
                             
                     )
                     
-                    readr::write_tsv(doc, path = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
+                    readr::write_tsv(doc, path = file.path(path, paste0("doc_",local.org,"_db_",db,".tsv")))
+                    
+                    genome_summary_stats <- summary_genome(file = file.path(path,
+                                                                            paste0(local.org, "_genomic_", db, ".fna.gz")), organism = organism)
+                    
+                    readr::write_tsv(genome_summary_stats, path = file.path(path, paste0("doc_",local.org,"_db_",db,"_summary_statistics.tsv")))
                     
                     message(
                         paste0(
