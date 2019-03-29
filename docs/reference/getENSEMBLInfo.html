@@ -148,20 +148,20 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>info.file</span> <span class='kw'>&lt;-</span> <span class='fu'>getENSEMBLInfo</span>()
 <span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 162 x 10</span><span>
-#&gt;    accession assembly release display_name common_name strain division name 
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>        COMMON_…      95 Shrew        European s… </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… sore…
-#&gt; </span><span style='color: #555555;'> 2</span><span> GCA_0016… LP_J_v1       95 Mouse LP/J   house mouse LP/J   Ensembl… mus_…
-#&gt; </span><span style='color: #555555;'> 3</span><span> GCA_0009… Cang.pa…      95 Angola colo… Angola col… </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… colo…
-#&gt; </span><span style='color: #555555;'> 4</span><span> GCA_0028… EquCab3…      95 Horse        horse       </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… equu…
-#&gt; </span><span style='color: #555555;'> 5</span><span> GCA_0001… OtoGar3       95 Bushbaby     small-eare… </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… otol…
-#&gt; </span><span style='color: #555555;'> 6</span><span> GCA_0016… Pygocen…      95 Red-bellied… red-bellie… </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… pygo…
-#&gt; </span><span style='color: #555555;'> 7</span><span> GCA_0022… Sdu_1.0       95 Greater amb… greater am… </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… seri…
-#&gt; </span><span style='color: #555555;'> 8</span><span> GCA_0000… BDGP6         95 Fruitfly     fruit fly   </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… dros…
-#&gt; </span><span style='color: #555555;'> 9</span><span> GCA_0016… AKR_J_v1      95 Mouse AKR/J  house mouse AKR/J  Ensembl… mus_…
-#&gt; </span><span style='color: #555555;'>10</span><span> GCA_0018… PanPar1…      95 Leopard      leopard     </span><span style='color: #BB0000;'>NA</span><span>     Ensembl… pant…
-#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 2 more variables: taxon_id </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   strain_collection </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+#&gt;    common_name division name  display_name accession taxon_id release
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> white-tuft… Ensembl… call… Marmoset     GCA_0027… 9483          95
+#&gt; </span><span style='color: #555555;'> 2</span><span> Pig-tailed… Ensembl… maca… Pig-tailed … GCA_0009… 9545          95
+#&gt; </span><span style='color: #555555;'> 3</span><span> baker's ye… Ensembl… sacc… Saccharomyc… GCA_0001… 4932          95
+#&gt; </span><span style='color: #555555;'> 4</span><span> lyretail c… Ensembl… neol… Lyretail ci… GCA_0002… 32507         95
+#&gt; </span><span style='color: #555555;'> 5</span><span> sailfin mo… Ensembl… poec… Sailfin mol… GCA_0014… 48699         95
+#&gt; </span><span style='color: #555555;'> 6</span><span> bicolor da… Ensembl… steg… Bicolor dam… GCA_0006… 144197        95
+#&gt; </span><span style='color: #555555;'> 7</span><span> Chinese ha… Ensembl… cric… Chinese ham… GCA_0002… 10029         95
+#&gt; </span><span style='color: #555555;'> 8</span><span> tiger tail… Ensembl… hipp… Tiger tail … GCA_0018… 109280        95
+#&gt; </span><span style='color: #555555;'> 9</span><span> zebra mbuna Ensembl… mayl… Zebra mbuna  GCA_0002… 106582        95
+#&gt; </span><span style='color: #555555;'>10</span><span> Golden Ham… Ensembl… meso… Golden Hams… GCA_0003… 10036         95
+#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 3 more variables: strain_collection </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   strain </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, assembly </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
