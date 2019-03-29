@@ -1,5 +1,9 @@
 #' @title Retrieve summary statistics for a genome assembly file
-#' @description A summary statistics of specific genome features is returned.
+#' @description A summary statistics of specific genome features is generated.
+#' These statistics are useful to assess the genome quality of retrieved genome assemblies
+#' when performing comparative genomics tasks. This way, users can assess whether or not
+#' patterns found based on genome comparisons aren't just a technical artifact of
+#' differences in genome assembly quality.
 #' @param file file path to a genome assembly file in \code{fasta} format.
 #' @param organism character string specifying the organism at hand.
 #' @author Hajk-Georg Drost
@@ -18,7 +22,15 @@
 #' (over all chromosomes or scaffolds or contigs) compared to the total number of 
 #' nucleotides in the genome assembly file
 #' }
-#' @seealso \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
+#' @seealso \code{\link{summary_cds}}, \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
+#' @examples \dontrun{
+#' # retrieve genome from NCBI RefSeq
+#' Sc <- biomartr::getGenome(db = "refseq", organism = "Saccharomyces cerevisiae")
+#' # compute genome assembly summary statistics
+#' Sc_genome_summary <- summary_genome(file = Sc, organism = "Saccharomyces cerevisiae")
+#' # look at results
+#' Sc_genome_summary
+#' }
 #' @export 
 summary_genome <- function(file,
                            organism) {
@@ -52,7 +64,7 @@ summary_genome <- function(file,
         GC_freq <- GC_abs / length_all_nucl
         
         # compute N50 of genome assembly
-        genome_N50 <- Biostrings::N50(Biostrings::width(genome_seq)) / 1000000
+        genome_N50 <- N50(Biostrings::width(genome_seq)) / 1000000
         
         res <- tibble::tibble(organism = organism,
                               genome_size_mbp = genome_size_nucl_mbp,
