@@ -12,7 +12,11 @@ summary_genome(file, organism)
 \item{organism}{character string specifying the organism at hand.}
 }
 \description{
-A summary statistics of specific genome features is returned.
+A summary statistics of specific genome features is generated.
+These statistics are useful to assess the genome quality of retrieved genome assemblies
+when performing comparative genomics tasks. This way, users can assess whether or not
+patterns found based on genome comparisons aren't just a technical artifact of
+differences in genome assembly quality.
 }
 \details{
 The summary statistics include: 
@@ -31,8 +35,18 @@ nucleotides in the genome assembly file
 nucleotides in the genome assembly file
 }
 }
+\examples{
+\dontrun{
+# retrieve genome from NCBI RefSeq
+Sc <- biomartr::getGenome(db = "refseq", organism = "Saccharomyces cerevisiae")
+# compute genome assembly summary statistics
+Sc_genome_summary <- summary_genome(file = Sc, organism = "Saccharomyces cerevisiae")
+# look at results
+Sc_genome_summary
+}
+}
 \seealso{
-\code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
+\code{\link{summary_cds}}, \code{\link{getCollection}}, \code{\link{getGenome}}, \code{\link{read_genome}}
 }
 \author{
 Hajk-Georg Drost
