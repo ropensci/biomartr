@@ -4,10 +4,22 @@ biomartr 0.9.0
 ### New Functions
 
 - New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output (find out more here: https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files)
-- New function `getGenomeSet()` allows users to easily retrieve genomes of multiple specified species
+- New function `getGenomeSet()` allows users to easily retrieve genomes of multiple specified species. 
+In addition, the genome summary statistics for all retrieved species will be stored as well to provide
+users with insights regarding the genome assembly quality of each species. This file can be used as Supplementary Information file
+in publications to facilitate reproducible research.
 - New function `getProteomeSet()` allows users to easily retrieve proteomes of multiple specified species
 - New function `getCDSSet()` allows users to easily retrieve coding sequences of multiple specified species
 - New function `getRNASet()` allows users to easily retrieve RNA sequences of multiple specified species
+- New function `summary_genome()` allows users to retrieve summary statistics for a genome assembly file to assess 
+the influence of genome assembly qualities when performing comparative genomics tasks
+- New function `summary_cds()` allows users to retrieve summary statistics for a coding sequence (CDS) file.
+We noticed, that many CDS files stored in NCBI or ENSEMBL databases contain sequences that aren't divisible by 3 (division into codons).
+This makes it difficult to divide CDS into codons for e.g. codon alignments or translation into protein sequences. In
+addition, some CDS files contain a significant amount of sequences that do not start with AUG (start codon).
+This function enables users to quantify how many of these sequences exist in a downloaded CDS file to process
+these files according to the analyses at hand.
+
 
 ### New Features of Existing Functions 
 
@@ -19,7 +31,8 @@ This way all genomes (reference AND non-reference) genomes will be downloaded by
 - `getGTF()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
 - `getGFF()`: users can now specify the NCBI Taxonomy ID or Accession ID for ENSEMBL in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
 - `getMarts()` will now throw an error when BioMart servers cannot be reached (#36)
-
+- `getGenome()` now also stores the genome summary statistics (see `?summary_genome()`) for the retrieved species in the `documentation` folder to provide
+users with insights regarding the genome assembly quality.
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
 ===========
