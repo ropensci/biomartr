@@ -19,7 +19,7 @@ Please find a detailed [documentation here](https://ropensci.github.io/biomartr/
 
 ### Citation
 
-**I would be very grateful if you could cite the following paper in case `biomartr` was useful for your own research. I plan on vastly extending the biomartr functionality and usability in the next years. Many thanks in advance :)**
+**I develop biomartr in my spare time and would be very grateful if you could cite the following paper in case `biomartr` was useful for your own research. I plan on vastly extending the biomartr functionality and usability in the next years to facilitate reproducible genomics research and require citations to back up these efforts. Many thanks in advance :)**
 
 > Drost HG, Paszkowski J. __Biomartr: genomic data retrieval with R__. *Bioinformatics* (2017) 33(8): 1216-1217. [doi:10.1093/bioinformatics/btw821](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R).
 
