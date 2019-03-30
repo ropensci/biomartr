@@ -131,7 +131,7 @@
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)
 
 <span class="co"># read the excel file</span>
-DrerioPhyloMap.MBEa &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">skip =</span> <span class="dv">4</span>)
+DrerioPhyloMap.MBEa &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">skip =</span> <span class="dv">4</span>)
 
 <span class="co"># format Phylostratigraphic Map for use with myTAI</span>
 Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
@@ -154,7 +154,7 @@ Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)
 
 <span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span>
-Drerio.OrganSpecificExpression &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/readxl/topics/read_excel">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">skip =</span> <span class="dv">3</span>)
+Drerio.OrganSpecificExpression &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">skip =</span> <span class="dv">3</span>)
 
 <span class="co"># select only brain specific genes</span>
 Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>(Drerio.OrganSpecificExpression[ , <span class="st">"brain"</span>])))
