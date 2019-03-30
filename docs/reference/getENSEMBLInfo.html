@@ -101,9 +101,6 @@ http://rest.ensembl.org/info/species?content-type=application/json/." />
     <li>
       <a href="../articles/Sequence_Retrieval.html">Sequence Retrieval</a>
     </li>
-    <li>
-      <a href="../articles/repsonse.html">UNKNOWN TITLE</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -148,20 +145,20 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>info.file</span> <span class='kw'>&lt;-</span> <span class='fu'>getENSEMBLInfo</span>()
 <span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 162 x 10</span><span>
-#&gt;    common_name division name  display_name accession taxon_id release
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> white-tuft… Ensembl… call… Marmoset     GCA_0027… 9483          95
-#&gt; </span><span style='color: #555555;'> 2</span><span> Pig-tailed… Ensembl… maca… Pig-tailed … GCA_0009… 9545          95
-#&gt; </span><span style='color: #555555;'> 3</span><span> baker's ye… Ensembl… sacc… Saccharomyc… GCA_0001… 4932          95
-#&gt; </span><span style='color: #555555;'> 4</span><span> lyretail c… Ensembl… neol… Lyretail ci… GCA_0002… 32507         95
-#&gt; </span><span style='color: #555555;'> 5</span><span> sailfin mo… Ensembl… poec… Sailfin mol… GCA_0014… 48699         95
-#&gt; </span><span style='color: #555555;'> 6</span><span> bicolor da… Ensembl… steg… Bicolor dam… GCA_0006… 144197        95
-#&gt; </span><span style='color: #555555;'> 7</span><span> Chinese ha… Ensembl… cric… Chinese ham… GCA_0002… 10029         95
-#&gt; </span><span style='color: #555555;'> 8</span><span> tiger tail… Ensembl… hipp… Tiger tail … GCA_0018… 109280        95
-#&gt; </span><span style='color: #555555;'> 9</span><span> zebra mbuna Ensembl… mayl… Zebra mbuna  GCA_0002… 106582        95
-#&gt; </span><span style='color: #555555;'>10</span><span> Golden Ham… Ensembl… meso… Golden Hams… GCA_0003… 10036         95
-#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 3 more variables: strain_collection </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   strain </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, assembly </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+#&gt;    taxon_id accession release strain assembly strain_collecti… division
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
+#&gt; </span><span style='color: #555555;'> 1</span><span> 30611    GCA_0001…      95 </span><span style='color: #BB0000;'>NA</span><span>     OtoGar3  </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 2</span><span> 61853    GCA_0001…      95 </span><span style='color: #BB0000;'>NA</span><span>     Nleu_3.0 </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 3</span><span> 379532   GCA_0009…      95 </span><span style='color: #BB0000;'>NA</span><span>     Pcoq_1.0 </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 4</span><span> 79684    GCA_0003…      95 </span><span style='color: #BB0000;'>NA</span><span>     MicOch1… </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 5</span><span> 8083     GCA_0027…      95 </span><span style='color: #BB0000;'>NA</span><span>     X_macul… </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 6</span><span> 8839     GCA_0003…      95 </span><span style='color: #BB0000;'>NA</span><span>     BGI_duc… </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 7</span><span> 9305     GCA_0001…      95 </span><span style='color: #BB0000;'>NA</span><span>     DEVIL7.0 </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 8</span><span> 9913     GCA_0022…      95 </span><span style='color: #BB0000;'>NA</span><span>     ARS-UCD… </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'> 9</span><span> 9598     GCA_0000…      95 </span><span style='color: #BB0000;'>NA</span><span>     Pan_tro… </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'>10</span><span> 9978     </span><span style='color: #BB0000;'>NA</span><span>             95 </span><span style='color: #BB0000;'>NA</span><span>     OchPri2… </span><span style='color: #BB0000;'>NA</span><span>               Ensembl…
+#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 3 more variables: common_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   display_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
