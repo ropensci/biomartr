@@ -145,20 +145,20 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>info.file</span> <span class='kw'>&lt;-</span> <span class='fu'>getENSEMBLInfo</span>()
 <span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 162 x 10</span><span>
-#&gt;    division common_name display_name name  accession release taxon_id
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
-#&gt; </span><span style='color: #555555;'> 1</span><span> Ensembl… rabbit      Rabbit       oryc… GCA_0000…      95 9986    
-#&gt; </span><span style='color: #555555;'> 2</span><span> Ensembl… Crab-eatin… Crab-eating… maca… GCA_0003…      95 9541    
-#&gt; </span><span style='color: #555555;'> 3</span><span> Ensembl… climbing p… Climbing pe… anab… GCA_9003…      95 64144   
-#&gt; </span><span style='color: #555555;'> 4</span><span> Ensembl… eastern ha… Eastern hap… asta… GCA_9002…      95 8154    
-#&gt; </span><span style='color: #555555;'> 5</span><span> Ensembl… tiger tail… Tiger tail … hipp… GCA_0018…      95 109280  
-#&gt; </span><span style='color: #555555;'> 6</span><span> Ensembl… zebra mbuna Zebra mbuna  mayl… GCA_0002…      95 106582  
-#&gt; </span><span style='color: #555555;'> 7</span><span> Ensembl… Domestic s… Sheep        ovis… GCA_0002…      95 9940    
-#&gt; </span><span style='color: #555555;'> 8</span><span> Ensembl… cape rock … Hyrax        proc… </span><span style='color: #BB0000;'>NA</span><span>             95 9813    
-#&gt; </span><span style='color: #555555;'> 9</span><span> Ensembl… Golden Ham… Golden Hams… meso… GCA_0003…      95 10036   
-#&gt; </span><span style='color: #555555;'>10</span><span> Ensembl… tammar wal… Wallaby      nota… GCA_0000…      95 9315    
-#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 3 more variables: strain_collection </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   assembly </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, strain </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+#&gt;    strain_collecti… assembly strain accession release taxon_id display_name
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
+#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>               HetGla_… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0002…      95 10181    Naked mole-…
+#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>               GRCz11   </span><span style='color: #BB0000;'>NA</span><span>     GCA_0000…      95 7955     Zebrafish   
+#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>               ASM1649… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0016…      95 37003    Mangrove ri…
+#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>               ASM1698… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0016…      95 94237    Ocean sunfi…
+#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>               vicPac1  </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>             95 30538    Alpaca      
+#&gt; </span><span style='color: #555555;'> 6</span><span> mouse            129S1_S… 129S1… GCA_0016…      95 10090    Mouse 129S1…
+#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>               pteVam1  </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>             95 132908   Megabat     
+#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>               Astyana… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0003…      95 7994     Cave fish   
+#&gt; </span><span style='color: #555555;'> 9</span><span> mouse            WSB_EiJ… WSB/E… GCA_0016…      95 10092    Mouse WSB/E…
+#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>               KH       </span><span style='color: #BB0000;'>NA</span><span>     GCA_0002…      95 7719     C.intestina…
+#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 3 more variables: name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, division </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   common_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
