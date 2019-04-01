@@ -19,6 +19,8 @@
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked
 #' in the database as either a reference genome or a representative genome.
+#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+#' that the most recent database version is used.  
 #' @param clean_retrieval logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param update a logical value indicating whether or not files that were already downloaded and are still present in the 
@@ -54,6 +56,7 @@ getGenomeSet <-
     function(db = "refseq",
              organisms,
              reference = FALSE,
+             release = NULL,
              clean_retrieval = TRUE,
              gunzip = TRUE,
              update = FALSE,
@@ -93,7 +96,7 @@ getGenomeSet <-
             
         }
         
-        if (!update) {
+        if (!update && (length(organisms) > 1)) {
             organisms_short <- tidy_name2(organisms)
             clean_names_short <- unlist(sapply(clean_names, function(x) unlist(stringr::str_split(x, "[.]"))))
             organisms <- as.character(as.vector(dplyr::setdiff(organisms_short, clean_names_short)))
@@ -106,6 +109,7 @@ getGenomeSet <-
                 paths[i] <- getGenome(db       = db,
                                       organism = organisms[i],
                                       reference = reference,
+                                      release = release,
                                       path     = path)
                 message("\n")
             }
