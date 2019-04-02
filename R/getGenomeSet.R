@@ -53,7 +53,7 @@
 getGenomeSet <-
     function(db = "refseq",
              organisms,
-             reference = TRUE,
+             reference = FALSE,
              clean_retrieval = TRUE,
              gunzip = TRUE,
              update = FALSE,
