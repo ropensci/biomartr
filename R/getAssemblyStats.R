@@ -68,7 +68,7 @@
 getAssemblyStats <-
     function(db = "refseq",
              organism,
-             reference = TRUE,
+             reference = FALSE,
              type = "download",
              path = file.path("_ncbi_downloads", "genomeassembly_stats")) {
         
