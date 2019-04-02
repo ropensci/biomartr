@@ -4,7 +4,7 @@
 \alias{getRNA}
 \title{RNA Sequence Retrieval}
 \usage{
-getRNA(db = "refseq", organism, reference = TRUE,
+getRNA(db = "refseq", organism, reference = FALSE,
   path = file.path("_ncbi_downloads", "RNA"))
 }
 \arguments{

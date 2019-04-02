@@ -4,7 +4,7 @@
 \alias{getGenome}
 \title{Genome Retrieval}
 \usage{
-getGenome(db = "refseq", organism, reference = TRUE,
+getGenome(db = "refseq", organism, reference = FALSE,
   path = file.path("_ncbi_downloads", "genomes"))
 }
 \arguments{

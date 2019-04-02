@@ -4,7 +4,7 @@
 \alias{getGFF}
 \title{Genome Annotation Retrieval (GFF3)}
 \usage{
-getGFF(db = "refseq", organism, reference = TRUE,
+getGFF(db = "refseq", organism, reference = FALSE,
   path = file.path("_ncbi_downloads", "annotation"))
 }
 \arguments{

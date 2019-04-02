@@ -4,7 +4,7 @@
 \alias{getGenomeSet}
 \title{Genome Retrieval of multiple species}
 \usage{
-getGenomeSet(db = "refseq", organisms, reference = TRUE,
+getGenomeSet(db = "refseq", organisms, reference = FALSE,
   clean_retrieval = TRUE, gunzip = TRUE, update = FALSE,
   path = "set_genomes")
 }

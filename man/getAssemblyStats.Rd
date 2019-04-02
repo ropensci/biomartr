@@ -4,7 +4,7 @@
 \alias{getAssemblyStats}
 \title{Genome Assembly Stats Retrieval}
 \usage{
-getAssemblyStats(db = "refseq", organism, reference = TRUE,
+getAssemblyStats(db = "refseq", organism, reference = FALSE,
   type = "download", path = file.path("_ncbi_downloads",
   "genomeassembly_stats"))
 }

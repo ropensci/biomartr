@@ -4,7 +4,7 @@
 \alias{getRepeatMasker}
 \title{Repeat Masker Retrieval}
 \usage{
-getRepeatMasker(db = "refseq", organism, reference = TRUE,
+getRepeatMasker(db = "refseq", organism, reference = FALSE,
   path = file.path("_ncbi_downloads", "repeatmasker"))
 }
 \arguments{
