@@ -39,7 +39,7 @@
 getRNA <-
     function(db = "refseq",
              organism,
-             reference = TRUE,
+             reference = FALSE,
              path = file.path("_ncbi_downloads", "RNA")) {
         if (!is.element(db, c("refseq", "genbank", "ensembl", 
                               "ensemblgenomes")))
