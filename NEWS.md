@@ -32,7 +32,9 @@ This way all genomes (reference AND non-reference) genomes will be downloaded by
 - `getGFF()`: users can now specify the NCBI Taxonomy ID or Accession ID for ENSEMBL in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
 - `getMarts()` will now throw an error when BioMart servers cannot be reached (#36)
 - `getGenome()` now also stores the genome summary statistics (see `?summary_genome()`) for the retrieved species in the `documentation` folder to provide
-users with insights regarding the genome assembly quality.
+users with insights regarding the genome assembly quality
+- In all get*() functions the default for argument `reference` is now set from `reference = TRUE` to `reference = FALSE` (= new default)
+
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
 ===========
