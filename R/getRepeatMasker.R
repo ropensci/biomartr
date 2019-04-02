@@ -58,7 +58,7 @@
 getRepeatMasker <-
     function(db = "refseq",
              organism,
-             reference = TRUE,
+             reference = FALSE,
              path = file.path("_ncbi_downloads", "repeatmasker")) {
         
     if (!is.element(db, c("refseq", "genbank")))
