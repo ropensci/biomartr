@@ -66,12 +66,13 @@ Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, a
 * [8. Genome Assembly Stats Retrieval with `getAssemblyStats()`](#genome-assembly-stats-retrieval)
     - [8.1 from NCBI RefSeq](#example-ncbi-refseq-7)
     - [8.2 from NCBI Genbank](#example-ncbi-genbank-6)
+* [8.B. Multiple AssemblyStats retrieval with `getAssemblyStatsSet()`](#assemblystatsset-retrieval)
 * [9. Collection (Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats) retrieval with `getCollection()`](#collection-retrieval)
     - [9.1 from NCBI RefSeq](#example-ncbi-refseq-8)
     - [9.2 from NCBI Genbank](#example-ncbi-genbank-7)
     - [9.3 from NCBI ENSEMBL](#example-ensembl-6)
     - [9.4 from NCBI ENSEMBLGENOMES](#example-ensemblgenomes-6)
-    
+* [9.B. Multiple Collections retrieval with `getCollectionSet()`](#collectionset-retrieval)    
 
 ## Getting Started with Sequence Retrieval
 
@@ -1623,6 +1624,32 @@ The summary statistics include:
 Alternatively, instead of specifying the scientific name in the argument `organism`
 users can specify the `taxonomy` id of the corresponding organism. Here, we specify
 the taxonomy id `4932` which encodes the species `Saccharomyces cerevisiae`.
+
+### GenomeSet Retrieval
+
+The `getGenomeSet()` function enables users to retrieve genome assembly files for
+multiple species. This is convenient when users wish to bulk download a particular
+set of species. 
+
+Example:
+
+```r
+# specify the species names
+download_species <- c("Saccharomyces cerevisiae", 
+                      "Caenorhabditis elegans", 
+                      "Chlamydomonas reinhardtii")
+# retrieve these three species from NCBI RefSeq                       
+biomartr::getGenomeSet("refseq", organisms = download_species)
+```
+
+```
+Starting genome retrieval of the following genomes: Saccharomyces cerevisiae, Caenorhabditis elegans, Chlamydomonas reinhardtii ...
+Generating folder set_genomes ...
+
+Starting genome retrieval of 'Scerevisiae' from refseq ...
+
+```
+
 
 
 ### Proteome Retrieval
