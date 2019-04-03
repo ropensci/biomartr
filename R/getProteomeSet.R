@@ -19,6 +19,8 @@
 #' }
 #' @param reference a logical value indicating whether or not a proteome shall be downloaded if it isn't marked
 #' in the database as either a reference proteome or a representative proteome.
+#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+#' that the most recent database version is used.  
 #' @param clean_retrieval logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which
@@ -52,6 +54,7 @@ getProteomeSet <-
     function(db = "refseq",
              organisms,
              reference = TRUE,
+             release = NULL,
              clean_retrieval = TRUE,
              gunzip = TRUE,
              path = "set_proteomes") {
@@ -76,6 +79,7 @@ getProteomeSet <-
             paths[i] <- getProteome(db       = db,
                                   organism = organisms[i],
                                   reference = reference,
+                                  release = release,
                                   path     = path)
             message("\n")
         }
