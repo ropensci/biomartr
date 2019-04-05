@@ -1,5 +1,11 @@
-getUniProtSeq <- function(organism, path = NULL, update = FALSE) {
-        
+#' @title Interface function to UniProt
+#' @noRd
+getUniProtSeq <-
+        function(organism,
+                 path = NULL,
+                 gunzip = FALSE,
+                 update = FALSE) {
+                
         organism_new <- stringr::str_replace_all(organism, " ", "%20")
         organism_name_path <- stringr::str_replace_all(organism, " ", "_")
         
@@ -114,25 +120,65 @@ getUniProtSeq <- function(organism, path = NULL, update = FALSE) {
                         submitter = ""
                 )
                 
-                message(
-                        paste0(
-                                "The proteome of '",
-                                organism,
-                                "' has been downloaded to '",
-                                ifelse(is.null(path), getwd(), path),
-                                "' and has been named '",
-                                paste0(organism_name_path, "_protein_uniprot.faa.gz"),
-                                "' ."
+                if (!gunzip) {
+                        message(
+                                paste0(
+                                        "The proteome of '",
+                                        organism,
+                                        "' has been downloaded to '",
+                                        ifelse(is.null(path), getwd(), path),
+                                        "' and has been named '",
+                                        paste0(organism_name_path, "_protein_uniprot.faa.gz"),
+                                        "' ."
+                                )
                         )
-                )
+                }
                 
-                return(file.path(
-                        ifelse(is.null(path), getwd(), path),
-                        paste0(
-                                organism_name_path,
-                                "_protein_uniprot.faa.gz"
+                if (gunzip) {
+                        message(
+                                paste0(
+                                        "The proteome of '",
+                                        organism,
+                                        "' has been downloaded to '",
+                                        ifelse(is.null(path), getwd(), path),
+                                        "' and has been named '",
+                                        paste0(organism_name_path, "_protein_uniprot.faa"),
+                                        "' ."
+                                )
                         )
-                ))
+                }
+                
+                if (gunzip) {
+                        message("Unzipping downloaded file ...")
+                        R.utils::gunzip(file.path(
+                                ifelse(is.null(path), getwd(), path),
+                                paste0(
+                                        organism_name_path,
+                                        "_protein_uniprot.faa.gz"
+                                )
+                        ), destname = file.path(
+                                ifelse(is.null(path), getwd(), path),
+                                paste0(
+                                        organism_name_path,
+                                        "_protein_uniprot.faa"
+                                )
+                        ))
+                        return(file.path(
+                                ifelse(is.null(path), getwd(), path),
+                                paste0(
+                                        organism_name_path,
+                                        "_protein_uniprot.faa"
+                                )
+                        ))
+                } else {
+                        return(file.path(
+                                ifelse(is.null(path), getwd(), path),
+                                paste0(
+                                        organism_name_path,
+                                        "_protein_uniprot.faa.gz"
+                                )
+                        ))
+                }
                 
         } else {
                 warning("Unfortunately, no entry for '",organism,"' has been found. Are you certain that you typed the scientific name correctly, e.g. Homo sapiens (capital letter in the first name)?", call. = FALSE)
