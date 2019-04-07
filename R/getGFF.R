@@ -15,6 +15,9 @@
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+#' that the most recent database version is used.
+#' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding annotation file shall be stored. Default is 
 #' \code{path = file.path("_ncbi_downloads","genomes")}.
@@ -56,6 +59,8 @@ getGFF <-
     function(db = "refseq",
              organism,
              reference = FALSE,
+             release = NULL,
+             gunzip = FALSE,
              path = file.path("_ncbi_downloads", "annotation")) {
         
        if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
@@ -66,7 +71,10 @@ getGFF <-
         
         if (db == "ensemblgenomes") {
             organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name[1]
-            message("Starting GFF retrieval of '", organism_name, "' from ", db, " ...")
+            if (!is.na(organism_name))
+                    message("Starting GFF retrieval of '", organism_name, "' from ", db, " ...")
+            if (is.na(organism_name))
+                    message("Starting GFF retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         } else {
             message("Starting GFF retrieval of '", organism, "' from ", db, " ...")
@@ -314,22 +322,32 @@ getGFF <-
                     
                     readr::write_tsv(doc, path = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
                     
-                    message(
-                        paste0(
-                            "The *.gff annotation file of '",
-                            organism,
-                            "' has been downloaded to '",
-                            path,
-                            "' and has been named '",
-                            paste0(local.org, "_genomic_", db, ".gff.gz"),
-                            "'."
-                        )
-                    )
+                    if (gunzip) {
+                            message(
+                                    paste0(
+                                            "The *.gff annnotation file of '",
+                                            organism,
+                                            "' has been downloaded to '",
+                                            path,
+                                            "' and has been named '",
+                                            paste0(local.org, "_genomic_", db, ".gff"),
+                                            "' ."
+                                    )
+                            )
+                            
+                    }
                     
-                    return(file.path(
-                        path,
-                        paste0(local.org, "_genomic_", db, ".gff.gz")
-                    ))
+                    if (gunzip) {
+                            message("Unzipping downloaded file ...")
+                            R.utils::gunzip(file.path(path,
+                                                      paste0(local.org, "_genomic_", db, ".gff.gz")), destname = file.path(path,
+                                                                                                                                    paste0(local.org, "_genomic_", db, ".gff")))
+                            return(file.path(path,
+                                             paste0(local.org, "_genomic_", db, ".gff")))
+                    } else {
+                            return(file.path(path,
+                                             paste0(local.org, "_genomic_", db, ".gff.gz")))
+                    }
                 } else {
                     stop(
                         "File: ",
@@ -348,11 +366,16 @@ getGFF <-
             }
             
             # download genome sequence from ENSEMBL
-            genome.path <-
-                getENSEMBL.Annotation(organism, type = "dna", 
-                                      id.type = "toplevel", path)
+                genome.path <-
+                        getENSEMBL.Annotation(
+                                organism,
+                                type = "dna",
+                                id.type = "toplevel",
+                                release = release,
+                                path = path
+                        )
             
-            if (is.logical(genome.path)) {
+            if (is.logical(genome.path[1])) {
                 if (!genome.path)
                     return(FALSE)
             } else {
@@ -411,7 +434,9 @@ getGFF <-
                     paste0("doc_", new.organism, "_db_", db, ".txt")
                 ))
                 
-                cat(paste0("File Name: ", genome.path))
+                cat(paste0("File Name: ", genome.path[1]))
+                cat("\n")
+                cat(paste0("Download Path: ", genome.path[2]))
                 cat("\n")
                 cat(paste0("Organism Name: ", new.organism))
                 cat("\n")
@@ -445,7 +470,8 @@ getGFF <-
                 sink()
                 
                 doc <- tibble::tibble(
-                    file_name = genome.path,
+                    file_name = genome.path[1],
+                    download_path = genome.path[2],
                     organism = new.organism,
                     database = db,
                     download_data = date(),
@@ -462,19 +488,41 @@ getGFF <-
                     paste0("doc_", new.organism, "_db_", db, ".tsv"))
                 )
                 
-                message(
-                    paste0(
-                        "The *.gff annotation file of '",
-                        organism,
-                        "' has been downloaded to '",
-                        genome.path,
-                        "' and has been named '",
-                        basename(genome.path),
-                        "'."
-                    )
-                )
+                if (!gunzip) {
+                        message(
+                                paste0(
+                                        "The GFF of '",
+                                        ensembl_summary$display_name[1],
+                                        "' has been downloaded to '",
+                                        path,
+                                        "' and has been named '",
+                                        basename(genome.path[1]),
+                                        "'."
+                                )
+                        )
+                }
                 
-                return(genome.path)
+                if (gunzip) {
+                        message(
+                                paste0(
+                                        "The GFF of '",
+                                        ensembl_summary$display_name[1],
+                                        "' has been downloaded to '",
+                                        path,
+                                        "' and has been named '",
+                                        basename(unlist(stringr::str_replace(genome.path[1], "[.]gz", ""))),
+                                        "'."
+                                )
+                        )
+                }
+                
+                if (gunzip) {
+                        message("Unzipping downloaded file ...")
+                        R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                        return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                } else {
+                        return(genome.path[1])
+                }
             }
         }
         
@@ -485,12 +533,17 @@ getGFF <-
             }
             
             # download genome sequence from ENSEMBLGENOMES
-            genome.path <-
-                getENSEMBLGENOMES.Annotation(organism, type = "dna", 
-                                             id.type = "toplevel", path)
+                genome.path <-
+                        getENSEMBLGENOMES.Annotation(
+                                organism,
+                                type = "dna",
+                                id.type = "toplevel",
+                                release = release,
+                                path = path
+                        )
             
-            if (is.logical(genome.path)) {
-                if (!genome.path)
+            if (is.logical(genome.path[1])) {
+                if (!genome.path[1])
                     return(FALSE)
             } else {
                 
@@ -548,7 +601,9 @@ getGFF <-
                     paste0("doc_", new.organism, "_db_", db, ".txt")
                 ))
                 
-                cat(paste0("File Name: ", genome.path))
+                cat(paste0("File Name: ", genome.path[1]))
+                cat("\n")
+                cat(paste0("Download Path: ", genome.path[2]))
                 cat("\n")
                 cat(paste0("Organism Name: ", new.organism))
                 cat("\n")
@@ -582,7 +637,8 @@ getGFF <-
                 sink()
                 
                 doc <- tibble::tibble(
-                    file_name = genome.path,
+                    file_name = genome.path[1],
+                    download_path = genome.path[2],
                     organism = new.organism,
                     database = db,
                     download_data = date(),
@@ -599,22 +655,44 @@ getGFF <-
                     paste0("doc_", new.organism, "_db_", db, ".tsv"))
                 )
                 
-                message(
-                    paste0(
-                        "The *.gff annotation file of '",
-                        organism,
-                        "' has been downloaded to '",
-                        genome.path,
-                        "' and has been named '",
-                        basename(genome.path),
-                        "'."
-                    )
-                )
+                if (!gunzip) {
+                        message(
+                                paste0(
+                                        "The GFF annotation file of '",
+                                        ensembl_summary$display_name,
+                                        "' has been downloaded to '",
+                                        path,
+                                        "' and has been named '",
+                                        basename(genome.path[1]),
+                                        "'."
+                                )
+                        )
+                }
                 
-                return(genome.path)
+                if (gunzip) {
+                        message(
+                                paste0(
+                                        "The GFF annotation file of '",
+                                        ensembl_summary$display_name,
+                                        "' has been downloaded to '",
+                                        path,
+                                        "' and has been named '",
+                                        basename(unlist(stringr::str_replace(genome.path[1], "[.]gz", ""))),
+                                        "'."
+                                )
+                        )
+                }
+                
+                if (gunzip) {
+                        message("Unzipping downloaded file ...")
+                        R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                        return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                } else {
+                        return(genome.path[1])
+                }
+            }
          }
     }
-}
 
 
 
