@@ -23,9 +23,6 @@ Please find a detailed [documentation here](https://ropensci.github.io/biomartr/
 
 > Drost HG, Paszkowski J. __Biomartr: genomic data retrieval with R__. *Bioinformatics* (2017) 33(8): 1216-1217. [doi:10.1093/bioinformatics/btw821](https://academic.oup.com/bioinformatics/article/doi/10.1093/bioinformatics/btw821/2931816/Biomartr-genomic-data-retrieval-with-R).
 
-If you cannot cite my paper, but still would like to support `biomartr`, think about buying me a coffee :)
-
-<a href="https://www.buymeacoffee.com/AbadZxhoJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 ### Short package description:
 
