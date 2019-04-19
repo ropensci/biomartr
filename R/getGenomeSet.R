@@ -99,7 +99,11 @@ getGenomeSet <-
         if (!update && (length(organisms) > 1)) {
             organisms_short <- tidy_name2(organisms)
             clean_names_short <- unlist(sapply(clean_names, function(x) unlist(stringr::str_split(x, "[.]"))))
-            organisms <- as.character(as.vector(dplyr::setdiff(organisms_short, clean_names_short)))
+            organisms_short_setdiff <- as.character(as.vector(dplyr::setdiff(organisms_short, clean_names_short)))
+            
+            if (length(organisms) > 0) {
+                    organisms <- organisms[which(organisms_short %in% organisms_short_setdiff)]
+            }
         }
         
         if (length(organisms) > 0) {
