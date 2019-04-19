@@ -107,8 +107,8 @@ getENSEMBLGENOMES.Seq <-
                     )
                 }, error = function(e) {
                     warning(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem ",
-                        "to work properly. Are you connected to the internet? ",
+                        "Something went wrong when accessing the API 'http://rest.ensemblgenomes.org'.",
+                        " Are you connected to the internet? ",
                         "Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' ",
                         "currently available? Could it be that the scientific name is mis-spelled or includes special characters such as '.' or '('?",
                         call. = FALSE
