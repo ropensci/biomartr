@@ -4,8 +4,8 @@
 \alias{getGenome}
 \title{Genome Retrieval}
 \usage{
-getGenome(db = "refseq", organism, reference = FALSE,
-  path = file.path("_ncbi_downloads", "genomes"))
+getGenome(db = "refseq", organism, reference = FALSE, release = NULL,
+  gunzip = FALSE, path = file.path("_ncbi_downloads", "genomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -25,6 +25,11 @@ shall be retrieved:
 }}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+
+\item{release}{the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+that the most recent database version is used.}
+
+\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding genome shall be stored. Default is 
