@@ -5,8 +5,8 @@
 \title{Genome Retrieval of multiple species}
 \usage{
 getGenomeSet(db = "refseq", organisms, reference = FALSE,
-  clean_retrieval = TRUE, gunzip = TRUE, update = FALSE,
-  path = "set_genomes")
+  release = NULL, clean_retrieval = TRUE, gunzip = TRUE,
+  update = FALSE, path = "set_genomes")
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome
@@ -28,6 +28,9 @@ There are three available options to characterize an organism:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked
 in the database as either a reference genome or a representative genome.}
+
+\item{release}{the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+that the most recent database version is used.}
 
 \item{clean_retrieval}{logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.}
 
