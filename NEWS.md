@@ -34,6 +34,11 @@ This way all genomes (reference AND non-reference) genomes will be downloaded by
 - `getGenome()` now also stores the genome summary statistics (see `?summary_genome()`) for the retrieved species in the `documentation` folder to provide
 users with insights regarding the genome assembly quality
 - In all get*() functions the default for argument `reference` is now set from `reference = TRUE` to `reference = FALSE` (= new default)
+- all `get*()` functions now received a new argument `release` which allows users to retrieve
+specific release versions of genomes, proteomes, etc from `ENSEMBL` and `ENSEMBLGENOMES`
+- all `get*()` functions received two new arguments `clean_retrieval` and  `gunzip` which
+allows users to upzip the downloaded files directly in the `get*()` function call and rename
+the file for more convenient downstream analyses
 
 
 [biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
