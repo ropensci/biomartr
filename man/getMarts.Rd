@@ -11,8 +11,10 @@ This funcion queries the Ensembl Biomart API and returns a table
 storing information about all available Ensembl Biomart databases.
 }
 \examples{
+\dontrun{
 # get a table of all available databases from Ensembl Biomart
- getMarts()
+getMarts()
+ }
 }
 \seealso{
 \code{\link{getDatasets}}, \code{\link{getAttributes}}, 
