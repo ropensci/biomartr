@@ -86,7 +86,7 @@ BiocManager::install("biomaRt", version = "3.8")
 
 ```
 
-Now users can install `biomartr` from [CRAN](https://cran.r-project.org/web/packages/biomartr/index.html):
+Now users can install `biomartr` from CRAN:
 
 ```r
 # install biomartr 0.8.0
