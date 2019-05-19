@@ -5,7 +5,8 @@
 \title{Proteome Retrieval}
 \usage{
 getProteome(db = "refseq", organism, reference = TRUE,
-  path = file.path("_ncbi_downloads", "proteomes"))
+  release = NULL, gunzip = FALSE, path = file.path("_ncbi_downloads",
+  "proteomes"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -14,7 +15,6 @@ shall be retrieved:
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 \item \code{db = "uniprot"}
 }}
 
@@ -26,6 +26,11 @@ shall be retrieved:
 }}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+
+\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used.}
+
+\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding proteome shall be stored. Default is 

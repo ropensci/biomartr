@@ -15,7 +15,6 @@ shall be retrieved:
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 
 \item{organisms}{a character vector storing the names of the organisms than shall be retrieved.
@@ -29,7 +28,7 @@ There are three available options to characterize an organism:
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked
 in the database as either a reference genome or a representative genome.}
 
-\item{release}{the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used.}
 
 \item{clean_retrieval}{logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.}
@@ -66,15 +65,16 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-biomartr::getGenomeSet("refseq", organisms = c("Arabidopsis thaliana", 
-                                               "Arabidopsis lyrata", 
-                                               "Capsella rubella"))
+getGenomeSet("refseq", organisms = c("Arabidopsis thaliana", 
+                                     "Arabidopsis lyrata", 
+                                     "Capsella rubella"))
 }
 
 }
 \seealso{
-\code{\link{getProteomeSet}}, \code{\link{getCDS}},
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}},
+\code{\link{getProteomeSet}}, \code{\link{getCDSSet}},
+\code{\link{getRNASet}}, \code{\link{getGFFSet}}, \code{\link{getCDS}},
+\code{\link{getGFF}}, \code{\link{getGTF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}},
 \code{\link{read_genome}}
 }
 \author{

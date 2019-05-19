@@ -14,7 +14,6 @@ shall be retrieved:
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 
 \item{organism}{there are three options to characterize an organism: 
@@ -26,7 +25,7 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{release}{the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
@@ -84,10 +83,10 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, 
+\code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
 \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
 \code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, 
-\code{\link{meta.retrieval}}, \code{\link{read_genome}}
+\code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
 }
 \author{
 Hajk-Georg Drost

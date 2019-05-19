@@ -12,7 +12,6 @@ getGTF(db = "ensembl", organism, path = file.path("ensembl",
 shall be retrieved:
 \itemize{
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 
 \item{organism}{a character string specifying the scientific name of the 
@@ -33,12 +32,7 @@ of interest can be downloaded and stored locally. GTF files can be retrieved
 from several databases.
 }
 \details{
-Internally this function loads the the overview.txt file from NCBI:
-
- refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
-
- genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
- 
+Internally this function loads the the overview.txt file from ENSEMBL:
 and creates a directory 'ensembl/annotation' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
