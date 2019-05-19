@@ -42,9 +42,13 @@ Download the `Phylostratigraphic Map` of _D. rerio_:
 ```r
 # download the Phylostratigraphic Map of Danio rerio
 # from Sestak and Domazet-Loso, 2015
-download.file( url      = "http://mbe.oxfordjournals.org/content/suppl/2014/11/17/msu319.DC1/TableS3-2.xlsx", 
-               destfile = "MBE_2015a_Drerio_PhyloMap.xlsx" )
 ```
+
+The dataset comes from `supplementary file 3` of this publication: https://academic.oup.com/mbe/article/32/2/299/1058654#77837069
+
+After downloading `supplementary file 3`, you will find the file “TableS3-2.xlsx” which can be used in the following biomartr functions.
+
+
 
 Read the `*.xlsx` file storing the `Phylostratigraphic Map` of _D. rerio_ and format it for the use with `myTAI`:
 
@@ -56,7 +60,7 @@ install.packages("readxl")
 library(readxl)
 
 # read the excel file
-DrerioPhyloMap.MBEa <- read_excel("MBE_2015a_Drerio_PhyloMap.xlsx", sheet = 1, skip = 4)
+DrerioPhyloMap.MBEa <- read_excel("TableS3-2.xlsx", sheet = 1, skip = 4)
 
 # format Phylostratigraphic Map for use with myTAI
 Drerio.PhyloMap <- DrerioPhyloMap.MBEa[ , 1:2]
@@ -87,7 +91,7 @@ Now, the `PlotEnrichment()` function visualizes the over- and underrepresented `
 library(readxl)
 
 # read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015
-Drerio.OrganSpecificExpression <- read_excel("MBE_2015a_Drerio_PhyloMap.xlsx", sheet = 2, skip = 3)
+Drerio.OrganSpecificExpression <- read_excel("TableS3-2.xlsx", sheet = 2, skip = 3)
 
 # select only brain specific genes
 Drerio.Brain.Genes <- unlist(unique(na.omit(Drerio.OrganSpecificExpression[ , "brain"])))
