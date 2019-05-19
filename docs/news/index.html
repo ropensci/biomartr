@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -129,8 +129,9 @@
 
     <div id="biomartr-0-9-0" class="section level1">
 <h1 class="page-header">
-<a href="#biomartr-0-9-0" class="anchor"></a>biomartr 0.9.0<small> Unreleased </small>
+<a href="#biomartr-0-9-0" class="anchor"></a><small> Unreleased </small><a href="(https://github.com/ropensci/biomartr/releases/tag/v0.9.0)">biomartr 0.9.0</a>
 </h1>
+<p><strong>Please be aware that as of April 2019, ENSEMBLGENOMES was retired (<a href="http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/">see details here</a>). Hence, all <code>biomartr</code> functions were updated and won’t support data retrieval from <code>ENSEMBLGENOMES</code> servers anymore.</strong></p>
 <div id="new-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New Functions</h3>
@@ -139,6 +140,7 @@
 <li>New function <code><a href="../reference/getGenomeSet.html">getGenomeSet()</a></code> allows users to easily retrieve genomes of multiple specified species. In addition, the genome summary statistics for all retrieved species will be stored as well to provide users with insights regarding the genome assembly quality of each species. This file can be used as Supplementary Information file in publications to facilitate reproducible research.</li>
 <li>New function <code><a href="../reference/getProteomeSet.html">getProteomeSet()</a></code> allows users to easily retrieve proteomes of multiple specified species</li>
 <li>New function <code><a href="../reference/getCDSSet.html">getCDSSet()</a></code> allows users to easily retrieve coding sequences of multiple specified species</li>
+<li>New function <code><a href="../reference/getGFFSet.html">getGFFSet()</a></code> allows users to easily retrieve GFF annotation files of multiple specified species</li>
 <li>New function <code><a href="../reference/getRNASet.html">getRNASet()</a></code> allows users to easily retrieve RNA sequences of multiple specified species</li>
 <li>New function <code><a href="../reference/summary_genome.html">summary_genome()</a></code> allows users to retrieve summary statistics for a genome assembly file to assess the influence of genome assembly qualities when performing comparative genomics tasks</li>
 <li>New function <code><a href="../reference/summary_cds.html">summary_cds()</a></code> allows users to retrieve summary statistics for a coding sequence (CDS) file. We noticed, that many CDS files stored in NCBI or ENSEMBL databases contain sequences that aren’t divisible by 3 (division into codons). This makes it difficult to divide CDS into codons for e.g. codon alignments or translation into protein sequences. In addition, some CDS files contain a significant amount of sequences that do not start with AUG (start codon). This function enables users to quantify how many of these sequences exist in a downloaded CDS file to process these files according to the analyses at hand.</li>
@@ -150,7 +152,7 @@
 <ul>
 <li>the default value of argument <code>reference</code> in <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> changed from <code>reference = TRUE</code> to <code>reference = FALSE</code>. This way all genomes (reference AND non-reference) genomes will be downloaded by default. This is what users seem to prefer.</li>
 <li>
-<code><a href="../reference/getCollection.html">getCollection()</a></code> now also retrieves <code>GTF</code> files when <code>db = 'ensembl'</code> or <code>db = 'ensemblgenomes'</code>
+<code><a href="../reference/getCollection.html">getCollection()</a></code> now also retrieves <code>GTF</code> files when <code>db = 'ensembl'</code>
 </li>
 <li>
 <code><a href="../reference/getAssemblyStats.html">getAssemblyStats()</a></code> now also performs md5 checksum test</li>
@@ -162,7 +164,11 @@
 <li>
 <code><a href="../reference/getMarts.html">getMarts()</a></code> will now throw an error when BioMart servers cannot be reached (<a href='https://github.com/ropensci/biomartr/issues/36'>#36</a>)</li>
 <li>
-<code><a href="../reference/getGenome.html">getGenome()</a></code> now also stores the genome summary statistics (see <code>?summary_genome()</code>) for the retrieved species in the <code>documentation</code> folder to provide users with insights regarding the genome assembly quality.</li>
+<code><a href="../reference/getGenome.html">getGenome()</a></code> now also stores the genome summary statistics (see <code>?summary_genome()</code>) for the retrieved species in the <code>documentation</code> folder to provide users with insights regarding the genome assembly quality</li>
+<li>In all get*() functions the default for argument <code>reference</code> is now set from <code>reference = TRUE</code> to <code>reference = FALSE</code> (= new default)</li>
+<li>all <code>get*()</code> functions now received a new argument <code>release</code> which allows users to retrieve specific release versions of genomes, proteomes, etc from <code>ENSEMBL</code> and <code>ENSEMBLGENOMES</code>
+</li>
+<li>all <code>get*()</code> functions received two new arguments <code>clean_retrieval</code> and <code>gunzip</code> which allows users to upzip the downloaded files directly in the <code>get*()</code> function call and rename the file for more convenient downstream analyses</li>
 </ul>
 </div>
 </div>

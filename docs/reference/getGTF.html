@@ -67,7 +67,7 @@ from several databases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -156,7 +156,6 @@ from several databases.</p>
       <td><p>a character string specifying the database from which the genome 
 shall be retrieved:</p><ul>
 <li><p><code>db = "ensembl"</code></p></li>
-<li><p><code>db = "ensemblgenomes"</code></p></li>
 </ul></td>
     </tr>
     <tr>
@@ -178,10 +177,8 @@ the corresponding annotation file shall be stored. Default is
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Internally this function loads the the overview.txt file from NCBI:</p>
-<p>refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/</p>
-<p>genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/</p> 
-<p>and creates a directory 'ensembl/annotation' to store
+    <p>Internally this function loads the the overview.txt file from ENSEMBL:
+and creates a directory 'ensembl/annotation' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
 'ensembl/annotation' folder and is accessible within the workspace,

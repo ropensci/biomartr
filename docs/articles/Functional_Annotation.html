@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
     <div class="page-header toc-ignore">
       <h1>Functional Annotation with biomartr</h1>
             
-            <h4 class="date">2019-03-31</h4>
+            <h4 class="date">2019-05-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Functional_Annotation.Rmd"><code>vignettes/Functional_Annotation.Rmd</code></a></small>
       <div class="hidden name"><code>Functional_Annotation.Rmd</code></div>
@@ -119,62 +119,62 @@
 <p>Hence, when users wish to retrieve information for a specific organism of interest, they first need to specify a particular <code>mart</code> and <code>dataset</code> in which the information of the corresponding organism of interest can be found. Subsequently they can specify the <code>attributes</code> argument to retrieve a particular type of functional annotation (e.g. Gene Ontology terms).</p>
 <p>The following section shall illustrate how <code>marts</code>, <code>datasets</code>, and <code>attributes</code> could be explored using <code>biomaRt</code> before the <code>biomartr</code> package existed.</p>
 <p>The availability of <code>marts</code>, <code>datasets</code>, and <code>attributes</code> can be checked by the following functions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install the biomaRt package       </span>
-<span class="co"># source("http://bioconductor.org/biocLite.R")      </span>
-<span class="co"># biocLite("biomaRt")       </span>
-<span class="co"># load biomaRt      </span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomaRt)        
-<span class="co"># look at top 10 databases      </span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listMarts">listMarts</a></span>(<span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>), <span class="dv">10</span>)      </code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install the biomaRt package       </span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># source("http://bioconductor.org/biocLite.R")      </span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># biocLite("biomaRt")       </span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># load biomaRt      </span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomaRt)        </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># look at top 10 databases      </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listMarts">listMarts</a></span>(<span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>), <span class="dv">10</span>)      </a></code></pre></div>
 <pre><code>#&gt;                biomart               version
-#&gt; 1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 95
-#&gt; 2   ENSEMBL_MART_MOUSE      Mouse strains 95
-#&gt; 3     ENSEMBL_MART_SNP  Ensembl Variation 95
-#&gt; 4 ENSEMBL_MART_FUNCGEN Ensembl Regulation 95</code></pre>
+#&gt; 1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 96
+#&gt; 2   ENSEMBL_MART_MOUSE      Mouse strains 96
+#&gt; 3     ENSEMBL_MART_SNP  Ensembl Variation 96
+#&gt; 4 ENSEMBL_MART_FUNCGEN Ensembl Regulation 96</code></pre>
 <p>Users will observe that several <code>marts</code> providing annotation for specific classes of organisms or groups of organisms are available.</p>
 <p>For our example, we will choose the <code>hsapiens_gene_ensembl</code> <code>mart</code> and list all available datasets that are element of this <code>mart</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)), <span class="dv">10</span>)     </code></pre></div>
-<pre><code>#&gt;                        dataset                              description                version
-#&gt; 1     acalliptera_gene_ensembl         Eastern happy genes (fAstCal1.2)             fAstCal1.2
-#&gt; 2   acarolinensis_gene_ensembl           Anole lizard genes (AnoCar2.0)              AnoCar2.0
-#&gt; 3    acitrinellus_gene_ensembl           Midas cichlid genes (Midas_v5)               Midas_v5
-#&gt; 4    amelanoleuca_gene_ensembl                    Panda genes (ailMel1)                ailMel1
-#&gt; 5      amexicanus_gene_ensembl Cave fish genes (Astyanax_mexicanus-2.0) Astyanax_mexicanus-2.0
-#&gt; 6      anancymaae_gene_ensembl       Ma's night monkey genes (Anan_2.0)               Anan_2.0
-#&gt; 7      aocellaris_gene_ensembl      Clown anemonefish genes (AmpOce1.0)              AmpOce1.0
-#&gt; 8        apercula_gene_ensembl         Orange clownfish genes (Nemo_v1)                Nemo_v1
-#&gt; 9  aplatyrhynchos_gene_ensembl                Duck genes (BGI_duck_1.0)           BGI_duck_1.0
-#&gt; 10  apolyacanthus_gene_ensembl        Spiny chromis genes (ASM210954v1)            ASM210954v1</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listDatasets">listDatasets</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="dt">host =</span> <span class="st">"www.ensembl.org"</span>)), <span class="dv">10</span>)     </a></code></pre></div>
+<pre><code>#&gt;                         dataset                                  description                version
+#&gt; 1  abrachyrhynchus_gene_ensembl        Pink-footed goose genes (ASM259213v1)            ASM259213v1
+#&gt; 2      acalliptera_gene_ensembl             Eastern happy genes (fAstCal1.2)             fAstCal1.2
+#&gt; 3    acarolinensis_gene_ensembl               Anole lizard genes (AnoCar2.0)              AnoCar2.0
+#&gt; 4     acitrinellus_gene_ensembl               Midas cichlid genes (Midas_v5)               Midas_v5
+#&gt; 5         ahaastii_gene_ensembl           Great spotted kiwi genes (aptHaa1)                aptHaa1
+#&gt; 6     amelanoleuca_gene_ensembl                        Panda genes (ailMel1)                ailMel1
+#&gt; 7       amexicanus_gene_ensembl Mexican tetra genes (Astyanax_mexicanus-2.0) Astyanax_mexicanus-2.0
+#&gt; 8       anancymaae_gene_ensembl           Ma's night monkey genes (Anan_2.0)               Anan_2.0
+#&gt; 9       aocellaris_gene_ensembl          Clown anemonefish genes (AmpOce1.0)              AmpOce1.0
+#&gt; 10         aowenii_gene_ensembl          Little spotted kiwi genes (aptOwe1)                aptOwe1</code></pre>
 <p>The <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart()</a></code> function is a wrapper function provided by <code>biomaRt</code> to connect a selected BioMart database (<code>mart</code>) with a corresponding dataset stored within this <code>mart</code>.<br>
 We select dataset <code>hsapiens_gene_ensembl</code> and now check for available attributes (annotation data) that can be accessed for <code>Homo sapiens</code> genes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(
-                                         <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>,         
-                                         <span class="dt">mart    =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>,      
-                                         <span class="dt">host    =</span> <span class="st">"www.ensembl.org"</span>))), <span class="dv">10</span>)        </code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">                                         <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>,         </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                                         <span class="dt">mart    =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>,      </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                                         <span class="dt">host    =</span> <span class="st">"www.ensembl.org"</span>))), <span class="dv">10</span>)        </a></code></pre></div>
 <p>Please note the nested structure of this attribute query. For an attribute query procedure an additional wrapper function named <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset()</a></code> is needed in which <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart()</a></code> and a corresponding dataset needs to be specified. The result is a table storing the name of available attributes for<br><em>Homo sapiens</em> as well as a short description.</p>
 <p>Furthermore, users can retrieve all filters for <em>Homo sapiens</em> that can be specified by the actual BioMart query process.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listFilters">listFilters</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(<span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>,       
-                                               <span class="dt">mart    =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>,        
-                                               <span class="dt">host    =</span> <span class="st">"www.ensembl.org"</span>))), <span class="dv">10</span>)      </code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"> <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listFilters">listFilters</a></span>(biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(<span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>,       </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                                               <span class="dt">mart    =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>,        </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                                               <span class="dt">host    =</span> <span class="st">"www.ensembl.org"</span>))), <span class="dv">10</span>)      </a></code></pre></div>
 <p>After accumulating all this information, it is now possible to perform an actual BioMart query by using the <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM()</a></code> function.</p>
 <p>In this example we will retrieve attributes: <code>start_position</code>,<code>end_position</code> and <code>description</code><br>
 for the <em>Homo sapiens</em> gene <code>"GUCA2A"</code>.</p>
 <p>Since the input genes are <code>ensembl gene ids</code>, we need to specify the <code>filters</code> argument <code>filters = "hgnc_symbol"</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co"># 1) select a mart and data set        </span>
- mart &lt;-<span class="st"> </span>biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(<span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>,         
-                    <span class="dt">mart    =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>,       
-                    <span class="dt">host    =</span> <span class="st">"www.ensembl.org"</span>))       
-        
- <span class="co"># 2) run a biomart query using the getBM() function        </span>
- <span class="co"># and specify the attributes and filter arguments      </span>
- geneSet &lt;-<span class="st"> "GUCA2A"</span>        
-        
- resultTable &lt;-<span class="st"> </span>biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_position"</span>,<span class="st">"end_position"</span>,<span class="st">"description"</span>),       
-                      <span class="dt">filters    =</span> <span class="st">"hgnc_symbol"</span>,       
-                      <span class="dt">values     =</span> geneSet,         
-                      <span class="dt">mart       =</span> mart)        
-        
- resultTable        </code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"> <span class="co"># 1) select a mart and data set        </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"> mart &lt;-<span class="st"> </span>biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useDataset">useDataset</a></span>(<span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>,         </a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">                    <span class="dt">mart    =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/useMart">useMart</a></span>(<span class="st">"ENSEMBL_MART_ENSEMBL"</span>,       </a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                    <span class="dt">host    =</span> <span class="st">"www.ensembl.org"</span>))       </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">        </a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"> <span class="co"># 2) run a biomart query using the getBM() function        </span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"> <span class="co"># and specify the attributes and filter arguments      </span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"> geneSet &lt;-<span class="st"> "GUCA2A"</span>        </a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">        </a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"> resultTable &lt;-<span class="st"> </span>biomaRt<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"start_position"</span>,<span class="st">"end_position"</span>,<span class="st">"description"</span>),       </a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">                      <span class="dt">filters    =</span> <span class="st">"hgnc_symbol"</span>,       </a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">                      <span class="dt">values     =</span> geneSet,         </a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">                      <span class="dt">mart       =</span> mart)        </a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">        </a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"> resultTable        </a></code></pre></div>
 <p>When using <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM()</a></code> users can pass all attributes retrieved by <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/listAttributes">listAttributes()</a></code> to the <code>attributes</code> argument of the <code><a href="https://www.rdocumentation.org/packages/biomaRt/topics/getBM">getBM()</a></code> function.</p>
 </div>
 </div>
@@ -203,11 +203,11 @@ for the <em>Homo sapiens</em> gene <code>"GUCA2A"</code>.</p>
 <h3 class="hasAnchor">
 <a href="#retrieve-available-marts" class="anchor"></a>Retrieve Available Marts</h3>
 <p>The <code><a href="../reference/getMarts.html">getMarts()</a></code> function allows users to list all available databases that can be accessed through BioMart interfaces.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the biomartr package</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomartr)
-
-<span class="co"># list all available databases</span>
-biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getMarts">getMarts</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># load the biomartr package</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomartr)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># list all available databases</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getMarts">getMarts</a></span>()</a></code></pre></div>
 <pre><code>  mart                  version                       
    &lt;chr&gt;                 &lt;chr&gt;                         
  1 ENSEMBL_MART_ENSEMBL  Ensembl Genes 92              
@@ -230,7 +230,7 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <h3 class="hasAnchor">
 <a href="#retrieve-available-datasets-from-a-specific-mart" class="anchor"></a>Retrieve Available Datasets from a Specific Mart</h3>
 <p>Now users can select a specific database to list all available datasets that can be accessed through this database. In this example we choose the <code>ENSEMBL_MART_ENSEMBL</code> database.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getDatasets">getDatasets</a></span>(<span class="dt">mart =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>) , <span class="dv">5</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getDatasets">getDatasets</a></span>(<span class="dt">mart =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>) , <span class="dv">5</span>)</a></code></pre></div>
 <pre><code> dataset                description                         version        
   &lt;chr&gt;                  &lt;chr&gt;                               &lt;chr&gt;          
 1 pabelii_gene_ensembl   Orangutan genes (PPYG2)             PPYG2          
@@ -239,7 +239,7 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 4 chircus_gene_ensembl   Goat genes (ARS1)                   ARS1           
 5 trubripes_gene_ensembl Fugu genes (FUGU 4.0)               FUGU 4.0  </code></pre>
 <p>Now you can select the dataset <code>hsapiens_gene_ensembl</code> and list all available attributes that can be retrieved from this dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getDatasets">getDatasets</a></span>(<span class="dt">mart =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>) , <span class="dv">38</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">tail</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getDatasets">getDatasets</a></span>(<span class="dt">mart =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>) , <span class="dv">38</span>)</a></code></pre></div>
 <pre><code>1 xtropicalis_gene_ensembl Xenopus genes (JGI 4.2)                JGI 4.2     
  2 saraneus_gene_ensembl    Shrew genes (sorAra1)                  sorAra1     
  3 nleucogenys_gene_ensembl Gibbon genes (Nleu_3.0)                Nleu_3.0    
@@ -256,11 +256,11 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <h3 class="hasAnchor">
 <a href="#retrieve-available-attributes-from-a-specific-dataset" class="anchor"></a>Retrieve Available Attributes from a Specific Dataset</h3>
 <p>Now that you have selected a database (<code>hsapiens_gene_ensembl</code>) and a dataset (<code>hsapiens_gene_ensembl</code>), users can list all available attributes for this dataset using the <code><a href="../reference/getAttributes.html">getAttributes()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># list all available attributes for dataset: hsapiens_gene_ensembl</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>( biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getAttributes">getAttributes</a></span>(<span class="dt">mart    =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, 
-                              <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>), <span class="dv">10</span> )</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># list all available attributes for dataset: hsapiens_gene_ensembl</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>( biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getAttributes">getAttributes</a></span>(<span class="dt">mart    =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, </a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">                              <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>), <span class="dv">10</span> )</a></code></pre></div>
 <pre><code>                            name                  description
 1                ensembl_gene_id               Gene stable ID
 2        ensembl_gene_id_version       Gene stable ID version
@@ -277,11 +277,11 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <h3 class="hasAnchor">
 <a href="#retrieve-available-filters-from-a-specific-dataset" class="anchor"></a>Retrieve Available Filters from a Specific Dataset</h3>
 <p>Finally, the <code><a href="../reference/getFilters.html">getFilters()</a></code> function allows users to list available filters for a specific dataset that can be used for a <code><a href="../reference/biomart.html">biomart()</a></code> query.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># list all available filters for dataset: hsapiens_gene_ensembl</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>( biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getFilters">getFilters</a></span>(<span class="dt">mart    =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, 
-                           <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>), <span class="dv">10</span> )</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co"># list all available filters for dataset: hsapiens_gene_ensembl</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>( biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getFilters">getFilters</a></span>(<span class="dt">mart    =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, </a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">                           <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>), <span class="dv">10</span> )</a></code></pre></div>
 <pre><code>                 name                            description
 1     chromosome_name               Chromosome/scaffold name
 2               start                                  Start
@@ -301,11 +301,11 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <p>In most use cases, users will work with a single or a set of model organisms. In this process they will mostly be interested in specific annotations for this particular model organism. The <code><a href="../reference/organismBM.html">organismBM()</a></code> function addresses this issue and provides users with an organism centric query to <code>marts</code> and <code>datasets</code> which are available for a particular organism of interest.</p>
 <p><strong>Note</strong> that when running the following functions for the first time, the data retrieval procedure will take some time, due to the remote access to BioMart. The corresponding result is then saved in a <code>*.txt</code> file named <code>_biomart/listDatasets.txt</code> within the <code><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir()</a></code> folder, allowing subsequent queries to be performed much faster. The <code><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir()</a></code> folder, however, will be deleted after a new R session was established. In this case the inital call of the subsequent functions again will take time to retrieve all organism specific data from the BioMart database.</p>
 <p>This concept of locally storing all organism specific database linking information available in BioMart into an internal file allows users to significantly speed up subsequent retrieval queries for that particular organism.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># retrieving all available datasets and biomart connections for</span>
-<span class="co"># a specific query organism (scientific name)</span>
-biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismBM">organismBM</a></span>(<span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co"># retrieving all available datasets and biomart connections for</span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co"># a specific query organism (scientific name)</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismBM">organismBM</a></span>(<span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>)</a></code></pre></div>
 <pre><code>   organism_name description                    mart      dataset       version
    &lt;chr&gt;         &lt;chr&gt;                          &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;  
  1 hsapiens      Human genes (GRCh38.p12)       ENSEMBL_… hsapiens_gen… GRCh38…
@@ -328,10 +328,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <p>Users will observe that 3 different <code>marts</code> provide 6 different <code>datasets</code> storing annotation information for <em>Homo sapiens</em>.</p>
 <p><strong>Please note, however, that scientific names of organisms must be written correctly! For ex. “Homo Sapiens” will be treated differently (not recognized) than “Homo sapiens” (recognized).</strong></p>
 <p>Similar to the <code>biomaRt</code> package query methodology, users need to specify <code>attributes</code> and <code>filters</code> to be able to perform accurate BioMart queries. Here the functions <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code> and <code><a href="../reference/organismFilters.html">organismFilters()</a></code> provide useful and intuitive concepts to obtain this information.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># return available attributes for "Homo sapiens"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>), <span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co"># return available attributes for "Homo sapiens"</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>), <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>1 ensembl_gene_id               Gene stable ID         hsapiens_ge… ENSEMBL_M…
  2 ensembl_gene_id_version       Gene stable ID version hsapiens_ge… ENSEMBL_M…
  3 ensembl_transcript_id         Transcript stable ID   hsapiens_ge… ENSEMBL_M…
@@ -354,10 +354,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 20 transcript_appris             APPRIS annotation      hsapiens_ge… ENSEMBL_M…</code></pre>
 <p>Users will observe that the <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code> function returns a data.frame storing attribute names, datasets, and marts which are available for <code>Homo sapiens</code>. After the ENSEMBL release 87 the <code>ENSEMBL_MART_SEQUENCE</code> service provided by Ensembl does not work properly and thus the <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code> function prints out warning messages to make the user aware when certain marts provided bt Ensembl do not work properly, yet.</p>
 <p>An additional feature provided by <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code> is the <code>topic</code> argument. The <code>topic</code> argument allows users to to search for specific attributes, topics, or categories for faster filtering.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># search for attribute topic "id"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"id"</span>), <span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co"># search for attribute topic "id"</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"id"</span>), <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>  name                          description            dataset      mart      
    &lt;chr&gt;                         &lt;chr&gt;                  &lt;chr&gt;        &lt;chr&gt;     
  1 ensembl_gene_id               Gene stable ID         hsapiens_ge… ENSEMBL_M…
@@ -382,10 +382,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 20 mobidblite                    MobiDBLite             hsapiens_ge… ENSEMBL_M…</code></pre>
 <p>Now, all <code>attribute names</code> having <code>id</code> as part of their <code>name</code> are being returned.</p>
 <p>Another example is <code>topic = "homolog"</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># search for attribute topic "homolog"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"homolog"</span>), <span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co"># search for attribute topic "homolog"</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"homolog"</span>), <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>  &lt;chr&gt;                                         &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt; 
  1 mspretus_homolog_ensembl_gene                 Algerian mouse… hsapie… ENSEM…
  2 mspretus_homolog_associated_gene_name         Algerian mouse… hsapie… ENSEM…
@@ -408,10 +408,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 19 vpacos_homolog_ensembl_peptide                Alpaca protein… hsapie… ENSEM…
 20 vpacos_homolog_chromosome                     Alpaca chromos… hsapie… ENSEM…</code></pre>
 <p>Or <code>topic = "dn"</code> and <code>topic = "ds"</code> for <code>dn</code> and <code>ds</code> value retrieval.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># search for attribute topic "dn"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"dn"</span>))</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co"># search for attribute topic "dn"</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"dn"</span>))</a></code></pre></div>
 <pre><code>  name                  description            dataset               mart      
   &lt;chr&gt;                 &lt;chr&gt;                  &lt;chr&gt;                 &lt;chr&gt;     
 1 cdna_coding_start     cDNA coding start      hsapiens_gene_ensembl ENSEMBL_M…
@@ -420,10 +420,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 4 vpacos_homolog_dn     dN with Alpaca         hsapiens_gene_ensembl ENSEMBL_M…
 5 pformosa_homolog_dn   dN with Amazon molly   hsapiens_gene_ensembl ENSEMBL_M…
 6 cpalliatus_homolog_dn dN with Angola colobus hsapiens_gene_ensembl ENSEMBL_M…</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># search for attribute topic "ds"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"ds"</span>))</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co"># search for attribute topic "ds"</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"ds"</span>))</a></code></pre></div>
 <pre><code>  name                description            dataset               mart        
   &lt;chr&gt;               &lt;chr&gt;                  &lt;chr&gt;                 &lt;chr&gt;       
 1 ccds                CCDS ID                hsapiens_gene_ensembl ENSEMBL_MAR…
@@ -433,10 +433,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 5 mspretus_homolog_ds dS with Algerian mouse hsapiens_gene_ensembl ENSEMBL_MAR…
 6 vpacos_homolog_ds   dS with Alpaca         hsapiens_gene_ensembl ENSEMBL_MAR…</code></pre>
 <p>Analogous to the <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code> function, the <code><a href="../reference/organismFilters.html">organismFilters()</a></code> function returns all filters that are available for a query organism of interest.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># return available filters for "Homo sapiens"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismFilters">organismFilters</a></span>(<span class="st">"Homo sapiens"</span>), <span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="co"># return available filters for "Homo sapiens"</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismFilters">organismFilters</a></span>(<span class="st">"Homo sapiens"</span>), <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>   name                                description          dataset    mart    
    &lt;chr&gt;                               &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;   
  1 chromosome_name                     Chromosome/scaffold… hsapiens_… ENSEMBL…
@@ -460,10 +460,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 19 with_entrezgene_trans_name          With EntrezGene tra… hsapiens_… ENSEMBL…
 20 with_embl                           With European Nucle… hsapiens_… ENSEMBL…</code></pre>
 <p>The <code><a href="../reference/organismFilters.html">organismFilters()</a></code> function also allows users to search for filters that correspond to a specific topic or category.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># search for filter topic "id"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismFilters">organismFilters</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"id"</span>), <span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co"># search for filter topic "id"</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismFilters">organismFilters</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"id"</span>), <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>   name                          description               dataset     mart    
    &lt;chr&gt;                         &lt;chr&gt;                     &lt;chr&gt;       &lt;chr&gt;   
  1 with_protein_id               With INSDC protein ID ID… hsapiens_g… ENSEMBL…
@@ -493,10 +493,10 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 </h2>
 <p>The short introduction to the functionality of <code><a href="../reference/organismBM.html">organismBM()</a></code>, <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code>, and <code><a href="../reference/organismFilters.html">organismFilters()</a></code> will allow users to perform BioMart queries in a very intuitive organism centric way. The main function to perform BioMart queries is <code><a href="../reference/biomart.html">biomart()</a></code>.</p>
 <p>For the following examples we will assume that we are interested in the annotation of specific genes from the <em>Homo sapiens</em> proteome. We want to map the corresponding refseq gene id to a set of other gene ids used in other databases. For this purpose, first we need consult the <code><a href="../reference/organismAttributes.html">organismAttributes()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"id"</span>))</code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/organismAttributes">organismAttributes</a></span>(<span class="st">"Homo sapiens"</span>, <span class="dt">topic =</span> <span class="st">"id"</span>))</a></code></pre></div>
 <pre><code> name                          description                  dataset    mart   
   &lt;chr&gt;                         &lt;chr&gt;                        &lt;chr&gt;      &lt;chr&gt;  
 1 ensembl_gene_id               Gene stable ID               hsapiens_… ENSEMB…
@@ -505,25 +505,25 @@ biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 4 ensembl_transcript_id_version Transcript stable ID version hsapiens_… ENSEMB…
 5 ensembl_peptide_id            Protein stable ID            hsapiens_… ENSEMB…
 6 ensembl_peptide_id_version    Protein stable ID version    hsapiens_… ENSEMB…</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># retrieve the proteome of Homo sapiens from refseq</span>
-file_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getProteome">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>,
-                                    <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,
-                                    <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>) )
-
-Hsapiens_proteome &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/read_proteome">read_proteome</a></span>(file_path, <span class="dt">format =</span> <span class="st">"fasta"</span>)
-
-<span class="co"># remove splice variants from id</span>
-gene_set &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/strsplit">strsplit</a></span>(Hsapiens_proteome<span class="op">@</span>ranges<span class="op">@</span>NAMES[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="st">"."</span>,<span class="dt">fixed =</span> <span class="ot">TRUE</span>), <span class="cf">function</span>(x) x[<span class="dv">1</span>]))
-
-result_BM &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/biomart">biomart</a></span>( <span class="dt">genes      =</span> gene_set, <span class="co"># genes were retrieved using biomartr::getGenome()</span>
-                                <span class="dt">mart       =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="co"># marts were selected with biomartr::getMarts()</span>
-                                <span class="dt">dataset    =</span> <span class="st">"hsapiens_gene_ensembl"</span>, <span class="co"># datasets were selected with biomartr::getDatasets()</span>
-                                <span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ensembl_gene_id"</span>,<span class="st">"ensembl_peptide_id"</span>), <span class="co"># attributes were selected with biomartr::getAttributes()</span>
-                                <span class="dt">filters    =</span> <span class="st">"refseq_peptide"</span>) <span class="co"># specify what ID type was stored in the fasta file retrieved with biomartr::getGenome()</span>
-
-result_BM </code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># retrieve the proteome of Homo sapiens from refseq</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4">file_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getProteome">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>,</a>
+<a class="sourceLine" id="cb36-5" data-line-number="5">                                    <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
+<a class="sourceLine" id="cb36-6" data-line-number="6">                                    <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>) )</a>
+<a class="sourceLine" id="cb36-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb36-8" data-line-number="8">Hsapiens_proteome &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/read_proteome">read_proteome</a></span>(file_path, <span class="dt">format =</span> <span class="st">"fasta"</span>)</a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb36-10" data-line-number="10"><span class="co"># remove splice variants from id</span></a>
+<a class="sourceLine" id="cb36-11" data-line-number="11">gene_set &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/strsplit">strsplit</a></span>(Hsapiens_proteome<span class="op">@</span>ranges<span class="op">@</span>NAMES[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="st">"."</span>,<span class="dt">fixed =</span> <span class="ot">TRUE</span>), <span class="cf">function</span>(x) x[<span class="dv">1</span>]))</a>
+<a class="sourceLine" id="cb36-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb36-13" data-line-number="13">result_BM &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/biomart">biomart</a></span>( <span class="dt">genes      =</span> gene_set, <span class="co"># genes were retrieved using biomartr::getGenome()</span></a>
+<a class="sourceLine" id="cb36-14" data-line-number="14">                                <span class="dt">mart       =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, <span class="co"># marts were selected with biomartr::getMarts()</span></a>
+<a class="sourceLine" id="cb36-15" data-line-number="15">                                <span class="dt">dataset    =</span> <span class="st">"hsapiens_gene_ensembl"</span>, <span class="co"># datasets were selected with biomartr::getDatasets()</span></a>
+<a class="sourceLine" id="cb36-16" data-line-number="16">                                <span class="dt">attributes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ensembl_gene_id"</span>,<span class="st">"ensembl_peptide_id"</span>), <span class="co"># attributes were selected with biomartr::getAttributes()</span></a>
+<a class="sourceLine" id="cb36-17" data-line-number="17">                                <span class="dt">filters    =</span> <span class="st">"refseq_peptide"</span>) <span class="co"># specify what ID type was stored in the fasta file retrieved with biomartr::getGenome()</span></a>
+<a class="sourceLine" id="cb36-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb36-19" data-line-number="19">result_BM </a></code></pre></div>
 <pre><code>  refseq_peptide ensembl_gene_id ensembl_peptide_id
 1      NP_000005 ENSG00000175899    ENSP00000323929
 2      NP_000006 ENSG00000156006    ENSP00000286479
@@ -541,14 +541,14 @@ result_BM </code></pre></div>
 <h3 class="hasAnchor">
 <a href="#go-annotation-retrieval-via-biomart" class="anchor"></a>GO Annotation Retrieval via BioMart</h3>
 <p>The <code><a href="../reference/getGO.html">getGO()</a></code> function takes several arguments as input to retrieve GO information from BioMart. First, the scientific name of the <code>organism</code> of interest needs to be specified. Furthermore, a set of <code>gene ids</code> as well as their corresponding <code>filter</code> notation (<code>GUCA2A</code> gene ids have <code>filter</code> notation <code>hgnc_symbol</code>; see <code><a href="../reference/organismFilters.html">organismFilters()</a></code> for details) need to be specified. The <code>database</code> argument then defines the database from which GO information shall be retrieved.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show all elements of the data.frame</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)
-<span class="co"># search for GO terms of an example Homo sapiens gene</span>
-GO_tbl &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getGO">getGO</a></span>(<span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, 
-                          <span class="dt">genes    =</span> <span class="st">"GUCA2A"</span>,
-                          <span class="dt">filters  =</span> <span class="st">"hgnc_symbol"</span>)
-
-GO_tbl</code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="co"># search for GO terms of an example Homo sapiens gene</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">GO_tbl &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getGO">getGO</a></span>(<span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">                          <span class="dt">genes    =</span> <span class="st">"GUCA2A"</span>,</a>
+<a class="sourceLine" id="cb38-6" data-line-number="6">                          <span class="dt">filters  =</span> <span class="st">"hgnc_symbol"</span>)</a>
+<a class="sourceLine" id="cb38-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb38-8" data-line-number="8">GO_tbl</a></code></pre></div>
 <p>Hence, for each <em>gene id</em> the resulting table stores all annotated GO terms found in <a href="http://ensemblgenomes.org/info/access/biomart">Ensembl Biomart</a>.</p>
 </div>
 </div>

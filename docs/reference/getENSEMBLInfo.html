@@ -64,7 +64,7 @@ http://rest.ensembl.org/info/species?content-type=application/json/." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -144,21 +144,21 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>info.file</span> <span class='kw'>&lt;-</span> <span class='fu'>getENSEMBLInfo</span>()
-<span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 162 x 10</span><span>
-#&gt;    strain_collecti… assembly strain accession release taxon_id display_name
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>               HetGla_… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0002…      95 10181    Naked mole-…
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>               GRCz11   </span><span style='color: #BB0000;'>NA</span><span>     GCA_0000…      95 7955     Zebrafish   
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>               ASM1649… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0016…      95 37003    Mangrove ri…
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>               ASM1698… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0016…      95 94237    Ocean sunfi…
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>               vicPac1  </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>             95 30538    Alpaca      
-#&gt; </span><span style='color: #555555;'> 6</span><span> mouse            129S1_S… 129S1… GCA_0016…      95 10090    Mouse 129S1…
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>               pteVam1  </span><span style='color: #BB0000;'>NA</span><span>     </span><span style='color: #BB0000;'>NA</span><span>             95 132908   Megabat     
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>               Astyana… </span><span style='color: #BB0000;'>NA</span><span>     GCA_0003…      95 7994     Cave fish   
-#&gt; </span><span style='color: #555555;'> 9</span><span> mouse            WSB_EiJ… WSB/E… GCA_0016…      95 10092    Mouse WSB/E…
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>               KH       </span><span style='color: #BB0000;'>NA</span><span>     GCA_0002…      95 7719     C.intestina…
-#&gt; </span><span style='color: #555555;'># … with 152 more rows, and 3 more variables: name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, division </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   common_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+<span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 199 x 10</span><span>
+#&gt;    common_name name  assembly taxon_id accession strain_collecti… strain
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
+#&gt; </span><span style='color: #555555;'> 1</span><span> house mouse mus_… GRCm38   10090    GCA_0000… mouse            refer…
+#&gt; </span><span style='color: #555555;'> 2</span><span> human       homo… GRCh38   9606     GCA_0000… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'> 3</span><span> domestic g… cavi… Cavpor3… 10141    GCA_0001… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'> 4</span><span> house mouse mus_… CBA_J_v1 10090    GCA_0016… mouse            CBA/J 
+#&gt; </span><span style='color: #555555;'> 5</span><span> Midas cich… amph… Midas_v5 61819    GCA_0007… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'> 6</span><span> green anole anol… AnoCar2… 28377    GCA_0000… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'> 7</span><span> White-head… cebu… Cebus_i… 1737458  GCA_0016… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'> 8</span><span> ballan wra… labr… BallGen… 56723    GCA_9000… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'> 9</span><span> leopard     pant… PanPar1… 9691     GCA_0018… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'>10</span><span> torafugu    taki… FUGU5    31033    GCA_0001… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #555555;'># … with 189 more rows, and 3 more variables: division </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   display_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, release </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

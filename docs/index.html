@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -132,7 +132,8 @@
 <li><a href="https://www.ncbi.nlm.nih.gov/refseq/">NCBI RefSeq</a></li>
 <li><a href="https://www.ncbi.nlm.nih.gov/genbank/">NCBI Genbank</a></li>
 <li><a href="https://www.ensembl.org/index.html">ENSEMBL</a></li>
-<li><a href="http://ensemblgenomes.org">ENSEMBLGENOMES</a></li>
+<li>
+<a href="http://ensemblgenomes.org">ENSEMBLGENOMES</a> (as of April 2019 - <code>ENSEMBL</code> and <code>ENSEMBLGENOMES</code> were joined - see <a href="http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/">details here</a>)</li>
 <li><a href="http://www.uniprot.org">UniProt</a></li>
 </ul>
 <p>Furthermore, an interface to the <a href="www.ensembl.org/biomart">Ensembl Biomart</a> database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd">download entire databases</a> such as</p>
@@ -166,16 +167,16 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The <code>biomartr</code> package relies on some <a href="https://www.bioconductor.org/install/">Bioconductor</a> tools and thus requires installation of the following packages:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install core Bioconductor packages</span>
-<span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>))
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)
-BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>()
-<span class="co"># Install package dependencies</span>
-BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"Biostrings"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)
-BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"biomaRt"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install core Bioconductor packages</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>))</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>()</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Install package dependencies</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"Biostrings"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"biomaRt"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</a></code></pre></div>
 <p>Now users can install <code>biomartr</code> from <a href="https://cran.r-project.org/web/packages/biomartr/index.html">CRAN</a>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install biomartr 0.8.0</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"biomartr"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install biomartr 0.8.0</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"biomartr"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -184,8 +185,8 @@ BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocu
 <h3 class="hasAnchor">
 <a href="#collection-retrieval" class="anchor"></a>Collection Retrieval</h3>
 <p>The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats files) will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file and was generated using the same genome assembly version. One aspect of why genomics studies fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version. To avoid this seemingly trivial mistake we encourage users to retrieve genome file collections using the <code>biomartr</code> function <code><a href="reference/getCollection.html">getCollection()</a></code> and attach the corresponding output as Supplementary Data to the respective genomics study to ensure computational and biological reproducibility.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download collection for Saccharomyces cerevisiae</span>
-biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getCollection">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># download collection for Saccharomyces cerevisiae</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getCollection">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>)</a></code></pre></div>
 <p>Internally, the <code><a href="reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/Saccharomyces_cerevisiae</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
 <p>Internally, a text file named <code>doc_Saccharomyces_cerevisiae_db_refseq.txt</code> is generated. The information stored in this log file is structured as follows:</p>
 <pre><code>File Name: Saccharomyces_cerevisiae_assembly_stats_refseq.txt
@@ -210,8 +211,8 @@ submitter: Saccharomyces Genome Database</code></pre>
 <h3 class="hasAnchor">
 <a href="#genome-retrieval-of-hundreds-of-genomes-using-only-one-command" class="anchor"></a>Genome retrieval of hundreds of genomes using only one command</h3>
 <p>Download all mammalian vertebrate genomes from <code>NCBI RefSeq</code> via:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download all vertebrate genomes</span>
-<span class="kw"><a href="reference/meta.retrieval.html">meta.retrieval</a></span>(<span class="dt">kingdom =</span> <span class="st">"vertebrate_mammalian"</span>, <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">type =</span> <span class="st">"genome"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># download all vertebrate genomes</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="reference/meta.retrieval.html">meta.retrieval</a></span>(<span class="dt">kingdom =</span> <span class="st">"vertebrate_mammalian"</span>, <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">type =</span> <span class="st">"genome"</span>)</a></code></pre></div>
 <p>All geneomes are stored in the folder named according to the kingdom. In this case <code>vertebrate_mammalian</code>. Alternatively, users can specify the <code>out.folder</code> argument to define a custom output folder path.</p>
 </div>
 <div id="platforms" class="section level3">
@@ -247,12 +248,12 @@ submitter: Saccharomyces Genome Database</code></pre>
 <li><a href="https://ropensci.github.io/biomartr/articles/BioMart_Examples.html">BioMart Examples</a></li>
 </ul>
 <p>Users can also read the tutorials within (<a href="http://www.rstudio.com/">RStudio</a>) :</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># source the biomartr package</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomartr)
-
-<span class="co"># look for all tutorials (vignettes) available in the biomartr package</span>
-<span class="co"># this will open your web browser</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/browseVignettes">browseVignettes</a></span>(<span class="st">"biomartr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># source the biomartr package</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomartr)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># look for all tutorials (vignettes) available in the biomartr package</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># this will open your web browser</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/browseVignettes">browseVignettes</a></span>(<span class="st">"biomartr"</span>)</a></code></pre></div>
 </div>
 <div id="news" class="section level2">
 <h2 class="hasAnchor">
@@ -263,11 +264,11 @@ submitter: Saccharomyces Genome Database</code></pre>
 <h2 class="hasAnchor">
 <a href="#install-developer-version" class="anchor"></a>Install Developer Version</h2>
 <p>Some bug fixes or new functionality will not be available on CRAN yet, but in the developer version here on GitHub. To download and install the most recent version of <code>biomartr</code> run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install the current version of biomartr on your system</span>
-<span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)
-
-BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"ropensci/biomartr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># install the current version of biomartr on your system</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"ropensci/biomartr"</span>)</a></code></pre></div>
 </div>
 <div id="genomic-data-retrieval" class="section level2">
 <h2 class="hasAnchor">
@@ -416,19 +417,19 @@ BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocu
 <div id="download-developer-version-on-windows-systems" class="section level2">
 <h2 class="hasAnchor">
 <a href="#download-developer-version-on-windows-systems" class="anchor"></a>Download Developer Version On Windows Systems</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># On Windows, this won't work - see ?build_github_devtools</span>
-<span class="kw">install_github</span>(<span class="st">"HajkD/biomartr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># When working with Windows, first you need to install the</span>
-<span class="co"># R package: rtools -&gt; install.packages("rtools")</span>
-
-<span class="co"># Afterwards you can install devtools -&gt; install.packages("devtools")</span>
-<span class="co"># and then you can run:</span>
-
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"HajkD/biomartr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># and then call it from the library</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"biomartr"</span>, <span class="dt">lib.loc =</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># On Windows, this won't work - see ?build_github_devtools</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">install_github</span>(<span class="st">"HajkD/biomartr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># When working with Windows, first you need to install the</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># R package: rtools -&gt; install.packages("rtools")</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># Afterwards you can install devtools -&gt; install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co"># and then you can run:</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"HajkD/biomartr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co"># and then call it from the library</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"biomartr"</span>, <span class="dt">lib.loc =</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span>)</a></code></pre></div>
 <div id="troubleshooting-on-windows-machines" class="section level3">
 <h3 class="hasAnchor">
 <a href="#troubleshooting-on-windows-machines" class="anchor"></a>Troubleshooting on Windows Machines</h3>

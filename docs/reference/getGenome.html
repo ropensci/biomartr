@@ -70,7 +70,7 @@ This is useful when comparing genomes with large difference in genome assembly q
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -151,8 +151,8 @@ This is useful when comparing genomes with large difference in genome assembly q
     
     </div>
 
-    <pre class="usage"><span class='fu'>getGenome</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organism</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='st'>"_ncbi_downloads"</span>, <span class='st'>"genomes"</span>))</pre>
+    <pre class="usage"><span class='fu'>getGenome</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organism</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>release</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='st'>"_ncbi_downloads"</span>, <span class='st'>"genomes"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,7 +164,6 @@ shall be retrieved:</p><ul>
 <li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
 <li><p><code>db = "ensembl"</code></p></li>
-<li><p><code>db = "ensemblgenomes"</code></p></li>
 </ul></td>
     </tr>
     <tr>
@@ -178,6 +177,15 @@ shall be retrieved:</p><ul>
     <tr>
       <th>reference</th>
       <td><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.</p></td>
+    </tr>
+    <tr>
+      <th>release</th>
+      <td><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning
+that the most recent database version is used.</p></td>
+    </tr>
+    <tr>
+      <th>gunzip</th>
+      <td><p>a logical value indicating whether or not files should be unzipped.</p></td>
     </tr>
     <tr>
       <th>path</th>
@@ -204,10 +212,10 @@ no download process will be performed.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='getProteome.html'>getProteome</a></code>, <code><a href='getCDS.html'>getCDS</a></code>, 
+    <div class='dont-index'><p><code><a href='getGenomeSet.html'>getGenomeSet</a></code>, <code><a href='getProteome.html'>getProteome</a></code>, <code><a href='getCDS.html'>getCDS</a></code>, 
 <code><a href='getGFF.html'>getGFF</a></code>, <code><a href='getRNA.html'>getRNA</a></code>, <code><a href='getRepeatMasker.html'>getRepeatMasker</a></code>, 
 <code><a href='getAssemblyStats.html'>getAssemblyStats</a></code>, <code><a href='summary_genome.html'>summary_genome</a></code>, 
-<code><a href='meta.retrieval.html'>meta.retrieval</a></code>, <code><a href='read_genome.html'>read_genome</a></code></p></div>
+<code><a href='meta.retrieval.html'>meta.retrieval</a></code>, <code><a href='meta.retrieval.all.html'>meta.retrieval.all</a></code>, <code><a href='read_genome.html'>read_genome</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

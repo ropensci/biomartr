@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Perform Meta-Genome Retrieval of all organisms in all kingdoms of life — meta.retrieval.all • biomartr</title>
+<title>GFF retrieval of multiple species — getGFFSet • biomartr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
 
 
-<meta property="og:title" content="Perform Meta-Genome Retrieval of all organisms in all kingdoms of life — meta.retrieval.all" />
+<meta property="og:title" content="GFF retrieval of multiple species — getGFFSet" />
 
-<meta property="og:description" content="Download genomes, proteomes, cds, gff, rna, or assembly stats 
-files of individual species of all kingdoms of life." />
+<meta property="og:description" content="Main GFF retrieval function for a set of organism of interest.
+By specifying the scientific names of the organisms of interest the corresponding fasta-files storing the GFF of the organisms of interest
+will be downloaded and stored locally. GFF files can be retrieved from several databases." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,90 +128,104 @@ files of individual species of all kingdoms of life." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Perform Meta-Genome Retrieval of all organisms in all kingdoms of life</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/meta.retrieval.all.R'><code>R/meta.retrieval.all.R</code></a></small>
-    <div class="hidden name"><code>meta.retrieval.all.Rd</code></div>
+    <h1>GFF retrieval of multiple species</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getGFFSet.R'><code>R/getGFFSet.R</code></a></small>
+    <div class="hidden name"><code>getGFFSet.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Download genomes, proteomes, cds, gff, rna, or assembly stats 
-files of individual species of all kingdoms of life.</p>
+    <p>Main GFF retrieval function for a set of organism of interest.
+By specifying the scientific names of the organisms of interest the corresponding fasta-files storing the GFF of the organisms of interest
+will be downloaded and stored locally. GFF files can be retrieved from several databases.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>meta.retrieval.all</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>getGFFSet</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organisms</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>release</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>clean_retrieval</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"set_GFF"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>db</th>
-      <td><p>a character string specifying the database from which the genome 
+      <td><p>a character string specifying the database from which the GFF
 shall be retrieved:</p><ul>
 <li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
-<li><p><code>db = "emsembl"</code></p></li>
-<li><p><code>db = "ensemblgenomes"</code></p></li>
+<li><p><code>db = "ensembl"</code></p></li>
 </ul></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>type of sequences that shall be retrieved. Options are:</p><ul>
-<li><p><code>type = "genome"</code> :
- for genome assembly retrieval; see also <code><a href='getGenome.html'>getGenome</a></code>),</p></li>
-<li><p><code>type = "proteome"</code> :
- (for proteome retrieval; see also <code><a href='getProteome.html'>getProteome</a></code>),</p></li>
-<li><p><code>type = "cds"</code> :
- (for coding sequence retrieval; see also <code><a href='getCDS.html'>getCDS</a></code>),</p></li>
-<li><p><code>type = "gff"</code> :
-(for annotation file retrieval in gff format; see also <code><a href='getGFF.html'>getGFF</a></code>),</p></li>
-<li><p><code>type = "gtf"</code> :
-(for annotation file retrieval in gtf format 
-(only for ensembl and ensemblgenomes); see also <code><a href='getGTF.html'>getGTF</a></code>),</p></li>
-<li><p><code>type = "rna"</code> :
- (for RNA file retrieval in fasta format; see also <code><a href='getRNA.html'>getRNA</a></code>),</p></li>
-<li><p><code>type = "rm"</code> :
- (for Repeat Masker output file retrieval; see also 
- <code><a href='getRepeatMasker.html'>getRepeatMasker</a></code>),</p></li>
-<li><p><code>type = "assemblystats"</code> (for genome assembly quality stats 
- file retrieval; see also <code><a href='getAssemblyStats.html'>getAssemblyStats</a></code>).</p></li>
+      <th>organisms</th>
+      <td><p>a character vector storing the names of the organisms than shall be retrieved.
+There are three available options to characterize an organism:</p><ul>
+<li><p>by <code>scientific name</code>: e.g. <code>organism = "Homo sapiens"</code></p></li>
+<li><p>by <code>database specific accession identifier</code>: e.g. <code>organism = "GCF_000001405.37"</code> (= NCBI RefSeq identifier for <code>Homo sapiens</code>)</p></li>
+<li><p>by <code>taxonomic identifier from NCBI Taxonomy</code>: e.g. <code>organism = "9606"</code> (= taxid of <code>Homo sapiens</code>)</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>reference</th>
-      <td><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
-as either a reference genome or a representative genome. Options are:</p><ul>
-<li><p><code>reference = FALSE</code> (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.</p></li>
-<li><p><code>reference = TRUE</code>: organisms that are downloaded must be either a reference or representative genome. Thus, most genomes which are usually non-reference genomes
-will not be downloaded.</p></li>
-</ul></td>
+      <td><p>a logical value indicating whether or not a GFF shall be downloaded if it isn't marked
+in the database as either a reference GFF or a representative GFF</p></td>
+    </tr>
+    <tr>
+      <th>release</th>
+      <td><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning
+that the most recent database version is used.</p></td>
+    </tr>
+    <tr>
+      <th>clean_retrieval</th>
+      <td><p>logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.</p></td>
+    </tr>
+    <tr>
+      <th>gunzip</th>
+      <td><p>a logical value indicating whether or not files should be unzipped.</p></td>
+    </tr>
+    <tr>
+      <th>update</th>
+      <td><p>a logical value indicating whether or not files that were already downloaded and are still present in the 
+output folder shall be updated and re-loaded (<code>update = TRUE</code> or whether the existing file shall be retained <code>update = FALSE</code> (Default)).</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>a character string specifying the location (a folder) in which
+the corresponding CDSs shall be stored. Default is
+<code>path</code> = <code>"set_CDS"</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a character vector storing the file paths of the retrieved files.</p>
+    <p>File path to downloaded CDSs.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function aims to perform bulk retrieval of all genomes 
-of species for all kingdoms of life.</p>
+    <p>Internally this function loads the the overview.txt file from NCBI:</p>
+<p>refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/</p>
+<p>genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/</p>
+<p>and creates a directory 'set_CDSs' to store
+the CDSs of interest as fasta files for future processing.
+In case the corresponding fasta file already exists within the
+'set_CDSs' folder and is accessible within the workspace,
+no download process will be performed.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='meta.retrieval.html'>meta.retrieval</a></code></p></div>
+    <div class='dont-index'><p><code><a href='getGenomeSet.html'>getGenomeSet</a></code>, <code><a href='getProteomeSet.html'>getProteomeSet</a></code>, <code><a href='getCDSSet.html'>getCDSSet</a></code>, <code><a href='getRNASet.html'>getRNASet</a></code>,
+<code><a href='getGFF.html'>getGFF</a></code>, <code><a href='getRNA.html'>getRNA</a></code>, <code><a href='meta.retrieval.html'>meta.retrieval</a></code>,
+<code><a href='read_cds.html'>read_cds</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># download all genomes from refseq</span>
-<span class='fu'>meta.retrieval.all</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>)
-<span class='co'># download all vertebrate genomes from genbank</span>
-<span class='fu'>meta.retrieval.all</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"genbank"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>)
-<span class='co'># download all vertebrate genomes from ensemblgenomes</span>
-<span class='fu'>meta.retrieval.all</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"genbank"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"ensemblgenomes"</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>getGFFSet</span>(<span class='st'>"refseq"</span>, <span class='kw'>organisms</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Arabidopsis thaliana"</span>,
+                                  <span class='st'>"Arabidopsis lyrata"</span>,
+                                  <span class='st'>"Capsella rubella"</span>))
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

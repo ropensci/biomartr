@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
     <div class="page-header toc-ignore">
       <h1>Ensembl BioMart Examples</h1>
             
-            <h4 class="date">2019-03-31</h4>
+            <h4 class="date">2019-05-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/BioMart_Examples.Rmd"><code>vignettes/BioMart_Examples.Rmd</code></a></small>
       <div class="hidden name"><code>BioMart_Examples.Rmd</code></div>
@@ -113,31 +113,31 @@
 <a href="#step-1" class="anchor"></a>Step 1</h3>
 <p>For the following example we will use the dataset an enrichment analyses found in <a href="https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd">PlotEnrichment()</a>.</p>
 <p>Install and load the <a href="https://github.com/HajkD/myTAI">myTAI</a> package:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install myTAI</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"myTAI"</span>)
-
-<span class="co"># load myTAI</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(myTAI)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install myTAI</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"myTAI"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># load myTAI</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(myTAI)</a></code></pre></div>
 <p>Download the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the Phylostratigraphic Map of Danio rerio</span>
-<span class="co"># from Sestak and Domazet-Loso, 2015</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/download.file">download.file</a></span>( <span class="dt">url      =</span> <span class="st">"http://mbe.oxfordjournals.org/content/suppl/2014/11/17/msu319.DC1/TableS3-2.xlsx"</span>, 
-               <span class="dt">destfile =</span> <span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span> )</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># download the Phylostratigraphic Map of Danio rerio</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># from Sestak and Domazet-Loso, 2015</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/download.file">download.file</a></span>( <span class="dt">url      =</span> <span class="st">"http://mbe.oxfordjournals.org/content/suppl/2014/11/17/msu319.DC1/TableS3-2.xlsx"</span>, </a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">destfile =</span> <span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span> )</a></code></pre></div>
 <p>Read the <code>*.xlsx</code> file storing the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> and format it for the use with <code>myTAI</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install the readxl package</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"readxl"</span>)
-
-<span class="co"># load package readxl</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)
-
-<span class="co"># read the excel file</span>
-DrerioPhyloMap.MBEa &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">skip =</span> <span class="dv">4</span>)
-
-<span class="co"># format Phylostratigraphic Map for use with myTAI</span>
-Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
-
-<span class="co"># have a look at the final format</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(Drerio.PhyloMap)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install the readxl package</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"readxl"</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># load package readxl</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># read the excel file</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">DrerioPhyloMap.MBEa &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">skip =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># format Phylostratigraphic Map for use with myTAI</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># have a look at the final format</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(Drerio.PhyloMap)</a></code></pre></div>
 <pre><code>  Phylostrata            ZFIN_ID
 1           1 ZDB-GENE-000208-13
 2           1 ZDB-GENE-000208-17
@@ -151,31 +151,31 @@ Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class
 <h3 class="hasAnchor">
 <a href="#enrichment-analyses" class="anchor"></a>Enrichment Analyses</h3>
 <p>Now, the <code><a href="https://www.rdocumentation.org/packages/myTAI/topics/PlotEnrichment">PlotEnrichment()</a></code> function visualizes the over- and underrepresented <code>Phylostrata</code> of brain specific genes when compared with the total number of genes stored in the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)
-
-<span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span>
-Drerio.OrganSpecificExpression &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">skip =</span> <span class="dv">3</span>)
-
-<span class="co"># select only brain specific genes</span>
-Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>(Drerio.OrganSpecificExpression[ , <span class="st">"brain"</span>])))
-
-<span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/myTAI/topics/PlotEnrichment">PlotEnrichment</a></span>(Drerio.PhyloMap,
-               <span class="dt">test.set     =</span> Drerio.Brain.Genes,
-               <span class="dt">measure      =</span> <span class="st">"foldchange"</span>,
-               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
-               <span class="dt">legendName   =</span> <span class="st">"PS"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(readxl)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">Drerio.OrganSpecificExpression &lt;-<span class="st"> </span><span class="kw"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"MBE_2015a_Drerio_PhyloMap.xlsx"</span>, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">skip =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># select only brain specific genes</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>(Drerio.OrganSpecificExpression[ , <span class="st">"brain"</span>])))</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/myTAI/topics/PlotEnrichment">PlotEnrichment</a></span>(Drerio.PhyloMap,</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">               <span class="dt">test.set     =</span> Drerio.Brain.Genes,</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">               <span class="dt">measure      =</span> <span class="st">"foldchange"</span>,</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">               <span class="dt">legendName   =</span> <span class="st">"PS"</span>)</a></code></pre></div>
 <p>Users will observe that for example brain genes deriving from PS5 are significantly enriched.</p>
 <p>Now we can select all brain genes originating in PS5 using the <code><a href="https://www.rdocumentation.org/packages/myTAI/topics/SelectGeneSet">SelectGeneSet()</a></code> function from <code>myTAI</code>. Please notice that <code><a href="https://www.rdocumentation.org/packages/myTAI/topics/SelectGeneSet">SelectGeneSet()</a></code> can only be used with phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument) since myTAI version &gt; 0.3.0.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BrainGenes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/myTAI/topics/SelectGeneSet">SelectGeneSet</a></span>(<span class="dt">ExpressionSet =</span> Drerio.PhyloMap,
-                            <span class="dt">gene.set      =</span> Drerio.Brain.Genes,
-                            <span class="dt">use.only.map  =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># select only brain genes originating in PS5</span>
-BrainGenes.PS5 &lt;-<span class="st"> </span>BrainGenes[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(BrainGenes[ , <span class="st">"Phylostrata"</span>] <span class="op">==</span><span class="st"> </span><span class="dv">5</span>), ]
-
-<span class="co"># look at the results</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(BrainGenes.PS5)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">BrainGenes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/myTAI/topics/SelectGeneSet">SelectGeneSet</a></span>(<span class="dt">ExpressionSet =</span> Drerio.PhyloMap,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                            <span class="dt">gene.set      =</span> Drerio.Brain.Genes,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                            <span class="dt">use.only.map  =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># select only brain genes originating in PS5</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">BrainGenes.PS5 &lt;-<span class="st"> </span>BrainGenes[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/which">which</a></span>(BrainGenes[ , <span class="st">"Phylostrata"</span>] <span class="op">==</span><span class="st"> </span><span class="dv">5</span>), ]</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co"># look at the results</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(BrainGenes.PS5)</a></code></pre></div>
 <pre><code>      Phylostrata           ZFIN_ID
 14851           5 ZDB-GENE-000210-6
 14852           5 ZDB-GENE-000210-7
@@ -185,8 +185,8 @@ BrainGenes.PS5 &lt;-<span class="st"> </span>BrainGenes[<span class="kw"><a href
 14860           5 ZDB-GENE-000526-1</code></pre>
 <p>Now users can perform the <code><a href="../reference/biomart.html">biomart()</a></code> function to obtain the functional annotation of brain genes originating in PS5.</p>
 <p>For this purpose, first we need to find the filter name of the corresponding gene ids such as <code>ZDB-GENE-000210-6</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find filter for zfin.org ids</span>
-<span class="kw"><a href="../reference/organismFilters.html">organismFilters</a></span>(<span class="st">"Danio rerio"</span>, <span class="dt">topic =</span> <span class="st">"zfin_id"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># find filter for zfin.org ids</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../reference/organismFilters.html">organismFilters</a></span>(<span class="st">"Danio rerio"</span>, <span class="dt">topic =</span> <span class="st">"zfin_id"</span>)</a></code></pre></div>
 <pre><code>                            name                           description             dataset
 52                  with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
 53  with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
@@ -220,8 +220,8 @@ BrainGenes.PS5 &lt;-<span class="st"> </span>BrainGenes[<span class="kw"><a href
 902 ENSEMBL_MART_ENSEMBL
 914 ENSEMBL_MART_ENSEMBL</code></pre>
 <p>Now users can retrieve the corresponding GO attribute of <em>D. rerio</em> with <code>organismAttributes</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find go attribute term for D. rerio</span>
-<span class="kw"><a href="../reference/organismAttributes.html">organismAttributes</a></span>(<span class="st">"Danio rerio"</span>, <span class="dt">topic =</span> <span class="st">"go"</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># find go attribute term for D. rerio</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="../reference/organismAttributes.html">organismAttributes</a></span>(<span class="st">"Danio rerio"</span>, <span class="dt">topic =</span> <span class="st">"go"</span>)</a></code></pre></div>
 <pre><code>                                              name                             description
 33                                           go_id                       GO Term Accession
 36                                 go_linkage_type                   GO Term Evidence Code
@@ -339,14 +339,14 @@ BrainGenes.PS5 &lt;-<span class="st"> </span>BrainGenes[<span class="kw"><a href
 3914    drerio_gene_vega ENSEMBL_MART_ENSEMBL
 3915    drerio_gene_vega ENSEMBL_MART_ENSEMBL</code></pre>
 <p>Now users can specify the filter <code>zfin_id</code> and attribute <code>go_id</code> to retrieve the GO terms of corresponding gene ids (<strong>Please note that this will take some time</strong>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve GO terms of D. rerio brain genes originating in PS5</span>
-GO_tbl.BrainGenes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomart.html">biomart</a></span>(<span class="dt">genes      =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(BrainGenes.PS5[ , <span class="st">"ZFIN_ID"</span>]),
-                             <span class="dt">mart       =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>,
-                             <span class="dt">dataset    =</span> <span class="st">"drerio_gene_ensembl"</span>,
-                             <span class="dt">attributes =</span> <span class="st">"go_id"</span>,
-                             <span class="dt">filters    =</span> <span class="st">"zfin_id"</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(GO_tbl.BrainGenes)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># retrieve GO terms of D. rerio brain genes originating in PS5</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">GO_tbl.BrainGenes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomart.html">biomart</a></span>(<span class="dt">genes      =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>(BrainGenes.PS5[ , <span class="st">"ZFIN_ID"</span>]),</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">                             <span class="dt">mart       =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>,</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">                             <span class="dt">dataset    =</span> <span class="st">"drerio_gene_ensembl"</span>,</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">                             <span class="dt">attributes =</span> <span class="st">"go_id"</span>,</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">                             <span class="dt">filters    =</span> <span class="st">"zfin_id"</span>)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(GO_tbl.BrainGenes)</a></code></pre></div>
 <pre><code>            zfin_id      go_id
 1 ZDB-GENE-000210-6 GO:0060037
 2 ZDB-GENE-000210-6 GO:0046983

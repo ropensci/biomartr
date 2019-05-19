@@ -65,7 +65,7 @@ will be downloaded and stored locally. Genome files can be retrieved from severa
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -141,9 +141,9 @@ will be downloaded and stored locally. Genome files can be retrieved from severa
     
     </div>
 
-    <pre class="usage"><span class='fu'>getGenomeSet</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organisms</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>clean_retrieval</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"set_genomes"</span>)</pre>
+    <pre class="usage"><span class='fu'>getGenomeSet</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='no'>organisms</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>release</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>clean_retrieval</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"set_genomes"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,7 +155,6 @@ shall be retrieved:</p><ul>
 <li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
 <li><p><code>db = "ensembl"</code></p></li>
-<li><p><code>db = "ensemblgenomes"</code></p></li>
 </ul></td>
     </tr>
     <tr>
@@ -171,6 +170,11 @@ There are three available options to characterize an organism:</p><ul>
       <th>reference</th>
       <td><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked
 in the database as either a reference genome or a representative genome.</p></td>
+    </tr>
+    <tr>
+      <th>release</th>
+      <td><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning
+that the most recent database version is used.</p></td>
     </tr>
     <tr>
       <th>clean_retrieval</th>
@@ -210,16 +214,17 @@ no download process will be performed.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='getProteomeSet.html'>getProteomeSet</a></code>, <code><a href='getCDS.html'>getCDS</a></code>,
-<code><a href='getGFF.html'>getGFF</a></code>, <code><a href='getRNA.html'>getRNA</a></code>, <code><a href='meta.retrieval.html'>meta.retrieval</a></code>,
+    <div class='dont-index'><p><code><a href='getProteomeSet.html'>getProteomeSet</a></code>, <code><a href='getCDSSet.html'>getCDSSet</a></code>,
+<code><a href='getRNASet.html'>getRNASet</a></code>, <code><a href='getGFFSet.html'>getGFFSet</a></code>, <code><a href='getCDS.html'>getCDS</a></code>,
+<code><a href='getGFF.html'>getGFF</a></code>, <code><a href='getGTF.html'>getGTF</a></code>, <code><a href='getRNA.html'>getRNA</a></code>, <code><a href='meta.retrieval.html'>meta.retrieval</a></code>,
 <code><a href='read_genome.html'>read_genome</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw pkg'>biomartr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/biomartr/topics/getGenomeSet'>getGenomeSet</a></span>(<span class='st'>"refseq"</span>, <span class='kw'>organisms</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Arabidopsis thaliana"</span>,
-                                               <span class='st'>"Arabidopsis lyrata"</span>,
-                                               <span class='st'>"Capsella rubella"</span>))
+<span class='fu'>getGenomeSet</span>(<span class='st'>"refseq"</span>, <span class='kw'>organisms</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Arabidopsis thaliana"</span>,
+                                     <span class='st'>"Arabidopsis lyrata"</span>,
+                                     <span class='st'>"Capsella rubella"</span>))
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
