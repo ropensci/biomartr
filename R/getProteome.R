@@ -10,7 +10,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' \item \code{db = "uniprot"}
 #' }
 #' @param organism there are three options to characterize an organism: 
@@ -20,7 +19,7 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+#' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which 
@@ -68,10 +67,10 @@ getProteome <-
              gunzip = FALSE,
              path = file.path("_ncbi_downloads", "proteomes")) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "ensemblgenomes", "uniprot")))
+                              "ensembl", "uniprot")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl',  'ensemblgenomes', 'uniprot'.",
+                'refseq', 'genbank', 'ensembl', 'uniprot'.",
                 call. = FALSE
             )
         
