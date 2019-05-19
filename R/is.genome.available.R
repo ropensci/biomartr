@@ -7,7 +7,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' \item \code{db = "uniprot"}
 #' }
 #' @param organism there are three options to characterize an organism: 
@@ -51,10 +50,10 @@ is.genome.available <-
              details = FALSE
              ) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "ensemblgenomes","uniprot")))
+                              "ensembl", "uniprot")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl', 'ensemblgenomes', or 'uniprot'",
+                'refseq', 'genbank', 'ensembl', or 'uniprot'",
                 call. = FALSE
             )
         
