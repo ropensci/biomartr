@@ -1,4 +1,4 @@
-biomartr 0.9.0
+[biomartr 0.9.0]((https://github.com/ropensci/biomartr/releases/tag/v0.9.0))
 ===========
 
 __Please be aware that as of April 2019, ENSEMBLGENOMES
