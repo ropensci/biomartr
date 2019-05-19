@@ -3,8 +3,10 @@
 #' storing information about all available Ensembl Biomart databases.
 #' @author Hajk-Georg Drost
 #' @examples
+#' \dontrun{
 #' # get a table of all available databases from Ensembl Biomart
-#'  getMarts()
+#' getMarts()
+#'  }
 #' @seealso \code{\link{getDatasets}}, \code{\link{getAttributes}}, 
 #' \code{\link{getFilters}}, \code{\link{organismBM}}, 
 #' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
