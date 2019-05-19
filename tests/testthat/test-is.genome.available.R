@@ -140,52 +140,6 @@ test_that("The is.genome.available() interface to Ensembl
                                                                 organism = "GCA_000146045.2")), TRUE)
           })
 
-test_that("The is.genome.available() interface to EnsemblGenomes 
-          works properly..", {
-              skip_on_cran()
-              skip_on_travis()
-    # test whether interface to 'ensemblgenomes' works properly
-              expect_equal(nrow(is.genome.available(db = "ensemblgenomes",
-                        organism = "Saccharomyces cerevisiae",
-                        details = TRUE)) > 0, TRUE)
-    
-    # test whether interface to 'ensemblgenomes' works properly without details
-              expect_equal(suppressMessages(is.genome.available(db = "ensemblgenomes", 
-                        organism = "Saccharomyces cerevisiae")), TRUE)
-    
-})
-
-
-test_that("The is.genome.available() interface to EnsemblGenomes 
-          works properly using taxid..", {
-              skip_on_cran()
-              skip_on_travis()
-              # test whether interface to 'ensemblgenomes' works properly
-              expect_equal(nrow(is.genome.available(db = "ensemblgenomes",
-                                                    organism = "1294334",
-                                                    details = TRUE)) > 0, TRUE)
-              
-              # test whether interface to 'ensemblgenomes' works properly without details
-              expect_equal(suppressMessages(is.genome.available(db = "ensemblgenomes", 
-                                                                organism = "1294334")), TRUE)
-              
-          })
-
-test_that("The is.genome.available() interface to EnsemblGenomes 
-          works properly using accession id", {
-              skip_on_cran()
-              skip_on_travis()
-              # test whether interface to 'ensemblgenomes' works properly
-              expect_equal(nrow(is.genome.available(db = "ensemblgenomes",
-                                                    organism = "GCA_000976725.1",
-                                                    details = TRUE)) > 0, TRUE)
-              
-              # test whether interface to 'ensemblgenomes' works properly without details
-              expect_equal(suppressMessages(is.genome.available(db = "ensemblgenomes", 
-                                                                organism = "GCA_000976725.1")), TRUE)
-              
-          })
-
 test_that("The is.genome.available() error messages work properly..", {
     skip_on_cran()
         skip_on_travis()
