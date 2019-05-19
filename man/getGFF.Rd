@@ -4,8 +4,8 @@
 \alias{getGFF}
 \title{Genome Annotation Retrieval (GFF3)}
 \usage{
-getGFF(db = "refseq", organism, reference = FALSE,
-  path = file.path("_ncbi_downloads", "annotation"))
+getGFF(db = "refseq", organism, reference = FALSE, release = NULL,
+  gunzip = FALSE, path = file.path("_ncbi_downloads", "annotation"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -14,13 +14,17 @@ shall be retrieved:
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 
 \item{organism}{a character string specifying the scientific name of the 
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+
+\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used.}
+
+\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding annotation file shall be stored. Default is 

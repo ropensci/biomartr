@@ -14,7 +14,6 @@ shall be retrieved:
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 
 \item{organism}{there are three options to characterize an organism: 
@@ -66,7 +65,8 @@ no download process will be performed.
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, 
+\code{\link{getGenomeSet}}, \code{\link{getProteomeSet}}, \code{\link{getCDSSet}}, 
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
 \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
 \code{\link{read_genome}}
 }
