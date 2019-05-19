@@ -13,7 +13,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' }
 #' @param organism there are three options to characterize an organism: 
 #' \itemize{
@@ -22,7 +21,7 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+#' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.  
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which 
@@ -61,10 +60,10 @@
 #' Ath_genome <- read_genome(file_path, format = "fasta")
 #' }
 #' 
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
+#' @seealso \code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
 #' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
 #' \code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, 
-#' \code{\link{meta.retrieval}}, \code{\link{read_genome}}
+#' \code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
 #' @export
 
 getGenome <-
@@ -75,10 +74,10 @@ getGenome <-
              gunzip = FALSE,
              path = file.path("_ncbi_downloads", "genomes")) {
         
-       if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
+       if (!is.element(db, c("refseq", "genbank", "ensembl")))
             stop(
                 "Please select one of the available data bases: 'refseq',
-                'genbank', 'ensembl', or 'ensemblgenomes'.",
+                'genbank', or 'ensembl'.",
                 call. = FALSE
             )
         
