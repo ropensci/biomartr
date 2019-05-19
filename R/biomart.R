@@ -97,7 +97,7 @@ biomart <- function(genes,
     
     colnames(query) <- c(filters, attributes)
     
-    genes <- dplyr::data_frame(as.character(genes))
+    genes <- tibble::tibble(as.character(genes))
     colnames(genes) <- as.character(filters)
     
     tbl_biomart <-
