@@ -8,7 +8,6 @@
 #' shall be retrieved:
 #' \itemize{
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' } 
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
@@ -16,12 +15,7 @@
 #' the corresponding annotation file shall be stored. Default is 
 #' \code{path = file.path("ensembl","annotation")}.
 #' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from NCBI:
-#' 
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
-#' 
-#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
-#'  
+#' @details Internally this function loads the the overview.txt file from ENSEMBL:
 #' and creates a directory 'ensembl/annotation' to store
 #' the genome of interest as fasta file for future processing.
 #' In case the corresponding fasta file already exists within the
@@ -47,9 +41,9 @@ getGTF <-
         function(db = "ensembl",
                  organism,
                  path = file.path("ensembl", "annotation")) {
-                if (!is.element(db, c("ensembl", "ensemblgenomes")))
+                if (!is.element(db, c("ensembl")))
                         stop(
-                                "Please select one of the available data bases: db = 'ensembl' or db = 'ensemblgenomes'."
+                                "Please select one of the available data bases: db = 'ensembl'."
                         )
                 
                 message("Starting gtf retrieval of '", organism, "' from ", db, " ...")
