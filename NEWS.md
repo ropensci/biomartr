@@ -1,6 +1,10 @@
 biomartr 0.9.0
 ===========
 
+__Please be aware that as of April 2019, ENSEMBLGENOMES
+was retired ([see details here](http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/)). Hence, all `biomartr` functions were updated
+and won't support data retrieval from `ENSEMBLGENOMES` servers anymore.__
+
 ### New Functions
 
 - New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output (find out more here: https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files)
@@ -10,6 +14,7 @@ users with insights regarding the genome assembly quality of each species. This 
 in publications to facilitate reproducible research.
 - New function `getProteomeSet()` allows users to easily retrieve proteomes of multiple specified species
 - New function `getCDSSet()` allows users to easily retrieve coding sequences of multiple specified species
+- New function `getGFFSet()` allows users to easily retrieve GFF annotation files of multiple specified species
 - New function `getRNASet()` allows users to easily retrieve RNA sequences of multiple specified species
 - New function `summary_genome()` allows users to retrieve summary statistics for a genome assembly file to assess 
 the influence of genome assembly qualities when performing comparative genomics tasks
@@ -25,7 +30,7 @@ these files according to the analyses at hand.
 
 - the default value of argument `reference` in `meta.retrieval()` changed from `reference = TRUE` to `reference = FALSE`.
 This way all genomes (reference AND non-reference) genomes will be downloaded by default. This is what users seem to prefer.
-- `getCollection()` now also retrieves `GTF` files when `db = 'ensembl'` or `db = 'ensemblgenomes'`
+- `getCollection()` now also retrieves `GTF` files when `db = 'ensembl'`
 - `getAssemblyStats()` now also performs md5 checksum test
 - all md5 checksum tests now retrieve the new md5checkfile format from NCBI RefSeq and Genbank
 - `getGTF()`: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument 'organism' to retrieve genome assemblies 
