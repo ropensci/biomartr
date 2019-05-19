@@ -27,52 +27,41 @@ Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, a
     - [1.1 from NCBI RefSeq](#example-ncbi-refseq)
     - [1.2 from NCBI Genbank](#example-ncbi-genbank)
     - [1.3 from ENSEMBL](#example-ensembl)
-    - [1.4 from ENSEMBLGENOMES](#example-ensemblgenomes)
 * [1.B. Multiple genome retrieval with `getGenomeSet()`](#genomeset-retrieval)
 * [2. Proteome retrieval with `getProteome()`](#proteome-retrieval)
     - [2.1 from NCBI RefSeq](#example-ncbi-refseq-1)
     - [2.2 from NCBI Genbank](#example-ncbi-genbank-1)
     - [2.3 from ENSEMBL](#example-ensembl-1)
-    - [2.4 from ENSEMBLGENOMES](#example-ensemblgenomes-1)
     - [2.5 from UniProt](#example-retrieval-uniprot)
 * [2.B. Multiple proteome retrieval with `getProteomeSet()`](#proteomeset-retrieval)
 * [3. Coding sequence retrieval with `getCDS()`](#cds-retrieval)
     - [3.1 from NCBI RefSeq](#example-ncbi-refseq-2)
     - [3.2 from NCBI Genbank](#example-ncbi-genbank-2)
     - [3.3 from ENSEMBL](#example-ensembl-2)
-    - [3.4 from ENSEMBLGENOMES](#example-ensemblgenomes-2)
 * [3.B. Multiple coding sequence retrieval with `getCDSSet()`](#cdsset-retrieval)
 * [4. RNA retrieval with `getRNA()`](#rna-retrieval)
     - [4.1 from NCBI RefSeq](#example-ncbi-refseq-3)
     - [4.2 from NCBI Genbank](#example-ncbi-genbank-3)
     - [4.3 from ENSEMBL](#example-ensembl-3)
-    - [4.4 from ENSEMBLGENOMES](#example-ensemblgenomes-3)
 * [4.B. Multiple RNA retrieval with `getRNASet()`](#rnaset-retrieval)
 * [5. GFF retrieval with `getGFF()`](#retrieve-the-annotation-file-of-a-particular-genome)
     - [5.1 from NCBI RefSeq](#example-ncbi-refseq-4)
     - [5.2 from NCBI Genbank](#example-ncbi-genbank-4)
     - [5.3 from ENSEMBL](#example-ensembl-4)
-    - [5.4 from ENSEMBLGENOMES](#example-ensemblgenomes-4)
 * [5.B. Multiple GFF retrieval with `getGFFSet()`](#gffset-retrieval)
 * [6. GTF retrieval with `getGTF()`](#retrieve-the-annotation-file-of-a-particular-genome)
     - [6.1 from NCBI RefSeq](#example-ncbi-refseq-5)
     - [6.2 from NCBI Genbank](#example-ncbi-genbank-5)
     - [6.3 from ENSEMBL](#example-ensembl-5)
-    - [6.4 from ENSEMBLGENOMES](#example-ensemblgenomes-5)
-* [6.B. Multiple GTF retrieval with `getGTFSet()`](#gtfset-retrieval)
 * [7. Repeat Masker Annotation file retrieval with `getRepeatMasker()`](#repeat-masker-retrieval)
     - [7.1 from NCBI RefSeq](#example-ncbi-refseq-6)
-* [7.B. Multiple RepeatMasker retrieval with `getRepeatMaskerSet()`](#repeatmaskerset-retrieval)
 * [8. Genome Assembly Stats Retrieval with `getAssemblyStats()`](#genome-assembly-stats-retrieval)
     - [8.1 from NCBI RefSeq](#example-ncbi-refseq-7)
     - [8.2 from NCBI Genbank](#example-ncbi-genbank-6)
-* [8.B. Multiple AssemblyStats retrieval with `getAssemblyStatsSet()`](#assemblystatsset-retrieval)
 * [9. Collection (Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats) retrieval with `getCollection()`](#collection-retrieval)
     - [9.1 from NCBI RefSeq](#example-ncbi-refseq-8)
     - [9.2 from NCBI Genbank](#example-ncbi-genbank-7)
     - [9.3 from NCBI ENSEMBL](#example-ensembl-6)
-    - [9.4 from NCBI ENSEMBLGENOMES](#example-ensemblgenomes-6)
-* [9.B. Multiple Collections retrieval with `getCollectionSet()`](#collectionset-retrieval)    
 
 ## Getting Started with Sequence Retrieval
 
@@ -263,7 +252,7 @@ is.genome.available(db = "refseq", organism = "Candida glabrata")
 
 ```r
 Unfortunatey, no entry for 'Candida glabrata' was found in the 'refseq' database. 
-Please consider specifying 'db = genbank' or 'db = ensembl' or 'db = ensemblgenomes 
+Please consider specifying 'db = genbank' or 'db = ensembl' 
 to check whether 'Candida glabrata' is availabe in these databases.
 [1] FALSE
 ```
@@ -359,13 +348,12 @@ available for download from NCBI Genbank. Using the `assembly_accession`
 id will now allow to specify which version shall be retrieved.
 
 
-### Using `is.genome.available()` with ENSEMBL and ENSEMBLGENOMES
+### Using `is.genome.available()` with ENSEMBL
 
-Users can also specify `db = "ensembl"` or `db = "ensemblgenomes"` to retrieve available organisms provided by ENSEMBL or ENSEMBLGENOMES.
+Users can also specify `db = "ensembl"` to retrieve available organisms provided by ENSEMBL.
 Again, users might experience a delay in the execution of this function when running it for the first time.
-This is due to the download of ENSEMBL or ENSEMBLGENOMES information which is then stored internally to enable a much faster
-execution of this function in following runs. The corresponding information files are stored at `file.path(tempdir(), "ensembl_summary.txt")` 
-and `file.path(tempdir(), "ensemblgenomes_summary.txt")`.
+This is due to the download of ENSEMBL information which is then stored internally to enable a much faster
+execution of this function in following runs. The corresponding information files are stored at `file.path(tempdir(), "ensembl_summary.txt")`.
 
 
 ### Example `ENSEMBL` (?is.genome.available): 
@@ -423,66 +411,6 @@ __Please note that the `accession` id can change internally at ENSEMBL. E.g. in 
 the `accession` id changed from `GCA_000001405.25` to `GCA_000001405.27`. Hence, please
 be careful and take this issue into account when you build automated retrieval scripts that are based
 on `accession` ids.__
-
-
-### Example `ENSEMBLGENOMES` (?is.genome.available): 
-
-For example, some species that cannot be found at `db = "ensembl"` might be available at `db = "ensemblgenomes"`
-and vice versa. So I recommend users to to check in both databases ENSEMBL and ESEMBLGENOMES whether or not a
-particular species is present. In case of `"Homo sapiens"`, the genome is available at `db = "ensembl"` but
-__not__ at `db = "ensemblgenomes"` whereas the genome of `"Arabidopsis thaliana"` is available at `db = "ensemblgenomes"`
-but __not__ at `db = "ensembl"`.
-
-
-```r
-# cheking whether Homo sapiens is available in the ENSEMBLGENOMES database
-is.genome.available(db = "ensemblgenomes", organism = "Homo sapiens")
-```
-
-```
-Unfortunatey, no entry for 'Homo sapiens' was found in the 'ensemblgenomes' database.
-Please consider specifying 'db = refseq' or 'db = genbank' or 'db = ensembl' or 'db = uniprot' 
-to check whether 'Homo sapiens' is available in these databases.
-[1] FALSE
-```
-
-```r
-# cheking whether Arabidopsis thaliana is available in the ENSEMBLGENOMES database
-is.genome.available(db = "ensemblgenomes", organism = "Arabidopsis thaliana")
-```
-
-```
-A reference or representative genome assembly is available for 'Arabidopsis thaliana'.
-[1] TRUE
-```
-
-```r
-# show details for Arabidopsis thaliana
-is.genome.available(db = "ensemblgenomes", organism = "Arabidopsis thaliana", details = TRUE)
-```
-
-```
- division  taxon_id name    release display_name accession strain_collecti…
-  <chr>        <int> <chr>     <int> <chr>        <chr>     <chr>           
-1 EnsemblP…     3702 arabid…      92 Arabidopsis… GCA_0000… NA              
-# ... with 3 more variables: common_name <chr>, strain <chr>, assembly <chr>
-```
-
-Please note that the detailed information provided by ENSEMBL or ENSEMBL genomes differs from the information provided by NCBI. 
-
-Also for `ENSEMBLGENOMES` users can specify `taxid` or `accession id` instead of the `scientific name` in the argument `organism`:
-
-```r
-# retrieve information 
-is.genome.available(db = "ensemblgenomes", "3702", details = TRUE)
-```
-
-```
-  division  taxon_id name    release display_name accession strain_collecti…
-  <chr>        <int> <chr>     <int> <chr>        <chr>     <chr>           
-1 EnsemblP…     3702 arabid…      92 Arabidopsis… GCA_0000… NA              
-# ... with 3 more variables: common_name <chr>, strain <chr>, assembly <chr>
-```
 
 ### Example `UniProt` (?is.genome.available):
 
@@ -549,13 +477,12 @@ is.genome.available(db = "uniprot", "UP000005640", details = TRUE)
 
 
 
-In general, the argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `ensemblgenomes`, `uniprot`) organism
+In general, the argument `db` specifies from which database (`refseq`, `genbank`, `ensembl` or `uniprot`) organism
 information shall be retrieved. Options are:
 
 - `db = 'refseq'`
 - `db = 'genbank'`
 - `db = 'ensembl'`
-- `db = 'ensemblgenomes'`
 - `db = 'uniprot'`
 
 
@@ -595,15 +522,6 @@ length(listGenomes(db = "ensembl"))
 [1] 113
 ```
 
-Example `ensemblgenomes`: 
-
-```{r,eval=FALSE}
-length(listGenomes(db = "ensemblgenomes"))
-```
-
-```
-[1] 45172
-```
 
 Hence, currently 14264 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 31/05/2018).
 
@@ -647,21 +565,9 @@ Ensembl
     113
 ```
 
-Example `ENSEMBLGENOMES`:
-
-```{r,eval=FALSE}
-# the number of genomes available for each kingdom
-listKingdoms(db = "ensemblgenomes")
-```
-
-```
-EnsemblBacteria    EnsemblFungi  EnsemblMetazoa   EnsemblPlants EnsemblProtists 
-          44048             811              71              53             189 
-```
-
 ### Analogous computations can be performed for `groups` and `subgroups`
 
-Unfortunately, `ENSEMBL` and `ENSEMBLGENOMES` do not provide group or subgroup information.
+Unfortunately, `ENSEMBL` does not provide group or subgroup information.
 Therefore, group and subgroup listings are limited to `refseq` and `genbank`.
 
 
@@ -1038,7 +944,7 @@ will then respond very fast, because they will access the corresponding files st
 After checking for the availability of sequence information for an organism of interest,
 the next step is to download the corresponding genome, proteome, CDS, or GFF file.
 The following functions allow users to download proteomes, genomes, CDS and GFF files from several
-database resources such as: [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/), [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/). When a corresponding proteome, genome, CDS or GFF file was
+database resources such as: [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/), [ENSEMBL](http://www.ensembl.org/index.html). When a corresponding proteome, genome, CDS or GFF file was
 loaded to your hard-drive, a documentation `*.txt` file is generated storing `File Name`, `Organism`,
 `Database`, `URL`, `DATE`, `assembly_accession`, `bioproject`, `biosample`, `taxid`, `version_status`, `release_type`,
 `seq_rel_date` etc. information of the retrieved file. This way a better reproducibility of proteome, genome, CDS and GFF versions
@@ -1052,7 +958,7 @@ The easiest way to download a genome is to use the `getGenome()` function.
 In this example we will download the genome of `Homo sapiens`.
 
 The `getGenome()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
-[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+[ENSEMBL](http://www.ensembl.org/index.html) databases from
 which corresponding genomes can be retrieved.
 
 The `db` argument specifies from which database genome assemblies in `*.fasta` file format shall be retrieved.
@@ -1062,7 +968,7 @@ Options are:
 - `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
 - `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
 - `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
-- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
 
 Furthermore, users need to specify the `scientific name`, the `taxid` (= [NCBI Taxnonomy](https://www.ncbi.nlm.nih.gov/taxonomy) identifier), or the `accession identifier` of the organism of interest for which a genome assembly shall be downloaded, e.g. `organism = "Homo sapiens"` or `organism = "9606"` or `organism = "GCF_000001405.37"`.
 Finally, the `path` argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location,
@@ -1458,6 +1364,8 @@ Human_Genome
 [524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...
 ```
 
+Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
+
 In addition, the genome summary statistics for the retrieved species is stored locally (`doc_homo_sapiens_db_ensembl_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
 This file can be used as `Supplementary Information` file in publications to facilitate reproducible research.
 Most comparative genomics studies do not consider differences in genome assembly qualities when comparing the genomes of diverse species.
@@ -1558,104 +1466,33 @@ Scerevisiae_Genome
 [17]  948066 AAATAGCCCTCATGTA...AATTTCGGTCAGAAA XVI dna:chromosom...
 ```
 
-
-
-### Example ENSEMBLGENOMES:
-
-Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
-as example.
-
-```{r,eval=FALSE}
-# download the genome of Arabidopsis thaliana from ENSEMBLGENOMES
-# and store the corresponding genome file in '_ncbi_downloads/genomes'
-AT.genome.ensemblgenomes <- getGenome( db       = "ensemblgenomes", 
-                                       organism = "Arabidopsis thaliana",
-                                       path     = file.path("_ncbi_downloads","genomes") )
-```
-
-```{r,eval=FALSE}
-# import downloaded genome as Biostrings object
-Cress_Genome <- read_genome(file = AT.genome.ensemblgenomes)
-```
-
-```{r,eval=FALSE}
-# look at the Biostrings object
-Cress_Genome
-```
-
-```
-  A DNAStringSet instance of length 7
-       width seq                                                   names               
-[1] 30427671 CCCTAAACCCTAAACCCTAAACCCT...AGGGTTTAGGGTTTAGGGTTTAGGG 1 dna:chromosome ...
-[2] 19698289 NNNNNNNNNNNNNNNNNNNNNNNNN...AGGGTTTAGGGTTTAGGGTTTAGGG 2 dna:chromosome ...
-[3] 23459830 NNNNNNNNNNNNNNNNNNNNNNNNN...ACCCTAAACCCTAAACCCTAAACCC 3 dna:chromosome ...
-[4] 18585056 NNNNNNNNNNNNNNNNNNNNNNNNN...AAGGGTTTAGGGTTTAGGGTTTAGG 4 dna:chromosome ...
-[5] 26975502 TATACCATGTACCCTCAACCTTAAA...GTTTAGGATTTAGGGTTTTTAGATC 5 dna:chromosome ...
-[6]   366924 GGATCCGTTCGAAACAGGTTAGCCT...TCGCAGAATGGAAACAAACCGGATT Mt dna:chromosome...
-[7]   154478 ATGGGCGAACGACGGGAATTGAACC...TCATAATAACTTGGTCCCGGGCATC Pt dna:chromosome...
-```
-In addition, the genome summary statistics for the retrieved species is stored locally (`doc_homo_sapiens_db_ensemblgenomes_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
-This file can be used as `Supplementary Information` file in publications to facilitate reproducible research.
-Most comparative genomics studies do not consider differences in genome assembly qualities when comparing the genomes of diverse species.
-This way, they expose themselves to technical artifacts that might generate patterns mistaken to be of biological relevance whereas
-in reality they just reflect the difference in genome assembly quality. Considering the quality of genome assemblies when downloading
-the genomic sequences will help researchers to avoid these pitfalls. 
-
-The summary statistics include:
-
-- `genome_size_mbp`: Genome size in mega base pairs
-
-- `n50_mbp`: The N50 contig size of the genome assembly in mega base pairs
-
-- `n_seqs`: The number of chromosomes/scaffolds/contigs of the genome assembly file
-
-- `n_nnn`: The absolute number of NNNs (over all chromosomes or scaffolds or contigs) in the genome assembly file
-
-- `rel_nnn`: The percentage (relative frequency) of NNNs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
-
-- `genome_entropy`: The Shannon Entropy of the genome assembly file (median entropy over all individual chromosome entropies)
-
-- `n_gc`: The total number of GCs (over all chromosomes or scaffolds or contigs) in the genome assembly file
-
-- `rel_gc`: The (relative frequency) of GCs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file
-
-#### Use `taxonomy` id for genome retrieval
-
-Alternatively, instead of specifying the scientific name in the argument `organism`
-users can specify the `taxonomy` id of the corresponding organism. Here, we specify
-the taxonomy id `4932` which encodes the species `Saccharomyces cerevisiae`.
-
 ### GenomeSet Retrieval
 
-The `getGenomeSet()` function enables users to retrieve genome assembly files for
+The `getGenomeSet()` function enables users to retrieve genome files for
 multiple species. This is convenient when users wish to bulk download a particular
-set of species. 
+set of species. Internally, a folder named `set_genomes` is generated in which
+genomes and genome info files are stored. In addition, users can specify the arguments: `clean_retrieval` and `gunzip` (both are `TRUE` by default) to clean file names and automatically unzip downloaded files. 
 
 Example:
 
 ```r
 # specify the species names
-download_species <- c("Saccharomyces cerevisiae", 
-                      "Caenorhabditis elegans", 
-                      "Chlamydomonas reinhardtii")
+download_species <- c("Arabidopsis thaliana", 
+                      "Arabidopsis lyrata", 
+                      "Capsella rubella")
 # retrieve these three species from NCBI RefSeq                       
-biomartr::getGenomeSet("refseq", organisms = download_species)
+biomartr::getGenomeSet("refseq", organisms = download_species, path = "set_genomes")
 ```
 
-```
-Starting genome retrieval of the following genomes: Saccharomyces cerevisiae, Caenorhabditis elegans, Chlamydomonas reinhardtii ...
-Generating folder set_genomes ...
-
-Starting genome retrieval of 'Scerevisiae' from refseq ...
-
-```
-
-
+If the download process was interrupted, users can re-run the function
+and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument `update = TRUE`.
 
 ### Proteome Retrieval
 
 The `getProteome()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
-[ENSEMBL](http://www.ensembl.org/index.html), [ENSEMBLGENOMES](http://ensemblgenomes.org/), and [UniProt](http://uniprot.org/) databases from
+[ENSEMBL](http://www.ensembl.org/index.html), and [UniProt](http://uniprot.org/) databases from
 which corresponding proteomes can be retrieved. It works analogous to `getGenome()`. 
 
 The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
@@ -1665,7 +1502,6 @@ Options are:
 - `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
 - `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
 - `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
-- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
 - `db = "uniprot" ` for retrieval from [UniProt](http://uniprot.org/)
 
 
@@ -1817,45 +1653,7 @@ Human_Proteome
 [107844]   508 MPSMLERISKNLV...GTLSLLQQLAEA ENSP00000494855.1...
 ```
 
-
-### Example `ENSEMBLGENOMES`:
-
-Due to the unavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
-as example.
-
-```{r,eval=FALSE}
-# download the proteome of Arabidopsis thaliana from ENSEMBLGENOMES
-# and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-AT.proteome.ensemblgenomes <- getProteome( db       = "ensemblgenomes", 
-                                           organism = "Arabidopsis thaliana",
-                                           path     = file.path("_ncbi_downloads","proteomes"))
-```
-
-
-```{r,eval=FALSE}
-# import proteome as Biostrings object
-Cress_Proteome <- read_proteome(file = AT.proteome.ensemblgenomes)
-```
-
-```{r,eval=FALSE}
-Cress_Proteome
-```
-
-```
-  A AAStringSet instance of length 48321
-        width seq                           names               
-    [1]   924 MMPKRFNTSGFDT...YEKIFDLAFNYDH AT3G05780.1 pep c...
-    [2]    61 MDSGLSWADQWDY...GFKWMKLGKKSDK AT1G24405.1 pep c...
-    [3]   232 MRIVGLTGGIASG...LGLSVCKQLKIGS AT2G27490.4 pep c...
-    [4]   232 MRIVGLTGGIASG...LGLSVCKQLKIGS AT2G27490.1 pep c...
-    [5]   232 MRIVGLTGGIASG...LGLSVCKQLKIGS AT2G27490.3 pep c...
-    ...   ... ...
-[48317]   305 MKDHERAILEERI...DKTEEAGNKKIRL AT1G30814.1 pep c...
-[48318]   321 MRAAINRANSLGG...KNGFEMAKYWRSQ AT2G43120.1 pep c...
-[48319]   372 MAHNQFKDSLDPL...KNGFEMAKYWRSQ AT2G43120.2 pep c...
-[48320]   345 MTATNKQVILKDY...KNVGKQVVVVARE AT5G16970.1 pep c...
-[48321]   122 MATNACKFLCLVL...FDLKVVDGYIACS AT4G32100.1 pep c...
-```
+Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
 
 ### Example Retrieval `Uniprot`:
 
@@ -1895,11 +1693,33 @@ A AAStringSet instance of length 84522
 [84522]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PYR5|A0A...
 ```
 
+### ProteomeSet Retrieval
+
+The `getProteomeSet()` function enables users to retrieve proteome files for
+multiple species. This is convenient when users wish to bulk download a particular
+set of species. Internally, a folder named `set_proteomes` is generated in which
+proteomes and proteome info files are stored. In addition, users can specify the arguments: `clean_retrieval` and `gunzip` (both are `TRUE` by default) to clean file names and automatically unzip downloaded files. 
+
+Example:
+
+```r
+# specify the species names
+download_species <- c("Arabidopsis thaliana", 
+                      "Arabidopsis lyrata", 
+                      "Capsella rubella")
+# retrieve these three species from NCBI RefSeq                       
+biomartr::getProteomeSet("refseq", organisms = download_species, path = "set_proteomes")
+```
+
+If the download process was interrupted, users can re-run the function
+and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument `update = TRUE`.
 
 ### CDS Retrieval
 
 The `getCDS()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
-[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+[ENSEMBL](http://www.ensembl.org/index.html) databases from
 which corresponding CDS files can be retrieved. It works analogous to `getGenome()` and `getProteome()`. 
 
 The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
@@ -1909,7 +1729,7 @@ Options are:
 - `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
 - `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
 - `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
-- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
+
 
 Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
 Finally, the `path` argument specifies the folder path in which the corresponding CDS file shall be locally stored. In case users would like to store the CDS file at a different location,
@@ -2094,52 +1914,35 @@ Human_CDS
 [102915]    559 ATGCGGAGATGCTACTGCCACTGC...CCTCACCTGCCATGTGGACTTCT ENST00000530476.1...
 ```
 
-### Example `ENSEMBLGENOMES`:
+Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
 
-Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
-as example.
+### CDSSet Retrieval
 
-```{r,eval=FALSE}
-# download the genome of Homo sapiens from ensemblgenomes
-# and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-AT.cds.ensemblgenomes <- getCDS( db       = "ensemblgenomes", 
-                                 organism = "Arabidopsis thaliana",
-                                 path     = file.path("_ncbi_downloads","CDS"))
+The `getCDSSet()` function enables users to retrieve CDS files for
+multiple species. This is convenient when users wish to bulk download a particular
+set of species. Internally, a folder named `set_cds` is generated in which
+CDS and CDS info files are stored. In addition, users can specify the arguments: `clean_retrieval` and `gunzip` (both are `TRUE` by default) to clean file names and automatically unzip downloaded files. 
+
+Example:
+
+```r
+# specify the species names
+download_species <- c("Arabidopsis thaliana", 
+                      "Arabidopsis lyrata", 
+                      "Capsella rubella")
+# retrieve these three species from NCBI RefSeq                       
+biomartr::getCDSSet("refseq", organisms = download_species, path = "set_cds")
 ```
 
-```{r,eval=FALSE}
-# import downloaded CDS as Biostrings object
-Cress_CDS <- read_cds(file     = AT.cds.ensemblgenomes, 
-                      obj.type = "Biostrings")
-
-```
-
-```{r,eval=FALSE}
-# look at the Biostrings object
-Cress_CDS
-```
-
-```
-  A BStringSet instance of length 35386
-        width seq                                                  names               
-    [1]  1248 ATGGGGAGAGATGAAACAGAGACGT...ACTACTCATATTATGCCTTTTTGA AT3G18710.1 cds:k...
-    [2]  2568 ATGGCAACTGAGAATCCTATTAGGA...GAAAACCAAGAATTGAGGAGATGA AT4G25880.2 cds:k...
-    [3]  2577 ATGGCAACTGAGAATCCTATTAGGA...TTCCCCAATAAAACCAAGAATTGA AT4G25880.3 cds:k...
-    [4]  2586 ATGGCAACTGAGAATCCTATTAGGA...GAAAACCAAGAATTGAGGAGATGA AT4G25880.1 cds:k...
-    [5]  1077 ATGACAAAGGCTTATTCAACACGTG...GAGGAAGCTATTTCCATGATCTAA AT1G71695.1 cds:k...
-    ...   ... ...
-[35382]  1125 ATGCATTCGCGCTCCGCCTTGCTCT...GCTTCTCCTTCTACATCCCCGTAG AT2G20860.1 cds:k...
-[35383]  1179 ATGGCAGACAATTTGAATTTGGTGA...TTGGGCCTCGCCGCCTATTATTAG AT3G14210.1 cds:k...
-[35384]  1488 ATGGCCTCTCTTCTCTCTCCCGCCA...TCAAAGCTCAGTTTCAGCAAGTGA AT5G01920.1 cds:k...
-[35385]  1689 ATGAGTTTAACAAAGAAAGCAAGTG...GAACCACAGGCCGGTCTCCTTAGA AT2G26280.1 cds:k...
-[35386]  1362 ATGGGTGTTTCTCTTCTGAAACAAC...GGTTTGGCCAATAATGTTATCTAG AT4G32600.1 cds:k...
-```
-
+If the download process was interrupted, users can re-run the function
+and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument `update = TRUE`.
 
 ### RNA Retrieval
 
 The `getRNA()` function is an interface function to the [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/), [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/),
-[ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMBLGENOMES](http://ensemblgenomes.org/) databases from
+[ENSEMBL](http://www.ensembl.org/index.html) databases from
 which corresponding RNA files can be retrieved. It works analogous to `getGenome()`, `getProteome()`, and `getCDS()`. 
 
 The `db` argument specifies from which database proteomes in `*.fasta` file format shall be retrieved.
@@ -2149,7 +1952,6 @@ Options are:
 - `db = "refseq"` for retrieval from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/about/)
 - `db = "genbank"` for retrieval from [NCBI Genbank](http://www.ncbi.nlm.nih.gov/genbank/about/)
 - `db = "ensembl"` for retrieval from [ENSEMBL](http://www.ensembl.org/index.html)
-- `db = "ensemblgenomes"` for retrieval from [ENSEMBLGENOMES](http://ensemblgenomes.org/)
 
 Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. `organism = "Homo sapiens"`.
 Finally, the `path` argument specifies the folder path in which the corresponding RNA file shall be locally stored. In case users would like to store the RNA file at a different location,
@@ -2333,50 +2135,34 @@ Human_rna
 [36701]    172 TTGAAGGCGTGGAGACTGAAGTCCTCTCTATATCCACAGAACAG...AAGAGGGCTGTTCAGTCTCCATGCCCTTCAATCCTTGGCTACT ENST00000615087.1...
 ```
 
-### Example `ENSEMBLGENOMES`:
+Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
 
-Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
-as example.
+### RNASet Retrieval
 
-```{r,eval=FALSE}
-# download the genome of Arabidopsis thaliana from ensemblgenomes
-# and store the corresponding genome RNA file in '_ncbi_downloads/RNA'
-AT.rna.ensemblgenomes <- getRNA( db       = "ensemblgenomes", 
-                                 organism = "Arabidopsis thaliana",
-                                 path     = file.path("_ncbi_downloads","RNA"))
+The `getRNASet()` function enables users to retrieve RNA files for
+multiple species. This is convenient when users wish to bulk download a particular
+set of species. Internally, a folder named `set_rna` is generated in which
+RNA and RNA info files are stored. In addition, users can specify the arguments: `clean_retrieval` and `gunzip` (both are `TRUE` by default) to clean file names and automatically unzip downloaded files. 
+
+Example:
+
+```r
+# specify the species names
+download_species <- c("Arabidopsis thaliana", 
+                      "Arabidopsis lyrata", 
+                      "Capsella rubella")
+# retrieve these three species from NCBI RefSeq                       
+biomartr::getRNASet("refseq", organisms = download_species, path = "set_rna")
 ```
 
-```{r,eval=FALSE}
-# import downloaded RNA as Biostrings object
-Cress_rna <- read_cds(file     = AT.rna.ensemblgenomes, 
-                      obj.type = "Biostrings")
-```
-
-```{r,eval=FALSE}
-# look at the Biostrings object
-Cress_rna
-```
-
-```
-  A BStringSet instance of length 1398
-       width seq                                                                                          names               
-   [1]   101 TAGTGAGCACAAAGCGAACTATTCTTTCGCCTTTTACTAAAGAAT...CCACGCTAAGTGGCATACGCCTATTTTTGGAGGGATCTGCCTTC AT1G05853.1 ncrna...
-   [2]   195 ATACCTTTCTCGGCCTTTTGGCTAAGATCAAGTGTAGTATCTGTT...AGTCGCCCATGCGTTGCACTACTGCATGGGCCTGGCTCAACCCG AT2G04455.1 ncrna...
-   [3]   195 TTTTTCTAATTACTTGCAAGCGATGTGTAAATTAGATTAATTCAA...TCATAAATTTAGATAATATTTCACTAAATAAGTTGAAATTGACC AT5G09945.1 ncrna...
-   [4]   101 CGCAGCTATGTGGTGAGCACAAAGCGAACTATTCTTTCGCCTTTT...CGTGTGCTCTCCACGCCAAGTGGCTTACGCCTATTTTTGGAGGG AT4G04185.1 ncrna...
-   [5]    55 GTGATCAATAAGACAAGTGGCCTAGGCTAGTGATCGCATTGCACATATCGTTTGG                                      AT4G06405.1 ncrna...
-   ...   ... ...
-[1394]   118 ACACATAAAACTAGTATATTGCCTTGAACATGGTTTATTAGGAAA...TCCTTATATACAATGTTCAAAGTAATGAATTAGTTTTATTTTGT at4g21362 ncrna c...
-[1395]   121 CTTACAGAGATCTTTGGCATTCTGTCCACCTCCTCTCTCTATATT...TTTCGTAAGAGGAGGTGGGCATACTGCCAATAGAGATCTGTTAG at1g76135 ncrna c...
-[1396]   100 GGTTGGATTACTGGGCGAATACTCCTATGGCAGATCGCATTGGCT...TAAAATGCTTCTCTGCCAAAGGAGATTTGCCCCGCAATTCATCC at2g34202 ncrna c...
-[1397]   174 TTGACCCAGCCAAATCGACTCACCGTTAAAACTTCTTAACAGCTC...CGCTGTTAAGGAGTGTTAACGGTGAGTCGATTTGGCCGGGTCAA at4g07565 ncrna c...
-[1398]   189 CTTAAGGCAATTTGACCTATATCAAATTTGGCACCGTTGCCGGGG...CCCGGCAACGGCGCCAAATTTGATATAGCTCAAATCGCCTTAAG at2g05455 ncrna c...
-```
-
+If the download process was interrupted, users can re-run the function
+and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument `update = TRUE`.
 
 ### Retrieve the annotation file of a particular genome
 
-Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` or alternatively for `ensembl` and `ensemblgenomes` the `getGTF()` function.
+Finally, users can download the corresponding annotation `.gff` files for particular genomes of interest using the `getGFF()` or alternatively for `ensembl` the `getGTF()` function.
 
 ### Example `NCBI RefSeq`:
 
@@ -2490,6 +2276,8 @@ Human_GFF
 10     1      . biological_region 10737     10744   0.999      +     0
 ```
 
+Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
+
 Alternatively for `getGTF()`:
 
 ```{r,eval=FALSE}
@@ -2500,59 +2288,33 @@ HS.gtf.ensembl <- getGTF( db       = "ensembl",
                          path = file.path("ensembl","annotation"))
 ```
 
-### Example `ENSEMBLGENOMES`:
-
-Due to the inavailability of `"Homo sapiens"` at `db = "ensemblgenomes"` here we choose `"Arabidopsis thaliana"`
-as example.
-
-```{r,eval=FALSE}
-# download the GFF file of Arabidopsis thaliana from ENSEMBLGENOMES
-# and store the corresponding file in 'ensemblgenomes/annotation'
-AT.gff.ensemblgenomes <- getGFF( db       = "ensemblgenomes", 
-                                 organism = "Arabidopsis thaliana", 
-                                 path = file.path("ensemblgenomes","annotation"))
-```
-
-After downloading the `.gff` file, users can import the `.gff` file with `read_gff()`.
-
-```{r,eval=FALSE}
-# import downloaded GFF file
-Cress_GFF <- read_gff(file = AT.gff.ensemblgenomes)
-```
-
-```{r,eval=FALSE}
-# show all elements of the data.frame
-options(tibble.print_max = Inf)
-Cress_GFF
-```
-
-```
-   seqid source           type start      end score strand phase
-   <int>  <chr>          <chr> <int>    <int> <dbl>  <chr> <dbl>
-1      1   TAIR     chromosome     1 30427671     0      .     0
-2      1   tair           gene  3631     5899     0      +     0
-3      1   tair     transcript  3631     5899     0      +     0
-4      1   tair five_prime_UTR  3631     3759     0      +     0
-5      1   tair           exon  3631     3913     0      +     0
-6      1   tair            CDS  3760     3913     0      +     0
-7      1   tair           exon  3996     4276     0      +     0
-8      1   tair            CDS  3996     4276     0      +     2
-9      1   tair           exon  4486     4605     0      +     0
-10     1   tair            CDS  4486     4605     0      +     0
-```
-
-Alternatively for `getGTF()`:
-
-```{r,eval=FALSE}
-# download the GTF file of Arabidopsis thaliana from ENSEMBLGENOMES
-# and store the corresponding file in 'ensemblgenomes/annotation'
-AT.gtf.ensemblgenomes <- getGTF( db       = "ensemblgenomes", 
-                                 organism = "Arabidopsis thaliana", 
-                                 path = file.path("ensemblgenomes","annotation"))
-```
-
 Taken together, `getGFF()` or `getGTF()` in combination with `getGenome()`, `getProteome()`, `getRNA()` and `getCDS()` allows users to retrieve the genome information together with the
 corresponding `.gff` or `gtf` annotation file to make sure that they both have the same version and origin.
+
+
+### GFFSet Retrieval
+
+The `getGFFSet()` function enables users to retrieve GFF files for
+multiple species. This is convenient when users wish to bulk download a particular
+set of species. Internally, a folder named `set_gff` is generated in which
+GFF and GFF info files are stored. In addition, users can specify the arguments: `clean_retrieval` and `gunzip` (both are `TRUE` by default) to clean file names and automatically unzip downloaded files. 
+
+Example:
+
+```r
+# specify the species names
+download_species <- c("Arabidopsis thaliana", 
+                      "Arabidopsis lyrata", 
+                      "Capsella rubella")
+# retrieve these three species from NCBI RefSeq                       
+biomartr::getGFFSet("refseq", organisms = download_species, path = "set_gff")
+```
+
+If the download process was interrupted, users can re-run the function
+and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument `update = TRUE`.
+
 
 ## Repeat Masker Retrieval
 
