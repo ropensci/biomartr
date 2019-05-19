@@ -10,7 +10,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' }
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
@@ -18,8 +17,6 @@
 #' \code{type = "download"} or should the corresponding file be downloaded and 
 #' subsequently be imported \code{type = "import"}.
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
-#' that the most recent database version is used.
 #' @param path a character string specifying the location (a folder) in
 #' which the corresponding file shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","genomeassembly_stats")}.
@@ -71,7 +68,6 @@ getAssemblyStats <-
     function(db = "refseq",
              organism,
              reference = FALSE,
-             release = NULL,
              type = "download",
              path = file.path("_ncbi_downloads", "genomeassembly_stats")) {
         
