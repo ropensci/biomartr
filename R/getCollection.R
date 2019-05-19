@@ -11,7 +11,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' }
 #' @param organism there are three options to characterize an organism: 
 #' \itemize{
@@ -45,7 +44,8 @@
 #'              path = file.path("_db_downloads","collections"))
 #' }
 #' 
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
+#' @seealso \code{\link{getGenomeSet}}, \code{\link{getProteomeSet}}, \code{\link{getCDSSet}}, 
+#' \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
 #' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
 #' \code{\link{read_genome}}
 #' @export
