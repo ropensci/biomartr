@@ -11,7 +11,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' } 
 #' @param organism there are three options to characterize an organism: 
 #' \itemize{
@@ -20,8 +19,7 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
-#' that the most recent database version is used.
+#' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) 
 #' in which the corresponding CDS file shall be stored. 
@@ -54,10 +52,10 @@ getCDS <-
              path = file.path("_ncbi_downloads", "CDS")) {
             
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "ensemblgenomes")))
+                              "ensembl")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl' or 'ensemblgenomes'.",
+                'refseq', 'genbank', or 'ensembl'.",
                 call. = FALSE
             )
             
