@@ -8,7 +8,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"}
 #' \item \code{db = "ensembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' }
 #' @param organisms a character vector storing the names of the organisms than shall be retrieved.
 #' There are three available options to characterize an organism:
@@ -19,7 +18,7 @@
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked
 #' in the database as either a reference genome or a representative genome.
-#' @param release the database release version of either ENSEMBL (\code{db = "ensembl"}) or ENSEMBLGENOMES (\code{db = "ensemblgenomes"}). Default is \code{release = NULL} meaning
+#' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.  
 #' @param clean_retrieval logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
@@ -42,13 +41,14 @@
 #' no download process will be performed.
 #' @return File path to downloaded genomes.
 #' @examples \dontrun{
-#' biomartr::getGenomeSet("refseq", organisms = c("Arabidopsis thaliana", 
-#'                                                "Arabidopsis lyrata", 
-#'                                                "Capsella rubella"))
+#' getGenomeSet("refseq", organisms = c("Arabidopsis thaliana", 
+#'                                      "Arabidopsis lyrata", 
+#'                                      "Capsella rubella"))
 #' }
 #'
-#' @seealso \code{\link{getProteomeSet}}, \code{\link{getCDS}},
-#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}},
+#' @seealso \code{\link{getProteomeSet}}, \code{\link{getCDSSet}},
+#' \code{\link{getRNASet}}, \code{\link{getGFFSet}}, \code{\link{getCDS}},
+#' \code{\link{getGFF}}, \code{\link{getGTF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}},
 #' \code{\link{read_genome}}
 #' @export
 
