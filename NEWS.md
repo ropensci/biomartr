@@ -1,4 +1,4 @@
-[biomartr 0.9.0]((https://github.com/ropensci/biomartr/releases/tag/v0.9.0))
+[biomartr 0.9.0](https://github.com/ropensci/biomartr/releases/tag/v0.9.0)
 ===========
 
 __Please be aware that as of April 2019, ENSEMBLGENOMES
@@ -46,7 +46,7 @@ allows users to upzip the downloaded files directly in the `get*()` function cal
 the file for more convenient downstream analyses
 
 
-[biomartr 0.8.0]((https://github.com/ropensci/biomartr/releases/tag/v0.8.0))
+[biomartr 0.8.0](https://github.com/ropensci/biomartr/releases/tag/v0.8.0)
 ===========
 
 ### New Functions
