@@ -52,7 +52,6 @@ Furthermore, an interface to the [Ensembl Biomart](www.ensembl.org/biomart) data
 - `NCBI nt`
 - `NCBI Genbank`
 - `ENSEMBL` 
-- `ENSEMBLGENOMES`
 
 with only one command.
 
