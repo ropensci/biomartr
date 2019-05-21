@@ -50,7 +50,7 @@ using `biomaRt` before the `biomartr` package existed.
  		
 The availability of `marts`, `datasets`, and `attributes` can be checked by the following functions:		
 
-```{r,eval=TRUE}		
+```{r,eval=FALSE}		
 # install the biomaRt package		
 # source("http://bioconductor.org/biocLite.R")		
 # biocLite("biomaRt")		
@@ -64,7 +64,7 @@ Users will observe that several `marts` providing annotation for specific classe
 
 For our example, we will choose the `hsapiens_gene_ensembl` `mart` and list all available datasets that are element of this `mart`.		
 
-```{r,eval=TRUE}		
+```{r,eval=FALSE}		
 head(biomaRt::listDatasets(biomaRt::useMart("ENSEMBL_MART_ENSEMBL", host = "www.ensembl.org")), 10)		
 ```		
 
