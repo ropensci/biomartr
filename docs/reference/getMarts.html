@@ -149,25 +149,11 @@ storing information about all available Ensembl Biomart databases.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># get a table of all available databases from Ensembl Biomart</span>
- <span class='fu'>getMarts</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 15 x 2</span><span>
-#&gt;    mart                  version                       
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                         
-#&gt; </span><span style='color: #555555;'> 1</span><span> ENSEMBL_MART_ENSEMBL  Ensembl Genes 96              
-#&gt; </span><span style='color: #555555;'> 2</span><span> ENSEMBL_MART_MOUSE    Mouse strains 96              
-#&gt; </span><span style='color: #555555;'> 3</span><span> ENSEMBL_MART_SEQUENCE Sequence                      
-#&gt; </span><span style='color: #555555;'> 4</span><span> ENSEMBL_MART_ONTOLOGY Ontology                      
-#&gt; </span><span style='color: #555555;'> 5</span><span> ENSEMBL_MART_GENOMIC  Genomic features 96           
-#&gt; </span><span style='color: #555555;'> 6</span><span> ENSEMBL_MART_SNP      Ensembl Variation 96          
-#&gt; </span><span style='color: #555555;'> 7</span><span> ENSEMBL_MART_FUNCGEN  Ensembl Regulation 96         
-#&gt; </span><span style='color: #555555;'> 8</span><span> plants_mart           Ensembl Plants Genes 43       
-#&gt; </span><span style='color: #555555;'> 9</span><span> plants_variations     Ensembl Plants Variations 43  
-#&gt; </span><span style='color: #555555;'>10</span><span> fungi_mart            Ensembl Fungi Genes 43        
-#&gt; </span><span style='color: #555555;'>11</span><span> fungi_variations      Ensembl Fungi Variations 43   
-#&gt; </span><span style='color: #555555;'>12</span><span> protists_mart         Ensembl Protists Genes 43     
-#&gt; </span><span style='color: #555555;'>13</span><span> protists_variations   Ensembl Protists Variations 43
-#&gt; </span><span style='color: #555555;'>14</span><span> metazoa_mart          Ensembl Metazoa Genes 43      
-#&gt; </span><span style='color: #555555;'>15</span><span> metazoa_variations    Ensembl Metazoa Variations 43 </div></span></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># get a table of all available databases from Ensembl Biomart</span>
+<span class='fu'>getMarts</span>()
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
