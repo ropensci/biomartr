@@ -44,7 +44,7 @@ read_rna <-
         if (obj.type == "Biostrings") {
             tryCatch({
                 RNA_file <-
-                    Biostrings::readRNAStringSet(filepath = file, 
+                    Biostrings::readDNAStringSet(filepath = file, 
                                                  format = format, ...)
             }, error = function(e) {
                 stop(
@@ -68,7 +68,7 @@ read_rna <-
         if (obj.type == "data.table") {
             tryCatch({
                 RNA_file <-
-                    Biostrings::readRNAStringSet(filepath = file, 
+                    Biostrings::readDNAStringSet(filepath = file, 
                                                  format = format, ...)
                 
                 RNA_names <-
