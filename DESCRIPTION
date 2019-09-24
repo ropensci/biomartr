@@ -1,9 +1,9 @@
 Package: biomartr
 Title: Genomic Data Retrieval
-Version: 0.9.0
+Version: 1.0.0.9000
 Authors@R: person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
-                email = "hgd23@cam.ac.uk",
+                email = "hajk-georg.drost@slcu.cam.ac.uk",
                 comment = c(ORCID = "http://orcid.org/0000-0002-1567-306X"))
 Description: Perform large scale genomic data retrieval and functional annotation retrieval. This package aims to provide users with a standardized
                 way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
