@@ -64,7 +64,7 @@ http://rest.ensembl.org/info/species?content-type=application/json/." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -144,21 +144,21 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>info.file</span> <span class='kw'>&lt;-</span> <span class='fu'>getENSEMBLInfo</span>()
-<span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 199 x 10</span><span>
-#&gt;    assembly common_name display_name release division strain_collecti… accession
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'> 1</span><span> FicAlb_… Collared f… Flycatcher        96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0002…
-#&gt; </span><span style='color: #555555;'> 2</span><span> C.can_g… American b… American be…      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0019…
-#&gt; </span><span style='color: #555555;'> 3</span><span> KH       Sea squirt… C.intestina…      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0002…
-#&gt; </span><span style='color: #555555;'> 4</span><span> pvi1.1   central be… Central bea…      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_9000…
-#&gt; </span><span style='color: #555555;'> 5</span><span> ASM1715… golden-col… Golden-coll…      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0017…
-#&gt; </span><span style='color: #555555;'> 6</span><span> MUSP714  steppe mou… Steppe mouse      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0033…
-#&gt; </span><span style='color: #555555;'> 7</span><span> Zonotri… white-thro… White-throa…      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0003…
-#&gt; </span><span style='color: #555555;'> 8</span><span> Dord_2.0 Ord's kang… Kangaroo rat      96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0001…
-#&gt; </span><span style='color: #555555;'> 9</span><span> Nleu_3.0 Northern w… Gibbon            96 Ensembl… </span><span style='color: #BB0000;'>NA</span><span>               GCA_0001…
-#&gt; </span><span style='color: #555555;'>10</span><span> FVB_NJ_… house mouse Mouse FVB/NJ      96 Ensembl… mouse            GCA_0016…
-#&gt; </span><span style='color: #555555;'># … with 189 more rows, and 3 more variables: taxon_id </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, strain </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+<span class='no'>info.file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 227 x 10</span><span>
+#&gt;    strain_collecti… strain display_name accession name  common_name release
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Red fox      GCA_0031… vulp… red fox          98
+#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Clown anemo… GCA_0027… amph… clown anem…      98
+#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Gelada       GCA_0032… ther… gelada           98
+#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Pachon cave… GCA_0048… asty… Pachon cav…      98
+#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Naked mole-… GCA_0002… hete… naked mole…      98
+#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Blue-crowne… GCA_0016… lepi… blue-crown…      98
+#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     C.intestina… GCA_0002… cion… Sea squirt…      98
+#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Elephant     GCA_0000… loxo… African sa…      98
+#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Macaque      GCA_0033… maca… Macaque          98
+#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>     Northern Am… GCA_0037… pero… Northern A…      98
+#&gt; </span><span style='color: #555555;'># … with 217 more rows, and 3 more variables: assembly </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, taxon_id </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   division </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
