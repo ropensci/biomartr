@@ -7,7 +7,7 @@ and won't support data retrieval from `ENSEMBLGENOMES` servers anymore.__
 
 ### New Functions
 
-- New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output (find out more here: https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files)
+- New function `clean.retrieval()` enables formatting and automatic unzipping of meta.retrieval output (find out more here: https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files)
 - New function `getGenomeSet()` allows users to easily retrieve genomes of multiple specified species. 
 In addition, the genome summary statistics for all retrieved species will be stored as well to provide
 users with insights regarding the genome assembly quality of each species. This file can be used as Supplementary Information file
