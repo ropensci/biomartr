@@ -45,7 +45,7 @@ Suggests:
     magrittr
 License: GPL-2
 LazyData: true
-URL: https://github.com/ropensci/biomartr
+URL: https://docs.ropensci.org/biomartr, https://github.com/ropensci/biomartr
 BugReports: https://github.com/ropensci/biomartr/issues
 RoxygenNote: 6.1.1
 Encoding: UTF-8
