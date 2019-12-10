@@ -4,8 +4,12 @@
 \alias{getCollection}
 \title{Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats}
 \usage{
-getCollection(db = "refseq", organism, reference = TRUE,
-  path = file.path("_db_downloads", "collections"))
+getCollection(
+  db = "refseq",
+  organism,
+  reference = TRUE,
+  path = file.path("_db_downloads", "collections")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the collection 

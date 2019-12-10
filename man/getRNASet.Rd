@@ -4,9 +4,16 @@
 \alias{getRNASet}
 \title{RNA Retrieval of multiple species}
 \usage{
-getRNASet(db = "refseq", organisms, reference = FALSE,
-  release = NULL, clean_retrieval = TRUE, gunzip = TRUE,
-  update = FALSE, path = "set_RNAs")
+getRNASet(
+  db = "refseq",
+  organisms,
+  reference = FALSE,
+  release = NULL,
+  clean_retrieval = TRUE,
+  gunzip = TRUE,
+  update = FALSE,
+  path = "set_RNAs"
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the RNA

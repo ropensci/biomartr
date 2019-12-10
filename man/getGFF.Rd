@@ -4,8 +4,14 @@
 \alias{getGFF}
 \title{Genome Annotation Retrieval (GFF3)}
 \usage{
-getGFF(db = "refseq", organism, reference = FALSE, release = NULL,
-  gunzip = FALSE, path = file.path("_ncbi_downloads", "annotation"))
+getGFF(
+  db = "refseq",
+  organism,
+  reference = FALSE,
+  release = NULL,
+  gunzip = FALSE,
+  path = file.path("_ncbi_downloads", "annotation")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

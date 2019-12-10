@@ -4,9 +4,16 @@
 \alias{meta.retrieval}
 \title{Perform Meta-Genome Retrieval}
 \usage{
-meta.retrieval(db = "refseq", kingdom, group = NULL, type = "genome",
-  restart_at_last = TRUE, reference = FALSE, combine = FALSE,
-  path = NULL)
+meta.retrieval(
+  db = "refseq",
+  kingdom,
+  group = NULL,
+  type = "genome",
+  restart_at_last = TRUE,
+  reference = FALSE,
+  combine = FALSE,
+  path = NULL
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

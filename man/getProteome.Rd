@@ -4,9 +4,14 @@
 \alias{getProteome}
 \title{Proteome Retrieval}
 \usage{
-getProteome(db = "refseq", organism, reference = TRUE,
-  release = NULL, gunzip = FALSE, path = file.path("_ncbi_downloads",
-  "proteomes"))
+getProteome(
+  db = "refseq",
+  organism,
+  reference = TRUE,
+  release = NULL,
+  gunzip = FALSE,
+  path = file.path("_ncbi_downloads", "proteomes")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

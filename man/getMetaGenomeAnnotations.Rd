@@ -4,8 +4,10 @@
 \alias{getMetaGenomeAnnotations}
 \title{Retrieve annotation *.gff files for metagenomes from NCBI Genbank}
 \usage{
-getMetaGenomeAnnotations(name, path = file.path("_ncbi_downloads",
-  "metagenome", "annotations"))
+getMetaGenomeAnnotations(
+  name,
+  path = file.path("_ncbi_downloads", "metagenome", "annotations")
+)
 }
 \arguments{
 \item{name}{metagenome name retrieved by \code{\link{listMetaGenomes}}.}

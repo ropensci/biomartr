@@ -4,9 +4,16 @@
 \alias{getProteomeSet}
 \title{Proteome retrieval of multiple species}
 \usage{
-getProteomeSet(db = "refseq", organisms, reference = FALSE,
-  release = NULL, clean_retrieval = TRUE, gunzip = TRUE,
-  update = FALSE, path = "set_proteomes")
+getProteomeSet(
+  db = "refseq",
+  organisms,
+  reference = FALSE,
+  release = NULL,
+  clean_retrieval = TRUE,
+  gunzip = TRUE,
+  update = FALSE,
+  path = "set_proteomes"
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the proteome

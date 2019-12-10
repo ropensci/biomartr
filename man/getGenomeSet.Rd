@@ -4,9 +4,16 @@
 \alias{getGenomeSet}
 \title{Genome Retrieval of multiple species}
 \usage{
-getGenomeSet(db = "refseq", organisms, reference = FALSE,
-  release = NULL, clean_retrieval = TRUE, gunzip = TRUE,
-  update = FALSE, path = "set_genomes")
+getGenomeSet(
+  db = "refseq",
+  organisms,
+  reference = FALSE,
+  release = NULL,
+  clean_retrieval = TRUE,
+  gunzip = TRUE,
+  update = FALSE,
+  path = "set_genomes"
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome

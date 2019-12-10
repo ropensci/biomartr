@@ -4,8 +4,13 @@
 \alias{read_cds}
 \title{Import CDS as Biostrings or data.table object}
 \usage{
-read_cds(file, format = "fasta", obj.type = "Biostrings",
-  delete_corrupt = FALSE, ...)
+read_cds(
+  file,
+  format = "fasta",
+  obj.type = "Biostrings",
+  delete_corrupt = FALSE,
+  ...
+)
 }
 \arguments{
 \item{file}{a character string specifying the path to the file storing 

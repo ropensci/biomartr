@@ -4,8 +4,14 @@
 \alias{getGenome}
 \title{Genome Retrieval}
 \usage{
-getGenome(db = "refseq", organism, reference = FALSE, release = NULL,
-  gunzip = FALSE, path = file.path("_ncbi_downloads", "genomes"))
+getGenome(
+  db = "refseq",
+  organism,
+  reference = FALSE,
+  release = NULL,
+  gunzip = FALSE,
+  path = file.path("_ncbi_downloads", "genomes")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

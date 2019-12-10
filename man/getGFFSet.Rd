@@ -4,9 +4,16 @@
 \alias{getGFFSet}
 \title{GFF retrieval of multiple species}
 \usage{
-getGFFSet(db = "refseq", organisms, reference = FALSE,
-  release = NULL, clean_retrieval = TRUE, gunzip = TRUE,
-  update = FALSE, path = "set_GFF")
+getGFFSet(
+  db = "refseq",
+  organisms,
+  reference = FALSE,
+  release = NULL,
+  clean_retrieval = TRUE,
+  gunzip = TRUE,
+  update = FALSE,
+  path = "set_GFF"
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the GFF

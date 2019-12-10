@@ -4,8 +4,12 @@
 \alias{getRepeatMasker}
 \title{Repeat Masker Retrieval}
 \usage{
-getRepeatMasker(db = "refseq", organism, reference = FALSE,
-  path = file.path("_ncbi_downloads", "repeatmasker"))
+getRepeatMasker(
+  db = "refseq",
+  organism,
+  reference = FALSE,
+  path = file.path("_ncbi_downloads", "repeatmasker")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

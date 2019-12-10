@@ -4,9 +4,16 @@
 \alias{getCDSSet}
 \title{CDS retrieval of multiple species}
 \usage{
-getCDSSet(db = "refseq", organisms, reference = FALSE,
-  release = NULL, clean_retrieval = TRUE, gunzip = TRUE,
-  update = FALSE, path = "set_CDS")
+getCDSSet(
+  db = "refseq",
+  organisms,
+  reference = FALSE,
+  release = NULL,
+  clean_retrieval = TRUE,
+  gunzip = TRUE,
+  update = FALSE,
+  path = "set_CDS"
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the CDS

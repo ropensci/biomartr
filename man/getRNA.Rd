@@ -4,8 +4,13 @@
 \alias{getRNA}
 \title{RNA Sequence Retrieval}
 \usage{
-getRNA(db = "refseq", organism, reference = FALSE, release = NULL,
-  path = file.path("_ncbi_downloads", "RNA"))
+getRNA(
+  db = "refseq",
+  organism,
+  reference = FALSE,
+  release = NULL,
+  path = file.path("_ncbi_downloads", "RNA")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

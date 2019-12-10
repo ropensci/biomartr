@@ -4,9 +4,13 @@
 \alias{getAssemblyStats}
 \title{Genome Assembly Stats Retrieval}
 \usage{
-getAssemblyStats(db = "refseq", organism, reference = FALSE,
-  type = "download", path = file.path("_ncbi_downloads",
-  "genomeassembly_stats"))
+getAssemblyStats(
+  db = "refseq",
+  organism,
+  reference = FALSE,
+  type = "download",
+  path = file.path("_ncbi_downloads", "genomeassembly_stats")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

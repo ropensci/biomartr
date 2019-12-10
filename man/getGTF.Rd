@@ -4,8 +4,7 @@
 \alias{getGTF}
 \title{Genome Annotation Retrieval (GTF)}
 \usage{
-getGTF(db = "ensembl", organism, path = file.path("ensembl",
-  "annotation"))
+getGTF(db = "ensembl", organism, path = file.path("ensembl", "annotation"))
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 

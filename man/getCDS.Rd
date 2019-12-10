@@ -4,8 +4,14 @@
 \alias{getCDS}
 \title{Coding Sequence Retrieval}
 \usage{
-getCDS(db = "refseq", organism, reference = FALSE, release = NULL,
-  gunzip = FALSE, path = file.path("_ncbi_downloads", "CDS"))
+getCDS(
+  db = "refseq",
+  organism,
+  reference = FALSE,
+  release = NULL,
+  gunzip = FALSE,
+  path = file.path("_ncbi_downloads", "CDS")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
