@@ -188,22 +188,6 @@ getCollection <-
                 message("Collection retrieval finished successfully!")
                 message("\n")
                 
-                cat(paste0(
-                        "We retrieved the genome assembly and checked the annotation for '",
-                        organism,
-                        "' (taxid: ",
-                        tsv_file$taxid,
-                        ", ",
-                        tsv_file$infraspecific_name,") from '",
-                        tsv_file$url,
-                        "' (accession: ",
-                        tsv_file$assembly_accession,
-                        ", bioproject: ",
-                        tsv_file$bioproject,
-                        ", biosample: ",
-                        tsv_file$biosample,
-                        ") using the biomartr R package (Drost and Paszkowski, 2017)."
-                ))
         }
         
         if (is.element(db, c("ensembl", "ensemblgenomes"))) {
