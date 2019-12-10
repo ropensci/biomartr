@@ -32,10 +32,9 @@ get.ensembl.info <- function(update = FALSE) {
         rest_url <- "http://rest.ensembl.org/info/species?content-type=application/json"
         rest_api_status <- curl::curl_fetch_memory(rest_url)
         if (rest_api_status$status_code != 200) {
-            stop(
+            message(
                 "The API 'http://rest.ensembl.org' does not seem to
-                work properly. Are you connected to the internet?
-                Is the homepage 'http://rest.ensembl.org' currently available?",
+                work properly. Is the homepage 'http://rest.ensembl.org' currently available?",
                 call. = FALSE
             )
         }
