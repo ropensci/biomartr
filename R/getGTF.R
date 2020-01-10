@@ -103,9 +103,8 @@ getGTF <-
                             )
                             
                             if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
-                                warning(
-                                    "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
-                                    call. = FALSE)
+                                message(
+                                    "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).")
                                 return(FALSE)
                             }
                             
@@ -234,15 +233,14 @@ getGTF <-
                                 ) 
                             
                             rest_url <- paste0(
-                                "http://rest.ensemblgenomes.org/info/assembly/",
+                                "http://rest.ensembl.org/info/assembly/",
                                 new.organism,
                                 "?content-type=application/json"
                             )
                             
                             if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
-                                warning(
-                                    "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
-                                    call. = FALSE)
+                                message(
+                                    "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).")
                                 return(FALSE)
                             }
                             
