@@ -36,10 +36,9 @@ getUniProtSeq <-
                                         )
                                 ))
                 }, error = function(e)
-                        stop(
-                                "The API 'https://www.ebi.ac.uk/proteins/api/proteomes'",
-                                " does not seem to work properly. Are you connected to the ", " internet? Is the homepage 'https://www.ebi.ac.uk/' currently available?",
-                                call. = FALSE
+                        message(
+                                "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'",
+                                " Sometimes the internet connection isn't stable and re-running the function might help. Is it possible to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
                         ))
                 
                 name <- upid <- taxonomy <- isReferenceProteome <- isRepresentativeProteome <- NULL
@@ -85,9 +84,8 @@ getUniProtSeq <-
                 
                 tryCatch({organism_fasta_file <-
                         Biostrings::readBStringSet(query)}, error = function(e)
-                                stop(
-                                        "Something went wrong ... The API ", query, " could not be used to retrieve a fasta file for '", organism,"'. Could it be that your internet connection was interrupted?",
-                                        call. = FALSE
+                                message(
+                                        "Something went wrong when trying to access the Uniprot API .Thus the query ", query, ". could not be used to retrieve a fasta file for '", organism,"'. Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall?"
                                 ))
                 
                 Biostrings::writeXStringSet(organism_fasta_file,
@@ -98,8 +96,6 @@ getUniProtSeq <-
                                                             "_protein_uniprot.faa.gz"
                                                     )
                                             ), compress = TRUE)
-                
-
                 
                 docFile(
                         file.name = paste0(organism_name_path, "_protein_uniprot.faa.gz"),
