@@ -72,7 +72,6 @@ organismBM <- function(organism = NULL, update = FALSE) {
         
     }
     
-    
     if (file.exists(getTMPFile(file.path("_biomart", "listMarts.txt"))))
         all_marts <-
             readr::read_tsv(
