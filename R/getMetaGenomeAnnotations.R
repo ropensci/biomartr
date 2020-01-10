@@ -68,13 +68,12 @@ getMetaGenomeAnnotations <-
                     mode = "wb"
                 ))
             }, error = function(e)
-                stop(
-                    "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be 
-                    reached. Are you connected to the internet? 
-                    Is the the FTP site '",
+                message(
+                    "Unfortunately, the FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be 
+                    reached. This might be due to an instable internet connection or some issues with the firewall.  
+                     Are you able to reach the FTP site '",
                     download_url,
-                    "' currently available?",
-                    call. = FALSE
+                    "' from your browser?"
                 ))
             
             docFile(
