@@ -116,7 +116,7 @@ paste0("http://metazoa.ensembl.org:80/biomart/martservice?",
             "Your input mart '",
             mart,
             "' could not be found. Please use getMarts() 
-            to choose from available marts."
+            to choose from available marts.", call. = FALSE
         ))
 }
 
