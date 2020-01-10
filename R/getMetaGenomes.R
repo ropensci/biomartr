@@ -28,7 +28,7 @@ getMetaGenomes <-
                 paste0("Unfortunately, the metagenome '",
                 name,
                 "' is not available. Please consult the listMetaGenomes() ",
-                "function for available metagenomes.")
+                "function for available metagenomes."), call. = FALSE
             )
         
         if (!file.exists(path)) {
@@ -66,11 +66,11 @@ getMetaGenomes <-
                     mode = "wb"
                 ))
             }, error = function(e)
-                stop(
-                    "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached.",
-                    " Are you connected to the internet? Is the the FTP site '",
-                    download_url,"' currently available? Please try to re-run this function ",
-                    "and see if it might work then ..."
+                message(
+                    "Unfortunately, the FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached.",
+                    " Are you able to access the FTP site '",
+                    download_url,"' in your browser? Please try to re-run this function ",
+                    "and see if it might work then ... Sometimes an unstable internet connection or firewall issues are causing this function to fail."
                 ))
             
             docFile(
