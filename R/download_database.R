@@ -67,13 +67,12 @@ download.database <- function(db, path = "database") {
             mode = "wb"
         )
     }, error = function(e)
-        stop(
+        message(
             paste0("The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/",
             db,
-            "' cannot be reached. Are you connected to the internet or did ",
+            "' cannot be reached. Are you connected to the internet or could there be a firewall issue or did ",
             "something go wrong with the connection to the NCBI server?", 
-            collapse = ""),
-            call. = FALSE
+            collapse = "")
         ))
     
     # test check sum
