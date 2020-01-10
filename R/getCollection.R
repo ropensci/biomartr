@@ -158,7 +158,7 @@ getCollection <-
         file.rename(file.path(getwd(), path, doc_files),
                     file.path(getwd(), path, "doc", doc_files))
         
-        doc_tsv <- doc_files[stringr::str_detect(doc_files, "[.]tsv")]
+        doc_tsv <- doc_files[stringr::str_detect(doc_files, paste0(db, "[.]tsv"))]
         
         if (is.element(db, c("refseq", "genbank"))) {
                 tsv_file <-
@@ -181,7 +181,8 @@ getCollection <-
                                         genome_rep = readr::col_character(),
                                         seq_rel_date = readr::col_date(format = ""),
                                         submitter = readr::col_character()
-                                )
+                                ),
+                                col_names = TRUE
                         )
                 
                 
@@ -190,7 +191,7 @@ getCollection <-
                 
         }
         
-        if (is.element(db, c("ensembl", "ensemblgenomes"))) {
+        if (is.element(db, c("ensembl"))) {
                 tsv_file <-
                         readr::read_tsv(
                                 file.path(getwd(), path, "doc", doc_tsv),
@@ -204,7 +205,8 @@ getCollection <-
                                         genebuild_last_geneset_update = readr::col_character(),
                                         assembly_accession = readr::col_character(),
                                         genebuild_initial_release_date = readr::col_character()
-                                )
+                                ),
+                                col_names = TRUE
                         )
                 
                 
@@ -212,9 +214,7 @@ getCollection <-
                 message("\n")
                 
         }
-        
-        
-        }
+}
 
 
 
