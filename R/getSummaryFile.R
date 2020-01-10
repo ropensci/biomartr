@@ -45,8 +45,8 @@ getSummaryFile <- function(db,kingdom){
                 mode = "wb"
             ))
         }, error = function(e)
-            stop(
-                "The FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be reached. Are you connected to the internet? Is the the FTP site '",
+            message(
+                "Something went wrong when trying to access the FTP site 'ftp://ftp.ncbi.nlm.nih.gov/'. Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall?. Is the the FTP site '",
                 paste0(
                     "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
                     db,
@@ -54,9 +54,7 @@ getSummaryFile <- function(db,kingdom){
                     kingdom,
                     "/assembly_summary.txt"
                 ),
-                "' currently available?",
-                " It could also be that you have a firewall issue or you previously sent many requests to NCBI and now your IP address has been blocked for the next hours.",
-                call. = FALSE
+                "' currently available?"
             ))
     }
     
