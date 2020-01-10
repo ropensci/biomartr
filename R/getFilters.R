@@ -24,7 +24,7 @@
 getFilters <- function(mart, dataset){
     
     if ((!is.character(mart)) || (!is.character(dataset)))
-        stop("Please use a character string as mart or dataset.")
+        stop("Please use a character string as mart or dataset.", call. = FALSE)
     
     if (stringr::str_detect(mart, "ENSEMBL"))
         # connect to BioMart API
