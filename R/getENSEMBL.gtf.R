@@ -130,10 +130,9 @@ getENSEMBL.gtf <-
                                                 ),
                                                 mode = "wb")
                         }, error = function(e)
-                                stop(
+                                message(
                                         "Something went wrong while trying to reach the file '",ensembl.qry,"'. This could be due to an instable internet connection or incorrect file path on the ENSEMBL ftp server. Please check if you are able to reach '",ensembl.qry, "' in your web browser.",
-                                        " In some cases ENSEMBL released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact the ENSEMBL helpdesk.",
-                                        call. = FALSE
+                                        " In some cases ENSEMBL released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact the ENSEMBL helpdesk."
                                 ))
                 }
                 
