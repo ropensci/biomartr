@@ -3,28 +3,25 @@
 \name{getReleases}
 \alias{getReleases}
 \title{Retrieve available database releases or versions 
-of ENSEMBL and ENSEMBLGENOMES}
+of ENSEMBL}
 \usage{
-getReleases(db = "refseq")
+getReleases(db = "ensembl")
 }
 \arguments{
 \item{db}{a character string specifying the database from which 
 available resease versions shall be retrieved:
 \itemize{
 \item \code{db = "ensembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 }
 \description{
 Retrieve available database releases or versions of 
-ENSEMBL and ENSEMBLGENOMES.
+ENSEMBL.
 }
 \examples{
 \dontrun{ 
 # retrieve available resease versions of ENSEMBL
 getReleases("ensembl")
-# retrieve available resease versions of ENSEMBLGENOMES
-getReleases("ensemblgenomes")
 }
 }
 \author{
