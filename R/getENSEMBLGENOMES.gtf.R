@@ -61,15 +61,14 @@ getENSEMBLGENOMES.gtf <-
             json.qry.info <-
                 jsonlite::fromJSON(
                     paste0(
-                        "http://rest.ensemblgenomes.org/info/assembly/",
+                        "http://rest.ensembl.org/info/assembly/",
                         new.organism,
                         "?content-type=application/json"
                     )
                 )
         }, error = function(e)
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                call. = FALSE
+            message(
+                "The API 'http://rest.ensembl.org' does not seem to work properly. Do you have a stable internet connection?"
             ))
         
         # retrieve detailed information for organism of interest
@@ -80,12 +79,11 @@ getENSEMBLGENOMES.gtf <-
         tryCatch({
             eg_version <-
                 jsonlite::fromJSON(
-                    "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+                    "http://rest.ensembl.org/info/eg_version?content-type=application/json"
                 )
         }, error = function(e)
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                call. = FALSE
+            message(
+                "The API 'http://rest.ensembl.org' does not seem to work properly. Do you have a stable internet connection?"
             ))
         
         if (get.org.info$division == "EnsemblBacteria") {
@@ -97,9 +95,8 @@ getENSEMBLGENOMES.gtf <-
                         mode = "wb"
                     )
                 }, error = function(e)
-                    stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                        call. = FALSE
+                    message(
+                        "The API 'http://rest.ensemblgenomes.org' does not seem to respond or work properly. Do you have a stable internet connection?"
                     ))
             }
             
@@ -221,11 +218,10 @@ getENSEMBLGENOMES.gtf <-
                     dirlistonly = TRUE
                 )
             }, error = function(e)
-                stop(
+                message(
                     "The server path '",
                     server.folder.path,
-                    "' seems not to exist. Please make sure that the selected bacteria is available at ENSEMBLGENOMES.",
-                    call. = FALSE
+                    "' seems not to exist. Please make sure that the selected bacteria is available at ENSEMBLGENOMES."
                 ))
             
             if (stringr::str_detect(get.files, "abinitio")) {
@@ -316,10 +312,9 @@ getENSEMBLGENOMES.gtf <-
                                     ),
                                     mode = "wb")
                 }, error = function(e)
-                    stop(
+                    message(
                         "Something went wrong while trying to reach the file '",ensembl.qry,"'. This could be due to an instable internet connection or incorrect file path on the ENSEMBLGENOMES ftp server. Please check if you are able to reach '",ensembl.qry, "' in your web browser.",
-                        " In some cases ENSEMBLGENOME released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact helpdesk@ensemblgenomes.org.",
-                        call. = FALSE
+                        " In some cases ENSEMBLGENOME released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact helpdesk@ensemblgenomes.org."
                     ))
             }
         }
