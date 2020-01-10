@@ -23,7 +23,6 @@ shall be retrieved:
 \item \code{db = "refseq"}
 \item \code{db = "genbank"} 
 \item \code{db = "emsembl"}
-\item \code{db = "ensemblgenomes"}
 }}
 
 \item{kingdom}{a character string specifying the kingdom of the organisms 
@@ -56,14 +55,6 @@ of interest, e.g.
 \item For \code{ENSEMBL}:
 \itemize{
 \item \code{kingdom = "Ensembl"}
-}
-\item For \code{ENSEMBLGENOMES}
-\itemize{
-\item \code{kingdom = "EnsemblBacteria"}
-\item \code{kingdom = "EnsemblFungi"}
-\item \code{kingdom = "EnsemblMetazoa"}
-\item \code{kingdom = "EnsemblPlants"}
-\item \code{kingdom = "EnsemblProtists"}
 }
 }
 
@@ -150,12 +141,6 @@ meta.retrieval(kingdom = "vertebrate_mammalian",
                db = "genbank", 
                type = "genome")
 
-# get all available kingdoms for ensemblgenomes
-getKingdoms(db = "ensemblgenomes")
-# download all vertebrate genomes from ensemblgenomes
-meta.retrieval(kingdom = "vertebrate_mammalian", 
-               db = "ensemblgenomes", 
-               type = "genome")
 
 # In case users do not wish to retrieve genomes from an entire kingdom, 
 # but rather from a subgoup (e.g. from species belonging to the 
