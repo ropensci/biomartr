@@ -23,12 +23,11 @@ getGENOMEREPORT <- function() {
                 mode = "wb"
             )
         }, error = function(e)
-            stop(
-                "The FTP site 
+            message(
+                "Unfortunately, the FTP site 
                 'ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt'
-                cannot be reached. Are you connected to the internet? Is the the
-                FTP site 'ftp://ftp.ncbi.nlm.nih.gov' currently available?",
-                call. = FALSE
+                does not seem to be reachable. Is your current internet connection stable? Can you reach the
+                FTP site 'ftp://ftp.ncbi.nlm.nih.gov'?"
             ))
         
         # NCBI limits requests to three per second
