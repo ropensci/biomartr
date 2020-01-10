@@ -272,12 +272,11 @@ getAssemblyStats <-
                         message("The md5 hash of file '", md5_file_path, "' matches!")
                   
                     }, error = function(e) {
-                        warning(
+                        message(
                             "The download session seems to have timed out at the FTP site '",
                             download_url, "'. This could be due to an overload of queries to the databases.",
                             " Please restart this function to continue the data retrieval process or wait ",
-                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side.",
-                            call. = FALSE
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
                         )
                         return("Not available")
                     })
@@ -355,12 +354,11 @@ getAssemblyStats <-
                     return(assembly_stats_file)
                 }
             } else {
-                stop(
+                message(
                     "File: ",
                     download_url,
                     " could not be loaded properly... 
-                    Are you connected to the internet?",
-                    call. = FALSE
+                     Something went wrong with the internet connection."
                 )
         }
     }
