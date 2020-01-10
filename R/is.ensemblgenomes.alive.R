@@ -6,9 +6,9 @@
 is.ensemblgenomes.alive <- function() {
     
     rest_api_status <- curl::curl_fetch_memory(
-    "http://rest.ensemblgenomes.org/info/ping?content-type=application/json")$status_code
+    "http://rest.ensembl.org/info/ping?content-type=application/json")$status_code
     
     if (rest_api_status != 200)
-        stop("The ENSEMBL site seems to be out of order or you might not be connected to the internet.",
-             "Please try to go to 'http://rest.ensemblgenomes.org/' and see if the site opens properly.", call. = FALSE)
+        message("The ENSEMBL site seems to be out of order. Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? Please try to go to 
+             'http://rest.ensembl.org/' and see if the site opens properly.")
 }
