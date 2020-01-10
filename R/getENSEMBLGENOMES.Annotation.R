@@ -61,15 +61,14 @@ getENSEMBLGENOMES.Annotation <-
             json.qry.info <-
                 jsonlite::fromJSON(
                     paste0(
-                        "http://rest.ensemblgenomes.org/info/assembly/",
+                        "http://rest.ensembl.org/info/assembly/",
                         new.organism,
                         "?content-type=application/json"
                     )
                 )
         }, error = function(e)
-            warning(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                call. = FALSE
+            message(
+                "The API 'http://rest.ensembl.org' does not seem to respond or work properly. Do you have a stable internet connection or could there be an issue with your firewall?"
             ))
         
         # retrieve detailed information for organism of interest
@@ -80,12 +79,11 @@ getENSEMBLGENOMES.Annotation <-
         tryCatch({
             eg_version <-
                 jsonlite::fromJSON(
- "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+ "http://rest.ensembl.org/info/eg_version?content-type=application/json"
                 )
         }, error = function(e)
-            warning(
-                "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                call. = FALSE
+            message(
+                "The API 'http://rest.ensembl.org' does not seem to work properly. Do you have a stable internet connection or could there be an issue with your firewall?"
             ))
         
         if (get.org.info$division == "EnsemblBacteria") {
@@ -97,9 +95,8 @@ getENSEMBLGENOMES.Annotation <-
                         mode = "wb"
                     )
                 }, error = function(e)
-                    stop(
-                        "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?",
-                        call. = FALSE
+                    message(
+                        "The API 'http://rest.ensemblgenomes.org' does not seem to work properly. Do you have a stable internet connection?"
                     ))
             }
             
@@ -186,12 +183,12 @@ getENSEMBLGENOMES.Annotation <-
             }
             
             release_api <- jsonlite::fromJSON(
-                    "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+                    "http://rest.ensembl.org/info/eg_version?content-type=application/json"
             )
             
             if (!is.null(release)){
                     if (!is.element(release, seq_len(as.integer(release_api))))
-                            stop("Please provide a release number that is supported by ENSEMBLGENOMES.", call. = FALSE)
+                            stop("Please provide a release number that is supported by ENSEMBL.", call. = FALSE)
             }
             
             # construct retrieval query
@@ -253,12 +250,11 @@ getENSEMBLGENOMES.Annotation <-
                     dirlistonly = TRUE
                 )
             }, error = function(e)
-                stop(
+                message(
                     "The server path '",
                     server.folder.path,
                     "' seems not to exist. Please make sure that the selected 
-                    bacteria is available at ENSEMBLGENOMES under the specified release.",
-                    call. = FALSE
+                    bacteria is available at ENSEMBLGENOMES under the specified release."
                 ))
             
             if (stringr::str_detect(get.files, "abinitio")) {
@@ -290,12 +286,12 @@ getENSEMBLGENOMES.Annotation <-
             
         } else {
                 release_api <- jsonlite::fromJSON(
-                        "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+                        "http://rest.ensembl.org/info/eg_version?content-type=application/json"
                 )
                 
                 if (!is.null(release)){
                         if (!is.element(release, seq_len(as.integer(release_api))))
-                                stop("Please provide a release number that is supported by ENSEMBLGENOMES.", call. = FALSE)
+                                stop("Please provide a release number that is supported by ENSEMBL.", call. = FALSE)
                 }
                 
                 # construct retrieval query
@@ -371,12 +367,12 @@ getENSEMBLGENOMES.Annotation <-
                                     ),
                                     mode = "wb")
                 }, error = function(e) {
-                        stop(
+                        message(
                                 "Something went wrong when trying to retrieve file ",
                                 ensembl.qry,
                                 " from ENSEMBLGENOMES. Could it be that the species ",
                                 organism,
-                                " does not have an entry for your specified release version?", call. = FALSE
+                                " does not have an entry for your specified release version?"
                         )
                 })
             }
