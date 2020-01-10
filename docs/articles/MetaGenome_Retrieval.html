@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meta-Genome Retrieval • biomartr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Meta-Genome Retrieval">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -76,7 +77,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/biomartr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,12 +90,13 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Meta-Genome Retrieval</h1>
             
-            <h4 class="date">2019-10-27</h4>
+            <h4 class="date">2020-01-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/MetaGenome_Retrieval.Rmd"><code>vignettes/MetaGenome_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>MetaGenome_Retrieval.Rmd</code></div>
@@ -289,12 +291,12 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#un-zipping-downloaded-files" class="anchor"></a>Un-zipping downloaded files</h4>
 <p>After downloading genomes users can format the output of <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> by first un-zipping downloaded files and renaming them for more convenient downstream data analysis (e.g. from <code>Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz</code> to <code>Scerevisiae.fa</code>).</p>
 <p>The easiest way to use <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code> in combination with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> is to use the pipe operator from the <code>magrittr</code> package:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span>(<span class="dt">kingdom =</span> <span class="st">"vertebrate_mammalian"</span>, </a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">               <span class="dt">db =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">               <span class="dt">type =</span> <span class="st">"genome"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="../reference/clean.retrieval.html">clean.retrieval</a></span>()</a></code></pre></div>
-<p>In the first step, genome assembly files are downloaded with <code>meta.retrieval</code> and subsequently (<code>%&gt;%</code>) un-zipped and re-named using <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code>.</p>
+<p>In the first step, genome assembly files are downloaded with <code>meta.retrieval</code> and subsequently (<code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code>) un-zipped and re-named using <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code>.</p>
 <p>Example <code>Bacteria</code></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># download all bacteria genomes</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span>(<span class="dt">kingdom =</span> <span class="st">"bacteria"</span>, <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">type =</span> <span class="st">"genome"</span>, <span class="dt">reference =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
@@ -484,7 +486,7 @@ submitter: Genome Reference Consortium</code></pre>
 <p>In most metagenomics studies, however, the influence or bias of genome assembly quality on the outcome of the analysis (e.g. comparative genomics, annotation, etc.) is neglected. To better grasp the genome assembly quality, the NCBI databases store genome assembly statistics of some species for which genome assemblies are available. An example assembly statistics report can be found at: <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt</a>.</p>
 <p>The <code>biomartr</code> package allows users to retrieve these genome assembly stats file in an automated way by specifying the argument <code>type = "assemblystats"</code> and <code>combine = TRUE</code>. Please make sure that <code>combine = TRUE</code> when selecting <code>type = "assemblystats"</code>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
 <a class="sourceLine" id="cb39-3" data-line-number="3"><span class="co"># retrieve genome assembly stats for all mammal genome assemblies</span></a>
 <a class="sourceLine" id="cb39-4" data-line-number="4"><span class="co"># and store these stats in a data.frame</span></a>
 <a class="sourceLine" id="cb39-5" data-line-number="5">mammals.gc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span>(<span class="dt">kingdom =</span> <span class="st">"vertebrate_mammalian"</span>, </a>
@@ -534,10 +536,10 @@ submitter: Genome Reference Consortium</code></pre>
 [43] "activated carbon metagenome"    "anaerobic digester metagenome"  "rock metagenome"               
 [46] "terrestrial metagenome"         "rock porewater metagenome"      "seawater metagenome"           
 [49] "scorpion gut metagenome"        "soda lake metagenome"           "glacier metagenome"</code></pre>
-<p>Internally the <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code> function downloads the assembly_summary.txt file from <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/</a> to retrieve available metagenome information. This procedure might take a few seconds during the first run of <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>. Subsequently, the assembly_summary.txt file will be stored in the <code><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir()</a></code> directory to achieve a much faster access of this information during following uses of <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>.</p>
+<p>Internally the <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code> function downloads the assembly_summary.txt file from <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/</a> to retrieve available metagenome information. This procedure might take a few seconds during the first run of <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>. Subsequently, the assembly_summary.txt file will be stored in the <code><a href="https://rdrr.io/r/base/tempfile.html">tempdir()</a></code> directory to achieve a much faster access of this information during following uses of <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>.</p>
 <p>In case users wish to retrieve detailed information about available metagenome projects they can specify the <code>details = TRUE</code> argument.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">tibble.print_max =</span> <span class="ot">Inf</span>)</a>
 <a class="sourceLine" id="cb43-3" data-line-number="3"><span class="co"># detailed information on available metagenomes at NCBI Genbank</span></a>
 <a class="sourceLine" id="cb43-4" data-line-number="4"><span class="kw"><a href="../reference/listMetaGenomes.html">listMetaGenomes</a></span>(<span class="dt">details =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code># A tibble: 857 x 21
@@ -559,7 +561,7 @@ submitter: Genome Reference Consortium</code></pre>
 #   ftp_path &lt;chr&gt;, excluded_from_refseq &lt;chr&gt;</code></pre>
 <p>Finally, users can retrieve available metagenomes using <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code>. The <code>name</code> argument receives the metagenome project name retrieved with <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>. The <code>path</code> argument specifies the folder path in which corresponding genomes shall be stored.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="kw"><a href="../reference/getMetaGenomes.html">getMetaGenomes</a></span>(<span class="dt">name =</span> <span class="st">"human gut metagenome"</span>, <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"human_gut"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="kw"><a href="../reference/getMetaGenomes.html">getMetaGenomes</a></span>(<span class="dt">name =</span> <span class="st">"human gut metagenome"</span>, <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"human_gut"</span>))</a></code></pre></div>
 <pre><code>1] "The metagenome of 'human gut metagenome' has been downloaded to '_ncbi_downloads/human_gut'."
   [1] "_ncbi_downloads/human_gut/GCA_000205525.2_ASM20552v2_genomic.fna.gz"
   [2] "_ncbi_downloads/human_gut/GCA_000205765.1_ASM20576v1_genomic.fna.gz"
@@ -581,7 +583,7 @@ submitter: Genome Reference Consortium</code></pre>
 <p>Internally, <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code> creates a folder specified in the <code>path</code> argument. Genomes associated with the metagenomes project specified in the <code>name</code> argument will then be downloaded and stored in this folder. As return value <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code> returns the file paths to the genome files which can then be used as input to the <code>read*()</code> functions.</p>
 <p>Alternatively or subsequent to the metagenome retrieval, users can retrieve annotation files of genomes belonging to a metagenome project selected with <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code> by using the <code><a href="../reference/getMetaGenomeAnnotations.html">getMetaGenomeAnnotations()</a></code> function.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw"><a href="../reference/getMetaGenomeAnnotations.html">getMetaGenomeAnnotations</a></span>(<span class="dt">name =</span> <span class="st">"human gut metagenome"</span>, <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"human_gut"</span>,<span class="st">"annotations"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw"><a href="../reference/getMetaGenomeAnnotations.html">getMetaGenomeAnnotations</a></span>(<span class="dt">name =</span> <span class="st">"human gut metagenome"</span>, <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"human_gut"</span>,<span class="st">"annotations"</span>))</a></code></pre></div>
 <pre><code>[1] "The annotations of metagenome 'human gut metagenome' have been downloaded and stored at '_ncbi_downloads/human_gut/annotations'."
   [1] "_ncbi_downloads/human_gut/annotations/GCA_000205525.2_ASM20552v2_genomic.gff.gz"
   [2] "_ncbi_downloads/human_gut/annotations/GCA_000205765.1_ASM20576v1_genomic.gff.gz"
@@ -768,6 +770,7 @@ submitter: Genome Reference Consortium</code></pre>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -781,17 +784,20 @@ submitter: Genome Reference Consortium</code></pre>
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Hajk-Georg Drost.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

@@ -7,18 +7,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Genomic Data Retrieval • biomartr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Genomic Data Retrieval">
 <meta property="og:description" content="Perform large scale genomic data retrieval and functional annotation retrieval. This package aims to provide users with a standardized
-                way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
-                retrieval from 'NCBI RefSeq', 'NCBI Genbank', 'ENSEMBL', 'ENSEMBLGENOMES',
-                and 'UniProt' databases. Furthermore, an interface to the 'BioMart' database
+                way to automate genome, proteome, RNA, coding sequence (CDS), GFF, and metagenome
+                retrieval from NCBI RefSeq, NCBI Genbank, ENSEMBL, ENSEMBLGENOMES,
+                and UniProt databases. Furthermore, an interface to the BioMart database
                 (Smedley et al. (2009) &lt;doi:10.1186/1471-2164-10-22&gt;) allows users to retrieve
                 functional annotation for genomic loci. In addition, users can download entire databases such
-                as 'NCBI RefSeq' (Pruitt et al. (2007) &lt;doi:10.1093/nar/gkl842&gt;), 'NCBI nr',
-                'NCBI nt', 'NCBI Genbank' (Benson et al. (2013) &lt;doi:10.1093/nar/gks1195&gt;), etc. as
-                well as 'ENSEMBL' and 'ENSEMBLGENOMES' with only one command.">
+                as NCBI RefSeq (Pruitt et al. (2007) &lt;doi:10.1093/nar/gkl842&gt;), NCBI nr,
+                NCBI nt, NCBI Genbank (Benson et al. (2013) &lt;doi:10.1093/nar/gks1195&gt;), etc. as
+                well as ENSEMBL and ENSEMBLGENOMES with only one command.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -38,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -46,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -84,7 +85,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/biomartr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -97,6 +98,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
 
@@ -112,7 +114,7 @@
 <a href="#motivation" class="anchor"></a>Motivation:</h3>
 <p>This package is born out of my own frustration to automate the genomic data retrieval process to create computationally reproducible scripts for large-scale genomics studies. Since I couldn’t find easy-to-use and fully reproducible software libraries I sat down and tried to implement a framework that would enable anyone to automate and standardize the genomic data retrieval process. I hope that this package is useful to others as well and that it helps to promote reproducible research in genomics studies.</p>
 <p>I happily welcome anyone who wishes to contribute to this project :) Just drop me an email.</p>
-<p>Please find a detailed <a href="https://ropensci.github.io/biomartr/articles/">documentation here</a>.</p>
+<p>Please find a detailed <a href="https://docs.ropensci.org/biomartr/articles/">documentation here</a>.</p>
 </div>
 <div id="citation" class="section level3">
 <h3 class="hasAnchor">
@@ -136,7 +138,7 @@
 <a href="http://ensemblgenomes.org">ENSEMBLGENOMES</a> (as of April 2019 - <code>ENSEMBL</code> and <code>ENSEMBLGENOMES</code> were joined - see <a href="http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/">details here</a>)</li>
 <li><a href="http://www.uniprot.org">UniProt</a></li>
 </ul>
-<p>Furthermore, an interface to the <a href="www.ensembl.org/biomart">Ensembl Biomart</a> database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd">download entire databases</a> such as</p>
+<p>Furthermore, an interface to the <code>Ensembl Biomart</code> database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd">download entire databases</a> such as</p>
 <ul>
 <li><code>NCBI RefSeq</code></li>
 <li><code>NCBI nr</code></li>
@@ -149,10 +151,10 @@
 <div id="similar-work" class="section level3">
 <h3 class="hasAnchor">
 <a href="#similar-work" class="anchor"></a>Similar Work</h3>
-<p>The main difference between the <a href="http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html">BiomaRt</a> package and the <a href="https://ropensci.github.io/biomartr/">biomartr</a> package is that <code>biomartr</code> extends the <code>functional annotation retrieval</code> procedure of <code>BiomaRt</code> and <strong>in addition</strong> provides useful retrieval functions for genomes, proteomes, coding sequences, gff files, RNA sequences, Repeat Masker annotations files, and functions for the retrieval of entire databases such as <code>NCBI nr</code> etc.</p>
-<p>Please consult the <a href="https://ropensci.github.io/biomartr/#tutorials">Tutorials section</a> for more details.</p>
+<p>The main difference between the <a href="http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html">BiomaRt</a> package and the <a href="https://docs.ropensci.org/biomartr/">biomartr</a> package is that <code>biomartr</code> extends the <code>functional annotation retrieval</code> procedure of <code>BiomaRt</code> and <strong>in addition</strong> provides useful retrieval functions for genomes, proteomes, coding sequences, gff files, RNA sequences, Repeat Masker annotations files, and functions for the retrieval of entire databases such as <code>NCBI nr</code> etc.</p>
+<p>Please consult the <a href="https://docs.ropensci.org/biomartr/#tutorials">Tutorials section</a> for more details.</p>
 <p><code>In the context of functional annotation retrieval</code> the <code>biomartr</code> package allows users to screen available marts using only the scientific name of an organism of interest instead of first searching for marts and datasets which support a particular organism of interest (which is required when using the <code>BiomaRt</code> package). Furthermore, <code>biomartr</code> allows you to search for particular topics when searching for attributes and filters. I am aware that the similar naming of the packages is unfortunate, but it arose due to historical reasons (please find a detailed explanation here: <a href="https://github.com/ropensci/biomartr/blob/master/FAQs.md" class="uri">https://github.com/ropensci/biomartr/blob/master/FAQs.md</a> and here <a href="https://github.com/ropensci/biomartr/issues/11">#11</a>).</p>
-<p>I also dedicated <a href="https://ropensci.github.io/biomartr/articles/Functional_Annotation.html">an entire vignette to compare</a> the <code>BiomaRt</code> and <code>biomartr</code> package functionality in the context of <code>Functional Annotation</code> (where their functionality overlaps which comprises about only 20% of the overall functionality of the biomartr package).</p>
+<p>I also dedicated <a href="https://docs.ropensci.org/biomartr/articles/Functional_Annotation.html">an entire vignette to compare</a> the <code>BiomaRt</code> and <code>biomartr</code> package functionality in the context of <code>Functional Annotation</code> (where their functionality overlaps which comprises about only 20% of the overall functionality of the biomartr package).</p>
 </div>
 <div id="feedback" class="section level3">
 <h3 class="hasAnchor">
@@ -167,15 +169,15 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The <code>biomartr</code> package relies on some <a href="https://www.bioconductor.org/install/">Bioconductor</a> tools and thus requires installation of the following packages:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install core Bioconductor packages</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>))</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>()</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>))</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>()</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Install package dependencies</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"Biostrings"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"biomaRt"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-6" data-line-number="6">BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"Biostrings"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"biomaRt"</span>, <span class="dt">version =</span> <span class="st">"3.8"</span>)</a></code></pre></div>
 <p>Now users can install <code>biomartr</code> from CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install biomartr 0.9.0</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"biomartr"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"biomartr"</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -185,7 +187,7 @@
 <a href="#collection-retrieval" class="anchor"></a>Collection Retrieval</h3>
 <p>The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats files) will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file and was generated using the same genome assembly version. One aspect of why genomics studies fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version. To avoid this seemingly trivial mistake we encourage users to retrieve genome file collections using the <code>biomartr</code> function <code><a href="reference/getCollection.html">getCollection()</a></code> and attach the corresponding output as Supplementary Data to the respective genomics study to ensure computational and biological reproducibility.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># download collection for Saccharomyces cerevisiae</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getCollection">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getCollection.html">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>)</a></code></pre></div>
 <p>Internally, the <code><a href="reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/Saccharomyces_cerevisiae</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
 <p>Internally, a text file named <code>doc_Saccharomyces_cerevisiae_db_refseq.txt</code> is generated. The information stored in this log file is structured as follows:</p>
 <pre><code>File Name: Saccharomyces_cerevisiae_assembly_stats_refseq.txt
@@ -224,15 +226,14 @@ submitter: Saccharomyces Genome Database</code></pre>
 <div id="frequently-asked-questions-faqs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#frequently-asked-questions-faqs" class="anchor"></a>Frequently Asked Questions (FAQs)</h3>
-<p>Please find <a href="FAQs.html">all FAQs here</a>.</p>
+<p>Please find <a href="https://github.com/ropensci/biomartr/blob/master/FAQs.md">all FAQs here</a>.</p>
 </div>
 <div id="discussions-and-bug-reports" class="section level3">
 <h3 class="hasAnchor">
 <a href="#discussions-and-bug-reports" class="anchor"></a>Discussions and Bug Reports</h3>
 <p>I would be very happy to learn more about potential improvements of the concepts and functions provided in this package.</p>
 <p>Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts of this package, please let me know:</p>
-<p><a href="https://twitter.com/hajkdrost">twitter: HajkDrost</a> or <a href="hgd23@cam.ac.uk">email</a></p>
-<p>For Bug Reports: Please send me an <a href="https://github.com/HajkD/biomartr/issues">issue</a>.</p>
+<p><a href="https://github.com/HajkD/biomartr/issues" class="uri">https://github.com/HajkD/biomartr/issues</a></p>
 </div>
 </div>
 <div id="tutorials" class="section level2">
@@ -240,34 +241,34 @@ submitter: Saccharomyces Genome Database</code></pre>
 <a href="#tutorials" class="anchor"></a>Tutorials</h2>
 <p>Getting Started with <code>biomartr</code>:</p>
 <ul>
-<li><a href="https://ropensci.github.io/biomartr/articles/Database_Retrieval.html">NCBI Database Retrieval</a></li>
-<li><a href="https://ropensci.github.io/biomartr/articles/Sequence_Retrieval.html">Genomic Sequence Retrieval</a></li>
-<li><a href="https://ropensci.github.io/biomartr/articles/MetaGenome_Retrieval.html">Meta-Genome Retrieval</a></li>
-<li><a href="https://ropensci.github.io/biomartr/articles/Functional_Annotation.html">Functional Annotation</a></li>
-<li><a href="https://ropensci.github.io/biomartr/articles/BioMart_Examples.html">BioMart Examples</a></li>
+<li><a href="https://docs.ropensci.org/biomartr/articles/Database_Retrieval.html">NCBI Database Retrieval</a></li>
+<li><a href="https://docs.ropensci.org/biomartr/articles/Sequence_Retrieval.html">Genomic Sequence Retrieval</a></li>
+<li><a href="https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html">Meta-Genome Retrieval</a></li>
+<li><a href="https://docs.ropensci.org/biomartr/articles/Functional_Annotation.html">Functional Annotation</a></li>
+<li><a href="https://docs.ropensci.org/biomartr/articles/BioMart_Examples.html">BioMart Examples</a></li>
 </ul>
 <p>Users can also read the tutorials within (<a href="http://www.rstudio.com/">RStudio</a>) :</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># source the biomartr package</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(biomartr)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(biomartr)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># look for all tutorials (vignettes) available in the biomartr package</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># this will open your web browser</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/browseVignettes">browseVignettes</a></span>(<span class="st">"biomartr"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes</a></span>(<span class="st">"biomartr"</span>)</a></code></pre></div>
 </div>
 <div id="news" class="section level2">
 <h2 class="hasAnchor">
 <a href="#news" class="anchor"></a>NEWS</h2>
-<p>The current status of the package as well as a detailed history of the functionality of each version of <code>biomartr</code> can be found in the <a href="https://ropensci.github.io/biomartr/news/index.html">NEWS</a> section.</p>
+<p>The current status of the package as well as a detailed history of the functionality of each version of <code>biomartr</code> can be found in the <a href="https://docs.ropensci.org/biomartr/news/index.html">NEWS</a> section.</p>
 </div>
 <div id="install-developer-version" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-developer-version" class="anchor"></a>Install Developer Version</h2>
 <p>Some bug fixes or new functionality will not be available on CRAN yet, but in the developer version here on GitHub. To download and install the most recent version of <code>biomartr</code> run:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># install the current version of biomartr on your system</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"ropensci/biomartr"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"ropensci/biomartr"</span>)</a></code></pre></div>
 </div>
 <div id="genomic-data-retrieval" class="section level2">
 <h2 class="hasAnchor">
@@ -425,10 +426,10 @@ submitter: Saccharomyces Genome Database</code></pre>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># Afterwards you can install devtools -&gt; install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co"># and then you can run:</span></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"HajkD/biomartr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"HajkD/biomartr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co"># and then call it from the library</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"biomartr"</span>, <span class="dt">lib.loc =</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"biomartr"</span>, <span class="dt">lib.loc =</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span>)</a></code></pre></div>
 <div id="troubleshooting-on-windows-machines" class="section level3">
 <h3 class="hasAnchor">
 <a href="#troubleshooting-on-windows-machines" class="anchor"></a>Troubleshooting on Windows Machines</h3>
@@ -441,7 +442,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <div id="code-of-conduct" class="section level1">
 <h1 class="hasAnchor">
 <a href="#code-of-conduct" class="anchor"></a>Code of conduct</h1>
-<p>Please note that this project is released with a <a href="CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
+<p>Please note that this project is released with a <a href="https://github.com/ropensci/biomartr/blob/master/CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 
   </div>
@@ -473,7 +474,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Hajk-Georg Drost <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/http://orcid.org/0000-0002-1567-306X" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Hajk-Georg Drost <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/http://orcid.org/0000-0002-1567-306X" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
@@ -488,17 +489,20 @@ submitter: Saccharomyces Genome Database</code></pre>
 </div>
 </div>
 
+
       <footer><div class="copyright">
   <p>Developed by Hajk-Georg Drost.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

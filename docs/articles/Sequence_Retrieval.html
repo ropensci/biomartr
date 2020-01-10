@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sequence Retrieval • biomartr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Sequence Retrieval">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -76,7 +77,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/biomartr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,12 +90,13 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Sequence Retrieval</h1>
             
-            <h4 class="date">2019-10-27</h4>
+            <h4 class="date">2020-01-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -239,7 +241,7 @@
 #   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
 #   excluded_from_refseq &lt;chr&gt;</code></pre>
 <p>When looking at the names of these organisms we see that they consist of different strains of <code>Mycobacterium tuberculosis</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">organism =</span> <span class="st">"Mycobacterium tuberculosis"</span>, </a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="../reference/is.genome.available.html">is.genome.available</a></span>(<span class="dt">organism =</span> <span class="st">"Mycobacterium tuberculosis"</span>, </a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">                         <span class="dt">db =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">                         <span class="dt">details =</span> <span class="ot">TRUE</span>)<span class="op">$</span>organism_name)</a></code></pre></div>
 <pre><code>[1] "Mycobacterium tuberculosis CDC1551"     
@@ -251,7 +253,7 @@
 <p>Now we can use the <code>assembly_accession</code> id to retrieve the <code>Mycobacterium tuberculosis</code> strain we are interested in, e.g. <code>Mycobacterium tuberculosis CDC1551</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">MtbCDC1551 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">                        <span class="dt">organism =</span> <span class="st">"GCF_000008585.1"</span>,  </a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">                        <span class="dt">path   =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>), </a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">                        <span class="dt">path   =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>), </a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">                        <span class="dt">reference =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">                        </a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">MtbCDC1551_genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(MtbCDC1551)</a>
@@ -361,8 +363,8 @@ that can then be specified in all get*() functions.
 </div>
 <div id="using-is-genome-available-with-ensembl" class="section level3">
 <h3 class="hasAnchor">
-<a href="#using-is-genome-available-with-ensembl" class="anchor"></a>Using <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> with ENSEMBL</h3>
-<p>Users can also specify <code>db = "ensembl"</code> to retrieve available organisms provided by ENSEMBL. Again, users might experience a delay in the execution of this function when running it for the first time. This is due to the download of ENSEMBL information which is then stored internally to enable a much faster execution of this function in following runs. The corresponding information files are stored at <code><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path(tempdir(), "ensembl_summary.txt")</a></code>.</p>
+<a href="#using-is-genome-available-with-ensembl" class="anchor"></a>Using <code>is.genome.available()</code> with ENSEMBL</h3>
+<p>Users can also specify <code>db = "ensembl"</code> to retrieve available organisms provided by ENSEMBL. Again, users might experience a delay in the execution of this function when running it for the first time. This is due to the download of ENSEMBL information which is then stored internally to enable a much faster execution of this function in following runs. The corresponding information files are stored at <code><a href="https://rdrr.io/r/base/file.path.html">file.path(tempdir(), "ensembl_summary.txt")</a></code>.</p>
 </div>
 <div id="example-ensembl-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
@@ -440,13 +442,13 @@ that can then be specified in all get*() functions.
 <p>In some cases it might be useful to check how many genomes (in total) are available in the different databases.</p>
 <p>Users can determine the total number of available genomes using the <code><a href="../reference/listGenomes.html">listGenomes()</a></code> function.</p>
 <p>Example <code>refseq</code>:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"refseq"</span>))</a></code></pre></div>
 <pre><code>[1] 14264</code></pre>
 <p>Example <code>genbank</code>:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>))</a></code></pre></div>
 <pre><code>[1] 21770</code></pre>
 <p>Example <code>ensembl</code>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw"><a href="../reference/listGenomes.html">listGenomes</a></span>(<span class="dt">db =</span> <span class="st">"ensembl"</span>))</a></code></pre></div>
 <pre><code>[1] 113</code></pre>
 <p>Hence, currently 14264 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 31/05/2018).</p>
 </div>
@@ -851,7 +853,7 @@ that can then be specified in all get*() functions.
 <code>db = "ensembl"</code> for retrieval from <a href="http://www.ensembl.org/index.html">ENSEMBL</a>
 </li>
 </ul>
-<p>Furthermore, users need to specify the <code>scientific name</code>, the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a> identifier), or the <code>accession identifier</code> of the organism of interest for which a genome assembly shall be downloaded, e.g. <code>organism = "Homo sapiens"</code> or <code>organism = "9606"</code> or <code>organism = "GCF_000001405.37"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument (e.g. <code><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path("_ncbi_downloads","genomes")</a></code>).</p>
+<p>Furthermore, users need to specify the <code>scientific name</code>, the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a> identifier), or the <code>accession identifier</code> of the organism of interest for which a genome assembly shall be downloaded, e.g. <code>organism = "Homo sapiens"</code> or <code>organism = "9606"</code> or <code>organism = "GCF_000001405.37"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument (e.g. <code><a href="https://rdrr.io/r/base/file.path.html">file.path("_ncbi_downloads","genomes")</a></code>).</p>
 </div>
 <div id="example-ncbi-refseq" class="section level3">
 <h3 class="hasAnchor">
@@ -860,7 +862,7 @@ that can then be specified in all get*() functions.
 <a class="sourceLine" id="cb57-2" data-line-number="2"><span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span></a>
 <a class="sourceLine" id="cb57-3" data-line-number="3">HS.genome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb57-4" data-line-number="4">                               <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb57-5" data-line-number="5">                               <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb57-5" data-line-number="5">                               <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</a></code></pre></div>
 <p>In this example, <code><a href="../reference/getGenome.html">getGenome()</a></code> creates a directory named <code>'_ncbi_downloads/genomes'</code> into which the corresponding genome named <code>GCF_000001405.34_GRCh38.p8_genomic.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getGenome.html">getGenome()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_genome.html">read_genome()</a></code> function. The variable <code>HS.genome.refseq</code> stores the path to the downloaded genome.</p>
 <p>Users can also omit the <code>path</code> argument if they wish to store the genome in their current working directory. E.g.:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co"># download the genome of Homo sapiens from refseq</span></a>
@@ -918,11 +920,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getGenome.html">getGenome()</a></code> and <code><a href="../reference/read_genome.html">read_genome()</a></code> functions allow users to retrieve genome assemblies by specifying the scientific name of the organism of interest and allow them to import the retrieved genome assembly e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded genomes and can rely on the log file generated by <code><a href="../reference/getGenome.html">getGenome()</a></code> to better document the source and version of genome assemblies used for subsequent studies.</p>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb63-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb63-4" data-line-number="4">Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb63-5" data-line-number="5">                           <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb63-6" data-line-number="6">                           <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-6" data-line-number="6">                           <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb63-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>()</a></code></pre></div>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">Human_Genome</a></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 551
@@ -943,7 +945,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#use-taxid-id-for-genome-retrieval" class="anchor"></a>Use <code>taxid</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>559292</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb66-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb66-4" data-line-number="4">Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(</a>
 <a class="sourceLine" id="cb66-5" data-line-number="5">            <span class="dt">db       =</span> <span class="st">"refseq"</span>,</a>
@@ -969,7 +971,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#use-assembly_accession-id-for-genome-retrieval" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCF_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb69-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb69-4" data-line-number="4">Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(</a>
 <a class="sourceLine" id="cb69-5" data-line-number="5">            <span class="dt">db       =</span> <span class="st">"refseq"</span>,</a>
@@ -999,7 +1001,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb72-2" data-line-number="2"><span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span></a>
 <a class="sourceLine" id="cb72-3" data-line-number="3">HS.genome.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
 <a class="sourceLine" id="cb72-4" data-line-number="4">                                <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb72-5" data-line-number="5">                                <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb72-5" data-line-number="5">                                <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</a></code></pre></div>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co"># import downloaded genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb73-2" data-line-number="2">Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(<span class="dt">file =</span> HS.genome.genbank)</a></code></pre></div>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co"># look at the Biostrings object</span></a>
@@ -1022,7 +1024,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#use-taxonomy-id-for-genome-retrieval" class="anchor"></a>Use <code>taxonomy</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>559292</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb76-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb76-4" data-line-number="4">Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(</a>
 <a class="sourceLine" id="cb76-5" data-line-number="5">            <span class="dt">db       =</span> <span class="st">"genbank"</span>,</a>
@@ -1048,7 +1050,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#use-assembly_accession-id-for-genome-retrieval-1" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCA_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb79-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb79-4" data-line-number="4">Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(</a>
 <a class="sourceLine" id="cb79-5" data-line-number="5">            <span class="dt">db       =</span> <span class="st">"genbank"</span>,</a>
@@ -1089,7 +1091,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb82-2" data-line-number="2"><span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span></a>
 <a class="sourceLine" id="cb82-3" data-line-number="3">HS.genome.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
 <a class="sourceLine" id="cb82-4" data-line-number="4">                                <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb82-5" data-line-number="5">                                <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb82-5" data-line-number="5">                                <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span>) )</a></code></pre></div>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="co"># import downloaded genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb83-2" data-line-number="2">Human_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_genome.html">read_genome</a></span>(<span class="dt">file =</span> HS.genome.ensembl)</a></code></pre></div>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="co"># look at the Biostrings object</span></a>
@@ -1125,7 +1127,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#use-taxonomy-id-for-genome-retrieval-1" class="anchor"></a>Use <code>taxonomy</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>4932</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb86-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb86-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb86-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb86-4" data-line-number="4">Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(</a>
 <a class="sourceLine" id="cb86-5" data-line-number="5">            <span class="dt">db       =</span> <span class="st">"ensembl"</span>,</a>
@@ -1151,7 +1153,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#use-assembly_accession-id-for-genome-retrieval-2" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCA_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb89-3" data-line-number="3"><span class="co"># import genome as Biostrings object</span></a>
 <a class="sourceLine" id="cb89-4" data-line-number="4">Scerevisiae_Genome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGenome.html">getGenome</a></span>(</a>
 <a class="sourceLine" id="cb89-5" data-line-number="5">            <span class="dt">db       =</span> <span class="st">"ensembl"</span>,</a>
@@ -1179,11 +1181,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>The <code><a href="../reference/getGenomeSet.html">getGenomeSet()</a></code> function enables users to retrieve genome files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_genomes</code> is generated in which genomes and genome info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="co"># specify the species names</span></a>
-<a class="sourceLine" id="cb92-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb92-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
 <a class="sourceLine" id="cb92-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
 <a class="sourceLine" id="cb92-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
 <a class="sourceLine" id="cb92-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
-<a class="sourceLine" id="cb92-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getGenomeSet">getGenomeSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_genomes"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb92-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGenomeSet.html">getGenomeSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_genomes"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
 </div>
 <div id="proteome-retrieval" class="section level3">
@@ -1215,7 +1217,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb93-2" data-line-number="2"><span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span></a>
 <a class="sourceLine" id="cb93-3" data-line-number="3">HS.proteome.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb93-4" data-line-number="4">                                   <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb93-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb93-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
 <p>In this example, <code><a href="../reference/getProteome.html">getProteome()</a></code> creates a directory named <code>'_ncbi_downloads/proteomes'</code> into which the corresponding genome named <code>GCF_000001405.34_GRCh38.p8_protein.faa.gz</code> is downloaded. The return value of <code><a href="../reference/getProteome.html">getProteome()</a></code> is the folder path to the downloaded proteome file that can then be used as input to the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function. The variable <code>HS.proteome.refseq</code> stores the path to the downloaded proteome. Subsequently, users can use the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function to import the proteome into the R session. Users can choose to work with the proteome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function.</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="co"># import proteome as Biostrings object</span></a>
 <a class="sourceLine" id="cb94-2" data-line-number="2">Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_proteome.html">read_proteome</a></span>(<span class="dt">file =</span> HS.proteome.refseq)</a></code></pre></div>
@@ -1235,11 +1237,11 @@ submitter: Genome Reference Consortium</code></pre>
 [113620]   380 MTPMRKTNPLMKL...ISLIENKMLKWA YP_003024038.1 cy...</code></pre>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb97-3" data-line-number="3"><span class="co"># import proteome as Biostrings object</span></a>
 <a class="sourceLine" id="cb97-4" data-line-number="4">Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb97-5" data-line-number="5">                               <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb97-6" data-line-number="6">                               <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb97-6" data-line-number="6">                               <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb97-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/read_proteome.html">read_proteome</a></span>()</a></code></pre></div>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">Human_Proteome</a></code></pre></div>
 <pre><code> A AAStringSet instance of length 113620
@@ -1263,7 +1265,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb100-2" data-line-number="2"><span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span></a>
 <a class="sourceLine" id="cb100-3" data-line-number="3">HS.proteome.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
 <a class="sourceLine" id="cb100-4" data-line-number="4">                                   <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb100-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb100-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="co"># import proteome as Biostrings object</span></a>
 <a class="sourceLine" id="cb101-2" data-line-number="2">Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_proteome.html">read_proteome</a></span>(<span class="dt">file =</span> HS.proteome.genbank)</a></code></pre></div>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">Human_Proteome</a></code></pre></div>
@@ -1288,7 +1290,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb104-2" data-line-number="2"><span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span></a>
 <a class="sourceLine" id="cb104-3" data-line-number="3">HS.proteome.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
 <a class="sourceLine" id="cb104-4" data-line-number="4">                                   <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb104-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb104-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="co"># import proteome as Biostrings object</span></a>
 <a class="sourceLine" id="cb105-2" data-line-number="2">Human_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_proteome.html">read_proteome</a></span>(<span class="dt">file =</span> HS.proteome.ensembl)</a></code></pre></div>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">Human_Proteome</a></code></pre></div>
@@ -1315,7 +1317,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb108-2" data-line-number="2"><span class="co"># and store the corresponding proteome file in '_uniprot_downloads/proteomes'</span></a>
 <a class="sourceLine" id="cb108-3" data-line-number="3">Mm.proteome.uniprot&lt;-<span class="st"> </span><span class="kw"><a href="../reference/getProteome.html">getProteome</a></span>( <span class="dt">db       =</span> <span class="st">"uniprot"</span>, </a>
 <a class="sourceLine" id="cb108-4" data-line-number="4">                                   <span class="dt">organism =</span> <span class="st">"Mus musculus"</span>,</a>
-<a class="sourceLine" id="cb108-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_uniprot_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb108-5" data-line-number="5">                                   <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_uniprot_downloads"</span>,<span class="st">"proteomes"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="co"># import proteome as Biostrings object</span></a>
 <a class="sourceLine" id="cb109-2" data-line-number="2">Mouse_Proteome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_proteome.html">read_proteome</a></span>(<span class="dt">file =</span> Mm.proteome.uniprot)</a></code></pre></div>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1">Mouse_Proteome</a></code></pre></div>
@@ -1339,11 +1341,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>The <code><a href="../reference/getProteomeSet.html">getProteomeSet()</a></code> function enables users to retrieve proteome files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_proteomes</code> is generated in which proteomes and proteome info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="co"># specify the species names</span></a>
-<a class="sourceLine" id="cb112-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb112-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
 <a class="sourceLine" id="cb112-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
 <a class="sourceLine" id="cb112-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
 <a class="sourceLine" id="cb112-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
-<a class="sourceLine" id="cb112-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getProteomeSet">getProteomeSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_proteomes"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb112-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getProteomeSet.html">getProteomeSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_proteomes"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
 </div>
 <div id="cds-retrieval" class="section level3">
@@ -1372,7 +1374,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb113-2" data-line-number="2"><span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span></a>
 <a class="sourceLine" id="cb113-3" data-line-number="3">HS.cds.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb113-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb113-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb113-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>))</a></code></pre></div>
 <p>In this example, <code><a href="../reference/getCDS.html">getCDS()</a></code> creates a directory named <code>'_ncbi_downloads/CDS'</code> into which the corresponding genome named <code>Homo_sapiens_cds_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getCDS.html">getCDS()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_cds.html">read_cds()</a></code> function. The variable <code>HS.cds.refseq</code> stores the path to the downloaded CDS file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_cds.html">read_cds()</a></code> function.</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="co"># import downloaded CDS as Biostrings object</span></a>
 <a class="sourceLine" id="cb114-2" data-line-number="2">Human_CDS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">file     =</span> HS.cds.refseq, </a>
@@ -1413,11 +1415,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getCDS.html">getCDS()</a></code> and <code><a href="../reference/read_cds.html">read_cds()</a></code> functions allow users to retrieve CDS files by specifying the scientific name of the organism of interest and allow them to import the retrieved CDS file e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded CDS and can rely on the log file generated by <code><a href="../reference/getCDS.html">getCDS()</a></code> to better document the source and version of CDS used for subsequent studies.</p>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb118-3" data-line-number="3"><span class="co"># import CDS as Biostrings object</span></a>
 <a class="sourceLine" id="cb118-4" data-line-number="4">Human_CDS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb118-5" data-line-number="5">                     <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb118-6" data-line-number="6">                     <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb118-6" data-line-number="6">                     <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb118-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">Human_CDS</a></code></pre></div>
 <pre><code> A BStringSet instance of length 114967
@@ -1441,7 +1443,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb121-2" data-line-number="2"><span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span></a>
 <a class="sourceLine" id="cb121-3" data-line-number="3">HS.cds.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
 <a class="sourceLine" id="cb121-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb121-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb121-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co"># import downloaded CDS as Biostrings object</span></a>
 <a class="sourceLine" id="cb122-2" data-line-number="2">Human_CDS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">file     =</span> HS.cds.genbank, </a>
 <a class="sourceLine" id="cb122-3" data-line-number="3">                      <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</a></code></pre></div>
@@ -1468,7 +1470,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb125-2" data-line-number="2"><span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span></a>
 <a class="sourceLine" id="cb125-3" data-line-number="3">HS.cds.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCDS.html">getCDS</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
 <a class="sourceLine" id="cb125-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb125-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb125-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="co"># import downloaded CDS as Biostrings object</span></a>
 <a class="sourceLine" id="cb126-2" data-line-number="2">Human_CDS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">file     =</span> HS.cds.ensembl, </a>
 <a class="sourceLine" id="cb126-3" data-line-number="3">                      <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</a></code></pre></div>
@@ -1495,11 +1497,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>The <code><a href="../reference/getCDSSet.html">getCDSSet()</a></code> function enables users to retrieve CDS files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_cds</code> is generated in which CDS and CDS info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="co"># specify the species names</span></a>
-<a class="sourceLine" id="cb129-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb129-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
 <a class="sourceLine" id="cb129-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
 <a class="sourceLine" id="cb129-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
 <a class="sourceLine" id="cb129-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
-<a class="sourceLine" id="cb129-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getCDSSet">getCDSSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_cds"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb129-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getCDSSet.html">getCDSSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_cds"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
 </div>
 <div id="rna-retrieval" class="section level3">
@@ -1528,7 +1530,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb130-2" data-line-number="2"><span class="co"># and store the corresponding RNA file in '_ncbi_downloads/RNA'</span></a>
 <a class="sourceLine" id="cb130-3" data-line-number="3">HS.rna.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb130-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb130-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb130-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>))</a></code></pre></div>
 <p>In this example, <code><a href="../reference/getRNA.html">getRNA()</a></code> creates a directory named <code>'_ncbi_downloads/RNA'</code> into which the corresponding RNA file named <code>Homo_sapiens_rna_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getRNA.html">getRNA()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_rna.html">read_rna()</a></code> function. The variable <code>HS.rna.refseq</code> stores the path to the downloaded RNA file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_rna.html">read_rna()</a></code> function.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1"><span class="co"># import downloaded RNA as Biostrings object</span></a>
 <a class="sourceLine" id="cb131-2" data-line-number="2">Human_rna &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_rna.html">read_rna</a></span>(<span class="dt">file     =</span> HS.rna.refseq, </a>
@@ -1568,11 +1570,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getRNA.html">getRNA()</a></code> and <code><a href="../reference/read_rna.html">read_rna()</a></code> functions allow users to retrieve RNA files by specifying the scientific name of the organism of interest and allow them to import the retrieved RNA file e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded RNA and can rely on the log file generated by <code><a href="../reference/getRNA.html">getRNA()</a></code> to better document the source and version of RNA used for subsequent studies.</p>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="co"># install.packages("magrittr")</span></a>
-<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb135-3" data-line-number="3"><span class="co"># import RNA as Biostrings object</span></a>
 <a class="sourceLine" id="cb135-4" data-line-number="4">Human_rna &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb135-5" data-line-number="5">                     <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb135-6" data-line-number="6">                     <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb135-6" data-line-number="6">                     <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb135-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">Human_rna</a></code></pre></div>
 <pre><code>   A BStringSet instance of length 164136
@@ -1596,7 +1598,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb138-2" data-line-number="2"><span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span></a>
 <a class="sourceLine" id="cb138-3" data-line-number="3">HS.rna.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
 <a class="sourceLine" id="cb138-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb138-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb138-5" data-line-number="5">                         <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="co"># import downloaded RNA as Biostrings object</span></a>
 <a class="sourceLine" id="cb139-2" data-line-number="2">Human_rna &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">file     =</span> HS.rna.genbank, </a>
 <a class="sourceLine" id="cb139-3" data-line-number="3">                      <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</a></code></pre></div>
@@ -1623,7 +1625,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb142-2" data-line-number="2"><span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span></a>
 <a class="sourceLine" id="cb142-3" data-line-number="3">HS.rna.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRNA.html">getRNA</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
 <a class="sourceLine" id="cb142-4" data-line-number="4">                          <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,</a>
-<a class="sourceLine" id="cb142-5" data-line-number="5">                          <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb142-5" data-line-number="5">                          <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="co"># import downloaded RNA as Biostrings object</span></a>
 <a class="sourceLine" id="cb143-2" data-line-number="2">Human_rna &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_cds.html">read_cds</a></span>(<span class="dt">file     =</span> HS.rna.ensembl, </a>
 <a class="sourceLine" id="cb143-3" data-line-number="3">                      <span class="dt">obj.type =</span> <span class="st">"Biostrings"</span>)</a></code></pre></div>
@@ -1650,11 +1652,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>The <code><a href="../reference/getRNASet.html">getRNASet()</a></code> function enables users to retrieve RNA files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_rna</code> is generated in which RNA and RNA info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="co"># specify the species names</span></a>
-<a class="sourceLine" id="cb146-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb146-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
 <a class="sourceLine" id="cb146-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
 <a class="sourceLine" id="cb146-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
 <a class="sourceLine" id="cb146-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
-<a class="sourceLine" id="cb146-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getRNASet">getRNASet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_rna"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb146-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getRNASet.html">getRNASet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_rna"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
 </div>
 <div id="retrieve-the-annotation-file-of-a-particular-genome" class="section level3">
@@ -1669,7 +1671,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb147-2" data-line-number="2"><span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span></a>
 <a class="sourceLine" id="cb147-3" data-line-number="3">HS.gff.refseq &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb147-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb147-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb147-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
 <a class="sourceLine" id="cb148-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.refseq)</a></code></pre></div>
@@ -1694,7 +1696,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb151-2" data-line-number="2"><span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span></a>
 <a class="sourceLine" id="cb151-3" data-line-number="3">HS.gff.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
 <a class="sourceLine" id="cb151-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb151-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb151-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
 <a class="sourceLine" id="cb152-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.genbank)</a></code></pre></div>
@@ -1721,7 +1723,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb155-2" data-line-number="2"><span class="co"># and store the corresponding file in 'ensembl/annotation'</span></a>
 <a class="sourceLine" id="cb155-3" data-line-number="3">HS.gff.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
 <a class="sourceLine" id="cb155-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb155-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb155-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
 <a class="sourceLine" id="cb156-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.ensembl)</a></code></pre></div>
@@ -1746,7 +1748,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a class="sourceLine" id="cb159-2" data-line-number="2"><span class="co"># and store the corresponding file in 'ensembl/annotation'</span></a>
 <a class="sourceLine" id="cb159-3" data-line-number="3">HS.gtf.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGTF.html">getGTF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
 <a class="sourceLine" id="cb159-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb159-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb159-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>Taken together, <code><a href="../reference/getGFF.html">getGFF()</a></code> or <code><a href="../reference/getGTF.html">getGTF()</a></code> in combination with <code><a href="../reference/getGenome.html">getGenome()</a></code>, <code><a href="../reference/getProteome.html">getProteome()</a></code>, <code><a href="../reference/getRNA.html">getRNA()</a></code> and <code><a href="../reference/getCDS.html">getCDS()</a></code> allows users to retrieve the genome information together with the corresponding <code>.gff</code> or <code>gtf</code> annotation file to make sure that they both have the same version and origin.</p>
 </div>
 <div id="gffset-retrieval" class="section level3">
@@ -1755,11 +1757,11 @@ submitter: Genome Reference Consortium</code></pre>
 <p>The <code><a href="../reference/getGFFSet.html">getGFFSet()</a></code> function enables users to retrieve GFF files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_gff</code> is generated in which GFF and GFF info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="co"># specify the species names</span></a>
-<a class="sourceLine" id="cb160-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb160-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
 <a class="sourceLine" id="cb160-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
 <a class="sourceLine" id="cb160-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
 <a class="sourceLine" id="cb160-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
-<a class="sourceLine" id="cb160-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/biomartr/topics/getGFFSet">getGFFSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_gff"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb160-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFFSet.html">getGFFSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_gff"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
 </div>
 </div>
@@ -1773,7 +1775,7 @@ submitter: Genome Reference Consortium</code></pre>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="co"># download repeat masker annotation file for Homo sapiens</span></a>
 <a class="sourceLine" id="cb161-2" data-line-number="2">Hsapiens_rm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb161-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb161-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"TEannotation"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb161-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"TEannotation"</span>))</a></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
 <a class="sourceLine" id="cb162-2" data-line-number="2">Hsapiens_rm_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_rm.html">read_rm</a></span>(<span class="st">"refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz"</span>)</a>
@@ -1791,7 +1793,7 @@ submitter: Genome Reference Consortium</code></pre>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="co"># download genome assembly stats file for Homo sapiens</span></a>
 <a class="sourceLine" id="cb163-2" data-line-number="2">Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb163-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb163-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb163-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
 <a class="sourceLine" id="cb164-2" data-line-number="2">Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)</a>
@@ -1817,7 +1819,7 @@ submitter: Genome Reference Consortium</code></pre>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="co"># download genome assembly stats file for Homo sapiens</span></a>
 <a class="sourceLine" id="cb166-2" data-line-number="2">Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
 <a class="sourceLine" id="cb166-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb166-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"genbank"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb166-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"genbank"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
 <a class="sourceLine" id="cb167-2" data-line-number="2">Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)</a>
@@ -1849,7 +1851,7 @@ submitter: Genome Reference Consortium</code></pre>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="co"># download collection for Saccharomyces cerevisiae</span></a>
 <a class="sourceLine" id="cb169-2" data-line-number="2"><span class="kw"><a href="../reference/getCollection.html">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, </a>
 <a class="sourceLine" id="cb169-3" data-line-number="3">               <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>, </a>
-<a class="sourceLine" id="cb169-4" data-line-number="4">               <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"Collections"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb169-4" data-line-number="4">               <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"Collections"</span>))</a></code></pre></div>
 <p>Internally, the <code><a href="../reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/Saccharomyces_erevisiae</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
 <pre><code>Genome download is completed!
 Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
@@ -1904,6 +1906,7 @@ We retrieved the genome assembly and checked the annotation for 'Saccharomyces c
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -1921,17 +1924,20 @@ We retrieved the genome assembly and checked the annotation for 'Saccharomyces c
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Hajk-Georg Drost.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
