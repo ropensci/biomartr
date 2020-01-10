@@ -38,8 +38,8 @@ custom_download <- function(url, ...) {
                                  quiet = TRUE)
         }
     } else {
-        warning(
-            "The FTP link: '",url,"' is not available. This might be due to an instable internet connection, a firewall issue, or wrong organism name.", call. = FALSE
+        message(
+            "The FTP link: '",url,"' seems not to be available at the moment. This might be due to an instable internet connection, a firewall issue, or wrong organism name. Could you please try to re-run the function to see whether it works now?"
         )
         return(FALSE)
     }
