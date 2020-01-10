@@ -22,7 +22,7 @@ summary_cds <- function(file,
         
         cds_seq <- Biostrings::readDNAStringSet(filepath = file, format = "fasta")
        if (length(cds_seq) == 0)
-               stop("Please provide a file that contains CDS sequences.", call. = )
+               stop("Please provide a file that contains CDS sequences.", call. = FALSE)
         
         total_seqs <- length(cds_seq)
         total_corrupt_cds <- sum(cds_seq@ranges@width %% 3 > 0)
