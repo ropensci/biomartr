@@ -264,12 +264,11 @@ getRNA <-
                             unlink(md5_file_path)
                 message("The md5 hash of file '", md5_file_path, "' matches!")
                         }, error = function(e) {
-                            warning(
+                            message(
                                 "The download session seems to have timed out at the FTP site '",
                                 download_url, "'. This could be due to an overload of queries to the databases.",
                                 " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side.",
-                                call. = FALSE
+                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
                             )
                             return(FALSE)
                         })
@@ -349,12 +348,10 @@ getRNA <-
                         )
                     ))
                 } else {
-                    warning(
-                        "File: ",
+                    message(
+                        "Something went wrong when trying to download file: ",
                         download_url,
-                        " could not be loaded properly... 
-                        Are you connected to the internet?",
-                        call. = FALSE
+                        " ... Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall?"
                     )
                 }
             }
@@ -560,15 +557,14 @@ getRNA <-
                     ) 
                 
                 rest_url <- paste0(
-                    "http://rest.ensemblgenomes.org/info/assembly/",
+                    "http://rest.ensembl.org/info/assembly/",
                     new.organism,
                     "?content-type=application/json"
                 )
                 
                 if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
-                    warning(
-                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
-                        call. = FALSE)
+                    message(
+                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).")
                     return(FALSE)
                 }
                 
@@ -636,7 +632,6 @@ getRNA <-
                     path,
                     paste0("doc_", new.organism, "_db_", db, ".tsv"))
                 )
-                
                 
                 message(
                     paste0(
