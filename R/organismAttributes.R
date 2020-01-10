@@ -135,7 +135,7 @@ organismAttributes <-
                 stringr::str_detect(x, topic))))
         
         if (dim(attributeTable[findTopic , ])[1] == 0)
-            stop("Unfortunately the topic '", topic , "' could not be found.")
+            stop("Unfortunately the topic '", topic , "' could not be found.", call. = FALSE)
         
         return(attributeTable[findTopic , ])
         
