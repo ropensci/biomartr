@@ -57,7 +57,6 @@ getENSEMBL.Annotation <-
                 stringr::str_sub(new.organism, 2, nchar(new.organism))
             )
         
-        
         rest_url <- paste0(
             "http://rest.ensembl.org/info/assembly/",
             new.organism,
@@ -176,12 +175,12 @@ getENSEMBL.Annotation <-
                                         ),
                                         mode = "wb")
                 }, error = function(e) {
-                        stop(
+                        message(
                                 "Something went wrong when trying to retrieve file ",
                                 ensembl.qry,
                                 " from ENSEMBL. Could it be that the species ",
                                 organism,
-                                " does not have an entry for your specified release version?", call. = FALSE
+                                " does not have an entry for your specified release version?"
                         )
                 })
         }
