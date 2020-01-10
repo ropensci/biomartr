@@ -34,8 +34,8 @@ get.ensembl.info <- function(update = FALSE) {
         if (rest_api_status$status_code != 200) {
             message(
                 "The API 'http://rest.ensembl.org' does not seem to
-                work properly. Is the homepage 'http://rest.ensembl.org' currently available?",
-                call. = FALSE
+                respond or work properly. Is the homepage 'http://rest.ensembl.org' currently available?",
+                " Could it be that there is a firewall issue on your side? Please re-run the function and check if it works now."
             )
         }
     
