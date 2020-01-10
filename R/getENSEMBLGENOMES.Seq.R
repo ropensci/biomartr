@@ -85,7 +85,7 @@ getENSEMBLGENOMES.Seq <-
         get.org.info <- ensembl_summary
         
         rest_url <- paste0(
-            "http://rest.ensemblgenomes.org/info/assembly/",
+            "http://rest.ensembl.org/info/assembly/",
             new.organism,
             "?content-type=application/json"
         )
@@ -106,12 +106,11 @@ getENSEMBLGENOMES.Seq <-
                         mode = "wb"
                     )
                 }, error = function(e) {
-                    warning(
+                    message(
                         "Something went wrong when accessing the API 'http://rest.ensemblgenomes.org'.",
                         " Are you connected to the internet? ",
                         "Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' ",
-                        "currently available? Could it be that the scientific name is mis-spelled or includes special characters such as '.' or '('?",
-                        call. = FALSE
+                        "currently available? Could it be that the scientific name is mis-spelled or includes special characters such as '.' or '('?"
                     )
                 })
             }
@@ -179,29 +178,27 @@ getENSEMBLGENOMES.Seq <-
                               assembly == get.org.info$assembly)
             
             if (nrow(bacteria.info) == 0) {
-                warning(
+                message(
                     "Unfortunately organism '",
                     ensembl_summary$display_name,
                     "' could not be found. Have you tried another database yet? ",
-                    "E.g. db = 'ensembl'? Thus, download for this species is omitted.",
-                    call. = FALSE
+                    "E.g. db = 'ensembl'? Thus, download for this species is omitted."
                 )
                 return(FALSE)
             }
             
             if (is.na(bacteria.info$core_db[1])) {
-                warning(
+                message(
                     "Unfortunately organism '",
                     ensembl_summary$display_name,
                     "' was not assigned to a bacteria collection. 
-                    Thus download for this species is omitted.",
-                    call. = FALSE
+                    Thus download for this species is omitted."
                 )
                 return(FALSE)
             }
             
             release_api <- jsonlite::fromJSON(
-                    "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+                    "http://rest.ensembl.org/info/eg_version?content-type=application/json"
             )
             
             if (!is.null(release)){
@@ -241,7 +238,7 @@ getENSEMBLGENOMES.Seq <-
         } else {
                 
                 release_api <- jsonlite::fromJSON(
-                        "http://rest.ensemblgenomes.org/info/eg_version?content-type=application/json"
+                        "http://rest.ensembl.org/info/eg_version?content-type=application/json"
                 )
                 
                 if (!is.null(release)){
