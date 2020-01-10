@@ -351,10 +351,9 @@ is.genome.available <-
                 rest_status_test <- curl_fetch_memory(unipreot_rest_url)
                 
                 if (rest_status_test$status_code != 200) {
-                    stop(
-                        "The API 'https://www.ebi.ac.uk/proteins/api/proteomes'",
-                        " does not seem to work properly. Are you connected to the ", " internet? Is the homepage 'https://www.ebi.ac.uk/' currently available?",
-                        call. = FALSE
+                    message(
+                        "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
+                        " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
                     )
                 }
                 uniprot_species_info <-
@@ -382,10 +381,9 @@ is.genome.available <-
                 rest_status_test_upid <- curl_fetch_memory(unipreot_rest_url_upid)
                 
                 if ((rest_status_test_upid$status_code != 200) & (rest_status_test_name$status_code != 200)) {
-                    stop(
-                        "The API 'https://www.ebi.ac.uk/proteins/api/proteomes'",
-                        " does not seem to work properly. Are you connected to the ", " internet? Is the homepage 'https://www.ebi.ac.uk/' currently available?",
-                        call. = FALSE
+                    message(
+                        "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
+                        " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
                     )
                 }
                 
@@ -403,7 +401,6 @@ is.genome.available <-
                         ))
                 }
             }
-
          
             if (!details) {
                 if (nrow(uniprot_species_info) == 0) {
@@ -459,5 +456,4 @@ is.genome.available <-
         
         if (details)
             return(uniprot_species_info)
-        
-    }
+}
