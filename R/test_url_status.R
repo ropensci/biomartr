@@ -7,13 +7,12 @@ test_url_status <- function(url, organism) {
             jsonlite::fromJSON(url)
         return(json.qry.info)
     } else {
-        warning(
-            "The url: ",
+        message(
+            "Something went wrong when trying to access the url: ",
             url,
-            " could not be reached. It seems like the organism '",
+            ". It seems like the organism '",
             organism,
-            "' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.",
-            call. = FALSE
+            "' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted."
         )
         return(FALSE)
     }
