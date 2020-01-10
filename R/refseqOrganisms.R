@@ -16,8 +16,7 @@ refseqOrganisms <- function() {
         "vertebrate_mammalian",
         "vertebrate_other"
     )
-    
-    
+
     all_refseqOrgs <-
         as.vector(unlist(lapply(refseq_kingdoms, function(kingdom)
             strsplit(
