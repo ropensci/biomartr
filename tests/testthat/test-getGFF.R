@@ -55,12 +55,3 @@ test_that("The getGFF() interface works properly for Ensembl (repeating command)
             organism = "Saccharomyces cerevisiae",
             path = tempdir())
 })
-
-test_that("The getGFF() interface works properly for EnsemblGenomes",{
-        skip_on_cran()
-        skip_on_travis()
-    # test proper download from EnsemblGenomes
-    getGFF( db       = "ensemblgenomes",
-            organism = "Saccharomyces cerevisiae",
-            path = file.path("ensembl","annotation"))
-})

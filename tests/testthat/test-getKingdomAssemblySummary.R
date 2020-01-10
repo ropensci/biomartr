@@ -5,7 +5,7 @@ test_that("The getKingdomAssemblySummary() interface works properly
     skip_on_cran()
     skip_on_travis()             
     # KingdomAssembly Summary Info file retrieval from RefSeq
-    getKingdomAssemblySummary("refseq")
+    expect_output(getKingdomAssemblySummary("refseq"))
 })
 
 
@@ -14,5 +14,5 @@ test_that("The getKingdomAssemblySummary() interface works properly
               skip_on_cran()
               skip_on_travis()          
               # KingdomAssembly Summary Info file retrieval from Genbank
-              getKingdomAssemblySummary("genbank")
+              expect_output(getKingdomAssemblySummary("genbank"))
 })

@@ -155,11 +155,6 @@ test_that("The is.genome.available() error messages work properly..", {
     expect_identical(suppressMessages(is.genome.available(organism = "Hrmo sapi", db = "ensembl")),
                      FALSE)
     
-    expect_identical(suppressMessages(
-        is.genome.available(organism = "Hrmo sapi", db = "ensemblgenomes")
-    ),
-    FALSE)
-    
     expect_identical(suppressMessages(is.genome.available(organism = "Hrmo sapi", db = "uniprot")),
                      FALSE)
 })

@@ -4,7 +4,8 @@ test_that("The getGroups() interface works properly... test: archaea",{
     
     skip_on_cran()
     skip_on_travis() 
-    testthat::equals(
+    
+    expect_equal(
         getGroups("archaea", db = "refseq"),
         c(
             "Archaeoglobi",
@@ -21,7 +22,11 @@ test_that("The getGroups() interface works properly... test: archaea",{
 })
 
 test_that("The getGroups() interface works properly... test: bacteria",{
-    testthat::equals(
+    
+    skip_on_cran()
+    skip_on_travis() 
+    
+    expect_equal(
         getGroups("bacteria", db = "refseq"),
         c(
             "Acidithiobacillia",
@@ -64,7 +69,11 @@ test_that("The getGroups() interface works properly... test: bacteria",{
 })
 
 test_that("The getGroups() interface works properly... test: fungi",{
-    testthat::equals(
+    
+    skip_on_cran()
+    skip_on_travis() 
+    
+    expect_equal(
         getGroups("fungi", db = "refseq"),
         c(
             "Ascomycetes", "Basidiomycetes", "Other Fungi"
@@ -74,7 +83,11 @@ test_that("The getGroups() interface works properly... test: fungi",{
 
 
 test_that("The getGroups() interface works properly... test: invertebrate",{
-    testthat::equals(
+    
+    skip_on_cran()
+    skip_on_travis() 
+    
+    expect_equal(
         getGroups("invertebrate", db = "refseq"),
         c(
             "Flatworms", "Insects", "Other Animals", "Roundworms"
@@ -84,7 +97,11 @@ test_that("The getGroups() interface works properly... test: invertebrate",{
 
 
 test_that("The getGroups() interface works properly... test: plant",{
-    testthat::equals(
+    
+    skip_on_cran()
+    skip_on_travis() 
+    
+    expect_equal(
         getGroups("plant", db = "refseq"),
         c(
             "Green Algae", "Land Plants"
@@ -94,7 +111,11 @@ test_that("The getGroups() interface works properly... test: plant",{
 
 
 test_that("The getGroups() interface works properly... test: protozoa",{
-    testthat::equals(
+    
+    skip_on_cran()
+    skip_on_travis() 
+    
+    expect_equal(
         getGroups("protozoa", db = "refseq"),
         c(
             "Apicomplexans", "Kinetoplasts", "Other Protists"
@@ -104,7 +125,11 @@ test_that("The getGroups() interface works properly... test: protozoa",{
 
 test_that("The getGroups() interface works properly... test: 
           vertebrate_mammalian",{
-    testthat::equals(
+              
+              skip_on_cran()
+              skip_on_travis() 
+              
+    expect_equal(
         getGroups("vertebrate_mammalian", db = "refseq"),
         c(
             "Mammals"
@@ -114,7 +139,11 @@ test_that("The getGroups() interface works properly... test:
 
 test_that("The getGroups() interface works properly... 
           test: vertebrate_other",{
-    testthat::equals(
+              
+              skip_on_cran()
+              skip_on_travis() 
+              
+    expect_equal(
         getGroups("vertebrate_other", db = "refseq"),
         c(
             "Amphibians", "Birds", "Fishes", "Reptiles"

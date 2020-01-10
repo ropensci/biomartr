@@ -11,12 +11,10 @@ test_that("The getAttributes() interface works properly..",{
         skip_on_cran()
         skip_on_travis()
         
-    marts <- getMarts()$mart
-    ensemb_mart <-
-        which(stringr::str_match(marts, "ENSEMBL_MART_ENSEMBL") != "NA")
+    expect_output(marts <- getMarts()$mart)
     
     attrib <-
-        getAttributes(mart = as.character(marts[ensemb_mart]), 
+        getAttributes(mart = "ENSEMBL_MART_ENSEMBL", 
                       dataset = "hsapiens_gene_ensembl")
     
     expect_equal(attrib[1 , 1], "ensembl_gene_id")
