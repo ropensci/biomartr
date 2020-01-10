@@ -21,9 +21,8 @@ getMarts <- function(){
         submarts.df[i] <- list(getSubMarts(submarts[i]))
     }
         }, error = function(e)
-        stop(
-            "It seems like the BioMart server could not be reached. This is either due to a server maintainence downtime or due to no internet connection on your side.",
-            call. = FALSE
+        message(
+            "It seems like the BioMart server could not be reached. This is either due to a server maintainence downtime or may be due to an instable internet connection on your side."
         ))
         
     return(dplyr::bind_rows(submarts.df))
