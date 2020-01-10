@@ -246,7 +246,7 @@ listGenomes <-
             if (!is.element(type, c("all", "kingdom")))
                 stop(
                     "Unfortunately, ENSEMBL only provides kingdom information 
-                    and no group or subgroup information."
+                    and no group or subgroup information.", call. = FALSE
                 )
             
             ensemblinfo <- get.ensembl.info()
@@ -314,7 +314,7 @@ listGenomes <-
             if (!is.element(type, c("all", "kingdom")))
                 stop(
                     "Unfortunately, ENSEMBLGENOMES only provides kingdom 
-                    information and no group or subgroup information."
+                    information and no group or subgroup information.", call. = FALSE
                 )
             
             ensemblgenomesinfo <-  get.ensemblgenome.info()
