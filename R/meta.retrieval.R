@@ -9,7 +9,6 @@
 #' \item \code{db = "refseq"}
 #' \item \code{db = "genbank"} 
 #' \item \code{db = "emsembl"}
-#' \item \code{db = "ensemblgenomes"}
 #' }
 #' @param kingdom a character string specifying the kingdom of the organisms 
 #' of interest, e.g. 
@@ -41,14 +40,6 @@
 #' \item For \code{ENSEMBL}:
 #' \itemize{
 #' \item \code{kingdom = "Ensembl"}
-#' }
-#' \item For \code{ENSEMBLGENOMES}
-#' \itemize{
-#' \item \code{kingdom = "EnsemblBacteria"}
-#' \item \code{kingdom = "EnsemblFungi"}
-#' \item \code{kingdom = "EnsemblMetazoa"}
-#' \item \code{kingdom = "EnsemblPlants"}
-#' \item \code{kingdom = "EnsemblProtists"}
 #' }
 #' }
 #' 
@@ -119,12 +110,6 @@
 #'                db = "genbank", 
 #'                type = "genome")
 #' 
-#' # get all available kingdoms for ensemblgenomes
-#' getKingdoms(db = "ensemblgenomes")
-#' # download all vertebrate genomes from ensemblgenomes
-#' meta.retrieval(kingdom = "vertebrate_mammalian", 
-#'                db = "ensemblgenomes", 
-#'                type = "genome")
 #' 
 #' # In case users do not wish to retrieve genomes from an entire kingdom, 
 #' # but rather from a subgoup (e.g. from species belonging to the 
@@ -193,10 +178,10 @@ meta.retrieval <- function(db         = "refseq",
             call. = FALSE
         )
     
-    if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
+    if (!is.element(db, c("refseq", "genbank", "ensembl")))
         stop(
-            "Please select einter db = 'refseq', db = 'genbank', 
-            db = 'ensembl' or db = 'ensemblgenomes'.",
+            "Please select einter db = 'refseq', db = 'genbank', or 
+            db = 'ensembl'.",
             call. = FALSE
         )
     
@@ -239,6 +224,7 @@ meta.retrieval <- function(db         = "refseq",
             #organism_name <- NULL
             
         }
+        
         if (!is.null(group)) {
             groups.selection <-
                 listGroups(kingdom = kingdom,
