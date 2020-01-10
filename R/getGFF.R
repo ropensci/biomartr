@@ -265,12 +265,11 @@ getGFF <-
                             
                         }, error = function(e)
                         {
-                            warning(
+                            message(
                                 "The download session seems to have timed out at the FTP site '",
                                 download_url, "'. This could be due to an overload of queries to the databases.",
                                 " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side.",
-                                call. = FALSE
+                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
                             )
                             return("Not available")
                         })
@@ -348,11 +347,10 @@ getGFF <-
                                              paste0(local.org, "_genomic_", db, ".gff.gz")))
                     }
                 } else {
-                    stop(
+                    message(
                         "File: ",
                         download_url,
-                        " could not be loaded properly... Are you connected to 
-                        the internet?"
+                        " could not be loaded properly... Something went wrong with your internet connection."
                     )
                 }
             }
@@ -417,9 +415,8 @@ getGFF <-
                 )
                 
                 if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
-                    warning(
-                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
-                        call. = FALSE)
+                    message(
+                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).")
                     return(FALSE)
                 }
                 
@@ -578,15 +575,14 @@ getGFF <-
                     ) 
                 
                 rest_url <- paste0(
-                    "http://rest.ensemblgenomes.org/info/assembly/",
+                    "http://rest.ensembl.org/info/assembly/",
                     new.organism,
                     "?content-type=application/json"
                 )
                 
                 if (curl::curl_fetch_memory(rest_url)$status_code != 200) {
-                    warning(
-                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).",
-                        call. = FALSE)
+                    message(
+                        "The url: '",rest_url,"' cannot be reached. This might be due to a connection issue or incorrect url path (e.g. not valid organism name).")
                     return(FALSE)
                 }
                 
@@ -692,10 +688,4 @@ getGFF <-
             }
          }
     }
-
-
-
-
-
-
 
