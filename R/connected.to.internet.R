@@ -9,9 +9,8 @@ connected.to.internet <- function() {
     if (curl::curl_fetch_memory("www.google.com")$status_code == 200) {
         return(TRUE)
     } else {
-        stop(
-            "It seems that you are not connected to the internet. Could you please check?",
-            call. = FALSE
+        message(
+            "It seems that you are not connected to the internet. A query to www.google.com was not successful. Could you please check?"
         )
     }
 }
