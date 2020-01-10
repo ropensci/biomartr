@@ -24,7 +24,7 @@ read_gff <- function(file) {
     )
     
     if (ncol(gff.input) > 9)
-        stop("The gff file format can not store more than 9 columns!")
+        stop("The gff file format can not store more than 9 columns!", call. = FALSE)
     
     
     # name standardized columns
