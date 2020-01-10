@@ -1,5 +1,6 @@
 [biomartr 0.9.1](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
-- minor changes to comply with CRAN policy
+- minor changes to comply with CRAN policy regarding Internet access failure 
+-> Instead of using warnings or error messages, only gentle messages are allowed to be used
 
 
 
