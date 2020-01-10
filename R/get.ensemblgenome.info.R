@@ -31,15 +31,16 @@ get.ensemblgenome.info <- function(update = FALSE) {
         
         message("Starting retrieval of information for all species stored in ENSEMBLGENOMES... This needs to be done only once.")
         
-        rest_url <- "http://rest.ensemblgenomes.org/info/species?content-type=application/json"
+        rest_url <- "http://rest.ensembl.org/info/species?content-type=application/json"
         rest_api_status <- curl::curl_fetch_memory(rest_url)
         
         if (rest_api_status$status_code != 200) {
-            stop(
-                "The API 'http://rest.ensemblgenomes.org' does not 
-                seem to work properly. Are you connected to the internet? 
-                Is the homepage 'http://rest.ensemblgenomes.org' 
-                currently available?", call. = FALSE
+            message(
+                "The API 'rest.ensembl.org' does not 
+                seem to respond or work properly.
+                Is the homepage 'rest.ensembl.org' 
+                currently available?", 
+                " Could it be that there is a firewall issue on your side? Please re-run the function and check if it works now."
             )
         }
         
