@@ -71,7 +71,7 @@ can unzip all files using clean.retrieval." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -167,7 +167,6 @@ shall be retrieved:</p>
 <li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
 <li><p><code>db = "emsembl"</code></p></li>
-<li><p><code>db = "ensemblgenomes"</code></p></li>
 </ul></td>
     </tr>
     <tr>
@@ -198,13 +197,6 @@ of interest, e.g.</p>
 </ul></li>
 <li><p>For <code>ENSEMBL</code>:</p><ul>
 <li><p><code>kingdom = "Ensembl"</code></p></li>
-</ul></li>
-<li><p>For <code>ENSEMBLGENOMES</code></p><ul>
-<li><p><code>kingdom = "EnsemblBacteria"</code></p></li>
-<li><p><code>kingdom = "EnsemblFungi"</code></p></li>
-<li><p><code>kingdom = "EnsemblMetazoa"</code></p></li>
-<li><p><code>kingdom = "EnsemblPlants"</code></p></li>
-<li><p><code>kingdom = "EnsemblProtists"</code></p></li>
 </ul></li>
 </ul>
 
@@ -301,12 +293,6 @@ to the same subgroup.</p>
                <span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"genbank"</span>,
                <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>)
 
-<span class='co'># get all available kingdoms for ensemblgenomes</span>
-<span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"ensemblgenomes"</span>)
-<span class='co'># download all vertebrate genomes from ensemblgenomes</span>
-<span class='fu'>meta.retrieval</span>(<span class='kw'>kingdom</span> <span class='kw'>=</span> <span class='st'>"vertebrate_mammalian"</span>,
-               <span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"ensemblgenomes"</span>,
-               <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"genome"</span>)
 
 <span class='co'># In case users do not wish to retrieve genomes from an entire kingdom, </span>
 <span class='co'># but rather from a subgoup (e.g. from species belonging to the </span>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Retrieve available database releases or versions 
-of ENSEMBL and ENSEMBLGENOMES — getReleases • biomartr</title>
+of ENSEMBL — getReleases • biomartr</title>
 
 
 <!-- jquery -->
@@ -37,9 +37,9 @@ of ENSEMBL and ENSEMBLGENOMES — getReleases • biomartr</title>
 
 
 <meta property="og:title" content="Retrieve available database releases or versions 
-of ENSEMBL and ENSEMBLGENOMES — getReleases" />
+of ENSEMBL — getReleases" />
 <meta property="og:description" content="Retrieve available database releases or versions of 
-ENSEMBL and ENSEMBLGENOMES." />
+ENSEMBL." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +72,7 @@ ENSEMBL and ENSEMBLGENOMES." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -136,17 +136,17 @@ ENSEMBL and ENSEMBLGENOMES." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve available database releases or versions 
-of ENSEMBL and ENSEMBLGENOMES</h1>
+of ENSEMBL</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/getReleases.R'><code>R/getReleases.R</code></a></small>
     <div class="hidden name"><code>getReleases.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Retrieve available database releases or versions of 
-ENSEMBL and ENSEMBLGENOMES.</p>
+ENSEMBL.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getReleases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>)</pre>
+    <pre class="usage"><span class='fu'>getReleases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"ensembl"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,7 +156,6 @@ ENSEMBL and ENSEMBLGENOMES.</p>
       <td><p>a character string specifying the database from which 
 available resease versions shall be retrieved:</p><ul>
 <li><p><code>db = "ensembl"</code></p></li>
-<li><p><code>db = "ensemblgenomes"</code></p></li>
 </ul></td>
     </tr>
     </table>
@@ -166,8 +165,6 @@ available resease versions shall be retrieved:</p><ul>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># retrieve available resease versions of ENSEMBL</span>
 <span class='fu'>getReleases</span>(<span class='st'>"ensembl"</span>)
-<span class='co'># retrieve available resease versions of ENSEMBLGENOMES</span>
-<span class='fu'>getReleases</span>(<span class='st'>"ensemblgenomes"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
