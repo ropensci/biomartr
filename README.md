@@ -79,15 +79,15 @@ if (!requireNamespace("BiocManager"))
     install.packages("BiocManager")
 BiocManager::install()
 # Install package dependencies
-BiocManager::install("Biostrings", version = "3.8")
-BiocManager::install("biomaRt", version = "3.8")
+BiocManager::install("Biostrings")
+BiocManager::install("biomaRt")
 
 ```
 
 Now users can install `biomartr` from CRAN:
 
 ```r
-# install biomartr 0.9.0
+# install biomartr 0.9.2
 install.packages("biomartr", dependencies = TRUE)
 ```
 
