@@ -17,6 +17,9 @@
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
+#' @param remove_annotation_outliers shall outlier lines be removed from the input \code{annotation_file}? 
+#' If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
+#' for further exploration.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding annotation file shall be stored. Default is 
 #' \code{path = file.path("_ncbi_downloads","genomes")}.
@@ -60,6 +63,7 @@ getGFF <-
              reference = FALSE,
              release = NULL,
              gunzip = FALSE,
+             remove_annotation_outliers = FALSE,
              path = file.path("_ncbi_downloads", "annotation")) {
         
        if (!is.element(db, c("refseq", "genbank", "ensembl")))
@@ -340,11 +344,16 @@ getGFF <-
                             R.utils::gunzip(file.path(path,
                                                       paste0(local.org, "_genomic_", db, ".gff.gz")), destname = file.path(path,
                                                                                                                                     paste0(local.org, "_genomic_", db, ".gff")))
-                            return(file.path(path,
-                                             paste0(local.org, "_genomic_", db, ".gff")))
+                            
+                            
+                            output_path <- check_annotation_biomartr(file.path(path,
+                                                                paste0(local.org, "_genomic_", db, ".gff")), remove_annotation_outliers = remove_annotation_outliers)
+                            
+                            return(output_path)
                     } else {
-                            return(file.path(path,
-                                             paste0(local.org, "_genomic_", db, ".gff.gz")))
+                        output_path <- check_annotation_biomartr(file.path(path,
+                                                            paste0(local.org, "_genomic_", db, ".gff.gz")), remove_annotation_outliers = remove_annotation_outliers)
+                            return(output_path)
                     }
                 } else {
                     message(
@@ -515,9 +524,14 @@ getGFF <-
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
-                        return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                        
+                        output_path <- check_annotation_biomartr(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")), remove_annotation_outliers = remove_annotation_outliers)
+                        
+                        return(output_path)
                 } else {
-                        return(genome.path[1])
+                    output_path <- check_annotation_biomartr(genome.path[1], remove_annotation_outliers = remove_annotation_outliers)
+                    
+                        return(output_path)
                 }
             }
         }
@@ -681,6 +695,7 @@ getGFF <-
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                        
                         return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
                 } else {
                         return(genome.path[1])
