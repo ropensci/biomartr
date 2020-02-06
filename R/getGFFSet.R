@@ -22,6 +22,9 @@
 #' that the most recent database version is used.  
 #' @param clean_retrieval logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
+#' @param remove_annotation_outliers shall outlier lines be removed from the input \code{annotation_file}? 
+#' If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
+#' for further exploration.
 #' @param update a logical value indicating whether or not files that were already downloaded and are still present in the 
 #' output folder shall be updated and re-loaded (\code{update = TRUE} or whether the existing file shall be retained \code{update = FALSE} (Default)).
 #' @param path a character string specifying the location (a folder) in which
@@ -58,6 +61,7 @@ getGFFSet <-
                  release = NULL,
                  clean_retrieval = TRUE,
                  gunzip = TRUE,
+                 remove_annotation_outliers = FALSE,
                  update = FALSE,
                  path = "set_GFF") {
                 
@@ -114,6 +118,7 @@ getGFFSet <-
                                                    organism = organisms[i],
                                                    reference = reference,
                                                    release = release,
+                                                   remove_annotation_outliers = remove_annotation_outliers,
                                                    path     = path)
                                 message("\n")
                         }
