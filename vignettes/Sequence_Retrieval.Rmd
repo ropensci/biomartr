@@ -24,6 +24,8 @@ The `biomartr` package allows users to retrieve biological sequences in a very s
 Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
 * [1. Genome retrieval with `getGenome()`](#genome-retrieval)
+    - [A. list total number of available genomes in each database](#listing-the-total-number-of-available-genomes)
+    - [B. dealing with kingdoms, groups, and subgroups ](#retrieving-kingdom-group-and-subgroup-information)
     - [1.1 from NCBI RefSeq](#example-ncbi-refseq)
     - [1.2 from NCBI Genbank](#example-ncbi-genbank)
     - [1.3 from ENSEMBL](#example-ensembl)
