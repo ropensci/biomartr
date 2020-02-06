@@ -1,5 +1,18 @@
 ## biomartr 1.0.0
 
+### New Functions
+
+- New function `check_annotation_biomartr()` helps to check whether downloaded GFF or GTF files are corrupt. Find more details [here](https://github.com/lawremi/rtracklayer/issues/15)
+
+### New Features 
+
+- the `getGFF()` function receives a new argument `remove_annotation_outliers` to enable users to remove corrupt lines from a GFF file
+Example:
+
+```r
+Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotation_outliers = TRUE)
+```
+
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
