@@ -1809,6 +1809,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <a class="sourceLine" id="cb164-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
 <a class="sourceLine" id="cb164-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFFSet.html">getGFFSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_gff"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 </div>
 </div>
 <div id="repeat-masker-retrieval" class="section level2">

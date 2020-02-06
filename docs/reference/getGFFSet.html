@@ -152,6 +152,7 @@ will be downloaded and stored locally. GFF files can be retrieved from several d
   <span class='kw'>release</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>clean_retrieval</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>remove_annotation_outliers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"set_GFF"</span>
 )</pre>
@@ -194,6 +195,12 @@ that the most recent database version is used.</p></td>
     <tr>
       <th>gunzip</th>
       <td><p>a logical value indicating whether or not files should be unzipped.</p></td>
+    </tr>
+    <tr>
+      <th>remove_annotation_outliers</th>
+      <td><p>shall outlier lines be removed from the input <code>annotation_file</code>? 
+If yes, then the initial <code>annotation_file</code> will be overwritten and the removed outlier lines will be stored at <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code>
+for further exploration.</p></td>
     </tr>
     <tr>
       <th>update</th>
