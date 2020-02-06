@@ -22,24 +22,20 @@ knitr::opts_chunk$set(
         - [1.1.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq)
         - [1.1.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank)
         - [1.1.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl)
-        - [1.1.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes)
     - [1.2 Retrieve Protein Sequences](#retrieve-protein-sequences)
         - [1.2.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-1)
         - [1.2.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-1)
         - [1.2.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-1)
-        - [1.2.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-1)
     - [1.3 Retrieve CDS Sequences](#retrieve-cds-sequences)
         - [1.3.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-2)
         - [1.3.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-2)
         - [1.3.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-2)
-        - [1.3.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-2)
     - [1.4 Retrieve GFF files](#retrieve-gff-files)
     - [1.5 Retrieve GTF files](#retrieve-gtf-files)
     - [1.6 Retrieve RNA sequences](#retrieve-rna-sequences)
         - [1.6.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-3)
         - [1.6.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-3)
         - [1.6.3 Retrieval from `ENSEMBL`](#retrieval-from-ensembl-3)
-        - [1.6.4 Retrieval from `ENSEMBLGENOMES`](#retrieval-from-ensemblgenomes-3)
     - [1.7 Retrieve Repeat Masker Repeat Annotation File](#retrieve-repeat-masker-sequences)
         - [1.7.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq-4)
         - [1.7.2 Retrieval from `NCBI Genbank`](#retrieval-from-ncbi-genbank-4)
@@ -78,7 +74,7 @@ Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval
 
 ### Retrieve Genomic Sequences
 
-To retrieve a list of all available kingdoms stored in the `NCBI RefSeq`,  `NCBI Genbank`, `ENSEMBL`, and `ENSEMBLGENOMES` databases users can consult the `getKingdoms()` function which stores a list of all available kingdoms of life for the corresponding database. 
+To retrieve a list of all available kingdoms stored in the `NCBI RefSeq`,  `NCBI Genbank`, and `ENSEMBL` databases users can consult the `getKingdoms()` function which stores a list of all available kingdoms of life for the corresponding database. 
 
 ### Example `NCBI RefSeq`:
 
@@ -118,24 +114,6 @@ getKingdoms(db = "ensembl")
 ```
 
 The `ENSEMBL` database does not differentiate between different kingdoms, but specialized on storing high-quality reference genomes of diverse biological disciplines.
-
-### Example `ENSEMBLGENOMES`
-
-
-```{r, eval=FALSE}
-getKingdoms(db = "ensemblgenomes")
-```
-
-```
-[1] "EnsemblBacteria" "EnsemblFungi"    "EnsemblMetazoa"  "EnsemblPlants"  
-[5] "EnsemblProtists"
-```
-
-The databse `ENSEMBLGENOMES` is divided into the specialised sub-databases `EnsemblBacteria`, `EnsemblFungi`, `EnsemblMetazoa`, `EnsemblPlants`, and `EnsemblProtists`.
-
-When chosing from which database species shall be retrieved (e.g. `db = "refseq"`),
-the `kingdom` argument specification must match the available kingdoms retrieved with e.g. `getKingdoms(db = "refseq")` 
-
 
 #### Retrieval from `NCBI RefSeq`
 
@@ -332,26 +310,6 @@ meta.retrieval(kingdom = "protozoa", db = "genbank", type = "genome", reference 
 # download all genomes from ENSEMBL
 meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "genome", reference = FALSE)
 ```
-
-
-#### Retrieval from `ENSEMBLGENOMES`
-
-Alternatively, download all species for a particular group from `ENSEBLGENOMES`
-
-Example Metazoa:
-```{r,eval=FALSE}
-# download all metazoa genomes
-meta.retrieval(kingdom = "EnsemblMetazoa", db = "ensemblgenomes", type = "genome", reference = FALSE)
-```
-
-Example Fungi:
-```{r,eval=FALSE}
-# download all fungi genomes
-meta.retrieval(kingdom = "EnsemblFungi", db = "ensemblgenomes", type = "genome", reference = FALSE)
-```
-
-EnsemblBacteria, EnsemblFungi, EnsemblMetazoa, EnsemblPlants, EnsemblProtists
-
 
 ### Retrieve groups or subgroups of species 
 
@@ -709,16 +667,6 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "proteom
 meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "proteome", reference = FALSE)
 ```
 
-
-#### Retrieval from `ENSEMBLGENOMES`:
-
-```{r,eval=FALSE}
-# download all EnsemblGenomes Bacteria proteome sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "proteome", reference = FALSE)
-```
-
-
-
 #### Retrieve CDS Sequences
 
 Download all mammalian vertebrate CDS from RefSeq (Genbank does not store CDS data).
@@ -740,14 +688,6 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "cds", r
 ```{r,eval=FALSE}
 # download all Ensembl CDS sequneces
 meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "cds", reference = FALSE)
-```
-
-
-#### Retrieval from `ENSEMBLGENOMES`:
-
-```{r,eval=FALSE}
-# download all EnsemblGenomes Bacteria CDS sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "cds", reference = FALSE)
 ```
 
 ### Retrieve GFF files
@@ -778,13 +718,6 @@ meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "gtf", reference = FA
 ```
 
 
-Example `ENSEMBLGENOMES`:
-```{r,eval=FALSE}
-# download all vertebrate gtf files
-meta.retrieval(kingdom = "EnsemblPlants", db = "ensemblgenomes", type = "gtf", reference = FALSE)
-```
-
-
 ### Retrieve RNA sequences
 
 Download all mammalian vertebrate RNA sequences from `NCBI RefSeq` and `NCBI Genbank`.
@@ -807,15 +740,6 @@ meta.retrieval(kingdom = "vertebrate_mammalian", db = "genbank", type = "rna", r
 # download all Ensembl RNA sequneces
 meta.retrieval(kingdom = "Ensembl", db = "ensembl", type = "rna", reference = FALSE)
 ```
-
-
-#### Retrieval from `ENSEMBLGENOMES`:
-
-```{r,eval=FALSE}
-# download all EnsemblGenomes Bacteria RNA sequneces
-meta.retrieval(kingdom = "EnsemblBacteria", db = "ensemblgenomes", type = "rna", reference = FALSE)
-```
-
 
 ### Retrieve Repeat Masker Sequences
 
