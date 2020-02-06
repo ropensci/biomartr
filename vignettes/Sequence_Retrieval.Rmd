@@ -2200,6 +2200,34 @@ Human_GFF
 10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0
 ```
 
+#### Removing corrupt lines from downloaded GFF files
+
+In some cases, `GFF` files stored at NCBI databases include corrupt lines that have more than 65000 characters. This [leads to problems](https://github.com/lawremi/rtracklayer/issues/15)
+when trying to import such annotation files into R. To overcome this issue users can specify the `remove_annotation_outliers = TRUE`
+argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.
+
+Example:
+
+```r
+Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotation_outliers = TRUE)
+```
+
+```
+Starting GFF retrieval of 'Arabidopsis thaliana' from refseq ...
+
+
+|============================================| 100%   52 MB
+File _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz exists already. Thus, download has been skipped.
+Importing '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' ...
+|============================================| 100%  434 MB
+Reading annotation file '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' and removing all outlier lines with number of characters greater 65000 ...
+Overwriting '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' with removed outlier lines ...
+Unzipping file _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' ...
+The new annotation file was created and has been stored at '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff'.
+The outlier lines were stored in a separate file to explore at '/var/folders/3x/6bbw6ds1039gpwny1m0hn8r80000gp/T//RtmpuVjnsC/Arabidopsis_thaliana_genomic_refseq.gff.gz_outlier_lines.txt'.
+```
+
+
 ### Example `NCBI Genbank`:
 
 ```{r,eval=FALSE}
@@ -2236,6 +2264,36 @@ Human_GFF
 8  KI270711.1 Genbank     region         1     42210     0      +     0
 9  KI270712.1 Genbank     region         1    176043     0      +     0
 10 KI270713.1 Genbank     region         1     40745     0      +     0
+```
+
+#### Removing corrupt lines from downloaded GFF files
+
+In some cases, `GFF` files stored at NCBI databases include corrupt lines that have more than 65000 characters. This [leads to problems](https://github.com/lawremi/rtracklayer/issues/15)
+when trying to import such annotation files into R. To overcome this issue users can specify the `remove_annotation_outliers = TRUE`
+argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.
+
+Example:
+
+```r
+Ath_path <- biomartr::getGFF(db = "genbank",
+             organism = "Arabidopsis thaliana",
+             remove_annotation_outliers = TRUE)
+```
+
+```
+Starting GFF retrieval of 'Arabidopsis thaliana' from genbank ...
+
+Completed!
+Now continue with species download ...
+GFF download of Arabidopsis_thaliana is completed!
+Checking md5 hash of file: _ncbi_downloads/annotation/Arabidopsis_thaliana_md5checksums.txt ...
+The md5 hash of file '_ncbi_downloads/annotation/Arabidopsis_thaliana_md5checksums.txt' matches!
+Importing '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' ...
+Reading annotation file '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' and removing all outlier lines with number of characters greater 65000 ...
+Overwriting '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' with removed outlier lines ...
+Unzipping file _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' ...
+The new annotation file was created and has been stored at '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff'.
+The outlier lines were stored in a separate file to explore at '/var/folders/3x/6bbw6ds1039gpwny1m0hn8r80000gp/T//RtmpuVjnsC/Arabidopsis_thaliana_genomic_genbank.gff.gz_outlier_lines.txt'.
 ```
 
 ### Example `ENSEMBL`:
@@ -2277,6 +2335,14 @@ Human_GFF
 ```
 
 Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
+
+
+#### Removing corrupt lines from downloaded GFF files
+
+In some cases, `GFF` files stored at NCBI databases include corrupt lines that have more than 65000 characters. This [leads to problems](https://github.com/lawremi/rtracklayer/issues/15)
+when trying to import such annotation files into R. To overcome this issue users can specify the `remove_annotation_outliers = TRUE`
+argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.
+
 
 Alternatively for `getGTF()`:
 
