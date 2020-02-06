@@ -2381,6 +2381,10 @@ and it will only download missing genomes. In cases users wish
 to download everything again and updating existing genomes, they may
 specify the argument `update = TRUE`.
 
+In some cases, `GFF` files stored at NCBI databases include corrupt lines that have more than 65000 characters. This [leads to problems](https://github.com/lawremi/rtracklayer/issues/15)
+when trying to import such annotation files into R. To overcome this issue users can specify the `remove_annotation_outliers = TRUE`
+argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.
+
 
 ## Repeat Masker Retrieval
 
