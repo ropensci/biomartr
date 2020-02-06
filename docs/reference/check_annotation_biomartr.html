@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve a List of Available NCBI Databases for Download — listDatabases • biomartr</title>
+<title>Check whether an annotation file contains outlier lines — check_annotation_biomartr • biomartr</title>
 
 
 <!-- jquery -->
@@ -35,15 +35,11 @@
 
 
 
-<meta property="og:title" content="Retrieve a List of Available NCBI Databases for Download — listDatabases" />
-<meta property="og:description" content="This function allows you to retrieve a list of database names 
-and versions that can be downloaded from correspondning servers.
-Database retrieval is crucial for most biological studies and analyses.
-There is a vast diversity of databases that can be accessed remotely or that 
-can be downloaded to your local machine. This function provides an interface 
-to databases that can be downloaded from NCBI servers and lists all available
-databases and their database version to be able to select an appropriate 
-database for download with download.database." />
+<meta property="og:title" content="Check whether an annotation file contains outlier lines — check_annotation_biomartr" />
+<meta property="og:description" content="Some annotation files include lines with character lengths greater than 65000. This causes problems when trying to import such annotation files into R using import.
+To overcome this issue, this function screens for such lines
+in a given annotation file and removes these lines so that
+import can handle the file." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -139,67 +135,52 @@ database for download with download.database." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve a List of Available NCBI Databases for Download</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listDatabases.R'><code>R/listDatabases.R</code></a>, <a href='https://github.com/ropensci/biomartr/blob/master/R/listNCBIDatabases.R'><code>R/listNCBIDatabases.R</code></a></small>
-    <div class="hidden name"><code>listDatabases.Rd</code></div>
+    <h1>Check whether an annotation file contains outlier lines</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/check_annotation_biomartr.R'><code>R/check_annotation_biomartr.R</code></a></small>
+    <div class="hidden name"><code>check_annotation_biomartr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function allows you to retrieve a list of database names 
-and versions that can be downloaded from correspondning servers.</p>
-<p>Database retrieval is crucial for most biological studies and analyses.
-There is a vast diversity of databases that can be accessed remotely or that 
-can be downloaded to your local machine. This function provides an interface 
-to databases that can be downloaded from NCBI servers and lists all available
-databases and their database version to be able to select an appropriate 
-database for download with <code><a href='download.database.html'>download.database</a></code>.</p>
+    <p>Some annotation files include lines with character lengths greater than 65000. This causes problems when trying to import such annotation files into R using <code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>import</a></code>.
+To overcome this issue, this function screens for such lines
+in a given annotation file and removes these lines so that
+<code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>import</a></code> can handle the file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>listDatabases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"nr"</span>, <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>listNCBIDatabases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"nr"</span>, <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>check_annotation_biomartr</span>(<span class='no'>annotation_file</span>, <span class='kw'>remove_annotation_outliers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>db</th>
-      <td><p>a character string specifying the name of the database that shall 
-be searched for.</p></td>
+      <th>annotation_file</th>
+      <td><p>a file path tp the annotation file.</p></td>
     </tr>
     <tr>
-      <th>update</th>
-      <td><p>a logical value specifying whether or not the local 
-listDatabases.txt file shall be updated by remote access to NCBI.</p></td>
+      <th>remove_annotation_outliers</th>
+      <td><p>shall outlier lines be removed from the input <code>annotation_file</code>? 
+If yes, then the initial <code>annotation_file</code> will be overwritten and the removed outlier lines will be stored at <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code>
+for further exploration.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='download.database.html'>download.database</a></code>, <code><a href='download.database.all.html'>download.database.all</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># retrieve all versions of the NCBI 'nr' database that can be downloaded</span>
-<span class='fu'>listNCBIDatabases</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"nr"</span>)</div><div class='output co'>#&gt;  [1] "nr.00.tar.gz" "nr.01.tar.gz" "nr.02.tar.gz" "nr.03.tar.gz" "nr.04.tar.gz"
-#&gt;  [6] "nr.05.tar.gz" "nr.06.tar.gz" "nr.07.tar.gz" "nr.08.tar.gz" "nr.09.tar.gz"
-#&gt; [11] "nr.10.tar.gz" "nr.11.tar.gz" "nr.12.tar.gz" "nr.13.tar.gz" "nr.14.tar.gz"
-#&gt; [16] "nr.15.tar.gz" "nr.16.tar.gz" "nr.17.tar.gz" "nr.18.tar.gz" "nr.19.tar.gz"
-#&gt; [21] "nr.20.tar.gz" "nr.21.tar.gz" "nr.22.tar.gz" "nr.23.tar.gz" "nr.24.tar.gz"
-#&gt; [26] "nr.25.tar.gz" "nr.26.tar.gz" "nr.27.tar.gz" "nr.28.tar.gz" "nr.29.tar.gz"
-#&gt; [31] "nr.30.tar.gz" "nr.31.tar.gz" "nr.32.tar.gz" "nr.33.tar.gz" "nr.34.tar.gz"
-#&gt; [36] "nr.35.tar.gz" "nr.36.tar.gz" "nr.37.tar.gz" "nr.38.tar.gz"</div><div class='input'>
-# analogous:
-# listNCBIDatabases(db = "cdd")
-# listNCBIDatabases(db = "nt")
-# listNCBIDatabases(db = "gss")
-# listNCBIDatabases(db = "refseq_protein")
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># download an example annotation file from NCBI RefSeq</span>
+<span class='no'>Ath_path</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>biomartr</span><span class='kw ns'>::</span><span class='fu'><a href='https://docs.ropensci.org/biomartr/reference/getGFF.html'>getGFF</a></span>(<span class='kw'>organism</span> <span class='kw'>=</span> <span class='st'>"Arabidopsis thaliana"</span>)
+<span class='co'># run annotation file check on the downloaded file</span>
+<span class='kw pkg'>biomartr</span><span class='kw ns'>::</span><span class='fu'><a href='https://docs.ropensci.org/biomartr/reference/check_annotation_biomartr.html'>check_annotation_biomartr</a></span>(<span class='no'>Ath_path</span>)
+<span class='co'># several outlier lines were detected, thus we re-run the</span>
+<span class='co'># function using 'remove_annotation_outliers = TRUE'</span>
+<span class='co'># to remove the outliers and overwrite the file</span>
+<span class='kw pkg'>biomartr</span><span class='kw ns'>::</span><span class='fu'><a href='https://docs.ropensci.org/biomartr/reference/check_annotation_biomartr.html'>check_annotation_biomartr</a></span>(<span class='no'>Ath_path</span>, <span class='kw'>remove_annotation_outliers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

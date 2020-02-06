@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1>Sequence Retrieval</h1>
             
-            <h4 class="date">2020-01-11</h4>
+            <h4 class="date">2020-02-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -1688,21 +1688,40 @@ submitter: Genome Reference Consortium</code></pre>
 8  NC_000001.11 BestRefSeq transcript 14362     29370     0      -     0
 9  NC_000001.11 BestRefSeq       exon 29321     29370     0      -     0
 10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0</code></pre>
+<div id="removing-corrupt-lines-from-downloaded-gff-files" class="section level4">
+<h4 class="hasAnchor">
+<a href="#removing-corrupt-lines-from-downloaded-gff-files" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">Ath_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFF.html">getGFF</a></span>(<span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, <span class="dt">remove_annotation_outliers =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>Starting GFF retrieval of 'Arabidopsis thaliana' from refseq ...
+
+
+|============================================| 100%   52 MB
+File _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz exists already. Thus, download has been skipped.
+Importing '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' ...
+|============================================| 100%  434 MB
+Reading annotation file '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' and removing all outlier lines with number of characters greater 65000 ...
+Overwriting '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' with removed outlier lines ...
+Unzipping file _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz' ...
+The new annotation file was created and has been stored at '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff'.
+The outlier lines were stored in a separate file to explore at '/var/folders/3x/6bbw6ds1039gpwny1m0hn8r80000gp/T//RtmpuVjnsC/Arabidopsis_thaliana_genomic_refseq.gff.gz_outlier_lines.txt'.</code></pre>
+</div>
 </div>
 <div id="example-ncbi-genbank-4" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-4" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="co"># download the GFF file of Homo sapiens from genbank</span></a>
-<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span></a>
-<a class="sourceLine" id="cb151-3" data-line-number="3">HS.gff.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
-<a class="sourceLine" id="cb151-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb151-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="co"># download the GFF file of Homo sapiens from genbank</span></a>
+<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span></a>
+<a class="sourceLine" id="cb153-3" data-line-number="3">HS.gff.genbank &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
+<a class="sourceLine" id="cb153-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb153-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
-<a class="sourceLine" id="cb152-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.genbank)</a></code></pre></div>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
-<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="co"># options(tibble.print_max = Inf)</span></a>
-<a class="sourceLine" id="cb153-3" data-line-number="3">Human_GFF</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
+<a class="sourceLine" id="cb154-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.genbank)</a></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb155-2" data-line-number="2"><span class="co"># options(tibble.print_max = Inf)</span></a>
+<a class="sourceLine" id="cb155-3" data-line-number="3">Human_GFF</a></code></pre></div>
 <pre><code>        seqid  source       type     start       end score strand phase
         &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;  &lt;chr&gt; &lt;dbl&gt;
 1  CM000663.2 Genbank     region         1 248956422     0      +     0
@@ -1715,21 +1734,43 @@ submitter: Genome Reference Consortium</code></pre>
 8  KI270711.1 Genbank     region         1     42210     0      +     0
 9  KI270712.1 Genbank     region         1    176043     0      +     0
 10 KI270713.1 Genbank     region         1     40745     0      +     0</code></pre>
+<div id="removing-corrupt-lines-from-downloaded-gff-files-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#removing-corrupt-lines-from-downloaded-gff-files-1" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1">Ath_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFF.html">getGFF</a></span>(<span class="dt">db =</span> <span class="st">"genbank"</span>,</a>
+<a class="sourceLine" id="cb157-2" data-line-number="2">             <span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>,</a>
+<a class="sourceLine" id="cb157-3" data-line-number="3">             <span class="dt">remove_annotation_outliers =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>Starting GFF retrieval of 'Arabidopsis thaliana' from genbank ...
+
+Completed!
+Now continue with species download ...
+GFF download of Arabidopsis_thaliana is completed!
+Checking md5 hash of file: _ncbi_downloads/annotation/Arabidopsis_thaliana_md5checksums.txt ...
+The md5 hash of file '_ncbi_downloads/annotation/Arabidopsis_thaliana_md5checksums.txt' matches!
+Importing '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' ...
+Reading annotation file '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' and removing all outlier lines with number of characters greater 65000 ...
+Overwriting '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' with removed outlier lines ...
+Unzipping file _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz' ...
+The new annotation file was created and has been stored at '_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff'.
+The outlier lines were stored in a separate file to explore at '/var/folders/3x/6bbw6ds1039gpwny1m0hn8r80000gp/T//RtmpuVjnsC/Arabidopsis_thaliana_genomic_genbank.gff.gz_outlier_lines.txt'.</code></pre>
+</div>
 </div>
 <div id="example-ensembl-4" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl-4" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="co"># download the GFF file of Homo sapiens from ENSEMBL</span></a>
-<a class="sourceLine" id="cb155-2" data-line-number="2"><span class="co"># and store the corresponding file in 'ensembl/annotation'</span></a>
-<a class="sourceLine" id="cb155-3" data-line-number="3">HS.gff.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
-<a class="sourceLine" id="cb155-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb155-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="co"># download the GFF file of Homo sapiens from ENSEMBL</span></a>
+<a class="sourceLine" id="cb159-2" data-line-number="2"><span class="co"># and store the corresponding file in 'ensembl/annotation'</span></a>
+<a class="sourceLine" id="cb159-3" data-line-number="3">HS.gff.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGFF.html">getGFF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
+<a class="sourceLine" id="cb159-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb159-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
-<a class="sourceLine" id="cb156-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.ensembl)</a></code></pre></div>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
-<a class="sourceLine" id="cb157-2" data-line-number="2"><span class="co"># options(tibble.print_max = Inf)</span></a>
-<a class="sourceLine" id="cb157-3" data-line-number="3">Human_GFF</a></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="co"># import downloaded GFF file</span></a>
+<a class="sourceLine" id="cb160-2" data-line-number="2">Human_GFF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_gff.html">read_gff</a></span>(<span class="dt">file =</span> HS.gff.ensembl)</a></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="co"># show all elements of the data.frame</span></a>
+<a class="sourceLine" id="cb161-2" data-line-number="2"><span class="co"># options(tibble.print_max = Inf)</span></a>
+<a class="sourceLine" id="cb161-3" data-line-number="3">Human_GFF</a></code></pre></div>
 <pre><code>   seqid source              type start       end   score strand phase
    &lt;int&gt;  &lt;chr&gt;             &lt;chr&gt; &lt;int&gt;     &lt;int&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
 1      1 GRCh38        chromosome     1 248956422       .      .     0
@@ -1743,25 +1784,30 @@ submitter: Genome Reference Consortium</code></pre>
 9      1      . biological_region 10735     10747   0.999      -     0
 10     1      . biological_region 10737     10744   0.999      +     0</code></pre>
 <p>Users can also specify the <code>release</code> argument which denotes the database release version of ENSEMBL (<code>db = "ensembl"</code>) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.</p>
+<div id="removing-corrupt-lines-from-downloaded-gff-files-2" class="section level4">
+<h4 class="hasAnchor">
+<a href="#removing-corrupt-lines-from-downloaded-gff-files-2" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Alternatively for <code><a href="../reference/getGTF.html">getGTF()</a></code>:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="co"># download the GTF file of Homo sapiens from ENSEMBL</span></a>
-<a class="sourceLine" id="cb159-2" data-line-number="2"><span class="co"># and store the corresponding file in 'ensembl/annotation'</span></a>
-<a class="sourceLine" id="cb159-3" data-line-number="3">HS.gtf.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGTF.html">getGTF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
-<a class="sourceLine" id="cb159-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb159-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="co"># download the GTF file of Homo sapiens from ENSEMBL</span></a>
+<a class="sourceLine" id="cb163-2" data-line-number="2"><span class="co"># and store the corresponding file in 'ensembl/annotation'</span></a>
+<a class="sourceLine" id="cb163-3" data-line-number="3">HS.gtf.ensembl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getGTF.html">getGTF</a></span>( <span class="dt">db       =</span> <span class="st">"ensembl"</span>, </a>
+<a class="sourceLine" id="cb163-4" data-line-number="4">                         <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb163-5" data-line-number="5">                         <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"ensembl"</span>,<span class="st">"annotation"</span>))</a></code></pre></div>
 <p>Taken together, <code><a href="../reference/getGFF.html">getGFF()</a></code> or <code><a href="../reference/getGTF.html">getGTF()</a></code> in combination with <code><a href="../reference/getGenome.html">getGenome()</a></code>, <code><a href="../reference/getProteome.html">getProteome()</a></code>, <code><a href="../reference/getRNA.html">getRNA()</a></code> and <code><a href="../reference/getCDS.html">getCDS()</a></code> allows users to retrieve the genome information together with the corresponding <code>.gff</code> or <code>gtf</code> annotation file to make sure that they both have the same version and origin.</p>
+</div>
 </div>
 <div id="gffset-retrieval" class="section level3">
 <h3 class="hasAnchor">
 <a href="#gffset-retrieval" class="anchor"></a>GFFSet Retrieval</h3>
 <p>The <code><a href="../reference/getGFFSet.html">getGFFSet()</a></code> function enables users to retrieve GFF files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_gff</code> is generated in which GFF and GFF info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="co"># specify the species names</span></a>
-<a class="sourceLine" id="cb160-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
-<a class="sourceLine" id="cb160-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
-<a class="sourceLine" id="cb160-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
-<a class="sourceLine" id="cb160-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
-<a class="sourceLine" id="cb160-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFFSet.html">getGFFSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_gff"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="co"># specify the species names</span></a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">download_species &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb164-3" data-line-number="3">                      <span class="st">"Arabidopsis lyrata"</span>, </a>
+<a class="sourceLine" id="cb164-4" data-line-number="4">                      <span class="st">"Capsella rubella"</span>)</a>
+<a class="sourceLine" id="cb164-5" data-line-number="5"><span class="co"># retrieve these three species from NCBI RefSeq                       </span></a>
+<a class="sourceLine" id="cb164-6" data-line-number="6">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFFSet.html">getGFFSet</a></span>(<span class="st">"refseq"</span>, <span class="dt">organisms =</span> download_species, <span class="dt">path =</span> <span class="st">"set_gff"</span>)</a></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
 </div>
 </div>
@@ -1772,15 +1818,15 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-5" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="co"># download repeat masker annotation file for Homo sapiens</span></a>
-<a class="sourceLine" id="cb161-2" data-line-number="2">Hsapiens_rm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
-<a class="sourceLine" id="cb161-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb161-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"TEannotation"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="co"># download repeat masker annotation file for Homo sapiens</span></a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">Hsapiens_rm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
+<a class="sourceLine" id="cb165-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb165-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"TEannotation"</span>))</a></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
-<a class="sourceLine" id="cb162-2" data-line-number="2">Hsapiens_rm_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_rm.html">read_rm</a></span>(<span class="st">"refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz"</span>)</a>
-<a class="sourceLine" id="cb162-3" data-line-number="3"><span class="co"># look at data</span></a>
-<a class="sourceLine" id="cb162-4" data-line-number="4">Hsapiens_rm_import</a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
+<a class="sourceLine" id="cb166-2" data-line-number="2">Hsapiens_rm_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_rm.html">read_rm</a></span>(<span class="st">"refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz"</span>)</a>
+<a class="sourceLine" id="cb166-3" data-line-number="3"><span class="co"># look at data</span></a>
+<a class="sourceLine" id="cb166-4" data-line-number="4">Hsapiens_rm_import</a></code></pre></div>
 </div>
 </div>
 <div id="genome-assembly-stats-retrieval" class="section level2">
@@ -1790,15 +1836,15 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-6" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-6" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="co"># download genome assembly stats file for Homo sapiens</span></a>
-<a class="sourceLine" id="cb163-2" data-line-number="2">Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
-<a class="sourceLine" id="cb163-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb163-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="co"># download genome assembly stats file for Homo sapiens</span></a>
+<a class="sourceLine" id="cb167-2" data-line-number="2">Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
+<a class="sourceLine" id="cb167-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb167-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
-<a class="sourceLine" id="cb164-2" data-line-number="2">Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)</a>
-<a class="sourceLine" id="cb164-3" data-line-number="3"><span class="co"># look at data</span></a>
-<a class="sourceLine" id="cb164-4" data-line-number="4">Hsapiens_stats_import</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
+<a class="sourceLine" id="cb168-2" data-line-number="2">Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)</a>
+<a class="sourceLine" id="cb168-3" data-line-number="3"><span class="co"># look at data</span></a>
+<a class="sourceLine" id="cb168-4" data-line-number="4">Hsapiens_stats_import</a></code></pre></div>
 <pre><code> A tibble: 1,196 x 6
    unit_name molecule_name molecule_type sequence_type statistic         value
    &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
@@ -1816,15 +1862,15 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-genbank-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-5" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="co"># download genome assembly stats file for Homo sapiens</span></a>
-<a class="sourceLine" id="cb166-2" data-line-number="2">Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
-<a class="sourceLine" id="cb166-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
-<a class="sourceLine" id="cb166-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"genbank"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="co"># download genome assembly stats file for Homo sapiens</span></a>
+<a class="sourceLine" id="cb170-2" data-line-number="2">Hsapiens_stats &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span>( <span class="dt">db       =</span> <span class="st">"genbank"</span>, </a>
+<a class="sourceLine" id="cb170-3" data-line-number="3">                                 <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>, </a>
+<a class="sourceLine" id="cb170-4" data-line-number="4">                                 <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"genbank"</span>,<span class="st">"AssemblyStats"</span>))</a></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
-<a class="sourceLine" id="cb167-2" data-line-number="2">Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)</a>
-<a class="sourceLine" id="cb167-3" data-line-number="3"><span class="co"># look at data</span></a>
-<a class="sourceLine" id="cb167-4" data-line-number="4">Hsapiens_stats_import</a></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="co"># import TE annotation file</span></a>
+<a class="sourceLine" id="cb171-2" data-line-number="2">Hsapiens_stats_import &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span>(Hsapiens_stats)</a>
+<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="co"># look at data</span></a>
+<a class="sourceLine" id="cb171-4" data-line-number="4">Hsapiens_stats_import</a></code></pre></div>
 <pre><code> A tibble: 1,196 x 6
    unit_name molecule_name molecule_type sequence_type statistic         value
    &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
@@ -1848,10 +1894,10 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-7" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-7" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="co"># download collection for Saccharomyces cerevisiae</span></a>
-<a class="sourceLine" id="cb169-2" data-line-number="2"><span class="kw"><a href="../reference/getCollection.html">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, </a>
-<a class="sourceLine" id="cb169-3" data-line-number="3">               <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>, </a>
-<a class="sourceLine" id="cb169-4" data-line-number="4">               <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"Collections"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="co"># download collection for Saccharomyces cerevisiae</span></a>
+<a class="sourceLine" id="cb173-2" data-line-number="2"><span class="kw"><a href="../reference/getCollection.html">getCollection</a></span>( <span class="dt">db =</span> <span class="st">"refseq"</span>, </a>
+<a class="sourceLine" id="cb173-3" data-line-number="3">               <span class="dt">organism =</span> <span class="st">"Saccharomyces cerevisiae"</span>, </a>
+<a class="sourceLine" id="cb173-4" data-line-number="4">               <span class="dt">path =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="st">"refseq"</span>,<span class="st">"Collections"</span>))</a></code></pre></div>
 <p>Internally, the <code><a href="../reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/Saccharomyces_erevisiae</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
 <pre><code>Genome download is completed!
 Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
