@@ -149,7 +149,12 @@ of interest can be downloaded and stored locally. GTF files can be retrieved
 from several databases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getGTF</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"ensembl"</span>, <span class='no'>organism</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='st'>"ensembl"</span>, <span class='st'>"annotation"</span>))</pre>
+    <pre class="usage"><span class='fu'>getGTF</span>(
+  <span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"ensembl"</span>,
+  <span class='no'>organism</span>,
+  <span class='kw'>remove_annotation_outliers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='st'>"ensembl"</span>, <span class='st'>"annotation"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,6 +170,12 @@ shall be retrieved:</p><ul>
       <th>organism</th>
       <td><p>a character string specifying the scientific name of the 
 organism of interest, e.g. <code>organism = "Homo sapiens"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>remove_annotation_outliers</th>
+      <td><p>shall outlier lines be removed from the input <code>annotation_file</code>? 
+If yes, then the initial <code>annotation_file</code> will be overwritten and the removed outlier lines will be stored at <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code>
+for further exploration.</p></td>
     </tr>
     <tr>
       <th>path</th>
