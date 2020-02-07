@@ -4,7 +4,12 @@
 \alias{getGTF}
 \title{Genome Annotation Retrieval (GTF)}
 \usage{
-getGTF(db = "ensembl", organism, path = file.path("ensembl", "annotation"))
+getGTF(
+  db = "ensembl",
+  organism,
+  remove_annotation_outliers = FALSE,
+  path = file.path("ensembl", "annotation")
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome 
@@ -15,6 +20,10 @@ shall be retrieved:
 
 \item{organism}{a character string specifying the scientific name of the 
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+
+\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}? 
+If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
+for further exploration.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding annotation file shall be stored. Default is 
