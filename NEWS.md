@@ -15,6 +15,8 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - the `getGFFSet()` function receives a new argument `remove_annotation_outliers` to enable users to remove corrupt lines from a GFF file
 
+- the `getGTF()` function receives a new argument `remove_annotation_outliers` to enable users to remove corrupt lines from a GTF file
+
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
