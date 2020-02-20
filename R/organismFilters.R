@@ -58,6 +58,8 @@ organismFilters <- function(organism,
     mart <- dataset <- NULL
     
     orgBM <- organismBM(organism = organism, update = update)
+    message("\n")
+    message("Starting retrieval of all available BioMart filters for ", organism, " ...")
     
     orgMarts <- names(table(orgBM$mart))
     
@@ -80,6 +82,11 @@ organismFilters <- function(organism,
             mart_tbl <-
                 do.call(rbind, lapply(seq_len(nrow(mart)),
                                       function(dataset) {
+                                          if (!is.element(mart$mart[dataset], c("ENSEMBL_MART_SNP", "ENSEMBL_MART_SEQUENCE", "plants_variations", "fungi_variations", "protists_variations"))) {
+                                              org_name_tmp <- unlist(stringr::str_split(mart$dataset[dataset], "_"))[1]
+                                              if (!is.element(mart$dataset[dataset], c(paste0(org_name_tmp, "_structvar_som"), paste0(org_name_tmp, "_structvar")))) {
+                                                  message("Processing mart ", mart$mart[dataset], " and dataset ", mart$dataset[dataset], " ...")
+                                                  tryCatch({
                                           filters_tbl <- 
                                     getFilters(dataset = mart$dataset[dataset],
                                                 mart    = mart$mart[dataset])
@@ -90,7 +97,9 @@ organismFilters <- function(organism,
                                     filters_tbl <-
                               dplyr::mutate(filters_tbl, dataset = datasetVec)
                                           
-                                          return(filters_tbl)
+                                          return(filters_tbl)}, error = function(e) {message("No entries found ...")})
+                                              }
+                                          }
                                       }))
             
             martVec <-
