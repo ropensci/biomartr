@@ -50,6 +50,7 @@
 organismBM <- function(organism = NULL, update = FALSE) {
     organism_name <- description <- mart <- dataset <- NULL
     
+    message("Starting retrieval of all available BioMart datasets for ", organism, " ...")
     if (update) {
         if (file.exists(getTMPFile(file.path("_biomart", "listMarts.txt"))))
             unlink(getTMPFile(file.path("_biomart", "listMarts.txt")))
@@ -61,26 +62,23 @@ organismBM <- function(organism = NULL, update = FALSE) {
             dir.create(file.path(tempdir(), "_biomart"))
         
         all_marts <- droplevels.data.frame(getMarts())
-        utils::write.table(
+        readr::write_tsv(
             all_marts,
             file.path(tempdir(), "_biomart", "listMarts.txt"),
-            sep = "\t",
-            col.names = TRUE,
-            row.names = FALSE,
-            quote     = FALSE
+            col_names = TRUE
         )
         
     }
     
     if (file.exists(getTMPFile(file.path("_biomart", "listMarts.txt"))))
         all_marts <-
-            readr::read_tsv(
+            as.data.frame(readr::read_tsv(
                 file.path(tempdir(), "_biomart", "listMarts.txt"),
                 col_types = readr::cols(
                     "mart" = readr::col_character(),
                     "version" = readr::col_character()
                 )
-            )
+            ))
     
     if (update) {
         if (file.exists(file.path(tempdir(), "_biomart", "listDatasets.txt")))
@@ -89,15 +87,20 @@ organismBM <- function(organism = NULL, update = FALSE) {
     }
     
     if (!file.exists(file.path(tempdir(), "_biomart", "listDatasets.txt"))) {
-        remove.corrupt.marts <- which(all_marts[, "mart"] %in% c("pride"))
+        remove.corrupt.marts <- which(all_marts[ , "mart"] %in% c("pride", "metazoa_variations"))
         
         if (length(remove.corrupt.marts) > 0) {
             all_marts <- all_marts[-remove.corrupt.marts , ]
         }
         
+        message("Datasets for the following marts will be retrieved:")
+        print(all_marts)
+        
+        
         all_datasets <-
             do.call(rbind, lapply(unlist(all_marts[ , "mart"]),
                                   function(mart) {
+                                    message("Processing mart ", mart, " ...")
                                       df <- getDatasets(mart = mart)
                                       df <-
                                           dplyr::mutate(dplyr::tbl_df(df), 
@@ -105,13 +108,10 @@ organismBM <- function(organism = NULL, update = FALSE) {
                                       return(df)
                                   }))
         
-        utils::write.table(
+        readr::write_tsv(
             all_datasets,
             file.path(tempdir(), "_biomart", "listDatasets.txt"),
-            sep = "\t",
-            col.names = TRUE,
-            row.names = FALSE,
-            quote     = FALSE
+            col_names = TRUE
         )
     }
     
@@ -164,6 +164,7 @@ organismBM <- function(organism = NULL, update = FALSE) {
         }
     }
     
+    message("Retrieval finished successfully.")
     if (is.null(organism))
         return(all_datasets)
 }
