@@ -60,6 +60,8 @@ organismAttributes <-
     
     # retrieve all available marts for the organism of interest
     orgBM <- organismBM(organism = organism, update = update)
+    message("\n")
+    message("Starting retrieval of all available BioMart attributes for ", organism, " ...")
     
     orgMarts <- names(table(orgBM$mart))
     martList <-
@@ -78,20 +80,26 @@ organismAttributes <-
         attrList <- lapply(martList, function(mart) {
             mart <- as.data.frame(mart)
             
-            
             mart_tbl <-
                 do.call(rbind, lapply(seq_len(nrow(mart)),
                                       function(dataset) {
-                                          attr_tbl <- 
-                                getAttributes(dataset = mart$dataset[dataset],
-                                                mart    = mart$mart[dataset])
-                                          
-                                          datasetVec <-
-                                rep(mart$dataset[dataset], nrow(attr_tbl))
-                                          
-                                          attr_tbl <-
-                                 dplyr::mutate(attr_tbl, dataset = datasetVec)
-                                          return(attr_tbl)
+                                          if (!is.element(mart$mart[dataset], c("ENSEMBL_MART_SNP", "ENSEMBL_MART_SEQUENCE", "plants_variations", "fungi_variations", "protists_variations"))) {
+                                              org_name_tmp <- unlist(stringr::str_split(mart$dataset[dataset], "_"))[1]
+                                              if (!is.element(mart$dataset[dataset], c(paste0(org_name_tmp, "_structvar_som"), paste0(org_name_tmp, "_structvar")))) {
+                                                  message("Processing mart ", mart$mart[dataset], " and dataset ", mart$dataset[dataset], " ...")
+                                                  tryCatch({attr_tbl <- 
+                                                      getAttributes(dataset = mart$dataset[dataset],
+                                                                    mart    = mart$mart[dataset])
+                                                  
+                                                  datasetVec <-
+                                                      rep(mart$dataset[dataset], nrow(attr_tbl))
+                                                  
+                                                  attr_tbl <-
+                                                      dplyr::mutate(attr_tbl, dataset = datasetVec)
+                                                  return(attr_tbl)
+                                                  }, error = function(e) {message("No entries found ...")})
+                                              }
+                                          }
                                       }))
             
             martVec <-
@@ -101,13 +109,10 @@ organismAttributes <-
             return(mart_tbl)
         })
         
-        utils::write.table(
+        readr::write_tsv(
             do.call(rbind, attrList),
             file.path(tempdir(), "_biomart", paste0(attrTXT, ".txt")),
-            sep       = "\t",
-            quote     = FALSE,
-            col.names = TRUE,
-            row.names = FALSE
+            col_names = TRUE
         )
     }
     
