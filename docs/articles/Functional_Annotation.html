@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1>Functional Annotation with biomartr</h1>
             
-            <h4 class="date">2020-02-07</h4>
+            <h4 class="date">2020-02-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Functional_Annotation.Rmd"><code>vignettes/Functional_Annotation.Rmd</code></a></small>
       <div class="hidden name"><code>Functional_Annotation.Rmd</code></div>
@@ -195,22 +195,23 @@ for the <em>Homo sapiens</em> gene <code>"GUCA2A"</code>.</p>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># list all available databases</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getMarts.html">getMarts</a></span>()</a></code></pre></div>
 <pre><code>  mart                  version                       
+  mart                  version                       
    &lt;chr&gt;                 &lt;chr&gt;                         
- 1 ENSEMBL_MART_ENSEMBL  Ensembl Genes 92              
- 2 ENSEMBL_MART_MOUSE    Mouse strains 92              
+ 1 ENSEMBL_MART_ENSEMBL  Ensembl Genes 99              
+ 2 ENSEMBL_MART_MOUSE    Mouse strains 99              
  3 ENSEMBL_MART_SEQUENCE Sequence                      
  4 ENSEMBL_MART_ONTOLOGY Ontology                      
- 5 ENSEMBL_MART_GENOMIC  Genomic features 92           
- 6 ENSEMBL_MART_SNP      Ensembl Variation 92          
- 7 ENSEMBL_MART_FUNCGEN  Ensembl Regulation 92         
- 8 plants_mart           Ensembl Plants Genes 39       
- 9 plants_variations     Ensembl Plants Variations 39  
-10 fungi_mart            Ensembl Fungi Genes 39        
-11 fungi_variations      Ensembl Fungi Variations 39   
-12 protists_mart         Ensembl Protists Genes 39     
-13 protists_variations   Ensembl Protists Variations 39
-14 metazoa_mart          Ensembl Metazoa Genes 39      
-15 metazoa_variations    Ensembl Metazoa Variations 39 </code></pre>
+ 5 ENSEMBL_MART_GENOMIC  Genomic features 99           
+ 6 ENSEMBL_MART_SNP      Ensembl Variation 99          
+ 7 ENSEMBL_MART_FUNCGEN  Ensembl Regulation 99         
+ 8 plants_mart           Ensembl Plants Genes 46       
+ 9 plants_variations     Ensembl Plants Variations 46  
+10 fungi_mart            Ensembl Fungi Genes 46        
+11 fungi_variations      Ensembl Fungi Variations 46   
+12 protists_mart         Ensembl Protists Genes 46     
+13 protists_variations   Ensembl Protists Variations 46
+14 metazoa_mart          Ensembl Metazoa Genes 46      
+15 metazoa_variations    Ensembl Metazoa Variations 46 </code></pre>
 </div>
 <div id="retrieve-available-datasets-from-a-specific-mart" class="section level3">
 <h3 class="hasAnchor">
@@ -219,23 +220,23 @@ for the <em>Homo sapiens</em> gene <code>"GUCA2A"</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getDatasets.html">getDatasets</a></span>(<span class="dt">mart =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>) , <span class="dv">5</span>)</a></code></pre></div>
 <pre><code> dataset                description                         version        
   &lt;chr&gt;                  &lt;chr&gt;                               &lt;chr&gt;          
-1 pabelii_gene_ensembl   Orangutan genes (PPYG2)             PPYG2          
-2 mpahari_gene_ensembl   Shrew mouse genes (PAHARI_EIJ_v1.1) PAHARI_EIJ_v1.1
-3 mspretus_gene_ensembl  Algerian mouse genes (SPRET_EiJ_v1) SPRET_EiJ_v1   
-4 chircus_gene_ensembl   Goat genes (ARS1)                   ARS1           
-5 trubripes_gene_ensembl Fugu genes (FUGU 4.0)               FUGU 4.0  </code></pre>
+1 mauratus_gene_ense… Golden Hamster genes (MesAur1. MesAur1.0  
+2 tbelangeri_gene_en… Tree Shrew genes (tupBel1)      tupBel1    
+3 csemilaevis_gene_e… Tongue sole genes (Cse_v1.0)    Cse_v1.0   
+4 acalliptera_gene_e… Eastern happy genes (fAstCal1. fAstCal1.2 
+5 hcomes_gene_ensembl Tiger tail seahorse genes (H_c H_comes_QL…  </code></pre>
 <p>Now you can select the dataset <code>hsapiens_gene_ensembl</code> and list all available attributes that can be retrieved from this dataset.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getDatasets.html">getDatasets</a></span>(<span class="dt">mart =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>) , <span class="dv">38</span>)</a></code></pre></div>
-<pre><code>1 xtropicalis_gene_ensembl Xenopus genes (JGI 4.2)                JGI 4.2     
- 2 saraneus_gene_ensembl    Shrew genes (sorAra1)                  sorAra1     
- 3 nleucogenys_gene_ensembl Gibbon genes (Nleu_3.0)                Nleu_3.0    
- 4 vpacos_gene_ensembl      Alpaca genes (vicPac1)                 vicPac1     
- 5 pcoquereli_gene_ensembl  Coquerel's sifaka genes (Pcoq_1.0)     Pcoq_1.0    
- 6 ggallus_gene_ensembl     Chicken genes (Gallus_gallus-5.0)      Gallus_gall…
- 7 csavignyi_gene_ensembl   C.savignyi genes (CSAV 2.0)            CSAV 2.0    
- 8 ngalili_gene_ensembl     Upper Galilee mountains blind mole ra… S.galili_v1…
- 9 rroxellana_gene_ensembl  Golden snub-nosed monkey genes (Rrox_… Rrox_v1     
-10 mnemestrina_gene_ensembl Pig-tailed macaque genes (Mnem_1.0)    Mnem_1.0    
+<pre><code>1 lcrocea_gene_ense Large yellow croaker genes ( L_crocea_2.0 
+ 2 xmaculatus_gene_e Platyfish genes (X_maculatus X_maculatus-…
+ 3 etelfairi_gene_en Lesser hedgehog tenrec genes TENREC       
+ 4 lcalcarifer_gene_ Barramundi perch genes (ASB_ ASB_HGAPasse…
+ 5 ssjinhua_gene_ens Pig - Jinhua genes (Jinhua_p Jinhua_pig_v1
+ 6 acchrysaetos_gene Golden eagle genes (bAquChr1 bAquChr1.2   
+ 7 elucius_gene_ense Northern pike genes (Eluc_V3) Eluc_V3      
+ 8 oanatinus_gene_en Platypus genes (OANA5)        OANA5        
+ 9 oaries_gene_ensem Sheep genes (Oar_v3.1)        Oar_v3.1     
+10 rferrumequinum_ge Greater horseshoe bat genes mRhiFer1_v1.p
 # ... with 28 more rows</code></pre>
 </div>
 <div id="retrieve-available-attributes-from-a-specific-dataset" class="section level3">
@@ -247,7 +248,8 @@ for the <em>Homo sapiens</em> gene <code>"GUCA2A"</code>.</p>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co"># list all available attributes for dataset: hsapiens_gene_ensembl</span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>( biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getAttributes.html">getAttributes</a></span>(<span class="dt">mart    =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, </a>
 <a class="sourceLine" id="cb12-5" data-line-number="5">                              <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>), <span class="dv">10</span> )</a></code></pre></div>
-<pre><code>                            name                  description
+<pre><code>Starting retrieval of attribute information from mart ENSEMBL_MART_ENSEMBL and dataset hsapiens_gene_ensembl ...
+                            name                  description
 1                ensembl_gene_id               Gene stable ID
 2        ensembl_gene_id_version       Gene stable ID version
 3          ensembl_transcript_id         Transcript stable ID
@@ -268,7 +270,8 @@ for the <em>Homo sapiens</em> gene <code>"GUCA2A"</code>.</p>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># list all available filters for dataset: hsapiens_gene_ensembl</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>( biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getFilters.html">getFilters</a></span>(<span class="dt">mart    =</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, </a>
 <a class="sourceLine" id="cb14-5" data-line-number="5">                           <span class="dt">dataset =</span> <span class="st">"hsapiens_gene_ensembl"</span>), <span class="dv">10</span> )</a></code></pre></div>
-<pre><code>                 name                            description
+<pre><code>Starting retrieval of filters information from mart ENSEMBL_MART_ENSEMBL and dataset hsapiens_gene_ensembl ...
+                 name                            description
 1     chromosome_name               Chromosome/scaffold name
 2               start                                  Start
 3                 end                                    End
