@@ -83,7 +83,6 @@ organismAttributes <-
             mart_tbl <-
                 do.call(rbind, lapply(seq_len(nrow(mart)),
                                       function(dataset) {
-                                          if (!is.element(mart$mart[dataset], c("ENSEMBL_MART_SNP", "ENSEMBL_MART_SEQUENCE", "plants_variations", "fungi_variations", "protists_variations"))) {
                                               org_name_tmp <- unlist(stringr::str_split(mart$dataset[dataset], "_"))[1]
                                               if (!is.element(mart$dataset[dataset], c(paste0(org_name_tmp, "_structvar_som"), paste0(org_name_tmp, "_structvar")))) {
                                                   message("Processing mart ", mart$mart[dataset], " and dataset ", mart$dataset[dataset], " ...")
@@ -99,7 +98,7 @@ organismAttributes <-
                                                   return(attr_tbl)
                                                   }, error = function(e) {message("No entries found ...")})
                                               }
-                                          }
+                                          
                                       }))
             
             martVec <-
