@@ -1,21 +1,36 @@
-#' @title List All Available Genomes
+#' @title List All Available Genomes either by kingdom, group, or subgroup
 #' @description This function retrieves the names of all genomes available on 
 #' the NCBI ftp:// server and stores the results in a file named 'overview.txt' 
 #' inside the directory _ncbi_downloads' that is built inside the workspace.
 #' @param db a character string specifying the database for which genome 
-#' availability shall be checked, e.g. \code{db = "refseq"}, 
-#' \code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}. 
+#' availability shall be checked. Available options are:
+#' \itemize{
+#' \item \code{db = "refseq"} 
+#' \item \code{db = "genbank"}
+#' \item \code{db = "ensembl"}
+#' }
 #' @param type a character string specifying a potential filter of available 
-#' genomes. Options are \code{type = "all"}, \code{type = "kingdom"}, 
-#' \code{type = "group"}, \code{type = "subgroup"}.
+#' genomes. Available options are:
+#' \itemize{
+#' \item \code{type = "all"}
+#' \item \code{type = "kingdom"} 
+#' \item \code{type = "group"}
+#' \item \code{type = "subgroup"}
+#' }
 #' @param subset a character string or character vector specifying a subset of 
 #' \code{type}. E.g. if users are interested in retrieving all
 #' \code{Eukaryota} species, they can specify: \code{type = "kingdom"} and 
 #' \code{subset = "Eukaryota"}. 
 #' @param details a boolean value specifying whether only the scientific names 
 #' of stored genomes shall be returned (details = FALSE) or all information such
-#' as \code{organism_name},\code{kingdoms}, \code{group}, \code{subgroup}, 
-#' \code{file_size_MB}, etc.
+#' as 
+#' \itemize{
+#' \item \code{organism_name}
+#' \item \code{kingdoms}
+#' \item \code{group}
+#' \item \code{subgroup} 
+#' \item \code{file_size_MB}, etc.
+#' }
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI 
 #' and creates a directory '_ncbi_downloads' in the \code{temdir()}
@@ -29,6 +44,12 @@
 #' \dontrun{
 #' # print details for refseq
 #' listGenomes(db = "refseq") 
+#' # print details for all plants in refseq
+#' listGenomes(db = "refseq", type = "kingdom")
+#' # print details for all plant groups in refseq
+#' listGenomes(db = "refseq", type = "group")
+#' # print details for all plant subgroups in refseq
+#' listGenomes(db = "refseq", type = "subgroup")
 #' }
 #' @export
 
@@ -38,10 +59,10 @@ listGenomes <-
              subset = NULL,
              details = FALSE) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "ensemblgenomes")))
+                              "ensembl")))
             stop(
                 "Please specify a database that is supported by this function. 
-                E.g. 'refseq', 'genbank', 'ensembl' or 'ensemblgenomes'.",
+                E.g. 'refseq', 'genbank', or 'ensembl'.",
                 call. = FALSE
             )
         
@@ -83,7 +104,7 @@ listGenomes <-
                         )
                     }
                     
-                    return(joined.df)
+                    return(tibble::as_tibble(joined.df))
                 }
                 
                 if (!details) {
@@ -121,7 +142,7 @@ listGenomes <-
                         return(dplyr::filter(joined.df, 
                                              is.element(kingdoms, subset)))
                     } else {
-                        return(joined.df)
+                        return(tibble::as_tibble(joined.df))
                     }
                 }
                 
@@ -167,7 +188,7 @@ listGenomes <-
                         return(dplyr::filter(joined.df, 
                                              is.element(group, subset)))
                     } else {
-                        return(joined.df)
+                        return(tibble::as_tibble(joined.df))
                     }
                 }
                 
@@ -213,7 +234,7 @@ listGenomes <-
                         return(dplyr::filter(joined.df, 
                                              is.element(subgroup, subset)))
                     } else {
-                        return(joined.df)
+                        return(tibble::as_tibble(joined.df))
                     }
                 }
                 
@@ -274,7 +295,7 @@ listGenomes <-
                         ))
                         
                     } else {
-                        return(ensemblinfo)
+                        return(tibble::as_tibble(ensemblinfo))
                     }
                 }
             }
