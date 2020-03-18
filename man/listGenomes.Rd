@@ -2,18 +2,27 @@
 % Please edit documentation in R/listGenomes.R
 \name{listGenomes}
 \alias{listGenomes}
-\title{List All Available Genomes}
+\title{List All Available Genomes either by kingdom, group, or subgroup}
 \usage{
 listGenomes(db = "refseq", type = "all", subset = NULL, details = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database for which genome 
-availability shall be checked, e.g. \code{db = "refseq"}, 
-\code{db = "genbank"}, \code{db = "ensembl"}, \code{db = "ensemblgenomes"}.}
+availability shall be checked. Available options are:
+\itemize{
+\item \code{db = "refseq"} 
+\item \code{db = "genbank"}
+\item \code{db = "ensembl"}
+}}
 
 \item{type}{a character string specifying a potential filter of available 
-genomes. Options are \code{type = "all"}, \code{type = "kingdom"}, 
-\code{type = "group"}, \code{type = "subgroup"}.}
+genomes. Available options are:
+\itemize{
+\item \code{type = "all"}
+\item \code{type = "kingdom"} 
+\item \code{type = "group"}
+\item \code{type = "subgroup"}
+}}
 
 \item{subset}{a character string or character vector specifying a subset of 
 \code{type}. E.g. if users are interested in retrieving all
@@ -22,8 +31,14 @@ genomes. Options are \code{type = "all"}, \code{type = "kingdom"},
 
 \item{details}{a boolean value specifying whether only the scientific names 
 of stored genomes shall be returned (details = FALSE) or all information such
-as \code{organism_name},\code{kingdoms}, \code{group}, \code{subgroup}, 
-\code{file_size_MB}, etc.}
+as 
+\itemize{
+\item \code{organism_name}
+\item \code{kingdoms}
+\item \code{group}
+\item \code{subgroup} 
+\item \code{file_size_MB}, etc.
+}}
 }
 \description{
 This function retrieves the names of all genomes available on 
@@ -45,6 +60,12 @@ and cannot be accurately accessed via a proxy.
 \dontrun{
 # print details for refseq
 listGenomes(db = "refseq") 
+# print details for all plants in refseq
+listGenomes(db = "refseq", type = "kingdom")
+# print details for all plant groups in refseq
+listGenomes(db = "refseq", type = "group")
+# print details for all plant subgroups in refseq
+listGenomes(db = "refseq", type = "subgroup")
 }
 }
 \author{
