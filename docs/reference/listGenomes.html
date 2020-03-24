@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List All Available Genomes — listGenomes • biomartr</title>
+<title>List All Available Genomes either by kingdom, group, or subgroup — listGenomes • biomartr</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="List All Available Genomes — listGenomes" />
+<meta property="og:title" content="List All Available Genomes either by kingdom, group, or subgroup — listGenomes" />
 <meta property="og:description" content="This function retrieves the names of all genomes available on 
 the NCBI ftp:// server and stores the results in a file named 'overview.txt' 
 inside the directory _ncbi_downloads' that is built inside the workspace." />
@@ -134,7 +134,7 @@ inside the directory _ncbi_downloads' that is built inside the workspace." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List All Available Genomes</h1>
+    <h1>List All Available Genomes either by kingdom, group, or subgroup</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listGenomes.R'><code>R/listGenomes.R</code></a></small>
     <div class="hidden name"><code>listGenomes.Rd</code></div>
     </div>
@@ -153,14 +153,21 @@ inside the directory _ncbi_downloads' that is built inside the workspace.</p>
     <tr>
       <th>db</th>
       <td><p>a character string specifying the database for which genome 
-availability shall be checked, e.g. <code>db = "refseq"</code>, 
-<code>db = "genbank"</code>, <code>db = "ensembl"</code>, <code>db = "ensemblgenomes"</code>.</p></td>
+availability shall be checked. Available options are:</p><ul>
+<li><p><code>db = "refseq"</code></p></li>
+<li><p><code>db = "genbank"</code></p></li>
+<li><p><code>db = "ensembl"</code></p></li>
+</ul></td>
     </tr>
     <tr>
       <th>type</th>
       <td><p>a character string specifying a potential filter of available 
-genomes. Options are <code>type = "all"</code>, <code>type = "kingdom"</code>, 
-<code>type = "group"</code>, <code>type = "subgroup"</code>.</p></td>
+genomes. Available options are:</p><ul>
+<li><p><code>type = "all"</code></p></li>
+<li><p><code>type = "kingdom"</code></p></li>
+<li><p><code>type = "group"</code></p></li>
+<li><p><code>type = "subgroup"</code></p></li>
+</ul></td>
     </tr>
     <tr>
       <th>subset</th>
@@ -173,8 +180,13 @@ genomes. Options are <code>type = "all"</code>, <code>type = "kingdom"</code>,
       <th>details</th>
       <td><p>a boolean value specifying whether only the scientific names 
 of stored genomes shall be returned (details = FALSE) or all information such
-as <code>organism_name</code>,<code>kingdoms</code>, <code>group</code>, <code>subgroup</code>, 
-<code>file_size_MB</code>, etc.</p></td>
+as</p><ul>
+<li><p><code>organism_name</code></p></li>
+<li><p><code>kingdoms</code></p></li>
+<li><p><code>group</code></p></li>
+<li><p><code>subgroup</code></p></li>
+<li><p><code>file_size_MB</code>, etc.</p></li>
+</ul></td>
     </tr>
     </table>
 
@@ -194,6 +206,12 @@ and cannot be accurately accessed via a proxy.</p>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># print details for refseq</span>
 <span class='fu'>listGenomes</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>)
+<span class='co'># print details for all plants in refseq</span>
+<span class='fu'>listGenomes</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"kingdom"</span>)
+<span class='co'># print details for all plant groups in refseq</span>
+<span class='fu'>listGenomes</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"group"</span>)
+<span class='co'># print details for all plant subgroups in refseq</span>
+<span class='fu'>listGenomes</span>(<span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"subgroup"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

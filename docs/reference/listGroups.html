@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List number of available genomes in each group — listGroups • biomartr</title>
+<title>List number of available genomes in each taxonomic group — listGroups • biomartr</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="List number of available genomes in each group — listGroups" />
+<meta property="og:title" content="List number of available genomes in each taxonomic group — listGroups" />
 <meta property="og:description" content="Users can retrieve the available number of sequenced 
 genomes per group. Only available for db = &quot;refseq&quot; and 
 db = &quot;genbank&quot;." />
@@ -134,7 +134,7 @@ db = &quot;genbank&quot;." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List number of available genomes in each group</h1>
+    <h1>List number of available genomes in each taxonomic group</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/biomartr/blob/master/R/listGroups.R'><code>R/listGroups.R</code></a></small>
     <div class="hidden name"><code>listGroups.Rd</code></div>
     </div>
@@ -153,8 +153,10 @@ genomes per group. Only available for <code>db = "refseq"</code> and
     <tr>
       <th>db</th>
       <td><p>a character string specifying the database for which genome 
-availability shall be checked, e.g. <code>db = "refseq"</code> and 
-<code>db = "genbank"</code>.</p></td>
+availability shall be checked. Available options are:</p><ul>
+<li><p><code>db = "refseq"</code></p></li>
+<li><p><code>db = "genbank"</code></p></li>
+</ul></td>
     </tr>
     <tr>
       <th>kingdom</th>

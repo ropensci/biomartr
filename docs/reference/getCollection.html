@@ -155,6 +155,9 @@ several databases.</p>
   <span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>,
   <span class='no'>organism</span>,
   <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>release</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>remove_annotation_outliers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='st'>"_db_downloads"</span>, <span class='st'>"collections"</span>)
 )</pre>
 
@@ -181,6 +184,20 @@ shall be retrieved:</p><ul>
     <tr>
       <th>reference</th>
       <td><p>a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.</p></td>
+    </tr>
+    <tr>
+      <th>release</th>
+      <td><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning that the most recent database version is used.</p></td>
+    </tr>
+    <tr>
+      <th>gunzip</th>
+      <td><p>a logical value indicating whether or not files should be unzipped.</p></td>
+    </tr>
+    <tr>
+      <th>remove_annotation_outliers</th>
+      <td><p>shall outlier lines be removed from the input annotation_file?
+If yes, then the initial annotation_file will be overwritten and the removed outlier lines 
+will be stored at <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code> for further exploration.</p></td>
     </tr>
     <tr>
       <th>path</th>
