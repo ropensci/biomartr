@@ -8,6 +8,9 @@ getCollection(
   db = "refseq",
   organism,
   reference = TRUE,
+  release = NULL,
+  gunzip = FALSE,
+  remove_annotation_outliers = FALSE,
   path = file.path("_db_downloads", "collections")
 )
 }
@@ -28,6 +31,14 @@ shall be retrieved:
 }}
 
 \item{reference}{a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+
+\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.}
+
+\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+
+\item{remove_annotation_outliers}{shall outlier lines be removed from the input annotation_file?
+If yes, then the initial annotation_file will be overwritten and the removed outlier lines 
+will be stored at \code{\link{tempdir}} for further exploration.}
 
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding collection shall be stored. Default is 

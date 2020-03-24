@@ -2,14 +2,17 @@
 % Please edit documentation in R/listGroups.R
 \name{listGroups}
 \alias{listGroups}
-\title{List number of available genomes in each group}
+\title{List number of available genomes in each taxonomic group}
 \usage{
 listGroups(db = "refseq", kingdom = "all", details = FALSE)
 }
 \arguments{
 \item{db}{a character string specifying the database for which genome 
-availability shall be checked, e.g. \code{db = "refseq"} and 
-\code{db = "genbank"}.}
+availability shall be checked. Available options are:
+\itemize{
+\item \code{db = "refseq"} 
+\item \code{db = "genbank"}
+}}
 
 \item{kingdom}{a kingdom specification retrieved by 
 \code{\link{getKingdoms}}.}
