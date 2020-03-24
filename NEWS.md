@@ -19,6 +19,8 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - adding a new message system to `biomartr::organismBM()`, `biomartr::organismAttributes()`, and `biomartr::organismFilters()` so that large API queries don't seem so unresponsive
 
+- `getCollection()` receives new arguments `release`, `remove_annotation_outliers`, and `gunzip` that will now be passed on to downstream retrieval functions
+
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
