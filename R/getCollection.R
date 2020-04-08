@@ -206,6 +206,7 @@ getCollection <-
                 
                 message("Collection retrieval finished successfully!")
                 message("\n")
+                return(file.path(getwd(), path))
                 
         }
         
@@ -230,6 +231,7 @@ getCollection <-
                 
                 message("Collection retrieval finished successfully!")
                 message("\n")
+                return(file.path(getwd(), path))
                 
         }
 }
