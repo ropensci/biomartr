@@ -4,6 +4,23 @@
 
 - New function `check_annotation_biomartr()` helps to check whether downloaded GFF or GTF files are corrupt. Find more details [here](https://github.com/lawremi/rtracklayer/issues/15)
 
+- new function `getCollectionSet()` allows users to retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats of multiple species
+
+Example:
+
+```r
+# define scientific names of species for which
+# collections shall be retrieved
+organism_list <- c("Arabidopsis thaliana", 
+                   "Arabidopsis lyrata", 
+                   "Capsella rubella")
+# download the collection of Arabidopsis thaliana from refseq
+# and store the corresponding genome file in '_ncbi_downloads/collection'
+ getCollectionSet( db       = "refseq", 
+             organism = organism_list, 
+             path = "set_collections")
+```
+
 ### New Features 
 
 - the `getGFF()` function receives a new argument `remove_annotation_outliers` to enable users to remove corrupt lines from a GFF file
