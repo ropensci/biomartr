@@ -141,9 +141,20 @@
 <h3 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New Functions</h3>
 <ul>
-<li>New function <code><a href="../reference/check_annotation_biomartr.html">check_annotation_biomartr()</a></code> helps to check whether downloaded GFF or GTF files are corrupt. Find more details <a href="https://github.com/lawremi/rtracklayer/issues/15">here</a>
-</li>
+<li><p>New function <code><a href="../reference/check_annotation_biomartr.html">check_annotation_biomartr()</a></code> helps to check whether downloaded GFF or GTF files are corrupt. Find more details <a href="https://github.com/lawremi/rtracklayer/issues/15">here</a></p></li>
+<li><p>new function <code><a href="../reference/getCollectionSet.html">getCollectionSet()</a></code> allows users to retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats of multiple species</p></li>
 </ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># define scientific names of species for which</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># collections shall be retrieved</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">organism_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">                   <span class="st">"Arabidopsis lyrata"</span>, </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">                   <span class="st">"Capsella rubella"</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># download the collection of Arabidopsis thaliana from refseq</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># and store the corresponding genome file in '_ncbi_downloads/collection'</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"> <span class="kw"><a href="../reference/getCollectionSet.html">getCollectionSet</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">             <span class="dt">organism =</span> organism_list, </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">             <span class="dt">path =</span> <span class="st">"set_collections"</span>)</a></code></pre></div>
 </div>
 <div id="new-features" class="section level3">
 <h3 class="hasAnchor">
@@ -151,7 +162,7 @@
 <ul>
 <li>the <code><a href="../reference/getGFF.html">getGFF()</a></code> function receives a new argument <code>remove_annotation_outliers</code> to enable users to remove corrupt lines from a GFF file Example:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Ath_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFF.html">getGFF</a></span>(<span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, <span class="dt">remove_annotation_outliers =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Ath_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFF.html">getGFF</a></span>(<span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, <span class="dt">remove_annotation_outliers =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <ul>
 <li><p>the <code><a href="../reference/getGFFSet.html">getGFFSet()</a></code> function receives a new argument <code>remove_annotation_outliers</code> to enable users to remove corrupt lines from a GFF file</p></li>
 <li><p>the <code><a href="../reference/getGTF.html">getGTF()</a></code> function receives a new argument <code>remove_annotation_outliers</code> to enable users to remove corrupt lines from a GTF file</p></li>
