@@ -3,8 +3,8 @@
 #' specifications and performs a biomart query for the given set of gene ids.
 #' @param genes a character vector storing the gene ids of a organisms
 #'  of interest to be queried against BioMart.
-#' @param mart a character string specifying the mart to be used, 
-#' e.g. mart = "ensembl".
+#' @param mart a character string specifying the mart to be used. Users
+#' can obtain available marts using \code{\link{getMarts}}.
 #' @param dataset a character string specifying the dataset within the mart to
 #'  be used, e.g. \code{dataset} = \code{"hsapiens_gene_ensembl"}.
 #' @param attributes a character vector specifying the attributes that shall be

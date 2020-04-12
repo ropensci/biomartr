@@ -10,8 +10,8 @@ biomart(genes, mart, dataset, attributes, filters, ...)
 \item{genes}{a character vector storing the gene ids of a organisms
 of interest to be queried against BioMart.}
 
-\item{mart}{a character string specifying the mart to be used, 
-e.g. mart = "ensembl".}
+\item{mart}{a character string specifying the mart to be used. Users
+can obtain available marts using \code{\link{getMarts}}.}
 
 \item{dataset}{a character string specifying the dataset within the mart to
 be used, e.g. \code{dataset} = \code{"hsapiens_gene_ensembl"}.}
