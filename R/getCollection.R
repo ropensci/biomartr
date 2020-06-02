@@ -67,7 +67,7 @@ getCollection <-
         new_name <- stringr::str_replace_all(organism," ","_")
         message("Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
             
-        org_exists <- is.genome.available(db = "refseq", organism, details = TRUE)   
+        org_exists <- is.genome.available(db = db, organism, details = TRUE)   
         
         if (isFALSE(org_exists) || length(org_exists) == 0)
             stop("No entry was found for organism ",organism,". Could the name be misspelled?",  call. = FALSE)
