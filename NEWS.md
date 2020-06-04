@@ -38,6 +38,9 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - `getCollection()` receives new arguments `release`, `remove_annotation_outliers`, and `gunzip` that will now be passed on to downstream retrieval functions
 
+### Bug Fixes
+
+- Fixing bug where genome availability check in `getCollection()` was only performed in `NCBI RefSeq` and not in other databases due to a constant used in `is.genome.available()` rather than a variable (Many thanks to Takahiro Yamada for cathing the bug) #53
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
