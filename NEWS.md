@@ -2,7 +2,7 @@
 
 ### New Features 
 
-- the `getGTF()` function receives a new argument `assembly_type = "toplevel"` to enable users to choose between toplevel and primary assembly. Setting `assembly_type = "primary_assembly"` will save a lot a space on hard drives for people using large genomes.
+- the `getGTF()`, `getGenome()` and `getGenomeSet()` functions receives a new argument `assembly_type = "toplevel"` to enable users to choose between toplevel and primary assembly. Setting `assembly_type = "primary_assembly"` will save a lot a space on hard drives for people using large genomes.
 
 ## biomartr 1.0.0
 
