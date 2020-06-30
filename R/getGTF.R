@@ -17,6 +17,15 @@
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding annotation file shall be stored. Default is 
 #' \code{path = file.path("ensembl","annotation")}.
+#' @param assembly_type a character string specifying from which assembly type the genome 
+#' shall be retrieved from (ensembl only, else this argument is ignored):
+#' Default is 
+#' \code{assembly_type = "toplevel")}.
+#' This will give you all multi-chromosomes (copies of the same chromosome with small variations).
+#' As an example the toplevel fasta genome in human is over 70 GB uncompressed.
+#' To get primary assembly with 1 chromosome variant per chromosome:
+#' \code{assembly_type = "primary_assembly")}.
+#' As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from ENSEMBL:
 #' and creates a directory 'ensembl/annotation' to store
@@ -26,11 +35,16 @@
 #' no download process will be performed.
 #' @return File path to downloaded annotation file.
 #' @examples \dontrun{
-#' # download the annotation of Arabidopsis thaliana from refseq
+#' # download the annotation of Homo sapiens from ensembl
 #' # and store the corresponding genome file in 'ensembl/annotation'
-#' getGTF( db       = "ensembl", 
-#'                organism = "Homo sapiens", 
-#'                path = file.path("ensembl","annotation"))
+#' getGTF(db            = "ensembl", 
+#'        organism      = "Homo sapiens", 
+#'        path          = file.path("ensembl","annotation"))
+#'                
+#' getGTF(db            = "ensembl", 
+#'        organism      = "Homo sapiens", 
+#'        path          = file.path("ensembl","annotation"),
+#'        assembly_type = "primary_assembly")
 #' 
 #' }
 #' 
@@ -44,12 +58,14 @@ getGTF <-
         function(db = "ensembl",
                  organism,
                  remove_annotation_outliers = FALSE,
-                 path = file.path("ensembl", "annotation")) {
+                 path = file.path("ensembl", "annotation"),
+                 assembly_type = "toplevel") {
                 if (!is.element(db, c("ensembl")))
                         stop(
                                 "Please select one of the available data bases: db = 'ensembl'.", call. = FALSE
                         )
-                
+                if (!(assembly_type %in% c("toplevel", "primary_assembly")))
+                  stop("Please select one the available assembly types: \ntoplevel, primary_assembly")
                 message("Starting gtf retrieval of '", organism, "' from ", db, " ...")
                 message("\n")
                 
@@ -62,7 +78,7 @@ getGTF <-
                         # download genome sequence from ENSEMBL
                         genome.path <-
                                 getENSEMBL.gtf(organism, type = "dna", 
-                                                      id.type = "toplevel", path)
+                                                      id.type = assembly_type, path)
                         
                         if (is.logical(genome.path)) {
                             if (!genome.path)
@@ -200,7 +216,7 @@ getGTF <-
                         # download genome sequence from ENSEMBLGENOMES
                         genome.path <-
                                 getENSEMBLGENOMES.gtf(organism, type = "dna", 
-                                                             id.type = "toplevel", path)
+                                                             id.type = assembly_type, path)
                         
                         if (is.logical(genome.path)) {
                             if (!genome.path)

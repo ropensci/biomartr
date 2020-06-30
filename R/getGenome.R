@@ -27,6 +27,7 @@
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding genome shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
+#' @inheritParams getGTF
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -72,7 +73,8 @@ getGenome <-
              reference = FALSE,
              release = NULL,
              gunzip = FALSE,
-             path = file.path("_ncbi_downloads", "genomes")) {
+             path = file.path("_ncbi_downloads", "genomes"),
+             assembly_type = "toplevel") {
         
        if (!is.element(db, c("refseq", "genbank", "ensembl")))
             stop(
@@ -80,6 +82,8 @@ getGenome <-
                 'genbank', or 'ensembl'.",
                 call. = FALSE
             )
+        if (!(assembly_type %in% c("toplevel", "primary_assembly")))
+            stop("Please select one the available assembly types: \ntoplevel, primary_assembly")
         
         if (!is.logical(reference))
             stop("Please specify 'reference' as either TRUE or FALSE.", call. = FALSE)
@@ -407,7 +411,7 @@ getGenome <-
                         getENSEMBL.Seq(
                                 organism,
                                 type = "dna",
-                                id.type = "toplevel",
+                                id.type = assembly_type,
                                 release = release,
                                 path = path
                         )
@@ -576,7 +580,7 @@ getGenome <-
                         getENSEMBLGENOMES.Seq(organism,
                                               release = release,
                                               type = "dna",
-                                              id.type = "toplevel",
+                                              id.type = assembly_type,
                                               path = path)
             
             if (is.logical(genome.path[1])) {

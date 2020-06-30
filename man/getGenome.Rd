@@ -10,7 +10,8 @@ getGenome(
   reference = FALSE,
   release = NULL,
   gunzip = FALSE,
-  path = file.path("_ncbi_downloads", "genomes")
+  path = file.path("_ncbi_downloads", "genomes"),
+  assembly_type = "toplevel"
 )
 }
 \arguments{
@@ -39,6 +40,16 @@ that the most recent database version is used.}
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding genome shall be stored. Default is 
 \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
+
+\item{assembly_type}{a character string specifying from which assembly type the genome 
+shall be retrieved from (ensembl only, else this argument is ignored):
+Default is 
+\code{assembly_type = "toplevel")}.
+This will give you all multi-chromosomes (copies of the same chromosome with small variations).
+As an example the toplevel fasta genome in human is over 70 GB uncompressed.
+To get primary assembly with 1 chromosome variant per chromosome:
+\code{assembly_type = "primary_assembly")}.
+As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
 }
 \value{
 File path to downloaded genome.
