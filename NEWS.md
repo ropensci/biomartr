@@ -1,8 +1,3 @@
-## biomartr 1.0.1
-
-### New Features 
-
-- the `getGTF()`, `getGenome()` and `getGenomeSet()` functions receives a new argument `assembly_type = "toplevel"` to enable users to choose between toplevel and primary assembly. Setting `assembly_type = "primary_assembly"` will save a lot a space on hard drives for people using large genomes.
 
 ## biomartr 1.0.0
 
@@ -43,6 +38,9 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 - adding a new message system to `biomartr::organismBM()`, `biomartr::organismAttributes()`, and `biomartr::organismFilters()` so that large API queries don't seem so unresponsive
 
 - `getCollection()` receives new arguments `release`, `remove_annotation_outliers`, and `gunzip` that will now be passed on to downstream retrieval functions
+
+- the `getGTF()`, `getGenome()` and `getGenomeSet()` functions receives a new argument `assembly_type = "toplevel"` to enable users to choose between toplevel and primary assembly when using ensembl database. Setting `assembly_type = "primary_assembly"` will save a lot a space on hard drives for people using large ensembl genomes.
+
 
 ### Bug Fixes
 
