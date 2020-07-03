@@ -12,7 +12,8 @@ getGenomeSet(
   clean_retrieval = TRUE,
   gunzip = TRUE,
   update = FALSE,
-  path = "set_genomes"
+  path = "set_genomes",
+  assembly_type = "toplevel"
 )
 }
 \arguments{
@@ -48,6 +49,16 @@ output folder shall be updated and re-loaded (\code{update = TRUE} or whether th
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding genomes shall be stored. Default is
 \code{path} = \code{"set_genomes"}.}
+
+\item{assembly_type}{a character string specifying from which assembly type the genome 
+shall be retrieved from (ensembl only, else this argument is ignored):
+Default is 
+\code{assembly_type = "toplevel")}.
+This will give you all multi-chromosomes (copies of the same chromosome with small variations).
+As an example the toplevel fasta genome in human is over 70 GB uncompressed.
+To get primary assembly with 1 chromosome variant per chromosome:
+\code{assembly_type = "primary_assembly")}.
+As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
 }
 \value{
 File path to downloaded genomes.

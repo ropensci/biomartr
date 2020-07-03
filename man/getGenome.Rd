@@ -10,11 +10,12 @@ getGenome(
   reference = FALSE,
   release = NULL,
   gunzip = FALSE,
-  path = file.path("_ncbi_downloads", "genomes")
+  path = file.path("_ncbi_downloads", "genomes"),
+  assembly_type = "toplevel"
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
@@ -22,7 +23,7 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism: 
+\item{organism}{there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -36,20 +37,30 @@ that the most recent database version is used.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
-\item{path}{a character string specifying the location (a folder) in which 
-the corresponding genome shall be stored. Default is 
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding genome shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
+
+\item{assembly_type}{a character string specifying from which assembly type the genome 
+shall be retrieved from (ensembl only, else this argument is ignored):
+Default is 
+\code{assembly_type = "toplevel")}.
+This will give you all multi-chromosomes (copies of the same chromosome with small variations).
+As an example the toplevel fasta genome in human is over 70 GB uncompressed.
+To get primary assembly with 1 chromosome variant per chromosome:
+\code{assembly_type = "primary_assembly")}.
+As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
 }
 \value{
 File path to downloaded genome.
 }
 \description{
 Main genome retrieval function for an organism of interest.
-By specifying the scientific name of an organism of interest the 
+By specifying the scientific name of an organism of interest the
 corresponding fasta-file storing the genome of the organism of interest
-can be downloaded and stored locally. Genome files can be retrieved from 
-several databases. In addition, the genome summary statistics for the 
-retrieved species is stored locally to provide users with 
+can be downloaded and stored locally. Genome files can be retrieved from
+several databases. In addition, the genome summary statistics for the
+retrieved species is stored locally to provide users with
 insights regarding the genome assembly quality (see \code{\link{summary_genome}} for details).
 This is useful when comparing genomes with large difference in genome assembly qualities.
 }
@@ -59,7 +70,7 @@ Internally this function loads the the overview.txt file from NCBI:
  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
- 
+
 and creates a directory '_ncbi_downloads/genomes' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
@@ -71,8 +82,8 @@ no download process will be performed.
 
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-file_path <- getGenome( db       = "refseq", 
-             organism = "Arabidopsis thaliana", 
+file_path <- getGenome( db       = "refseq",
+             organism = "Arabidopsis thaliana",
              path = file.path("_ncbi_downloads","genomes"))
 
 Ath_genome <- read_genome(file_path, format = "fasta")
@@ -80,8 +91,8 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 
 # download the genome of Arabidopsis thaliana from genbank
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-file_path <- getGenome( db       = "genbank", 
-             organism = "Arabidopsis thaliana", 
+file_path <- getGenome( db       = "genbank",
+             organism = "Arabidopsis thaliana",
              path = file.path("_ncbi_downloads","genomes"))
 
 Ath_genome <- read_genome(file_path, format = "fasta")
@@ -89,9 +100,9 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 
 }
 \seealso{
-\code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, 
+\code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}},
+\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
+\code{\link{getAssemblyStats}}, \code{\link{summary_genome}},
 \code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
 }
 \author{

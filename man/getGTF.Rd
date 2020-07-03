@@ -8,7 +8,8 @@ getGTF(
   db = "ensembl",
   organism,
   remove_annotation_outliers = FALSE,
-  path = file.path("ensembl", "annotation")
+  path = file.path("ensembl", "annotation"),
+  assembly_type = "toplevel"
 )
 }
 \arguments{
@@ -28,6 +29,16 @@ for further exploration.}
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding annotation file shall be stored. Default is 
 \code{path = file.path("ensembl","annotation")}.}
+
+\item{assembly_type}{a character string specifying from which assembly type the genome 
+shall be retrieved from (ensembl only, else this argument is ignored):
+Default is 
+\code{assembly_type = "toplevel")}.
+This will give you all multi-chromosomes (copies of the same chromosome with small variations).
+As an example the toplevel fasta genome in human is over 70 GB uncompressed.
+To get primary assembly with 1 chromosome variant per chromosome:
+\code{assembly_type = "primary_assembly")}.
+As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
 }
 \value{
 File path to downloaded annotation file.
@@ -49,11 +60,16 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-# download the annotation of Arabidopsis thaliana from refseq
+# download the annotation of Homo sapiens from ensembl
 # and store the corresponding genome file in 'ensembl/annotation'
-getGTF( db       = "ensembl", 
-               organism = "Homo sapiens", 
-               path = file.path("ensembl","annotation"))
+getGTF(db            = "ensembl", 
+       organism      = "Homo sapiens", 
+       path          = file.path("ensembl","annotation"))
+               
+getGTF(db            = "ensembl", 
+       organism      = "Homo sapiens", 
+       path          = file.path("ensembl","annotation"),
+       assembly_type = "primary_assembly")
 
 }
 

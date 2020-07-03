@@ -27,6 +27,7 @@
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding genomes shall be stored. Default is
 #' \code{path} = \code{"set_genomes"}.
+#' @inheritParams getGTF
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -60,7 +61,8 @@ getGenomeSet <-
              clean_retrieval = TRUE,
              gunzip = TRUE,
              update = FALSE,
-             path = "set_genomes") {
+             path = "set_genomes",
+             assembly_type = "toplevel") {
         message(
             "Starting genome retrieval of the following genomes: ",
             paste0(organisms, collapse = ", "),
@@ -71,6 +73,8 @@ getGenomeSet <-
             message("Generating folder ", path, " ...")
             dir.create(path, recursive = TRUE)
         }
+        if (!(assembly_type %in% c("toplevel", "primary_assembly")))
+            stop("Please select one the available assembly types: \ntoplevel, primary_assembly")
         
         if (!file.exists(file.path(path, "documentation")))
             dir.create(file.path(path, "documentation"))
@@ -114,7 +118,8 @@ getGenomeSet <-
                                       organism = organisms[i],
                                       reference = reference,
                                       release = release,
-                                      path     = path)
+                                      path     = path,
+                                      assembly_type = assembly_type)
                 message("\n")
             }
             

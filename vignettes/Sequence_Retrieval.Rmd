@@ -1337,7 +1337,8 @@ The summary statistics include:
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
 HS.genome.ensembl <- getGenome( db       = "ensembl", 
                                 organism = "Homo sapiens",
-                                path     = file.path("_ncbi_downloads","genomes") )
+                                path     = file.path("_ncbi_downloads","genomes") ,
+                                assembly_type = "primary_assembly")
 ```
 
 ```{r,eval=FALSE}
@@ -1365,7 +1366,7 @@ Human_Genome
 [523]       971 ATTTGCGATGTGTGTTCTCAACTA...TTGGATAGCTTTGAAGTTTTCGT KI270392.1 dna:sc...
 [524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...
 ```
-
+If you are using `db = "ensembl"` you can set `assembly_type = "primary_assembly"`. For the human genome the toplevel genome assembly size is > 70 GB uncompressed, while primary assembly is just a few GB. 
 Users can also specify the `release` argument which denotes the database release version of ENSEMBL (`db = "ensembl"`) in case they wish to download archived vgenome versions. Default is release = NULL meaning that the most recent database version is used.
 
 In addition, the genome summary statistics for the retrieved species is stored locally (`doc_homo_sapiens_db_ensembl_summary_statistics.tsv`) to provide users with insights regarding the genome assembly quality (see `?summary_genome()` for details).
@@ -2353,7 +2354,8 @@ Alternatively for `getGTF()`:
 # and store the corresponding file in 'ensembl/annotation'
 HS.gtf.ensembl <- getGTF( db       = "ensembl", 
                          organism = "Homo sapiens", 
-                         path = file.path("ensembl","annotation"))
+                         path = file.path("ensembl","annotation"),
+                         assembly_type = "primary_assembly")
 ```
 
 Taken together, `getGFF()` or `getGTF()` in combination with `getGenome()`, `getProteome()`, `getRNA()` and `getCDS()` allows users to retrieve the genome information together with the
