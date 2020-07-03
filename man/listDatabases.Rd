@@ -28,6 +28,7 @@ databases and their database version to be able to select an appropriate
 database for download with \code{\link{download.database}}.
 }
 \examples{
+\dontrun{
 # retrieve all versions of the NCBI 'nr' database that can be downloaded
 listNCBIDatabases(db = "nr")
 
@@ -36,6 +37,7 @@ listNCBIDatabases(db = "nr")
 # listNCBIDatabases(db = "nt")
 # listNCBIDatabases(db = "gss")
 # listNCBIDatabases(db = "refseq_protein")
+}
 }
 \seealso{
 \code{\link{download.database}}, \code{\link{download.database.all}}

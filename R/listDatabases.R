@@ -13,7 +13,7 @@
 #' databases and their database version to be able to select an appropriate 
 #' database for download with \code{\link{download.database}}.
 #' @author Hajk-Georg Drost
-#' @examples
+#' @examples \dontrun{
 #' # retrieve all versions of the NCBI 'nr' database that can be downloaded
 #' listNCBIDatabases(db = "nr")
 #' 
@@ -22,6 +22,7 @@
 #' # listNCBIDatabases(db = "nt")
 #' # listNCBIDatabases(db = "gss")
 #' # listNCBIDatabases(db = "refseq_protein")
+#' }
 #' @seealso \code{\link{download.database}}, \code{\link{download.database.all}}
 #' @export
 
@@ -29,7 +30,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
     if (is.element("listDatabases", as.character(match.call()[[1]])))
         warning(
       "Please use listNCBIDatabases() instead of listDatabases(), 
-      in the next version 1.0.0 of biomartr this function will be deprecated.",
+      in the next version of biomartr this function will be deprecated.",
             call. = FALSE
         )
     
