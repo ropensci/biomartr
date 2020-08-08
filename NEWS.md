@@ -46,6 +46,8 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - Fixing bug where genome availability check in `getCollection()` was only performed in `NCBI RefSeq` and not in other databases due to a constant used in `is.genome.available()` rather than a variable (Many thanks to Takahiro Yamada for cathing the bug) #53
 
+- fixing an issue that caused the read_cds() function to fail in `data.table` mode (Many thanks to Clement Kent) #57
+
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
 -> Instead of using warnings or error messages, only gentle messages are allowed to be used
