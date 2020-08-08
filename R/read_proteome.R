@@ -40,6 +40,10 @@ read_proteome <-
                 call. = FALSE
             )
         
+        if (!file.exists(file))
+            stop("The file path you specified does not seem to exist: '", file,"'.", call. = FALSE)
+        
+        
         geneids <- NULL
         
         if (obj.type == "Biostrings") {
