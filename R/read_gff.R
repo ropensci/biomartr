@@ -23,6 +23,9 @@ read_gff <- function(file) {
             )
     )
     
+    if (!file.exists(file))
+        stop("The file path you specified does not seem to exist: '", file,"'.", call. = FALSE)
+    
     if (ncol(gff.input) > 9)
         stop("The gff file format can not store more than 9 columns!", call. = FALSE)
     

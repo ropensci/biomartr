@@ -31,6 +31,9 @@ read_genome <-
                  supported by this function.",
                  call. = FALSE)
         
+        if (!file.exists(file))
+            stop("The file path you specified does not seem to exist: '", file,"'.", call. = FALSE)
+        
         if (!is.element(obj.type, c("Biostrings", "data.table")))
             stop(
                 "Please specify a valid object type: obj.type = 'Biostrings' 
