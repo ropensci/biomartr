@@ -45,7 +45,7 @@ License: GPL-2
 LazyData: true
 URL: https://docs.ropensci.org/biomartr, https://github.com/ropensci/biomartr
 BugReports: https://github.com/ropensci/biomartr/issues
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 X-schema.org-keywords: BioMart, genomic-data-retrieval, annotation-retrieval, database-retrieval, NCBI, ENSEMBL, biological-data-retrieval 
 X-schema.org-applicationCategory: Data Access 

@@ -1,0 +1,82 @@
+# Assembly Statistics Report
+# Assembly name:  ASM9106v2
+# Organism name:  Saccharomyces cerevisiae (baker's yeast)
+# Taxid:          4932
+# BioSample:      SAMEA3138293
+# BioProject:     PRJNA13838
+# Submitter:      Sanger Institute
+# Date:           2001-07-03
+# Assembly type:  haploid
+# Release type:   minor
+# Assembly level: Chromosome
+# Genome representation: partial
+# Excluded from RefSeq: partial
+# GenBank assembly accession: GCA_000091065.2
+#
+## Assembly-Units:
+## GenBank Unit Accession	RefSeq Unit Accession	Assembly-Unit name
+## GCA_000091075.1		Primary Assembly
+#
+# Statistic Types
+# Statistic	Description
+# component-count	Number of unique components
+# molecule-count	Number of chromosomes and plasmids in full assembly
+# region-count	Number of genomic regions defined in full assembly
+# spanned-gaps	Number of spanned gaps. Spanned gaps are gaps within a scaffold
+# top-level-count	Number of chromosomes or plasmids, unplaced/unlocalized scaffolds, alt-loci scaffolds, and patch scaffolds
+# total-gap-length	Total length of gaps
+# total-length	Total sequence length including bases and gaps
+# ungapped-length	Total length excluding gaps
+# unspanned-gaps	Number of unspanned gaps. Unspanned gaps are gaps between scaffolds
+#
+# Sequence-type Description
+# all	statistic covers all the sequences in the unit-assembly and molecule(s) specified.
+# molecule	statistic covers the specified molecule. molecule-name and molecule-type/loc will be given.
+# unlocalized	statistic covers the sequences assigned to a molecule but with no position. molecule-name and molecule-type/loc will be given.
+# unplaced	statistic covers the sequences not assigned to any molecule in the assembly.
+#
+# unit-name	molecule-name	molecule-type/loc	sequence-type	statistic	value
+all	all	all	all	total-length	586761
+all	all	all	all	spanned-gaps	0
+all	all	all	all	unspanned-gaps	0
+all	all	all	all	region-count	0
+all	all	all	all	total-gap-length	0
+all	all	all	all	molecule-count	2
+all	all	all	all	top-level-count	2
+all	all	all	all	component-count	2
+Primary Assembly	all	all	all	total-length	586761
+Primary Assembly	all	all	all	ungapped-length	586761
+Primary Assembly	all	all	all	spanned-gaps	0
+Primary Assembly	all	all	all	unspanned-gaps	0
+Primary Assembly	all	all	assembled-molecule	total-length	586761
+Primary Assembly	all	all	assembled-molecule	ungapped-length	586761
+Primary Assembly	all	all	assembled-molecule	spanned-gaps	0
+Primary Assembly	all	all	assembled-molecule	unspanned-gaps	0
+Primary Assembly	all	all	unlocalized-scaffold	total-length	0
+Primary Assembly	all	all	unlocalized-scaffold	ungapped-length	0
+Primary Assembly	all	all	unlocalized-scaffold	spanned-gaps	0
+Primary Assembly	all	all	unlocalized-scaffold	unspanned-gaps	0
+Primary Assembly	III	Chromosome	all	total-length	316613
+Primary Assembly	III	Chromosome	all	ungapped-length	316613
+Primary Assembly	III	Chromosome	all	spanned-gaps	0
+Primary Assembly	III	Chromosome	all	unspanned-gaps	0
+Primary Assembly	III	Chromosome	assembled-molecule	total-length	316613
+Primary Assembly	III	Chromosome	assembled-molecule	ungapped-length	316613
+Primary Assembly	III	Chromosome	assembled-molecule	spanned-gaps	0
+Primary Assembly	III	Chromosome	assembled-molecule	unspanned-gaps	0
+Primary Assembly	III	Chromosome	unlocalized-scaffold	total-length	0
+Primary Assembly	III	Chromosome	unlocalized-scaffold	ungapped-length	0
+Primary Assembly	III	Chromosome	unlocalized-scaffold	spanned-gaps	0
+Primary Assembly	III	Chromosome	unlocalized-scaffold	unspanned-gaps	0
+Primary Assembly	VI	Chromosome	all	total-length	270148
+Primary Assembly	VI	Chromosome	all	ungapped-length	270148
+Primary Assembly	VI	Chromosome	all	spanned-gaps	0
+Primary Assembly	VI	Chromosome	all	unspanned-gaps	0
+Primary Assembly	VI	Chromosome	assembled-molecule	total-length	270148
+Primary Assembly	VI	Chromosome	assembled-molecule	ungapped-length	270148
+Primary Assembly	VI	Chromosome	assembled-molecule	spanned-gaps	0
+Primary Assembly	VI	Chromosome	assembled-molecule	unspanned-gaps	0
+Primary Assembly	VI	Chromosome	unlocalized-scaffold	total-length	0
+Primary Assembly	VI	Chromosome	unlocalized-scaffold	ungapped-length	0
+Primary Assembly	VI	Chromosome	unlocalized-scaffold	spanned-gaps	0
+Primary Assembly	VI	Chromosome	unlocalized-scaffold	unspanned-gaps	0
