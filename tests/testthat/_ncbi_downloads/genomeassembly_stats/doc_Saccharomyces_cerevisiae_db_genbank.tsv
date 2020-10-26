@@ -1,2 +1,0 @@
-file_name	organism	url	database	path	refseq_category	assembly_accession	bioproject	biosample	taxid	infraspecific_name	version_status	release_type	genome_rep	seq_rel_date	submitter
-Saccharomyces_cerevisiae_genomic_genbank.fna.gz	Saccharomyces_cerevisiae	ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/091/065/GCA_000091065.2_ASM9106v2/GCA_000091065.2_ASM9106v2_assembly_stats.txt	genbank	_ncbi_downloads/genomeassembly_stats	na	GCA_000091065.2	PRJNA13838	SAMEA3138293	4932	NA	latest	Minor	Partial	2001-07-03	Tsukuba Life Science Center
