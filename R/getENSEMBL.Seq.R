@@ -3,7 +3,7 @@
 #' organisms from ENSEMBL.
 #' @param organism scientific name of the organism of interest.
 #' @param type biological sequence type.
-#' @param id.type id type.
+#' @param id.type a character, default "toplevel". id type of assembly, either toplevel or primary_assembly usually.
 #' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used. \code{release = 75} would for human would give the stable
 #' GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
@@ -79,11 +79,12 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
     }
 
     # construct retrieval query
-    if (is.null(release))
-            core_path <- "ftp://ftp.ensembl.org/pub/current_fasta/"
+    if (is.null(release)) {
+        core_path <- "ftp://ftp.ensembl.org/pub/current_fasta/"
+    } else {
+        core_path <- paste0("ftp://ftp.ensembl.org/pub/release-", release ,"/fasta/")
+    }
 
-    if (!is.null(release))
-            core_path <- paste0("ftp://ftp.ensembl.org/pub/release-", release ,"/fasta/")
 
     # construct retrieval query
     # Before 75, ensembl used .release extension on assembly
