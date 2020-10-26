@@ -9,45 +9,51 @@ getGTF(
   organism,
   remove_annotation_outliers = FALSE,
   path = file.path("ensembl", "annotation"),
-  assembly_type = "toplevel"
+  assembly_type = "toplevel",
+  release = NULL
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{a character string specifying the scientific name of the 
+\item{organism}{a character string specifying the scientific name of the
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
-\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}? 
+\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
 If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
 for further exploration.}
 
-\item{path}{a character string specifying the location (a folder) in which 
-the corresponding annotation file shall be stored. Default is 
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding annotation file shall be stored. Default is
 \code{path = file.path("ensembl","annotation")}.}
 
-\item{assembly_type}{a character string specifying from which assembly type the genome 
+\item{assembly_type}{a character string specifying from which assembly type the genome
 shall be retrieved from (ensembl only, else this argument is ignored):
-Default is 
+Default is
 \code{assembly_type = "toplevel")}.
 This will give you all multi-chromosomes (copies of the same chromosome with small variations).
 As an example the toplevel fasta genome in human is over 70 GB uncompressed.
 To get primary assembly with 1 chromosome variant per chromosome:
 \code{assembly_type = "primary_assembly")}.
 As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
+
+\item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used. \code{release = 75} would for human would give the stable
+GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
+if the standard format before that.}
 }
 \value{
 File path to downloaded annotation file.
 }
 \description{
-Main retrieval function for GTF files of an 
-organism of interest. By specifying the scientific name of an organism of 
-interest the corresponding GTF file storing the annotation  for the organism 
-of interest can be downloaded and stored locally. GTF files can be retrieved 
+Main retrieval function for GTF files of an
+organism of interest. By specifying the scientific name of an organism of
+interest the corresponding GTF file storing the annotation  for the organism
+of interest can be downloaded and stored locally. GTF files can be retrieved
 from several databases.
 }
 \details{
@@ -62,12 +68,12 @@ no download process will be performed.
 \dontrun{
 # download the annotation of Homo sapiens from ensembl
 # and store the corresponding genome file in 'ensembl/annotation'
-getGTF(db            = "ensembl", 
-       organism      = "Homo sapiens", 
+getGTF(db            = "ensembl",
+       organism      = "Homo sapiens",
        path          = file.path("ensembl","annotation"))
-               
-getGTF(db            = "ensembl", 
-       organism      = "Homo sapiens", 
+
+getGTF(db            = "ensembl",
+       organism      = "Homo sapiens",
        path          = file.path("ensembl","annotation"),
        assembly_type = "primary_assembly")
 
@@ -75,8 +81,8 @@ getGTF(db            = "ensembl",
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
+\code{\link{getProteome}}, \code{\link{getCDS}},
+\code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
 \code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}},
 \code{\link{getGFF}}
 }

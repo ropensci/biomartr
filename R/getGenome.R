@@ -21,8 +21,7 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-#' that the most recent database version is used.
+#' @inheritParams getENSEMBL.Seq
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding genome shall be stored. Default is
