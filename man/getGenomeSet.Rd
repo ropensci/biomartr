@@ -50,9 +50,9 @@ output folder shall be updated and re-loaded (\code{update = TRUE} or whether th
 the corresponding genomes shall be stored. Default is
 \code{path} = \code{"set_genomes"}.}
 
-\item{assembly_type}{a character string specifying from which assembly type the genome 
+\item{assembly_type}{a character string specifying from which assembly type the genome
 shall be retrieved from (ensembl only, else this argument is ignored):
-Default is 
+Default is
 \code{assembly_type = "toplevel")}.
 This will give you all multi-chromosomes (copies of the same chromosome with small variations).
 As an example the toplevel fasta genome in human is over 70 GB uncompressed.
