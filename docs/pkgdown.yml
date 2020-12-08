@@ -1,5 +1,5 @@
-pandoc: 2.3.1
-pkgdown: 1.4.1
+pandoc: 2.7.3
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   BioMart_Examples: BioMart_Examples.html
@@ -7,4 +7,5 @@ articles:
   Functional_Annotation: Functional_Annotation.html
   MetaGenome_Retrieval: MetaGenome_Retrieval.html
   Sequence_Retrieval: Sequence_Retrieval.html
+last_built: 2020-12-08T18:41Z
 

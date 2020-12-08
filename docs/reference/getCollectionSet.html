@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,11 +42,10 @@
 <meta property="og:title" content="Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats of multiple species — getCollectionSet" />
 <meta property="og:description" content="Main collection retrieval function for an organism of interest.
 By specifying the scientific name of an organism of interest a collection consisting of
-the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats 
+the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats
 file of the organism of interest
-can be downloaded and stored locally. Collections can be retrieved from 
+can be downloaded and stored locally. Collections can be retrieved from
 several databases." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +63,7 @@ several databases." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +77,7 @@ several databases." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -119,7 +122,7 @@ several databases." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ropensci/biomartr">
+  <a href="https://github.com/ropensci/biomartr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -145,30 +148,30 @@ several databases." />
     <div class="ref-description">
     <p>Main collection retrieval function for an organism of interest.
 By specifying the scientific name of an organism of interest a collection consisting of
-the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats 
+the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats
 file of the organism of interest
-can be downloaded and stored locally. Collections can be retrieved from 
+can be downloaded and stored locally. Collections can be retrieved from
 several databases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getCollectionSet</span>(
-  <span class='kw'>db</span> <span class='kw'>=</span> <span class='st'>"refseq"</span>,
-  <span class='no'>organisms</span>,
-  <span class='kw'>reference</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>release</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>clean_retrieval</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>gunzip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>update</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>remove_annotation_outliers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"set_collections"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>getCollectionSet</span><span class='op'>(</span>
+  db <span class='op'>=</span> <span class='st'>"refseq"</span>,
+  <span class='va'>organisms</span>,
+  reference <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  release <span class='op'>=</span> <span class='cn'>NULL</span>,
+  clean_retrieval <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  gunzip <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  update <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  remove_annotation_outliers <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  path <span class='op'>=</span> <span class='st'>"set_collections"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>db</th>
-      <td><p>a character string specifying the database from which the collection 
+      <td><p>a character string specifying the database from which the collection
 shall be retrieved:</p><ul>
 <li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
@@ -193,19 +196,29 @@ which collections shall be retrieved. There are three options to characterize an
       <td><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning that the most recent database version is used.</p></td>
     </tr>
     <tr>
+      <th>clean_retrieval, </th>
+      <td><p>a logical, default FALSE. Cleaning file names for more convenient
+downstream processing.</p></td>
+    </tr>
+    <tr>
       <th>gunzip</th>
       <td><p>a logical value indicating whether or not files should be unzipped.</p></td>
     </tr>
     <tr>
+      <th>update</th>
+      <td><p>a logical, default FALSE. The existing file will be retained if existing.
+If TRUE, will download and overwrite the file.</p></td>
+    </tr>
+    <tr>
       <th>remove_annotation_outliers</th>
       <td><p>shall outlier lines be removed from the input annotation_file?
-If yes, then the initial annotation_file will be overwritten and the removed outlier lines 
+If yes, then the initial annotation_file will be overwritten and the removed outlier lines
 will be stored at <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></code> for further exploration.</p></td>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>a character string specifying the location (a folder) in which 
-the corresponding collection shall be stored. Default is 
+      <td><p>a character string specifying the location (a folder) in which
+the corresponding collection shall be stored. Default is
 <code>path</code> = <code><a href='https://rdrr.io/r/base/file.path.html'>file.path("_db_downloads","collections")</a></code>.</p></td>
     </tr>
     </table>
@@ -217,7 +230,7 @@ the corresponding collection shall be stored. Default is
 
     <p>Internally this function loads the the overview.txt file from NCBI:</p>
 <p>refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/</p>
-<p>genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/</p> 
+<p>genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/</p>
 <p>and creates a directory '_ncbi_downloads/collection' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
@@ -225,37 +238,34 @@ In case the corresponding fasta file already exists within the
 no download process will be performed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='getCollection.html'>getCollection</a></code>, <code><a href='getGenomeSet.html'>getGenomeSet</a></code>, <code><a href='getProteomeSet.html'>getProteomeSet</a></code>, <code><a href='getCDSSet.html'>getCDSSet</a></code>, 
-<code><a href='getGenome.html'>getGenome</a></code>, <code><a href='getProteome.html'>getProteome</a></code>, <code><a href='getCDS.html'>getCDS</a></code>, 
-<code><a href='getGFF.html'>getGFF</a></code>, <code><a href='getRNA.html'>getRNA</a></code>, <code><a href='meta.retrieval.html'>meta.retrieval</a></code>, 
+    <div class='dont-index'><p><code><a href='getCollection.html'>getCollection</a></code>, <code><a href='getGenomeSet.html'>getGenomeSet</a></code>, <code><a href='getProteomeSet.html'>getProteomeSet</a></code>, <code><a href='getCDSSet.html'>getCDSSet</a></code>,
+<code><a href='getGenome.html'>getGenome</a></code>, <code><a href='getProteome.html'>getProteome</a></code>, <code><a href='getCDS.html'>getCDS</a></code>,
+<code><a href='getGFF.html'>getGFF</a></code>, <code><a href='getRNA.html'>getRNA</a></code>, <code><a href='meta.retrieval.html'>meta.retrieval</a></code>,
 <code><a href='read_genome.html'>read_genome</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># define scientific names of species for which</span>
 <span class='co'># collections shall be retrieved</span>
-<span class='no'>organism_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Arabidopsis thaliana"</span>,
+<span class='va'>organism_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Arabidopsis thaliana"</span>,
                    <span class='st'>"Arabidopsis lyrata"</span>,
-                   <span class='st'>"Capsella rubella"</span>)
+                   <span class='st'>"Capsella rubella"</span><span class='op'>)</span>
 <span class='co'># download the collection of Arabidopsis thaliana from refseq</span>
 <span class='co'># and store the corresponding genome file in '_ncbi_downloads/collection'</span>
- <span class='fu'>getCollectionSet</span>( <span class='kw'>db</span>       <span class='kw'>=</span> <span class='st'>"refseq"</span>,
-             <span class='kw'>organism</span> <span class='kw'>=</span> <span class='no'>organism_list</span>,
-             <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"set_collections"</span>)
-}</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+ <span class='fu'>getCollectionSet</span><span class='op'>(</span> db       <span class='op'>=</span> <span class='st'>"refseq"</span>,
+             organism <span class='op'>=</span> <span class='va'>organism_list</span>,
+             path <span class='op'>=</span> <span class='st'>"set_collections"</span><span class='op'>)</span>
+<span class='op'>}</span>
 
-    <h2>Author</h2>
-    <p>Hajk-Georg Drost</p>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -266,7 +276,7 @@ no download process will be performed.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

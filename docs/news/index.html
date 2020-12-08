@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -53,7 +57,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -112,7 +116,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ropensci/biomartr">
+  <a href="https://github.com/ropensci/biomartr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -130,13 +134,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/ropensci/biomartr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="biomartr-1-0-0" class="section level2">
+    <div id="biomartr-102" class="section level2">
 <h2 class="hasAnchor">
-<a href="#biomartr-1-0-0" class="anchor"></a>biomartr 1.0.0</h2>
+<a href="#biomartr-102" class="anchor"></a>biomartr 1.0.2</h2>
 <div id="new-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New Functions</h3>
@@ -145,16 +149,18 @@
 <li><p>new function <code><a href="../reference/getCollectionSet.html">getCollectionSet()</a></code> allows users to retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats of multiple species</p></li>
 </ul>
 <p>Example:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># define scientific names of species for which</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># collections shall be retrieved</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">organism_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Arabidopsis thaliana"</span>, </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">                   <span class="st">"Arabidopsis lyrata"</span>, </a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">                   <span class="st">"Capsella rubella"</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># download the collection of Arabidopsis thaliana from refseq</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># and store the corresponding genome file in '_ncbi_downloads/collection'</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"> <span class="kw"><a href="../reference/getCollectionSet.html">getCollectionSet</a></span>( <span class="dt">db       =</span> <span class="st">"refseq"</span>, </a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">             <span class="dt">organism =</span> organism_list, </a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">             <span class="dt">path =</span> <span class="st">"set_collections"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># define scientific names of species for which</span>
+<span class="co"># collections shall be retrieved</span>
+<span class="va">organism_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, 
+                   <span class="st">"Arabidopsis lyrata"</span>, 
+                   <span class="st">"Capsella rubella"</span><span class="op">)</span>
+<span class="co"># download the collection of Arabidopsis thaliana from refseq</span>
+<span class="co"># and store the corresponding genome file in '_ncbi_downloads/collection'</span>
+ <span class="fu"><a href="../reference/getCollectionSet.html">getCollectionSet</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
+             organism <span class="op">=</span> <span class="va">organism_list</span>, 
+             path <span class="op">=</span> <span class="st">"set_collections"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="new-features" class="section level3">
 <h3 class="hasAnchor">
@@ -162,12 +168,25 @@
 <ul>
 <li>the <code><a href="../reference/getGFF.html">getGFF()</a></code> function receives a new argument <code>remove_annotation_outliers</code> to enable users to remove corrupt lines from a GFF file Example:</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Ath_path &lt;-<span class="st"> </span>biomartr<span class="op">::</span><span class="kw"><a href="https://docs.ropensci.org/biomartr/reference/getGFF.html">getGFF</a></span>(<span class="dt">organism =</span> <span class="st">"Arabidopsis thaliana"</span>, <span class="dt">remove_annotation_outliers =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">Ath_path</span> <span class="op">&lt;-</span> <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Arabidopsis thaliana"</span>, remove_annotation_outliers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <ul>
 <li><p>the <code><a href="../reference/getGFFSet.html">getGFFSet()</a></code> function receives a new argument <code>remove_annotation_outliers</code> to enable users to remove corrupt lines from a GFF file</p></li>
 <li><p>the <code><a href="../reference/getGTF.html">getGTF()</a></code> function receives a new argument <code>remove_annotation_outliers</code> to enable users to remove corrupt lines from a GTF file</p></li>
 <li><p>adding a new message system to <code><a href="../reference/organismBM.html">biomartr::organismBM()</a></code>, <code><a href="../reference/organismAttributes.html">biomartr::organismAttributes()</a></code>, and <code><a href="../reference/organismFilters.html">biomartr::organismFilters()</a></code> so that large API queries don’t seem so unresponsive</p></li>
 <li><p><code><a href="../reference/getCollection.html">getCollection()</a></code> receives new arguments <code>release</code>, <code>remove_annotation_outliers</code>, and <code>gunzip</code> that will now be passed on to downstream retrieval functions</p></li>
+<li><p>the <code><a href="../reference/getGTF.html">getGTF()</a></code>, <code><a href="../reference/getGenome.html">getGenome()</a></code> and <code><a href="../reference/getGenomeSet.html">getGenomeSet()</a></code> functions receives a new argument <code>assembly_type = "toplevel"</code> to enable users to choose between toplevel and primary assembly when using ensembl database. Setting <code>assembly_type = "primary_assembly"</code> will save a lot a space on hard drives for people using large ensembl genomes.</p></li>
+<li><p>all <code>get*()</code> functions with <code>release</code> argument now check if the ENSEMBL release is &gt;45 (Many thanks to <a href='https://github.com/Roleren'>@Roleren</a> <a href='https://github.com/ropensci/biomartr/issues/31'>#31</a> <a href='https://github.com/ropensci/biomartr/issues/61'>#61</a>)</p></li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h3>
+<ul>
+<li><p>Fixing bug where genome availability check in <code><a href="../reference/getCollection.html">getCollection()</a></code> was only performed in <code>NCBI RefSeq</code> and not in other databases due to a constant used in <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> rather than a variable (Many thanks to Takahiro Yamada for catching the bug) <a href='https://github.com/ropensci/biomartr/issues/53'>#53</a></p></li>
+<li><p>fixing an issue that caused the read_cds() function to fail in <code>data.table</code> mode (Many thanks to Clement Kent) <a href='https://github.com/ropensci/biomartr/issues/57'>#57</a></p></li>
+<li><p>fixing an <code>SSL</code> bug that was found on <code>Ubuntu 20.04</code> systems <a href='https://github.com/ropensci/biomartr/issues/66'>#66</a> (Many thanks to Håkon Tjeldnes)</p></li>
 </ul>
 <p><a href="https://github.com/ropensci/biomartr/releases/tag/v0.9.1">biomartr 0.9.2</a></p>
 <ul>
@@ -175,9 +194,9 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-9-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-9-0" class="anchor"></a><small> 2019-05-21 </small><a href="https://github.com/ropensci/biomartr/releases/tag/v0.9.0">biomartr 0.9.0</a>
+    <div id="biomartr-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#biomartr-090" class="anchor"></a><small> 2019-05-21 </small><a href="https://github.com/ropensci/biomartr/releases/tag/v0.9.0">biomartr 0.9.0</a>
 </h1>
 <p><strong>Please be aware that as of April 2019, ENSEMBLGENOMES was retired (<a href="http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/">see details here</a>). Hence, all <code>biomartr</code> functions were updated and won’t support data retrieval from <code>ENSEMBLGENOMES</code> servers anymore.</strong></p>
 <div id="new-functions-1" class="section level3">
@@ -220,9 +239,9 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-8-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-8-0" class="anchor"></a><small> 2018-06-27 </small><a href="https://github.com/ropensci/biomartr/releases/tag/v0.8.0">biomartr 0.8.0</a>
+    <div id="biomartr-080" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0">
+<a href="#biomartr-080" class="anchor"></a><small> 2018-06-27 </small><a href="https://github.com/ropensci/biomartr/releases/tag/v0.8.0">biomartr 0.8.0</a>
 </h1>
 <div id="new-functions-2" class="section level3">
 <h3 class="hasAnchor">
@@ -243,19 +262,16 @@
 <li><p><code><a href="../reference/getProteome.html">getProteome()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve proteomes</p></li>
 <li><p><code><a href="../reference/getCDS.html">getCDS()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve CDS</p></li>
 <li><p><code><a href="../reference/getRNA.html">getRNA()</a></code>: users can now specify the NCBI Taxonomy ID or Accession ID in addition to the scientific name in argument ‘organism’ to retrieve RNAs</p></li>
-<li>
-<code><a href="../reference/is.genome.available.html">is.genome.available()</a></code>: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent with all <code>get*()</code> functions</li>
-<li>
-<code>meta.retrieval</code> receives a new argument <code>restart_at_last</code> to indicate whether or not the download process when re-running the <code>meta.retrieval</code> function shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum</li>
-<li>
-<code>meta.retrieval</code> now generates an csv overview file in the <code>doc</code> folder which stores genome version, date, origin, etc information for all downloaded organisms and can be directly used as Supplementary Data file in publications to increase computational and biological reproducibility of the genomics study</li>
+<li><p><code><a href="../reference/is.genome.available.html">is.genome.available()</a></code>: argument order was changed from is.genome.available(organism, details, db) to is.genome.available(db, organism, details) to be logically more consistent with all <code>get*()</code> functions</p></li>
+<li><p><code>meta.retrieval</code> receives a new argument <code>restart_at_last</code> to indicate whether or not the download process when re-running the <code>meta.retrieval</code> function shall pick up at the last species or whether it should crawl through all existing files to check the md5checksum</p></li>
+<li><p><code>meta.retrieval</code> now generates an csv overview file in the <code>doc</code> folder which stores genome version, date, origin, etc information for all downloaded organisms and can be directly used as Supplementary Data file in publications to increase computational and biological reproducibility of the genomics study</p></li>
 <li><p><code><a href="../reference/download.database.all.html">download.database.all()</a></code> can now skip already downloaded files and internally removes corrupted files with non-matching md5checksum. Re-downloading of currupted files and be performed by simply re-running the <code><a href="../reference/download.database.all.html">download.database.all()</a></code> command</p></li>
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-7-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-7-0" class="anchor"></a><small> 2018-01-03 </small><a href="https://github.com/ropensci/biomartr/releases/tag/v0.7.0">biomartr 0.7.0</a>
+    <div id="biomartr-070" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.0">
+<a href="#biomartr-070" class="anchor"></a><small> 2018-01-03 </small><a href="https://github.com/ropensci/biomartr/releases/tag/v0.7.0">biomartr 0.7.0</a>
 </h1>
 <div id="function-changes" class="section level3">
 <h3 class="hasAnchor">
@@ -275,25 +291,25 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-5-2" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-5-2" class="anchor"></a>biomartr 0.5.2<small> 2017-09-20 </small>
+    <div id="biomartr-052" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.2">
+<a href="#biomartr-052" class="anchor"></a>biomartr 0.5.2<small> 2017-09-20 </small>
 </h1>
-<div id="bug-fixes" class="section level3">
+<div id="bug-fixes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li>fixing bug (<a href="https://github.com/ropensci/biomartr/issues/6" class="uri">https://github.com/ropensci/biomartr/issues/6</a>) that caused incorrect filtering condition when more than one entry for an organism is present in the assemblysummary.txt file at NCBI (Thanks to <a href='https://github.com/kalmeshv'>@kalmeshv</a>)</li>
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-5-1" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-5-1" class="anchor"></a>biomartr 0.5.1<small> 2017-05-28 </small>
+    <div id="biomartr-051" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.1">
+<a href="#biomartr-051" class="anchor"></a>biomartr 0.5.1<small> 2017-05-28 </small>
 </h1>
-<div id="bug-fixes-1" class="section level3">
+<div id="bug-fixes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li><p>fixing a bug in <code>exists.ftp.file()</code> and <code>getENSEMBLGENOMES.Seq()</code> that caused bacterial genome, proteome, etc retrieval to fail due to the wrong construction of a query ftp request <a href="https://github.com/HajkD/biomartr/issues/7" class="uri">https://github.com/HajkD/biomartr/issues/7</a> (Many thanks to <a href='https://github.com/dbsseven'>@dbsseven</a>)</p></li>
 <li><p>fix a major bug in which organisms having no representative genome would generate NULL paths that subsequently crashed the <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> function when it tried to print out the result paths.</p></li>
@@ -321,19 +337,19 @@
 <li><p><code>meta.retieval()</code> and <code>meta.retieval.all()</code> now allow the bulk retrieval of Repeat Masker output files via <code>type = "rm"</code>. See <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> for more details.</p></li>
 <li><p>all <code>get*()</code> retrieval functions now skip the download of a particular file if it already exists in the specified file path</p></li>
 <li><p><code><a href="../reference/download.database.html">download.database()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> now internally perform md5 check sum checks to make sure that the file download was successful</p></li>
-<li><p><code><a href="../reference/download.database.html">download.database()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> now return the file paths of the downloaded file so that it is easier to use these functions when constructing pipelines, e.g. <code>download.database() %&gt;% ...</code> or <code>download.database.all() %&gt;% ...</code>.</p></li>
-<li><p><code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> now return the file paths of the downloaded file so that it is easier to use these functions when constructing pipelines, e.g. <code>meta.retrieval() %&gt;% ...</code> or <code>meta.retrieval() %&gt;% ...</code>.</p></li>
+<li><p><code><a href="../reference/download.database.html">download.database()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> now return the file paths of the downloaded file so that it is easier to use these functions when constructing pipelines, e.g. <code>download.database() %&gt;% ...</code> or <code>download.database.all() %&gt;% ...</code>.</p></li>
+<li><p><code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> now return the file paths of the downloaded file so that it is easier to use these functions when constructing pipelines, e.g. <code>meta.retrieval() %&gt;% ...</code> or <code>meta.retrieval() %&gt;% ...</code>.</p></li>
 <li><p><code><a href="../reference/getGenome.html">getGenome()</a></code>, <code><a href="../reference/getProteome.html">getProteome()</a></code>, <code><a href="../reference/getCDS.html">getCDS()</a></code>, <code><a href="../reference/getRNA.html">getRNA()</a></code>, <code><a href="../reference/getGFF.html">getGFF()</a></code>, and <code><a href="../reference/getAssemblyStats.html">getAssemblyStats()</a></code> now internally perform md5 checksum tests to make sure that files are retrieved intact.</p></li>
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-4-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-4-0" class="anchor"></a>biomartr 0.4.0<small> 2017-03-14 </small>
+    <div id="biomartr-040" class="section level1">
+<h1 class="page-header" data-toc-text="0.4.0">
+<a href="#biomartr-040" class="anchor"></a>biomartr 0.4.0<small> 2017-03-14 </small>
 </h1>
-<div id="bug-fixes-2" class="section level3">
+<div id="bug-fixes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h3>
 <ul>
 <li>fixing a major bug <a href="https://github.com/HajkD/biomartr/issues/6" class="uri">https://github.com/HajkD/biomartr/issues/6</a> that caused that in all <code>get*()</code> (genome, proteome, gff, etc.) and <code>meta.retrieval*()</code> functions the meta retrieval process errored and terminated whenever NCBI or ENSEMBL didn’t store all types of sequences for a particular organism: genome, proteome, cds, etc. This has been fixed now and function calls such as <code><a href="../reference/meta.retrieval.html">meta.retrieval(kingdom = "bacteria", db = "genbank", type = "proteome")</a></code> should work properly now (Thanks to <a href='https://github.com/ARamesh123'>@ARamesh123</a> for making me aware if this bug). Hence, this bug affected all attempts to download all proteome sequences e.g. for bacteria and viruses, because NCBI does not store genome AND proteome information for all bacterial or viral species.</li>
 </ul>
@@ -368,21 +384,21 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-3-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-3-0" class="anchor"></a>biomartr 0.3.0<small> 2017-02-09 </small>
+    <div id="biomartr-030" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.0">
+<a href="#biomartr-030" class="anchor"></a>biomartr 0.3.0<small> 2017-02-09 </small>
 </h1>
-<div id="bug-fixes-3" class="section level3">
+<div id="bug-fixes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h3>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h3>
 <ul>
-<li>Fixing a bug <a href="https://github.com/HajkD/biomartr/issues/2" class="uri">https://github.com/HajkD/biomartr/issues/2</a> based on the <a href="https://github.com/tidyverse/readr">readr package</a> that affected the <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code>, <code><a href="../reference/getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code>, <code><a href="../reference/getMetaGenomeSummary.html">getMetaGenomeSummary()</a></code>, <code>getENSEMBL.Seq()</code> and <code>getENSEMBLGENOMES.Seq()</code> functions causing quoted lines in the <code>assembly_summary.txt</code> to be omitted when reading these files. This artefact caused that e.g. instead of information of 80,000 Bacteria genomes only 40,000 (which non-quotations) were read (Thanks to <a href="https://github.com/alartin">Xin Wu</a>).</li>
+<li>Fixing a bug <a href="https://github.com/HajkD/biomartr/issues/2" class="uri">https://github.com/HajkD/biomartr/issues/2</a> based on the <a href="https://github.com/tidyverse/readr">readr package</a> that affected the <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code>, <code><a href="../reference/getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code>, <code><a href="../reference/getMetaGenomeSummary.html">getMetaGenomeSummary()</a></code>, <code><a href="../reference/getENSEMBL.Seq.html">getENSEMBL.Seq()</a></code> and <code>getENSEMBLGENOMES.Seq()</code> functions causing quoted lines in the <code>assembly_summary.txt</code> to be omitted when reading these files. This artefact caused that e.g. instead of information of 80,000 Bacteria genomes only 40,000 (which non-quotations) were read (Thanks to <a href="https://github.com/alartin">Xin Wu</a>).</li>
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-2-1" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-2-1" class="anchor"></a>biomartr 0.2.1<small> 2016-12-15 </small>
+    <div id="biomartr-021" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.1">
+<a href="#biomartr-021" class="anchor"></a>biomartr 0.2.1<small> 2016-12-15 </small>
 </h1>
 <p>In this version of <code>biomartr</code> the <code>organism*()</code> functions were adapted to the new <a href="http://www.ensembl.info/blog/2016/12/08/ensembl-87-has-been-released/">ENSEMBL 87 release</a> in which organism name specification in the Biomart description column <a href="https://github.com/HajkD/biomartr/issues/1">was changed</a> from a scientific name convention to a mix of common name and scientific name convention.</p>
 <ul>
@@ -390,9 +406,9 @@
 <li><p>fixing error handling bug that caused commands such as <code><a href="../reference/download.database.html">download.database(db = "nr.27.tar.gz")</a></code> to not execute properly</p></li>
 </ul>
 </div>
-    <div id="biomartr-0-2-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-2-0" class="anchor"></a>biomartr 0.2.0<small> 2016-11-22 </small>
+    <div id="biomartr-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#biomartr-020" class="anchor"></a>biomartr 0.2.0<small> 2016-11-22 </small>
 </h1>
 <p>In this version, <code>biomartr</code> was extended to now retrieve genome, proteome, CDS, GFF and meta-genome data also from <a href="http://www.ensembl.org/index.html">ENSEMBL</a> and <a href="http://ensemblgenomes.org/">ENSEMLGENOMES</a>. Furthermore, all NCBI retrieval functions were updated to the new server folder structure standards of NCBI.</p>
 <div id="new-functions-6" class="section level3">
@@ -415,7 +431,7 @@
 <li><p>new function <code><a href="../reference/getGroups.html">getGroups()</a></code> allows users to retrieve available groups for a kingdom of life</p></li>
 <li><p>new function <code>getSubgroups()</code> allows users to retrieve available subgroups for a kingdom of life</p></li>
 <li><p>new external helper function <code><a href="../reference/getMetaGenomeSummary.html">getMetaGenomeSummary()</a></code> to retrieve the assembly_summary.txt files from NCBI genbank metagenomes</p></li>
-<li><p>new internal helper function <code>getENSEMBL.Seq()</code> acting as main interface function to communicate with the ENSEMBL database API for sequence retrieval</p></li>
+<li><p>new internal helper function <code><a href="../reference/getENSEMBL.Seq.html">getENSEMBL.Seq()</a></code> acting as main interface function to communicate with the ENSEMBL database API for sequence retrieval</p></li>
 <li><p>new internal helper function <code>getENSEMBLGENOMES.Seq()</code> acting as main interface function to communicate with the ENSEMBL database API for sequence retrieval</p></li>
 <li><p>new internal helper function <code>getENSEMBL.Annotation()</code> acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval</p></li>
 <li><p>new internal helper function <code>getENSEMBLGENOMES.Annotation()</code> acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval</p></li>
@@ -441,7 +457,7 @@
 <li><p>the argument <code>db_name</code> in <code><a href="../reference/listDatabases.html">listDatabases()</a></code> has been renamed <code>db</code> to be more consistent with the notation in other functions</p></li>
 <li><p>the argument <code>name</code> in <code><a href="../reference/download.database.html">download.database()</a></code> has been renamed <code>db</code> to be more consistent with the notation in other functions</p></li>
 <li><p><code><a href="../reference/getKingdoms.html">getKingdoms()</a></code> now retrieves also kingdom information for ENSEMBL and ENSEMBLGENOMES</p></li>
-<li><p><code><a href="../reference/getKingdoms.html">getKingdoms()</a></code> received new argument <code>db</code> to specify from which database (e.g. <code>refseq</code>, <code>genbank</code>, <code>ensembl</code> or <code>ensemblgenomes</code>) kingdom information shall be retrieved</p></li>
+<li><p><code><a href="../reference/getKingdoms.html">getKingdoms()</a></code> received new argument <code>db</code> to specify from which database (e.g. <code>refseq</code>, <code>genbank</code>, <code>ensembl</code> or <code>ensemblgenomes</code>) kingdom information shall be retrieved</p></li>
 <li><p><code><a href="../reference/getKingdoms.html">getKingdoms(db = "refseq")</a></code> received one more member: <code>"viral"</code>, allowing the genome retrieval of all viruses</p></li>
 <li><p>argument <code>out.folder</code> in <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> has been renamed to <code>path</code> to be more consistent with other retrieval functions</p></li>
 <li><p>all <code>read_*</code> functions now received a new argument <code>obj.type</code> allowing users to choose between storing input genomes as Biostrings object or data.table object</p></li>
@@ -463,9 +479,9 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-1-0" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-1-0" class="anchor"></a>biomartr 0.1.0<small> 2016-08-07 </small>
+    <div id="biomartr-010" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.0">
+<a href="#biomartr-010" class="anchor"></a>biomartr 0.1.0<small> 2016-08-07 </small>
 </h1>
 <ul>
 <li><p>fixing a parsing error of the file <code>ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/assembly_summary.txt</code> The problem was that comment lines were introduced and columns couldn’t be parsed correctly anymore. This caused that genomes, proteomes, and CDS files could not be downloaded properly. This has been fixed now.</p></li>
@@ -475,9 +491,9 @@
 <li><p>updated Vignettes</p></li>
 </ul>
 </div>
-    <div id="biomartr-0-0-3" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-0-3" class="anchor"></a>biomartr 0.0.3<small> 2016-03-02 </small>
+    <div id="biomartr-003" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.3">
+<a href="#biomartr-003" class="anchor"></a>biomartr 0.0.3<small> 2016-03-02 </small>
 </h1>
 <ul>
 <li><p>updating unit tests for new API</p></li>
@@ -494,9 +510,9 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-0-2" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-0-2" class="anchor"></a>biomartr 0.0.2<small> 2015-08-07 </small>
+    <div id="biomartr-002" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.2">
+<a href="#biomartr-002" class="anchor"></a>biomartr 0.0.2<small> 2015-08-07 </small>
 </h1>
 <div id="vignettes-1" class="section level3">
 <h3 class="hasAnchor">
@@ -506,34 +522,18 @@
 </ul>
 </div>
 </div>
-    <div id="biomartr-0-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#biomartr-0-0-1" class="anchor"></a>biomartr 0.0.1<small> 2015-07-22 </small>
+    <div id="biomartr-001" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.1">
+<a href="#biomartr-001" class="anchor"></a>biomartr 0.0.1<small> 2015-07-22 </small>
 </h1>
 <p>Release Version</p>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#biomartr-1-0-0">1.0.0</a></li>
-        <li><a href="#biomartr-0-9-0">0.9.0</a></li>
-        <li><a href="#biomartr-0-8-0">0.8.0</a></li>
-        <li><a href="#biomartr-0-7-0">0.7.0</a></li>
-        <li><a href="#biomartr-0-5-2">0.5.2</a></li>
-        <li><a href="#biomartr-0-5-1">0.5.1</a></li>
-        <li><a href="#biomartr-0-4-0">0.4.0</a></li>
-        <li><a href="#biomartr-0-3-0">0.3.0</a></li>
-        <li><a href="#biomartr-0-2-1">0.2.1</a></li>
-        <li><a href="#biomartr-0-2-0">0.2.0</a></li>
-        <li><a href="#biomartr-0-1-0">0.1.0</a></li>
-        <li><a href="#biomartr-0-0-3">0.0.3</a></li>
-        <li><a href="#biomartr-0-0-2">0.0.2</a></li>
-        <li><a href="#biomartr-0-0-1">0.0.1</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -545,7 +545,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

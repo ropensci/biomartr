@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Main BioMart Query Function — biomart" />
 <meta property="og:description" content="This function takes a set of gene ids and the biomart
 specifications and performs a biomart query for the given set of gene ids." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ specifications and performs a biomart query for the given set of gene ids." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ specifications and performs a biomart query for the given set of gene ids." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -115,7 +118,7 @@ specifications and performs a biomart query for the given set of gene ids." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ropensci/biomartr">
+  <a href="https://github.com/ropensci/biomartr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -143,7 +146,7 @@ specifications and performs a biomart query for the given set of gene ids." />
 specifications and performs a biomart query for the given set of gene ids.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>biomart</span>(<span class='no'>genes</span>, <span class='no'>mart</span>, <span class='no'>dataset</span>, <span class='no'>attributes</span>, <span class='no'>filters</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>biomart</span><span class='op'>(</span><span class='va'>genes</span>, <span class='va'>mart</span>, <span class='va'>dataset</span>, <span class='va'>attributes</span>, <span class='va'>filters</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,14 +200,17 @@ implemented by Steffen Durinck et al.</p>
 
     <div class='dont-index'><p><code><a href='organismFilters.html'>organismFilters</a></code>, <code><a href='organismBM.html'>organismBM</a></code>,
 <code><a href='https://rdrr.io/pkg/biomaRt/man/listAttributes.html'>listAttributes</a></code>, <code><a href='https://rdrr.io/pkg/biomaRt/man/getBM.html'>getBM</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># 1) select a mart</span>
-<span class='fu'><a href='getMarts.html'>getMarts</a></span>()
+<span class='fu'><a href='getMarts.html'>getMarts</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># we will select mart 'plants_mart' and search for available datasets</span>
-<span class='fu'><a href='getDatasets.html'>getDatasets</a></span>(<span class='kw'>mart</span> <span class='kw'>=</span> <span class='st'>"plants_mart"</span>)
+<span class='fu'><a href='getDatasets.html'>getDatasets</a></span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"plants_mart"</span><span class='op'>)</span>
 
 <span class='co'># we choose dataset 'athaliana_eg_gene' and run biomart()</span>
 <span class='co'># using mart: 'plants_mart', dataset: "athaliana_eg_gene"</span>
@@ -213,27 +219,21 @@ implemented by Steffen Durinck et al.</p>
 <span class='co'># c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120",</span>
 <span class='co'>#    "AT1G06130", "AT1G06200")</span>
 
-<span class='fu'>biomart</span>(<span class='kw'>genes</span>      <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AT1G06090"</span>, <span class='st'>"AT1G06100"</span>,
+<span class='fu'>biomart</span><span class='op'>(</span>genes      <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AT1G06090"</span>, <span class='st'>"AT1G06100"</span>,
                        <span class='st'>"AT1G06110"</span>, <span class='st'>"AT1G06120"</span>,
-                       <span class='st'>"AT1G06130"</span>, <span class='st'>"AT1G06200"</span>),
-        <span class='kw'>mart</span>       <span class='kw'>=</span> <span class='st'>"plants_mart"</span>,
-        <span class='kw'>dataset</span>    <span class='kw'>=</span> <span class='st'>"athaliana_eg_gene"</span>,
-        <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"start_position"</span>,<span class='st'>"end_position"</span>,<span class='st'>"description"</span>),
-        <span class='kw'>filters</span>    <span class='kw'>=</span> <span class='st'>"ensembl_gene_id"</span>)
-}</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                       <span class='st'>"AT1G06130"</span>, <span class='st'>"AT1G06200"</span><span class='op'>)</span>,
+        mart       <span class='op'>=</span> <span class='st'>"plants_mart"</span>,
+        dataset    <span class='op'>=</span> <span class='st'>"athaliana_eg_gene"</span>,
+        attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"start_position"</span>,<span class='st'>"end_position"</span>,<span class='st'>"description"</span><span class='op'>)</span>,
+        filters    <span class='op'>=</span> <span class='st'>"ensembl_gene_id"</span><span class='op'>)</span>
+<span class='op'>}</span>
 
-    <h2>Author</h2>
-    <p>Hajk-Georg Drost</p>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -244,7 +244,7 @@ implemented by Steffen Durinck et al.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
