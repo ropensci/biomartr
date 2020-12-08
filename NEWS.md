@@ -1,5 +1,5 @@
 
-## biomartr 1.0.0
+## biomartr 1.0.2
 
 ### New Functions
 
@@ -41,12 +41,15 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - the `getGTF()`, `getGenome()` and `getGenomeSet()` functions receives a new argument `assembly_type = "toplevel"` to enable users to choose between toplevel and primary assembly when using ensembl database. Setting `assembly_type = "primary_assembly"` will save a lot a space on hard drives for people using large ensembl genomes.
 
+- all `get*()` functions with `release` argument now check if the ENSEMBL release is >45 (Many thanks to @Roleren #31 #61) 
 
 ### Bug Fixes
 
-- Fixing bug where genome availability check in `getCollection()` was only performed in `NCBI RefSeq` and not in other databases due to a constant used in `is.genome.available()` rather than a variable (Many thanks to Takahiro Yamada for cathing the bug) #53
+- Fixing bug where genome availability check in `getCollection()` was only performed in `NCBI RefSeq` and not in other databases due to a constant used in `is.genome.available()` rather than a variable (Many thanks to Takahiro Yamada for catching the bug) #53
 
 - fixing an issue that caused the read_cds() function to fail in `data.table` mode (Many thanks to Clement Kent) #57
+
+- fixing an `SSL` bug that was found on `Ubuntu 20.04` systems #66 (Many thanks to Håkon Tjeldnes)
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
