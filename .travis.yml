@@ -3,7 +3,7 @@ bioc_required: true
 bioc_packages: 
    - biomaRt
    - Biostrings
-warnings_are_errors: true
+warnings_are_errors: false
 sudo: required
 r_check_revdep: false
 r_check_args: "--no-build-vignettes --no-manual --as-cran"
