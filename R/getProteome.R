@@ -141,14 +141,14 @@ getProteome <-
                             AssemblyFilesAllKingdoms,
                             stringr::str_detect(organism_name, organism) |
                                 stringr::str_detect(assembly_accession, organism),
-                            (version_status == "latest")
+                            (version_status == "latest"), !is.na(ftp_path)
                         ) 
                 } else {
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
                             taxid == as.integer(organism),
-                            (version_status == "latest")
+                            (version_status == "latest"), !is.na(ftp_path)
                         ) 
                 }
             }
@@ -325,7 +325,7 @@ getProteome <-
                         
                     )
                     
-                    readr::write_tsv(doc, path = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
+                    readr::write_tsv(doc, file = file.path(path,paste0("doc_",local.org,"_db_",db,".tsv")))
                     
                     if (!gunzip) {
                             message(
@@ -506,7 +506,7 @@ getProteome <-
                         
                 )
                 
-                readr::write_tsv(doc, file.path(
+                readr::write_tsv(doc, file = file.path(
                         path,
                         paste0("doc_", new.organism, "_db_", db, ".tsv"))
                 )
@@ -673,7 +673,7 @@ getProteome <-
                         
                 )
                 
-                readr::write_tsv(doc, file.path(
+                readr::write_tsv(doc, file = file.path(
                         path,
                         paste0("doc_", new.organism, "_db_", db, ".tsv"))
                 )

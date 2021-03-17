@@ -161,14 +161,14 @@ getGenome <-
                             AssemblyFilesAllKingdoms,
                             stringr::str_detect(organism_name, organism) |
                                 assembly_accession == organism,
-                            (version_status == "latest")
+                            (version_status == "latest"), !is.na(ftp_path)
                         )
                 } else {
                     FoundOrganism <-
                         dplyr::filter(
                             AssemblyFilesAllKingdoms,
                             taxid == as.integer(organism),
-                            (version_status == "latest")
+                            (version_status == "latest"), !is.na(ftp_path)
                         )
                 }
             }
@@ -339,12 +339,12 @@ getGenome <-
 
                     )
 
-                    readr::write_tsv(doc, path = file.path(path, paste0("doc_",local.org,"_db_",db,".tsv")))
+                    readr::write_tsv(doc, file = file.path(path, paste0("doc_",local.org,"_db_",db,".tsv")))
 
                     genome_summary_stats <- summary_genome(file = file.path(path,
                                                                             paste0(local.org, "_genomic_", db, ".fna.gz")), organism = organism)
 
-                    readr::write_tsv(genome_summary_stats, path = file.path(path, paste0("doc_",local.org,"_db_",db,"_summary_statistics.tsv")))
+                    readr::write_tsv(genome_summary_stats, file = file.path(path, paste0("doc_",local.org,"_db_",db,"_summary_statistics.tsv")))
 
                     if (!gunzip) {
                             message(
@@ -529,7 +529,7 @@ getGenome <-
 
                 )
 
-                readr::write_tsv(doc, file.path(
+                readr::write_tsv(doc, file = file.path(
                         path,
                         paste0("doc_", new.organism, "_db_", db, ".tsv"))
                         )
@@ -696,7 +696,7 @@ getGenome <-
 
                 )
 
-                readr::write_tsv(doc, file.path(
+                readr::write_tsv(doc, file = file.path(
                         path,
                         paste0("doc_", new.organism, "_db_", db, ".tsv"))
                 )
