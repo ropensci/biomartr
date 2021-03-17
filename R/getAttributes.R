@@ -1,5 +1,5 @@
 #' @title Retrieve All Available Attributes for a Specific Dataset
-#' @description This funcion queries the BioMart Interface and returns a table
+#' @description This function queries the BioMart Interface and returns a table
 #' storing all available attributes for a specific dataset.
 #' 
 #' @param mart a character string specifying the database (mart) 
