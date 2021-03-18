@@ -142,7 +142,7 @@ getGenome <-
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
-                            (version_status == "latest")
+                            (version_status == "latest"), !is.na(ftp_path)
                         )
                 } else {
                     FoundOrganism <-
@@ -152,7 +152,7 @@ getGenome <-
                             ((refseq_category == "representative genome") |
                                  (refseq_category == "reference genome")
                             ),
-                            (version_status == "latest"))
+                            (version_status == "latest"), !is.na(ftp_path))
                 }
             } else {
                 if (!is.taxid(organism)) {

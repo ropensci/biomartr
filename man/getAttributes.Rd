@@ -14,7 +14,7 @@ for which datasets shall be listed.}
 attributes shall be listed.}
 }
 \description{
-This funcion queries the BioMart Interface and returns a table
+This function queries the BioMart Interface and returns a table
 storing all available attributes for a specific dataset.
 }
 \examples{
