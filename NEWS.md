@@ -55,7 +55,9 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - fixing global variable issue that caused `clean.retrieval()` to fail when no documentation file was in a `meta.retrieval()` folder
 
-- The NCBI recently started adding `NA` values as FTP file paths in their `species summary files` for species without reference genomes. As a result `meta.retrieval()` stopped working, because no FTP paths were found for some species. This issue was now fixed by adding the filter rule `!is.na(ftp_path)` into all `get*()` functions (Many thanks for making me aware of this issue Ashok Kumar Sharma #34 and Dominik Merges #72)  
+- The NCBI recently started adding `NA` values as FTP file paths in their `species summary files` for species without reference genomes. As a result `meta.retrieval()` stopped working, because no FTP paths were found for some species. This issue was now fixed by adding the filter rule `!is.na(ftp_path)` into all `get*()` functions (Many thanks for making me aware of this issue Ashok Kumar Sharma #34 and Dominik Merges #72) 
+
+- Fixing an issue in `custom_download()` where the `method` argument was causing issues when downloading from `https` directed `ftp` sites (Many thanks to @cmatKhan) #76 
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 

@@ -13,8 +13,6 @@ custom_download <- function(url, ...) {
         if (operating_sys == "Darwin") {
             downloader::download(
                 url = url, ...,
-                method = "curl",
-                extra = "--retry 3",
                 cacheOK = FALSE,
                 quiet = TRUE
             )
@@ -24,8 +22,6 @@ custom_download <- function(url, ...) {
         if (operating_sys == "Linux") {
             downloader::download(
                 url = url, ...,
-                method = "wget",
-                extra = "--tries 3 --continue",
                 cacheOK = FALSE,
                 quiet = TRUE
             )
