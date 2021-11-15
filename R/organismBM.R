@@ -103,7 +103,7 @@ organismBM <- function(organism = NULL, update = FALSE) {
                                     message("Processing mart ", mart, " ...")
                                       df <- getDatasets(mart = mart)
                                       df <-
-                                          dplyr::mutate(dplyr::tbl_df(df), 
+                                          dplyr::mutate(tibble::as_tibble(df), 
                                                 mart = rep(mart, nrow(df)))
                                       return(df)
                                   }))
