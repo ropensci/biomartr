@@ -91,12 +91,12 @@
 
       
 
-      </header><script src="MetaGenome_Retrieval_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="MetaGenome_Retrieval_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meta-Genome Retrieval</h1>
             
-            <h4 class="date">2021-03-17</h4>
+            <h4 class="date">2021-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/MetaGenome_Retrieval.Rmd"><code>vignettes/MetaGenome_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>MetaGenome_Retrieval.Rmd</code></div>
@@ -180,7 +180,7 @@
 <p>For example, the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package can be used with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> as follows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes, then apply ...</span>
-<span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">...</span></code></pre></div>
+<span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> <span class="va">...</span></code></pre></div>
 <p>Here <code>...</code> denotes any subsequent meta-genomics analysis. Hence, <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> enables the pipelining methodology for meta-genomics.</p>
 </div>
 <div id="retrieve-genomic-sequences" class="section level3">
@@ -286,9 +286,9 @@ submitter: Genome Reference Consortium</code></pre>
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, 
                db <span class="op">=</span> <span class="st">"refseq"</span>, 
-               type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+               type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> 
     <span class="fu"><a href="../reference/clean.retrieval.html">clean.retrieval</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>In the first step, genome assembly files are downloaded with <code>meta.retrieval</code> and subsequently (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>) un-zipped and re-named using <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code>.</p>
+<p>In the first step, genome assembly files are downloaded with <code>meta.retrieval</code> and subsequently (<code>%&gt;%</code>) un-zipped and re-named using <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code>.</p>
 <p>Example <code>Bacteria</code></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all bacteria genomes</span>

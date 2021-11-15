@@ -91,12 +91,12 @@
 
       
 
-      </header><script src="Database_Retrieval_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Database_Retrieval_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>NCBI Database Retrieval</h1>
             
-            <h4 class="date">2021-03-17</h4>
+            <h4 class="date">2021-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd"><code>vignettes/Database_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Database_Retrieval.Rmd</code></div>
@@ -144,7 +144,7 @@
 [31] "sts"                     "swissprot"               "taxdb"                  
 [34] "tsa_nr"                  "tsa_nt"                  "vector"</code></pre>
 <p>However, in case users already know which database they would like to retrieve they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the <code>NCBI nr</code> database shall be retrieved.</p>
-<p>First, the <code><a href="../reference/listDatabases.html">listNCBIDatabases(db = "nr")</a></code> allows to list all files corresponding to the <code>nr</code> database.</p>
+<p>First, the <code>listNCBIDatabases(db = "nr")</code> allows to list all files corresponding to the <code>nr</code> database.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all NCBI nr files</span>
 <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nr"</span><span class="op">)</span></code></pre></div>

@@ -219,7 +219,7 @@ will be stored at <code><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</
       <th>path</th>
       <td><p>a character string specifying the location (a folder) in which
 the corresponding collection shall be stored. Default is
-<code>path</code> = <code><a href='https://rdrr.io/r/base/file.path.html'>file.path("_db_downloads","collections")</a></code>.</p></td>
+<code>path</code> = <code>file.path("_db_downloads","collections")</code>.</p></td>
     </tr>
     </table>
 
@@ -247,20 +247,20 @@ no download process will be performed.</p>
     <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># define scientific names of species for which</span>
-<span class='co'># collections shall be retrieved</span>
-<span class='va'>organism_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Arabidopsis thaliana"</span>,
-                   <span class='st'>"Arabidopsis lyrata"</span>,
-                   <span class='st'>"Capsella rubella"</span><span class='op'>)</span>
-<span class='co'># download the collection of Arabidopsis thaliana from refseq</span>
-<span class='co'># and store the corresponding genome file in '_ncbi_downloads/collection'</span>
- <span class='fu'>getCollectionSet</span><span class='op'>(</span> db       <span class='op'>=</span> <span class='st'>"refseq"</span>,
-             organism <span class='op'>=</span> <span class='va'>organism_list</span>,
-             path <span class='op'>=</span> <span class='st'>"set_collections"</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># define scientific names of species for which</span></span>
+<span class='r-in'><span class='co'># collections shall be retrieved</span></span>
+<span class='r-in'><span class='va'>organism_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Arabidopsis thaliana"</span>,</span>
+<span class='r-in'>                   <span class='st'>"Arabidopsis lyrata"</span>,</span>
+<span class='r-in'>                   <span class='st'>"Capsella rubella"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># download the collection of Arabidopsis thaliana from refseq</span></span>
+<span class='r-in'><span class='co'># and store the corresponding genome file in '_ncbi_downloads/collection'</span></span>
+<span class='r-in'> <span class='fu'>getCollectionSet</span><span class='op'>(</span> db       <span class='op'>=</span> <span class='st'>"refseq"</span>,</span>
+<span class='r-in'>             organism <span class='op'>=</span> <span class='va'>organism_list</span>,</span>
+<span class='r-in'>             path <span class='op'>=</span> <span class='st'>"set_collections"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

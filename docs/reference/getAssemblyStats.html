@@ -191,7 +191,7 @@ subsequently be imported <code>type = "import"</code>.</p></td>
       <th>path</th>
       <td><p>a character string specifying the location (a folder) in
 which the corresponding file shall be stored. Default is 
-<code>path</code> = <code><a href='https://rdrr.io/r/base/file.path.html'>file.path("_ncbi_downloads","genomeassembly_stats")</a></code>.</p></td>
+<code>path</code> = <code>file.path("_ncbi_downloads","genomeassembly_stats")</code>.</p></td>
     </tr>
     </table>
 
@@ -222,27 +222,27 @@ GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt.</p>
     <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># download the genome assembly stats file of Saccharomyces cerevisiae</span>
-<span class='co'># from NCBI RefSeq</span>
-<span class='co'># and store the corresponding genome file in </span>
-<span class='co'># '_ncbi_downloads/genomeassembly_stats'</span>
-<span class='va'>file_path</span> <span class='op'>&lt;-</span> <span class='fu'>getAssemblyStats</span><span class='op'>(</span> db <span class='op'>=</span> <span class='st'>"refseq"</span>, 
-                 organism <span class='op'>=</span> <span class='st'>"Saccharomyces cerevisiae"</span>, 
-                 path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"_ncbi_downloads"</span>,<span class='st'>"genomeassembly_stats"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='co'># import the raw file as it is downloaded</span>
-<span class='va'>Scerevisiae.stats</span> <span class='op'>&lt;-</span> <span class='fu'><a href='read_assemblystats.html'>read_assemblystats</a></span><span class='op'>(</span><span class='va'>file_path</span>, type <span class='op'>=</span> <span class='st'>"raw"</span><span class='op'>)</span>
-
-<span class='co'># download the genome assembly stats file of Saccharomyces cerevisiae</span>
-<span class='co'># from NCBI RefSeq </span>
-<span class='co'># and import overall statistics of the genome assembly</span>
-<span class='va'>Scerevisiae.stats.import</span> <span class='op'>&lt;-</span> <span class='fu'>getAssemblyStats</span><span class='op'>(</span> db <span class='op'>=</span> <span class='st'>"refseq"</span>, 
-                 organism <span class='op'>=</span> <span class='st'>"Saccharomyces cerevisiae"</span>,
-                 type <span class='op'>=</span> <span class='st'>"import"</span>, 
-                 path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"_ncbi_downloads"</span>,<span class='st'>"genomeassembly_stats"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># download the genome assembly stats file of Saccharomyces cerevisiae</span></span>
+<span class='r-in'><span class='co'># from NCBI RefSeq</span></span>
+<span class='r-in'><span class='co'># and store the corresponding genome file in </span></span>
+<span class='r-in'><span class='co'># '_ncbi_downloads/genomeassembly_stats'</span></span>
+<span class='r-in'><span class='va'>file_path</span> <span class='op'>&lt;-</span> <span class='fu'>getAssemblyStats</span><span class='op'>(</span> db <span class='op'>=</span> <span class='st'>"refseq"</span>, </span>
+<span class='r-in'>                 organism <span class='op'>=</span> <span class='st'>"Saccharomyces cerevisiae"</span>, </span>
+<span class='r-in'>                 path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"_ncbi_downloads"</span>,<span class='st'>"genomeassembly_stats"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># import the raw file as it is downloaded</span></span>
+<span class='r-in'><span class='va'>Scerevisiae.stats</span> <span class='op'>&lt;-</span> <span class='fu'><a href='read_assemblystats.html'>read_assemblystats</a></span><span class='op'>(</span><span class='va'>file_path</span>, type <span class='op'>=</span> <span class='st'>"raw"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># download the genome assembly stats file of Saccharomyces cerevisiae</span></span>
+<span class='r-in'><span class='co'># from NCBI RefSeq </span></span>
+<span class='r-in'><span class='co'># and import overall statistics of the genome assembly</span></span>
+<span class='r-in'><span class='va'>Scerevisiae.stats.import</span> <span class='op'>&lt;-</span> <span class='fu'>getAssemblyStats</span><span class='op'>(</span> db <span class='op'>=</span> <span class='st'>"refseq"</span>, </span>
+<span class='r-in'>                 organism <span class='op'>=</span> <span class='st'>"Saccharomyces cerevisiae"</span>,</span>
+<span class='r-in'>                 type <span class='op'>=</span> <span class='st'>"import"</span>, </span>
+<span class='r-in'>                 path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"_ncbi_downloads"</span>,<span class='st'>"genomeassembly_stats"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

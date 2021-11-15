@@ -3,7 +3,7 @@ title: "Functional Annotation with biomartr"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Functional Annotation}
+  %\VignetteIndexEntry{Functional Annotation with biomartr}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---

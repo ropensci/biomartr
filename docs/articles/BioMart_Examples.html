@@ -91,12 +91,12 @@
 
       
 
-      </header><script src="BioMart_Examples_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="BioMart_Examples_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Ensembl BioMart Examples</h1>
             
-            <h4 class="date">2021-03-17</h4>
+            <h4 class="date">2021-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/BioMart_Examples.Rmd"><code>vignettes/BioMart_Examples.Rmd</code></a></small>
       <div class="hidden name"><code>BioMart_Examples.Rmd</code></div>
@@ -136,7 +136,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
 
 <span class="co"># read the excel file</span>
-<span class="va">DrerioPhyloMap.MBEa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span>, skip <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="va">DrerioPhyloMap.MBEa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span>, skip <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 
 <span class="co"># format Phylostratigraphic Map for use with myTAI</span>
 <span class="va">Drerio.PhyloMap</span> <span class="op">&lt;-</span> <span class="va">DrerioPhyloMap.MBEa</span><span class="op">[</span> , <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>
@@ -150,31 +150,31 @@
 4           1 ZDB-GENE-000208-23
 5           1  ZDB-GENE-000209-3
 6           1  ZDB-GENE-000209-4</code></pre>
-<p>Now, <code>Drerio.PhyloMap</code> stores the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used as background set to perform enrichment analyses with <code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html">PlotEnrichment()</a></code> from <code>myTAI</code>.</p>
+<p>Now, <code>Drerio.PhyloMap</code> stores the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used as background set to perform enrichment analyses with <code>PlotEnrichment()</code> from <code>myTAI</code>.</p>
 </div>
 <div id="enrichment-analyses" class="section level3">
 <h3 class="hasAnchor">
 <a href="#enrichment-analyses" class="anchor"></a>Enrichment Analyses</h3>
-<p>Now, the <code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html">PlotEnrichment()</a></code> function visualizes the over- and underrepresented <code>Phylostrata</code> of brain specific genes when compared with the total number of genes stored in the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
+<p>Now, the <code>PlotEnrichment()</code> function visualizes the over- and underrepresented <code>Phylostrata</code> of brain specific genes when compared with the total number of genes stored in the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
 
 <span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span>
-<span class="va">Drerio.OrganSpecificExpression</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span>, skip <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">Drerio.OrganSpecificExpression</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span>, skip <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># select only brain specific genes</span>
 <span class="va">Drerio.Brain.Genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">Drerio.OrganSpecificExpression</span><span class="op">[</span> , <span class="st">"brain"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span>
-<span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html">PlotEnrichment</a></span><span class="op">(</span><span class="va">Drerio.PhyloMap</span>,
+<span class="fu">PlotEnrichment</span><span class="op">(</span><span class="va">Drerio.PhyloMap</span>,
                test.set     <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,
                measure      <span class="op">=</span> <span class="st">"foldchange"</span>,
                use.only.map <span class="op">=</span> <span class="cn">TRUE</span>,
                legendName   <span class="op">=</span> <span class="st">"PS"</span><span class="op">)</span></code></pre></div>
 <p>Users will observe that for example brain genes deriving from PS5 are significantly enriched.</p>
-<p>Now we can select all brain genes originating in PS5 using the <code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html">SelectGeneSet()</a></code> function from <code>myTAI</code>. Please notice that <code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html">SelectGeneSet()</a></code> can only be used with phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument) since myTAI version &gt; 0.3.0.</p>
+<p>Now we can select all brain genes originating in PS5 using the <code>SelectGeneSet()</code> function from <code>myTAI</code>. Please notice that <code>SelectGeneSet()</code> can only be used with phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument) since myTAI version &gt; 0.3.0.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">BrainGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html">SelectGeneSet</a></span><span class="op">(</span>ExpressionSet <span class="op">=</span> <span class="va">Drerio.PhyloMap</span>,
+<code class="sourceCode R"><span class="va">BrainGenes</span> <span class="op">&lt;-</span> <span class="fu">SelectGeneSet</span><span class="op">(</span>ExpressionSet <span class="op">=</span> <span class="va">Drerio.PhyloMap</span>,
                             gene.set      <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,
                             use.only.map  <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 

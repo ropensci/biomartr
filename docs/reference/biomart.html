@@ -170,7 +170,7 @@ be used, e.g. <code>dataset</code> = <code>"hsapiens_gene_ensembl"</code>.</p></
       <th>attributes</th>
       <td><p>a character vector specifying the attributes that shall be
 used, e.g. <code>attributes</code> = 
-<code><a href='https://rdrr.io/r/base/c.html'>c("start_position","end_position","description")</a></code>.</p></td>
+<code>c("start_position","end_position","description")</code>.</p></td>
     </tr>
     <tr>
       <th>filters</th>
@@ -205,30 +205,30 @@ implemented by Steffen Durinck et al.</p>
     <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># 1) select a mart</span>
-<span class='fu'><a href='getMarts.html'>getMarts</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># we will select mart 'plants_mart' and search for available datasets</span>
-<span class='fu'><a href='getDatasets.html'>getDatasets</a></span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"plants_mart"</span><span class='op'>)</span>
-
-<span class='co'># we choose dataset 'athaliana_eg_gene' and run biomart()</span>
-<span class='co'># using mart: 'plants_mart', dataset: "athaliana_eg_gene"</span>
-<span class='co'># attributes: c("start_position","end_position","description")</span>
-<span class='co'># for an example gene set of Arabidopsis thaliana:</span>
-<span class='co'># c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120",</span>
-<span class='co'>#    "AT1G06130", "AT1G06200")</span>
-
-<span class='fu'>biomart</span><span class='op'>(</span>genes      <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AT1G06090"</span>, <span class='st'>"AT1G06100"</span>,
-                       <span class='st'>"AT1G06110"</span>, <span class='st'>"AT1G06120"</span>,
-                       <span class='st'>"AT1G06130"</span>, <span class='st'>"AT1G06200"</span><span class='op'>)</span>,
-        mart       <span class='op'>=</span> <span class='st'>"plants_mart"</span>,
-        dataset    <span class='op'>=</span> <span class='st'>"athaliana_eg_gene"</span>,
-        attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"start_position"</span>,<span class='st'>"end_position"</span>,<span class='st'>"description"</span><span class='op'>)</span>,
-        filters    <span class='op'>=</span> <span class='st'>"ensembl_gene_id"</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># 1) select a mart</span></span>
+<span class='r-in'><span class='fu'><a href='getMarts.html'>getMarts</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># we will select mart 'plants_mart' and search for available datasets</span></span>
+<span class='r-in'><span class='fu'><a href='getDatasets.html'>getDatasets</a></span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"plants_mart"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># we choose dataset 'athaliana_eg_gene' and run biomart()</span></span>
+<span class='r-in'><span class='co'># using mart: 'plants_mart', dataset: "athaliana_eg_gene"</span></span>
+<span class='r-in'><span class='co'># attributes: c("start_position","end_position","description")</span></span>
+<span class='r-in'><span class='co'># for an example gene set of Arabidopsis thaliana:</span></span>
+<span class='r-in'><span class='co'># c("AT1G06090", "AT1G06100", "AT1G06110", "AT1G06120",</span></span>
+<span class='r-in'><span class='co'>#    "AT1G06130", "AT1G06200")</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>biomart</span><span class='op'>(</span>genes      <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AT1G06090"</span>, <span class='st'>"AT1G06100"</span>,</span>
+<span class='r-in'>                       <span class='st'>"AT1G06110"</span>, <span class='st'>"AT1G06120"</span>,</span>
+<span class='r-in'>                       <span class='st'>"AT1G06130"</span>, <span class='st'>"AT1G06200"</span><span class='op'>)</span>,</span>
+<span class='r-in'>        mart       <span class='op'>=</span> <span class='st'>"plants_mart"</span>,</span>
+<span class='r-in'>        dataset    <span class='op'>=</span> <span class='st'>"athaliana_eg_gene"</span>,</span>
+<span class='r-in'>        attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"start_position"</span>,<span class='st'>"end_position"</span>,<span class='st'>"description"</span><span class='op'>)</span>,</span>
+<span class='r-in'>        filters    <span class='op'>=</span> <span class='st'>"ensembl_gene_id"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

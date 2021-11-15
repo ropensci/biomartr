@@ -284,43 +284,43 @@ to the same subgroup.</p>
     <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># get all available kingdoms for refseq</span>
-<span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"refseq"</span><span class='op'>)</span>
-<span class='co'># download all vertebrate genomes from refseq</span>
-<span class='fu'>meta.retrieval</span><span class='op'>(</span>kingdom <span class='op'>=</span> <span class='st'>"vertebrate_mammalian"</span>, 
-               db <span class='op'>=</span> <span class='st'>"refseq"</span>, 
-               type <span class='op'>=</span> <span class='st'>"genome"</span><span class='op'>)</span>
-
-<span class='co'># get all available kingdoms for genbank</span>
-<span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"genbank"</span><span class='op'>)</span>
-<span class='co'># download all vertebrate genomes from genbank</span>
-<span class='fu'>meta.retrieval</span><span class='op'>(</span>kingdom <span class='op'>=</span> <span class='st'>"vertebrate_mammalian"</span>, 
-               db <span class='op'>=</span> <span class='st'>"genbank"</span>, 
-               type <span class='op'>=</span> <span class='st'>"genome"</span><span class='op'>)</span>
-
-
-<span class='co'># In case users do not wish to retrieve genomes from an entire kingdom, </span>
-<span class='co'># but rather from a subgoup (e.g. from species belonging to the </span>
-<span class='co'># Gammaproteobacteria class, a subgroup of the bacteria kingdom), </span>
-<span class='co'># they can use the following workflow"</span>
-<span class='co'># First, users can again consult the getKingdoms() function to retrieve </span>
-<span class='co'># kingdom information.</span>
-<span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"refseq"</span><span class='op'>)</span>
-
-<span class='co'># In this example, we will choose the bacteria kingdom. </span>
-<span class='co'># Now, the getGroups() function allows users to obtain available </span>
-<span class='co'># subgroups of the bacteria kingdom.</span>
-<span class='fu'><a href='getGroups.html'>getGroups</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"refseq"</span>, kingdom <span class='op'>=</span> <span class='st'>"bacteria"</span><span class='op'>)</span>
-
-<span class='co'># Now we choose the group Gammaproteobacteria and specify </span>
-<span class='co'># the group argument in the meta.retrieval() function</span>
-<span class='fu'>meta.retrieval</span><span class='op'>(</span>kingdom <span class='op'>=</span> <span class='st'>"bacteria"</span>, 
-   roup <span class='op'>=</span> <span class='st'>"Gammaproteobacteria"</span>, 
-   db <span class='op'>=</span> <span class='st'>"refseq"</span>, 
-   type <span class='op'>=</span> <span class='st'>"genome"</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># get all available kingdoms for refseq</span></span>
+<span class='r-in'><span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"refseq"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># download all vertebrate genomes from refseq</span></span>
+<span class='r-in'><span class='fu'>meta.retrieval</span><span class='op'>(</span>kingdom <span class='op'>=</span> <span class='st'>"vertebrate_mammalian"</span>, </span>
+<span class='r-in'>               db <span class='op'>=</span> <span class='st'>"refseq"</span>, </span>
+<span class='r-in'>               type <span class='op'>=</span> <span class='st'>"genome"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># get all available kingdoms for genbank</span></span>
+<span class='r-in'><span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"genbank"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># download all vertebrate genomes from genbank</span></span>
+<span class='r-in'><span class='fu'>meta.retrieval</span><span class='op'>(</span>kingdom <span class='op'>=</span> <span class='st'>"vertebrate_mammalian"</span>, </span>
+<span class='r-in'>               db <span class='op'>=</span> <span class='st'>"genbank"</span>, </span>
+<span class='r-in'>               type <span class='op'>=</span> <span class='st'>"genome"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># In case users do not wish to retrieve genomes from an entire kingdom, </span></span>
+<span class='r-in'><span class='co'># but rather from a subgoup (e.g. from species belonging to the </span></span>
+<span class='r-in'><span class='co'># Gammaproteobacteria class, a subgroup of the bacteria kingdom), </span></span>
+<span class='r-in'><span class='co'># they can use the following workflow"</span></span>
+<span class='r-in'><span class='co'># First, users can again consult the getKingdoms() function to retrieve </span></span>
+<span class='r-in'><span class='co'># kingdom information.</span></span>
+<span class='r-in'><span class='fu'><a href='getKingdoms.html'>getKingdoms</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"refseq"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># In this example, we will choose the bacteria kingdom. </span></span>
+<span class='r-in'><span class='co'># Now, the getGroups() function allows users to obtain available </span></span>
+<span class='r-in'><span class='co'># subgroups of the bacteria kingdom.</span></span>
+<span class='r-in'><span class='fu'><a href='getGroups.html'>getGroups</a></span><span class='op'>(</span>db <span class='op'>=</span> <span class='st'>"refseq"</span>, kingdom <span class='op'>=</span> <span class='st'>"bacteria"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Now we choose the group Gammaproteobacteria and specify </span></span>
+<span class='r-in'><span class='co'># the group argument in the meta.retrieval() function</span></span>
+<span class='r-in'><span class='fu'>meta.retrieval</span><span class='op'>(</span>kingdom <span class='op'>=</span> <span class='st'>"bacteria"</span>, </span>
+<span class='r-in'>   roup <span class='op'>=</span> <span class='st'>"Gammaproteobacteria"</span>, </span>
+<span class='r-in'>   db <span class='op'>=</span> <span class='st'>"refseq"</span>, </span>
+<span class='r-in'>   type <span class='op'>=</span> <span class='st'>"genome"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

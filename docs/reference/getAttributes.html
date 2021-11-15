@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Retrieve All Available Attributes for a Specific Dataset — getAttributes" />
-<meta property="og:description" content="This funcion queries the BioMart Interface and returns a table
+<meta property="og:description" content="This function queries the BioMart Interface and returns a table
 storing all available attributes for a specific dataset." />
 
 
@@ -142,7 +142,7 @@ storing all available attributes for a specific dataset." />
     </div>
 
     <div class="ref-description">
-    <p>This funcion queries the BioMart Interface and returns a table
+    <p>This function queries the BioMart Interface and returns a table
 storing all available attributes for a specific dataset.</p>
     </div>
 
@@ -173,19 +173,19 @@ attributes shall be listed.</p></td>
     <p>Hajk-Georg Drost</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># search for available datasets</span>
-<span class='fu'><a href='getMarts.html'>getMarts</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># choose database (mart): ENSEMBL_MART_ENSEMBL</span>
-<span class='co'># and get a table of all available datasets from this BioMart database</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='getDatasets.html'>getDatasets</a></span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span><span class='op'>)</span>, <span class='fl'>10</span><span class='op'>)</span>
-
-<span class='co'># choose dataset: "hsapiens_gene_ensembl"</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>getAttributes</span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>, 
-                   dataset <span class='op'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span><span class='op'>)</span> , <span class='fl'>5</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># search for available datasets</span></span>
+<span class='r-in'><span class='fu'><a href='getMarts.html'>getMarts</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># choose database (mart): ENSEMBL_MART_ENSEMBL</span></span>
+<span class='r-in'><span class='co'># and get a table of all available datasets from this BioMart database</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='getDatasets.html'>getDatasets</a></span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span><span class='op'>)</span>, <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># choose dataset: "hsapiens_gene_ensembl"</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>getAttributes</span><span class='op'>(</span>mart <span class='op'>=</span> <span class='st'>"ENSEMBL_MART_ENSEMBL"</span>, </span>
+<span class='r-in'>                   dataset <span class='op'>=</span> <span class='st'>"hsapiens_gene_ensembl"</span><span class='op'>)</span> , <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -91,12 +91,12 @@
 
       
 
-      </header><script src="Sequence_Retrieval_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Sequence_Retrieval_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sequence Retrieval</h1>
             
-            <h4 class="date">2021-03-17</h4>
+            <h4 class="date">2021-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -220,34 +220,35 @@
 #   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
 #   excluded_from_refseq &lt;chr&gt;</code></pre>
 <p>Here, we find one possible versions of the human genome having the <code>assembly_accession</code> ID <code>GCF_000001405.38</code>.</p>
-<p>When retrieving a genome with e.g. <code><a href="../reference/getGenome.html">getGenome()</a></code> the <code>organism</code> argument can also be specified using the <code>assembly_accession</code> ID instead of the scientific name of the organism. This is true for all <code>get*()</code> functions. Hence, instead of writing <code><a href="../reference/getGenome.html">getGenome(db = "refseq", organism = "Homo sapiens")</a></code>, users can specify <code><a href="../reference/getGenome.html">getGenome(db = "refseq", organism = "GCF_000001405.38")</a></code>. This is particularly useful when more than one entry is available for one organism.</p>
+<p>When retrieving a genome with e.g. <code><a href="../reference/getGenome.html">getGenome()</a></code> the <code>organism</code> argument can also be specified using the <code>assembly_accession</code> ID instead of the scientific name of the organism. This is true for all <code>get*()</code> functions. Hence, instead of writing <code>getGenome(db = "refseq", organism = "Homo sapiens")</code>, users can specify <code>getGenome(db = "refseq", organism = "GCF_000001405.38")</code>. This is particularly useful when more than one entry is available for one organism.</p>
 <p><strong>Please note that the <code>assembly_accession</code> id might change internally in external databases such as NCBI RefSeq. Thus when writing automated scripts using the <code>assembly_accession</code> id they might stop working due to the internal change of ids at RefSeq. Recently, I had the case where the <code>assembly_accession</code> id was changed at RefSeq from <code>GCF_000001405.37</code> to <code>GCF_000001405.38</code>. Thus, scripts based on screening for entries with <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> stopped working, because the id <code>GCF_000001405.37</code> couldn’t be found anymore.</strong></p>
 <p>In some cases users will find several entries for the same scientific name. This might be due to the fact that ecotypes, strains, or other types of sub-species are available in the respective databases.</p>
 <p>For example. when we search for the bacterium <code>Mycobacterium tuberculosis</code> in NCBI RefSeq we get 5377 hits.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Mycobacterium tuberculosis"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>A tibble: 5,377 x 21
-   assembly_accessi… bioproject biosample wgs_master refseq_category  taxid
-   &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;int&gt;
- 1 GCF_000008585.1   PRJNA2241… SAMN0260… NA         na               83331
- 2 GCF_000016145.1   PRJNA2241… SAMN0260… NA         na              419947
- 3 GCF_000016925.1   PRJNA2241… SAMN0010… NA         na              336982
- 4 GCF_000023625.1   PRJNA2241… SAMN0076… NA         na              478434
- 5 GCF_000152105.1   PRJNA2241… SAMN0259… ADHQ00000… na              675512
- 6 GCF_000153685.2   PRJNA2241… SAMN0308… NA         na              395095
- 7 GCF_000154585.2   PRJNA2241… SAMN0308… NA         na              478433
- 8 GCF_000154605.2   PRJNA2241… SAMN0010… NA         na              478435
- 9 GCF_000155795.1   PRJNA2241… SAMN0259… ABVM00000… na              555461
-10 GCF_000159755.1   PRJNA2241… SAMN0259… ACHP00000… na              611303
-# ... with 5,367 more rows, and 15 more variables: species_taxid &lt;int&gt;,
-#   organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;,
-#   version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;,
-#   genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
-#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
-#   excluded_from_refseq &lt;chr&gt;</code></pre>
+<pre><code>A tibble: 6,744 x 21
+   assembly_accessi… bioproject  biosample  wgs_master  refseq_category
+   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;          
+ 1 GCF_000729745.1   PRJNA224116 SAMN02899… JPFP000000… na             
+ 2 GCF_000729755.1   PRJNA224116 SAMN02899… JPFQ000000… na             
+ 3 GCF_000729765.1   PRJNA224116 SAMN02899… JPFR000000… na             
+ 4 GCF_000749605.1   PRJNA224116 SAMN02902… JQES000000… na             
+ 5 GCF_000749615.1   PRJNA224116 SAMN02902… JQER000000… na             
+ 6 GCF_000749625.1   PRJNA224116 SAMN02902… JQEQ000000… na             
+ 7 GCF_000749665.1   PRJNA224116 SAMN02902… JQEV000000… na             
+ 8 GCF_000749675.1   PRJNA224116 SAMN02902… JQET000000… na             
+ 9 GCF_000749685.1   PRJNA224116 SAMN02902… JQEN000000… na             
+10 GCF_000749725.1   PRJNA224116 SAMN02902… JQEM000000… na             
+ … with 6,734 more rows, and 16 more variables: taxid &lt;int&gt;,
+   species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+   excluded_from_refseq &lt;chr&gt;</code></pre>
 <p>When looking at the names of these organisms we see that they consist of different strains of <code>Mycobacterium tuberculosis</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Mycobacterium tuberculosis"</span>, 
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Mycobacterium tuberculosis"</span>, 
                          db <span class="op">=</span> <span class="st">"refseq"</span>, 
                          details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">organism_name</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "Mycobacterium tuberculosis CDC1551"     
@@ -310,18 +311,18 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check genome availability for Candida glabrata</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"Candida glabrata"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>Unfortunatey, no entry <span class="cf">for</span> <span class="st">'Candida glabrata'</span> was found <span class="cf">in</span> the <span class="st">'refseq'</span> database. </span>
-<span id="cb16-2"><a href="#cb16-2"></a>Please consider specifying <span class="st">'db = genbank'</span> or <span class="st">'db = ensembl'</span> </span>
-<span id="cb16-3"><a href="#cb16-3"></a>to check whether <span class="st">'Candida glabrata'</span> is availabe <span class="cf">in</span> these databases.</span>
-<span id="cb16-4"><a href="#cb16-4"></a>[<span class="dv">1</span>] <span class="ot">FALSE</span></span></code></pre></div>
-<p>When now checking the availability in <code>NCBI Genbank</code> we find that indeed ‘Candida glabrata’ is availabe:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Unfortunatey, no entry <span class="cf">for</span> <span class="st">'Candida glabrata'</span> was found <span class="cf">in</span> the <span class="st">'refseq'</span> database. </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Please consider specifying <span class="st">'db = genbank'</span> or <span class="st">'db = ensembl'</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>to check whether <span class="st">'Candida glabrata'</span> is availabe <span class="cf">in</span> these databases.</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code></pre></div>
+<p>When now checking the availability in <code>NCBI Genbank</code> we find that indeed ‘Candida glabrata’ is available:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check genome availability for Candida glabrata</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Candida glabrata"</span><span class="op">)</span></code></pre></div>
 <pre><code>Only a non-reference genome assembly is available for 'Candida glabrata'. 
 Please make sure to specify the argument 'reference = FALSE' when running any get*() function.
 [1] TRUE</code></pre>
-<p>Although, an entry is available the <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> warns us that only a non-reference genome is available for ‘Candida glabrata’. To then retrieve the e.g. genome etc. files users need to speficy the <code>reference = FALSE</code> argument in the <code>get*()</code> functions.</p>
+<p>Although, an entry is available the <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> warns us that only a non-reference genome is available for ‘Candida glabrata’. To then retrieve the e.g. genome etc. files users need to specify the <code>reference = FALSE</code> argument in the <code>get*()</code> functions.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve non-reference genome </span>
@@ -378,7 +379,7 @@ that can then be specified in all get*() functions.
 <div id="using-is-genome-available-with-ensembl" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-is-genome-available-with-ensembl" class="anchor"></a>Using <code>is.genome.available()</code> with ENSEMBL</h3>
-<p>Users can also specify <code>db = "ensembl"</code> to retrieve available organisms provided by ENSEMBL. Again, users might experience a delay in the execution of this function when running it for the first time. This is due to the download of ENSEMBL information which is then stored internally to enable a much faster execution of this function in following runs. The corresponding information files are stored at <code><a href="https://rdrr.io/r/base/file.path.html">file.path(tempdir(), "ensembl_summary.txt")</a></code>.</p>
+<p>Users can also specify <code>db = "ensembl"</code> to retrieve available organisms provided by ENSEMBL. Again, users might experience a delay in the execution of this function when running it for the first time. This is due to the download of ENSEMBL information which is then stored internally to enable a much faster execution of this function in following runs. The corresponding information files are stored at <code>file.path(tempdir(), "ensembl_summary.txt")</code>.</p>
 </div>
 <div id="example-ensembl-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
@@ -883,7 +884,7 @@ that can then be specified in all get*() functions.
 <code>db = "ensembl"</code> for retrieval from <a href="http://www.ensembl.org/index.html">ENSEMBL</a>
 </li>
 </ul>
-<p>Furthermore, users need to specify the <code>scientific name</code>, the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a> identifier), or the <code>accession identifier</code> of the organism of interest for which a genome assembly shall be downloaded, e.g. <code>organism = "Homo sapiens"</code> or <code>organism = "9606"</code> or <code>organism = "GCF_000001405.37"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument (e.g. <code><a href="https://rdrr.io/r/base/file.path.html">file.path("_ncbi_downloads","genomes")</a></code>).</p>
+<p>Furthermore, users need to specify the <code>scientific name</code>, the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a> identifier), or the <code>accession identifier</code> of the organism of interest for which a genome assembly shall be downloaded, e.g. <code>organism = "Homo sapiens"</code> or <code>organism = "9606"</code> or <code>organism = "GCF_000001405.37"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument (e.g. <code>file.path("_ncbi_downloads","genomes")</code>).</p>
 </div>
 <div id="example-ncbi-refseq" class="section level3">
 <h3 class="hasAnchor">
@@ -959,7 +960,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Human_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                            organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
-                           path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                           path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Genome</span></code></pre></div>
@@ -986,7 +987,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Scerevisiae_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>
             db       <span class="op">=</span> <span class="st">"refseq"</span>,
-            organism <span class="op">=</span> <span class="st">"559292"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            organism <span class="op">=</span> <span class="st">"559292"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
@@ -1014,7 +1015,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Scerevisiae_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>
             db       <span class="op">=</span> <span class="st">"refseq"</span>,
-            organism <span class="op">=</span> <span class="st">"GCF_000146045.2"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            organism <span class="op">=</span> <span class="st">"GCF_000146045.2"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
@@ -1072,7 +1073,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Scerevisiae_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>
             db       <span class="op">=</span> <span class="st">"genbank"</span>,
-            organism <span class="op">=</span> <span class="st">"559292"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            organism <span class="op">=</span> <span class="st">"559292"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
@@ -1100,7 +1101,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Scerevisiae_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>
             db       <span class="op">=</span> <span class="st">"genbank"</span>,
-            organism <span class="op">=</span> <span class="st">"GCA_000146045.2"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            organism <span class="op">=</span> <span class="st">"GCA_000146045.2"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
@@ -1183,7 +1184,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Scerevisiae_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>
             db       <span class="op">=</span> <span class="st">"ensembl"</span>,
-            organism <span class="op">=</span> <span class="st">"4932"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            organism <span class="op">=</span> <span class="st">"4932"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
@@ -1211,7 +1212,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import genome as Biostrings object</span>
 <span class="va">Scerevisiae_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>
             db       <span class="op">=</span> <span class="st">"ensembl"</span>,
-            organism <span class="op">=</span> <span class="st">"GCA_000146045.2"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            organism <span class="op">=</span> <span class="st">"GCA_000146045.2"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
@@ -1301,7 +1302,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import proteome as Biostrings object</span>
 <span class="va">Human_Proteome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getProteome.html">getProteome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
-                               path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                               path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Proteome</span></code></pre></div>
@@ -1494,7 +1495,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import CDS as Biostrings object</span>
 <span class="va">Human_CDS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCDS.html">getCDS</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                      organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
-                     path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                     path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_CDS</span></code></pre></div>
@@ -1661,7 +1662,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="co"># import RNA as Biostrings object</span>
 <span class="va">Human_rna</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getRNA.html">getRNA</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                      organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
-                     path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                     path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_rna</span></code></pre></div>
