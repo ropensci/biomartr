@@ -45,6 +45,9 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 
 - in all `get*()` functions, the `readr::write_tsv(path = )` was exchanged to `readr::write_tsv(file = )`, since the `readr` package version > 1.4.0 is depreciating the `path` argument. 
 
+- `tbl_df()` was deprecated in dplyr 1.0.0.
+Please use `tibble::as_tibble()` instead. -> adjusted `organismBM()` accordingly
+
 ### Bug Fixes
 
 - Fixing bug where genome availability check in `getCollection()` was only performed in `NCBI RefSeq` and not in other databases due to a constant used in `is.genome.available()` rather than a variable (Many thanks to Takahiro Yamada for catching the bug) #53
