@@ -139,31 +139,32 @@ is.genome.available(organism = "Mycobacterium tuberculosis", db = "refseq", deta
 ```
 
 ```
-A tibble: 5,377 x 21
-   assembly_accessi… bioproject biosample wgs_master refseq_category  taxid
-   <chr>             <chr>      <chr>     <chr>      <chr>            <int>
- 1 GCF_000008585.1   PRJNA2241… SAMN0260… NA         na               83331
- 2 GCF_000016145.1   PRJNA2241… SAMN0260… NA         na              419947
- 3 GCF_000016925.1   PRJNA2241… SAMN0010… NA         na              336982
- 4 GCF_000023625.1   PRJNA2241… SAMN0076… NA         na              478434
- 5 GCF_000152105.1   PRJNA2241… SAMN0259… ADHQ00000… na              675512
- 6 GCF_000153685.2   PRJNA2241… SAMN0308… NA         na              395095
- 7 GCF_000154585.2   PRJNA2241… SAMN0308… NA         na              478433
- 8 GCF_000154605.2   PRJNA2241… SAMN0010… NA         na              478435
- 9 GCF_000155795.1   PRJNA2241… SAMN0259… ABVM00000… na              555461
-10 GCF_000159755.1   PRJNA2241… SAMN0259… ACHP00000… na              611303
-# ... with 5,367 more rows, and 15 more variables: species_taxid <int>,
-#   organism_name <chr>, infraspecific_name <chr>, isolate <chr>,
-#   version_status <chr>, assembly_level <chr>, release_type <chr>,
-#   genome_rep <chr>, seq_rel_date <date>, asm_name <chr>, submitter <chr>,
-#   gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
-#   excluded_from_refseq <chr>
+A tibble: 6,744 x 21
+   assembly_accessi… bioproject  biosample  wgs_master  refseq_category
+   <chr>             <chr>       <chr>      <chr>       <chr>          
+ 1 GCF_000729745.1   PRJNA224116 SAMN02899… JPFP000000… na             
+ 2 GCF_000729755.1   PRJNA224116 SAMN02899… JPFQ000000… na             
+ 3 GCF_000729765.1   PRJNA224116 SAMN02899… JPFR000000… na             
+ 4 GCF_000749605.1   PRJNA224116 SAMN02902… JQES000000… na             
+ 5 GCF_000749615.1   PRJNA224116 SAMN02902… JQER000000… na             
+ 6 GCF_000749625.1   PRJNA224116 SAMN02902… JQEQ000000… na             
+ 7 GCF_000749665.1   PRJNA224116 SAMN02902… JQEV000000… na             
+ 8 GCF_000749675.1   PRJNA224116 SAMN02902… JQET000000… na             
+ 9 GCF_000749685.1   PRJNA224116 SAMN02902… JQEN000000… na             
+10 GCF_000749725.1   PRJNA224116 SAMN02902… JQEM000000… na             
+ … with 6,734 more rows, and 16 more variables: taxid <int>,
+   species_taxid <int>, organism_name <chr>,
+   infraspecific_name <chr>, isolate <chr>, version_status <chr>,
+   assembly_level <chr>, release_type <chr>, genome_rep <chr>,
+   seq_rel_date <date>, asm_name <chr>, submitter <chr>,
+   gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
+   excluded_from_refseq <chr>
 ```
 
 When looking at the names of these organisms we see that they consist of different strains of `Mycobacterium tuberculosis`.
 
 ```r
-head(is.genome.available(organism = "Mycobacterium tuberculosis", 
+tail(is.genome.available(organism = "Mycobacterium tuberculosis", 
                          db = "refseq", 
                          details = TRUE)$organism_name)
 ```
@@ -260,7 +261,7 @@ to check whether 'Candida glabrata' is availabe in these databases.
 ```
 
 When now checking the availability in `NCBI Genbank` we find that indeed
-'Candida glabrata' is availabe:
+'Candida glabrata' is available:
 
 ```r
 # check genome availability for Candida glabrata
@@ -275,7 +276,7 @@ Please make sure to specify the argument 'reference = FALSE' when running any ge
 
 Although, an entry is available the `is.genome.available()` warns us that
 only a non-reference genome is available for 'Candida glabrata'.
-To then retrieve the e.g. genome etc. files users need to speficy the
+To then retrieve the e.g. genome etc. files users need to specify the
 `reference = FALSE` argument in the `get*()` functions.
 
 For example:
