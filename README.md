@@ -4,7 +4,9 @@ biomartr
 [![Travis-CI Build Status](https://travis-ci.org/ropensci/biomartr.svg?branch=master)](https://travis-ci.org/ropensci/biomartr)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/biomartr)](https://github.com/metacran/cranlogs.app)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/biomartr)](https://github.com/metacran/cranlogs.app)
-[![Paper link](https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg)](https://academic.oup.com/bioinformatics/article/33/8/1216/2931816) 
+[![Paper link](https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg)](https://academic.oup.com/bioinformatics/article/33/8/1216/2931816)
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-biomartr/README.html)
+
  
 ## Genomic Data Retrieval with R
 
@@ -92,6 +94,27 @@ Now users can install `biomartr` from CRAN:
 # install biomartr 0.9.2
 install.packages("biomartr", dependencies = TRUE)
 ```
+
+## Installation with Bioconda
+
+With an activated Bioconda channel (see [2. Set up channels](http://bioconda.github.io/user/install.html#set-up-channels)), install with:
+
+```
+conda install r-biomartr
+```
+
+and update with:
+
+```
+conda update r-biomartr
+```
+
+or use the docker container:
+```
+docker pull quay.io/biocontainers/r-biomartr:<tag>
+```
+(check [r-biomartr/tags](https://quay.io/repository/biocontainers/r-biomartr?tab=tags) for valid values for <tag>)
+
 
 ## Example
 

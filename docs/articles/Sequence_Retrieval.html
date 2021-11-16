@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sequence Retrieval</h1>
             
-            <h4 class="date">2021-11-15</h4>
+            <h4 class="date">2021-11-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -327,14 +327,8 @@ Please make sure to specify the argument 'reference = FALSE' when running any ge
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve non-reference genome </span>
 <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Candida glabrata"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<pre><code>Only a non-reference genome assembly is available for 'Candida glabrata'. 
-Please make sure to specify the argument 'reference = FALSE' when running any get*() function.
-Genome download is completed!
-Checking md5 hash of file: _ncbi_downloads/genomes/Candida_glabrata_md5checksums.txt ...
-The md5 hash of file '_ncbi_downloads/genomes/Candida_glabrata_md5checksums.txt' matches!
-The genome of 'Candida_glabrata' has been downloaded to '_ncbi_downloads/genomes' 
-and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
-[1] "_ncbi_downloads/genomes/Candida_glabrata_genomic_genbank.fna.gz"</code></pre>
+<pre><code>Unfortunately no genome file could be found for organism 'Candida glabrata'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?
+[1] "Not available"</code></pre>
 </div>
 </div>
 <div id="example-ncbi-genbank-is-genome-available" class="section level3">
@@ -345,35 +339,34 @@ and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
 <code class="sourceCode R"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
-<pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
-More than one entry was found for 'Homo sapiens'. 
-Please consider to re-run this funtion and specify 'details = TRUE'. 
-This will allow you to select the 'assembly_accession' identifier 
-that can then be specified in all get*() functions.
+<pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.                           
+More than one entry was found for 'Homo sapiens'. Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = Homo sapiens, db = genbank, details = TRUE)'. This will allow you to select the 'assembly_accession' identifier that can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <p>Now with <code>details = TRUE</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code> assembly_accessi… bioproject biosample   wgs_master  refseq_category taxid
-   &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;
- 1 GCA_000001405.27  PRJNA31257 NA          NA          reference geno…  9606
- 2 GCA_000002115.2   PRJNA1431  SAMN029812… AADD000000… na               9606
- 3 GCA_000002125.2   PRJNA19621 SAMN029812… ABBA000000… na               9606
- 4 GCA_000002135.3   PRJNA10793 NA          NA          na               9606
- 5 GCA_000004845.2   PRJNA42199 SAMN000033… ADDF000000… na               9606
- 6 GCA_000005465.1   PRJNA42201 NA          DAAB000000… na               9606
- 7 GCA_000181135.1   PRJNA28335 SAMN000016… ABKV000000… na               9606
- 8 GCA_000185165.1   PRJNA59877 SAMN029812… AEKP000000… na               9606
- 9 GCA_000212995.1   PRJNA19621 SAMN029812… ABSL000000… na               9606
-10 GCA_000252825.1   PRJNA19621 SAMN029812… ABBA000000… na               9606
-# ... with 70 more rows, and 15 more variables: species_taxid &lt;int&gt;,
-#   organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;,
-#   version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;,
-#   genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+<pre><code> A tibble: 1,041 × 23                                                                                   
+   assembly_accession bioproject biosample  wgs_master refseq_category
+   &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          
+ 1 GCA_000001405.28   PRJNA31257 NA         NA         reference geno…
+ 2 GCA_000002115.2    PRJNA1431  SAMN02981… AADD00000… na             
+ 3 GCA_000002125.2    PRJNA19621 SAMN02981… ABBA00000… na             
+ 4 GCA_000002135.3    PRJNA10793 NA         NA         na             
+ 5 GCA_000004845.2    PRJNA42199 SAMN00003… ADDF00000… na             
+ 6 GCA_000005465.1    PRJNA42201 NA         DAAB00000… na             
+ 7 GCA_000181135.1    PRJNA28335 SAMN00001… ABKV00000… na             
+ 8 GCA_000185165.1    PRJNA59877 SAMN02981… AEKP00000… na             
+ 9 GCA_000212995.1    PRJNA19621 SAMN02981… ABSL00000… na             
+10 GCA_000252825.1    PRJNA19621 SAMN02981… ABBA00000… na             
+# … with 1,031 more rows, and 18 more variables: taxid &lt;int&gt;,
+#   species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
 #   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
-#   excluded_from_refseq &lt;chr&gt;</code></pre>
+#   excluded_from_refseq &lt;chr&gt;, X22 &lt;chr&gt;, X23 &lt;chr&gt;</code></pre>
 <p>As you can see there are several versions of the <code>Homo sapiens</code> genome available for download from NCBI Genbank. Using the <code>assembly_accession</code> id will now allow to specify which version shall be retrieved.</p>
 </div>
 <div id="using-is-genome-available-with-ensembl" class="section level3">
@@ -392,26 +385,28 @@ that can then be specified in all get*() functions.
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve details for Homo sapiens</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>  division taxon_id name    release display_name accession   strain_collecti…
-  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;           
-1 Ensembl      9606 homo_s…      92 Human        GCA_000001… NA              
-# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;</code></pre>
+<pre><code>  division           assembly accession  release name  taxon_id strain
+  &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; 
+1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
+# … with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
+#   strain_collection &lt;chr&gt;</code></pre>
 <p>Again, users can either specify the <code>taxid</code> or <code>accession id</code> when searching for organism entries.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve details for Homo sapiens using taxid</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span>, organism <span class="op">=</span> <span class="st">"9606"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>division taxon_id name    release display_name accession   strain_collecti…
-  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;           
-1 Ensembl      9606 homo_s…      92 Human        GCA_000001… NA              
-# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;
-&gt; </code></pre>
+<pre><code>division           assembly accession  release name  taxon_id strain
+  &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; 
+1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
+# … with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
+#   strain_collection &lt;chr&gt;</code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve details for Homo sapiens using accession id</span>
-<span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"GCA_000001405.27"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>  division taxon_id name    release display_name accession  strain_collecti…
-  &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;           
-1 Ensembl      9606 homo_s…      92 Human        GCA_00000… NA              
-# ... with 3 more variables: common_name &lt;chr&gt;, strain &lt;chr&gt;, assembly &lt;chr&gt;</code></pre>
+<span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"GCA_000001405.28"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code> division           assembly accession  release name  taxon_id strain
+  &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; 
+1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
+# … with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
+#   strain_collection &lt;chr&gt;</code></pre>
 <p><strong>Please note that the <code>accession</code> id can change internally at ENSEMBL. E.g. in a recent case the <code>accession</code> id changed from <code>GCA_000001405.25</code> to <code>GCA_000001405.27</code>. Hence, please be careful and take this issue into account when you build automated retrieval scripts that are based on <code>accession</code> ids.</strong></p>
 </div>
 <div id="example-uniprot-is-genome-available" class="section level3">
@@ -422,35 +417,56 @@ that can then be specified in all get*() functions.
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
+More than one entry was found for 'Homo sapiens'. Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = Homo sapiens, db = uniprot, details = TRUE)'. This will allow you to select the 'assembly_accession' identifier that can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <p>or with details:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code> name   description isReferenceProt… isRepresentativ… dbReference component
-* &lt;chr&gt;  &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;list&gt;      &lt;list&gt;   
-1 Homo … Homo sapie… TRUE             TRUE             &lt;data.fram… &lt;data.fr…
-# ... with 7 more variables: reference &lt;list&gt;, upid &lt;chr&gt;, modified &lt;dbl&gt;,
-#   taxonomy &lt;int&gt;, source &lt;chr&gt;, sourceTaxonomy &lt;int&gt;, superregnum &lt;chr&gt;</code></pre>
+<pre><code> A tibble: 29 × 16
+   name          description        isReferenceProte… isRepresentativ…
+   &lt;chr&gt;         &lt;chr&gt;              &lt;lgl&gt;             &lt;lgl&gt;           
+ 1 Homo sapiens… Homo sapiens (Hom… TRUE              TRUE            
+ 2 Human associ… NA                 FALSE             TRUE            
+ 3 Human respir… NA                 FALSE             FALSE           
+ 4 Human respir… NA                 FALSE             FALSE           
+ 5 Human respir… NA                 FALSE             FALSE           
+ 6 Human respir… NA                 FALSE             FALSE           
+ 7 Human respir… NA                 FALSE             FALSE           
+ 8 Human respir… NA                 FALSE             FALSE           
+ 9 Human respir… NA                 FALSE             FALSE           
+10 Human respir… NA                 FALSE             FALSE           
+# … with 19 more rows, and 12 more variables:
+#   genomeAssembly &lt;df[,4]&gt;, dbReference &lt;list&gt;, component &lt;list&gt;,
+#   reference &lt;list&gt;, annotationScore &lt;df[,1]&gt;, scores &lt;list&gt;,
+#   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
+#   superregnum &lt;chr&gt;, strain &lt;chr&gt;</code></pre>
 <p>Users can also search available species at UniProt via <code>taxid</code> or <code>upid</code> id.</p>
 <p>Here <code>9606</code> defines the taxonomy id for <code>Homo sapiens</code>.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"9606"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code> name   description isReferenceProt… isRepresentativ… dbReference component
-* &lt;chr&gt;  &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;list&gt;      &lt;list&gt;   
-1 Homo … Homo sapie… TRUE             TRUE             &lt;data.fram… &lt;data.fr…
-# ... with 7 more variables: reference &lt;list&gt;, upid &lt;chr&gt;, modified &lt;dbl&gt;,
-#   taxonomy &lt;int&gt;, source &lt;chr&gt;, sourceTaxonomy &lt;int&gt;, superregnum &lt;chr&gt;</code></pre>
+<pre><code> A tibble: 3 × 15
+  name  description isReferenceProt… isRepresentativ… genomeAssembly$…
+  &lt;chr&gt; &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;chr&gt;           
+1 Homo… Homo sapie… TRUE             TRUE             Ensembl         
+2 Homo… NA          FALSE            FALSE            ENA/EMBL        
+3 Homo… NA          FALSE            FALSE            ENA/EMBL        
+# … with 10 more variables: dbReference &lt;list&gt;, component &lt;list&gt;,
+#   reference &lt;list&gt;, annotationScore &lt;df[,1]&gt;, scores &lt;list&gt;,
+#   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
+#   superregnum &lt;chr&gt;</code></pre>
 <p>Here <code>UP000005640</code> defines the <code>upid</code> for <code>Homo sapiens</code>.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"UP000005640"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code> name   description isReferenceProt… isRepresentativ… dbReference component
-* &lt;chr&gt;  &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;list&gt;      &lt;list&gt;   
-1 Homo … Homo sapie… TRUE             TRUE             &lt;data.fram… &lt;data.fr…
-# ... with 7 more variables: reference &lt;list&gt;, upid &lt;chr&gt;, modified &lt;dbl&gt;,
-#   taxonomy &lt;int&gt;, source &lt;chr&gt;, sourceTaxonomy &lt;int&gt;, superregnum &lt;chr&gt;</code></pre>
+<pre><code> name  description isReferenceProt… isRepresentativ… genomeAssembly$…
+  &lt;chr&gt; &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;chr&gt;           
+1 Homo… Homo sapie… TRUE             TRUE             Ensembl         
+# … with 10 more variables: dbReference &lt;list&gt;, component &lt;list&gt;,
+#   reference &lt;list&gt;, annotationScore &lt;df[,1]&gt;, scores &lt;list&gt;,
+#   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
+#   superregnum &lt;chr&gt;</code></pre>
 <p>In general, the argument <code>db</code> specifies from which database (<code>refseq</code>, <code>genbank</code>, <code>ensembl</code> or <code>uniprot</code>) organism information shall be retrieved. Options are:</p>
 <ul>
 <li><code>db = 'refseq'</code></li>

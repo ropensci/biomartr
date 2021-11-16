@@ -180,6 +180,17 @@
 <code class="sourceCode R"><span class="co"># install biomartr 0.9.2</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"biomartr"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
+<div id="installation-with-bioconda" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation-with-bioconda" class="anchor"></a>Installation with Bioconda</h2>
+<p>With an activated Bioconda channel (see <a href="http://bioconda.github.io/user/install.html#set-up-channels">2. Set up channels</a>), install with:</p>
+<pre><code>conda install r-biomartr</code></pre>
+<p>and update with:</p>
+<pre><code>conda update r-biomartr</code></pre>
+<p>or use the docker container:</p>
+<pre><code>docker pull quay.io/biocontainers/r-biomartr:&lt;tag&gt;</code></pre>
+<p>(check <a href="https://quay.io/repository/biocontainers/r-biomartr?tab=tags">r-biomartr/tags</a> for valid values for <tag>)</tag></p>
+</div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
@@ -187,7 +198,7 @@
 <h3 class="hasAnchor">
 <a href="#collection-retrieval" class="anchor"></a>Collection Retrieval</h3>
 <p>The automated retrieval of collections (= Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats files) will make sure that the genome file of an organism will match the CDS, proteome, RNA, GFF, etc file and was generated using the same genome assembly version. One aspect of why genomics studies fail in computational and biological reproducibility is that it is not clear whether CDS, proteome, RNA, GFF, etc files used in a proposed analysis were generated using the same genome assembly file denoting the same genome assembly version. To avoid this seemingly trivial mistake we encourage users to retrieve genome file collections using the <code>biomartr</code> function <code><a href="reference/getCollection.html">getCollection()</a></code> and attach the corresponding output as Supplementary Data to the respective genomics study to ensure computational and biological reproducibility.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download collection for Saccharomyces cerevisiae</span>
 <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="reference/getCollection.html">getCollection</a></span><span class="op">(</span> db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"Saccharomyces cerevisiae"</span><span class="op">)</span></code></pre></div>
 <p>Internally, the <code><a href="reference/getCollection.html">getCollection()</a></code> function will now generate a folder named <code>refseq/Collection/Saccharomyces_cerevisiae</code> and will store all genome and annotation files for <code>Saccharomyces cerevisiae</code> in the same folder. In addition, the exact genoem and annotation version will be logged in the <code>doc</code> folder.</p>
@@ -214,7 +225,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <h3 class="hasAnchor">
 <a href="#genome-retrieval-of-hundreds-of-genomes-using-only-one-command" class="anchor"></a>Genome retrieval of hundreds of genomes using only one command</h3>
 <p>Download all mammalian vertebrate genomes from <code>NCBI RefSeq</code> via:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span></code></pre></div>
 <p>All geneomes are stored in the folder named according to the kingdom. In this case <code>vertebrate_mammalian</code>. Alternatively, users can specify the <code>out.folder</code> argument to define a custom output folder path.</p>
@@ -251,7 +262,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <li><a href="https://docs.ropensci.org/biomartr/articles/BioMart_Examples.html">BioMart Examples</a></li>
 </ul>
 <p>Users can also read the tutorials within (<a href="http://www.rstudio.com/">RStudio</a>) :</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># source the biomartr package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/biomartr">biomartr</a></span><span class="op">)</span>
 
@@ -268,7 +279,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <h2 class="hasAnchor">
 <a href="#install-developer-version" class="anchor"></a>Install Developer Version</h2>
 <p>Some bug fixes or new functionality will not be available on CRAN yet, but in the developer version here on GitHub. To download and install the most recent version of <code>biomartr</code> run:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install the current version of biomartr on your system</span>
 <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
     <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
@@ -422,7 +433,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <div id="download-developer-version-on-windows-systems" class="section level2">
 <h2 class="hasAnchor">
 <a href="#download-developer-version-on-windows-systems" class="anchor"></a>Download Developer Version On Windows Systems</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># On Windows, this won't work - see ?build_github_devtools</span>
 <span class="fu">install_github</span><span class="op">(</span><span class="st">"HajkD/biomartr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -432,7 +443,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <span class="co"># Afterwards you can install devtools -&gt; install.packages("devtools")</span>
 <span class="co"># and then you can run:</span>
 
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"HajkD/biomartr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"HajkD/biomartr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># and then call it from the library</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/biomartr">"biomartr"</a></span>, lib.loc <span class="op">=</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span><span class="op">)</span></code></pre></div>
@@ -492,6 +503,7 @@ submitter: Saccharomyces Genome Database</code></pre>
 <li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/biomartr" alt="rstudio mirror downloads"></a></li>
 <li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/grand-total/biomartr" alt="rstudio mirror downloads"></a></li>
 <li><a href="https://academic.oup.com/bioinformatics/article/33/8/1216/2931816"><img src="https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg" alt="Paper link"></a></li>
+<li><a href="http://bioconda.github.io/recipes/r-biomartr/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda"></a></li>
 </ul>
 </div>
 </div>
