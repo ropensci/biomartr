@@ -16,7 +16,8 @@
 #' @export
 
 getKingdoms <- function(db = "refseq"){
-    
+  withr::local_options(timeout = max(30000, getOption("timeout")))
+  
     if (!is.element(db, c("refseq", "genbank","ensembl", "ensemblgenomes")))
         stop("Please select one of the available data bases: 'refseq', 
              'genbank', 'ensembl', or 'ensemblgenomes'.", call. = FALSE)
@@ -54,12 +55,12 @@ getKingdoms <- function(db = "refseq"){
     
     if (db == "ensembl") {
         ensemblinfo <- get.ensembl.info()
-        ensemblgenomesinfo <-  get.ensemblgenome.info()
+        #ensemblgenomesinfo <-  get.ensemblgenome.info()
         
-        joined.df <-
-            dplyr::inner_join(ensemblinfo, ensemblgenomesinfo, by = "name")
+        #joined.df <-
+           # dplyr::inner_join(ensemblinfo, ensemblgenomesinfo, by = "name")
         
-        return(names(table(joined.df$division.x)))
+        return(names(table(ensemblinfo$division)))
     }
     
     if (db == "ensemblgenomes") {

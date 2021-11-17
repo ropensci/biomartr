@@ -10,7 +10,8 @@
 #' @export
 
 getGENOMEREPORT <- function() {
-    
+  withr::local_options(timeout = max(30000, getOption("timeout")))
+  
     if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
         dir.create(file.path(tempdir(), "_ncbi_downloads"))
     }
