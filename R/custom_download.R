@@ -7,6 +7,8 @@
 #' @noRd
 custom_download <- function(url, ...) {
 
+  withr::local_options(timeout = max(30000, getOption("timeout")))
+  
     if (RCurl::url.exists(url)) {
         operating_sys <- Sys.info()[1]
 
