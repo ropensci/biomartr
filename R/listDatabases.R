@@ -53,7 +53,7 @@ listDatabases <- function(db = "nr", update = FALSE) {
                             sep = ";",
                             header = FALSE)
     } else {
-        # retrieve all avaiable databases from NCBI
+        # retrieve all available databases from NCBI
         listDBs <-
             strsplit(
                 RCurl::getURL(

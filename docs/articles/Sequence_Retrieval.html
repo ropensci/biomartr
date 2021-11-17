@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sequence Retrieval</h1>
             
-            <h4 class="date">2021-11-16</h4>
+            <h4 class="date">2021-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -110,7 +110,22 @@
 <a href="#biological-sequence-retrieval" class="anchor"></a>Biological Sequence Retrieval</h2>
 <p>The <code>biomartr</code> package allows users to retrieve biological sequences in a very simple and intuitive way.</p>
 <p>Using <code>biomartr</code>, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> To make sure that you have a sufficiently stable (internet) connection between R and the respective databases, please set the default <code>timeout</code> setting <strong>on your local machine</strong> from 60sec to at least 30000sec before running any retrieval functions via:</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fl">30000</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="topics" class="section level2">
+<h2 class="hasAnchor">
+<a href="#topics" class="anchor"></a>Topics</h2>
 <ul>
+<li>
+<a href="#getting-started-with-sequence-retrieval">0. Getting Started with Sequence Retrieval</a>
+<ul>
+<li><a href="#listing-the-total-number-of-available-genomes">0.1 Listing the total number of available genomes</a></li>
+</ul>
+</li>
 <li>
 <a href="#genome-retrieval">1. Genome retrieval with <code>getGenome()</code></a>
 <ul>
@@ -199,14 +214,14 @@
 <div id="example-ncbi-refseq-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-is-genome-available" class="anchor"></a>Example <code>NCBI RefSeq</code> (?is.genome.available):</h3>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
 [1] TRUE</code></pre>
 <p>In the case of the human genome, there are more than one entry in the NCBI RefSeq database (see message). By specifying the argument ‘details = TRUE’ users can retrieve all information for ‘Homo sapiens’ that is stored in NCBI RefSeq.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -224,7 +239,7 @@
 <p><strong>Please note that the <code>assembly_accession</code> id might change internally in external databases such as NCBI RefSeq. Thus when writing automated scripts using the <code>assembly_accession</code> id they might stop working due to the internal change of ids at RefSeq. Recently, I had the case where the <code>assembly_accession</code> id was changed at RefSeq from <code>GCF_000001405.37</code> to <code>GCF_000001405.38</code>. Thus, scripts based on screening for entries with <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> stopped working, because the id <code>GCF_000001405.37</code> couldn’t be found anymore.</strong></p>
 <p>In some cases users will find several entries for the same scientific name. This might be due to the fact that ecotypes, strains, or other types of sub-species are available in the respective databases.</p>
 <p>For example. when we search for the bacterium <code>Mycobacterium tuberculosis</code> in NCBI RefSeq we get 5377 hits.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Mycobacterium tuberculosis"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>A tibble: 6,744 x 21
    assembly_accessi… bioproject  biosample  wgs_master  refseq_category
@@ -247,7 +262,7 @@
    gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
    excluded_from_refseq &lt;chr&gt;</code></pre>
 <p>When looking at the names of these organisms we see that they consist of different strains of <code>Mycobacterium tuberculosis</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Mycobacterium tuberculosis"</span>, 
                          db <span class="op">=</span> <span class="st">"refseq"</span>, 
                          details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">organism_name</span><span class="op">)</span></code></pre></div>
@@ -258,7 +273,7 @@
 [5] "Mycobacterium tuberculosis SUMu001"     
 [6] "Mycobacterium tuberculosis str. Haarlem"</code></pre>
 <p>Now we can use the <code>assembly_accession</code> id to retrieve the <code>Mycobacterium tuberculosis</code> strain we are interested in, e.g. <code>Mycobacterium tuberculosis CDC1551</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">MtbCDC1551</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, 
                         organism <span class="op">=</span> <span class="st">"GCF_000008585.1"</span>,  
                         path   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span>, 
@@ -274,7 +289,7 @@
 <h4 class="hasAnchor">
 <a href="#using-the-ncbi-taxonomy-id-instead-of-the-scientific-name-to-screen-for-organism-availability" class="anchor"></a>Using the NCBI Taxonomy ID instead of the scientific name to screen for organism availability</h4>
 <p>Instead of specifying the <code>scientific name</code> of the organism of interest users can specify the <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy</a> identifier (= <code>taxid</code>) of the corresponding organism. For example, the <code>taxid</code> of <code>Homo sapiens</code> is <code>9606</code>. Now users can specify <code>organism = "9606"</code> to retrieve entries for <code>Homo sapiens</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking availability for Homo sapiens using its taxid</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"9606"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>  assembly_accession bioproject biosample wgs_master refseq_category  taxid
@@ -291,7 +306,7 @@
 <h4 class="hasAnchor">
 <a href="#using-the-accession-id-instead-of-the-scientific-name-or-taxid-to-screen-for-organism-availability" class="anchor"></a>Using the accession ID instead of the scientific name or taxid to screen for organism availability</h4>
 <p>Finally, instead of specifying either the <code>scientific name</code> of the organism of interest nor the <code>taxid</code>, users can specify the accession ID of the organism of interest. In the following example we use the accession ID of <code>Homo sapiens</code> (= <code>GCF_000001405.38</code>):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking availability for Homo sapiens using its taxid</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"GCF_000001405.38"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>assembly_accession bioproject biosample wgs_master refseq_category  taxid
@@ -308,15 +323,15 @@
 <h4 class="hasAnchor">
 <a href="#a-small-negative-example" class="anchor"></a>A small negative example</h4>
 <p>In some cases your organism of interest will not be available in <code>NCBI RefSeq</code>. Here an example:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check genome availability for Candida glabrata</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, organism <span class="op">=</span> <span class="st">"Candida glabrata"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Unfortunatey, no entry <span class="cf">for</span> <span class="st">'Candida glabrata'</span> was found <span class="cf">in</span> the <span class="st">'refseq'</span> database. </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Please consider specifying <span class="st">'db = genbank'</span> or <span class="st">'db = ensembl'</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>to check whether <span class="st">'Candida glabrata'</span> is availabe <span class="cf">in</span> these databases.</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Unfortunatey, no entry <span class="cf">for</span> <span class="st">'Candida glabrata'</span> was found <span class="cf">in</span> the <span class="st">'refseq'</span> database. </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Please consider specifying <span class="st">'db = genbank'</span> or <span class="st">'db = ensembl'</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>to check whether <span class="st">'Candida glabrata'</span> is availabe <span class="cf">in</span> these databases.</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code></pre></div>
 <p>When now checking the availability in <code>NCBI Genbank</code> we find that indeed ‘Candida glabrata’ is available:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check genome availability for Candida glabrata</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Candida glabrata"</span><span class="op">)</span></code></pre></div>
 <pre><code>Only a non-reference genome assembly is available for 'Candida glabrata'. 
@@ -324,7 +339,7 @@ Please make sure to specify the argument 'reference = FALSE' when running any ge
 [1] TRUE</code></pre>
 <p>Although, an entry is available the <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> warns us that only a non-reference genome is available for ‘Candida glabrata’. To then retrieve the e.g. genome etc. files users need to specify the <code>reference = FALSE</code> argument in the <code>get*()</code> functions.</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve non-reference genome </span>
 <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Candida glabrata"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>Unfortunately no genome file could be found for organism 'Candida glabrata'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?
@@ -335,7 +350,7 @@ Please make sure to specify the argument 'reference = FALSE' when running any ge
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-is-genome-available" class="anchor"></a>Example <code>NCBI Genbank</code> (?is.genome.available):</h3>
 <p>Test whether or not the genome of <code>Homo sapiens</code> is present at NCBI Genbank.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
@@ -343,7 +358,7 @@ Please make sure to specify the argument 'reference = FALSE' when running any ge
 More than one entry was found for 'Homo sapiens'. Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = Homo sapiens, db = genbank, details = TRUE)'. This will allow you to select the 'assembly_accession' identifier that can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <p>Now with <code>details = TRUE</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># checking whether or not the Homo sapiens </span>
 <span class="co"># genome is avaialable for download</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -377,12 +392,12 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <div id="example-ensembl-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl-is-genome-available" class="anchor"></a>Example <code>ENSEMBL</code> (?is.genome.available):</h3>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># cheking whether Homo sapiens is available in the ENSEMBL database</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
 [1] TRUE</code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve details for Homo sapiens</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span>, organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>  division           assembly accession  release name  taxon_id strain
@@ -391,7 +406,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 # … with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
 #   strain_collection &lt;chr&gt;</code></pre>
 <p>Again, users can either specify the <code>taxid</code> or <code>accession id</code> when searching for organism entries.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve details for Homo sapiens using taxid</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span>, organism <span class="op">=</span> <span class="st">"9606"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>division           assembly accession  release name  taxon_id strain
@@ -399,7 +414,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
 # … with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
 #   strain_collection &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve details for Homo sapiens using accession id</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"GCA_000001405.28"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code> division           assembly accession  release name  taxon_id strain
@@ -413,14 +428,14 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <h3 class="hasAnchor">
 <a href="#example-uniprot-is-genome-available" class="anchor"></a>Example <code>UniProt</code> (?is.genome.available):</h3>
 <p>Users can also check the availability of proteomes in the <a href="http://www.uniprot.org">UniProt database</a> by specifying:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>A reference or representative genome assembly is available for 'Homo sapiens'.
 More than one entry was found for 'Homo sapiens'. Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = Homo sapiens, db = uniprot, details = TRUE)'. This will allow you to select the 'assembly_accession' identifier that can then be specified in all get*() functions.
 [1] TRUE</code></pre>
 <p>or with details:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code> A tibble: 29 × 16
@@ -443,7 +458,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 #   superregnum &lt;chr&gt;, strain &lt;chr&gt;</code></pre>
 <p>Users can also search available species at UniProt via <code>taxid</code> or <code>upid</code> id.</p>
 <p>Here <code>9606</code> defines the taxonomy id for <code>Homo sapiens</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"9606"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code> A tibble: 3 × 15
@@ -457,7 +472,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 #   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
 #   superregnum &lt;chr&gt;</code></pre>
 <p>Here <code>UP000005640</code> defines the <code>upid</code> for <code>Homo sapiens</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"UP000005640"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code> name  description isReferenceProt… isRepresentativ… genomeAssembly$…
@@ -481,41 +496,41 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <p>In some cases it might be useful to check how many genomes (in total) are available in the different databases.</p>
 <p>Users can determine the total number of available genomes using the <code><a href="../reference/listGenomes.html">listGenomes()</a></code> function.</p>
 <p>Example <code>refseq</code>:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="../reference/listGenomes.html">listGenomes</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] 14264</code></pre>
+<pre><code>[1] 24910</code></pre>
 <p>Example <code>genbank</code>:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="../reference/listGenomes.html">listGenomes</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] 21770</code></pre>
+<pre><code>[1] 35298</code></pre>
 <p>Example <code>ensembl</code>:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="../reference/listGenomes.html">listGenomes</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] 113</code></pre>
-<p>Hence, currently 14264 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 31/05/2018).</p>
+<pre><code>[1] 310</code></pre>
+<p>Hence, currently 24910 genomes (including all kingdoms of life) are stored on <code>NCBI RefSeq</code> (as of 16/11/2021).</p>
 </div>
 <div id="retrieving-kingdom-group-and-subgroup-information" class="section level3">
 <h3 class="hasAnchor">
 <a href="#retrieving-kingdom-group-and-subgroup-information" class="anchor"></a>Retrieving kingdom, group and subgroup information</h3>
 <p>Using this example users can retrieve the number of available species for each kingdom of life:</p>
 <p>Example <code>refseq</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="fu"><a href="../reference/listKingdoms.html">listKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span><span class="op">)</span></code></pre></div>
-<pre><code>    Archaea  Bacteria Eukaryota   Viroids   Viruses 
-      169      6321       561        47      7166 </code></pre>
+<pre><code>    Archaea  Bacteria Eukaryota   Viruses 
+      330     11797      1002     10637 </code></pre>
 <p>Example <code>genbank</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="fu"><a href="../reference/listKingdoms.html">listKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span><span class="op">)</span></code></pre></div>
 <pre><code>  Archaea  Bacteria Eukaryota 
-     1249     18083      2438</code></pre>
+     1651     25904      7742</code></pre>
 <p>Example <code>ENSEMBL</code>:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the number of genomes available for each kingdom</span>
 <span class="fu"><a href="../reference/listKingdoms.html">listKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span><span class="op">)</span></code></pre></div>
-<pre><code>Ensembl 
-    113</code></pre>
+<pre><code>EnsemblVertebrates 
+               310</code></pre>
 </div>
 <div id="analogous-computations-can-be-performed-for-groups-and-subgroups" class="section level3">
 <h3 class="hasAnchor">
@@ -523,223 +538,34 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 </h3>
 <p>Unfortunately, <code>ENSEMBL</code> does not provide group or subgroup information. Therefore, group and subgroup listings are limited to <code>refseq</code> and <code>genbank</code>.</p>
 <p>Example <code>refseq</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the number of genomes available for each group</span>
 <span class="fu"><a href="../reference/listGroups.html">listGroups</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span><span class="op">)</span></code></pre></div>
-<pre><code>                 Abditibacteriota                                   Acidithiobacillia 
-                                                  1                                                   5 
-                                     Acidobacteriia                                    Ackermannviridae 
-                                                 16                                                  21 
-                                     Actinobacteria                                        Adenoviridae 
-                                               1226                                                  62 
-                                  Alloherpesviridae                                   Alphaflexiviridae 
-                                                  8                                                  56 
-                                Alphaproteobacteria                                   Alphasatellitidae 
-                                                857                                                  67 
-                                  Alphatetraviridae                                      Alvernaviridae 
-                                                  3                                                   1 
-                                      Amalgaviridae                                          Amphibians 
-                                                 10                                                   3 
-                                     Ampullaviridae                                       Anelloviridae 
-                                                  3                                                  61 
-                                      Apicomplexans                          Apple fruit crinkle viroid 
-                                                 18                                                   1 
-          Apple hammerhead viroid-like circular RNA                                         Apscaviroid 
-                                                  1                                                  12 
-                                          Aquificae                                        Archaeoglobi 
-                                                  6                                                   3 
-                                       Arenaviridae                                     Armatimonadetes 
-                                                 37                                                   4 
-                                      Arteriviridae                                         Ascomycetes 
-                                                 13                                                  45 
-                                        Ascoviridae                                        Asfarviridae 
-                                                  4                                                   1 
-                                        Aspiviridae                                        Astroviridae 
-                                                  3                                                  40 
-                                        Avsunviroid                                   Bacilladnaviridae 
-                                                  1                                                   7 
-                           Bacteria candidate phyla                        Bacteroidetes/Chlorobi group 
-                                                  3                                                 654 
-                                      Baculoviridae                                           Balneolia 
-                                                 66                                                   4 
-                                       Barnaviridae                                      Basidiomycetes 
-                                                  1                                                   5 
-                                        Benyviridae                                    Betaflexiviridae 
-                                                  3                                                  92 
-                                 Betaproteobacteria                                      Bicaudaviridae 
-                                                407                                                   4 
-                                              Birds                                        Birnaviridae 
-                                                 54                                                   8 
-                                     Blastocatellia                                        Bornaviridae 
-                                                  1                                                   5 
-                                       Bromoviridae                                       Caliciviridae 
-                                                 35                                                  26 
-                               Candidatus Kryptonia                            Candidatus Micrarchaeota 
-                                                  3                                                   1 
-                           Candidatus Tectomicrobia                                   Carmotetraviridae 
-                                                  1                                                   1 
-                                     Caulimoviridae Cherry leaf scorch small circular viroid-like RNA 1 
-                                                 67                                                   1 
-              Cherry small circular viroid-like RNA                                          Chlamydiae 
-                                                  1                                                  19 
-                                        Chloroflexi                                       Chrysoviridae 
-                                                 23                                                   9 
-                                       Circoviridae                                     Closteroviridae 
-                                                148                                                  40 
-                                        Cocadviroid                                          Coleviroid 
-                                                  4                                                   6 
-                               Coprothermobacterota                                       Coronaviridae 
-                                                  1                                                  47 
-                                     Corticoviridae                                       Crenarchaeota 
-                                                  1                                                   9 
-                Cyanobacteria/Melainabacteria group                                        Cystoviridae 
-                                                 22                                                   5 
-                                Deinococcus-Thermus                          delta/epsilon subdivisions 
-                                                 23                                                 142 
-                                  Deltaflexiviridae                                     Dicistroviridae 
-                                                  1                                                  27 
-                                          Elaviroid                                        Endomicrobia 
-                                                  1                                                   2 
-                                     Endornaviridae                                       Fibrobacteres 
-                                                 29                                                   2 
-                                        Filoviridae                                         Fimoviridae 
-                                                  7                                                   6 
-                                         Firmicutes                                              Fishes 
-                                               1378                                                  52 
-                                          Flatworms                                        Flaviviridae 
-                                                  4                                                 107 
-                                      Fusariviridae                                      Fuselloviridae 
-                                                  7                                                  10 
-                                      Fusobacteriia                                   Gammaflexiviridae 
-                                                 20                                                   1 
-                                Gammaproteobacteria                                       Geminiviridae 
-                                               1285                                                 406 
-                                   Gemmatimonadetes                                       Genomoviridae 
-                                                  2                                                  62 
-                                     Globuloviridae                             Grapevine latent viroid 
-                                                  2                                                   1 
-                                        Green Algae                                        Guttaviridae 
-                                                  8                                                   1 
-                                       Halobacteria                                        Hantaviridae 
-                                                 80                                                  24 
-                                     Hepadnaviridae                                         Hepeviridae 
-                                                 16                                                   3 
-                                      Herpesviridae                                         Hostuviroid 
-                                                 72                                                   2 
-                                  Hydrogenophilalia                                         Hypoviridae 
-                                                  1                                                  15 
-                                     Hytrosaviridae                                         Iflaviridae 
-                                                  2                                                  34 
-                                         Inoviridae                                             Insects 
-                                                 42                                                 110 
-                                       Iridoviridae                                        Kinetoplasts 
-                                                 20                                                   5 
-                                 Kiritimatiellaeota                                         Land Plants 
-                                                  1                                                  80 
-                                      Lavidaviridae                                       Lentisphaerae 
-                                                  2                                                   1 
-                                        Leviviridae                                    Lipothrixviridae 
-                                                 11                                                   8 
-                                       Luteoviridae                                 Malacoherpesviridae 
-                                                 48                                                   2 
-                                            Mammals                                        Marnaviridae 
-                                                100                                                   1 
-                                   Marseilleviridae                                    Megabirnaviridae 
-                                                  6                                                   3 
-                                      Mesoniviridae                                     Methanobacteria 
-                                                  7                                                  18 
-                                       Methanococci                                     Methanomicrobia 
-                                                  2                                                  21 
-                              Methanonatronarchaeia                                        Microviridae 
-                                                  1                                                  42 
-                                        Mimiviridae           Mulberry small circular viroid-like RNA 1 
-                                                  5                                                   1 
-                                      Mymonaviridae                                          Myoviridae 
-                                                  1                                                 516 
-                                       Nairoviridae                                         Nanoviridae 
-                                                 13                                                   8 
-                                       Narnaviridae                                         Nimaviridae 
-                                                 39                                                   1 
-                                         Nitrospira                                         Nodaviridae 
-                                                 10                                                  15 
-                                        Nudiviridae                                        Nyamiviridae 
-                                                  5                                                   4 
-                                        Oligoflexia                                    Orthomyxoviridae 
-                                                  3                                                   6 
-                                              Other                                       Other Animals 
-                                                988                                                  35 
-                                        Other Fungi                                      Other Protists 
-                                                  3                                                  16 
-                                   Papillomaviridae                                     Paramyxoviridae 
-                                                134                                                  54 
-                                     Partitiviridae                                        Parvoviridae 
-                                                 55                                                  90 
-                                       Pelamoviroid                                    Peribunyaviridae 
-                                                  2                                                  32 
-                                Permutotetraviridae                                    Persimmon viroid 
-                                                  1                                                   1 
-                                      Phasmaviridae                                       Phenuiviridae 
-                                                  4                                                  28 
-                                    Phycodnaviridae                                    Picobirnaviridae 
-                                                 26                                                   5 
-                                     Picornaviridae                                        Pithoviridae 
-                                                104                                                   2 
-                                     Planctomycetes                                       Plasmaviridae 
-                                                 18                                                   1 
-                                    Pleolipoviridae                                       Pneumoviridae 
-                                                  8                                                   7 
-                                        Podoviridae                                     Polycipiviridae 
-                                                343                                                   6 
-                                     Polydnaviridae                                      Polyomaviridae 
-                                                  5                                                  83 
-                                        Pospiviroid                                         Potyviridae 
-                                                 11                                                 146 
-                                         Poxviridae                                       Quadriviridae 
-                                                 47                                                   1 
-                                         Reoviridae                                            Reptiles 
-                                                 67                                                  11 
-                                       Retroviridae                                       Rhabdoviridae 
-                                                 52                                                 150 
-                                       Rhodothermia                                         Roniviridae 
-                                                  4                                                   1 
-                                         Roundworms                            Rubber viroid India/2009 
-                                                  8                                                   1 
-                                        Rudiviridae                                         Secoviridae 
-                                                 15                                                  53 
-                                       Siphoviridae                                       Solemoviridae 
-                                               1061                                                  20 
-                                       Solibacteres                                      Solinviviridae 
-                                                  3                                                   2 
-                                 Sphaerolipoviridae                                        Spirochaetia 
-                                                  7                                                  39 
-                                         Sunviridae                                         Synergistia 
-                                                  1                                                   4 
-                                       Tectiviridae                                         Tenericutes 
-                                                  5                                                  69 
-                                     Thaumarchaeota                                         Thermococci 
-                                                  8                                                  19 
-                              Thermodesulfobacteria                                      Thermoplasmata 
-                                                  4                                                   7 
-                                        Thermotogae                                         Togaviridae 
-                                                 10                                                  24 
-                                 Tolecusatellitidae                                       Tombusviridae 
-                                                101                                                  68 
-                                       Tospoviridae                                         Totiviridae 
-                                                 17                                                  66 
-                                   Tristromaviridae                                        Turriviridae 
-                                                  1                                                   2 
-                                        Tymoviridae                                        unclassified 
-                                                 37                                                 606 
-                         unclassified Acidobacteria               unclassified Bacteria (miscellaneous) 
-                                                  1                                                  13 
-                           unclassified Nitrospirae                         unclassified Proteobacteria 
-                                                  1                                                   2 
-                                    Verrucomicrobia                                        Virgaviridae 
-                                                 25                                                  52 
-                                 Zetaproteobacteria 
-                                                  5 </code></pre>
+<pre><code> Abditibacteriota 
+                                               1 
+                               Acidithiobacillia 
+                                               8 
+                                  Acidobacteriia 
+                                              22 
+                                Ackermannviridae 
+                                              65 
+                                  Actinobacteria 
+                                            2640 
+                                    Adenoviridae 
+                                              64 
+                                    Adomaviridae 
+                                               2 
+                                    Aliusviridae 
+                                               2 
+                               Alloherpesviridae 
+                                              13 
+                               Alphaflexiviridae 
+                                              62 
+                             Alphaproteobacteria 
+                                            1762 
+  ...</code></pre>
 <p>Example <code>genbank</code>:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># the number of genomes available for each group</span>
 <span class="fu"><a href="../reference/listGroups.html">listGroups</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span><span class="op">)</span></code></pre></div>
 <pre><code>                       Abditibacteriota                       Acidithiobacillia 
@@ -874,7 +700,9 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
                                       1                                     296 
                      Zetaproteobacteria 
                                      41 </code></pre>
-<p><strong>Note</strong> that when running the <code><a href="../reference/listGenomes.html">listGenomes()</a></code> function for the first time, it might take a while until the function returns any results, because necessary information need to be downloaded from NCBI and ENSEMBL databases. All subsequent executions of <code><a href="../reference/listGenomes.html">listGenomes()</a></code> will then respond very fast, because they will access the corresponding files stored on your hard drive.</p>
+<blockquote>
+<p><strong><strong>Note</strong></strong> that when running the <code><a href="../reference/listGenomes.html">listGenomes()</a></code> function for the first time, it might take a while until the function returns any results, because necessary information need to be downloaded from NCBI and ENSEMBL databases. All subsequent executions of <code><a href="../reference/listGenomes.html">listGenomes()</a></code> will then respond very fast, because they will access the corresponding files stored on your hard drive.</p>
+</blockquote>
 </div>
 </div>
 <div id="downloading-biological-sequences-and-annotations" class="section level2">
@@ -905,7 +733,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <div id="example-ncbi-refseq" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq" class="anchor"></a>Example NCBI RefSeq:</h3>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 <span class="va">HS.genome.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
@@ -913,16 +741,16 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
                                path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>In this example, <code><a href="../reference/getGenome.html">getGenome()</a></code> creates a directory named <code>'_ncbi_downloads/genomes'</code> into which the corresponding genome named <code>GCF_000001405.34_GRCh38.p8_genomic.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getGenome.html">getGenome()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_genome.html">read_genome()</a></code> function. The variable <code>HS.genome.refseq</code> stores the path to the downloaded genome.</p>
 <p>Users can also omit the <code>path</code> argument if they wish to store the genome in their current working directory. E.g.:</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 <span class="va">HS.genome.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
 <p>Subsequently, users can use the <code><a href="../reference/read_genome.html">read_genome()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_genome.html">read_genome()</a></code> function.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded genome as Biostrings object</span>
 <span class="va">Human_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.genome.refseq</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_Genome</span></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 551
@@ -970,7 +798,7 @@ submitter: Genome Reference Consortium</code></pre>
 </ul>
 <p>In summary, the <code><a href="../reference/getGenome.html">getGenome()</a></code> and <code><a href="../reference/read_genome.html">read_genome()</a></code> functions allow users to retrieve genome assemblies by specifying the scientific name of the organism of interest and allow them to import the retrieved genome assembly e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded genomes and can rely on the log file generated by <code><a href="../reference/getGenome.html">getGenome()</a></code> to better document the source and version of genome assemblies used for subsequent studies.</p>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -978,7 +806,7 @@ submitter: Genome Reference Consortium</code></pre>
                            organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                            path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Genome</span></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 551
           width seq                                                names               
@@ -997,7 +825,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#use-taxid-id-for-genome-retrieval" class="anchor"></a>Use <code>taxid</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>559292</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -1005,7 +833,7 @@ submitter: Genome Reference Consortium</code></pre>
             db       <span class="op">=</span> <span class="st">"refseq"</span>,
             organism <span class="op">=</span> <span class="st">"559292"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
 <pre><code>A DNAStringSet instance of length 17
        width seq                                      names               
@@ -1025,7 +853,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#use-assembly_accession-id-for-genome-retrieval" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCF_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -1033,7 +861,7 @@ submitter: Genome Reference Consortium</code></pre>
             db       <span class="op">=</span> <span class="st">"refseq"</span>,
             organism <span class="op">=</span> <span class="st">"GCF_000146045.2"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
 <pre><code> A DNAStringSet instance of length 17
        width seq                                                    names               
@@ -1054,16 +882,16 @@ submitter: Genome Reference Consortium</code></pre>
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank" class="anchor"></a>Example NCBI Genbank:</h3>
 <p>Genome retrieval from <code>NCBI Genbank</code>.</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from Genbank</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 <span class="va">HS.genome.genbank</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"genbank"</span>, 
                                 organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                 path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded genome as Biostrings object</span>
 <span class="va">Human_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.genome.genbank</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_Genome</span></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 551
@@ -1083,7 +911,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#use-taxonomy-id-for-genome-retrieval" class="anchor"></a>Use <code>taxonomy</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>559292</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -1091,7 +919,7 @@ submitter: Genome Reference Consortium</code></pre>
             db       <span class="op">=</span> <span class="st">"genbank"</span>,
             organism <span class="op">=</span> <span class="st">"559292"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
 <pre><code>A DNAStringSet instance of length 16
        width seq                                names               
@@ -1111,7 +939,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#use-assembly_accession-id-for-genome-retrieval-1" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCA_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -1119,7 +947,7 @@ submitter: Genome Reference Consortium</code></pre>
             db       <span class="op">=</span> <span class="st">"genbank"</span>,
             organism <span class="op">=</span> <span class="st">"GCA_000146045.2"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
 <pre><code>A DNAStringSet instance of length 16
        width seq                                  names               
@@ -1151,17 +979,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ensembl" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl" class="anchor"></a>Example ENSEMBL:</h3>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 <span class="va">HS.genome.ensembl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"ensembl"</span>, 
                                 organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                 path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"genomes"</span><span class="op">)</span> ,
                                 assembly_type <span class="op">=</span> <span class="st">"primary_assembly"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded genome as Biostrings object</span>
 <span class="va">Human_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.genome.ensembl</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_Genome</span></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 524
@@ -1194,7 +1022,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#use-taxonomy-id-for-genome-retrieval-1" class="anchor"></a>Use <code>taxonomy</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name in the argument <code>organism</code> users can specify the <code>taxonomy</code> id of the corresponding organism. Here, we specify the taxonomy id <code>4932</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -1202,7 +1030,7 @@ submitter: Genome Reference Consortium</code></pre>
             db       <span class="op">=</span> <span class="st">"ensembl"</span>,
             organism <span class="op">=</span> <span class="st">"4932"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 17
        width seq                            names               
@@ -1222,7 +1050,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#use-assembly_accession-id-for-genome-retrieval-2" class="anchor"></a>Use <code>assembly_accession</code> id for genome retrieval</h4>
 <p>Alternatively, instead of specifying the scientific name or taxonomy in the argument <code>organism</code> users can specify the <code>assembly_accession</code> id of the corresponding organism. Here, we specify the <code>assembly_accession</code> id <code>GCA_000146045.2</code> which encodes the species <code>Saccharomyces cerevisiae</code>.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import genome as Biostrings object</span>
@@ -1230,7 +1058,7 @@ submitter: Genome Reference Consortium</code></pre>
             db       <span class="op">=</span> <span class="st">"ensembl"</span>,
             organism <span class="op">=</span> <span class="st">"GCA_000146045.2"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Scerevisiae_Genome</span></code></pre></div>
 <pre><code>  A DNAStringSet instance of length 17
        width seq                                names               
@@ -1252,7 +1080,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#genomeset-retrieval" class="anchor"></a>GenomeSet Retrieval</h3>
 <p>The <code><a href="../reference/getGenomeSet.html">getGenomeSet()</a></code> function enables users to retrieve genome files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_genomes</code> is generated in which genomes and genome info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># specify the species names</span>
 <span class="va">download_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, 
                       <span class="st">"Arabidopsis lyrata"</span>, 
@@ -1286,17 +1114,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-1" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the proteome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
 <span class="va">HS.proteome.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getProteome.html">getProteome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                    organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                    path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In this example, <code><a href="../reference/getProteome.html">getProteome()</a></code> creates a directory named <code>'_ncbi_downloads/proteomes'</code> into which the corresponding genome named <code>GCF_000001405.34_GRCh38.p8_protein.faa.gz</code> is downloaded. The return value of <code><a href="../reference/getProteome.html">getProteome()</a></code> is the folder path to the downloaded proteome file that can then be used as input to the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function. The variable <code>HS.proteome.refseq</code> stores the path to the downloaded proteome. Subsequently, users can use the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function to import the proteome into the R session. Users can choose to work with the proteome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function.</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import proteome as Biostrings object</span>
 <span class="va">Human_Proteome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.proteome.refseq</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Proteome</span></code></pre></div>
 <pre><code>A AAStringSet instance of length 113620
          width seq                          names               
@@ -1312,7 +1140,7 @@ submitter: Genome Reference Consortium</code></pre>
 [113619]   174 MMYALFLLSVGLV...GVYIVIEIARGN YP_003024037.1 NA...
 [113620]   380 MTPMRKTNPLMKL...ISLIENKMLKWA YP_003024038.1 cy...</code></pre>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import proteome as Biostrings object</span>
@@ -1320,7 +1148,7 @@ submitter: Genome Reference Consortium</code></pre>
                                organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Proteome</span></code></pre></div>
 <pre><code> A AAStringSet instance of length 113620
          width seq                          names               
@@ -1339,16 +1167,16 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-genbank-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-1" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the proteome of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
 <span class="va">HS.proteome.genbank</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getProteome.html">getProteome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"genbank"</span>, 
                                    organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                    path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import proteome as Biostrings object</span>
 <span class="va">Human_Proteome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.proteome.genbank</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Proteome</span></code></pre></div>
 <pre><code>A AAStringSet instance of length 13
      width seq                              names               
@@ -1367,16 +1195,16 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ensembl-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl-1" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the proteome of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
 <span class="va">HS.proteome.ensembl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getProteome.html">getProteome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"ensembl"</span>, 
                                    organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                    path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import proteome as Biostrings object</span>
 <span class="va">Human_Proteome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.proteome.ensembl</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_Proteome</span></code></pre></div>
 <pre><code>  A AAStringSet instance of length 107844
          width seq                          names               
@@ -1397,16 +1225,16 @@ submitter: Genome Reference Consortium</code></pre>
 <h3 class="hasAnchor">
 <a href="#example-retrieval-uniprot" class="anchor"></a>Example Retrieval <code>Uniprot</code>:</h3>
 <p>Another way of retrieving proteome sequences is from the <a href="http://www.uniprot.org/">UniProt</a> database.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the proteome of Mus musculus from UniProt</span>
 <span class="co"># and store the corresponding proteome file in '_uniprot_downloads/proteomes'</span>
 <span class="va">Mm.proteome.uniprot</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/getProteome.html">getProteome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"uniprot"</span>, 
                                    organism <span class="op">=</span> <span class="st">"Mus musculus"</span>,
                                    path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_uniprot_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import proteome as Biostrings object</span>
 <span class="va">Mouse_Proteome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">Mm.proteome.uniprot</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Mouse_Proteome</span></code></pre></div>
 <pre><code>A AAStringSet instance of length 84522
         width seq                                  names               
@@ -1427,7 +1255,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#proteomeset-retrieval" class="anchor"></a>ProteomeSet Retrieval</h3>
 <p>The <code><a href="../reference/getProteomeSet.html">getProteomeSet()</a></code> function enables users to retrieve proteome files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_proteomes</code> is generated in which proteomes and proteome info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># specify the species names</span>
 <span class="va">download_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, 
                       <span class="st">"Arabidopsis lyrata"</span>, 
@@ -1458,18 +1286,18 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-2" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
 <span class="va">HS.cds.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCDS.html">getCDS</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In this example, <code><a href="../reference/getCDS.html">getCDS()</a></code> creates a directory named <code>'_ncbi_downloads/CDS'</code> into which the corresponding genome named <code>Homo_sapiens_cds_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getCDS.html">getCDS()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_cds.html">read_cds()</a></code> function. The variable <code>HS.cds.refseq</code> stores the path to the downloaded CDS file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_cds.html">read_cds()</a></code> function.</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded CDS as Biostrings object</span>
 <span class="va">Human_CDS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.cds.refseq</span>, 
                       obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_CDS</span></code></pre></div>
 <pre><code> A BStringSet instance of length 114967
@@ -1505,7 +1333,7 @@ seq_rel_date: 2016-09-26
 submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getCDS.html">getCDS()</a></code> and <code><a href="../reference/read_cds.html">read_cds()</a></code> functions allow users to retrieve CDS files by specifying the scientific name of the organism of interest and allow them to import the retrieved CDS file e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded CDS and can rely on the log file generated by <code><a href="../reference/getCDS.html">getCDS()</a></code> to better document the source and version of CDS used for subsequent studies.</p>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import CDS as Biostrings object</span>
@@ -1513,7 +1341,7 @@ submitter: Genome Reference Consortium</code></pre>
                      organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                      path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_CDS</span></code></pre></div>
 <pre><code> A BStringSet instance of length 114967
           width seq                                                names               
@@ -1532,17 +1360,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-genbank-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-2" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
 <span class="va">HS.cds.genbank</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCDS.html">getCDS</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"genbank"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded CDS as Biostrings object</span>
 <span class="va">Human_CDS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.cds.genbank</span>, 
                       obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_CDS</span></code></pre></div>
 <pre><code>  A BStringSet instance of length 13
@@ -1562,17 +1390,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ensembl-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl-2" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the genome of Homo sapiens from ensembl</span>
 <span class="co"># and store the corresponding genome CDS file in '_ncbi_downloads/CDS'</span>
 <span class="va">HS.cds.ensembl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCDS.html">getCDS</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"ensembl"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded CDS as Biostrings object</span>
 <span class="va">Human_CDS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.cds.ensembl</span>, 
                       obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_CDS</span></code></pre></div>
 <pre><code>  A BStringSet instance of length 102915
@@ -1595,7 +1423,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#cdsset-retrieval" class="anchor"></a>CDSSet Retrieval</h3>
 <p>The <code><a href="../reference/getCDSSet.html">getCDSSet()</a></code> function enables users to retrieve CDS files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_cds</code> is generated in which CDS and CDS info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># specify the species names</span>
 <span class="va">download_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, 
                       <span class="st">"Arabidopsis lyrata"</span>, 
@@ -1626,18 +1454,18 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-3" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-3" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the RNA of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding RNA file in '_ncbi_downloads/RNA'</span>
 <span class="va">HS.rna.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getRNA.html">getRNA</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>In this example, <code><a href="../reference/getRNA.html">getRNA()</a></code> creates a directory named <code>'_ncbi_downloads/RNA'</code> into which the corresponding RNA file named <code>Homo_sapiens_rna_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getRNA.html">getRNA()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_rna.html">read_rna()</a></code> function. The variable <code>HS.rna.refseq</code> stores the path to the downloaded RNA file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_rna.html">read_rna()</a></code> function.</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded RNA as Biostrings object</span>
 <span class="va">Human_rna</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_rna.html">read_rna</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.rna.refseq</span>, 
                       obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_rna</span></code></pre></div>
 <pre><code>   A BStringSet instance of length 164136
@@ -1672,7 +1500,7 @@ seq_rel_date: 2017-01-06
 submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getRNA.html">getRNA()</a></code> and <code><a href="../reference/read_rna.html">read_rna()</a></code> functions allow users to retrieve RNA files by specifying the scientific name of the organism of interest and allow them to import the retrieved RNA file e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded RNA and can rely on the log file generated by <code><a href="../reference/getRNA.html">getRNA()</a></code> to better document the source and version of RNA used for subsequent studies.</p>
 <p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="co"># import RNA as Biostrings object</span>
@@ -1680,7 +1508,7 @@ submitter: Genome Reference Consortium</code></pre>
                      organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                      path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span>
     <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_rna</span></code></pre></div>
 <pre><code>   A BStringSet instance of length 164136
           width seq                                                                                       names               
@@ -1699,17 +1527,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-genbank-3" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-3" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the RNA of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span>
 <span class="va">HS.rna.genbank</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getRNA.html">getRNA</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"genbank"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded RNA as Biostrings object</span>
 <span class="va">Human_rna</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.rna.genbank</span>, 
                       obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_rna</span></code></pre></div>
 <pre><code>  A BStringSet instance of length 24
@@ -1729,17 +1557,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ensembl-3" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl-3" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the RNA of Homo sapiens from ensembl</span>
 <span class="co"># and store the corresponding genome RNA file in '_ncbi_downloads/RNA'</span>
 <span class="va">HS.rna.ensembl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getRNA.html">getRNA</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"ensembl"</span>, 
                           organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                           path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded RNA as Biostrings object</span>
 <span class="va">Human_rna</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.rna.ensembl</span>, 
                       obj.type <span class="op">=</span> <span class="st">"Biostrings"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># look at the Biostrings object</span>
 <span class="va">Human_rna</span></code></pre></div>
 <pre><code>  A BStringSet instance of length 36701
@@ -1762,7 +1590,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#rnaset-retrieval" class="anchor"></a>RNASet Retrieval</h3>
 <p>The <code><a href="../reference/getRNASet.html">getRNASet()</a></code> function enables users to retrieve RNA files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_rna</code> is generated in which RNA and RNA info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># specify the species names</span>
 <span class="va">download_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, 
                       <span class="st">"Arabidopsis lyrata"</span>, 
@@ -1779,17 +1607,17 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-ncbi-refseq-4" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-4" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the GFF file of Homo sapiens from refseq</span>
 <span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span>
 <span class="va">HS.gff.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, 
                          path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded GFF file</span>
 <span class="va">Human_GFF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_gff.html">read_gff</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.gff.refseq</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Human_GFF</span></code></pre></div>
 <pre><code>          seqid     source       type start       end score strand phase
           &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt; &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;  &lt;chr&gt; &lt;dbl&gt;
@@ -1808,7 +1636,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#removing-corrupt-lines-from-downloaded-gff-files" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
 <p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Ath_path</span> <span class="op">&lt;-</span> <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Arabidopsis thaliana"</span>, remove_annotation_outliers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>Starting GFF retrieval of 'Arabidopsis thaliana' from refseq ...
 
@@ -1827,17 +1655,17 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="example-ncbi-genbank-4" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-4" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the GFF file of Homo sapiens from genbank</span>
 <span class="co"># and store the corresponding file in '_ncbi_downloads/annotation'</span>
 <span class="va">HS.gff.genbank</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"genbank"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, 
                          path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"annotation"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded GFF file</span>
 <span class="va">Human_GFF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_gff.html">read_gff</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.gff.genbank</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of the data.frame</span>
 <span class="co"># options(tibble.print_max = Inf)</span>
 <span class="va">Human_GFF</span></code></pre></div>
@@ -1858,7 +1686,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <a href="#removing-corrupt-lines-from-downloaded-gff-files-1" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
 <p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Ath_path</span> <span class="op">&lt;-</span> <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>,
              organism <span class="op">=</span> <span class="st">"Arabidopsis thaliana"</span>,
              remove_annotation_outliers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -1880,17 +1708,17 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="example-ensembl-4" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ensembl-4" class="anchor"></a>Example <code>ENSEMBL</code>:</h3>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the GFF file of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding file in 'ensembl/annotation'</span>
 <span class="va">HS.gff.ensembl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"ensembl"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, 
                          path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"ensembl"</span>,<span class="st">"annotation"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>After downloading the <code>.gff</code> file, users can import the <code>.gff</code> file with <code><a href="../reference/read_gff.html">read_gff()</a></code>.</p>
-<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded GFF file</span>
 <span class="va">Human_GFF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_gff.html">read_gff</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.gff.ensembl</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of the data.frame</span>
 <span class="co"># options(tibble.print_max = Inf)</span>
 <span class="va">Human_GFF</span></code></pre></div>
@@ -1912,7 +1740,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <a href="#removing-corrupt-lines-from-downloaded-gff-files-2" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
 <p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Alternatively for <code><a href="../reference/getGTF.html">getGTF()</a></code>:</p>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the GTF file of Homo sapiens from ENSEMBL</span>
 <span class="co"># and store the corresponding file in 'ensembl/annotation'</span>
 <span class="va">HS.gtf.ensembl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGTF.html">getGTF</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"ensembl"</span>, 
@@ -1927,7 +1755,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <a href="#gffset-retrieval" class="anchor"></a>GFFSet Retrieval</h3>
 <p>The <code><a href="../reference/getGFFSet.html">getGFFSet()</a></code> function enables users to retrieve GFF files for multiple species. This is convenient when users wish to bulk download a particular set of species. Internally, a folder named <code>set_gff</code> is generated in which GFF and GFF info files are stored. In addition, users can specify the arguments: <code>clean_retrieval</code> and <code>gunzip</code> (both are <code>TRUE</code> by default) to clean file names and automatically unzip downloaded files.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># specify the species names</span>
 <span class="va">download_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, 
                       <span class="st">"Arabidopsis lyrata"</span>, 
@@ -1945,13 +1773,13 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="example-ncbi-refseq-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-5" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download repeat masker annotation file for Homo sapiens</span>
 <span class="va">Hsapiens_rm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getRepeatMasker.html">getRepeatMasker</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                  organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, 
                                  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"refseq"</span>,<span class="st">"TEannotation"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import TE annotation file</span>
 <span class="va">Hsapiens_rm_import</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_rm.html">read_rm</a></span><span class="op">(</span><span class="st">"refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz"</span><span class="op">)</span>
 <span class="co"># look at data</span>
@@ -1965,13 +1793,13 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="example-ncbi-refseq-6" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-6" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download genome assembly stats file for Homo sapiens</span>
 <span class="va">Hsapiens_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                  organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, 
                                  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"refseq"</span>,<span class="st">"AssemblyStats"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import TE annotation file</span>
 <span class="va">Hsapiens_stats_import</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span><span class="op">(</span><span class="va">Hsapiens_stats</span><span class="op">)</span>
 <span class="co"># look at data</span>
@@ -1993,13 +1821,13 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="example-ncbi-genbank-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank-5" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download genome assembly stats file for Homo sapiens</span>
 <span class="va">Hsapiens_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAssemblyStats.html">getAssemblyStats</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"genbank"</span>, 
                                  organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>, 
                                  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"genbank"</span>,<span class="st">"AssemblyStats"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now users can import the TE annotation file using <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import TE annotation file</span>
 <span class="va">Hsapiens_stats_import</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_assemblystats.html">read_assemblystats</a></span><span class="op">(</span><span class="va">Hsapiens_stats</span><span class="op">)</span>
 <span class="co"># look at data</span>
@@ -2027,7 +1855,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="example-ncbi-refseq-7" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-7" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download collection for Saccharomyces cerevisiae</span>
 <span class="fu"><a href="../reference/getCollection.html">getCollection</a></span><span class="op">(</span> db <span class="op">=</span> <span class="st">"refseq"</span>, 
                organism <span class="op">=</span> <span class="st">"Saccharomyces cerevisiae"</span>, 
@@ -2080,7 +1908,9 @@ Collection retrieval finished successfully!
 
 
 We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).</code></pre>
-<p>Users can now simply attach the output folder `` as supplementary data in their study and state in the materials sections. This way, computational and biological reproducibility can be standardized and indeed will become trivial in the context of genome version and annotation version.</p>
+<blockquote>
+<p>Users can now simply attach the output folder as supplementary data in their study and state in the materials sections. This way, computational and biological reproducibility can be standardized and indeed will become trivial in the context of genome version and annotation version.</p>
+</blockquote>
 </div>
 </div>
   </div>

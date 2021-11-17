@@ -96,7 +96,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meta-Genome Retrieval</h1>
             
-            <h4 class="date">2021-11-16</h4>
+            <h4 class="date">2021-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/MetaGenome_Retrieval.Rmd"><code>vignettes/MetaGenome_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>MetaGenome_Retrieval.Rmd</code></div>
@@ -105,6 +105,14 @@
 
     
     
+<blockquote>
+<p><strong><em>NOTE:</em></strong> To make sure that you have a sufficiently stable (internet) connection between R and the respective databases, please set the default <code>timeout</code> setting <strong>on your local machine</strong> from 60sec to at least 30000sec before running any retrieval functions via:</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fl">30000</span><span class="op">)</span></code></pre></div>
+<div id="topics" class="section level2">
+<h2 class="hasAnchor">
+<a href="#topics" class="anchor"></a>Topics</h2>
 <ul>
 <li>
 <a href="#perform-meta-genome-retrieval">1. Perform Meta-Genome Retrieval for Specific Kingdoms of Life</a>
@@ -169,6 +177,7 @@
 </ul>
 </li>
 </ul>
+</div>
 <div id="perform-meta-genome-retrieval" class="section level2">
 <h2 class="hasAnchor">
 <a href="#perform-meta-genome-retrieval" class="anchor"></a>Perform Meta-Genome Retrieval</h2>
@@ -178,10 +187,10 @@
 <a href="#getting-started" class="anchor"></a>Getting Started</h4>
 <p>The <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> functions aim to simplify the genome retrieval and computational reproducibility process for meta-genomics studies. Both functions allow users to either download genomes, proteomes, CDS, etc for species within a specific kingdom or subgroup of life (<code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code>) or of all species of all kingdoms (<code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code>). Before <code>biomartr</code> users had to write <code>shell</code> scripts to download respective genomic data. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing R workflows and for easier reproducibility.</p>
 <p>For example, the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package can be used with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> as follows.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes, then apply ...</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> <span class="va">...</span></code></pre></div>
-<p>Here <code>...</code> denotes any subsequent meta-genomics analysis. Hence, <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> enables the pipelining methodology for meta-genomics.</p>
+<p>Here <code>...</code> denotes any subsequent meta-genomics analysis. Hence, <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> enables the pipeline methodology for meta-genomics.</p>
 </div>
 <div id="retrieve-genomic-sequences" class="section level3">
 <h3 class="hasAnchor">
@@ -191,7 +200,7 @@
 <div id="example-ncbi-refseq" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/getKingdoms.html">getKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "archaea"              "bacteria"             "fungi"                "invertebrate"        
 [5] "plant"                "protozoa"             "vertebrate_mammalian" "vertebrate_other"    
@@ -200,7 +209,7 @@
 <div id="example-ncbi-genbank" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-genbank" class="anchor"></a>Example <code>NCBI Genbank</code>:</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/getKingdoms.html">getKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "archaea"              "bacteria"             "fungi"               
 [4] "invertebrate"         "plant"                "protozoa"            
@@ -211,16 +220,16 @@
 <h3 class="hasAnchor">
 <a href="#example-ensembl" class="anchor"></a>Example <code>ENSEMBL</code>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/getKingdoms.html">getKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span><span class="op">)</span></code></pre></div>
-<pre><code>[1] "Ensembl"</code></pre>
+<pre><code>[1] "EnsemblVertebrates"                                             </code></pre>
 <p>The <code>ENSEMBL</code> database does not differentiate between different kingdoms, but specialized on storing high-quality reference genomes of diverse biological disciplines.</p>
 <div id="retrieval-from-ncbi-refseq" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-refseq" class="anchor"></a>Retrieval from <code>NCBI RefSeq</code>
 </h4>
 <p>Download all mammalian vertebrate genomes from <code>NCBI RefSeq</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>The argument <code>kingdom</code> specifies the kingdom selected with <code><a href="../reference/getKingdoms.html">getKingdoms()</a></code> from which genomes of organisms shall be retrieved. The <code>db</code> argument specifies the database from which respective genomes shall be downloaded. The argument <code>type</code> specifies that <code>genome assembly</code> files shall be retrieved. The argument <code>reference</code> indicates whether or not a genome shall be downloaded if it isn’t marked in the database as either a <code>reference genome</code> or a <code>representative genome</code>. Options are:</p>
@@ -282,7 +291,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#un-zipping-downloaded-files" class="anchor"></a>Un-zipping downloaded files</h4>
 <p>After downloading genomes users can format the output of <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> by first un-zipping downloaded files and renaming them for more convenient downstream data analysis (e.g. from <code>Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz</code> to <code>Scerevisiae.fa</code>).</p>
 <p>The easiest way to use <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code> in combination with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> is to use the pipe operator from the <code>magrittr</code> package:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, 
                db <span class="op">=</span> <span class="st">"refseq"</span>, 
@@ -290,31 +299,31 @@ submitter: Genome Reference Consortium</code></pre>
     <span class="fu"><a href="../reference/clean.retrieval.html">clean.retrieval</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>In the first step, genome assembly files are downloaded with <code>meta.retrieval</code> and subsequently (<code>%&gt;%</code>) un-zipped and re-named using <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code>.</p>
 <p>Example <code>Bacteria</code></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all bacteria genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"bacteria"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Viruses</code></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all virus genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"viral"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Archaea</code></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all archaea genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"archaea"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Fungi</code></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all fungi genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"fungi"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Plants</code></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all plant genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"plant"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Invertebrates</code></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all invertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"invertebrate"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Protozoa</code></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all invertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"protozoa"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -323,31 +332,31 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#retrieval-from-ncbi-genbank" class="anchor"></a>Retrieval from <code>NCBI Genbank</code>
 </h4>
 <p>Alternatively, download all mammalian vertebrate genomes from <code>NCBI Genbank</code>, e.g.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Bacteria</code></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all bacteria genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"bacteria"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Archaea</code></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all archaea genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"archaea"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Fungi</code></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all fungi genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"fungi"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Plants</code></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all plant genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"plant"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Invertebrates</code></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all invertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"invertebrate"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Protozoa</code></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all invertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"protozoa"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -355,7 +364,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ensembl" class="anchor"></a>Retrieval from <code>ENSEMBL</code>
 </h4>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all genomes from ENSEMBL</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"Ensembl"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -368,13 +377,13 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#example-retrieval-of-all-gammaproteobacteria-genomes-from-ncbi-refseq" class="anchor"></a>Example retrieval of all <code>Gammaproteobacteria</code> genomes from <code>NCBI RefSeq</code>:</h4>
 <p>First, users can again consult the <code><a href="../reference/getKingdoms.html">getKingdoms()</a></code> function to retrieve kingdom information.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/getKingdoms.html">getKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "archaea"              "bacteria"             "fungi"                "invertebrate"        
 [5] "plant"                "protozoa"             "vertebrate_mammalian" "vertebrate_other"    
 [9] "viral"</code></pre>
 <p>In this example, we will choose the <code>bacteria</code> kingdom. Now, the <code><a href="../reference/getGroups.html">getGroups()</a></code> function allows users to obtain available subgroups of the <code>bacteria</code> kingdom.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/getGroups.html">getGroups</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, kingdom <span class="op">=</span> <span class="st">"bacteria"</span><span class="op">)</span></code></pre></div>
 <pre><code> [1] "Acidithiobacillia"                     "Acidobacteriia"                       
  [3] "Actinobacteria"                        "Alphaproteobacteria"                  
@@ -396,7 +405,7 @@ submitter: Genome Reference Consortium</code></pre>
 [35] "Zetaproteobacteria" </code></pre>
 <p>Please note, that the <code>kingdom</code> argument specified in <code><a href="../reference/getGroups.html">getGroups()</a></code> needs to match with an available kingdom retrieved with <code><a href="../reference/getKingdoms.html">getKingdoms()</a></code>. It is also important that in both cases: <code><a href="../reference/getKingdoms.html">getKingdoms()</a></code> and <code><a href="../reference/getGroups.html">getGroups()</a></code> the same database should be specified.</p>
 <p>Now we choose the group <code>Gammaproteobacteria</code> and specify the <code>group</code> argument in the <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> function.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"bacteria"</span>, group <span class="op">=</span> <span class="st">"Gammaproteobacteria"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Using this command, all bacterial (<code>kingdom = "bacteria"</code>) genomes (<code>type = "genome"</code>) that belong to the group <code>Gammaproteobacteria</code> (<code>group = "Gammaproteobacteria"</code>) will be retrieved from NCBI RefSeq (<code>db = "refseq"</code>).</p>
 <p>Alternatively, <code>Gammaproteobacteria</code> genomes can be retrieved from NCBI Genbank by exchanging <code>db = "refseq"</code> to <code>db = "genbank"</code>. If users wish to download proteome, CDS, or GFF files instead of genomes, they can specify the argument: <code>type = "proteome"</code>, <code>type = "cds"</code>, or <code>type = "gff"</code>.</p>
@@ -405,7 +414,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h4 class="hasAnchor">
 <a href="#example-retrieval-of-all-adenoviridae-genomes-from-ncbi-refseq" class="anchor"></a>Example retrieval of all <code>Adenoviridae</code> genomes from <code>NCBI RefSeq</code>:</h4>
 <p>Retrieve groups for viruses.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/getGroups.html">getGroups</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, kingdom <span class="op">=</span> <span class="st">"viral"</span><span class="op">)</span></code></pre></div>
 <pre><code> [1] "Adenoviridae"                                        "Alloherpesviridae"                                  
   [3] "Alphaflexiviridae"                                   "Alphatetraviridae"                                  
@@ -469,7 +478,7 @@ submitter: Genome Reference Consortium</code></pre>
 [119] "Tymoviridae"                                         "unclassified"                                       
 [121] "unclassified Pospiviroidae"                          "Virgaviridae"</code></pre>
 <p>Now we can choose <code>Adenoviridae</code> as group argument for the <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> function.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"viral"</span>, group <span class="op">=</span> <span class="st">"Adenoviridae"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Again, by exchanging <code>type = "genome"</code> by either <code>type = "proteome"</code>, <code>type = "cds"</code>, <code>type = "rna"</code>, <code>type = "assemblystats"</code>, or <code>type = "gff"</code>, users can retrieve proteome, CDS, RNA, genome assembly statistics or GFF files instead of genomes.</p>
 </div>
@@ -484,7 +493,7 @@ submitter: Genome Reference Consortium</code></pre>
 </blockquote>
 <p>In most metagenomics studies, however, the influence or bias of genome assembly quality on the outcome of the analysis (e.g. comparative genomics, annotation, etc.) is neglected. To better grasp the genome assembly quality, the NCBI databases store genome assembly statistics of some species for which genome assemblies are available. An example assembly statistics report can be found at: <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt</a>.</p>
 <p>The <code>biomartr</code> package allows users to retrieve these genome assembly stats file in an automated way by specifying the argument <code>type = "assemblystats"</code> and <code>combine = TRUE</code>. Please make sure that <code>combine = TRUE</code> when selecting <code>type = "assemblystats"</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of the data.frame</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>tibble.print_max <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
 <span class="co"># retrieve genome assembly stats for all mammal genome assemblies</span>
@@ -517,7 +526,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#metagenome-project-retrieval-from-ncbi-genbank" class="anchor"></a>Metagenome project retrieval from NCBI Genbank</h3>
 <p>NCBI Genbank stores <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/">metagenome projects</a> in addition to species specific genome, proteome or CDS sequences. To retrieve these metagenomes users can perform the following combination of commands:</p>
 <p>First, users can list the project names of available metagenomes by typing</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list available metagenomes at NCBI Genbank</span>
 <span class="fu"><a href="../reference/listMetaGenomes.html">listMetaGenomes</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "metagenome"                     "human gut metagenome"           "epibiont metagenome"           
@@ -539,7 +548,7 @@ submitter: Genome Reference Consortium</code></pre>
 [49] "scorpion gut metagenome"        "soda lake metagenome"           "glacier metagenome"</code></pre>
 <p>Internally the <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code> function downloads the assembly_summary.txt file from <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/</a> to retrieve available metagenome information. This procedure might take a few seconds during the first run of <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>. Subsequently, the assembly_summary.txt file will be stored in the <code><a href="https://rdrr.io/r/base/tempfile.html">tempdir()</a></code> directory to achieve a much faster access of this information during following uses of <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>.</p>
 <p>In case users wish to retrieve detailed information about available metagenome projects they can specify the <code>details = TRUE</code> argument.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of the data.frame</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>tibble.print_max <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
 <span class="co"># detailed information on available metagenomes at NCBI Genbank</span>
@@ -562,7 +571,7 @@ submitter: Genome Reference Consortium</code></pre>
 #   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;, gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;,
 #   ftp_path &lt;chr&gt;, excluded_from_refseq &lt;chr&gt;</code></pre>
 <p>Finally, users can retrieve available metagenomes using <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code>. The <code>name</code> argument receives the metagenome project name retrieved with <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code>. The <code>path</code> argument specifies the folder path in which corresponding genomes shall be stored.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span>
 <span class="fu"><a href="../reference/getMetaGenomes.html">getMetaGenomes</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"human gut metagenome"</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"human_gut"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>1] "The metagenome of 'human gut metagenome' has been downloaded to '_ncbi_downloads/human_gut'."
@@ -585,7 +594,7 @@ submitter: Genome Reference Consortium</code></pre>
  ...</code></pre>
 <p>Internally, <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code> creates a folder specified in the <code>path</code> argument. Genomes associated with the metagenomes project specified in the <code>name</code> argument will then be downloaded and stored in this folder. As return value <code><a href="../reference/getMetaGenomes.html">getMetaGenomes()</a></code> returns the file paths to the genome files which can then be used as input to the <code>read*()</code> functions.</p>
 <p>Alternatively or subsequent to the metagenome retrieval, users can retrieve annotation files of genomes belonging to a metagenome project selected with <code><a href="../reference/listMetaGenomes.html">listMetaGenomes()</a></code> by using the <code><a href="../reference/getMetaGenomeAnnotations.html">getMetaGenomeAnnotations()</a></code> function.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span>
 <span class="fu"><a href="../reference/getMetaGenomeAnnotations.html">getMetaGenomeAnnotations</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"human gut metagenome"</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"human_gut"</span>,<span class="st">"annotations"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "The annotations of metagenome 'human gut metagenome' have been downloaded and stored at '_ncbi_downloads/human_gut/annotations'."
@@ -616,21 +625,21 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="retrieval-from-ncbi-refseq-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-refseq-1" class="anchor"></a>Retrieval from <code>NCBI RefSeq</code>:</h4>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"proteome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ncbi-genbank-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-genbank-1" class="anchor"></a>Retrieval from <code>NCBI Genbank</code>:</h4>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"proteome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ensembl-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ensembl-1" class="anchor"></a>Retrieval from <code>ENSEMBL</code>:</h4>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all Ensembl proteome sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"Ensembl"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, type <span class="op">=</span> <span class="st">"proteome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -642,21 +651,21 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="retrieval-from-ncbi-refseq-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-refseq-2" class="anchor"></a>Retrieval from <code>NCBI RefSeq</code>:</h4>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"cds"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ncbi-genbank-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-genbank-2" class="anchor"></a>Retrieval from <code>NCBI Genbank</code>:</h4>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"cds"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ensembl-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ensembl-2" class="anchor"></a>Retrieval from <code>ENSEMBL</code>:</h4>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all Ensembl CDS sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"Ensembl"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, type <span class="op">=</span> <span class="st">"cds"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -666,11 +675,11 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#retrieve-gff-files" class="anchor"></a>Retrieve GFF files</h3>
 <p>Download all mammalian vertebrate gff files.</p>
 <p>Example <code>NCBI RefSeq</code>:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate gff files</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"gff"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>NCBI Genbank</code>:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate gff files</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"gff"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -679,7 +688,7 @@ submitter: Genome Reference Consortium</code></pre>
 <a href="#retrieve-gtf-files" class="anchor"></a>Retrieve GTF files</h3>
 <p>Download all mammalian vertebrate gtf files.</p>
 <p>Example <code>ENSEMBL</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate gff files</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"Ensembl"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, type <span class="op">=</span> <span class="st">"gtf"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -690,21 +699,21 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="retrieval-from-ncbi-refseq-3" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-refseq-3" class="anchor"></a>Retrieval from <code>NCBI RefSeq</code>:</h4>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate RNA sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"rna"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ncbi-genbank-3" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-genbank-3" class="anchor"></a>Retrieval from <code>NCBI Genbank</code>:</h4>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate RNA sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"rna"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ensembl-3" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ensembl-3" class="anchor"></a>Retrieval from <code>ENSEMBL</code>:</h4>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all Ensembl RNA sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"Ensembl"</span>, db <span class="op">=</span> <span class="st">"ensembl"</span>, type <span class="op">=</span> <span class="st">"rna"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -716,14 +725,14 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="retrieval-from-ncbi-refseq-4" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-refseq-4" class="anchor"></a>Retrieval from <code>NCBI RefSeq</code>:</h4>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate RNA sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"rm"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="retrieval-from-ncbi-genbank-4" class="section level4">
 <h4 class="hasAnchor">
 <a href="#retrieval-from-ncbi-genbank-4" class="anchor"></a>Retrieval from <code>NCBI Genbank</code>:</h4>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate RNA sequneces</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"rm"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Users can obtain alternative kingdoms using <code><a href="../reference/getKingdoms.html">getKingdoms()</a></code>.</p>
@@ -738,11 +747,11 @@ submitter: Genome Reference Consortium</code></pre>
 <h3 class="hasAnchor">
 <a href="#genome-retrieval" class="anchor"></a>Genome Retrieval</h3>
 <p>Example <code>RefSeq</code>:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all geneomes stored in RefSeq</span>
 <span class="fu"><a href="../reference/meta.retrieval.all.html">meta.retrieval.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Genbank</code>:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all geneomes stored in Genbank</span>
 <span class="fu"><a href="../reference/meta.retrieval.all.html">meta.retrieval.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"genome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
@@ -750,11 +759,11 @@ submitter: Genome Reference Consortium</code></pre>
 <h3 class="hasAnchor">
 <a href="#proteome-retrieval" class="anchor"></a>Proteome Retrieval</h3>
 <p>Example <code>RefSeq</code>:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all proteome stored in RefSeq</span>
 <span class="fu"><a href="../reference/meta.retrieval.all.html">meta.retrieval.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"proteome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Example <code>Genbank</code>:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all proteome stored in Genbank</span>
 <span class="fu"><a href="../reference/meta.retrieval.all.html">meta.retrieval.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>, type <span class="op">=</span> <span class="st">"proteome"</span>, reference <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Again, by exchanging <code>type = "proteome"</code> by either</p>
