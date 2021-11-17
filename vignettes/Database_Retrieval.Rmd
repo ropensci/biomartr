@@ -18,6 +18,13 @@ knitr::opts_chunk$set(
 
 # Retrieve Sequence Databases from NCBI
 
+> **_NOTE:_** To make sure that you have a sufficiently stable (internet) connection between R and the respective databases, please set the default `timeout` setting __on your local machine__ from 60sec to at least 300000sec before running any retrieval functions via:
+
+```r
+options(timeout = 300000)
+```
+
+## Getting Started
 NCBI stores a variety of specialized database such as [Genbank, RefSeq, Taxonomy, SNP, etc.](https://www.ncbi.nlm.nih.gov/guide/data-software/) on their servers.
 The `download.database()` and `download.database.all()` functions implemented in `biomartr` allows users to download these databases from NCBI.
 This process might be very useful for downstream analyses such as sequence searches with e.g. BLAST. For this purpose see the R package [metablastr](https://github.com/HajkD/metablastr) which aims to seamlessly inegrate `biomartr` based genomic data retrieval with downsteam large-scale BLAST searches.
@@ -43,18 +50,43 @@ biomartr::listNCBIDatabases(db = "all")
 ```
 
 ```
-[1] "16SMicrobial"            "cdd_delta"               "cloud"                  
- [4] "env_nr"                  "env_nt"                  "est"                    
- [7] "est_human"               "est_mouse"               "est_others"             
-[10] "FASTA"                   "gene_info"               "gss"                    
-[13] "gss_annot"               "htgs"                    "human_genomic"          
-[16] "landmark"                "nr"                      "nt"                     
-[19] "other_genomic"           "pataa"                   "patnt"                  
-[22] "pdbaa"                   "pdbnt"                   "ref_prok_rep_genomes"   
-[25] "ref_viroids_rep_genomes" "ref_viruses_rep_genomes" "refseq_genomic"         
-[28] "refseq_protein"          "refseq_rna"              "refseqgene"             
-[31] "sts"                     "swissprot"               "taxdb"                  
-[34] "tsa_nr"                  "tsa_nt"                  "vector"
+[1] "16S_ribosomal_RNA"                     "16S_ribosomal_RNA-nucl-metadata"      
+ [3] "18S_fungal_sequences"                  "18S_fungal_sequences-nucl-metadata"   
+ [5] "28S_fungal_sequences"                  "28S_fungal_sequences-nucl-metadata"   
+ [7] "Betacoronavirus"                       "Betacoronavirus-nucl-metadata"        
+ [9] "blastdb-manifest"                      "blastdb-metadata-1-1"                 
+[11] "blastdbv5"                             "cdd_delta"                            
+[13] "cloud"                                 "env_nr"                               
+[15] "env_nr-prot-metadata"                  "env_nt"                               
+[17] "env_nt-nucl-metadata"                  "FASTA"                                
+[19] "human_genome"                          "human_genome-nucl-metadata"           
+[21] "ITS_eukaryote_sequences"               "ITS_eukaryote_sequences-nucl-metadata"
+[23] "ITS_RefSeq_Fungi"                      "ITS_RefSeq_Fungi-nucl-metadata"       
+[25] "landmark"                              "landmark-prot-metadata"               
+[27] "LSU_eukaryote_rRNA"                    "LSU_eukaryote_rRNA-nucl-metadata"     
+[29] "LSU_prokaryote_rRNA"                   "LSU_prokaryote_rRNA-nucl-metadata"    
+[31] "mito"                                  "mito-nucl-metadata"                   
+[33] "mouse_genome"                          "mouse_genome-nucl-metadata"           
+[35] "nr"                                    "nr-prot-metadata"                     
+[37] "nt"                                    "nt-nucl-metadata"                     
+[39] "pataa"                                 "pataa-prot-metadata"                  
+[41] "patnt"                                 "patnt-nucl-metadata"                  
+[43] "pdbaa"                                 "pdbaa-prot-metadata"                  
+[45] "pdbnt"                                 "pdbnt-nucl-metadata"                  
+[47] "ref_euk_rep_genomes"                   "ref_euk_rep_genomes-nucl-metadata"    
+[49] "ref_prok_rep_genomes"                  "ref_prok_rep_genomes-nucl-metadata"   
+[51] "ref_viroids_rep_genomes"               "ref_viroids_rep_genomes-nucl-metadata"
+[53] "ref_viruses_rep_genomes"               "ref_viruses_rep_genomes-nucl-metadata"
+[55] "refseq_protein"                        "refseq_protein-prot-metadata"         
+[57] "refseq_rna"                            "refseq_rna-nucl-metadata"             
+[59] "refseq_select_prot"                    "refseq_select_prot-prot-metadata"     
+[61] "refseq_select_rna"                     "refseq_select_rna-nucl-metadata"      
+[63] "SSU_eukaryote_rRNA"                    "SSU_eukaryote_rRNA-nucl-metadata"     
+[65] "swissprot"                             "swissprot-prot-metadata"              
+[67] "taxdb"                                 "taxdb-metadata"                       
+[69] "tsa_nr"                                "tsa_nr-prot-metadata"                 
+[71] "tsa_nt"                                "tsa_nt-nucl-metadata"                 
+[73] "v4"                                    "v5" 
 ```
 
 
@@ -70,31 +102,38 @@ biomartr::listNCBIDatabases(db = "nr")
 ```
 
 ```
-[1] "nr.00.tar.gz" "nr.83.tar.gz" "nr.75.tar.gz" "nr.01.tar.gz"
- [5] "nr.02.tar.gz" "nr.03.tar.gz" "nr.04.tar.gz" "nr.05.tar.gz"
- [9] "nr.76.tar.gz" "nr.16.tar.gz" "nr.54.tar.gz" "nr.55.tar.gz"
-[13] "nr.56.tar.gz" "nr.06.tar.gz" "nr.15.tar.gz" "nr.30.tar.gz"
-[17] "nr.57.tar.gz" "nr.58.tar.gz" "nr.59.tar.gz" "nr.60.tar.gz"
-[21] "nr.61.tar.gz" "nr.62.tar.gz" "nr.63.tar.gz" "nr.64.tar.gz"
-[25] "nr.65.tar.gz" "nr.66.tar.gz" "nr.67.tar.gz" "nr.68.tar.gz"
-[29] "nr.69.tar.gz" "nr.70.tar.gz" "nr.71.tar.gz" "nr.72.tar.gz"
-[33] "nr.73.tar.gz" "nr.74.tar.gz" "nr.07.tar.gz" "nr.77.tar.gz"
-[37] "nr.78.tar.gz" "nr.08.tar.gz" "nr.09.tar.gz" "nr.10.tar.gz"
-[41] "nr.79.tar.gz" "nr.80.tar.gz" "nr.81.tar.gz" "nr.82.tar.gz"
-[45] "nr.84.tar.gz" "nr.11.tar.gz" "nr.12.tar.gz" "nr.85.tar.gz"
-[49] "nr.13.tar.gz" "nr.86.tar.gz" "nr.87.tar.gz" "nr.14.tar.gz"
-[53] "nr.28.tar.gz" "nr.29.tar.gz" "nr.31.tar.gz" "nr.17.tar.gz"
-[57] "nr.18.tar.gz" "nr.19.tar.gz" "nr.20.tar.gz" "nr.21.tar.gz"
-[61] "nr.22.tar.gz" "nr.23.tar.gz" "nr.32.tar.gz" "nr.24.tar.gz"
-[65] "nr.25.tar.gz" "nr.26.tar.gz" "nr.27.tar.gz" "nr.33.tar.gz"
-[69] "nr.34.tar.gz" "nr.35.tar.gz" "nr.36.tar.gz" "nr.37.tar.gz"
-[73] "nr.38.tar.gz" "nr.39.tar.gz" "nr.40.tar.gz" "nr.41.tar.gz"
-[77] "nr.42.tar.gz" "nr.43.tar.gz" "nr.44.tar.gz" "nr.45.tar.gz"
-[81] "nr.46.tar.gz" "nr.47.tar.gz" "nr.48.tar.gz" "nr.49.tar.gz"
-[85] "nr.53.tar.gz" "nr.50.tar.gz" "nr.51.tar.gz" "nr.52.tar.gz"
+[1] "nr.00.tar.gz"          "nr.01.tar.gz"         
+ [3] "nr.02.tar.gz"          "nr.03.tar.gz"         
+ [5] "nr.04.tar.gz"          "nr.05.tar.gz"         
+ [7] "nr.06.tar.gz"          "nr.07.tar.gz"         
+ [9] "nr.08.tar.gz"          "nr.09.tar.gz"         
+[11] "nr.10.tar.gz"          "nr.11.tar.gz"         
+[13] "nr.12.tar.gz"          "nr.13.tar.gz"         
+[15] "nr.14.tar.gz"          "nr.15.tar.gz"         
+[17] "nr.16.tar.gz"          "nr.17.tar.gz"         
+[19] "nr.18.tar.gz"          "nr.19.tar.gz"         
+[21] "nr.20.tar.gz"          "nr.21.tar.gz"         
+[23] "nr.22.tar.gz"          "nr.23.tar.gz"         
+[25] "nr.24.tar.gz"          "nr.25.tar.gz"         
+[27] "nr.26.tar.gz"          "nr.27.tar.gz"         
+[29] "nr.28.tar.gz"          "nr.29.tar.gz"         
+[31] "nr.30.tar.gz"          "nr.31.tar.gz"         
+[33] "nr.32.tar.gz"          "nr.33.tar.gz"         
+[35] "nr.34.tar.gz"          "nr.35.tar.gz"         
+[37] "nr.36.tar.gz"          "nr.37.tar.gz"         
+[39] "nr.38.tar.gz"          "nr.39.tar.gz"         
+[41] "nr.40.tar.gz"          "nr.41.tar.gz"         
+[43] "nr.42.tar.gz"          "nr.43.tar.gz"         
+[45] "nr.44.tar.gz"          "nr.45.tar.gz"         
+[47] "nr.46.tar.gz"          "nr-prot-metadata.json"
+[49] "nr.47.tar.gz"          "nr.48.tar.gz"         
+[51] "nr.49.tar.gz"          "nr.50.tar.gz"         
+[53] "nr.51.tar.gz"          "nr.52.tar.gz"         
+[55] "nr.53.tar.gz"          "nr.54.tar.gz"         
+[57] "nr.55.tar.gz"
 ```
 
-The output illustrates that the `NCBI nr` database has been separated into 41 files.
+The output illustrates that the `NCBI nr` database has been separated into several sub-data-packages.
 
 Further examples are:
 
@@ -105,83 +144,52 @@ biomartr::listNCBIDatabases(db = "nt")
 ```
 
 ```
-[1] "nt.00.tar.gz" "nt.01.tar.gz" "nt.02.tar.gz" "nt.03.tar.gz"
- [5] "nt.04.tar.gz" "nt.05.tar.gz" "nt.06.tar.gz" "nt.07.tar.gz"
- [9] "nt.08.tar.gz" "nt.09.tar.gz" "nt.10.tar.gz" "nt.40.tar.gz"
-[13] "nt.11.tar.gz" "nt.41.tar.gz" "nt.42.tar.gz" "nt.43.tar.gz"
-[17] "nt.44.tar.gz" "nt.45.tar.gz" "nt.46.tar.gz" "nt.47.tar.gz"
-[21] "nt.48.tar.gz" "nt.49.tar.gz" "nt.50.tar.gz" "nt.12.tar.gz"
-[25] "nt.51.tar.gz" "nt.52.tar.gz" "nt.13.tar.gz" "nt.14.tar.gz"
-[29] "nt.53.tar.gz" "nt.54.tar.gz" "nt.55.tar.gz" "nt.56.tar.gz"
-[33] "nt.57.tar.gz" "nt.15.tar.gz" "nt.16.tar.gz" "nt.58.tar.gz"
-[37] "nt.26.tar.gz" "nt.27.tar.gz" "nt.17.tar.gz" "nt.18.tar.gz"
-[41] "nt.28.tar.gz" "nt.29.tar.gz" "nt.19.tar.gz" "nt.20.tar.gz"
-[45] "nt.21.tar.gz" "nt.22.tar.gz" "nt.23.tar.gz" "nt.24.tar.gz"
-[49] "nt.25.tar.gz" "nt.30.tar.gz" "nt.31.tar.gz" "nt.32.tar.gz"
-[53] "nt.33.tar.gz" "nt.34.tar.gz" "nt.35.tar.gz" "nt.36.tar.gz"
-[57] "nt.37.tar.gz" "nt.39.tar.gz" "nt.38.tar.gz"
+[1] "nt.00.tar.gz"          "nt.01.tar.gz"         
+ [3] "nt.02.tar.gz"          "nt.03.tar.gz"         
+ [5] "nt.04.tar.gz"          "nt.05.tar.gz"         
+ [7] "nt.06.tar.gz"          "nt.07.tar.gz"         
+ [9] "nt.08.tar.gz"          "nt.09.tar.gz"         
+[11] "nt.10.tar.gz"          "nt.11.tar.gz"         
+[13] "nt.12.tar.gz"          "nt.13.tar.gz"         
+[15] "nt.14.tar.gz"          "nt.15.tar.gz"         
+[17] "nt.16.tar.gz"          "nt.17.tar.gz"         
+[19] "nt.18.tar.gz"          "nt.19.tar.gz"         
+[21] "nt.20.tar.gz"          "nt.21.tar.gz"         
+[23] "nt.22.tar.gz"          "nt.23.tar.gz"         
+[25] "nt.24.tar.gz"          "nt.25.tar.gz"         
+[27] "nt.26.tar.gz"          "nt.27.tar.gz"         
+[29] "nt.28.tar.gz"          "nt.29.tar.gz"         
+[31] "nt.30.tar.gz"          "nt.31.tar.gz"         
+[33] "nt.32.tar.gz"          "nt.33.tar.gz"         
+[35] "nt.34.tar.gz"          "nt.35.tar.gz"         
+[37] "nt.36.tar.gz"          "nt.37.tar.gz"         
+[39] "nt-nucl-metadata.json" "nt.38.tar.gz"         
+[41] "nt.39.tar.gz"          "nt.40.tar.gz"         
+[43] "nt.41.tar.gz"          "nt.42.tar.gz"         
+[45] "nt.43.tar.gz"          "nt.44.tar.gz"         
+[47] "nt.45.tar.gz"          "nt.46.tar.gz"         
+[49] "nt.47.tar.gz"          "nt.48.tar.gz"
 ```
 
-```{r, eval=FALSE}
-# show all NCBI ESTs others
-biomartr::listNCBIDatabases(db = "est_others")
-```
-
-```
- [1] "est_others.00.tar.gz" "est_others.01.tar.gz"
- [3] "est_others.02.tar.gz" "est_others.03.tar.gz"
- [5] "est_others.04.tar.gz" "est_others.05.tar.gz"
- [7] "est_others.06.tar.gz" "est_others.07.tar.gz"
- [9] "est_others.08.tar.gz" "est_others.09.tar.gz"
-[11] "est_others.10.tar.gz"
-```
-
-```{r, eval=FALSE}
-# show all NCBI RefSeq (only genomes)
-head(biomartr::listNCBIDatabases(db = "refseq_genomic"), 20)
-```
-
-```
-[1] "refseq_genomic.218.tar.gz" "refseq_genomic.219.tar.gz"
- [3] "refseq_genomic.220.tar.gz" "refseq_genomic.00.tar.gz" 
- [5] "refseq_genomic.01.tar.gz"  "refseq_genomic.02.tar.gz" 
- [7] "refseq_genomic.03.tar.gz"  "refseq_genomic.04.tar.gz" 
- [9] "refseq_genomic.05.tar.gz"  "refseq_genomic.06.tar.gz" 
-[11] "refseq_genomic.07.tar.gz"  "refseq_genomic.08.tar.gz" 
-[13] "refseq_genomic.09.tar.gz"  "refseq_genomic.10.tar.gz" 
-[15] "refseq_genomic.11.tar.gz"  "refseq_genomic.12.tar.gz" 
-[17] "refseq_genomic.13.tar.gz"  "refseq_genomic.14.tar.gz" 
-[19] "refseq_genomic.15.tar.gz"  "refseq_genomic.16.tar.gz"
-```
 
 ```{r, eval=FALSE}
 # show all NCBI RefSeq (only proteomes)
-biomartr::listNCBIDatabases(db = "refseq_protein")
+head(biomartr::listNCBIDatabases(db = "refseq_protein"), 20)
 ```
 
 ```
-[1] "refseq_protein.25.tar.gz" "refseq_protein.00.tar.gz"
- [3] "refseq_protein.01.tar.gz" "refseq_protein.02.tar.gz"
- [5] "refseq_protein.03.tar.gz" "refseq_protein.26.tar.gz"
- [7] "refseq_protein.27.tar.gz" "refseq_protein.28.tar.gz"
- [9] "refseq_protein.29.tar.gz" "refseq_protein.04.tar.gz"
-[11] "refseq_protein.05.tar.gz" "refseq_protein.06.tar.gz"
-[13] "refseq_protein.07.tar.gz" "refseq_protein.08.tar.gz"
-[15] "refseq_protein.09.tar.gz" "refseq_protein.14.tar.gz"
-[17] "refseq_protein.15.tar.gz" "refseq_protein.16.tar.gz"
-[19] "refseq_protein.41.tar.gz" "refseq_protein.10.tar.gz"
-[21] "refseq_protein.11.tar.gz" "refseq_protein.17.tar.gz"
-[23] "refseq_protein.12.tar.gz" "refseq_protein.13.tar.gz"
-[25] "refseq_protein.18.tar.gz" "refseq_protein.19.tar.gz"
-[27] "refseq_protein.20.tar.gz" "refseq_protein.21.tar.gz"
-[29] "refseq_protein.22.tar.gz" "refseq_protein.23.tar.gz"
-[31] "refseq_protein.24.tar.gz" "refseq_protein.30.tar.gz"
-[33] "refseq_protein.31.tar.gz" "refseq_protein.32.tar.gz"
-[35] "refseq_protein.33.tar.gz" "refseq_protein.34.tar.gz"
-[37] "refseq_protein.35.tar.gz" "refseq_protein.36.tar.gz"
-[39] "refseq_protein.37.tar.gz" "refseq_protein.38.tar.gz"
-[41] "refseq_protein.39.tar.gz" "refseq_protein.40.tar.gz"
+[1] "refseq_protein.00.tar.gz" "refseq_protein.01.tar.gz"
+ [3] "refseq_protein.02.tar.gz" "refseq_protein.03.tar.gz"
+ [5] "refseq_protein.04.tar.gz" "refseq_protein.05.tar.gz"
+ [7] "refseq_protein.06.tar.gz" "refseq_protein.07.tar.gz"
+ [9] "refseq_protein.08.tar.gz" "refseq_protein.09.tar.gz"
+[11] "refseq_protein.10.tar.gz" "refseq_protein.11.tar.gz"
+[13] "refseq_protein.12.tar.gz" "refseq_protein.13.tar.gz"
+[15] "refseq_protein.14.tar.gz" "refseq_protein.15.tar.gz"
+[17] "refseq_protein.16.tar.gz" "refseq_protein.17.tar.gz"
+[19] "refseq_protein.18.tar.gz" "refseq_protein.19.tar.gz"
 ```
+
 
 ```{r, eval=FALSE}
 # show all NCBI RefSeq (only RNA)
@@ -189,13 +197,12 @@ biomartr::listNCBIDatabases(db = "refseq_rna")
 ```
 
 ```
-[1] "refseq_rna.00.tar.gz" "refseq_rna.01.tar.gz"
- [3] "refseq_rna.10.tar.gz" "refseq_rna.02.tar.gz"
- [5] "refseq_rna.05.tar.gz" "refseq_rna.03.tar.gz"
- [7] "refseq_rna.06.tar.gz" "refseq_rna.04.tar.gz"
- [9] "refseq_rna.07.tar.gz" "refseq_rna.08.tar.gz"
-[11] "refseq_rna.09.tar.gz" "refseq_rna.11.tar.gz"
-[13] "refseq_rna.12.tar.gz" "refseq_rna.13.tar.gz"
+[1] "refseq_rna.00.tar.gz"          "refseq_rna.01.tar.gz"         
+ [3] "refseq_rna.02.tar.gz"          "refseq_rna.03.tar.gz"         
+ [5] "refseq_rna.04.tar.gz"          "refseq_rna.05.tar.gz"         
+ [7] "refseq_rna.06.tar.gz"          "refseq_rna.07.tar.gz"         
+ [9] "refseq_rna.08.tar.gz"          "refseq_rna-nucl-metadata.json"
+[11] "refseq_rna.09.tar.gz" 
 ```
 
 ```{r, eval=FALSE}
@@ -204,7 +211,7 @@ biomartr::listNCBIDatabases(db = "swissprot")
 ```
 
 ```
-[1] "swissprot.tar.gz"
+[1] "swissprot.tar.gz"             "swissprot-prot-metadata.json"
 ```
 
 ```{r, eval=FALSE}
@@ -213,26 +220,8 @@ biomartr::listNCBIDatabases(db = "pdb")
 ```
 
 ```
- [1] "pdbnt.00.tar.gz" "pdbnt.40.tar.gz" "pdbnt.41.tar.gz"
- [4] "pdbnt.42.tar.gz" "pdbnt.43.tar.gz" "pdbnt.44.tar.gz"
- [7] "pdbnt.45.tar.gz" "pdbnt.46.tar.gz" "pdbnt.47.tar.gz"
-[10] "pdbnt.48.tar.gz" "pdbnt.49.tar.gz" "pdbnt.50.tar.gz"
-[13] "pdbnt.51.tar.gz" "pdbnt.52.tar.gz" "pdbnt.53.tar.gz"
-[16] "pdbnt.54.tar.gz" "pdbnt.55.tar.gz" "pdbnt.56.tar.gz"
-[19] "pdbnt.57.tar.gz" "pdbnt.58.tar.gz" "pdbnt.26.tar.gz"
-[22] "pdbnt.27.tar.gz" "pdbnt.01.tar.gz" "pdbnt.02.tar.gz"
-[25] "pdbnt.03.tar.gz" "pdbnt.04.tar.gz" "pdbnt.05.tar.gz"
-[28] "pdbnt.06.tar.gz" "pdbnt.07.tar.gz" "pdbnt.08.tar.gz"
-[31] "pdbnt.09.tar.gz" "pdbnt.10.tar.gz" "pdbnt.11.tar.gz"
-[34] "pdbnt.12.tar.gz" "pdbnt.13.tar.gz" "pdbnt.14.tar.gz"
-[37] "pdbnt.15.tar.gz" "pdbnt.16.tar.gz" "pdbnt.17.tar.gz"
-[40] "pdbnt.18.tar.gz" "pdbnt.28.tar.gz" "pdbnt.19.tar.gz"
-[43] "pdbnt.20.tar.gz" "pdbnt.21.tar.gz" "pdbnt.22.tar.gz"
-[46] "pdbnt.23.tar.gz" "pdbnt.24.tar.gz" "pdbnt.29.tar.gz"
-[49] "pdbnt.25.tar.gz" "pdbaa.tar.gz"    "pdbnt.30.tar.gz"
-[52] "pdbnt.31.tar.gz" "pdbnt.32.tar.gz" "pdbnt.33.tar.gz"
-[55] "pdbnt.34.tar.gz" "pdbnt.35.tar.gz" "pdbnt.36.tar.gz"
-[58] "pdbnt.37.tar.gz" "pdbnt.39.tar.gz" "pdbnt.38.tar.gz"
+ [1] "pdbaa.tar.gz"             "pdbnt.tar.gz"            
+[3] "pdbaa-prot-metadata.json" "pdbnt-nucl-metadata.json"
 ```
 
 ```{r, eval=FALSE}
@@ -241,35 +230,10 @@ biomartr::listNCBIDatabases(db = "human")
 ```
 
 ```
-[1] "human_genomic.00.tar.gz" "human_genomic.01.tar.gz"
- [3] "human_genomic.02.tar.gz" "human_genomic.03.tar.gz"
- [5] "human_genomic.04.tar.gz" "human_genomic.05.tar.gz"
- [7] "human_genomic.06.tar.gz" "human_genomic.07.tar.gz"
- [9] "human_genomic.08.tar.gz" "human_genomic.10.tar.gz"
-[11] "human_genomic.11.tar.gz" "human_genomic.12.tar.gz"
-[13] "human_genomic.13.tar.gz" "human_genomic.14.tar.gz"
-[15] "human_genomic.15.tar.gz" "human_genomic.16.tar.gz"
-[17] "human_genomic.18.tar.gz" "human_genomic.19.tar.gz"
-[19] "human_genomic.20.tar.gz" "human_genomic.21.tar.gz"
-[21] "human_genomic.22.tar.gz"
+1] "human_genome.00.tar.gz"          "human_genome.01.tar.gz"         
+[3] "human_genome-nucl-metadata.json"
 ```
 
-
-```{r, eval=FALSE}
-# show NCBI EST databases
-biomartr::listNCBIDatabases(db = "est")
-```
-
-```
- [1] "est.tar.gz"           "est_human.00.tar.gz" 
- [3] "est_human.01.tar.gz"  "est_mouse.tar.gz"    
- [5] "est_others.00.tar.gz" "est_others.01.tar.gz"
- [7] "est_others.02.tar.gz" "est_others.03.tar.gz"
- [9] "est_others.04.tar.gz" "est_others.05.tar.gz"
-[11] "est_others.06.tar.gz" "est_others.07.tar.gz"
-[13] "est_others.08.tar.gz" "est_others.09.tar.gz"
-[15] "est_others.10.tar.gz"
-```
 
 __Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.__
 

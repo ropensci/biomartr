@@ -16,7 +16,14 @@ knitr::opts_chunk$set(
   tidy = FALSE)
 ```
 
+> **_NOTE:_** To make sure that you have a sufficiently stable (internet) connection between R and the respective databases, please set the default `timeout` setting __on your local machine__ from 60sec to at least 30000sec before running any retrieval functions via:
 
+```r
+options(timeout = 30000)
+```
+
+
+## Topics
 - [1. Perform Meta-Genome Retrieval for Specific Kingdoms of Life](#perform-meta-genome-retrieval)
     - [1.1 Retrieve Genomic Sequences](#retrieve-genomic-sequences)
         - [1.1.1 Retrieval from `NCBI RefSeq`](#retrieval-from-ncbi-refseq)
@@ -70,7 +77,7 @@ For example, the pipeline logic of the [magrittr](https://github.com/smbache/mag
 meta.retrieval(kingdom = "vertebrate_mammalian", db = "refseq", type = "genome") %>% ...
 ```
 
-Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval()` enables the pipelining methodology for meta-genomics. 
+Here `...` denotes any subsequent meta-genomics analysis. Hence, `meta.retrieval()` enables the pipeline methodology for meta-genomics. 
 
 ### Retrieve Genomic Sequences
 
@@ -110,7 +117,7 @@ getKingdoms(db = "ensembl")
 ```
 
 ```
-[1] "Ensembl"
+[1] "EnsemblVertebrates"                                             
 ```
 
 The `ENSEMBL` database does not differentiate between different kingdoms, but specialized on storing high-quality reference genomes of diverse biological disciplines.

@@ -23,6 +23,17 @@ The `biomartr` package allows users to retrieve biological sequences in a very s
 
 Using `biomartr`, users can retrieve either genomes, proteomes, CDS, RNA, GFF, and genome assembly statistics data using the specialized functions:
 
+
+> **_NOTE:_** To make sure that you have a sufficiently stable (internet) connection between R and the respective databases, please set the default `timeout` setting __on your local machine__ from 60sec to at least 30000sec before running any retrieval functions via:
+
+```r
+options(timeout = 30000)
+```
+
+## Topics
+
+* [0. Getting Started with Sequence Retrieval](#getting-started-with-sequence-retrieval)
+    - [0.1 Listing the total number of available genomes](#listing-the-total-number-of-available-genomes)
 * [1. Genome retrieval with `getGenome()`](#genome-retrieval)
     - [A. list total number of available genomes in each database](#listing-the-total-number-of-available-genomes)
     - [B. dealing with kingdoms, groups, and subgroups ](#retrieving-kingdom-group-and-subgroup-information)
@@ -287,14 +298,8 @@ getGenome(db = "genbank", organism = "Candida glabrata", reference = FALSE)
 ```
 
 ```
-Only a non-reference genome assembly is available for 'Candida glabrata'. 
-Please make sure to specify the argument 'reference = FALSE' when running any get*() function.
-Genome download is completed!
-Checking md5 hash of file: _ncbi_downloads/genomes/Candida_glabrata_md5checksums.txt ...
-The md5 hash of file '_ncbi_downloads/genomes/Candida_glabrata_md5checksums.txt' matches!
-The genome of 'Candida_glabrata' has been downloaded to '_ncbi_downloads/genomes' 
-and has been named 'Candida_glabrata_genomic_genbank.fna.gz'.
-[1] "_ncbi_downloads/genomes/Candida_glabrata_genomic_genbank.fna.gz"
+Unfortunately no genome file could be found for organism 'Candida glabrata'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?
+[1] "Not available"
 ```
 
 ### Example `NCBI Genbank` (?is.genome.available): 
@@ -308,11 +313,8 @@ is.genome.available(db = "genbank", organism = "Homo sapiens")
 ```
 
 ```
-A reference or representative genome assembly is available for 'Homo sapiens'.
-More than one entry was found for 'Homo sapiens'. 
-Please consider to re-run this funtion and specify 'details = TRUE'. 
-This will allow you to select the 'assembly_accession' identifier 
-that can then be specified in all get*() functions.
+A reference or representative genome assembly is available for 'Homo sapiens'.                           
+More than one entry was found for 'Homo sapiens'. Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = Homo sapiens, db = genbank, details = TRUE)'. This will allow you to select the 'assembly_accession' identifier that can then be specified in all get*() functions.
 [1] TRUE
 ```
 
@@ -326,24 +328,26 @@ is.genome.available(db = "genbank", organism = "Homo sapiens", details = TRUE)
 
 
 ```
- assembly_accessi… bioproject biosample   wgs_master  refseq_category taxid
-   <chr>             <chr>      <chr>       <chr>       <chr>           <int>
- 1 GCA_000001405.27  PRJNA31257 NA          NA          reference geno…  9606
- 2 GCA_000002115.2   PRJNA1431  SAMN029812… AADD000000… na               9606
- 3 GCA_000002125.2   PRJNA19621 SAMN029812… ABBA000000… na               9606
- 4 GCA_000002135.3   PRJNA10793 NA          NA          na               9606
- 5 GCA_000004845.2   PRJNA42199 SAMN000033… ADDF000000… na               9606
- 6 GCA_000005465.1   PRJNA42201 NA          DAAB000000… na               9606
- 7 GCA_000181135.1   PRJNA28335 SAMN000016… ABKV000000… na               9606
- 8 GCA_000185165.1   PRJNA59877 SAMN029812… AEKP000000… na               9606
- 9 GCA_000212995.1   PRJNA19621 SAMN029812… ABSL000000… na               9606
-10 GCA_000252825.1   PRJNA19621 SAMN029812… ABBA000000… na               9606
-# ... with 70 more rows, and 15 more variables: species_taxid <int>,
-#   organism_name <chr>, infraspecific_name <chr>, isolate <chr>,
-#   version_status <chr>, assembly_level <chr>, release_type <chr>,
-#   genome_rep <chr>, seq_rel_date <date>, asm_name <chr>, submitter <chr>,
+ A tibble: 1,041 × 23                                                                                   
+   assembly_accession bioproject biosample  wgs_master refseq_category
+   <chr>              <chr>      <chr>      <chr>      <chr>          
+ 1 GCA_000001405.28   PRJNA31257 NA         NA         reference geno…
+ 2 GCA_000002115.2    PRJNA1431  SAMN02981… AADD00000… na             
+ 3 GCA_000002125.2    PRJNA19621 SAMN02981… ABBA00000… na             
+ 4 GCA_000002135.3    PRJNA10793 NA         NA         na             
+ 5 GCA_000004845.2    PRJNA42199 SAMN00003… ADDF00000… na             
+ 6 GCA_000005465.1    PRJNA42201 NA         DAAB00000… na             
+ 7 GCA_000181135.1    PRJNA28335 SAMN00001… ABKV00000… na             
+ 8 GCA_000185165.1    PRJNA59877 SAMN02981… AEKP00000… na             
+ 9 GCA_000212995.1    PRJNA19621 SAMN02981… ABSL00000… na             
+10 GCA_000252825.1    PRJNA19621 SAMN02981… ABBA00000… na             
+# … with 1,031 more rows, and 18 more variables: taxid <int>,
+#   species_taxid <int>, organism_name <chr>,
+#   infraspecific_name <chr>, isolate <chr>, version_status <chr>,
+#   assembly_level <chr>, release_type <chr>, genome_rep <chr>,
+#   seq_rel_date <date>, asm_name <chr>, submitter <chr>,
 #   gbrs_paired_asm <chr>, paired_asm_comp <chr>, ftp_path <chr>,
-#   excluded_from_refseq <chr>
+#   excluded_from_refseq <chr>, X22 <chr>, X23 <chr>
 ```
 
 As you can see there are several versions of the `Homo sapiens` genome
@@ -377,10 +381,11 @@ is.genome.available(db = "ensembl", organism = "Homo sapiens", details = TRUE)
 ```
 
 ```
-  division taxon_id name    release display_name accession   strain_collecti…
-  <chr>       <int> <chr>     <int> <chr>        <chr>       <chr>           
-1 Ensembl      9606 homo_s…      92 Human        GCA_000001… NA              
-# ... with 3 more variables: common_name <chr>, strain <chr>, assembly <chr>
+  division           assembly accession  release name  taxon_id strain
+  <chr>              <chr>    <chr>        <int> <chr>    <int> <chr> 
+1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
+# … with 3 more variables: display_name <chr>, common_name <chr>,
+#   strain_collection <chr>
 ```
 
 Again, users can either specify the `taxid` or `accession id` when searching for organism entries.
@@ -391,23 +396,24 @@ is.genome.available(db = "ensembl", organism = "9606", details = TRUE)
 ```
 
 ```
-division taxon_id name    release display_name accession   strain_collecti…
-  <chr>       <int> <chr>     <int> <chr>        <chr>       <chr>           
-1 Ensembl      9606 homo_s…      92 Human        GCA_000001… NA              
-# ... with 3 more variables: common_name <chr>, strain <chr>, assembly <chr>
-> 
+division           assembly accession  release name  taxon_id strain
+  <chr>              <chr>    <chr>        <int> <chr>    <int> <chr> 
+1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
+# … with 3 more variables: display_name <chr>, common_name <chr>,
+#   strain_collection <chr>
 ```
 
 ```r
 # retrieve details for Homo sapiens using accession id
-is.genome.available(organism = "GCA_000001405.27", db = "ensembl", details = TRUE)
+is.genome.available(organism = "GCA_000001405.28", db = "ensembl", details = TRUE)
 ```
 
 ```
-  division taxon_id name    release display_name accession  strain_collecti…
-  <chr>       <int> <chr>     <int> <chr>        <chr>      <chr>           
-1 Ensembl      9606 homo_s…      92 Human        GCA_00000… NA              
-# ... with 3 more variables: common_name <chr>, strain <chr>, assembly <chr>
+ division           assembly accession  release name  taxon_id strain
+  <chr>              <chr>    <chr>        <int> <chr>    <int> <chr> 
+1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
+# … with 3 more variables: display_name <chr>, common_name <chr>,
+#   strain_collection <chr>
 ```
 
 __Please note that the `accession` id can change internally at ENSEMBL. E.g. in a recent case
@@ -428,6 +434,7 @@ is.genome.available(db = "uniprot", "Homo sapiens", details = FALSE)
 
 ```
 A reference or representative genome assembly is available for 'Homo sapiens'.
+More than one entry was found for 'Homo sapiens'. Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = Homo sapiens, db = uniprot, details = TRUE)'. This will allow you to select the 'assembly_accession' identifier that can then be specified in all get*() functions.
 [1] TRUE
 ```
 
@@ -439,11 +446,24 @@ is.genome.available(db = "uniprot", "Homo sapiens", details = TRUE)
 ```
 
 ```
- name   description isReferenceProt… isRepresentativ… dbReference component
-* <chr>  <chr>       <lgl>            <lgl>            <list>      <list>   
-1 Homo … Homo sapie… TRUE             TRUE             <data.fram… <data.fr…
-# ... with 7 more variables: reference <list>, upid <chr>, modified <dbl>,
-#   taxonomy <int>, source <chr>, sourceTaxonomy <int>, superregnum <chr>
+ A tibble: 29 × 16
+   name          description        isReferenceProte… isRepresentativ…
+   <chr>         <chr>              <lgl>             <lgl>           
+ 1 Homo sapiens… Homo sapiens (Hom… TRUE              TRUE            
+ 2 Human associ… NA                 FALSE             TRUE            
+ 3 Human respir… NA                 FALSE             FALSE           
+ 4 Human respir… NA                 FALSE             FALSE           
+ 5 Human respir… NA                 FALSE             FALSE           
+ 6 Human respir… NA                 FALSE             FALSE           
+ 7 Human respir… NA                 FALSE             FALSE           
+ 8 Human respir… NA                 FALSE             FALSE           
+ 9 Human respir… NA                 FALSE             FALSE           
+10 Human respir… NA                 FALSE             FALSE           
+# … with 19 more rows, and 12 more variables:
+#   genomeAssembly <df[,4]>, dbReference <list>, component <list>,
+#   reference <list>, annotationScore <df[,1]>, scores <list>,
+#   upid <chr>, modified <dbl>, taxonomy <int>, source <chr>,
+#   superregnum <chr>, strain <chr>
 ```
 
 Users can also search available species at UniProt via `taxid` or `upid` id.
@@ -456,11 +476,16 @@ is.genome.available(db = "uniprot", "9606", details = TRUE)
 ```
 
 ```
- name   description isReferenceProt… isRepresentativ… dbReference component
-* <chr>  <chr>       <lgl>            <lgl>            <list>      <list>   
-1 Homo … Homo sapie… TRUE             TRUE             <data.fram… <data.fr…
-# ... with 7 more variables: reference <list>, upid <chr>, modified <dbl>,
-#   taxonomy <int>, source <chr>, sourceTaxonomy <int>, superregnum <chr>
+ A tibble: 3 × 15
+  name  description isReferenceProt… isRepresentativ… genomeAssembly$…
+  <chr> <chr>       <lgl>            <lgl>            <chr>           
+1 Homo… Homo sapie… TRUE             TRUE             Ensembl         
+2 Homo… NA          FALSE            FALSE            ENA/EMBL        
+3 Homo… NA          FALSE            FALSE            ENA/EMBL        
+# … with 10 more variables: dbReference <list>, component <list>,
+#   reference <list>, annotationScore <df[,1]>, scores <list>,
+#   upid <chr>, modified <dbl>, taxonomy <int>, source <chr>,
+#   superregnum <chr>
 ```
 
 Here `UP000005640` defines the `upid` for `Homo sapiens`.
@@ -471,11 +496,13 @@ is.genome.available(db = "uniprot", "UP000005640", details = TRUE)
 ```
 
 ```
- name   description isReferenceProt… isRepresentativ… dbReference component
-* <chr>  <chr>       <lgl>            <lgl>            <list>      <list>   
-1 Homo … Homo sapie… TRUE             TRUE             <data.fram… <data.fr…
-# ... with 7 more variables: reference <list>, upid <chr>, modified <dbl>,
-#   taxonomy <int>, source <chr>, sourceTaxonomy <int>, superregnum <chr>
+ name  description isReferenceProt… isRepresentativ… genomeAssembly$…
+  <chr> <chr>       <lgl>            <lgl>            <chr>           
+1 Homo… Homo sapie… TRUE             TRUE             Ensembl         
+# … with 10 more variables: dbReference <list>, component <list>,
+#   reference <list>, annotationScore <df[,1]>, scores <list>,
+#   upid <chr>, modified <dbl>, taxonomy <int>, source <chr>,
+#   superregnum <chr>
 ```
 
 
@@ -502,7 +529,7 @@ length(listGenomes(db = "refseq"))
 ```
 
 ```
-[1] 14264
+[1] 24910
 ```
 
 Example `genbank`: 
@@ -512,7 +539,7 @@ length(listGenomes(db = "genbank"))
 ```
 
 ```
-[1] 21770
+[1] 35298
 ```
 
 Example `ensembl`: 
@@ -522,11 +549,11 @@ length(listGenomes(db = "ensembl"))
 ```
 
 ```
-[1] 113
+[1] 310
 ```
 
 
-Hence, currently 14264 genomes (including all kingdoms of life) are stored on NCBI RefSeq (as of 31/05/2018).
+Hence, currently 24910 genomes (including all kingdoms of life) are stored on `NCBI RefSeq` (as of 16/11/2021).
 
 ### Retrieving kingdom, group and subgroup information
 
@@ -540,8 +567,8 @@ listKingdoms(db = "refseq")
 ```
 
 ```
-    Archaea  Bacteria Eukaryota   Viroids   Viruses 
-      169      6321       561        47      7166 
+    Archaea  Bacteria Eukaryota   Viruses 
+      330     11797      1002     10637 
 ```
 
 Example `genbank`:
@@ -553,7 +580,7 @@ listKingdoms(db = "genbank")
 
 ```
   Archaea  Bacteria Eukaryota 
-     1249     18083      2438
+     1651     25904      7742
 ```
 
 Example `ENSEMBL`:
@@ -564,8 +591,8 @@ listKingdoms(db = "ensembl")
 ```
 
 ```
-Ensembl 
-    113
+EnsemblVertebrates 
+               310
 ```
 
 ### Analogous computations can be performed for `groups` and `subgroups`
@@ -582,218 +609,29 @@ listGroups(db = "refseq")
 ```
 
 ```
-                 Abditibacteriota                                   Acidithiobacillia 
-                                                  1                                                   5 
-                                     Acidobacteriia                                    Ackermannviridae 
-                                                 16                                                  21 
-                                     Actinobacteria                                        Adenoviridae 
-                                               1226                                                  62 
-                                  Alloherpesviridae                                   Alphaflexiviridae 
-                                                  8                                                  56 
-                                Alphaproteobacteria                                   Alphasatellitidae 
-                                                857                                                  67 
-                                  Alphatetraviridae                                      Alvernaviridae 
-                                                  3                                                   1 
-                                      Amalgaviridae                                          Amphibians 
-                                                 10                                                   3 
-                                     Ampullaviridae                                       Anelloviridae 
-                                                  3                                                  61 
-                                      Apicomplexans                          Apple fruit crinkle viroid 
-                                                 18                                                   1 
-          Apple hammerhead viroid-like circular RNA                                         Apscaviroid 
-                                                  1                                                  12 
-                                          Aquificae                                        Archaeoglobi 
-                                                  6                                                   3 
-                                       Arenaviridae                                     Armatimonadetes 
-                                                 37                                                   4 
-                                      Arteriviridae                                         Ascomycetes 
-                                                 13                                                  45 
-                                        Ascoviridae                                        Asfarviridae 
-                                                  4                                                   1 
-                                        Aspiviridae                                        Astroviridae 
-                                                  3                                                  40 
-                                        Avsunviroid                                   Bacilladnaviridae 
-                                                  1                                                   7 
-                           Bacteria candidate phyla                        Bacteroidetes/Chlorobi group 
-                                                  3                                                 654 
-                                      Baculoviridae                                           Balneolia 
-                                                 66                                                   4 
-                                       Barnaviridae                                      Basidiomycetes 
-                                                  1                                                   5 
-                                        Benyviridae                                    Betaflexiviridae 
-                                                  3                                                  92 
-                                 Betaproteobacteria                                      Bicaudaviridae 
-                                                407                                                   4 
-                                              Birds                                        Birnaviridae 
-                                                 54                                                   8 
-                                     Blastocatellia                                        Bornaviridae 
-                                                  1                                                   5 
-                                       Bromoviridae                                       Caliciviridae 
-                                                 35                                                  26 
-                               Candidatus Kryptonia                            Candidatus Micrarchaeota 
-                                                  3                                                   1 
-                           Candidatus Tectomicrobia                                   Carmotetraviridae 
-                                                  1                                                   1 
-                                     Caulimoviridae Cherry leaf scorch small circular viroid-like RNA 1 
-                                                 67                                                   1 
-              Cherry small circular viroid-like RNA                                          Chlamydiae 
-                                                  1                                                  19 
-                                        Chloroflexi                                       Chrysoviridae 
-                                                 23                                                   9 
-                                       Circoviridae                                     Closteroviridae 
-                                                148                                                  40 
-                                        Cocadviroid                                          Coleviroid 
-                                                  4                                                   6 
-                               Coprothermobacterota                                       Coronaviridae 
-                                                  1                                                  47 
-                                     Corticoviridae                                       Crenarchaeota 
-                                                  1                                                   9 
-                Cyanobacteria/Melainabacteria group                                        Cystoviridae 
-                                                 22                                                   5 
-                                Deinococcus-Thermus                          delta/epsilon subdivisions 
-                                                 23                                                 142 
-                                  Deltaflexiviridae                                     Dicistroviridae 
-                                                  1                                                  27 
-                                          Elaviroid                                        Endomicrobia 
-                                                  1                                                   2 
-                                     Endornaviridae                                       Fibrobacteres 
-                                                 29                                                   2 
-                                        Filoviridae                                         Fimoviridae 
-                                                  7                                                   6 
-                                         Firmicutes                                              Fishes 
-                                               1378                                                  52 
-                                          Flatworms                                        Flaviviridae 
-                                                  4                                                 107 
-                                      Fusariviridae                                      Fuselloviridae 
-                                                  7                                                  10 
-                                      Fusobacteriia                                   Gammaflexiviridae 
-                                                 20                                                   1 
-                                Gammaproteobacteria                                       Geminiviridae 
-                                               1285                                                 406 
-                                   Gemmatimonadetes                                       Genomoviridae 
-                                                  2                                                  62 
-                                     Globuloviridae                             Grapevine latent viroid 
-                                                  2                                                   1 
-                                        Green Algae                                        Guttaviridae 
-                                                  8                                                   1 
-                                       Halobacteria                                        Hantaviridae 
-                                                 80                                                  24 
-                                     Hepadnaviridae                                         Hepeviridae 
-                                                 16                                                   3 
-                                      Herpesviridae                                         Hostuviroid 
-                                                 72                                                   2 
-                                  Hydrogenophilalia                                         Hypoviridae 
-                                                  1                                                  15 
-                                     Hytrosaviridae                                         Iflaviridae 
-                                                  2                                                  34 
-                                         Inoviridae                                             Insects 
-                                                 42                                                 110 
-                                       Iridoviridae                                        Kinetoplasts 
-                                                 20                                                   5 
-                                 Kiritimatiellaeota                                         Land Plants 
-                                                  1                                                  80 
-                                      Lavidaviridae                                       Lentisphaerae 
-                                                  2                                                   1 
-                                        Leviviridae                                    Lipothrixviridae 
-                                                 11                                                   8 
-                                       Luteoviridae                                 Malacoherpesviridae 
-                                                 48                                                   2 
-                                            Mammals                                        Marnaviridae 
-                                                100                                                   1 
-                                   Marseilleviridae                                    Megabirnaviridae 
-                                                  6                                                   3 
-                                      Mesoniviridae                                     Methanobacteria 
-                                                  7                                                  18 
-                                       Methanococci                                     Methanomicrobia 
-                                                  2                                                  21 
-                              Methanonatronarchaeia                                        Microviridae 
-                                                  1                                                  42 
-                                        Mimiviridae           Mulberry small circular viroid-like RNA 1 
-                                                  5                                                   1 
-                                      Mymonaviridae                                          Myoviridae 
-                                                  1                                                 516 
-                                       Nairoviridae                                         Nanoviridae 
-                                                 13                                                   8 
-                                       Narnaviridae                                         Nimaviridae 
-                                                 39                                                   1 
-                                         Nitrospira                                         Nodaviridae 
-                                                 10                                                  15 
-                                        Nudiviridae                                        Nyamiviridae 
-                                                  5                                                   4 
-                                        Oligoflexia                                    Orthomyxoviridae 
-                                                  3                                                   6 
-                                              Other                                       Other Animals 
-                                                988                                                  35 
-                                        Other Fungi                                      Other Protists 
-                                                  3                                                  16 
-                                   Papillomaviridae                                     Paramyxoviridae 
-                                                134                                                  54 
-                                     Partitiviridae                                        Parvoviridae 
-                                                 55                                                  90 
-                                       Pelamoviroid                                    Peribunyaviridae 
-                                                  2                                                  32 
-                                Permutotetraviridae                                    Persimmon viroid 
-                                                  1                                                   1 
-                                      Phasmaviridae                                       Phenuiviridae 
-                                                  4                                                  28 
-                                    Phycodnaviridae                                    Picobirnaviridae 
-                                                 26                                                   5 
-                                     Picornaviridae                                        Pithoviridae 
-                                                104                                                   2 
-                                     Planctomycetes                                       Plasmaviridae 
-                                                 18                                                   1 
-                                    Pleolipoviridae                                       Pneumoviridae 
-                                                  8                                                   7 
-                                        Podoviridae                                     Polycipiviridae 
-                                                343                                                   6 
-                                     Polydnaviridae                                      Polyomaviridae 
-                                                  5                                                  83 
-                                        Pospiviroid                                         Potyviridae 
-                                                 11                                                 146 
-                                         Poxviridae                                       Quadriviridae 
-                                                 47                                                   1 
-                                         Reoviridae                                            Reptiles 
-                                                 67                                                  11 
-                                       Retroviridae                                       Rhabdoviridae 
-                                                 52                                                 150 
-                                       Rhodothermia                                         Roniviridae 
-                                                  4                                                   1 
-                                         Roundworms                            Rubber viroid India/2009 
-                                                  8                                                   1 
-                                        Rudiviridae                                         Secoviridae 
-                                                 15                                                  53 
-                                       Siphoviridae                                       Solemoviridae 
-                                               1061                                                  20 
-                                       Solibacteres                                      Solinviviridae 
-                                                  3                                                   2 
-                                 Sphaerolipoviridae                                        Spirochaetia 
-                                                  7                                                  39 
-                                         Sunviridae                                         Synergistia 
-                                                  1                                                   4 
-                                       Tectiviridae                                         Tenericutes 
-                                                  5                                                  69 
-                                     Thaumarchaeota                                         Thermococci 
-                                                  8                                                  19 
-                              Thermodesulfobacteria                                      Thermoplasmata 
-                                                  4                                                   7 
-                                        Thermotogae                                         Togaviridae 
-                                                 10                                                  24 
-                                 Tolecusatellitidae                                       Tombusviridae 
-                                                101                                                  68 
-                                       Tospoviridae                                         Totiviridae 
-                                                 17                                                  66 
-                                   Tristromaviridae                                        Turriviridae 
-                                                  1                                                   2 
-                                        Tymoviridae                                        unclassified 
-                                                 37                                                 606 
-                         unclassified Acidobacteria               unclassified Bacteria (miscellaneous) 
-                                                  1                                                  13 
-                           unclassified Nitrospirae                         unclassified Proteobacteria 
-                                                  1                                                   2 
-                                    Verrucomicrobia                                        Virgaviridae 
-                                                 25                                                  52 
-                                 Zetaproteobacteria 
-                                                  5 
+ Abditibacteriota 
+                                               1 
+                               Acidithiobacillia 
+                                               8 
+                                  Acidobacteriia 
+                                              22 
+                                Ackermannviridae 
+                                              65 
+                                  Actinobacteria 
+                                            2640 
+                                    Adenoviridae 
+                                              64 
+                                    Adomaviridae 
+                                               2 
+                                    Aliusviridae 
+                                               2 
+                               Alloherpesviridae 
+                                              13 
+                               Alphaflexiviridae 
+                                              62 
+                             Alphaproteobacteria 
+                                            1762 
+  ...
 ```
 
 Example `genbank`:
@@ -938,9 +776,7 @@ listGroups(db = "genbank")
                                      41 
 ```
 
-__Note__ that when running the `listGenomes()` function for the first time, it might take a while until
-the function returns any results, because necessary information need to be downloaded from NCBI and ENSEMBL databases. All subsequent executions of `listGenomes()`
-will then respond very fast, because they will access the corresponding files stored on your hard drive.
+> **__Note__** that when running the `listGenomes()` function for the first time, it might take a while until the function returns any results, because necessary information need to be downloaded from NCBI and ENSEMBL databases. All subsequent executions of `listGenomes()` will then respond very fast, because they will access the corresponding files stored on your hard drive.
 
 ## Downloading Biological Sequences and Annotations
 
@@ -2567,8 +2403,7 @@ Collection retrieval finished successfully!
 We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
 ```
 
-Users can now simply attach the output folder `` as supplementary data in their study and state in the materials sections. This way, computational and biological reproducibility can be standardized and indeed will become trivial
-in the context of genome version and annotation version.
+> Users can now simply attach the output folder as supplementary data in their study and state in the materials sections. This way, computational and biological reproducibility can be standardized and indeed will become trivial in the context of genome version and annotation version.
 
 
 
