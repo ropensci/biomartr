@@ -66,7 +66,7 @@ Please use `tibble::as_tibble()` instead. -> adjusted `organismBM()` accordingly
 
 - Fixing an issue in `custom_download()` where the `method` argument was causing issues when downloading from `https` directed `ftp` sites (Many thanks to @cmatKhan) #76 
 
-
+- Fixing issue when trying to combine multiple summary-stats files where NA's were present in the list item that was passed along for combination in `meta.retrieval()` #73 (Many thanks to Dominik Merges)
 
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
