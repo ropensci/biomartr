@@ -48,7 +48,7 @@ Ath_path <- biomartr::getGFF(organism = "Arabidopsis thaliana", remove_annotatio
 - `tbl_df()` was deprecated in dplyr 1.0.0.
 Please use `tibble::as_tibble()` instead. -> adjusted `organismBM()` accordingly
 
-- `custom_download()`, `getGENOMEREPORT()`, and other download functions now have specified `withr::local_options(timeout = max(30000, getOption("timeout")))` which extends the default 60sec timeout to 30000sec
+- `custom_download()`, `getGENOMEREPORT()`, and other download functions now have specified `withr::local_options(timeout = max(30000000, getOption("timeout")))` which extends the default 60sec timeout to 30000000sec
 
 
 
