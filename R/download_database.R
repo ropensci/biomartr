@@ -29,7 +29,7 @@
 download.database <- function(db, path = "database") {
     # test if internet connection is available
     connected.to.internet()
-  withr::local_options(timeout = max(30000000, getOption("timeout")))
+  withr::local_options(timeout = max(30000000000, getOption("timeout")))
   
     if (!is.element(db, listNCBIDatabases(db = db)))
         stop(

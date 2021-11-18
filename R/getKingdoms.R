@@ -16,7 +16,7 @@
 #' @export
 
 getKingdoms <- function(db = "refseq"){
-  withr::local_options(timeout = max(30000, getOption("timeout")))
+  withr::local_options(timeout = max(30000000, getOption("timeout")))
   
     if (!is.element(db, c("refseq", "genbank","ensembl", "ensemblgenomes")))
         stop("Please select one of the available data bases: 'refseq', 
