@@ -34,7 +34,8 @@ Imports:
     purrr,
     R.utils,
     philentropy,
-    withr
+    withr,
+    fs
 Suggests:
     knitr (>= 1.6),
     rmarkdown (>= 0.3.3),
