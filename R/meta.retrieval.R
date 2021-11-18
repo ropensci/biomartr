@@ -533,6 +533,7 @@ meta.retrieval <- function(db         = "refseq",
                                 type     = "import"
                             )
                         )
+                        names(stats.files[i]) <- FinalOrganisms[i]
                         message("\n")
                     } else {
                         paths[i] <- getAssemblyStats(
@@ -558,6 +559,7 @@ meta.retrieval <- function(db         = "refseq",
                                 type     = "import"
                             )
                         )
+                        names(stats.files[i]) <- FinalOrganisms[i]
                     } else {
                         paths[i] <- getAssemblyStats(
                             db       = db,
@@ -579,6 +581,7 @@ meta.retrieval <- function(db         = "refseq",
             doc_tsv_files <- file.path(path,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+              if (fs::file_size(data) > 0)
                 suppressMessages(readr::read_tsv(data))
             }))
             
@@ -593,6 +596,7 @@ meta.retrieval <- function(db         = "refseq",
             doc_tsv_files <- file.path(kingdom,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+              if (fs::file_size(data) > 0)
                 suppressMessages(readr::read_tsv(data))
             }))
             
@@ -602,7 +606,7 @@ meta.retrieval <- function(db         = "refseq",
         }
         
         if (combine) {
-            stats.files <- dplyr::bind_rows(stats.files)
+            stats.files <- dplyr::bind_rows(na.omit(stats.files))
             message("Finished meta retieval process.")
             return(stats.files)
         }
@@ -619,6 +623,7 @@ meta.retrieval <- function(db         = "refseq",
             doc_tsv_files <- file.path(path,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+              if (fs::file_size(data) > 0)
                 suppressMessages(readr::read_tsv(data))
             }))
             
@@ -633,6 +638,7 @@ meta.retrieval <- function(db         = "refseq",
             doc_tsv_files <- file.path(kingdom,"documentation", meta_files[stringr::str_detect(meta_files, "[.]tsv")])
             
             summary_log <- dplyr::bind_rows(lapply(doc_tsv_files, function(data) {
+              if (fs::file_size(data) > 0)
                 suppressMessages(readr::read_tsv(data))
             }))
             
