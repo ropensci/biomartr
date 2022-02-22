@@ -1,5 +1,4 @@
-
-## biomartr 1.0.2
+# biomartr 1.0.2
 
 ### New Functions
 
