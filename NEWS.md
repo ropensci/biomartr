@@ -68,6 +68,8 @@ Please use `tibble::as_tibble()` instead. -> adjusted `organismBM()` accordingly
 
 - Fixing issue when trying to combine multiple summary-stats files where NA's were present in the list item that was passed along for combination in `meta.retrieval()` #73 (Many thanks to Dominik Merges)
 
+- Fixing a bug in `download.database.all()` where the lack of removing listed file `*-metadata.json` caused corruption of the download process (Many thanks to Jaruwatana Lotharukpong)
+
 [biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
 - minor changes to comply with CRAN policy regarding Internet access failure 
 -> Instead of using warnings or error messages, only gentle messages are allowed to be used
