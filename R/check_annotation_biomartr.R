@@ -1,5 +1,6 @@
 #' @title Check whether an annotation file contains outlier lines
-#' @description Some annotation files include lines with character lengths greater than 65000. This causes problems when trying to import such annotation files into R using \code{\link[rtracklayer]{import}}.
+#' @description Some annotation files include lines with character lengths greater than 65000. 
+#' This causes problems when trying to import such annotation files into R using \code{import}.
 #' To overcome this issue, this function screens for such lines
 #' in a given annotation file and removes these lines so that
 #' \code{import} can handle the file.

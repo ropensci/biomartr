@@ -50,7 +50,7 @@ In detail, `biomartr` automates genome, proteome, CDS, RNA, Repeats, GFF/GTF (an
 - [ENSEMBLGENOMES](http://ensemblgenomes.org) (as of April 2019 - `ENSEMBL` and `ENSEMBLGENOMES` were joined - see [details here](https://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/))
 - [UniProt](https://www.uniprot.org)
 
-Furthermore, an interface to the `Ensembl Biomart` database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd) such as 
+Furthermore, an interface to the `Ensembl Biomart` database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can [download entire databases](https://docs.ropensci.org/biomartr/articles/Database_Retrieval.html) such as 
 
 - `NCBI RefSeq` 
 - `NCBI nr` 
@@ -93,7 +93,7 @@ BiocManager::install("biomaRt")
 Now users can install `biomartr` from CRAN:
 
 ```r
-# install biomartr 0.9.2
+# install biomartr 1.0.2
 install.packages("biomartr", dependencies = TRUE)
 ```
 
@@ -321,10 +321,6 @@ devtools::install_github("HajkD/biomartr", build_vignettes = TRUE, dependencies 
 # and then call it from the library
 library("biomartr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 ```
-
-### Troubleshooting on Windows Machines
-
-- Install `biomartr` on a Win 8 laptop: [solution](https://github.com/drostlab/orthologr/issues/1) ( Thanks to Andres Romanowski )
 
 # Code of conduct
 
