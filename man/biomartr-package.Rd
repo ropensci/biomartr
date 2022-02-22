@@ -39,6 +39,6 @@ such as
 }
 
 \author{
-Hajk-Georg Drost \email{hgd23@cam.ac.uk}
+Hajk-Georg Drost \email{hajk-georg.drost@tuebingen.mpg.de}
 }
 \keyword{package}
