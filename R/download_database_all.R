@@ -24,6 +24,7 @@
 download.database.all <- function(db, path = NULL) {
     
     db_chunks <- listNCBIDatabases(db = db)
+    db_chunks <- db_chunks[-which(stringr::str_detect(db_chunks, "[.]json"))]
     
     message("Starting download of the files: ",
             paste0(db_chunks, collapse = ", "),
