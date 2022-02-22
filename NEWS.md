@@ -69,7 +69,7 @@ Please use `tibble::as_tibble()` instead. -> adjusted `organismBM()` accordingly
 
 - Fixing a bug in `download.database.all()` where the lack of removing listed file `*-metadata.json` caused corruption of the download process (Many thanks to Jaruwatana Lotharukpong)
 
-[biomartr 0.9.2](https://github.com/ropensci/biomartr/releases/tag/v0.9.1)
+biomartr 0.9.2
 - minor changes to comply with CRAN policy regarding Internet access failure 
 -> Instead of using warnings or error messages, only gentle messages are allowed to be used
 
@@ -79,7 +79,7 @@ Please use `tibble::as_tibble()` instead. -> adjusted `organismBM()` accordingly
 ===========
 
 __Please be aware that as of April 2019, ENSEMBLGENOMES
-was retired ([see details here](http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/)). Hence, all `biomartr` functions were updated
+was retired ([see details here](https://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/)). Hence, all `biomartr` functions were updated
 and won't support data retrieval from `ENSEMBLGENOMES` servers anymore.__
 
 ### New Functions
@@ -133,14 +133,13 @@ protein sequences, gff files, etc for a particular species
 
 ### New Functionality of Existing Functions 
 
-- `getProteome()` can now retrieve proteomes from the [UniProt](http://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`.
-An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-retrieval-uniprot)
+- `getProteome()` can now retrieve proteomes from the [UniProt](https://www.uniprot.org/) database by specifying `getProteome(db = "uniprot")`.
 
 - `is.genome.available()` now prints out more useful interactive messages when searching for available organisms 
 
 - `is.genome.available()` can now handle `taxids` and `assembly_accession ids` in addition to the scientific name when
 specifying argument `organism`
-An example can be found [here](https://github.com/ropensci/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd#example-ncbi-refseq)
+
 
 - `is.genome.available()` can now check for organism availability in the UniProt database
 
@@ -195,7 +194,7 @@ biomartr 0.5.1
 
 ### Bug fixes
 
-- fixing a bug in `exists.ftp.file()` and `getENSEMBLGENOMES.Seq()` that caused bacterial genome, proteome, etc retrieval to fail due to the wrong construction of a query ftp request https://github.com/HajkD/biomartr/issues/7
+- fixing a bug in `exists.ftp.file()` and `getENSEMBLGENOMES.Seq()` that caused bacterial genome, proteome, etc retrieval to fail due to the wrong construction of a query ftp request https://github.com/ropensci/biomartr/issues/7
 (Many thanks to @dbsseven)
 
 - fix a major bug in which organisms having no representative genome would generate NULL paths that subsequently crashed the `meta.retrieval()` function when it tried to print out the result paths.
@@ -247,7 +246,7 @@ biomartr 0.4.0
 
 ### Bug fixes
 
-- fixing a major bug https://github.com/HajkD/biomartr/issues/6 that caused that in all `get*()` (genome, proteome, gff, etc.) and `meta.retrieval*()` functions
+- fixing a major bug https://github.com/ropensci/biomartr/issues/6 that caused that in all `get*()` (genome, proteome, gff, etc.) and `meta.retrieval*()` functions
  the meta retrieval process errored and terminated whenever NCBI or ENSEMBL didn't
 store all types of sequences for a particular organism: genome, proteome, cds, etc. This has been fixed now and function calls
 such as `meta.retrieval(kingdom = "bacteria", db = "genbank", type = "proteome")` should work properly now (Thanks to @ARamesh123 for making me aware if this bug). Hence, this bug affected all attempts to download all proteome sequences e.g. for bacteria and viruses, because NCBI does not store genome AND proteome information for all bacterial or viral species. 
@@ -291,15 +290,15 @@ biomartr 0.3.0
 
 ### Bug fixes
 
-- Fixing a bug https://github.com/HajkD/biomartr/issues/2 based on the [readr package](https://github.com/tidyverse/readr) that affected the `getSummaryFile()`, `getKingdomAssemblySummary()`, `getMetaGenomeSummary()`,
+- Fixing a bug https://github.com/ropensci/biomartr/issues/2 based on the [readr package](https://github.com/tidyverse/readr) that affected the `getSummaryFile()`, `getKingdomAssemblySummary()`, `getMetaGenomeSummary()`,
 `getENSEMBL.Seq()` and `getENSEMBLGENOMES.Seq()` functions causing quoted lines in the `assembly_summary.txt` to be omitted when reading these files. This artefact caused that e.g. instead of information of 80,000 Bacteria genomes only 40,000 (which non-quotations) were read (Thanks to [Xin Wu](https://github.com/alartin)).
 
 
 biomartr 0.2.1
 ===========
 
-In this version of `biomartr` the `organism*()` functions were adapted to the new [ENSEMBL 87 release](http://www.ensembl.info/blog/2016/12/08/ensembl-87-has-been-released/)
-in which organism name specification in the Biomart description column [was changed](https://github.com/HajkD/biomartr/issues/1)
+In this version of `biomartr` the `organism*()` functions were adapted to the new [ENSEMBL 87 release](https://www.ensembl.info/2016/12/08/ensembl-87-has-been-released/)
+in which organism name specification in the Biomart description column [was changed](https://github.com/ropensci/biomartr/issues/1)
 from a scientific name convention to a mix of common name and scientific name convention.
 
 - all `organism*()` functions have been adapted to the new ENSEMBL 87 release organism name notation that is used in the Biomart description
@@ -310,7 +309,7 @@ biomartr 0.2.0
 ===========
 
 In this version, `biomartr` was extended to now retrieve genome, proteome, CDS, GFF and meta-genome data
-also from [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/).
+also from [ENSEMBL](https://www.ensembl.org/index.html) and [ENSEMLGENOMES](https://ensemblgenomes.org/).
 Furthermore, all NCBI retrieval functions were updated to the new server folder structure standards of NCBI.
 
 
@@ -367,7 +366,7 @@ into one big data.frame
 
 ### Function changes
 
-- functions `getGenome()`, `getProteome()`, and `getCDS()` now can also in addition to NCBI retrieve genomes, proteomes or CDS from  [ENSEMBL](http://www.ensembl.org/index.html) and [ENSEMLGENOMES](http://ensemblgenomes.org/)
+- functions `getGenome()`, `getProteome()`, and `getCDS()` now can also in addition to NCBI retrieve genomes, proteomes or CDS from  [ENSEMBL](https://www.ensembl.org/index.html) and [ENSEMLGENOMES](https://ensemblgenomes.org/)
 
 - the functions `getGenome()`, `getProteome()`, and `getCDS()` were completely re-written and now use the assembly_summary.txt files
 provided by NCBI to retrieve the download path to the corresponding genome. Furthermore, these functions now lost the `kingdom` argument.

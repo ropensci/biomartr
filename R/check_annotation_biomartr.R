@@ -2,8 +2,8 @@
 #' @description Some annotation files include lines with character lengths greater than 65000. This causes problems when trying to import such annotation files into R using \code{\link[rtracklayer]{import}}.
 #' To overcome this issue, this function screens for such lines
 #' in a given annotation file and removes these lines so that
-#' \code{\link[rtracklayer]{import}} can handle the file.
-#' @param annotation_file a file path tp the annotation file.
+#' \code{import} can handle the file.
+#' @param annotation_file a file path to the annotation file.
 #' @param remove_annotation_outliers shall outlier lines be removed from the input \code{annotation_file}? 
 #' If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
 #' for further exploration.

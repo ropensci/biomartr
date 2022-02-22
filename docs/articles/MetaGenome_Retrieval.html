@@ -186,7 +186,7 @@
 <h4 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting Started</h4>
 <p>The <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> functions aim to simplify the genome retrieval and computational reproducibility process for meta-genomics studies. Both functions allow users to either download genomes, proteomes, CDS, etc for species within a specific kingdom or subgroup of life (<code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code>) or of all species of all kingdoms (<code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code>). Before <code>biomartr</code> users had to write <code>shell</code> scripts to download respective genomic data. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing R workflows and for easier reproducibility.</p>
-<p>For example, the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package can be used with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> as follows.</p>
+<p>For example, the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package can be used with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> and <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download all vertebrate genomes, then apply ...</span>
 <span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> <span class="va">...</span></code></pre></div>
@@ -487,7 +487,7 @@ submitter: Genome Reference Consortium</code></pre>
 <h3 class="hasAnchor">
 <a href="#meta-retrieval-of-genome-assembly-quality-information" class="anchor"></a>Meta retrieval of genome assembly quality information</h3>
 <p>Although much effort is invested to increase the genome assembly quality when new genomes are published or new versions are released, the influence of genome assembly quality on downstream analyses cannot be neglected. A rule of thumb is, that the larger the genome the more prone it is to genome assembly errors and therefore, a reduction of assembly quality.</p>
-<p>In <a href="http://www.plantcell.org/content/28/8/1759.short">Veeckman et al., 2016</a> the authors conclude:</p>
+<p>In <a href="https://doi.org/10.1105/tpc.16.00349">Veeckman et al., 2016</a> the authors conclude:</p>
 <blockquote>
 <p>As yet, no uniform metrics or standards are in place to estimate the completeness of a genome assembly or the annotated gene space, despite their importance for downstream analyses</p>
 </blockquote>

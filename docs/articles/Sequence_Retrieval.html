@@ -427,7 +427,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <div id="example-uniprot-is-genome-available" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-uniprot-is-genome-available" class="anchor"></a>Example <code>UniProt</code> (?is.genome.available):</h3>
-<p>Users can also check the availability of proteomes in the <a href="http://www.uniprot.org">UniProt database</a> by specifying:</p>
+<p>Users can also check the availability of proteomes in the <a href="https://www.uniprot.org">UniProt database</a> by specifying:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve information from UniProt</span>
 <span class="fu"><a href="../reference/is.genome.available.html">is.genome.available</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"uniprot"</span>, <span class="st">"Homo sapiens"</span>, details <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
@@ -708,24 +708,24 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <div id="downloading-biological-sequences-and-annotations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#downloading-biological-sequences-and-annotations" class="anchor"></a>Downloading Biological Sequences and Annotations</h2>
-<p>After checking for the availability of sequence information for an organism of interest, the next step is to download the corresponding genome, proteome, CDS, or GFF file. The following functions allow users to download proteomes, genomes, CDS and GFF files from several database resources such as: <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="http://www.ensembl.org/index.html">ENSEMBL</a>. When a corresponding proteome, genome, CDS or GFF file was loaded to your hard-drive, a documentation <code>*.txt</code> file is generated storing <code>File Name</code>, <code>Organism</code>, <code>Database</code>, <code>URL</code>, <code>DATE</code>, <code>assembly_accession</code>, <code>bioproject</code>, <code>biosample</code>, <code>taxid</code>, <code>version_status</code>, <code>release_type</code>, <code>seq_rel_date</code> etc. information of the retrieved file. This way a better reproducibility of proteome, genome, CDS and GFF versions used for subsequent data analyses can be achieved.</p>
+<p>After checking for the availability of sequence information for an organism of interest, the next step is to download the corresponding genome, proteome, CDS, or GFF file. The following functions allow users to download proteomes, genomes, CDS and GFF files from several database resources such as: <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a>. When a corresponding proteome, genome, CDS or GFF file was loaded to your hard-drive, a documentation <code>*.txt</code> file is generated storing <code>File Name</code>, <code>Organism</code>, <code>Database</code>, <code>URL</code>, <code>DATE</code>, <code>assembly_accession</code>, <code>bioproject</code>, <code>biosample</code>, <code>taxid</code>, <code>version_status</code>, <code>release_type</code>, <code>seq_rel_date</code> etc. information of the retrieved file. This way a better reproducibility of proteome, genome, CDS and GFF versions used for subsequent data analyses can be achieved.</p>
 <div id="genome-retrieval" class="section level3">
 <h3 class="hasAnchor">
 <a href="#genome-retrieval" class="anchor"></a>Genome Retrieval</h3>
 <p>The easiest way to download a genome is to use the <code><a href="../reference/getGenome.html">getGenome()</a></code> function.</p>
 <p>In this example we will download the genome of <code>Homo sapiens</code>.</p>
-<p>The <code><a href="../reference/getGenome.html">getGenome()</a></code> function is an interface function to the <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="http://www.ensembl.org/index.html">ENSEMBL</a> databases from which corresponding genomes can be retrieved.</p>
+<p>The <code><a href="../reference/getGenome.html">getGenome()</a></code> function is an interface function to the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a> databases from which corresponding genomes can be retrieved.</p>
 <p>The <code>db</code> argument specifies from which database genome assemblies in <code>*.fasta</code> file format shall be retrieved.</p>
 <p>Options are:</p>
 <ul>
 <li>
-<code>db = "refseq"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
+<code>db = "refseq"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
 </li>
 <li>
-<code>db = "genbank"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
+<code>db = "genbank"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
 </li>
 <li>
-<code>db = "ensembl"</code> for retrieval from <a href="http://www.ensembl.org/index.html">ENSEMBL</a>
+<code>db = "ensembl"</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a>
 </li>
 </ul>
 <p>Furthermore, users need to specify the <code>scientific name</code>, the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a> identifier), or the <code>accession identifier</code> of the organism of interest for which a genome assembly shall be downloaded, e.g. <code>organism = "Homo sapiens"</code> or <code>organism = "9606"</code> or <code>organism = "GCF_000001405.37"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding assembly shall be locally stored. In case users would like to store the genome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument (e.g. <code>file.path("_ncbi_downloads","genomes")</code>).</p>
@@ -746,7 +746,7 @@ More than one entry was found for 'Homo sapiens'. Please consider to run the fun
 <span class="co"># and store the corresponding genome file in '_ncbi_downloads/genomes'</span>
 <span class="va">HS.genome.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getGenome.html">getGenome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
-<p>Subsequently, users can use the <code><a href="../reference/read_genome.html">read_genome()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_genome.html">read_genome()</a></code> function.</p>
+<p>Subsequently, users can use the <code><a href="../reference/read_genome.html">read_genome()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_genome.html">read_genome()</a></code> function.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded genome as Biostrings object</span>
 <span class="va">Human_Genome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_genome.html">read_genome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.genome.refseq</span><span class="op">)</span></code></pre></div>
@@ -797,7 +797,7 @@ submitter: Genome Reference Consortium</code></pre>
 <li><p><code>rel_gc</code>: The (relative frequency) of GCs (over all chromosomes or scaffolds or contigs) compared to the total number of nucleotides in the genome assembly file</p></li>
 </ul>
 <p>In summary, the <code><a href="../reference/getGenome.html">getGenome()</a></code> and <code><a href="../reference/read_genome.html">read_genome()</a></code> functions allow users to retrieve genome assemblies by specifying the scientific name of the organism of interest and allow them to import the retrieved genome assembly e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded genomes and can rely on the log file generated by <code><a href="../reference/getGenome.html">getGenome()</a></code> to better document the source and version of genome assemblies used for subsequent studies.</p>
-<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
@@ -1092,21 +1092,21 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="proteome-retrieval" class="section level3">
 <h3 class="hasAnchor">
 <a href="#proteome-retrieval" class="anchor"></a>Proteome Retrieval</h3>
-<p>The <code><a href="../reference/getProteome.html">getProteome()</a></code> function is an interface function to the <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="http://www.ensembl.org/index.html">ENSEMBL</a>, and <a href="http://uniprot.org/">UniProt</a> databases from which corresponding proteomes can be retrieved. It works analogous to <code><a href="../reference/getGenome.html">getGenome()</a></code>.</p>
+<p>The <code><a href="../reference/getProteome.html">getProteome()</a></code> function is an interface function to the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a>, and <a href="https://www.uniprot.org/">UniProt</a> databases from which corresponding proteomes can be retrieved. It works analogous to <code><a href="../reference/getGenome.html">getGenome()</a></code>.</p>
 <p>The <code>db</code> argument specifies from which database proteomes in <code>*.fasta</code> file format shall be retrieved.</p>
 <p>Options are:</p>
 <ul>
 <li>
-<code>db = "refseq"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
+<code>db = "refseq"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
 </li>
 <li>
-<code>db = "genbank"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
+<code>db = "genbank"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
 </li>
 <li>
-<code>db = "ensembl"</code> for retrieval from <a href="http://www.ensembl.org/index.html">ENSEMBL</a>
+<code>db = "ensembl"</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a>
 </li>
 <li>
-<code>db = "uniprot"</code> for retrieval from <a href="http://uniprot.org/">UniProt</a>
+<code>db = "uniprot"</code> for retrieval from <a href="https://www.uniprot.org/">UniProt</a>
 </li>
 </ul>
 <p>Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. <code>organism = "Homo sapiens"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding proteome shall be locally stored. In case users would like to store the proteome file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument.</p>
@@ -1120,7 +1120,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="va">HS.proteome.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getProteome.html">getProteome</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                                    organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                                    path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"proteomes"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>In this example, <code><a href="../reference/getProteome.html">getProteome()</a></code> creates a directory named <code>'_ncbi_downloads/proteomes'</code> into which the corresponding genome named <code>GCF_000001405.34_GRCh38.p8_protein.faa.gz</code> is downloaded. The return value of <code><a href="../reference/getProteome.html">getProteome()</a></code> is the folder path to the downloaded proteome file that can then be used as input to the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function. The variable <code>HS.proteome.refseq</code> stores the path to the downloaded proteome. Subsequently, users can use the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function to import the proteome into the R session. Users can choose to work with the proteome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function.</p>
+<p>In this example, <code><a href="../reference/getProteome.html">getProteome()</a></code> creates a directory named <code>'_ncbi_downloads/proteomes'</code> into which the corresponding genome named <code>GCF_000001405.34_GRCh38.p8_protein.faa.gz</code> is downloaded. The return value of <code><a href="../reference/getProteome.html">getProteome()</a></code> is the folder path to the downloaded proteome file that can then be used as input to the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function. The variable <code>HS.proteome.refseq</code> stores the path to the downloaded proteome. Subsequently, users can use the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function to import the proteome into the R session. Users can choose to work with the proteome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_proteome.html">read_proteome()</a></code> function.</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import proteome as Biostrings object</span>
 <span class="va">Human_Proteome</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_proteome.html">read_proteome</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">HS.proteome.refseq</span><span class="op">)</span></code></pre></div>
@@ -1139,7 +1139,7 @@ submitter: Genome Reference Consortium</code></pre>
 [113618]   603 MTMHTTMTTLTLT...FFPLILTLLLIT YP_003024036.1 NA...
 [113619]   174 MMYALFLLSVGLV...GVYIVIEIARGN YP_003024037.1 NA...
 [113620]   380 MTPMRKTNPLMKL...ISLIENKMLKWA YP_003024038.1 cy...</code></pre>
-<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
@@ -1224,7 +1224,7 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="example-retrieval-uniprot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-retrieval-uniprot" class="anchor"></a>Example Retrieval <code>Uniprot</code>:</h3>
-<p>Another way of retrieving proteome sequences is from the <a href="http://www.uniprot.org/">UniProt</a> database.</p>
+<p>Another way of retrieving proteome sequences is from the <a href="https://www.uniprot.org/">UniProt</a> database.</p>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the proteome of Mus musculus from UniProt</span>
 <span class="co"># and store the corresponding proteome file in '_uniprot_downloads/proteomes'</span>
@@ -1267,18 +1267,18 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="cds-retrieval" class="section level3">
 <h3 class="hasAnchor">
 <a href="#cds-retrieval" class="anchor"></a>CDS Retrieval</h3>
-<p>The <code><a href="../reference/getCDS.html">getCDS()</a></code> function is an interface function to the <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="http://www.ensembl.org/index.html">ENSEMBL</a> databases from which corresponding CDS files can be retrieved. It works analogous to <code><a href="../reference/getGenome.html">getGenome()</a></code> and <code><a href="../reference/getProteome.html">getProteome()</a></code>.</p>
+<p>The <code><a href="../reference/getCDS.html">getCDS()</a></code> function is an interface function to the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a> databases from which corresponding CDS files can be retrieved. It works analogous to <code><a href="../reference/getGenome.html">getGenome()</a></code> and <code><a href="../reference/getProteome.html">getProteome()</a></code>.</p>
 <p>The <code>db</code> argument specifies from which database proteomes in <code>*.fasta</code> file format shall be retrieved.</p>
 <p>Options are:</p>
 <ul>
 <li>
-<code>db = "refseq"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
+<code>db = "refseq"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
 </li>
 <li>
-<code>db = "genbank"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
+<code>db = "genbank"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
 </li>
 <li>
-<code>db = "ensembl"</code> for retrieval from <a href="http://www.ensembl.org/index.html">ENSEMBL</a>
+<code>db = "ensembl"</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a>
 </li>
 </ul>
 <p>Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. <code>organism = "Homo sapiens"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding CDS file shall be locally stored. In case users would like to store the CDS file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument.</p>
@@ -1292,7 +1292,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="va">HS.cds.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCDS.html">getCDS</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"CDS"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>In this example, <code><a href="../reference/getCDS.html">getCDS()</a></code> creates a directory named <code>'_ncbi_downloads/CDS'</code> into which the corresponding genome named <code>Homo_sapiens_cds_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getCDS.html">getCDS()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_cds.html">read_cds()</a></code> function. The variable <code>HS.cds.refseq</code> stores the path to the downloaded CDS file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_cds.html">read_cds()</a></code> function.</p>
+<p>In this example, <code><a href="../reference/getCDS.html">getCDS()</a></code> creates a directory named <code>'_ncbi_downloads/CDS'</code> into which the corresponding genome named <code>Homo_sapiens_cds_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getCDS.html">getCDS()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_cds.html">read_cds()</a></code> function. The variable <code>HS.cds.refseq</code> stores the path to the downloaded CDS file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_cds.html">read_cds()</a></code> function.</p>
 <div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded CDS as Biostrings object</span>
 <span class="va">Human_CDS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cds.html">read_cds</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.cds.refseq</span>, 
@@ -1332,7 +1332,7 @@ genome_rep: Full
 seq_rel_date: 2016-09-26
 submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getCDS.html">getCDS()</a></code> and <code><a href="../reference/read_cds.html">read_cds()</a></code> functions allow users to retrieve CDS files by specifying the scientific name of the organism of interest and allow them to import the retrieved CDS file e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded CDS and can rely on the log file generated by <code><a href="../reference/getCDS.html">getCDS()</a></code> to better document the source and version of CDS used for subsequent studies.</p>
-<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
@@ -1435,18 +1435,18 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="rna-retrieval" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rna-retrieval" class="anchor"></a>RNA Retrieval</h3>
-<p>The <code><a href="../reference/getRNA.html">getRNA()</a></code> function is an interface function to the <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="http://www.ensembl.org/index.html">ENSEMBL</a> databases from which corresponding RNA files can be retrieved. It works analogous to <code><a href="../reference/getGenome.html">getGenome()</a></code>, <code><a href="../reference/getProteome.html">getProteome()</a></code>, and <code><a href="../reference/getCDS.html">getCDS()</a></code>.</p>
+<p>The <code><a href="../reference/getRNA.html">getRNA()</a></code> function is an interface function to the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a> databases from which corresponding RNA files can be retrieved. It works analogous to <code><a href="../reference/getGenome.html">getGenome()</a></code>, <code><a href="../reference/getProteome.html">getProteome()</a></code>, and <code><a href="../reference/getCDS.html">getCDS()</a></code>.</p>
 <p>The <code>db</code> argument specifies from which database proteomes in <code>*.fasta</code> file format shall be retrieved.</p>
 <p>Options are:</p>
 <ul>
 <li>
-<code>db = "refseq"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
+<code>db = "refseq"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>
 </li>
 <li>
-<code>db = "genbank"</code> for retrieval from <a href="http://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
+<code>db = "genbank"</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>
 </li>
 <li>
-<code>db = "ensembl"</code> for retrieval from <a href="http://www.ensembl.org/index.html">ENSEMBL</a>
+<code>db = "ensembl"</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a>
 </li>
 </ul>
 <p>Furthermore, again users need to specify the scientific name of the organism of interest for which a proteomes shall be downloaded, e.g. <code>organism = "Homo sapiens"</code>. Finally, the <code>path</code> argument specifies the folder path in which the corresponding RNA file shall be locally stored. In case users would like to store the RNA file at a different location, they can specify the <code>path = file.path("put","your","path","here")</code> argument.</p>
@@ -1460,7 +1460,7 @@ submitter: Genome Reference Consortium</code></pre>
 <span class="va">HS.rna.refseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getRNA.html">getRNA</a></span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>, 
                          organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
                          path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>,<span class="st">"RNA"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>In this example, <code><a href="../reference/getRNA.html">getRNA()</a></code> creates a directory named <code>'_ncbi_downloads/RNA'</code> into which the corresponding RNA file named <code>Homo_sapiens_rna_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getRNA.html">getRNA()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_rna.html">read_rna()</a></code> function. The variable <code>HS.rna.refseq</code> stores the path to the downloaded RNA file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="http://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_rna.html">read_rna()</a></code> function.</p>
+<p>In this example, <code><a href="../reference/getRNA.html">getRNA()</a></code> creates a directory named <code>'_ncbi_downloads/RNA'</code> into which the corresponding RNA file named <code>Homo_sapiens_rna_from_genomic_refseq.fna.gz</code> is downloaded. The return value of <code><a href="../reference/getRNA.html">getRNA()</a></code> is the folder path to the downloaded genome file that can then be used as input to the <code><a href="../reference/read_rna.html">read_rna()</a></code> function. The variable <code>HS.rna.refseq</code> stores the path to the downloaded RNA file. Subsequently, users can use the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to import the genome into the R session. Users can choose to work with the genome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a> object (<code>obj.type = "Biostrings"</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> object (<code>obj.type = "data.table"</code>) by specifying the <code>obj.type</code> argument of the <code><a href="../reference/read_rna.html">read_rna()</a></code> function.</p>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import downloaded RNA as Biostrings object</span>
 <span class="va">Human_rna</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_rna.html">read_rna</a></span><span class="op">(</span>file     <span class="op">=</span> <span class="va">HS.rna.refseq</span>, 
@@ -1499,7 +1499,7 @@ genome_rep: Full
 seq_rel_date: 2017-01-06
 submitter: Genome Reference Consortium</code></pre>
 <p>In summary, the <code><a href="../reference/getRNA.html">getRNA()</a></code> and <code><a href="../reference/read_rna.html">read_rna()</a></code> functions allow users to retrieve RNA files by specifying the scientific name of the organism of interest and allow them to import the retrieved RNA file e.g. as <code>Biostrings</code> object. Thus, users can then perform the <code>Biostrings notation</code> to work with downloaded RNA and can rely on the log file generated by <code><a href="../reference/getRNA.html">getRNA()</a></code> to better document the source and version of RNA used for subsequent studies.</p>
-<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/smbache/magrittr">magrittr</a> package:</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
@@ -1634,7 +1634,7 @@ submitter: Genome Reference Consortium</code></pre>
 <div id="removing-corrupt-lines-from-downloaded-gff-files" class="section level4">
 <h4 class="hasAnchor">
 <a href="#removing-corrupt-lines-from-downloaded-gff-files" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
-<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This leads to problems when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Ath_path</span> <span class="op">&lt;-</span> <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Arabidopsis thaliana"</span>, remove_annotation_outliers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -1684,7 +1684,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="removing-corrupt-lines-from-downloaded-gff-files-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#removing-corrupt-lines-from-downloaded-gff-files-1" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
-<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This leads to problems when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Ath_path</span> <span class="op">&lt;-</span> <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/getGFF.html">getGFF</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span>,
@@ -1738,7 +1738,7 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <div id="removing-corrupt-lines-from-downloaded-gff-files-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#removing-corrupt-lines-from-downloaded-gff-files-2" class="anchor"></a>Removing corrupt lines from downloaded GFF files</h4>
-<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This leads to problems when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 <p>Alternatively for <code><a href="../reference/getGTF.html">getGTF()</a></code>:</p>
 <div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># download the GTF file of Homo sapiens from ENSEMBL</span>
@@ -1763,13 +1763,13 @@ The outlier lines were stored in a separate file to explore at '/var/folders/3x/
 <span class="co"># retrieve these three species from NCBI RefSeq                       </span>
 <span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/getGFFSet.html">getGFFSet</a></span><span class="op">(</span><span class="st">"refseq"</span>, organisms <span class="op">=</span> <span class="va">download_species</span>, path <span class="op">=</span> <span class="st">"set_gff"</span><span class="op">)</span></code></pre></div>
 <p>If the download process was interrupted, users can re-run the function and it will only download missing genomes. In cases users wish to download everything again and updating existing genomes, they may specify the argument <code>update = TRUE</code>.</p>
-<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This <a href="https://github.com/lawremi/rtracklayer/issues/15">leads to problems</a> when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases include corrupt lines that have more than 65000 characters. This leads to problems when trying to import such annotation files into R. To overcome this issue users can specify the <code>remove_annotation_outliers = TRUE</code> argument to remove such outlier lines and overwrite the downloaded annotation file. This will make any downstream analysis with this annotation file much more reliable.</p>
 </div>
 </div>
 <div id="repeat-masker-retrieval" class="section level2">
 <h2 class="hasAnchor">
 <a href="#repeat-masker-retrieval" class="anchor"></a>Repeat Masker Retrieval</h2>
-<p><a href="http://www.repeatmasker.org">Repeat Masker</a> is a tool for screening DNA sequences for interspersed repeats and low complexity DNA sequences. NCBI stores the <code>Repeat Masker</code> for sevel species in their databases and can be retrieved using <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> and imported via <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
+<p><a href="https://www.repeatmasker.org">Repeat Masker</a> is a tool for screening DNA sequences for interspersed repeats and low complexity DNA sequences. NCBI stores the <code>Repeat Masker</code> for sevel species in their databases and can be retrieved using <code><a href="../reference/getRepeatMasker.html">getRepeatMasker()</a></code> and imported via <code><a href="../reference/read_rm.html">read_rm()</a></code>.</p>
 <div id="example-ncbi-refseq-5" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-ncbi-refseq-5" class="anchor"></a>Example <code>NCBI RefSeq</code>:</h3>

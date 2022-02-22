@@ -104,6 +104,7 @@
 <div id="biomartr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#biomartr" class="anchor"></a>biomartr</h1></div>
+<!-- badges: start -->
 
 <div id="genomic-data-retrieval-with-r" class="section level2">
 <h2 class="hasAnchor">
@@ -134,10 +135,10 @@
 <li><a href="https://www.ncbi.nlm.nih.gov/genbank/">NCBI Genbank</a></li>
 <li><a href="https://www.ensembl.org/index.html">ENSEMBL</a></li>
 <li>
-<a href="http://ensemblgenomes.org">ENSEMBLGENOMES</a> (as of April 2019 - <code>ENSEMBL</code> and <code>ENSEMBLGENOMES</code> were joined - see <a href="http://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/">details here</a>)</li>
-<li><a href="http://www.uniprot.org">UniProt</a></li>
+<a href="http://ensemblgenomes.org">ENSEMBLGENOMES</a> (as of April 2019 - <code>ENSEMBL</code> and <code>ENSEMBLGENOMES</code> were joined - see <a href="https://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/">details here</a>)</li>
+<li><a href="https://www.uniprot.org">UniProt</a></li>
 </ul>
-<p>Furthermore, an interface to the <code>Ensembl Biomart</code> database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Database_Retrieval.Rmd">download entire databases</a> such as</p>
+<p>Furthermore, an interface to the <code>Ensembl Biomart</code> database allows users to retrieve functional annotation for genomic loci using a novel and organism centric search strategy. In addition, users can <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd">download entire databases</a> such as</p>
 <ul>
 <li><code>NCBI RefSeq</code></li>
 <li><code>NCBI nr</code></li>
@@ -150,7 +151,7 @@
 <div id="similar-work" class="section level3">
 <h3 class="hasAnchor">
 <a href="#similar-work" class="anchor"></a>Similar Work</h3>
-<p>The main difference between the <a href="http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html">BiomaRt</a> package and the <a href="https://docs.ropensci.org/biomartr/">biomartr</a> package is that <code>biomartr</code> extends the <code>functional annotation retrieval</code> procedure of <code>BiomaRt</code> and <strong>in addition</strong> provides useful retrieval functions for genomes, proteomes, coding sequences, gff files, RNA sequences, Repeat Masker annotations files, and functions for the retrieval of entire databases such as <code>NCBI nr</code> etc.</p>
+<p>The main difference between the <a href="https://www.bioconductor.org/packages/release/bioc/html/biomaRt.html">BiomaRt</a> package and the <a href="https://docs.ropensci.org/biomartr/">biomartr</a> package is that <code>biomartr</code> extends the <code>functional annotation retrieval</code> procedure of <code>BiomaRt</code> and <strong>in addition</strong> provides useful retrieval functions for genomes, proteomes, coding sequences, gff files, RNA sequences, Repeat Masker annotations files, and functions for the retrieval of entire databases such as <code>NCBI nr</code> etc.</p>
 <p>Please consult the <a href="https://docs.ropensci.org/biomartr/#tutorials">Tutorials section</a> for more details.</p>
 <p><code>In the context of functional annotation retrieval</code> the <code>biomartr</code> package allows users to screen available marts using only the scientific name of an organism of interest instead of first searching for marts and datasets which support a particular organism of interest (which is required when using the <code>BiomaRt</code> package). Furthermore, <code>biomartr</code> allows you to search for particular topics when searching for attributes and filters. I am aware that the similar naming of the packages is unfortunate, but it arose due to historical reasons (please find a detailed explanation here: <a href="https://github.com/ropensci/biomartr/blob/master/FAQs.md" class="uri">https://github.com/ropensci/biomartr/blob/master/FAQs.md</a> and here <a href="https://github.com/ropensci/biomartr/issues/11">#11</a>).</p>
 <p>I also dedicated <a href="https://docs.ropensci.org/biomartr/articles/Functional_Annotation.html">an entire vignette to compare</a> the <code>BiomaRt</code> and <code>biomartr</code> package functionality in the context of <code>Functional Annotation</code> (where their functionality overlaps which comprises about only 20% of the overall functionality of the biomartr package).</p>
@@ -183,7 +184,7 @@
 <div id="installation-with-bioconda" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation-with-bioconda" class="anchor"></a>Installation with Bioconda</h2>
-<p>With an activated Bioconda channel (see <a href="http://bioconda.github.io/user/install.html#set-up-channels">2. Set up channels</a>), install with:</p>
+<p>With an activated Bioconda channel (see <a href="https://bioconda.github.io/user/install.html#set-up-channels">2. Set up channels</a>), install with:</p>
 <pre><code>conda install r-biomartr</code></pre>
 <p>and update with:</p>
 <pre><code>conda update r-biomartr</code></pre>
@@ -230,13 +231,6 @@ submitter: Saccharomyces Genome Database</code></pre>
 <span class="fu"><a href="reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span></code></pre></div>
 <p>All geneomes are stored in the folder named according to the kingdom. In this case <code>vertebrate_mammalian</code>. Alternatively, users can specify the <code>out.folder</code> argument to define a custom output folder path.</p>
 </div>
-<div id="platforms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#platforms" class="anchor"></a>Platforms</h3>
-<blockquote>
-<p>Find <code>biomartr</code> also at <a href="https://omictools.com/biomartr-tool">OmicTools</a>.</p>
-</blockquote>
-</div>
 <div id="frequently-asked-questions-faqs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#frequently-asked-questions-faqs" class="anchor"></a>Frequently Asked Questions (FAQs)</h3>
@@ -261,10 +255,10 @@ submitter: Saccharomyces Genome Database</code></pre>
 <li><a href="https://docs.ropensci.org/biomartr/articles/Functional_Annotation.html">Functional Annotation</a></li>
 <li><a href="https://docs.ropensci.org/biomartr/articles/BioMart_Examples.html">BioMart Examples</a></li>
 </ul>
-<p>Users can also read the tutorials within (<a href="http://www.rstudio.com/">RStudio</a>) :</p>
+<p>Users can also read the tutorials within (<a href="https://www.rstudio.com/">RStudio</a>) :</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># source the biomartr package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/biomartr">biomartr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/biomartr/">biomartr</a></span><span class="op">)</span>
 
 <span class="co"># look for all tutorials (vignettes) available in the biomartr package</span>
 <span class="co"># this will open your web browser</span>
@@ -446,12 +440,12 @@ submitter: Saccharomyces Genome Database</code></pre>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"HajkD/biomartr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># and then call it from the library</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/biomartr">"biomartr"</a></span>, lib.loc <span class="op">=</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://docs.ropensci.org/biomartr/">"biomartr"</a></span>, lib.loc <span class="op">=</span> <span class="st">"C:/Program Files/R/R-3.1.1/library"</span><span class="op">)</span></code></pre></div>
 <div id="troubleshooting-on-windows-machines" class="section level3">
 <h3 class="hasAnchor">
 <a href="#troubleshooting-on-windows-machines" class="anchor"></a>Troubleshooting on Windows Machines</h3>
 <ul>
-<li>Install <code>biomartr</code> on a Win 8 laptop: <a href="https://github.com/HajkD/orthologr/issues/1">solution</a> ( Thanks to Andres Romanowski )</li>
+<li>Install <code>biomartr</code> on a Win 8 laptop: <a href="https://github.com/drostlab/orthologr/issues/1">solution</a> ( Thanks to Andres Romanowski )</li>
 </ul>
 </div>
 </div>
@@ -498,12 +492,12 @@ submitter: Saccharomyces Genome Database</code></pre>
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ropensci/onboarding/issues/93"><img src="https://badges.ropensci.org/93_status.svg"></a></li>
+<li><a href="https://github.com/ropensci/software-review/issues/93"><img src="https://badges.ropensci.org/93_status.svg"></a></li>
 <li><a href="https://travis-ci.org/ropensci/biomartr"><img src="https://travis-ci.org/ropensci/biomartr.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/biomartr" alt="rstudio mirror downloads"></a></li>
-<li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/grand-total/biomartr" alt="rstudio mirror downloads"></a></li>
+<li><a href="https://github.com/r-hub/cranlogs.app"><img src="https://cranlogs.r-pkg.org/badges/biomartr" alt="rstudio mirror downloads"></a></li>
+<li><a href="https://github.com/r-hub/cranlogs.app"><img src="https://cranlogs.r-pkg.org/badges/grand-total/biomartr" alt="rstudio mirror downloads"></a></li>
 <li><a href="https://academic.oup.com/bioinformatics/article/33/8/1216/2931816"><img src="https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg" alt="Paper link"></a></li>
-<li><a href="http://bioconda.github.io/recipes/r-biomartr/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda"></a></li>
+<li><a href="https://bioconda.github.io/recipes/r-biomartr/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda"></a></li>
 </ul>
 </div>
 </div>

@@ -27,7 +27,7 @@ options(timeout = 300000)
 ## Getting Started
 NCBI stores a variety of specialized database such as [Genbank, RefSeq, Taxonomy, SNP, etc.](https://www.ncbi.nlm.nih.gov/guide/data-software/) on their servers.
 The `download.database()` and `download.database.all()` functions implemented in `biomartr` allows users to download these databases from NCBI.
-This process might be very useful for downstream analyses such as sequence searches with e.g. BLAST. For this purpose see the R package [metablastr](https://github.com/HajkD/metablastr) which aims to seamlessly inegrate `biomartr` based genomic data retrieval with downsteam large-scale BLAST searches.
+This process might be very useful for downstream analyses such as sequence searches with e.g. BLAST. For this purpose see the R package [metablastr](https://github.com/drostlab/metablastr) which aims to seamlessly integrate `biomartr` based genomic data retrieval with downstream large-scale BLAST searches.
 
 * [1. List available NCBI databases with `listNCBIDatabases()`](#ist-available-databases)
 * [2. Download NCBI databases with `download.database.all()`](#download-ncbi-databases)

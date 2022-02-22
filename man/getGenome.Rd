@@ -11,8 +11,7 @@ getGenome(
   release = NULL,
   gunzip = FALSE,
   path = file.path("_ncbi_downloads", "genomes"),
-  assembly_type = "toplevel",
-  kingdom_assembly_summary_file = NULL
+  assembly_type = "toplevel"
 )
 }
 \arguments{

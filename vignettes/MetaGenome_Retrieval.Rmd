@@ -69,7 +69,7 @@ computational and scientific reproducibility of the meta-genomics study at hand.
 
 The `meta.retrieval()` and `meta.retrieval.all()` functions aim to simplify the genome retrieval and computational reproducibility process for meta-genomics studies. Both functions allow users to either download genomes, proteomes, CDS, etc for species within a specific kingdom or subgroup of life (`meta.retrieval()`) or of all species of all kingdoms (`meta.retrieval.all()`). Before `biomartr` users had to write `shell` scripts to download respective genomic data. However, since many meta-genomics packages exist for the R programming language, I implemented this functionality for easy integration into existing R workflows and for easier reproducibility.
 
-For example, the pipeline logic of the [magrittr](https://github.com/smbache/magrittr) package can be used with
+For example, the pipeline logic of the [magrittr](https://github.com/tidyverse/magrittr) package can be used with
 `meta.retrieval()` and `meta.retrieval.all()` as follows.
 
 ```{r,eval=FALSE}
@@ -468,7 +468,7 @@ of genome assembly quality on downstream analyses cannot be neglected.
 A rule of thumb is, that the larger the genome the more prone it is to
 genome assembly errors and therefore, a reduction of assembly quality.
 
-In [Veeckman et al., 2016](http://www.plantcell.org/content/28/8/1759.short) the authors conclude:
+In [Veeckman et al., 2016](https://doi.org/10.1105/tpc.16.00349) the authors conclude:
 
 > As yet, no uniform metrics or standards are in place to estimate the completeness of a genome assembly or
 > the annotated gene space, despite their importance for downstream analyses

@@ -27,24 +27,24 @@ options(timeout = 30000)
 
 ### Getting Started 
 
-The [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart) database enables users to retrieve a vast diversity of annotation data
+The `Ensembl Biomart` database enables users to retrieve a vast diversity of annotation data
 for specific organisms. Initially, Steffen Durinck and Wolfgang Huber provided a powerful interface between
-the R language and [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart) by implementing the R package [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html). 
+the R language and `Ensembl Biomart` by implementing the R package [biomaRt](https://www.bioconductor.org/packages/release/bioc/html/biomaRt.html). 
 
 The purpose of the `biomaRt` package was to mimic the ENSEMBL BioMart database structure to construct queries that can be sent to the Application Programming Interface (API) of BioMart. Although, this procedure was very useful in the past, it seems not intuitive from an organism centric point of view. Usually, users wish to download functional annotation for a particular organism of interest. However, the BioMart and thus the `biomaRt` package require that users already know in which `mart` and  `dataset` the organism of interest will be found which requires significant efforts of searching and screening. In addition, once the  `mart` and  `dataset` of a particular organism of interest were found and specified the user must again learn which `attribute` has to be specified to retrieve the functional annotation information of interest. 
 
 The new functionality implemented in the `biomartr` package aims to overcome this 
-search bottleneck by extending the functionality of the [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package. The new `biomartr` package introduces a more organism cantered annotation retrieval concept which does not require to screen for `marts`, `datasets`, and `attributes` beforehand. With `biomartr` users only need to specify the `scientific name` of the organism of interest to then retrieve available `marts`, `datasets`, and `attributes` for the corresponding organism of interest.   
+search bottleneck by extending the functionality of the [biomaRt](https://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package. The new `biomartr` package introduces a more organism cantered annotation retrieval concept which does not require to screen for `marts`, `datasets`, and `attributes` beforehand. With `biomartr` users only need to specify the `scientific name` of the organism of interest to then retrieve available `marts`, `datasets`, and `attributes` for the corresponding organism of interest.   
 
 This paradigm shift enables users to quickly construct queries to the BioMart database without having to learn the particular database structure and organization of BioMart. 
 
 The following sections will introduce users to the functionality and data retrieval precedures of `biomartr` and will show how `biomartr`
-extends the functionality of the initial [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package.
+extends the functionality of the initial [biomaRt](https://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package.
 
 ### The old `biomaRt` query methodology		
 
-The best way to get started with the _old_ methodology presented by the established [biomaRt](http://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package is to understand the workflow of its data retrieval process. The query logic of the `biomaRt` package derives from the database organization of [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart) which stores a vast diversity of annotation data
-for specific organisms. In detail, the [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart) database is organized into so called:		
+The best way to get started with the _old_ methodology presented by the established [biomaRt](https://www.bioconductor.org/packages/release/bioc/html/biomaRt.html) package is to understand the workflow of its data retrieval process. The query logic of the `biomaRt` package derives from the database organization of `Ensembl Biomart` which stores a vast diversity of annotation data
+for specific organisms. In detail, the `Ensembl Biomart` database is organized into so called:		
  `marts`, `datasets`, and `attributes`. `Marts` denote a higher level category of functional annotation such as `SNP` (e.g. for functional annotation of particular single nucleotide polymorphisms (SNPs)) or `FUNCGEN` (e.g. for functional annotation of regulatory regions or relationsships of genes). `Datasets` denote the
 particular species of interest for which functional annotation is available __within__ this specific `mart`. It can happen that
 `datasets` (= particular species of interest) are available in one `mart` (= higher category of functional annotation) but not in an other `mart`.
@@ -60,7 +60,7 @@ The availability of `marts`, `datasets`, and `attributes` can be checked by the 
 
 ```{r,eval=FALSE}		
 # install the biomaRt package		
-# source("http://bioconductor.org/biocLite.R")		
+# source("https://bioconductor.org/biocLite.R")		
 # biocLite("biomaRt")		
 # load biomaRt		
 library(biomaRt)		
@@ -651,7 +651,7 @@ The `biomart()` function takes as arguments a set of genes (gene ids specified i
 The `biomartr` package also enables a fast and intuitive retrieval of GO terms
 and additional information via the `getGO()` function. Several databases can be selected
 to retrieve GO annotation information for a set of query genes. So far, the `getGO()`
-function allows GO information retrieval from the [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart) database. 
+function allows GO information retrieval from the `Ensembl Biomart` database. 
 
 In this example we will retrieve GO information for a set of _Homo sapiens_ genes
 stored as `hgnc_symbol`.
@@ -675,5 +675,5 @@ GO_tbl
 ```
 
 
-Hence, for each _gene id_ the resulting table stores all annotated GO terms found in [Ensembl Biomart](http://ensemblgenomes.org/info/access/biomart).
+Hence, for each _gene id_ the resulting table stores all annotated GO terms found in `Ensembl Biomart`.
 
