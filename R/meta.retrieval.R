@@ -606,7 +606,7 @@ meta.retrieval <- function(db         = "refseq",
         }
         
         if (combine) {
-            stats.files <- dplyr::bind_rows(na.omit(stats.files))
+            stats.files <- dplyr::bind_rows(stats::na.omit(stats.files))
             message("Finished meta retieval process.")
             return(stats.files)
         }
