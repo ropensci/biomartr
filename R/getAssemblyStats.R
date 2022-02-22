@@ -108,7 +108,7 @@ getAssemblyStats <-
         organism <- stringr::str_replace_all(organism, "\\(", "")
         organism <- stringr::str_replace_all(organism, "\\)", "")
         
-        assembly_accession <- taxid <- NULL
+        assembly_accession <- taxid <- ftp_path <- NULL
         
         if (reference) {
             if (!is.taxid(organism)) {

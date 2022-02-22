@@ -125,7 +125,7 @@ getGenome <-
             }
 
             organism_name <- taxid <-
-                refseq_category <- version_status <- assembly_accession <- NULL
+                refseq_category <- version_status <- assembly_accession <- ftp_path <- NULL
 
             organism <-
                 stringr::str_replace_all(organism, "\\(", "")

@@ -97,7 +97,7 @@ getGFF <-
             }
             
             organism_name <- assembly_accession <- taxid <-
-                refseq_category <- version_status <- NULL
+                refseq_category <- version_status <- ftp_path <- NULL
             
             organism <-
                 stringr::str_replace_all(organism, "\\(", "")
