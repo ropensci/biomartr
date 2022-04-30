@@ -12,7 +12,7 @@
 
 read_rm <- function(file) {
     
-    rm_file <- readr::read_lines(file = file, skip = 3)
+    rm_file <- readr::read_lines(file = file, skip = 2)
     rm_file <- lapply(rm_file, function(x) {
         str.res <- unlist(stringr::str_split(x, "\\s+"))[-1]
         str.res <- str.res[1:14]
