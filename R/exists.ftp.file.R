@@ -39,8 +39,8 @@ exists.ftp.file <- function(url, file.path) {
 #' @import curl
 exists.ftp.file.new <- function(url, file.path) {
 
-
-    if (!RCurl::url.exists(dirname(url)))
+    url_dir_safe <- gsub("//$", "/", file.path(dirname(url), "/"))
+    if (!RCurl::url.exists(url_dir_safe))
         return(FALSE)
 
     con <- RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
