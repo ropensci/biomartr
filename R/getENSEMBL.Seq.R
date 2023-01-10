@@ -57,7 +57,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
 
 
     rest_url <- paste0(
-        "http://rest.ensembl.org/info/assembly/",
+        "https://rest.ensembl.org/info/assembly/",
         new.organism,
         "?content-type=application/json"
     )
@@ -68,7 +68,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
     }
 
     release_api <- jsonlite::fromJSON(
-            "http://rest.ensembl.org/info/data/?content-type=application/json"
+            "https://rest.ensembl.org/info/data/?content-type=application/json"
     )$releases
 
     if (!is.null(release)){

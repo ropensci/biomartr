@@ -2,24 +2,24 @@
 % Please edit documentation in R/getReleases.R
 \name{getReleases}
 \alias{getReleases}
-\title{Retrieve available database releases or versions 
+\title{Retrieve available database releases or versions
 of ENSEMBL}
 \usage{
 getReleases(db = "ensembl")
 }
 \arguments{
-\item{db}{a character string specifying the database from which 
+\item{db}{a character string specifying the database from which
 available resease versions shall be retrieved:
 \itemize{
 \item \code{db = "ensembl"}
 }}
 }
 \description{
-Retrieve available database releases or versions of 
+Retrieve available database releases or versions of
 ENSEMBL.
 }
 \examples{
-\dontrun{ 
+\dontrun{
 # retrieve available resease versions of ENSEMBL
 getReleases("ensembl")
 }

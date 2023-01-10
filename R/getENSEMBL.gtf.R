@@ -50,7 +50,7 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
 
 
     rest_url <- paste0(
-        "http://rest.ensembl.org/info/assembly/",
+        "https://rest.ensembl.org/info/assembly/",
         new.organism,
         "?content-type=application/json"
     )
