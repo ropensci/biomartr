@@ -30,7 +30,6 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
             ensembl_summary <-
                 dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
         } else {
-
             ensembl_summary <-
                 dplyr::filter(
                     ensembl_summary,
@@ -41,42 +40,21 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
         }
     }
 
-    new.organism <- ensembl_summary$name[1]
-    new.organism <-
-        paste0(
-            stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
-            stringr::str_sub(new.organism, 2, nchar(new.organism))
-        )
-
-
-    rest_url <- paste0(
-        "https://rest.ensembl.org/info/assembly/",
-        new.organism,
-        "?content-type=application/json"
-    )
+    new.organism <- ensembl_proper_organism_name(ensembl_summary)
+    rest_url <- ensembl_rest_url_assembly(new.organism)
 
     rest_api_status <- test_url_status(url = rest_url, organism = organism)
     if (is.logical(rest_api_status)) {
         return(FALSE)
     }
 
-    if (!is.null(release)){
+    if (!is.null(release)) {
       release <- as.numeric(release)
-
-      if (!is.element(release, seq_len(as.integer(ensembl_summary$release))))
+      if (!is.element(release, ensembl_all_releases()))
         stop("Please provide a release number that is supported by ENSEMBL.", call. = FALSE)
-    }
-
-    # construct retrieval query
-    if (is.null(release)) {
-      core_path <- "ftp://ftp.ensembl.org/pub/current_gtf/"
-      release <- ensembl_summary$release
-    } else {
-      core_path <- paste0("ftp://ftp.ensembl.org/pub/release-", release ,"/gtf/")
-    }
+    } else release <- ensembl_current_release(ensembl_summary$division[1])
 
 
-    # construct retrieval query
     # Before 75, ensembl used .release extension on assembly
     all_possible_assemblies <- rest_api_status$coord_system_versions
     all_possible_assemblies <- paste0(all_possible_assemblies,
@@ -88,6 +66,9 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
       }
     }
 
+    # construct retrieval query
+    core_path <- ensembl_ftp_server_url_gtf(ensembl_summary$division[1],
+                                              release)
     rest_api_status$release_coord_system_version <- "not_found"
     for (assembly_option in all_possible_assemblies) {
       ensembl.qry <-
@@ -95,12 +76,10 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
           core_path,
           stringr::str_to_lower(new.organism),
           "/",
-          paste0(
-            stringr::str_to_title(string = new.organism, locale = "en"),
-            ".",
-            assembly_option,
-            ".gtf.gz"
-          )
+          stringr::str_to_title(string = new.organism, locale = "en"),
+          ".",
+          assembly_option,
+          ".gtf.gz"
         )
       assembly_is_correct <- exists.ftp.file.new(ensembl.qry, ensembl.qry)
       if (assembly_is_correct) {
@@ -110,31 +89,18 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
     }
     # construct retrieval query
 
-
-    if (file.exists(file.path(
-            path,
-            paste0(
-                    stringr::str_to_title(string = new.organism,
-                                          locale = "en"),
-                    ".",
-                    rest_api_status$release_coord_system_version,
-                    "_ensembl",
-                    ".gtf.gz"
-            )
-    ))) {
+    local_file <- file.path(
+      path,
+      paste0(
+        stringr::str_to_title(string = new.organism,
+                              locale = "en"),
+        ".",
+        rest_api_status$release_coord_system_version,
+        "_ensembl", ".gtf.gz"))
+    if (file.exists(local_file)) {
             message(
                     "File ",
-                    file.path(
-                            path,
-                            paste0(
-                                    stringr::str_to_title(string = new.organism,
-                                                          locale = "en"),
-                                    ".",
-                                    rest_api_status$release_coord_system_version,
-                                    "_ensembl",
-                                    ".gtf.gz"
-                            )
-                    ),
+                    local_file,
                     " exists already. Thus, download has been skipped."
             )
     } else {
@@ -146,19 +112,7 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
       }
 
       tryCatch({
-              custom_download(ensembl.qry,
-                              destfile = file.path(
-                                      path,
-                                      paste0(
-                                              stringr::str_to_title(string = new.organism,
-                                                                    locale = "en"),
-                                              ".",
-                                              rest_api_status$release_coord_system_version,
-                                              "_ensembl",
-                                              ".gtf.gz"
-                                      )
-                              ),
-                              mode = "wb")
+              custom_download(ensembl.qry, destfile = local_file, mode = "wb")
       }, error = function(e)
               message(
                       "Something went wrong while trying to reach the file '",ensembl.qry,"'. This could be due to an instable internet connection or incorrect file path on the ENSEMBL ftp server. Please check if you are able to reach '",ensembl.qry, "' in your web browser.",
@@ -166,15 +120,5 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
               ))
     }
 
-    return(file.path(
-            path,
-            paste0(
-                    stringr::str_to_title(string = new.organism, locale = "en"),
-                    ".",
-                    rest_api_status$release_coord_system_version,
-                    "_ensembl",
-                    ".gtf.gz"
-            )
-    ))
-
+    return(local_file)
 }
