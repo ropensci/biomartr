@@ -7,7 +7,7 @@
 is.genome.available(db = "refseq", organism, details = FALSE)
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
@@ -16,28 +16,28 @@ shall be retrieved:
 \item \code{db = "uniprot"}
 }}
 
-\item{organism}{there are three options to characterize an organism: 
+\item{organism}{there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
 \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 }}
 
-\item{details}{a logical value specifying whether or not details on genome 
-size, kingdom, etc. shall be printed to the console intead of a 
+\item{details}{a logical value specifying whether or not details on genome
+size, kingdom, etc. shall be printed to the console intead of a
 boolean value.}
 }
 \value{
-a logical value specifing whether or not the genome of the input 
-organism is available. In case \code{details} = \code{TRUE} only a character 
+a logical value specifing whether or not the genome of the input
+organism is available. In case \code{details} = \code{TRUE} only a character
 string specifying the genome details is being returned.
 }
 \description{
-This function checks the availability of a given genome on the 
+This function checks the availability of a given genome on the
 NBCI servers specified as scientific name.
 }
 \details{
-Internally this function calls the \code{\link{listGenomes}} function to 
+Internally this function calls the \code{\link{listGenomes}} function to
 detect all available genomes and checks whether or not the specified organism
 is available for download.
 }
@@ -54,7 +54,7 @@ is.genome.available(organism = "Homo sapiens", db = "ensembl")
 
 # and printing details
 is.genome.available(organism = "Homo sapiens",
-                    details = TRUE, 
+                    details = TRUE,
                     db = "ensembl")
 }
 }

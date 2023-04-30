@@ -17,9 +17,7 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
     new.organism <- ensembl_proper_organism_name(ensembl_summary)
     rest_url <- ensembl_rest_url_assembly(new.organism)
     rest_api_status <- test_url_status(url = rest_url, organism = organism)
-    if (is.logical(rest_api_status)) {
-        return(FALSE)
-    }
+    if (isFALSE(rest_api_status)) return(FALSE)
 
     if (!is.null(release)) {
       release <- as.numeric(release)
@@ -44,9 +42,12 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
                                               release)
     rest_api_status$release_coord_system_version <- "not_found"
     for (assembly_option in all_possible_assemblies) {
+      collection_for_bacteria_only <- get_bacteria_collection_id(ensembl_summary)
+      if (isFALSE(collection_for_bacteria_only)) return(FALSE)
       ensembl.qry <-
         paste0(
           core_path,
+          collection_for_bacteria_only,
           stringr::str_to_lower(new.organism),
           "/",
           stringr::str_to_title(string = new.organism, locale = "en"),

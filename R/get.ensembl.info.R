@@ -157,9 +157,14 @@ ensembl_ftp_server_url_gtf <- function(division, release = NULL) {
             ensembl_ftp_server_url_release_style_gtf(division, release))
 }
 
-ensembl_ftp_server_query_full <- function(core_path, new.organism, type, assembly_option, id.type) {
+ensembl_ftp_server_query_full <- function(core_path, new.organism, type,
+                                          assembly_option, id.type,
+                                          ensembl_summary) {
+  collection_for_bacteria_only <- get_bacteria_collection_id(ensembl_summary)
+  if (isFALSE(collection_for_bacteria_only)) return(FALSE)
   paste0(
     core_path,
+    collection_for_bacteria_only,
     stringr::str_to_lower(new.organism),
     "/",
     type,

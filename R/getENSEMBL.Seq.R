@@ -24,9 +24,7 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
     new.organism <- ensembl_proper_organism_name(ensembl_summary)
     rest_url <- ensembl_rest_url_assembly(new.organism)
     rest_api_status <- test_url_status(url = rest_url, organism = organism)
-    if (is.logical(rest_api_status)) {
-        return(FALSE)
-    }
+    if (isFALSE(rest_api_status)) return(FALSE)
 
     if (!is.null(release)) {
         release <- as.numeric(release)
@@ -55,12 +53,14 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
     rest_api_status$release_coord_system_version <- "not_found"
     for (assembly_option in all_possible_assemblies) {
         ensembl.qry <- ensembl_ftp_server_query_full(core_path, new.organism,
-                                              type, assembly_option, id.type)
-
-        assembly_is_correct <- exists.ftp.file.new(ensembl.qry, ensembl.qry)
-        if (assembly_is_correct) {
+                                              type, assembly_option, id.type,
+                                              ensembl_summary)
+        if (!isFALSE(ensembl.qry)) {
+          assembly_is_correct <- exists.ftp.file.new(ensembl.qry, ensembl.qry)
+          if (assembly_is_correct) {
             rest_api_status$release_coord_system_version <- assembly_option
             break
+          }
         }
     }
 
