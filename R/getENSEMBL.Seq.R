@@ -17,36 +17,9 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
         stop("Please a 'type' argument supported by this function:
              'dna', 'cds', 'pep', 'ncrna'.")
 
+    ensembl_summary <- ensembl_assembly_hits(organism)
+    if (isFALSE(ensembl_summary)) return(FALSE)
 
-    ensembl_summary <-
-        suppressMessages(is.genome.available(
-            organism = organism,
-            db = "ensembl",
-            details = TRUE
-        ))
-
-    if (nrow(ensembl_summary) == 0) {
-        message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
-        return(FALSE)
-    }
-
-    taxon_id <- assembly <- name <- accession <- NULL
-
-    if (nrow(ensembl_summary) > 1) {
-        if (is.taxid(organism)) {
-            ensembl_summary <-
-                dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
-        } else {
-
-            ensembl_summary <-
-                dplyr::filter(
-                    ensembl_summary,
-                    (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                        (accession == organism),
-                        !is.na(assembly)
-                )
-        }
-    }
     # Check if assembly can be reached
     new.organism <- ensembl_proper_organism_name(ensembl_summary)
     rest_url <- ensembl_rest_url_assembly(new.organism)
@@ -94,9 +67,9 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
     local_file <- ensembl_seq_local_path(path, new.organism, rest_api_status,
                                          type, id.type)
     if (file.exists(local_file)) {
-        message("File ",local_file,
-                " exists already. Thus, download has been skipped.")
-        return(local_file)
+      message("File ", local_file, " exists already.",
+              " Thus, download has been skipped.")
+      return(local_file)
     } else {
         if (rest_api_status$release_coord_system_version == "not_found") {
             message("Found organism but given release number did not specify existing file
@@ -169,3 +142,9 @@ ensembl_proper_organism_name <- function(ensembl_summary) {
     )
   new.organism <- ensembl_fix_wrong_naming(new.organism)
 }
+
+lower_cap_underscore_organism_name <- function(organism) {
+  stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
+}
+
+

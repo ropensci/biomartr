@@ -11,38 +11,11 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
             stop("Please a 'type' argument supported by this function:
                  'dna', 'cds', 'pep'.")
 
-    ensembl_summary <-
-        suppressMessages(is.genome.available(
-            organism = organism,
-            db = "ensembl",
-            details = TRUE
-        ))
-
-    if (nrow(ensembl_summary) == 0) {
-        message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
-        return(FALSE)
-    }
-
-    taxon_id <- assembly <- name <- accession <- NULL
-
-    if (nrow(ensembl_summary) > 1) {
-        if (is.taxid(organism)) {
-            ensembl_summary <-
-                dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
-        } else {
-            ensembl_summary <-
-                dplyr::filter(
-                    ensembl_summary,
-                    (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                        (accession == organism),
-                    !is.na(assembly)
-                )
-        }
-    }
+    ensembl_summary <- ensembl_assembly_hits(organism)
+    if (isFALSE(ensembl_summary)) return(FALSE)
 
     new.organism <- ensembl_proper_organism_name(ensembl_summary)
     rest_url <- ensembl_rest_url_assembly(new.organism)
-
     rest_api_status <- test_url_status(url = rest_url, organism = organism)
     if (is.logical(rest_api_status)) {
         return(FALSE)
@@ -98,11 +71,8 @@ getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",
         rest_api_status$release_coord_system_version,
         "_ensembl", ".gtf.gz"))
     if (file.exists(local_file)) {
-            message(
-                    "File ",
-                    local_file,
-                    " exists already. Thus, download has been skipped."
-            )
+            message("File ", local_file, " exists already.",
+              " Thus, download has been skipped.")
     } else {
       if (rest_api_status$release_coord_system_version == "not_found") {
         message("Found organism but given release number did not specify existing file
