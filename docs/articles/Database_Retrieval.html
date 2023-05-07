@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/biomartr/">
+  <a href="https://github.com/ropensci/biomartr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,55 +87,77 @@
 
       
 
-      </header><script src="Database_Retrieval_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>NCBI Database Retrieval</h1>
             
-            <h4 class="date">2022-02-22</h4>
+            <h4 data-toc-skip class="date">2023-05-07</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/Database_Retrieval.Rmd"><code>vignettes/Database_Retrieval.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/vignettes/Database_Retrieval.Rmd" class="external-link"><code>vignettes/Database_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Database_Retrieval.Rmd</code></div>
 
     </div>
 
     
     
-<div id="retrieve-sequence-databases-from-ncbi" class="section level1">
-<h1 class="hasAnchor">
-<a href="#retrieve-sequence-databases-from-ncbi" class="anchor"></a>Retrieve Sequence Databases from NCBI</h1>
+<div class="section level2">
+<h2 id="retrieve-sequence-databases-from-ncbi">Retrieve Sequence Databases from NCBI<a class="anchor" aria-label="anchor" href="#retrieve-sequence-databases-from-ncbi"></a>
+</h2>
 <blockquote>
-<p><strong><em>NOTE:</em></strong> To make sure that you have a sufficiently stable (internet) connection between R and the respective databases, please set the default <code>timeout</code> setting <strong>on your local machine</strong> from 60sec to at least 300000sec before running any retrieval functions via:</p>
+<p><strong><em>NOTE:</em></strong> To make sure that you have a
+sufficiently stable (internet) connection between R and the respective
+databases, please set the default <code>timeout</code> setting
+<strong>on your local machine</strong> from 60sec to at least 300000sec
+before running any retrieval functions via:</p>
 </blockquote>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fl">300000</span><span class="op">)</span></code></pre></div>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting Started</h2>
-<p>NCBI stores a variety of specialized database such as <a href="https://www.ncbi.nlm.nih.gov/guide/data-software/">Genbank, RefSeq, Taxonomy, SNP, etc.</a> on their servers. The <code><a href="../reference/download.database.html">download.database()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions implemented in <code>biomartr</code> allows users to download these databases from NCBI. This process might be very useful for downstream analyses such as sequence searches with e.g. BLAST. For this purpose see the R package <a href="https://github.com/drostlab/metablastr">metablastr</a> which aims to seamlessly integrate <code>biomartr</code> based genomic data retrieval with downstream large-scale BLAST searches.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>timeout <span class="op">=</span> <span class="fl">300000</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h3>
+<p>NCBI stores a variety of specialized database such as <a href="https://www.ncbi.nlm.nih.gov/guide/data-software/" class="external-link">Genbank,
+RefSeq, Taxonomy, SNP, etc.</a> on their servers. The
+<code><a href="../reference/download.database.html">download.database()</a></code> and
+<code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions implemented in
+<code>biomartr</code> allows users to download these databases from
+NCBI. This process might be very useful for downstream analyses such as
+sequence searches with e.g. BLAST. For this purpose see the R package <a href="https://github.com/drostlab/metablastr" class="external-link">metablastr</a> which aims
+to seamlessly integrate <code>biomartr</code> based genomic data
+retrieval with downstream large-scale BLAST searches.</p>
 <ul>
-<li><a href="#ist-available-databases">1. List available NCBI databases with <code>listNCBIDatabases()</code></a></li>
+<li><a href="#ist-available-databases">1. List available NCBI databases
+with <code>listNCBIDatabases()</code></a></li>
 <li>
-<a href="#download-ncbi-databases">2. Download NCBI databases with <code>download.database.all()</code></a>
+<a href="#download-ncbi-databases">2. Download NCBI databases with
+<code>download.database.all()</code></a>
 <ul>
 <li><a href="#example-ncbi-nr">2.1 Example NCBI nr retrieval</a></li>
 <li><a href="#example-ncbi-nt">2.2 Example NCBI nt retrieval</a></li>
-<li><a href="#example-ncbi-refseq">2.3 Example NCBI RefSeq retrieval</a></li>
-<li><a href="#example-pdb">2.4 Example Protein Database (PDB) retrieval</a></li>
-<li><a href="#example-ncbi-taxonomy">2.5 Example NCBI Taxonomy retrieval</a></li>
-<li><a href="#example-ncbi-swissprot">2.6 Example NCBI Swissprot retrieval</a></li>
-<li><a href="#example-ncbi-cdd-delta">2.7 Example NCBI CDD Delta retrieval</a></li>
+<li><a href="#example-ncbi-refseq">2.3 Example NCBI RefSeq
+retrieval</a></li>
+<li><a href="#example-pdb">2.4 Example Protein Database (PDB)
+retrieval</a></li>
+<li><a href="#example-ncbi-taxonomy">2.5 Example NCBI Taxonomy
+retrieval</a></li>
+<li><a href="#example-ncbi-swissprot">2.6 Example NCBI Swissprot
+retrieval</a></li>
+<li><a href="#example-ncbi-cdd-delta">2.7 Example NCBI CDD Delta
+retrieval</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div id="list-available-databases" class="section level2">
-<h2 class="hasAnchor">
-<a href="#list-available-databases" class="anchor"></a>List available databases</h2>
-<p>Before downloading specific databases from NCBI users might want to list available databases. Using the <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code> function users can retrieve a list of available databases stored on NCBI.</p>
+<div class="section level3">
+<h3 id="list-available-databases">List available databases<a class="anchor" aria-label="anchor" href="#list-available-databases"></a>
+</h3>
+<p>Before downloading specific databases from NCBI users might want to
+list available databases. Using the <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code>
+function users can retrieve a list of available databases stored on
+NCBI.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># retrieve a list of available sequence databases at NCBI</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># retrieve a list of available sequence databases at NCBI</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "16S_ribosomal_RNA"                     "16S_ribosomal_RNA-nucl-metadata"      
  [3] "18S_fungal_sequences"                  "18S_fungal_sequences-nucl-metadata"   
  [5] "28S_fungal_sequences"                  "28S_fungal_sequences-nucl-metadata"   
@@ -177,11 +195,15 @@
 [69] "tsa_nr"                                "tsa_nr-prot-metadata"                 
 [71] "tsa_nt"                                "tsa_nt-nucl-metadata"                 
 [73] "v4"                                    "v5" </code></pre>
-<p>However, in case users already know which database they would like to retrieve they can filter for the exact files by specifying the NCBI database name. In the following example all sequence files that are part of the <code>NCBI nr</code> database shall be retrieved.</p>
-<p>First, the <code>listNCBIDatabases(db = "nr")</code> allows to list all files corresponding to the <code>nr</code> database.</p>
+<p>However, in case users already know which database they would like to
+retrieve they can filter for the exact files by specifying the NCBI
+database name. In the following example all sequence files that are part
+of the <code>NCBI nr</code> database shall be retrieved.</p>
+<p>First, the <code>listNCBIDatabases(db = "nr")</code> allows to list
+all files corresponding to the <code>nr</code> database.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show all NCBI nr files</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show all NCBI nr files</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nr"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "nr.00.tar.gz"          "nr.01.tar.gz"         
  [3] "nr.02.tar.gz"          "nr.03.tar.gz"         
  [5] "nr.04.tar.gz"          "nr.05.tar.gz"         
@@ -211,11 +233,12 @@
 [53] "nr.51.tar.gz"          "nr.52.tar.gz"         
 [55] "nr.53.tar.gz"          "nr.54.tar.gz"         
 [57] "nr.55.tar.gz"</code></pre>
-<p>The output illustrates that the <code>NCBI nr</code> database has been separated into several sub-data-packages.</p>
+<p>The output illustrates that the <code>NCBI nr</code> database has
+been separated into several sub-data-packages.</p>
 <p>Further examples are:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show all NCBI nt files</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show all NCBI nt files</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nt"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "nt.00.tar.gz"          "nt.01.tar.gz"         
  [3] "nt.02.tar.gz"          "nt.03.tar.gz"         
  [5] "nt.04.tar.gz"          "nt.05.tar.gz"         
@@ -242,8 +265,8 @@
 [47] "nt.45.tar.gz"          "nt.46.tar.gz"         
 [49] "nt.47.tar.gz"          "nt.48.tar.gz"</code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show all NCBI RefSeq (only proteomes)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq_protein"</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show all NCBI RefSeq (only proteomes)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq_protein"</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "refseq_protein.00.tar.gz" "refseq_protein.01.tar.gz"
  [3] "refseq_protein.02.tar.gz" "refseq_protein.03.tar.gz"
  [5] "refseq_protein.04.tar.gz" "refseq_protein.05.tar.gz"
@@ -255,8 +278,8 @@
 [17] "refseq_protein.16.tar.gz" "refseq_protein.17.tar.gz"
 [19] "refseq_protein.18.tar.gz" "refseq_protein.19.tar.gz"</code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show all NCBI RefSeq (only RNA)</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq_rna"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show all NCBI RefSeq (only RNA)</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq_rna"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "refseq_rna.00.tar.gz"          "refseq_rna.01.tar.gz"         
  [3] "refseq_rna.02.tar.gz"          "refseq_rna.03.tar.gz"         
  [5] "refseq_rna.04.tar.gz"          "refseq_rna.05.tar.gz"         
@@ -264,65 +287,83 @@
  [9] "refseq_rna.08.tar.gz"          "refseq_rna-nucl-metadata.json"
 [11] "refseq_rna.09.tar.gz" </code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show NCBI swissprot</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"swissprot"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show NCBI swissprot</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"swissprot"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "swissprot.tar.gz"             "swissprot-prot-metadata.json"</code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show NCBI PDB</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"pdb"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show NCBI PDB</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"pdb"</span><span class="op">)</span></span></code></pre></div>
 <pre><code> [1] "pdbaa.tar.gz"             "pdbnt.tar.gz"            
 [3] "pdbaa-prot-metadata.json" "pdbnt-nucl-metadata.json"</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># show NCBI Human database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># show NCBI Human database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/listDatabases.html">listNCBIDatabases</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>1] "human_genome.00.tar.gz"          "human_genome.01.tar.gz"         
 [3] "human_genome-nucl-metadata.json"</code></pre>
-<p><strong>Please not that all lookup and retrieval function will only work properly when a sufficient internet connection is provided.</strong></p>
-<p>In a next step users can use the <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code> and <code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions to retrieve all files corresponding to a specific NCBI database.</p>
+<p><strong>Please not that all lookup and retrieval function will only
+work properly when a sufficient internet connection is
+provided.</strong></p>
+<p>In a next step users can use the <code><a href="../reference/listDatabases.html">listNCBIDatabases()</a></code> and
+<code><a href="../reference/download.database.all.html">download.database.all()</a></code> functions to retrieve all files
+corresponding to a specific NCBI database.</p>
 </div>
-<div id="download-ncbi-databases" class="section level2">
-<h2 class="hasAnchor">
-<a href="#download-ncbi-databases" class="anchor"></a>Download NCBI databases</h2>
-<p>Using the same search strategy by specifying the database name as described above, users can now download these databases using the <code><a href="../reference/download.database.all.html">download.database.all()</a></code> function.</p>
+<div class="section level3">
+<h3 id="download-ncbi-databases">Download NCBI databases<a class="anchor" aria-label="anchor" href="#download-ncbi-databases"></a>
+</h3>
+<p>Using the same search strategy by specifying the database name as
+described above, users can now download these databases using the
+<code><a href="../reference/download.database.all.html">download.database.all()</a></code> function.</p>
 <p>For downloading only single files users can type:</p>
-<div id="example-ncbi-nr" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-ncbi-nr" class="anchor"></a>Example NCBI nr</h3>
+<div class="section level4">
+<h4 id="example-ncbi-nr">Example NCBI nr<a class="anchor" aria-label="anchor" href="#example-ncbi-nr"></a>
+</h4>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI nr database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nr"</span>, path <span class="op">=</span> <span class="st">"nr"</span><span class="op">)</span></code></pre></div>
-<p>This command will download the pre-formatted (by makeblastdb formatted) database version is retrieved.</p>
-<p>Using this command, all <code>NCBI nr</code> files are loaded into the <code>nr</code> folder (<code>path = "nr"</code>). For each data package, <code>biomartr</code> checks the <code>md5checksum</code> of the downloaded file and the file stored online to make sure that internet connection losses didn’t currupt the file. In case you see a warning message notifying you about not-matching <code>md5checksum</code> values, please re-download the corresponding data package by re-running the <code><a href="../reference/download.database.all.html">download.database.all()</a></code> command. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.</p>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI nr database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nr"</span>, path <span class="op">=</span> <span class="st">"nr"</span><span class="op">)</span></span></code></pre></div>
+<p>This command will download the pre-formatted (by makeblastdb
+formatted) database version is retrieved.</p>
+<p>Using this command, all <code>NCBI nr</code> files are loaded into
+the <code>nr</code> folder (<code>path = "nr"</code>). For each data
+package, <code>biomartr</code> checks the <code>md5checksum</code> of
+the downloaded file and the file stored online to make sure that
+internet connection losses didn’t currupt the file. In case you see a
+warning message notifying you about not-matching
+<code>md5checksum</code> values, please re-download the corresponding
+data package by re-running the <code><a href="../reference/download.database.all.html">download.database.all()</a></code>
+command. From my own experience this can happen when server connections
+or internet connections are not very stable during the download process
+of large data chunks.</p>
 </div>
-<div id="example-ncbi-nt" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-ncbi-nt" class="anchor"></a>Example NCBI nt</h3>
-<p>The same approach can be applied to all other databases mentioned above, e.g.:</p>
+<div class="section level4">
+<h4 id="example-ncbi-nt">Example NCBI nt<a class="anchor" aria-label="anchor" href="#example-ncbi-nt"></a>
+</h4>
+<p>The same approach can be applied to all other databases mentioned
+above, e.g.:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI nt database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nt"</span>, path <span class="op">=</span> <span class="st">"nt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI nt database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"nt"</span>, path <span class="op">=</span> <span class="st">"nt"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="example-ncbi-refseq" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-ncbi-refseq" class="anchor"></a>Example NCBI RefSeq</h3>
+<div class="section level4">
+<h4 id="example-ncbi-refseq">Example NCBI RefSeq<a class="anchor" aria-label="anchor" href="#example-ncbi-refseq"></a>
+</h4>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI refseq (protein) database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq_protein"</span>, path <span class="op">=</span> <span class="st">"refseq_protein"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI refseq (protein) database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq_protein"</span>, path <span class="op">=</span> <span class="st">"refseq_protein"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="example-pdb" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-pdb" class="anchor"></a>Example PDB</h3>
+<div class="section level4">
+<h4 id="example-pdb">Example PDB<a class="anchor" aria-label="anchor" href="#example-pdb"></a>
+</h4>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI PDB database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"pdb"</span>, path <span class="op">=</span> <span class="st">"pdb"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI PDB database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"pdb"</span>, path <span class="op">=</span> <span class="st">"pdb"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="example-ncbi-taxonomy" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-ncbi-taxonomy" class="anchor"></a>Example NCBI Taxonomy</h3>
+<div class="section level4">
+<h4 id="example-ncbi-taxonomy">Example NCBI Taxonomy<a class="anchor" aria-label="anchor" href="#example-ncbi-taxonomy"></a>
+</h4>
 <p>Download NCBI Taxonomy via:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI taxonomy database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"taxdb"</span>, path <span class="op">=</span> <span class="st">"taxdb"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI taxonomy database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"taxdb"</span>, path <span class="op">=</span> <span class="st">"taxdb"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>Starting download of the files: taxdb.tar.gz, taxdb.btd, taxdb.bti ...
 This download process may take a while due to the large size of the individual data chunks ...
 Starting download process of file: taxdb.tar.gz ...
@@ -339,23 +380,32 @@ The md5 hash of file 'taxdb.bti' matches!
 File 'taxdb/taxdb.bti has successfully been retrieved.
 Download process is finished and files are stored in 'taxdb'.</code></pre>
 </div>
-<div id="example-ncbi-swissprot" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-ncbi-swissprot" class="anchor"></a>Example NCBI Swissprot</h3>
+<div class="section level4">
+<h4 id="example-ncbi-swissprot">Example NCBI Swissprot<a class="anchor" aria-label="anchor" href="#example-ncbi-swissprot"></a>
+</h4>
 <p>Download NCBI Swissprot via:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI swissprot database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"swissprot"</span>, path <span class="op">=</span> <span class="st">"swissprot"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI swissprot database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"swissprot"</span>, path <span class="op">=</span> <span class="st">"swissprot"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="example-ncbi-cdd-delta" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-ncbi-cdd-delta" class="anchor"></a>Example NCBI CDD Delta</h3>
+<div class="section level4">
+<h4 id="example-ncbi-cdd-delta">Example NCBI CDD Delta<a class="anchor" aria-label="anchor" href="#example-ncbi-cdd-delta"></a>
+</h4>
 <p>Download NCBI CDD Delta via:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the entire NCBI CDD Delta database</span>
-<span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"cdd_delta"</span>, path <span class="op">=</span> <span class="st">"cdd_delta"</span><span class="op">)</span></code></pre></div>
-<p>For each data package, <code>biomartr</code> checks the <code>md5checksum</code> of the downloaded file and the file stored online to make sure that internet connection losses didn’t currupt the file. In case you see a warning message notifying you about not-matching <code>md5checksum</code> values, please re-download the corresponding data package. From my own experience this can happen when server connections or internet connections are not very stable during the download process of large data chunks.</p>
-<p><strong>Please notice that most of these databases are very large, so users should take of of providing a stable internet connection throughout the download process.</strong></p>
+<code class="sourceCode R"><span><span class="co"># download the entire NCBI CDD Delta database</span></span>
+<span><span class="fu">biomartr</span><span class="fu">::</span><span class="fu"><a href="../reference/download.database.all.html">download.database.all</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"cdd_delta"</span>, path <span class="op">=</span> <span class="st">"cdd_delta"</span><span class="op">)</span></span></code></pre></div>
+<p>For each data package, <code>biomartr</code> checks the
+<code>md5checksum</code> of the downloaded file and the file stored
+online to make sure that internet connection losses didn’t currupt the
+file. In case you see a warning message notifying you about not-matching
+<code>md5checksum</code> values, please re-download the corresponding
+data package. From my own experience this can happen when server
+connections or internet connections are not very stable during the
+download process of large data chunks.</p>
+<p><strong>Please notice that most of these databases are very large, so
+users should take of of providing a stable internet connection
+throughout the download process.</strong></p>
 </div>
 </div>
 </div>
@@ -372,11 +422,13 @@ Download process is finished and files are stored in 'taxdb'.</code></pre>
 
 
       <footer><div class="copyright">
-  <p>Developed by Hajk-Georg Drost.</p>
+  <p></p>
+<p>Developed by Hajk-Georg Drost.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -384,6 +436,8 @@ Download process is finished and files are stored in 'taxdb'.</code></pre>
 
   
 
+
+  
 
   </body>
 </html>
