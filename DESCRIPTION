@@ -1,10 +1,11 @@
 Package: biomartr
 Title: Genomic Data Retrieval
 Version: 1.0.3
-Authors@R: person("Hajk-Georg", "Drost",
+Authors@R: c(person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hajk-georg.drost@tuebingen.mpg.de",
                 comment = c(ORCID = "http://orcid.org/0000-0002-1567-306X"))
+            )
 Description: Perform large scale genomic data retrieval and functional annotation retrieval. This package aims to provide users with a standardized
                 way to automate genome, proteome, 'RNA', coding sequence ('CDS'), 'GFF', and metagenome
                 retrieval from 'NCBI RefSeq', 'NCBI Genbank', 'ENSEMBL', 
@@ -45,7 +46,7 @@ Suggests:
     magrittr
 License: GPL-2
 LazyData: true
-URL: https://docs.ropensci.org/biomartr/, https://github.com/ropensci/biomartr
+Config/Needs/website: https://docs.ropensci.org/biomartr/, https://github.com/ropensci/biomartr
 BugReports: https://github.com/ropensci/biomartr/issues
 RoxygenNote: 7.2.3
 Encoding: UTF-8
