@@ -19,13 +19,13 @@ knitr::opts_chunk$set(
 ## Use Case #1: Functional Annotation of Genes Sharing a Common Evolutionary History
 
 Evolutionary Transcriptomics aims to predict stages or periods of evolutionary conservation in
-biological processes on the transcriptome level. However, finding genes sharing a [common evolutionary history](https://github.com/drostlab/myTAI/blob/master/vignettes/Enrichment.Rmd) could reveal how the the biological process might have evolved in the first place.
+biological processes on the transcriptome level. However, finding genes sharing a [common evolutionary history](https://drostlab.github.io/myTAI/articles/Enrichment.html) could reveal how the the biological process might have evolved in the first place.
 
-In this `Use Case` we will combine functional and biological annotation obtained with `biomartr` with enriched genes obtained with [PlotEnrichment()](https://github.com/drostlab/myTAI/blob/master/vignettes/Enrichment.Rmd). 
+In this `Use Case` we will combine functional and biological annotation obtained with `biomartr` with enriched genes obtained with [PlotEnrichment()](https://drostlab.github.io/myTAI/articles/Enrichment.html). 
 
 ### Step 1
 
-For the following example we will use the dataset an enrichment analyses found in [PlotEnrichment()](https://github.com/drostlab/myTAI/blob/master/vignettes/Enrichment.Rmd).
+For the following example we will use the dataset an enrichment analyses found in [PlotEnrichment()](https://drostlab.github.io/myTAI/articles/Enrichment.html).
 
 Install and load the [myTAI](https://github.com/drostlab/myTAI) package:
 
