@@ -1,3 +1,7 @@
+# [biomartr 1.0.3](https://github.com/ropensci/biomartr/releases/tag/v1.0.3)
+
+- adding [pull request #88](https://github.com/ropensci/biomartr/pull/88) which fixes issues with `http` to `https` curl requests (Many thanks to @Roleren)
+
 # [biomartr 1.0.2](https://github.com/ropensci/biomartr/releases/tag/v1.0.2)
 
 ### New Functions
