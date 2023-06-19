@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Ensembl BioMart Examples</h1>
             
-            <h4 data-toc-skip class="date">2023-05-07</h4>
+            <h4 data-toc-skip class="date">2023-06-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/vignettes/BioMart_Examples.Rmd" class="external-link"><code>vignettes/BioMart_Examples.Rmd</code></a></small>
       <div class="hidden name"><code>BioMart_Examples.Rmd</code></div>
@@ -163,12 +163,12 @@ for the use with <code>myTAI</code>:</p>
 <p>Now, <code>Drerio.PhyloMap</code> stores the
 <code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used
 as background set to perform enrichment analyses with
-<code>PlotEnrichment()</code> from <code>myTAI</code>.</p>
+<code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html" class="external-link">PlotEnrichment()</a></code> from <code>myTAI</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="enrichment-analyses">Enrichment Analyses<a class="anchor" aria-label="anchor" href="#enrichment-analyses"></a>
 </h3>
-<p>Now, the <code>PlotEnrichment()</code> function visualizes the over-
+<p>Now, the <code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html" class="external-link">PlotEnrichment()</a></code> function visualizes the over-
 and underrepresented <code>Phylostrata</code> of brain specific genes
 when compared with the total number of genes stored in the
 <code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
@@ -182,7 +182,7 @@ when compared with the total number of genes stored in the
 <span><span class="va">Drerio.Brain.Genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">Drerio.OrganSpecificExpression</span><span class="op">[</span> , <span class="st">"brain"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span></span>
-<span><span class="fu">PlotEnrichment</span><span class="op">(</span><span class="va">Drerio.PhyloMap</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html" class="external-link">PlotEnrichment</a></span><span class="op">(</span><span class="va">Drerio.PhyloMap</span>,</span>
 <span>               test.set     <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,</span>
 <span>               measure      <span class="op">=</span> <span class="st">"foldchange"</span>,</span>
 <span>               use.only.map <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -190,12 +190,12 @@ when compared with the total number of genes stored in the
 <p>Users will observe that for example brain genes deriving from PS5 are
 significantly enriched.</p>
 <p>Now we can select all brain genes originating in PS5 using the
-<code>SelectGeneSet()</code> function from <code>myTAI</code>. Please
-notice that <code>SelectGeneSet()</code> can only be used with
+<code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html" class="external-link">SelectGeneSet()</a></code> function from <code>myTAI</code>. Please
+notice that <code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html" class="external-link">SelectGeneSet()</a></code> can only be used with
 phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument)
 since myTAI version &gt; 0.3.0.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">BrainGenes</span> <span class="op">&lt;-</span> <span class="fu">SelectGeneSet</span><span class="op">(</span>ExpressionSet <span class="op">=</span> <span class="va">Drerio.PhyloMap</span>,</span>
+<code class="sourceCode R"><span><span class="va">BrainGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html" class="external-link">SelectGeneSet</a></span><span class="op">(</span>ExpressionSet <span class="op">=</span> <span class="va">Drerio.PhyloMap</span>,</span>
 <span>                            gene.set      <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,</span>
 <span>                            use.only.map  <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -70,7 +70,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.3" id="biomartr-103"><a href="https://github.com/ropensci/biomartr/releases/tag/v1.0.3" class="external-link">biomartr 1.0.3</a><a class="anchor" aria-label="anchor" href="#biomartr-103"></a></h2>
+<h2 class="page-header" data-toc-text="1.0.4" id="biomartr-104">biomartr 1.0.4<a class="anchor" aria-label="anchor" href="#biomartr-104"></a></h2>
+<div class="section level4">
+<h4 id="new-features-1-0-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-0-4"></a></h4>
+<ul><li>in <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code> all columns of the <code>assembly_summary.txt</code> are now specified with names and correct data types (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)</li>
+</ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-1-0-4">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-4"></a></h4>
+<ul><li>whenever the low-level function <code><a href="../reference/getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code> was called by all get*() functions, due to an error in the <code>assembly_summary.txt</code> file for viruses where the total gene count was stored as character and not as integer (as is the case for all other <code>assembly_summary.txt</code> files), an error occurred stating that <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> cannot join column $X35 due to differences in data types. This has now been resolved by parsing the correct data types with <code>readr</code>. Many thanks to … for pointing this out to me. (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.3" id="biomartr-103"><a href="https://github.com/ropensci/biomartr/releases/tag/v1.0.3" class="external-link">biomartr 1.0.3</a><small>2023-05-07</small><a class="anchor" aria-label="anchor" href="#biomartr-103"></a></h2>
 <ul><li>adding <a href="https://github.com/ropensci/biomartr/pull/88" class="external-link">pull request </a><a href="https://github.com/ropensci/biomartr/issues/88" class="external-link">#88</a> which fixes issues with <code>http</code> to <code>https</code> curl requests (Many thanks to <a href="https://github.com/Roleren" class="external-link">@Roleren</a>)</li>
 </ul></div>
     <div class="section level2">
