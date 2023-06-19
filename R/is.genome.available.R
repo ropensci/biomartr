@@ -50,10 +50,10 @@ is.genome.available <-
              details = FALSE
              ) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "uniprot")))
+                              "ensembl", "uniprot", "ensemblgenomes")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl', or 'uniprot'",
+                'refseq', 'genbank', 'ensembl', or 'uniprot', 'ensemblgenomes'",
                 call. = FALSE
             )
         

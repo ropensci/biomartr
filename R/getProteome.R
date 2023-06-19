@@ -67,10 +67,10 @@ getProteome <-
              gunzip = FALSE,
              path = file.path("_ncbi_downloads", "proteomes")) {
         if (!is.element(db, c("refseq", "genbank", 
-                              "ensembl", "uniprot")))
+                              "ensembl", "uniprot", "ensemblgenomes")))
             stop(
                 "Please select one of the available data bases: 
-                'refseq', 'genbank', 'ensembl', 'uniprot'.",
+                'refseq', 'genbank', 'ensembl', 'uniprot', or 'ensemblgenomes'.",
                 call. = FALSE
             )
         
