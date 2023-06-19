@@ -1,4 +1,4 @@
-# biomartr 1.0.4
+# [biomartr 1.0.4](https://github.com/ropensci/biomartr/releases/tag/v1.0.4)
 
 ### New Features
 - in `getSummaryFile()` all columns of the `assembly_summary.txt` are now specified with names and correct data types (#92) 
