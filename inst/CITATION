@@ -1,8 +1,9 @@
 citHeader("To cite biomartr in publications please use:")
 
-citEntry(entry = "Article",
+bibentry(entry = "Article",
+  bibtype  = "Manual",
   title        = "Biomartr: genomic data retrieval with R",
-  author       = personList(as.person("Drost Hajk-Georg"),
+  author       = c(as.person("Drost Hajk-Georg"),
                    as.person("Paszkowski Jerzy")),
   journal      = "Bioinformatics",
   year         = "2017",

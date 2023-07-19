@@ -3,7 +3,6 @@ biomartr
 
 <!-- badges: start -->
 [![](https://badges.ropensci.org/93_status.svg)](https://github.com/ropensci/software-review/issues/93)
-[![Travis-CI Build Status](https://travis-ci.org/ropensci/biomartr.svg?branch=master)](https://travis-ci.org/ropensci/biomartr)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/biomartr)](https://github.com/r-hub/cranlogs.app)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/biomartr)](https://github.com/r-hub/cranlogs.app)
 [![Paper link](https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg)](https://academic.oup.com/bioinformatics/article/33/8/1216/2931816)
@@ -93,13 +92,13 @@ BiocManager::install("biomaRt")
 Now users can install `biomartr` from CRAN:
 
 ```r
-# install biomartr 1.0.2
+# install biomartr 1.0.4
 install.packages("biomartr", dependencies = TRUE)
 ```
 
 ## Installation with Bioconda
 
-With an activated Bioconda channel (see [2. Set up channels](https://bioconda.github.io/user/install.html#set-up-channels)), install with:
+With an activated Bioconda channel (see 2. Set up channels), install with:
 
 ```
 conda install r-biomartr
@@ -206,7 +205,7 @@ Getting Started with `biomartr`:
 - [BioMart Examples](https://docs.ropensci.org/biomartr/articles/BioMart_Examples.html)
 
 
-Users can also read the tutorials within ([RStudio](https://www.rstudio.com/)) :
+Users can also read the tutorials within ([Posit (former RStudio)](https://posit.co/)) :
 
 ```r
 # source the biomartr package

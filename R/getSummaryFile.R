@@ -93,7 +93,24 @@ getSummaryFile <- function(db,kingdom){
                                      "gbrs_paired_asm",
                                      "paired_asm_comp",
                                      "ftp_path",
-                                     "excluded_from_refseq"
+                                     "excluded_from_refseq",
+                                     "relation_to_type_material",
+                                     "asm_not_live_date",
+                                     "assembly_type",
+                                     "group",
+                                     "genome_size",
+                                     "genome_size_ungapped",
+                                     "gc_percent",
+                                     "replicon_count",
+                                     "scaffold_count",
+                                     "contig_count",
+                                     "annotation_provider",
+                                     "annotation_name",
+                                     "annotation_date",
+                                     "total_gene_count",
+                                     "protein_coding_gene_count",
+                                     "non_coding_gene_count",
+                                     "pubmed_id"
                                  ),
                                  col_types = readr::cols(
                                     assembly_accession = readr::col_character(),
@@ -116,7 +133,24 @@ getSummaryFile <- function(db,kingdom){
                                      gbrs_paired_asm = readr::col_character(),
                                      paired_asm_comp = readr::col_character(),
                                      ftp_path = readr::col_character(),
-                                   excluded_from_refseq = readr::col_character()
+                                   excluded_from_refseq = readr::col_character(),
+                                   relation_to_type_material = readr::col_character(),
+                                   asm_not_live_date = readr::col_character(),
+                                   assembly_type = readr::col_character(),
+                                   group = readr::col_character(),
+                                   genome_size = readr::col_integer(),
+                                   genome_size_ungapped = readr::col_integer(),
+                                   gc_percent = readr::col_double(),
+                                   replicon_count = readr::col_integer(),
+                                   scaffold_count = readr::col_integer(),
+                                   contig_count = readr::col_integer(),
+                                   annotation_provider = readr::col_character(),
+                                   annotation_name = readr::col_character(),
+                                   annotation_date = readr::col_date(format = "%m/%d/%y"),
+                                   total_gene_count = readr::col_integer(),
+                                   protein_coding_gene_count = readr::col_integer(),
+                                   non_coding_gene_count = readr::col_integer(),
+                                   pubmed_id = readr::col_character()
                                  )
                              )
                          )

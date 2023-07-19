@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/biomartr/">
+  <a href="https://github.com/ropensci/biomartr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,58 +87,72 @@
 
       
 
-      </header><script src="BioMart_Examples_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Ensembl BioMart Examples</h1>
             
-            <h4 class="date">2022-02-22</h4>
+            <h4 data-toc-skip class="date">2023-06-19</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/master/vignettes/BioMart_Examples.Rmd"><code>vignettes/BioMart_Examples.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/vignettes/BioMart_Examples.Rmd" class="external-link"><code>vignettes/BioMart_Examples.Rmd</code></a></small>
       <div class="hidden name"><code>BioMart_Examples.Rmd</code></div>
 
     </div>
 
     
     
-<div id="use-case-1-functional-annotation-of-genes-sharing-a-common-evolutionary-history" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use-case-1-functional-annotation-of-genes-sharing-a-common-evolutionary-history" class="anchor"></a>Use Case #1: Functional Annotation of Genes Sharing a Common Evolutionary History</h2>
-<p>Evolutionary Transcriptomics aims to predict stages or periods of evolutionary conservation in biological processes on the transcriptome level. However, finding genes sharing a <a href="https://github.com/drostlab/myTAI/blob/master/vignettes/Enrichment.Rmd">common evolutionary history</a> could reveal how the the biological process might have evolved in the first place.</p>
-<p>In this <code>Use Case</code> we will combine functional and biological annotation obtained with <code>biomartr</code> with enriched genes obtained with <a href="https://github.com/drostlab/myTAI/blob/master/vignettes/Enrichment.Rmd">PlotEnrichment()</a>.</p>
-<div id="step-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#step-1" class="anchor"></a>Step 1</h3>
-<p>For the following example we will use the dataset an enrichment analyses found in <a href="https://github.com/drostlab/myTAI/blob/master/vignettes/Enrichment.Rmd">PlotEnrichment()</a>.</p>
-<p>Install and load the <a href="https://github.com/drostlab/myTAI">myTAI</a> package:</p>
+<div class="section level2">
+<h2 id="use-case-1-functional-annotation-of-genes-sharing-a-common-evolutionary-history">Use Case #1: Functional Annotation of Genes Sharing a Common
+Evolutionary History<a class="anchor" aria-label="anchor" href="#use-case-1-functional-annotation-of-genes-sharing-a-common-evolutionary-history"></a>
+</h2>
+<p>Evolutionary Transcriptomics aims to predict stages or periods of
+evolutionary conservation in biological processes on the transcriptome
+level. However, finding genes sharing a <a href="https://drostlab.github.io/myTAI/articles/Enrichment.html" class="external-link">common
+evolutionary history</a> could reveal how the the biological process
+might have evolved in the first place.</p>
+<p>In this <code>Use Case</code> we will combine functional and
+biological annotation obtained with <code>biomartr</code> with enriched
+genes obtained with <a href="https://drostlab.github.io/myTAI/articles/Enrichment.html" class="external-link">PlotEnrichment()</a>.</p>
+<div class="section level3">
+<h3 id="step-1">Step 1<a class="anchor" aria-label="anchor" href="#step-1"></a>
+</h3>
+<p>For the following example we will use the dataset an enrichment
+analyses found in <a href="https://drostlab.github.io/myTAI/articles/Enrichment.html" class="external-link">PlotEnrichment()</a>.</p>
+<p>Install and load the <a href="https://github.com/drostlab/myTAI" class="external-link">myTAI</a> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install myTAI</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"myTAI"</span><span class="op">)</span>
-
-<span class="co"># load myTAI</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drostlab/myTAI">myTAI</a></span><span class="op">)</span></code></pre></div>
-<p>Download the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>:</p>
+<code class="sourceCode R"><span><span class="co"># install myTAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"myTAI"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># load myTAI</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drostlab/myTAI" class="external-link">myTAI</a></span><span class="op">)</span></span></code></pre></div>
+<p>Download the <code>Phylostratigraphic Map</code> of <em>D.
+rerio</em>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># download the Phylostratigraphic Map of Danio rerio</span>
-<span class="co"># from Sestak and Domazet-Loso, 2015</span></code></pre></div>
-<p>The dataset comes from <code>supplementary file 3</code> of this publication: <a href="https://academic.oup.com/mbe/article/32/2/299/1058654#77837069" class="uri">https://academic.oup.com/mbe/article/32/2/299/1058654#77837069</a></p>
-<p>After downloading <code>supplementary file 3</code>, you will find the file “TableS3-2.xlsx” which can be used in the following biomartr functions.</p>
-<p>Read the <code>*.xlsx</code> file storing the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> and format it for the use with <code>myTAI</code>:</p>
+<code class="sourceCode R"><span><span class="co"># download the Phylostratigraphic Map of Danio rerio</span></span>
+<span><span class="co"># from Sestak and Domazet-Loso, 2015</span></span></code></pre></div>
+<p>The dataset comes from <code>supplementary file 3</code> of this
+publication: <a href="https://academic.oup.com/mbe/article/32/2/299/1058654#77837069" class="external-link uri">https://academic.oup.com/mbe/article/32/2/299/1058654#77837069</a></p>
+<p>After downloading <code>supplementary file 3</code>, you will find
+the file “TableS3-2.xlsx” which can be used in the following biomartr
+functions.</p>
+<p>Read the <code>*.xlsx</code> file storing the
+<code>Phylostratigraphic Map</code> of <em>D. rerio</em> and format it
+for the use with <code>myTAI</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install the readxl package</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"readxl"</span><span class="op">)</span>
-
-<span class="co"># load package readxl</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
-
-<span class="co"># read the excel file</span>
-<span class="va">DrerioPhyloMap.MBEa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span>, skip <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-
-<span class="co"># format Phylostratigraphic Map for use with myTAI</span>
-<span class="va">Drerio.PhyloMap</span> <span class="op">&lt;-</span> <span class="va">DrerioPhyloMap.MBEa</span><span class="op">[</span> , <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>
-
-<span class="co"># have a look at the final format</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Drerio.PhyloMap</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install the readxl package</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"readxl"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># load package readxl</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read the excel file</span></span>
+<span><span class="va">DrerioPhyloMap.MBEa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">1</span>, skip <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># format Phylostratigraphic Map for use with myTAI</span></span>
+<span><span class="va">Drerio.PhyloMap</span> <span class="op">&lt;-</span> <span class="va">DrerioPhyloMap.MBEa</span><span class="op">[</span> , <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># have a look at the final format</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Drerio.PhyloMap</span><span class="op">)</span></span></code></pre></div>
 <pre><code>  Phylostrata            ZFIN_ID
 1           1 ZDB-GENE-000208-13
 2           1 ZDB-GENE-000208-17
@@ -150,39 +160,50 @@
 4           1 ZDB-GENE-000208-23
 5           1  ZDB-GENE-000209-3
 6           1  ZDB-GENE-000209-4</code></pre>
-<p>Now, <code>Drerio.PhyloMap</code> stores the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used as background set to perform enrichment analyses with <code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html">PlotEnrichment()</a></code> from <code>myTAI</code>.</p>
+<p>Now, <code>Drerio.PhyloMap</code> stores the
+<code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used
+as background set to perform enrichment analyses with
+<code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html" class="external-link">PlotEnrichment()</a></code> from <code>myTAI</code>.</p>
 </div>
-<div id="enrichment-analyses" class="section level3">
-<h3 class="hasAnchor">
-<a href="#enrichment-analyses" class="anchor"></a>Enrichment Analyses</h3>
-<p>Now, the <code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html">PlotEnrichment()</a></code> function visualizes the over- and underrepresented <code>Phylostrata</code> of brain specific genes when compared with the total number of genes stored in the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
+<div class="section level3">
+<h3 id="enrichment-analyses">Enrichment Analyses<a class="anchor" aria-label="anchor" href="#enrichment-analyses"></a>
+</h3>
+<p>Now, the <code><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html" class="external-link">PlotEnrichment()</a></code> function visualizes the over-
+and underrepresented <code>Phylostrata</code> of brain specific genes
+when compared with the total number of genes stored in the
+<code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span>
-
-<span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span>
-<span class="va">Drerio.OrganSpecificExpression</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/readxl/man/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span>, skip <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-
-<span class="co"># select only brain specific genes</span>
-<span class="va">Drerio.Brain.Genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">Drerio.OrganSpecificExpression</span><span class="op">[</span> , <span class="st">"brain"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span>
-<span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html">PlotEnrichment</a></span><span class="op">(</span><span class="va">Drerio.PhyloMap</span>,
-               test.set     <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,
-               measure      <span class="op">=</span> <span class="st">"foldchange"</span>,
-               use.only.map <span class="op">=</span> <span class="cn">TRUE</span>,
-               legendName   <span class="op">=</span> <span class="st">"PS"</span><span class="op">)</span></code></pre></div>
-<p>Users will observe that for example brain genes deriving from PS5 are significantly enriched.</p>
-<p>Now we can select all brain genes originating in PS5 using the <code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html">SelectGeneSet()</a></code> function from <code>myTAI</code>. Please notice that <code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html">SelectGeneSet()</a></code> can only be used with phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument) since myTAI version &gt; 0.3.0.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span></span>
+<span><span class="va">Drerio.OrganSpecificExpression</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="st">"TableS3-2.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span>, skip <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># select only brain specific genes</span></span>
+<span><span class="va">Drerio.Brain.Genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">Drerio.OrganSpecificExpression</span><span class="op">[</span> , <span class="st">"brain"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/PlotEnrichment.html" class="external-link">PlotEnrichment</a></span><span class="op">(</span><span class="va">Drerio.PhyloMap</span>,</span>
+<span>               test.set     <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,</span>
+<span>               measure      <span class="op">=</span> <span class="st">"foldchange"</span>,</span>
+<span>               use.only.map <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>               legendName   <span class="op">=</span> <span class="st">"PS"</span><span class="op">)</span></span></code></pre></div>
+<p>Users will observe that for example brain genes deriving from PS5 are
+significantly enriched.</p>
+<p>Now we can select all brain genes originating in PS5 using the
+<code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html" class="external-link">SelectGeneSet()</a></code> function from <code>myTAI</code>. Please
+notice that <code><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html" class="external-link">SelectGeneSet()</a></code> can only be used with
+phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument)
+since myTAI version &gt; 0.3.0.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">BrainGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html">SelectGeneSet</a></span><span class="op">(</span>ExpressionSet <span class="op">=</span> <span class="va">Drerio.PhyloMap</span>,
-                            gene.set      <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,
-                            use.only.map  <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co"># select only brain genes originating in PS5</span>
-<span class="va">BrainGenes.PS5</span> <span class="op">&lt;-</span> <span class="va">BrainGenes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">BrainGenes</span><span class="op">[</span> , <span class="st">"Phylostrata"</span><span class="op">]</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span>, <span class="op">]</span>
-
-<span class="co"># look at the results</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">BrainGenes.PS5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">BrainGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/myTAI/man/SelectGeneSet.html" class="external-link">SelectGeneSet</a></span><span class="op">(</span>ExpressionSet <span class="op">=</span> <span class="va">Drerio.PhyloMap</span>,</span>
+<span>                            gene.set      <span class="op">=</span> <span class="va">Drerio.Brain.Genes</span>,</span>
+<span>                            use.only.map  <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># select only brain genes originating in PS5</span></span>
+<span><span class="va">BrainGenes.PS5</span> <span class="op">&lt;-</span> <span class="va">BrainGenes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">BrainGenes</span><span class="op">[</span> , <span class="st">"Phylostrata"</span><span class="op">]</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># look at the results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">BrainGenes.PS5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      Phylostrata           ZFIN_ID
 14851           5 ZDB-GENE-000210-6
 14852           5 ZDB-GENE-000210-7
@@ -190,11 +211,13 @@
 14856           5 ZDB-GENE-000411-1
 14857           5 ZDB-GENE-000427-4
 14860           5 ZDB-GENE-000526-1</code></pre>
-<p>Now users can perform the <code><a href="../reference/biomart.html">biomart()</a></code> function to obtain the functional annotation of brain genes originating in PS5.</p>
-<p>For this purpose, first we need to find the filter name of the corresponding gene ids such as <code>ZDB-GENE-000210-6</code>.</p>
+<p>Now users can perform the <code><a href="../reference/biomart.html">biomart()</a></code> function to obtain
+the functional annotation of brain genes originating in PS5.</p>
+<p>For this purpose, first we need to find the filter name of the
+corresponding gene ids such as <code>ZDB-GENE-000210-6</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># find filter for zfin.org ids</span>
-<span class="fu"><a href="../reference/organismFilters.html">organismFilters</a></span><span class="op">(</span><span class="st">"Danio rerio"</span>, topic <span class="op">=</span> <span class="st">"zfin_id"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># find filter for zfin.org ids</span></span>
+<span><span class="fu"><a href="../reference/organismFilters.html">organismFilters</a></span><span class="op">(</span><span class="st">"Danio rerio"</span>, topic <span class="op">=</span> <span class="st">"zfin_id"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>                            name                           description             dataset
 52                  with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
 53  with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
@@ -227,10 +250,11 @@
 731 ENSEMBL_MART_ENSEMBL
 902 ENSEMBL_MART_ENSEMBL
 914 ENSEMBL_MART_ENSEMBL</code></pre>
-<p>Now users can retrieve the corresponding GO attribute of <em>D. rerio</em> with <code>organismAttributes</code>.</p>
+<p>Now users can retrieve the corresponding GO attribute of <em>D.
+rerio</em> with <code>organismAttributes</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># find go attribute term for D. rerio</span>
-<span class="fu"><a href="../reference/organismAttributes.html">organismAttributes</a></span><span class="op">(</span><span class="st">"Danio rerio"</span>, topic <span class="op">=</span> <span class="st">"go"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># find go attribute term for D. rerio</span></span>
+<span><span class="fu"><a href="../reference/organismAttributes.html">organismAttributes</a></span><span class="op">(</span><span class="st">"Danio rerio"</span>, topic <span class="op">=</span> <span class="st">"go"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>                                              name                             description
 33                                           go_id                       GO Term Accession
 36                                 go_linkage_type                   GO Term Evidence Code
@@ -347,16 +371,18 @@
 3202 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
 3914    drerio_gene_vega ENSEMBL_MART_ENSEMBL
 3915    drerio_gene_vega ENSEMBL_MART_ENSEMBL</code></pre>
-<p>Now users can specify the filter <code>zfin_id</code> and attribute <code>go_id</code> to retrieve the GO terms of corresponding gene ids (<strong>Please note that this will take some time</strong>).</p>
+<p>Now users can specify the filter <code>zfin_id</code> and attribute
+<code>go_id</code> to retrieve the GO terms of corresponding gene ids
+(<strong>Please note that this will take some time</strong>).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># retrieve GO terms of D. rerio brain genes originating in PS5</span>
-<span class="va">GO_tbl.BrainGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biomart.html">biomart</a></span><span class="op">(</span>genes      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">BrainGenes.PS5</span><span class="op">[</span> , <span class="st">"ZFIN_ID"</span><span class="op">]</span><span class="op">)</span>,
-                             mart       <span class="op">=</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>,
-                             dataset    <span class="op">=</span> <span class="st">"drerio_gene_ensembl"</span>,
-                             attributes <span class="op">=</span> <span class="st">"go_id"</span>,
-                             filters    <span class="op">=</span> <span class="st">"zfin_id"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">GO_tbl.BrainGenes</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># retrieve GO terms of D. rerio brain genes originating in PS5</span></span>
+<span><span class="va">GO_tbl.BrainGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biomart.html">biomart</a></span><span class="op">(</span>genes      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">BrainGenes.PS5</span><span class="op">[</span> , <span class="st">"ZFIN_ID"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>                             mart       <span class="op">=</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>,</span>
+<span>                             dataset    <span class="op">=</span> <span class="st">"drerio_gene_ensembl"</span>,</span>
+<span>                             attributes <span class="op">=</span> <span class="st">"go_id"</span>,</span>
+<span>                             filters    <span class="op">=</span> <span class="st">"zfin_id"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">GO_tbl.BrainGenes</span><span class="op">)</span></span></code></pre></div>
 <pre><code>            zfin_id      go_id
 1 ZDB-GENE-000210-6 GO:0060037
 2 ZDB-GENE-000210-6 GO:0046983
@@ -379,11 +405,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Hajk-Georg Drost.</p>
+  <p></p>
+<p>Developed by Hajk-Georg Drost.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -391,6 +419,8 @@
 
   
 
+
+  
 
   </body>
 </html>
