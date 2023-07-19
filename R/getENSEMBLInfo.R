@@ -2,6 +2,7 @@
 #' @description Retrieve species and genome information from
 #' http://rest.ensembl.org/info/species?content-type=application/json/.
 #' @author Hajk-Georg Drost
+#' @return a tibble table with info
 #' @export
 getENSEMBLInfo <- function() {
     ENSEMBLInfoTable <- get.ensembl.info(update = TRUE)
@@ -10,7 +11,7 @@ getENSEMBLInfo <- function() {
 
 ensembl_assembly_hits <- function(organism) {
   ensembl_summary <-
-    suppressMessages(is.genome.available(
+    suppressMessages(is.genome.available.ensembl(
       organism = organism,
       db = "ensembl",
       details = TRUE
@@ -52,6 +53,83 @@ ensembl_summaries_filter <- function(ensembl_summary, organism) {
     }
   }
   return(ensembl_summary)
+}
+
+is.taxid <- function(x) {
+  return(stringr::str_count(x, "[:digit:]") == nchar(x))
+}
+
+#' Check if genome is available in ensembl
+#'
+#' @param division "EnsemblVertebrates", alternatives: "EnsemblPlants", "EnsemblFungi"
+#' @noRd
+is.genome.available.ensembl <- function(db = "ensembl", organism,
+                                        details = FALSE, divisions = ensembl_divisions()) {
+  name <- accession <- accession <- assembly <- taxon_id <- NULL
+  new.organism <- stringr::str_replace_all(organism, " ", "_")
+
+  # For each ensembl division, check if it exists
+  for (division in ensembl_divisions()) {
+    ensembl.available.organisms <- get.ensembl.info(division = division)
+    ensembl.available.organisms <- dplyr::filter(ensembl.available.organisms, !is.na(assembly))
+
+    if (!is.taxid(organism)) {
+      selected.organism <-
+        dplyr::filter(
+          ensembl.available.organisms,
+          stringr::str_detect(name,
+                              stringr::str_to_lower(new.organism)) |
+            accession == organism, !is.na(assembly)
+        )
+    } else {
+      selected.organism <-
+        dplyr::filter(
+          ensembl.available.organisms, taxon_id == as.integer(organism), !is.na(assembly))
+
+    }
+    if (nrow(selected.organism) > 0) break
+  }
+
+
+
+  if (!details) {
+    if (nrow(selected.organism) == 0) {
+      organism_no_hit_message_zero(organism, db)
+      return(FALSE)
+    }
+    if (nrow(selected.organism) > 0) {
+      message("A reference or representative genome assembly is available for '", organism, "'.")
+      if (nrow(selected.organism) > 1) {
+        organism_no_hit_message_more_than_one(organism, db)
+      }
+      return(TRUE)
+    }
+  }
+  if (details)
+    return(selected.organism)
+}
+
+organism_no_hit_message_zero <- function(organism, db) {
+  message(
+    "Unfortunatey, no entry for '",
+    organism,
+    "' was found in the '",
+    db,
+    "' database. ",
+    "Please consider specifying ",
+    paste0("'db = ", dplyr::setdiff(
+      c("refseq", "genbank", "ensembl", "ensemblgenomes", "uniprot"), db
+    ), collapse = "' or "),
+    "' to check whether '",organism,"' is available in these databases."
+  )
+}
+
+organism_no_hit_message_more_than_one <- function(organism, db) {
+  message("More than one entry was found for '", organism, "'.",
+          " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = ",
+          organism, ", db = ",db, ", details = TRUE)'.",
+          " This will allow you to select the 'assembly_accession' identifier that can then be ",
+          "specified in all get*() functions.")
 }
 
 all_bacterias_info <- function() {

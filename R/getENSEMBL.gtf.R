@@ -2,6 +2,7 @@
 #' @description This function downloads gff
 #' files of query organisms from ENSEMBL.
 #' @inheritParams getENSEMBL.Seq
+#' @import curl RCurl
 #' @author Hajk-Georg Drost
 #' @return character filepath to download file, returns FALSE if failed.
 getENSEMBL.gtf <- function(organism, type = "dna", id.type = "toplevel",

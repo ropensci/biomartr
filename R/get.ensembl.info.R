@@ -64,11 +64,12 @@ ensembl_rest_url <- function() {
 }
 
 ensembl_divisions <- function() {
-  c("EnsemblVertebrates", "EnsemblPlants", "EnsemblFungi", "EnsemblBacteria")
+  c("EnsemblVertebrates", "EnsemblPlants", "EnsemblFungi", "EnsemblMetazoa",
+    "EnsemblBacteria")
 }
 ensembl_divisions_short <- function() {
   c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
-    EnsemblBacteria = "bacteria")
+    EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa")
 }
 
 ensembl_rest_url_species <- function() {
@@ -79,7 +80,7 @@ ensembl_rest_url_species <- function() {
 #' Get supported species from given division
 #'
 #' @param division "EnsemblVertebrates", alternatives:
-#'  "EnsemblPlants", "EnsemblFungi", "EnsemblBacteria"
+#'  "EnsemblPlants", "EnsemblFungi", "EnsemblMetazoa", "EnsemblBacteria"
 #' @noRd
 ensembl_rest_url_species_division <- function(division = "EnsemblVertebrates") {
   stopifnot(division %in% ensembl_divisions())
