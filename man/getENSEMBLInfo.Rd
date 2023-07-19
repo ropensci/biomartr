@@ -6,8 +6,11 @@
 \usage{
 getENSEMBLInfo()
 }
+\value{
+a tibble table with info
+}
 \description{
-Retrieve species and genome information from 
+Retrieve species and genome information from
 http://rest.ensembl.org/info/species?content-type=application/json/.
 }
 \author{

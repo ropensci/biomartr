@@ -17,74 +17,20 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
         stop("Please a 'type' argument supported by this function:
              'dna', 'cds', 'pep', 'ncrna'.")
 
+    ensembl_summary <- ensembl_assembly_hits(organism)
+    if (isFALSE(ensembl_summary)) return(FALSE)
 
-    ensembl_summary <-
-        suppressMessages(is.genome.available(
-            organism = organism,
-            db = "ensembl",
-            details = TRUE
-        ))
-
-    if (nrow(ensembl_summary) == 0) {
-        message("Unfortunately, organism '",organism,"' does not exist in this database. Could it be that the organism name is misspelled? Thus, download has been omitted.")
-        return(FALSE)
-    }
-
-    taxon_id <- assembly <- name <- accession <- NULL
-
-    if (nrow(ensembl_summary) > 1) {
-        if (is.taxid(organism)) {
-            ensembl_summary <-
-                dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
-        } else {
-
-            ensembl_summary <-
-                dplyr::filter(
-                    ensembl_summary,
-                    (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                        (accession == organism),
-                        !is.na(assembly)
-                )
-        }
-    }
-
-    new.organism <- ensembl_summary$name[1]
-    new.organism <-
-        paste0(
-            stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
-            stringr::str_sub(new.organism, 2, nchar(new.organism))
-        )
-
-
-    rest_url <- paste0(
-        "https://rest.ensembl.org/info/assembly/",
-        new.organism,
-        "?content-type=application/json"
-    )
-
+    # Check if assembly can be reached
+    new.organism <- ensembl_proper_organism_name(ensembl_summary)
+    rest_url <- ensembl_rest_url_assembly(new.organism)
     rest_api_status <- test_url_status(url = rest_url, organism = organism)
-    if (is.logical(rest_api_status)) {
-        return(FALSE)
-    }
+    if (isFALSE(rest_api_status)) return(FALSE)
 
-    release_api <- jsonlite::fromJSON(
-            "https://rest.ensembl.org/info/data/?content-type=application/json"
-    )$releases
-
-    if (!is.null(release)){
+    if (!is.null(release)) {
         release <- as.numeric(release)
-
-        if (!is.element(release, seq_len(as.integer(release_api))))
+        if (!is.element(release, ensembl_all_releases()))
             stop("Please provide a release number that is supported by ENSEMBL.", call. = FALSE)
     }
-
-    # construct retrieval query
-    if (is.null(release)) {
-        core_path <- "ftp://ftp.ensembl.org/pub/current_fasta/"
-    } else {
-        core_path <- paste0("ftp://ftp.ensembl.org/pub/release-", release ,"/fasta/")
-    }
-
 
     # construct retrieval query
     # Before 75, ensembl used .release extension on assembly
@@ -100,74 +46,30 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
         }
     }
 
+    # construct retrieval query
+    core_path <- ensembl_ftp_server_url_fasta(ensembl_summary$division[1],
+                                              release)
     # Go through all possible assemblies, from newest to oldest, only 1 will match!
     rest_api_status$release_coord_system_version <- "not_found"
     for (assembly_option in all_possible_assemblies) {
-        ensembl.qry <-
-            paste0(
-                    core_path,
-                stringr::str_to_lower(new.organism),
-                "/",
-                type,
-                "/",
-                paste0(
-                    stringr::str_to_title(new.organism, locale = "en"),
-                    ".",
-                    assembly_option,
-                    ".",
-                    type,
-                    ifelse(id.type == "none","","."),
-                    ifelse(id.type == "none","",id.type),
-                    ".fa.gz"
-                )
-            )
-        assembly_is_correct <- exists.ftp.file.new(ensembl.qry, ensembl.qry)
-        if (assembly_is_correct) {
+        ensembl.qry <- ensembl_ftp_server_query_full(core_path, new.organism,
+                                              type, assembly_option, id.type,
+                                              ensembl_summary)
+        if (!isFALSE(ensembl.qry)) {
+          assembly_is_correct <- exists.ftp.file.new(ensembl.qry, ensembl.qry)
+          if (assembly_is_correct) {
             rest_api_status$release_coord_system_version <- assembly_option
             break
+          }
         }
     }
 
-
-    if (file.exists(file.path(
-        path,
-        paste0(
-            stringr::str_to_title(new.organism, locale = "en"),
-            ".",
-            rest_api_status$release_coord_system_version,
-            ".",
-            type,
-            ifelse(id.type == "none","","."),
-            ifelse(id.type == "none","",id.type),
-            ".fa.gz"
-        )
-    ))) {
-        message("File ",file.path(
-            path,
-            paste0(
-                stringr::str_to_title(new.organism, locale = "en"),
-                ".",
-                rest_api_status$release_coord_system_version,
-                ".",
-                type,
-                ifelse(id.type == "none","","."),
-                ifelse(id.type == "none","",id.type),
-                ".fa.gz"
-            )
-        )," exists already. Thus, download has been skipped.")
-        return(file.path(
-            path,
-            paste0(
-                stringr::str_to_title(new.organism, locale = "en"),
-                ".",
-                rest_api_status$release_coord_system_version,
-                ".",
-                type,
-                ifelse(id.type == "none","","."),
-                ifelse(id.type == "none","",id.type),
-                ".fa.gz"
-            )
-        ))
+    local_file <- ensembl_seq_local_path(path, new.organism, rest_api_status,
+                                         type, id.type)
+    if (file.exists(local_file)) {
+      message("File ", local_file, " exists already.",
+              " Thus, download has been skipped.")
+      return(local_file)
     } else {
         if (rest_api_status$release_coord_system_version == "not_found") {
             message("Found organism but given release number did not specify existing file
@@ -177,33 +79,72 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
         }
 
         custom_download(url = ensembl.qry,
-                        destfile = file.path(
-                            path,
-                            paste0(
-                                new.organism,
-                                ".",
-                                rest_api_status$release_coord_system_version,
-                                ".",
-                                type,
-                                ifelse(id.type == "none", "", "."),
-                                ifelse(id.type == "none", "", id.type),
-                                ".fa.gz"
-                            )
-                        ),
+                        destfile = local_file,
                         mode = "wb")
 
-        return(c(file.path(
-            path,
-            paste0(
-                stringr::str_to_title(new.organism, locale = "en"),
-                ".",
-                rest_api_status$release_coord_system_version,
-                ".",
-                type,
-                ifelse(id.type == "none", "", "."),
-                ifelse(id.type == "none", "", id.type),
-                ".fa.gz"
-            )
-        ), ensembl.qry))
+        return(c(local_file, ensembl.qry))
     }
 }
+
+ensembl_seq_file_base <- function(new.organism, assembly_option, type,
+                                  id.type) {
+  paste0(
+    stringr::str_to_title(new.organism, locale = "en"),
+    ".",
+    assembly_option,
+    ".",
+    type,
+    ifelse(id.type == "none", "", paste0(".", id.type)),
+    ".fa.gz"
+  )
+}
+ensembl_seq_local_path <- function(path, new.organism, rest_api_status,
+                                   type, id.type) {
+  assembly_option <- rest_api_status$release_coord_system_version
+  file.path(
+    path,
+    ensembl_seq_file_base(new.organism, assembly_option, type,
+                          id.type)
+  )
+}
+
+ensembl_gtf_local_path <- function(path, new.organism, rest_api_status,
+                                   type, id.type) {
+  assembly_option <- rest_api_status$release_coord_system_version
+  file.path(
+    path,
+    ensembl_seq_file_base(new.organism, assembly_option, type,
+                          id.type)
+  )
+}
+
+ensembl_fix_wrong_naming <- function(organism) {
+  organism <-
+    stringr::str_replace_all(organism, " sp ", " sp. ")
+  organism <-
+    stringr::str_replace_all(organism, " pv ", " pv. ")
+  organism <-
+    stringr::str_replace_all(organism, " str ", " str. ")
+  organism <-
+    stringr::str_replace_all(organism, " subsp ", " subsp. ")
+  organism <-
+    stringr::str_replace_all(organism, "\\(", "")
+  organism <-
+    stringr::str_replace_all(organism, "\\)", "")
+}
+
+ensembl_proper_organism_name <- function(ensembl_summary) {
+  new.organism <- ensembl_summary$name[1]
+  new.organism <-
+    paste0(
+      stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+      stringr::str_sub(new.organism, 2, nchar(new.organism))
+    )
+  new.organism <- ensembl_fix_wrong_naming(new.organism)
+}
+
+lower_cap_underscore_organism_name <- function(organism) {
+  stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
+}
+
+
