@@ -11,8 +11,13 @@
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
-#' test <- getKingdomAssemblySummary(db = "refseq")
+#' # This example will run the default version of this function 
+#' # whereby information for Bacteria are not downloaded
+#' test <- getKingdomAssemblySummary(db = "genbank", skip_bacteria = TRUE)
 #' test
+#' # Users can then retrieve information for Bacteria by skip_bacteria = FALSE
+#' test2 <- getKingdomAssemblySummary(db = "genbank", skip_bacteria = FALSE)
+#' test2
 #' }
 #' @seealso \code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}} 
 #' @export
