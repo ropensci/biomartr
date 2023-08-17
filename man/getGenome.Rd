@@ -8,6 +8,7 @@ getGenome(
   db = "refseq",
   organism,
   reference = FALSE,
+  skip_bacteria = TRUE,
   release = NULL,
   gunzip = FALSE,
   path = file.path("_ncbi_downloads", "genomes"),
@@ -31,6 +32,11 @@ shall be retrieved:
 }}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used. \code{release = 75} would for human would give the stable

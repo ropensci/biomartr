@@ -5,10 +5,15 @@
 \title{Retrieve and summarise the assembly_summary.txt files from 
 NCBI for all kingdoms}
 \usage{
-getKingdomAssemblySummary(db)
+getKingdomAssemblySummary(db, skip_bacteria = TRUE)
 }
 \arguments{
 \item{db}{database name. E.g. \code{refseq} or \code{genbank}.}
+
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
 }
 \description{
 Retrieval function of the assembly_summary.txt file 
