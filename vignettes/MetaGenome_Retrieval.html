@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2023-08-17" />
+
+<title>Meta-Genome Retrieval</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Meta-Genome Retrieval</h1>
+<h4 class="date">2023-08-17</h4>
+
+
+
+<blockquote>
+<p><strong><em>NOTE:</em></strong> To make sure that you have a
+sufficiently stable (internet) connection between R and the respective
+databases, please set the default <code>timeout</code> setting
+<strong>on your local machine</strong> from 60sec to at least 30000sec
+before running any retrieval functions via:</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">30000</span>)</span></code></pre></div>
+<div id="topics" class="section level2">
+<h2>Topics</h2>
+<ul>
+<li><a href="#perform-meta-genome-retrieval">1. Perform Meta-Genome
+Retrieval for Specific Kingdoms of Life</a>
+<ul>
+<li><a href="#retrieve-genomic-sequences">1.1 Retrieve Genomic
+Sequences</a>
+<ul>
+<li><a href="#retrieval-from-ncbi-refseq">1.1.1 Retrieval from
+<code>NCBI RefSeq</code></a></li>
+<li><a href="#retrieval-from-ncbi-genbank">1.1.2 Retrieval from
+<code>NCBI Genbank</code></a></li>
+<li><a href="#retrieval-from-ensembl">1.1.3 Retrieval from
+<code>ENSEMBL</code></a></li>
+</ul></li>
+<li><a href="#retrieve-protein-sequences">1.2 Retrieve Protein
+Sequences</a>
+<ul>
+<li><a href="#retrieval-from-ncbi-refseq-1">1.2.1 Retrieval from
+<code>NCBI RefSeq</code></a></li>
+<li><a href="#retrieval-from-ncbi-genbank-1">1.2.2 Retrieval from
+<code>NCBI Genbank</code></a></li>
+<li><a href="#retrieval-from-ensembl-1">1.2.3 Retrieval from
+<code>ENSEMBL</code></a></li>
+</ul></li>
+<li><a href="#retrieve-cds-sequences">1.3 Retrieve CDS Sequences</a>
+<ul>
+<li><a href="#retrieval-from-ncbi-refseq-2">1.3.1 Retrieval from
+<code>NCBI RefSeq</code></a></li>
+<li><a href="#retrieval-from-ncbi-genbank-2">1.3.2 Retrieval from
+<code>NCBI Genbank</code></a></li>
+<li><a href="#retrieval-from-ensembl-2">1.3.3 Retrieval from
+<code>ENSEMBL</code></a></li>
+</ul></li>
+<li><a href="#retrieve-gff-files">1.4 Retrieve GFF files</a></li>
+<li><a href="#retrieve-gtf-files">1.5 Retrieve GTF files</a></li>
+<li><a href="#retrieve-rna-sequences">1.6 Retrieve RNA sequences</a>
+<ul>
+<li><a href="#retrieval-from-ncbi-refseq-3">1.6.1 Retrieval from
+<code>NCBI RefSeq</code></a></li>
+<li><a href="#retrieval-from-ncbi-genbank-3">1.6.2 Retrieval from
+<code>NCBI Genbank</code></a></li>
+<li><a href="#retrieval-from-ensembl-3">1.6.3 Retrieval from
+<code>ENSEMBL</code></a></li>
+</ul></li>
+<li><a href="#retrieve-repeat-masker-sequences">1.7 Retrieve Repeat
+Masker Repeat Annotation File</a>
+<ul>
+<li><a href="#retrieval-from-ncbi-refseq-4">1.7.1 Retrieval from
+<code>NCBI RefSeq</code></a></li>
+<li><a href="#retrieval-from-ncbi-genbank-4">1.7.2 Retrieval from
+<code>NCBI Genbank</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#retrieve-groups-or-subgroups-of-species">2. Retrieve
+groups or subgroups of species</a>
+<ul>
+<li><a href="#example-retrieval-of-all-gammaproteobacteria-genomes-from-ncbi-refseq">2.1
+Example retrieval of all <code>Gammaproteobacteria</code> genomes from
+<code>NCBI RefSeq</code></a></li>
+<li><a href="#example-retrieval-of-all-adenoviridae-genomes-from-ncbi-refseq">2.2
+Example retrieval of all <code>Adenoviridae</code> genomes from
+<code>NCBI RefSeq</code></a></li>
+</ul></li>
+<li><a href="#meta-retrieval-of-genome-assembly-quality-information">3.
+Meta retrieval of genome assembly quality information</a></li>
+<li><a href="#metagenome-project-retrieval-from-ncbi-genbank">4.
+Retrieve data from metagenome projects such as
+<code>human gut metagenome</code> project from
+<code>NCBI Genbank</code></a></li>
+<li><a href="#retrieve-individual-genomes-for-all-species-in-the-tree-of-life">5.
+Retrieve Individual Genomes for all Species in the Tree of Life</a>
+<ul>
+<li><a href="#genome-retrieval">5.1 Example: Genome Retrieval</a></li>
+<li><a href="#proteome-retrieval">5.2 Example: Proteome
+Retrieval</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="perform-meta-genome-retrieval" class="section level2">
+<h2>Perform Meta-Genome Retrieval</h2>
+<p>The number of genome assemblies generated and stored in sequence
+databases is growing exponentially every year. With the availability of
+this growing amount of genomic data, meta-genomics studies become more
+and more popular. By using this bulk of genomes for comparing them to
+thousands of other genomes new structural patterns and evolutionary
+insights can be obtained. However, the first step in any meta-genomics
+study is the retrieval of the genomes, proteomes, coding sequences or
+annotation files that shall be compared and investigated. For this
+purpose, the <code>meta.retrieval()</code> and
+<code>meta.retrieval.all()</code> functions allows users to perform
+straightforward meta-genome retrieval of hundreds of genomes, proteomes,
+CDS, etc in R. Finally, in addition to the retrieved sequence
+information the <code>meta.retrieval()</code> and
+<code>meta.retrieval.all()</code> functions will generate a
+<code>summary file</code> which contains information about the genome
+version, genome status, submitter, etc for each organism to promote
+computational and scientific reproducibility of the meta-genomics study
+at hand. This <code>summary file</code> can for example be attached as
+<code>Supplementary Data</code> to the respective study.</p>
+<div id="getting-started" class="section level4">
+<h4>Getting Started</h4>
+<p>The <code>meta.retrieval()</code> and
+<code>meta.retrieval.all()</code> functions aim to simplify the genome
+retrieval and computational reproducibility process for meta-genomics
+studies. Both functions allow users to either download genomes,
+proteomes, CDS, etc for species within a specific kingdom or subgroup of
+life (<code>meta.retrieval()</code>) or of all species of all kingdoms
+(<code>meta.retrieval.all()</code>). Before <code>biomartr</code> users
+had to write <code>shell</code> scripts to download respective genomic
+data. However, since many meta-genomics packages exist for the R
+programming language, I implemented this functionality for easy
+integration into existing R workflows and for easier
+reproducibility.</p>
+<p>For example, the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package can be
+used with <code>meta.retrieval()</code> and
+<code>meta.retrieval.all()</code> as follows.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes, then apply ...</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span> ...</span></code></pre></div>
+<p>Here <code>...</code> denotes any subsequent meta-genomics analysis.
+Hence, <code>meta.retrieval()</code> enables the pipeline methodology
+for meta-genomics.</p>
+</div>
+<div id="retrieve-genomic-sequences" class="section level3">
+<h3>Retrieve Genomic Sequences</h3>
+<p>To retrieve a list of all available kingdoms stored in the
+<code>NCBI RefSeq</code>, <code>NCBI Genbank</code>, and
+<code>ENSEMBL</code> databases users can consult the
+<code>getKingdoms()</code> function which stores a list of all available
+kingdoms of life for the corresponding database.</p>
+</div>
+<div id="example-ncbi-refseq" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">getKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;archaea&quot;              &quot;bacteria&quot;             &quot;fungi&quot;                &quot;invertebrate&quot;        
+[5] &quot;plant&quot;                &quot;protozoa&quot;             &quot;vertebrate_mammalian&quot; &quot;vertebrate_other&quot;    
+[9] &quot;viral&quot;</code></pre>
+</div>
+<div id="example-ncbi-genbank" class="section level3">
+<h3>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">getKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;archaea&quot;              &quot;bacteria&quot;             &quot;fungi&quot;               
+[4] &quot;invertebrate&quot;         &quot;plant&quot;                &quot;protozoa&quot;            
+[7] &quot;vertebrate_mammalian&quot; &quot;vertebrate_other&quot;</code></pre>
+<p>In these examples the difference betwenn <code>db = &quot;refseq&quot;</code>
+and <code>db = &quot;genbank&quot;</code> is that <code>db = &quot;genbank&quot;</code> does
+not store <code>viral</code> information.</p>
+</div>
+<div id="example-ensembl" class="section level3">
+<h3>Example <code>ENSEMBL</code></h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">getKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;EnsemblVertebrates&quot;                                             </code></pre>
+<p>The <code>ENSEMBL</code> database does not differentiate between
+different kingdoms, but specialized on storing high-quality reference
+genomes of diverse biological disciplines.</p>
+<div id="retrieval-from-ncbi-refseq" class="section level4">
+<h4>Retrieval from <code>NCBI RefSeq</code></h4>
+<p>Download all mammalian vertebrate genomes from
+<code>NCBI RefSeq</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>The argument <code>kingdom</code> specifies the kingdom selected with
+<code>getKingdoms()</code> from which genomes of organisms shall be
+retrieved. The <code>db</code> argument specifies the database from
+which respective genomes shall be downloaded. The argument
+<code>type</code> specifies that <code>genome assembly</code> files
+shall be retrieved. The argument <code>reference</code> indicates
+whether or not a genome shall be downloaded if it isn’t marked in the
+database as either a <code>reference genome</code> or a
+<code>representative genome</code>. Options are:</p>
+<ul>
+<li><code>reference = FALSE</code> (<strong>Default</strong>): all
+organisms (reference, representative, and non-representative genomes)
+are downloaded.</li>
+<li><code>reference = TRUE</code>: organisms that are downloaded must be
+either a <code>reference</code> or <code>representative genome</code>.
+Thus, most genomes which are usually non-reference genomes will not be
+downloaded and the user will retrieve much less organisms than are
+stored in databases.</li>
+</ul>
+<p>When running this command all geneomes are stored in a folder which
+is either named according to the kingdom (in this case
+<code>vertebrate_mammalian</code>). Alternatively, users can specify the
+<code>out.folder</code> argument to define a custom output folder
+path.</p>
+<p>Internally, in this example <code>meta.retrieval()</code> will
+generate a folder named <code>vertebrate_mammalian</code> in which
+respective genomes will be stored. In addition, the
+<code>vertebrate_mammalian</code> folder contains a folder named
+<code>documentation</code> which stores individual documentation files
+for each individual organism and a <code>summary file</code> which
+stores documentation for all retrieved organisms. This
+<code>summary file</code> can then be used as
+<code>Supplementary Data</code> in studies to promote computational
+reproducibility.</p>
+<p>An example documentation file of an individual organism looks like
+this:</p>
+<pre><code>File Name: Mus_musculus_genomic_genbank.gff.gz
+Organism Name: Mus_musculus
+Database: NCBI genbank
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/635/GCA_000001635.7_GRCm38.p5/GCA_000001635.7_GRCm38.p5_genomic.gff.gz
+Download_Date: Mon Nov 14 12:43:45 2016
+refseq_category: reference genome
+assembly_accession: GCA_000001635.7
+bioproject: PRJNA20689
+biosample: NA
+taxid: 10090
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-06-29
+submitter: Genome Reference Consortium</code></pre>
+<p>An example <code>summary file</code> of all organism looks like this
+(here we use 105 Plant species as an example):</p>
+<pre><code># A tibble: 105 x 16
+   file_name     organism   url             database path  refseq_category
+   &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;          
+ 1 Aegilops_tau Aegilops_ ftp://ftp.ncbi refseq   Prot representative
+ 2 Amborella_tr Amborella ftp://ftp.ncbi refseq   Prot representative
+ 3 Ananas_comos Ananas_co ftp://ftp.ncbi refseq   Prot representative
+ 4 Arabidopsis_ Arabidops ftp://ftp.ncbi refseq   Prot representative
+ 5 Arabidopsis_ Arabidops ftp://ftp.ncbi refseq   Prot reference geno
+ 6 Arachis_dura Arachis_d ftp://ftp.ncbi refseq   Prot representative
+ 7 Arachis_ipae Arachis_i ftp://ftp.ncbi refseq   Prot representative
+ 8 Asparagus_of Asparagus ftp://ftp.ncbi refseq   Prot representative
+ 9 Auxenochlore Auxenochl ftp://ftp.ncbi refseq   Prot representative
+10 Bathycoccus_ Bathycocc ftp://ftp.ncbi refseq   Prot representative
+# ... with 95 more rows, and 10 more variables: assembly_accession &lt;chr&gt;,
+#   bioproject &lt;chr&gt;, biosample &lt;chr&gt;, taxid &lt;int&gt;,
+#   infraspecific_name &lt;chr&gt;, version_status &lt;chr&gt;, release_type &lt;chr&gt;,
+#   genome_rep &lt;chr&gt;, seq_rel_date &lt;date&gt;, submitter &lt;chr&gt;</code></pre>
+</div>
+<div id="restarting-a-corrupted-download" class="section level4">
+<h4>Restarting a corrupted download</h4>
+<p>Unfortunately, when downloading large amounts of genomes the NCBI
+RefSeq database limits the number of queries from an individual IP
+address. This causes that the download process might stop or time out at
+a particular step. To overcome this limitation users can simply
+<strong>re-run</strong> the <code>meta.retrieval()</code> command they
+previously executed and specify the argument
+<code>restart_at_last</code> which has the following two options:</p>
+<ul>
+<li>If <code>restart_at_last = TRUE</code> (<strong>Default</strong>)
+then <code>meta.retrieval()</code> will skip all organisms that are
+already present in the folder and will start downloading all remaining
+species (thus will pick up from where the initial download process
+stopped). However, this way <code>meta.retrieval()</code> will not be
+able to check whether already downloaded organism files are corrupted or
+not by checking the <code>md5 checksum</code> of the respective file.
+Thus, I recommend to download the last organism before
+<code>meta.retrieval()</code> stopped manually using
+<code>getGenome()</code> to make sure that the respective file is not
+corrupted.</li>
+<li>If <code>restart_at_last = FALSE</code> then
+<code>meta.retrieval()</code> will start from the beginning and crawl
+through already downloaded organism files and check whether already
+downloaded organism files are corrupted or not by checking the
+<code>md5 checksum</code> (this procedure takes longer than
+<code>restart_at_last = TRUE</code>). After checking existing files the
+function will start downloading all remaining organisms.</li>
+</ul>
+</div>
+<div id="un-zipping-downloaded-files" class="section level4">
+<h4>Un-zipping downloaded files</h4>
+<p>After downloading genomes users can format the output of
+<code>meta.retrieval()</code> by first un-zipping downloaded files and
+renaming them for more convenient downstream data analysis (e.g. from
+<code>Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz</code> to
+<code>Scerevisiae.fa</code>).</p>
+<p>The easiest way to use <code>clean.retrieval()</code> in combination
+with <code>meta.retrieval()</code> is to use the pipe operator from the
+<code>magrittr</code> package:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>               <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>               <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">clean.retrieval</span>()</span></code></pre></div>
+<p>In the first step, genome assembly files are downloaded with
+<code>meta.retrieval</code> and subsequently (<code>%&gt;%</code>)
+un-zipped and re-named using <code>clean.retrieval()</code>.</p>
+<p>Example <code>Bacteria</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># download all bacteria genomes</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;bacteria&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Viruses</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># download all virus genomes</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;viral&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Archaea</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># download all archaea genomes</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;archaea&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Fungi</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># download all fungi genomes</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;fungi&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Plants</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># download all plant genomes</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;plant&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Invertebrates</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># download all invertebrate genomes</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;invertebrate&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Protozoa</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># download all invertebrate genomes</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;protozoa&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ncbi-genbank" class="section level4">
+<h4>Retrieval from <code>NCBI Genbank</code></h4>
+<p>Alternatively, download all mammalian vertebrate genomes from
+<code>NCBI Genbank</code>, e.g.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Bacteria</code></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># download all bacteria genomes</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;bacteria&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Archaea</code></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># download all archaea genomes</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;archaea&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Fungi</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># download all fungi genomes</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;fungi&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Plants</code></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># download all plant genomes</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;plant&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Invertebrates</code></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co"># download all invertebrate genomes</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;invertebrate&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Protozoa</code></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># download all invertebrate genomes</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;protozoa&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ensembl" class="section level4">
+<h4>Retrieval from <code>ENSEMBL</code></h4>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># download all genomes from ENSEMBL</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;Ensembl&quot;</span>, <span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="retrieve-groups-or-subgroups-of-species" class="section level3">
+<h3>Retrieve groups or subgroups of species</h3>
+<p>In case users do not wish to retrieve genomes from an entire kingdom,
+but rather from a group or subgoup (e.g. from species belonging to the
+<code>Gammaproteobacteria</code> class, a subgroup of the
+<code>bacteria</code> kingdom), they can use the following workflow.</p>
+<div id="example-retrieval-of-all-gammaproteobacteria-genomes-from-ncbi-refseq" class="section level4">
+<h4>Example retrieval of all <code>Gammaproteobacteria</code> genomes
+from <code>NCBI RefSeq</code>:</h4>
+<p>First, users can again consult the <code>getKingdoms()</code>
+function to retrieve kingdom information.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">getKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;archaea&quot;              &quot;bacteria&quot;             &quot;fungi&quot;                &quot;invertebrate&quot;        
+[5] &quot;plant&quot;                &quot;protozoa&quot;             &quot;vertebrate_mammalian&quot; &quot;vertebrate_other&quot;    
+[9] &quot;viral&quot;</code></pre>
+<p>In this example, we will choose the <code>bacteria</code> kingdom.
+Now, the <code>getGroups()</code> function allows users to obtain
+available subgroups of the <code>bacteria</code> kingdom.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">getGroups</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">kingdom =</span> <span class="st">&quot;bacteria&quot;</span>)</span></code></pre></div>
+<pre><code> [1] &quot;Acidithiobacillia&quot;                     &quot;Acidobacteriia&quot;                       
+ [3] &quot;Actinobacteria&quot;                        &quot;Alphaproteobacteria&quot;                  
+ [5] &quot;Aquificae&quot;                             &quot;Armatimonadetes&quot;                      
+ [7] &quot;Bacteroidetes/Chlorobi group&quot;          &quot;Balneolia&quot;                            
+ [9] &quot;Betaproteobacteria&quot;                    &quot;Blastocatellia&quot;                       
+[11] &quot;Candidatus Kryptonia&quot;                  &quot;Chlamydiae&quot;                           
+[13] &quot;Chloroflexi&quot;                           &quot;Cyanobacteria/Melainabacteria group&quot;  
+[15] &quot;Deinococcus-Thermus&quot;                   &quot;delta/epsilon subdivisions&quot;           
+[17] &quot;Endomicrobia&quot;                          &quot;Fibrobacteres&quot;                        
+[19] &quot;Firmicutes&quot;                            &quot;Fusobacteriia&quot;                        
+[21] &quot;Gammaproteobacteria&quot;                   &quot;Gemmatimonadetes&quot;                     
+[23] &quot;Kiritimatiellaeota&quot;                    &quot;Nitrospira&quot;                           
+[25] &quot;Planctomycetes&quot;                        &quot;Spirochaetia&quot;                         
+[27] &quot;Synergistia&quot;                           &quot;Tenericutes&quot;                          
+[29] &quot;Thermodesulfobacteria&quot;                 &quot;Thermotogae&quot;                          
+[31] &quot;unclassified Acidobacteria&quot;            &quot;unclassified Bacteria (miscellaneous)&quot;
+[33] &quot;unclassified Proteobacteria&quot;           &quot;Verrucomicrobia&quot;                      
+[35] &quot;Zetaproteobacteria&quot; </code></pre>
+<p>Please note, that the <code>kingdom</code> argument specified in
+<code>getGroups()</code> needs to match with an available kingdom
+retrieved with <code>getKingdoms()</code>. It is also important that in
+both cases: <code>getKingdoms()</code> and <code>getGroups()</code> the
+same database should be specified.</p>
+<p>Now we choose the group <code>Gammaproteobacteria</code> and specify
+the <code>group</code> argument in the <code>meta.retrieval()</code>
+function.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;bacteria&quot;</span>, <span class="at">group =</span> <span class="st">&quot;Gammaproteobacteria&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Using this command, all bacterial (<code>kingdom = &quot;bacteria&quot;</code>)
+genomes (<code>type = &quot;genome&quot;</code>) that belong to the group
+<code>Gammaproteobacteria</code>
+(<code>group = &quot;Gammaproteobacteria&quot;</code>) will be retrieved from NCBI
+RefSeq (<code>db = &quot;refseq&quot;</code>).</p>
+<p>Alternatively, <code>Gammaproteobacteria</code> genomes can be
+retrieved from NCBI Genbank by exchanging <code>db = &quot;refseq&quot;</code> to
+<code>db = &quot;genbank&quot;</code>. If users wish to download proteome, CDS, or
+GFF files instead of genomes, they can specify the argument:
+<code>type = &quot;proteome&quot;</code>, <code>type = &quot;cds&quot;</code>, or
+<code>type = &quot;gff&quot;</code>.</p>
+</div>
+<div id="example-retrieval-of-all-adenoviridae-genomes-from-ncbi-refseq" class="section level4">
+<h4>Example retrieval of all <code>Adenoviridae</code> genomes from
+<code>NCBI RefSeq</code>:</h4>
+<p>Retrieve groups for viruses.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">getGroups</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">kingdom =</span> <span class="st">&quot;viral&quot;</span>)</span></code></pre></div>
+<pre><code> [1] &quot;Adenoviridae&quot;                                        &quot;Alloherpesviridae&quot;                                  
+  [3] &quot;Alphaflexiviridae&quot;                                   &quot;Alphatetraviridae&quot;                                  
+  [5] &quot;Alvernaviridae&quot;                                      &quot;Amalgaviridae&quot;                                      
+  [7] &quot;Ampullaviridae&quot;                                      &quot;Anelloviridae&quot;                                      
+  [9] &quot;Apple fruit crinkle viroid&quot;                          &quot;Apple hammerhead viroid-like circular RNA&quot;          
+ [11] &quot;Apscaviroid&quot;                                         &quot;Arenaviridae&quot;                                       
+ [13] &quot;Arteriviridae&quot;                                       &quot;Ascoviridae&quot;                                        
+ [15] &quot;Asfarviridae&quot;                                        &quot;Astroviridae&quot;                                       
+ [17] &quot;Avsunviroid&quot;                                         &quot;Baculoviridae&quot;                                      
+ [19] &quot;Barnaviridae&quot;                                        &quot;Benyviridae&quot;                                        
+ [21] &quot;Betaflexiviridae&quot;                                    &quot;Bicaudaviridae&quot;                                     
+ [23] &quot;Birnaviridae&quot;                                        &quot;Bornaviridae&quot;                                       
+ [25] &quot;Bromoviridae&quot;                                        &quot;Bunyaviridae&quot;                                       
+ [27] &quot;Caliciviridae&quot;                                       &quot;Carmotetraviridae&quot;                                  
+ [29] &quot;Caulimoviridae&quot;                                      &quot;Cherry leaf scorch small circular viroid-like RNA 1&quot;
+ [31] &quot;Cherry small circular viroid-like RNA&quot;               &quot;Chrysoviridae&quot;                                      
+ [33] &quot;Circoviridae&quot;                                        &quot;Closteroviridae&quot;                                    
+ [35] &quot;Cocadviroid&quot;                                         &quot;Coleviroid&quot;                                         
+ [37] &quot;Coronaviridae&quot;                                       &quot;Corticoviridae&quot;                                     
+ [39] &quot;Cystoviridae&quot;                                        &quot;Dicistroviridae&quot;                                    
+ [41] &quot;Elaviroid&quot;                                           &quot;Endornaviridae&quot;                                     
+ [43] &quot;Filoviridae&quot;                                         &quot;Flaviviridae&quot;                                       
+ [45] &quot;Fusarividae&quot;                                         &quot;Fuselloviridae&quot;                                     
+ [47] &quot;Gammaflexiviridae&quot;                                   &quot;Geminiviridae&quot;                                      
+ [49] &quot;Genomoviridae&quot;                                       &quot;Globuloviridae&quot;                                     
+ [51] &quot;Grapevine latent viroid&quot;                             &quot;Guttaviridae&quot;                                       
+ [53] &quot;Hepadnaviridae&quot;                                      &quot;Hepeviridae&quot;                                        
+ [55] &quot;Herpesviridae&quot;                                       &quot;Hostuviroid&quot;                                        
+ [57] &quot;Hypoviridae&quot;                                         &quot;Hytrosaviridae&quot;                                     
+ [59] &quot;Iflaviridae&quot;                                         &quot;Inoviridae&quot;                                         
+ [61] &quot;Iridoviridae&quot;                                        &quot;Lavidaviridae&quot;                                      
+ [63] &quot;Leviviridae&quot;                                         &quot;Lipothrixviridae&quot;                                   
+ [65] &quot;Luteoviridae&quot;                                        &quot;Malacoherpesviridae&quot;                                
+ [67] &quot;Marnaviridae&quot;                                        &quot;Marseilleviridae&quot;                                   
+ [69] &quot;Megabirnaviridae&quot;                                    &quot;Mesoniviridae&quot;                                      
+ [71] &quot;Microviridae&quot;                                        &quot;Mimiviridae&quot;                                        
+ [73] &quot;Mulberry small circular viroid-like RNA 1&quot;           &quot;Mymonaviridae&quot;                                      
+ [75] &quot;Myoviridae&quot;                                          &quot;Nanoviridae&quot;                                        
+ [77] &quot;Narnaviridae&quot;                                        &quot;Nimaviridae&quot;                                        
+ [79] &quot;Nodaviridae&quot;                                         &quot;Nudiviridae&quot;                                        
+ [81] &quot;Nyamiviridae&quot;                                        &quot;Ophioviridae&quot;                                       
+ [83] &quot;Orthomyxoviridae&quot;                                    &quot;Other&quot;                                              
+ [85] &quot;Papillomaviridae&quot;                                    &quot;Paramyxoviridae&quot;                                    
+ [87] &quot;Partitiviridae&quot;                                      &quot;Parvoviridae&quot;                                       
+ [89] &quot;Pelamoviroid&quot;                                        &quot;Permutotetraviridae&quot;                                
+ [91] &quot;Persimmon viroid&quot;                                    &quot;Phycodnaviridae&quot;                                    
+ [93] &quot;Picobirnaviridae&quot;                                    &quot;Picornaviridae&quot;                                     
+ [95] &quot;Plasmaviridae&quot;                                       &quot;Pneumoviridae&quot;                                      
+ [97] &quot;Podoviridae&quot;                                         &quot;Polydnaviridae&quot;                                     
+ [99] &quot;Polyomaviridae&quot;                                      &quot;Pospiviroid&quot;                                        
+[101] &quot;Potyviridae&quot;                                         &quot;Poxviridae&quot;                                         
+[103] &quot;Quadriviridae&quot;                                       &quot;Reoviridae&quot;                                         
+[105] &quot;Retroviridae&quot;                                        &quot;Rhabdoviridae&quot;                                      
+[107] &quot;Roniviridae&quot;                                         &quot;Rubber viroid India/2009&quot;                           
+[109] &quot;Rudiviridae&quot;                                         &quot;Secoviridae&quot;                                        
+[111] &quot;Siphoviridae&quot;                                        &quot;Sphaerolipoviridae&quot;                                 
+[113] &quot;Sunviridae&quot;                                          &quot;Tectiviridae&quot;                                       
+[115] &quot;Togaviridae&quot;                                         &quot;Tombusviridae&quot;                                      
+[117] &quot;Totiviridae&quot;                                         &quot;Turriviridae&quot;                                       
+[119] &quot;Tymoviridae&quot;                                         &quot;unclassified&quot;                                       
+[121] &quot;unclassified Pospiviroidae&quot;                          &quot;Virgaviridae&quot;</code></pre>
+<p>Now we can choose <code>Adenoviridae</code> as group argument for the
+<code>meta.retrieval()</code> function.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;viral&quot;</span>, <span class="at">group =</span> <span class="st">&quot;Adenoviridae&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Again, by exchanging <code>type = &quot;genome&quot;</code> by either
+<code>type = &quot;proteome&quot;</code>, <code>type = &quot;cds&quot;</code>,
+<code>type = &quot;rna&quot;</code>, <code>type = &quot;assemblystats&quot;</code>, or
+<code>type = &quot;gff&quot;</code>, users can retrieve proteome, CDS, RNA, genome
+assembly statistics or GFF files instead of genomes.</p>
+</div>
+</div>
+<div id="meta-retrieval-of-genome-assembly-quality-information" class="section level3">
+<h3>Meta retrieval of genome assembly quality information</h3>
+<p>Although much effort is invested to increase the genome assembly
+quality when new genomes are published or new versions are released, the
+influence of genome assembly quality on downstream analyses cannot be
+neglected. A rule of thumb is, that the larger the genome the more prone
+it is to genome assembly errors and therefore, a reduction of assembly
+quality.</p>
+<p>In <a href="https://doi.org/10.1105/tpc.16.00349">Veeckman et al.,
+2016</a> the authors conclude:</p>
+<blockquote>
+<p>As yet, no uniform metrics or standards are in place to estimate the
+completeness of a genome assembly or the annotated gene space, despite
+their importance for downstream analyses</p>
+</blockquote>
+<p>In most metagenomics studies, however, the influence or bias of
+genome assembly quality on the outcome of the analysis (e.g. comparative
+genomics, annotation, etc.) is neglected. To better grasp the genome
+assembly quality, the NCBI databases store genome assembly statistics of
+some species for which genome assemblies are available. An example
+assembly statistics report can be found at: <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt</a>.</p>
+<p>The <code>biomartr</code> package allows users to retrieve these
+genome assembly stats file in an automated way by specifying the
+argument <code>type = &quot;assemblystats&quot;</code> and
+<code>combine = TRUE</code>. Please make sure that
+<code>combine = TRUE</code> when selecting
+<code>type = &quot;assemblystats&quot;</code>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co"># show all elements of the data.frame</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tibble.print_max =</span> <span class="cn">Inf</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="co"># retrieve genome assembly stats for all mammal genome assemblies</span></span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co"># and store these stats in a data.frame</span></span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a>mammals.gc <span class="ot">&lt;-</span> <span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, </span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a>                             <span class="at">db      =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a>                             <span class="at">type    =</span> <span class="st">&quot;assemblystats&quot;</span>, </span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a>                             <span class="at">combine =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a>mammals.gc</span></code></pre></div>
+<pre><code>                    species total_length spanned_gaps unspanned_gaps region_count scaffold_count
+                      &lt;chr&gt;        &lt;int&gt;        &lt;int&gt;          &lt;int&gt;        &lt;int&gt;          &lt;int&gt;
+1  Ornithorhynchus anatinus   1995607322       243698            137            0         200283
+2      Sarcophilus harrisii           NA       201317              0            0          35974
+3      Dasypus novemcinctus           NA       268413              0            0          46559
+4       Erinaceus europaeus           NA       219764              0            0           5803
+5         Echinops telfairi           NA       269444              0            0           8402
+6           Pteropus alecto   1985975446       104566              0            0          65598
+7     Rousettus aegyptiacus   1910250568          559              0            0             NA
+8        Callithrix jacchus           NA       184972           2242            0          16399
+9  Cebus capucinus imitator           NA       133441              0            0           7156
+10          Cercocebus atys           NA        65319              0            0          11433
+# ... with 89 more rows, and 9 more variables: scaffold_N50 &lt;int&gt;, scaffold_L50 &lt;int&gt;,
+#   scaffold_N75 &lt;int&gt;, scaffold_N90 &lt;int&gt;, contig_count &lt;int&gt;, contig_N50 &lt;int&gt;, total_gap_length &lt;int&gt;,
+#   molecule_count &lt;int&gt;, top_level_count &lt;int&gt;</code></pre>
+<p>Analogously, this information can be retrieved for each kingdom other
+than <code>kingdom = &quot;vertebrate_mammalian&quot;</code>. Please consult
+<code>getKingdoms()</code> for available kingdoms.</p>
+</div>
+<div id="metagenome-project-retrieval-from-ncbi-genbank" class="section level3">
+<h3>Metagenome project retrieval from NCBI Genbank</h3>
+<p>NCBI Genbank stores <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/">metagenome
+projects</a> in addition to species specific genome, proteome or CDS
+sequences. To retrieve these metagenomes users can perform the following
+combination of commands:</p>
+<p>First, users can list the project names of available metagenomes by
+typing</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co"># list available metagenomes at NCBI Genbank</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="fu">listMetaGenomes</span>()</span></code></pre></div>
+<pre><code>[1] &quot;metagenome&quot;                     &quot;human gut metagenome&quot;           &quot;epibiont metagenome&quot;           
+ [4] &quot;marine metagenome&quot;              &quot;soil metagenome&quot;                &quot;mine drainage metagenome&quot;      
+ [7] &quot;mouse gut metagenome&quot;           &quot;marine sediment metagenome&quot;     &quot;termite gut metagenome&quot;        
+[10] &quot;hot springs metagenome&quot;         &quot;human lung metagenome&quot;          &quot;fossil metagenome&quot;             
+[13] &quot;freshwater metagenome&quot;          &quot;saltern metagenome&quot;             &quot;stromatolite metagenome&quot;       
+[16] &quot;coral metagenome&quot;               &quot;mosquito metagenome&quot;            &quot;fish metagenome&quot;               
+[19] &quot;bovine gut metagenome&quot;          &quot;chicken gut metagenome&quot;         &quot;wastewater metagenome&quot;         
+[22] &quot;microbial mat metagenome&quot;       &quot;freshwater sediment metagenome&quot; &quot;human metagenome&quot;              
+[25] &quot;hydrothermal vent metagenome&quot;   &quot;compost metagenome&quot;             &quot;wallaby gut metagenome&quot;        
+[28] &quot;groundwater metagenome&quot;         &quot;gut metagenome&quot;                 &quot;sediment metagenome&quot;           
+[31] &quot;ant fungus garden metagenome&quot;   &quot;food metagenome&quot;                &quot;hypersaline lake metagenome&quot;   
+[34] &quot;hydrocarbon metagenome&quot;         &quot;activated sludge metagenome&quot;    &quot;viral metagenome&quot;              
+[37] &quot;bioreactor metagenome&quot;          &quot;wasp metagenome&quot;                &quot;permafrost metagenome&quot;         
+[40] &quot;sponge metagenome&quot;              &quot;aquatic metagenome&quot;             &quot;insect gut metagenome&quot;         
+[43] &quot;activated carbon metagenome&quot;    &quot;anaerobic digester metagenome&quot;  &quot;rock metagenome&quot;               
+[46] &quot;terrestrial metagenome&quot;         &quot;rock porewater metagenome&quot;      &quot;seawater metagenome&quot;           
+[49] &quot;scorpion gut metagenome&quot;        &quot;soda lake metagenome&quot;           &quot;glacier metagenome&quot;</code></pre>
+<p>Internally the <code>listMetaGenomes()</code> function downloads the
+assembly_summary.txt file from <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/</a>
+to retrieve available metagenome information. This procedure might take
+a few seconds during the first run of <code>listMetaGenomes()</code>.
+Subsequently, the assembly_summary.txt file will be stored in the
+<code>tempdir()</code> directory to achieve a much faster access of this
+information during following uses of <code>listMetaGenomes()</code>.</p>
+<p>In case users wish to retrieve detailed information about available
+metagenome projects they can specify the <code>details = TRUE</code>
+argument.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="co"># show all elements of the data.frame</span></span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tibble.print_max =</span> <span class="cn">Inf</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="co"># detailed information on available metagenomes at NCBI Genbank</span></span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="fu">listMetaGenomes</span>(<span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code># A tibble: 857 x 21
+   assembly_accession bioproject    biosample     wgs_master refseq_category  taxid species_taxid
+                &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;  &lt;int&gt;         &lt;int&gt;
+1     GCA_000206185.1 PRJNA32359 SAMN02954317 AAGA00000000.1              na 256318        256318
+2     GCA_000206205.1 PRJNA32355 SAMN02954315 AAFZ00000000.1              na 256318        256318
+3     GCA_000206225.1 PRJNA32357 SAMN02954316 AAFY00000000.1              na 256318        256318
+4     GCA_000208265.2 PRJNA17779 SAMN02954240 AASZ00000000.1              na 256318        256318
+5     GCA_000208285.1 PRJNA17657 SAMN02954268 AATO00000000.1              na 256318        256318
+6     GCA_000208305.1 PRJNA17659 SAMN02954269 AATN00000000.1              na 256318        256318
+7     GCA_000208325.1 PRJNA16729 SAMN02954263 AAQL00000000.1              na 256318        256318
+8     GCA_000208345.1 PRJNA16729 SAMN02954262 AAQK00000000.1              na 256318        256318
+9     GCA_000208365.1 PRJNA13699 SAMN02954283 AAFX00000000.1              na 256318        256318
+10    GCA_900010595.1 PRJEB11544 SAMEA3639840 CZPY00000000.1              na 256318        256318
+# ... with 847 more rows, and 14 more variables: organism_name &lt;chr&gt;, infraspecific_name &lt;chr&gt;,
+#   isolate &lt;chr&gt;, version_status &lt;chr&gt;, assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;, gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;,
+#   ftp_path &lt;chr&gt;, excluded_from_refseq &lt;chr&gt;</code></pre>
+<p>Finally, users can retrieve available metagenomes using
+<code>getMetaGenomes()</code>. The <code>name</code> argument receives
+the metagenome project name retrieved with
+<code>listMetaGenomes()</code>. The <code>path</code> argument specifies
+the folder path in which corresponding genomes shall be stored.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="fu">getMetaGenomes</span>(<span class="at">name =</span> <span class="st">&quot;human gut metagenome&quot;</span>, <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;human_gut&quot;</span>))</span></code></pre></div>
+<pre><code>1] &quot;The metagenome of &#39;human gut metagenome&#39; has been downloaded to &#39;_ncbi_downloads/human_gut&#39;.&quot;
+  [1] &quot;_ncbi_downloads/human_gut/GCA_000205525.2_ASM20552v2_genomic.fna.gz&quot;
+  [2] &quot;_ncbi_downloads/human_gut/GCA_000205765.1_ASM20576v1_genomic.fna.gz&quot;
+  [3] &quot;_ncbi_downloads/human_gut/GCA_000205785.1_ASM20578v1_genomic.fna.gz&quot;
+  [4] &quot;_ncbi_downloads/human_gut/GCA_000207925.1_ASM20792v1_genomic.fna.gz&quot;
+  [5] &quot;_ncbi_downloads/human_gut/GCA_000207945.1_ASM20794v1_genomic.fna.gz&quot;
+  [6] &quot;_ncbi_downloads/human_gut/GCA_000207965.1_ASM20796v1_genomic.fna.gz&quot;
+  [7] &quot;_ncbi_downloads/human_gut/GCA_000207985.1_ASM20798v1_genomic.fna.gz&quot;
+  [8] &quot;_ncbi_downloads/human_gut/GCA_000208005.1_ASM20800v1_genomic.fna.gz&quot;
+  [9] &quot;_ncbi_downloads/human_gut/GCA_000208025.1_ASM20802v1_genomic.fna.gz&quot;
+ [10] &quot;_ncbi_downloads/human_gut/GCA_000208045.1_ASM20804v1_genomic.fna.gz&quot;
+ [11] &quot;_ncbi_downloads/human_gut/GCA_000208065.1_ASM20806v1_genomic.fna.gz&quot;
+ [12] &quot;_ncbi_downloads/human_gut/GCA_000208085.1_ASM20808v1_genomic.fna.gz&quot;
+ [13] &quot;_ncbi_downloads/human_gut/GCA_000208105.1_ASM20810v1_genomic.fna.gz&quot;
+ [14] &quot;_ncbi_downloads/human_gut/GCA_000208125.1_ASM20812v1_genomic.fna.gz&quot;
+ [15] &quot;_ncbi_downloads/human_gut/GCA_000208145.1_ASM20814v1_genomic.fna.gz&quot;
+ [16] &quot;_ncbi_downloads/human_gut/GCA_000208165.1_ASM20816v1_genomic.fna.gz&quot;
+ ...</code></pre>
+<p>Internally, <code>getMetaGenomes()</code> creates a folder specified
+in the <code>path</code> argument. Genomes associated with the
+metagenomes project specified in the <code>name</code> argument will
+then be downloaded and stored in this folder. As return value
+<code>getMetaGenomes()</code> returns the file paths to the genome files
+which can then be used as input to the <code>read*()</code>
+functions.</p>
+<p>Alternatively or subsequent to the metagenome retrieval, users can
+retrieve annotation files of genomes belonging to a metagenome project
+selected with <code>listMetaGenomes()</code> by using the
+<code>getMetaGenomeAnnotations()</code> function.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="co"># retrieve all genomes belonging to the human gut metagenome project</span></span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="fu">getMetaGenomeAnnotations</span>(<span class="at">name =</span> <span class="st">&quot;human gut metagenome&quot;</span>, <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;human_gut&quot;</span>,<span class="st">&quot;annotations&quot;</span>))</span></code></pre></div>
+<pre><code>[1] &quot;The annotations of metagenome &#39;human gut metagenome&#39; have been downloaded and stored at &#39;_ncbi_downloads/human_gut/annotations&#39;.&quot;
+  [1] &quot;_ncbi_downloads/human_gut/annotations/GCA_000205525.2_ASM20552v2_genomic.gff.gz&quot;
+  [2] &quot;_ncbi_downloads/human_gut/annotations/GCA_000205765.1_ASM20576v1_genomic.gff.gz&quot;
+  [3] &quot;_ncbi_downloads/human_gut/annotations/GCA_000205785.1_ASM20578v1_genomic.gff.gz&quot;
+  [4] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207925.1_ASM20792v1_genomic.gff.gz&quot;
+  [5] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207945.1_ASM20794v1_genomic.gff.gz&quot;
+  [6] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207965.1_ASM20796v1_genomic.gff.gz&quot;
+  [7] &quot;_ncbi_downloads/human_gut/annotations/GCA_000207985.1_ASM20798v1_genomic.gff.gz&quot;
+  [8] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208005.1_ASM20800v1_genomic.gff.gz&quot;
+  [9] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208025.1_ASM20802v1_genomic.gff.gz&quot;
+ [10] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208045.1_ASM20804v1_genomic.gff.gz&quot;
+ [11] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208065.1_ASM20806v1_genomic.gff.gz&quot;
+ [12] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208085.1_ASM20808v1_genomic.gff.gz&quot;
+ [13] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208105.1_ASM20810v1_genomic.gff.gz&quot;
+ [13] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208105.1_ASM20810v1_genomic.gff.gz&quot;
+ [14] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208125.1_ASM20812v1_genomic.gff.gz&quot;
+ [15] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208145.1_ASM20814v1_genomic.gff.gz&quot;
+ [16] &quot;_ncbi_downloads/human_gut/annotations/GCA_000208165.1_ASM20816v1_genomic.gff.gz&quot;
+ ...</code></pre>
+<p>The file paths of the downloaded <code>*.gff</code> are retured by
+<code>getMetaGenomeAnnotations()</code> and can be used as input for the
+<code>read.gff()</code> function in the <a href="https://github.com/HajkD/seqreadr">seqreadr</a> package.</p>
+<div id="retrieve-protein-sequences" class="section level4">
+<h4>Retrieve Protein Sequences</h4>
+<p>Download all mammalian vertebrate proteomes.</p>
+</div>
+<div id="retrieval-from-ncbi-refseq-1" class="section level4">
+<h4>Retrieval from <code>NCBI RefSeq</code>:</h4>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes</span></span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;proteome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ncbi-genbank-1" class="section level4">
+<h4>Retrieval from <code>NCBI Genbank</code>:</h4>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes</span></span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;proteome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ensembl-1" class="section level4">
+<h4>Retrieval from <code>ENSEMBL</code>:</h4>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="co"># download all Ensembl proteome sequneces</span></span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;Ensembl&quot;</span>, <span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;proteome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieve-cds-sequences" class="section level4">
+<h4>Retrieve CDS Sequences</h4>
+<p>Download all mammalian vertebrate CDS from RefSeq (Genbank does not
+store CDS data).</p>
+</div>
+<div id="retrieval-from-ncbi-refseq-2" class="section level4">
+<h4>Retrieval from <code>NCBI RefSeq</code>:</h4>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes</span></span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;cds&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ncbi-genbank-2" class="section level4">
+<h4>Retrieval from <code>NCBI Genbank</code>:</h4>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="co"># download all vertebrate genomes</span></span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;cds&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ensembl-2" class="section level4">
+<h4>Retrieval from <code>ENSEMBL</code>:</h4>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="co"># download all Ensembl CDS sequneces</span></span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;Ensembl&quot;</span>, <span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;cds&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="retrieve-gff-files" class="section level3">
+<h3>Retrieve GFF files</h3>
+<p>Download all mammalian vertebrate gff files.</p>
+<p>Example <code>NCBI RefSeq</code>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="co"># download all vertebrate gff files</span></span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;gff&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>NCBI Genbank</code>:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="co"># download all vertebrate gff files</span></span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;gff&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieve-gtf-files" class="section level3">
+<h3>Retrieve GTF files</h3>
+<p>Download all mammalian vertebrate gtf files.</p>
+<p>Example <code>ENSEMBL</code>:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="co"># download all vertebrate gff files</span></span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;Ensembl&quot;</span>, <span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;gtf&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieve-rna-sequences" class="section level3">
+<h3>Retrieve RNA sequences</h3>
+<p>Download all mammalian vertebrate RNA sequences from
+<code>NCBI RefSeq</code> and <code>NCBI Genbank</code>.</p>
+<div id="retrieval-from-ncbi-refseq-3" class="section level4">
+<h4>Retrieval from <code>NCBI RefSeq</code>:</h4>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="co"># download all vertebrate RNA sequneces</span></span>
+<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;rna&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ncbi-genbank-3" class="section level4">
+<h4>Retrieval from <code>NCBI Genbank</code>:</h4>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="co"># download all vertebrate RNA sequneces</span></span>
+<span id="cb56-2"><a href="#cb56-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;rna&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ensembl-3" class="section level4">
+<h4>Retrieval from <code>ENSEMBL</code>:</h4>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="co"># download all Ensembl RNA sequneces</span></span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;Ensembl&quot;</span>, <span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">type =</span> <span class="st">&quot;rna&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="retrieve-repeat-masker-sequences" class="section level3">
+<h3>Retrieve Repeat Masker Sequences</h3>
+<p>Download all mammalian vertebrate Repeat Masker Annotation files from
+<code>NCBI RefSeq</code> and <code>NCBI Genbank</code>.</p>
+<div id="retrieval-from-ncbi-refseq-4" class="section level4">
+<h4>Retrieval from <code>NCBI RefSeq</code>:</h4>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="co"># download all vertebrate RNA sequneces</span></span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;rm&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="retrieval-from-ncbi-genbank-4" class="section level4">
+<h4>Retrieval from <code>NCBI Genbank</code>:</h4>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="co"># download all vertebrate RNA sequneces</span></span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a><span class="fu">meta.retrieval</span>(<span class="at">kingdom =</span> <span class="st">&quot;vertebrate_mammalian&quot;</span>, <span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;rm&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Users can obtain alternative kingdoms using
+<code>getKingdoms()</code>.</p>
+</div>
+</div>
+</div>
+<div id="retrieve-individual-genomes-for-all-species-in-the-tree-of-life" class="section level2">
+<h2>Retrieve Individual Genomes for all Species in the Tree of Life</h2>
+<p>If users wish to download the all genomes, proteome, CDS, or gff
+files for all species available in RefSeq or Genbank, they can use the
+<code>meta.retrieval.all()</code> function for this purpose.</p>
+<div id="genome-retrieval" class="section level3">
+<h3>Genome Retrieval</h3>
+<p>Example <code>RefSeq</code>:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a><span class="co"># download all geneomes stored in RefSeq</span></span>
+<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a><span class="fu">meta.retrieval.all</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Genbank</code>:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="co"># download all geneomes stored in Genbank</span></span>
+<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a><span class="fu">meta.retrieval.all</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;genome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="proteome-retrieval" class="section level3">
+<h3>Proteome Retrieval</h3>
+<p>Example <code>RefSeq</code>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="co"># download all proteome stored in RefSeq</span></span>
+<span id="cb62-2"><a href="#cb62-2" tabindex="-1"></a><span class="fu">meta.retrieval.all</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">type =</span> <span class="st">&quot;proteome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Example <code>Genbank</code>:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="co"># download all proteome stored in Genbank</span></span>
+<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a><span class="fu">meta.retrieval.all</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">type =</span> <span class="st">&quot;proteome&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Again, by exchanging <code>type = &quot;proteome&quot;</code> by either</p>
+<ul>
+<li><code>type = &quot;genome&quot;</code></li>
+<li><code>type = &quot;cds&quot;</code></li>
+<li><code>type = &quot;rna&quot;</code></li>
+<li><code>type = &quot;assemblystats&quot;</code></li>
+<li><code>type = &quot;gff&quot;</code></li>
+</ul>
+<p>users can retrieve genome, CDS, RNA, genome assembly statistics or
+GFF files instead of proteomes.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

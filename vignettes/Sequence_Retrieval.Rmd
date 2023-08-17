@@ -111,9 +111,9 @@ is.genome.available(db = "refseq", organism = "Homo sapiens", details = TRUE)
 ```
 
 ```
-  assembly_accessi… bioproject biosample wgs_master refseq_category taxid
+  assembly_accessi bioproject biosample wgs_master refseq_category taxid
   <chr>             <chr>      <chr>     <chr>      <chr>           <int>
-1 GCF_000001405.38  PRJNA168   NA        NA         reference geno…  9606
+1 GCF_000001405.38  PRJNA168   NA        NA         reference geno  9606
 # ... with 15 more variables: species_taxid <int>, organism_name <chr>,
 #   infraspecific_name <chr>, isolate <chr>, version_status <chr>,
 #   assembly_level <chr>, release_type <chr>, genome_rep <chr>,
@@ -151,19 +151,19 @@ is.genome.available(organism = "Mycobacterium tuberculosis", db = "refseq", deta
 
 ```
 A tibble: 6,744 x 21
-   assembly_accessi… bioproject  biosample  wgs_master  refseq_category
+   assembly_accessi bioproject  biosample  wgs_master  refseq_category
    <chr>             <chr>       <chr>      <chr>       <chr>          
- 1 GCF_000729745.1   PRJNA224116 SAMN02899… JPFP000000… na             
- 2 GCF_000729755.1   PRJNA224116 SAMN02899… JPFQ000000… na             
- 3 GCF_000729765.1   PRJNA224116 SAMN02899… JPFR000000… na             
- 4 GCF_000749605.1   PRJNA224116 SAMN02902… JQES000000… na             
- 5 GCF_000749615.1   PRJNA224116 SAMN02902… JQER000000… na             
- 6 GCF_000749625.1   PRJNA224116 SAMN02902… JQEQ000000… na             
- 7 GCF_000749665.1   PRJNA224116 SAMN02902… JQEV000000… na             
- 8 GCF_000749675.1   PRJNA224116 SAMN02902… JQET000000… na             
- 9 GCF_000749685.1   PRJNA224116 SAMN02902… JQEN000000… na             
-10 GCF_000749725.1   PRJNA224116 SAMN02902… JQEM000000… na             
- … with 6,734 more rows, and 16 more variables: taxid <int>,
+ 1 GCF_000729745.1   PRJNA224116 SAMN02899 JPFP000000 na             
+ 2 GCF_000729755.1   PRJNA224116 SAMN02899 JPFQ000000 na             
+ 3 GCF_000729765.1   PRJNA224116 SAMN02899 JPFR000000 na             
+ 4 GCF_000749605.1   PRJNA224116 SAMN02902 JQES000000 na             
+ 5 GCF_000749615.1   PRJNA224116 SAMN02902 JQER000000 na             
+ 6 GCF_000749625.1   PRJNA224116 SAMN02902 JQEQ000000 na             
+ 7 GCF_000749665.1   PRJNA224116 SAMN02902 JQEV000000 na             
+ 8 GCF_000749675.1   PRJNA224116 SAMN02902 JQET000000 na             
+ 9 GCF_000749685.1   PRJNA224116 SAMN02902 JQEN000000 na             
+10 GCF_000749725.1   PRJNA224116 SAMN02902 JQEM000000 na             
+  with 6,734 more rows, and 16 more variables: taxid <int>,
    species_taxid <int>, organism_name <chr>,
    infraspecific_name <chr>, isolate <chr>, version_status <chr>,
    assembly_level <chr>, release_type <chr>, genome_rep <chr>,
@@ -328,20 +328,20 @@ is.genome.available(db = "genbank", organism = "Homo sapiens", details = TRUE)
 
 
 ```
- A tibble: 1,041 × 23                                                                                   
+ A tibble: 1,041 x 23                                                                                   
    assembly_accession bioproject biosample  wgs_master refseq_category
    <chr>              <chr>      <chr>      <chr>      <chr>          
- 1 GCA_000001405.28   PRJNA31257 NA         NA         reference geno…
- 2 GCA_000002115.2    PRJNA1431  SAMN02981… AADD00000… na             
- 3 GCA_000002125.2    PRJNA19621 SAMN02981… ABBA00000… na             
+ 1 GCA_000001405.28   PRJNA31257 NA         NA         reference geno
+ 2 GCA_000002115.2    PRJNA1431  SAMN02981 AADD00000 na             
+ 3 GCA_000002125.2    PRJNA19621 SAMN02981 ABBA00000 na             
  4 GCA_000002135.3    PRJNA10793 NA         NA         na             
- 5 GCA_000004845.2    PRJNA42199 SAMN00003… ADDF00000… na             
- 6 GCA_000005465.1    PRJNA42201 NA         DAAB00000… na             
- 7 GCA_000181135.1    PRJNA28335 SAMN00001… ABKV00000… na             
- 8 GCA_000185165.1    PRJNA59877 SAMN02981… AEKP00000… na             
- 9 GCA_000212995.1    PRJNA19621 SAMN02981… ABSL00000… na             
-10 GCA_000252825.1    PRJNA19621 SAMN02981… ABBA00000… na             
-# … with 1,031 more rows, and 18 more variables: taxid <int>,
+ 5 GCA_000004845.2    PRJNA42199 SAMN00003 ADDF00000 na             
+ 6 GCA_000005465.1    PRJNA42201 NA         DAAB00000 na             
+ 7 GCA_000181135.1    PRJNA28335 SAMN00001 ABKV00000 na             
+ 8 GCA_000185165.1    PRJNA59877 SAMN02981 AEKP00000 na             
+ 9 GCA_000212995.1    PRJNA19621 SAMN02981 ABSL00000 na             
+10 GCA_000252825.1    PRJNA19621 SAMN02981 ABBA00000 na             
+#  with 1,031 more rows, and 18 more variables: taxid <int>,
 #   species_taxid <int>, organism_name <chr>,
 #   infraspecific_name <chr>, isolate <chr>, version_status <chr>,
 #   assembly_level <chr>, release_type <chr>, genome_rep <chr>,
@@ -383,8 +383,8 @@ is.genome.available(db = "ensembl", organism = "Homo sapiens", details = TRUE)
 ```
   division           assembly accession  release name  taxon_id strain
   <chr>              <chr>    <chr>        <int> <chr>    <int> <chr> 
-1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
-# … with 3 more variables: display_name <chr>, common_name <chr>,
+1 EnsemblVertebrates GRCh38   GCA_00000     104 homo     9606 NA    
+#  with 3 more variables: display_name <chr>, common_name <chr>,
 #   strain_collection <chr>
 ```
 
@@ -398,8 +398,8 @@ is.genome.available(db = "ensembl", organism = "9606", details = TRUE)
 ```
 division           assembly accession  release name  taxon_id strain
   <chr>              <chr>    <chr>        <int> <chr>    <int> <chr> 
-1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
-# … with 3 more variables: display_name <chr>, common_name <chr>,
+1 EnsemblVertebrates GRCh38   GCA_00000     104 homo     9606 NA    
+#  with 3 more variables: display_name <chr>, common_name <chr>,
 #   strain_collection <chr>
 ```
 
@@ -411,8 +411,8 @@ is.genome.available(organism = "GCA_000001405.28", db = "ensembl", details = TRU
 ```
  division           assembly accession  release name  taxon_id strain
   <chr>              <chr>    <chr>        <int> <chr>    <int> <chr> 
-1 EnsemblVertebrates GRCh38   GCA_00000…     104 homo…     9606 NA    
-# … with 3 more variables: display_name <chr>, common_name <chr>,
+1 EnsemblVertebrates GRCh38   GCA_00000     104 homo     9606 NA    
+#  with 3 more variables: display_name <chr>, common_name <chr>,
 #   strain_collection <chr>
 ```
 
@@ -446,20 +446,20 @@ is.genome.available(db = "uniprot", "Homo sapiens", details = TRUE)
 ```
 
 ```
- A tibble: 29 × 16
-   name          description        isReferenceProte… isRepresentativ…
+ A tibble: 29 x 16
+   name          description        isReferenceProte isRepresentativ
    <chr>         <chr>              <lgl>             <lgl>           
- 1 Homo sapiens… Homo sapiens (Hom… TRUE              TRUE            
- 2 Human associ… NA                 FALSE             TRUE            
- 3 Human respir… NA                 FALSE             FALSE           
- 4 Human respir… NA                 FALSE             FALSE           
- 5 Human respir… NA                 FALSE             FALSE           
- 6 Human respir… NA                 FALSE             FALSE           
- 7 Human respir… NA                 FALSE             FALSE           
- 8 Human respir… NA                 FALSE             FALSE           
- 9 Human respir… NA                 FALSE             FALSE           
-10 Human respir… NA                 FALSE             FALSE           
-# … with 19 more rows, and 12 more variables:
+ 1 Homo sapiens Homo sapiens (Hom TRUE              TRUE            
+ 2 Human associ NA                 FALSE             TRUE            
+ 3 Human respir NA                 FALSE             FALSE           
+ 4 Human respir NA                 FALSE             FALSE           
+ 5 Human respir NA                 FALSE             FALSE           
+ 6 Human respir NA                 FALSE             FALSE           
+ 7 Human respir NA                 FALSE             FALSE           
+ 8 Human respir NA                 FALSE             FALSE           
+ 9 Human respir NA                 FALSE             FALSE           
+10 Human respir NA                 FALSE             FALSE           
+#  with 19 more rows, and 12 more variables:
 #   genomeAssembly <df[,4]>, dbReference <list>, component <list>,
 #   reference <list>, annotationScore <df[,1]>, scores <list>,
 #   upid <chr>, modified <dbl>, taxonomy <int>, source <chr>,
@@ -476,13 +476,13 @@ is.genome.available(db = "uniprot", "9606", details = TRUE)
 ```
 
 ```
- A tibble: 3 × 15
-  name  description isReferenceProt… isRepresentativ… genomeAssembly$…
+ A tibble: 3 x 15
+  name  description isReferenceProt isRepresentativ genomeAssembly$
   <chr> <chr>       <lgl>            <lgl>            <chr>           
-1 Homo… Homo sapie… TRUE             TRUE             Ensembl         
-2 Homo… NA          FALSE            FALSE            ENA/EMBL        
-3 Homo… NA          FALSE            FALSE            ENA/EMBL        
-# … with 10 more variables: dbReference <list>, component <list>,
+1 Homo Homo sapie TRUE             TRUE             Ensembl         
+2 Homo NA          FALSE            FALSE            ENA/EMBL        
+3 Homo NA          FALSE            FALSE            ENA/EMBL        
+#  with 10 more variables: dbReference <list>, component <list>,
 #   reference <list>, annotationScore <df[,1]>, scores <list>,
 #   upid <chr>, modified <dbl>, taxonomy <int>, source <chr>,
 #   superregnum <chr>
@@ -496,10 +496,10 @@ is.genome.available(db = "uniprot", "UP000005640", details = TRUE)
 ```
 
 ```
- name  description isReferenceProt… isRepresentativ… genomeAssembly$…
+ name  description isReferenceProt isRepresentativ genomeAssembly$
   <chr> <chr>       <lgl>            <lgl>            <chr>           
-1 Homo… Homo sapie… TRUE             TRUE             Ensembl         
-# … with 10 more variables: dbReference <list>, component <list>,
+1 Homo Homo sapie TRUE             TRUE             Ensembl         
+#  with 10 more variables: dbReference <list>, component <list>,
 #   reference <list>, annotationScore <df[,1]>, scores <list>,
 #   upid <chr>, modified <dbl>, taxonomy <int>, source <chr>,
 #   superregnum <chr>

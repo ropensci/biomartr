@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2023-08-17" />
+
+<title>Ensembl BioMart Examples</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Ensembl BioMart Examples</h1>
+<h4 class="date">2023-08-17</h4>
+
+
+
+<div id="use-case-1-functional-annotation-of-genes-sharing-a-common-evolutionary-history" class="section level2">
+<h2>Use Case #1: Functional Annotation of Genes Sharing a Common
+Evolutionary History</h2>
+<p>Evolutionary Transcriptomics aims to predict stages or periods of
+evolutionary conservation in biological processes on the transcriptome
+level. However, finding genes sharing a <a href="https://drostlab.github.io/myTAI/articles/Enrichment.html">common
+evolutionary history</a> could reveal how the the biological process
+might have evolved in the first place.</p>
+<p>In this <code>Use Case</code> we will combine functional and
+biological annotation obtained with <code>biomartr</code> with enriched
+genes obtained with <a href="https://drostlab.github.io/myTAI/articles/Enrichment.html">PlotEnrichment()</a>.</p>
+<div id="step-1" class="section level3">
+<h3>Step 1</h3>
+<p>For the following example we will use the dataset an enrichment
+analyses found in <a href="https://drostlab.github.io/myTAI/articles/Enrichment.html">PlotEnrichment()</a>.</p>
+<p>Install and load the <a href="https://github.com/drostlab/myTAI">myTAI</a> package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># install myTAI</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;myTAI&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># load myTAI</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(myTAI)</span></code></pre></div>
+<p>Download the <code>Phylostratigraphic Map</code> of <em>D.
+rerio</em>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># download the Phylostratigraphic Map of Danio rerio</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># from Sestak and Domazet-Loso, 2015</span></span></code></pre></div>
+<p>The dataset comes from <code>Supplementary file 3</code> of this
+publication: <a href="https://academic.oup.com/mbe/article/32/2/299/1058654#77837069" class="uri">https://academic.oup.com/mbe/article/32/2/299/1058654#77837069</a></p>
+<p>After downloading <code>Supplementary file 3</code>, you will find
+the file <code>TableS3-2.xlsx</code> which can be used in the following
+<code>biomartr</code> functions.</p>
+<p>Read the <code>*.xlsx</code> file storing the
+<code>Phylostratigraphic Map</code> of <em>D. rerio</em> and format it
+for the use with <code>myTAI</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># install the readxl package</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># load package readxl</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># read the excel file</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>DrerioPhyloMap.MBEa <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;TableS3-2.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># format Phylostratigraphic Map for use with myTAI</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>Drerio.PhyloMap <span class="ot">&lt;-</span> DrerioPhyloMap.MBEa[ , <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co"># have a look at the final format</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">head</span>(Drerio.PhyloMap)</span></code></pre></div>
+<pre><code>  Phylostrata            ZFIN_ID
+1           1 ZDB-GENE-000208-13
+2           1 ZDB-GENE-000208-17
+3           1 ZDB-GENE-000208-18
+4           1 ZDB-GENE-000208-23
+5           1  ZDB-GENE-000209-3
+6           1  ZDB-GENE-000209-4</code></pre>
+<p>Now, <code>Drerio.PhyloMap</code> stores the
+<code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used
+as background set to perform enrichment analyses with
+<code>PlotEnrichment()</code> from <code>myTAI</code>.</p>
+</div>
+<div id="enrichment-analyses" class="section level3">
+<h3>Enrichment Analyses</h3>
+<p>Now, the <code>PlotEnrichment()</code> function visualizes the over-
+and underrepresented <code>Phylostrata</code> of brain specific genes
+when compared with the total number of genes stored in the
+<code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>Drerio.OrganSpecificExpression <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;TableS3-2.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">2</span>, <span class="at">skip =</span> <span class="dv">3</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># select only brain specific genes</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>Drerio.Brain.Genes <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">unique</span>(<span class="fu">na.omit</span>(Drerio.OrganSpecificExpression[ , <span class="st">&quot;brain&quot;</span>])))</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="fu">PlotEnrichment</span>(Drerio.PhyloMap,</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>               <span class="at">test.set     =</span> Drerio.Brain.Genes,</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>               <span class="at">measure      =</span> <span class="st">&quot;foldchange&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>               <span class="at">use.only.map =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>               <span class="at">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</span></code></pre></div>
+<p>Users will observe that for example brain genes deriving from PS5 are
+significantly enriched.</p>
+<p>Now we can select all brain genes originating in PS5 using the
+<code>SelectGeneSet()</code> function from <code>myTAI</code>. Please
+notice that <code>SelectGeneSet()</code> can only be used with
+phylostratigraphic maps only (<code>use.map.only = TRUE</code> argument)
+since myTAI version &gt; 0.3.0.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>BrainGenes <span class="ot">&lt;-</span> <span class="fu">SelectGeneSet</span>(<span class="at">ExpressionSet =</span> Drerio.PhyloMap,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                            <span class="at">gene.set      =</span> Drerio.Brain.Genes,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                            <span class="at">use.only.map  =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># select only brain genes originating in PS5</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>BrainGenes.PS5 <span class="ot">&lt;-</span> BrainGenes[<span class="fu">which</span>(BrainGenes[ , <span class="st">&quot;Phylostrata&quot;</span>] <span class="sc">==</span> <span class="dv">5</span>), ]</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># look at the results</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="fu">head</span>(BrainGenes.PS5)</span></code></pre></div>
+<pre><code>      Phylostrata           ZFIN_ID
+14851           5 ZDB-GENE-000210-6
+14852           5 ZDB-GENE-000210-7
+14853           5 ZDB-GENE-000328-4
+14856           5 ZDB-GENE-000411-1
+14857           5 ZDB-GENE-000427-4
+14860           5 ZDB-GENE-000526-1</code></pre>
+<p>Now users can perform the <code>biomart()</code> function to obtain
+the functional annotation of brain genes originating in PS5.</p>
+<p>For this purpose, first we need to find the filter name of the
+corresponding gene ids such as <code>ZDB-GENE-000210-6</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># find filter for zfin.org ids</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">organismFilters</span>(<span class="st">&quot;Danio rerio&quot;</span>, <span class="at">topic =</span> <span class="st">&quot;zfin_id&quot;</span>)</span></code></pre></div>
+<pre><code>                            name                           description             dataset
+52                  with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
+53  with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
+103                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] drerio_gene_ensembl
+274                 with_zfin_id                       with ZFIN ID(s)    drerio_gene_vega
+286                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-121214-212]    drerio_gene_vega
+366                 with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
+367 with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
+417                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] drerio_gene_ensembl
+588                 with_zfin_id                       with ZFIN ID(s)    drerio_gene_vega
+600                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-121214-212]    drerio_gene_vega
+680                 with_zfin_id                       with ZFIN ID(s) drerio_gene_ensembl
+681 with_zfin_id_transcript_name          with ZFIN transcript name(s) drerio_gene_ensembl
+731                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-060825-136] drerio_gene_ensembl
+902                 with_zfin_id                       with ZFIN ID(s)    drerio_gene_vega
+914                      zfin_id ZFIN ID(s) [e.g. ZDB-GENE-121214-212]    drerio_gene_vega
+                    mart
+52  ENSEMBL_MART_ENSEMBL
+53  ENSEMBL_MART_ENSEMBL
+103 ENSEMBL_MART_ENSEMBL
+274 ENSEMBL_MART_ENSEMBL
+286 ENSEMBL_MART_ENSEMBL
+366 ENSEMBL_MART_ENSEMBL
+367 ENSEMBL_MART_ENSEMBL
+417 ENSEMBL_MART_ENSEMBL
+588 ENSEMBL_MART_ENSEMBL
+600 ENSEMBL_MART_ENSEMBL
+680 ENSEMBL_MART_ENSEMBL
+681 ENSEMBL_MART_ENSEMBL
+731 ENSEMBL_MART_ENSEMBL
+902 ENSEMBL_MART_ENSEMBL
+914 ENSEMBL_MART_ENSEMBL</code></pre>
+<p>Now users can retrieve the corresponding GO attribute of <em>D.
+rerio</em> with <code>organismAttributes</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># find go attribute term for D. rerio</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">organismAttributes</span>(<span class="st">&quot;Danio rerio&quot;</span>, <span class="at">topic =</span> <span class="st">&quot;go&quot;</span>)</span></code></pre></div>
+<pre><code>                                              name                             description
+33                                           go_id                       GO Term Accession
+36                                 go_linkage_type                   GO Term Evidence Code
+38                            goslim_goa_accession                 GOSlim GOA Accession(s)
+39                          goslim_goa_description                  GOSlim GOA Description
+516                  ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID
+517  ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID
+518               ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID
+519                    ggorilla_homolog_chromosome                 Gorilla Chromosome Name
+520                   ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp)
+521                     ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp)
+522                ggorilla_homolog_orthology_type                           Homology Type
+523                       ggorilla_homolog_subtype                                Ancestor
+524          ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high]
+525                       ggorilla_homolog_perc_id   % Identity with respect to query gene
+526                    ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene
+527                            ggorilla_homolog_dn                                      dN
+528                            ggorilla_homolog_ds                                      dS
+1240                                         go_id                                   GO ID
+1241                                      quick_go                             Quick GO ID
+1370                                         go_id                       GO Term Accession
+1373                               go_linkage_type                   GO Term Evidence Code
+1375                          goslim_goa_accession                 GOSlim GOA Accession(s)
+1376                        goslim_goa_description                  GOSlim GOA Description
+1853                 ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID
+1854 ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID
+1855              ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID
+1856                   ggorilla_homolog_chromosome                 Gorilla Chromosome Name
+1857                  ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp)
+1858                    ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp)
+1859               ggorilla_homolog_orthology_type                           Homology Type
+1860                      ggorilla_homolog_subtype                                Ancestor
+1861         ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high]
+1862                      ggorilla_homolog_perc_id   % Identity with respect to query gene
+1863                   ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene
+1864                           ggorilla_homolog_dn                                      dN
+1865                           ggorilla_homolog_ds                                      dS
+2577                                         go_id                                   GO ID
+2578                                      quick_go                             Quick GO ID
+2707                                         go_id                       GO Term Accession
+2710                               go_linkage_type                   GO Term Evidence Code
+2712                          goslim_goa_accession                 GOSlim GOA Accession(s)
+2713                        goslim_goa_description                  GOSlim GOA Description
+3190                 ggorilla_homolog_ensembl_gene                 Gorilla Ensembl Gene ID
+3191 ggorilla_homolog_canomical_transcript_protein      Canonical Protein or Transcript ID
+3192              ggorilla_homolog_ensembl_peptide              Gorilla Ensembl Protein ID
+3193                   ggorilla_homolog_chromosome                 Gorilla Chromosome Name
+3194                  ggorilla_homolog_chrom_start           Gorilla Chromosome Start (bp)
+3195                    ggorilla_homolog_chrom_end             Gorilla Chromosome End (bp)
+3196               ggorilla_homolog_orthology_type                           Homology Type
+3197                      ggorilla_homolog_subtype                                Ancestor
+3198         ggorilla_homolog_orthology_confidence    Orthology confidence [0 low, 1 high]
+3199                      ggorilla_homolog_perc_id   % Identity with respect to query gene
+3200                   ggorilla_homolog_perc_id_r1 % Identity with respect to Gorilla gene
+3201                           ggorilla_homolog_dn                                      dN
+3202                           ggorilla_homolog_ds                                      dS
+3914                                         go_id                                   GO ID
+3915                                      quick_go                             Quick GO ID
+                 dataset                 mart
+33   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+36   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+38   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+39   drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+516  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+517  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+518  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+519  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+520  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+521  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+522  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+523  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+524  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+525  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+526  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+527  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+528  drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1240    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+1241    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+1370 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1373 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1375 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1376 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1853 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1854 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1855 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1856 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1857 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1858 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1859 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1860 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1861 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1862 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1863 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1864 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+1865 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2577    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+2578    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+2707 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2710 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2712 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+2713 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3190 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3191 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3192 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3193 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3194 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3195 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3196 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3197 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3198 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3199 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3200 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3201 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3202 drerio_gene_ensembl ENSEMBL_MART_ENSEMBL
+3914    drerio_gene_vega ENSEMBL_MART_ENSEMBL
+3915    drerio_gene_vega ENSEMBL_MART_ENSEMBL</code></pre>
+<p>Now users can specify the filter <code>zfin_id</code> and attribute
+<code>go_id</code> to retrieve the GO terms of corresponding gene ids
+(<strong>Please note that this will take some time</strong>).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># retrieve GO terms of D. rerio brain genes originating in PS5</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>GO_tbl.BrainGenes <span class="ot">&lt;-</span> <span class="fu">biomart</span>(<span class="at">genes      =</span> <span class="fu">unlist</span>(BrainGenes.PS5[ , <span class="st">&quot;ZFIN_ID&quot;</span>]),</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>                             <span class="at">mart       =</span> <span class="st">&quot;ENSEMBL_MART_ENSEMBL&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                             <span class="at">dataset    =</span> <span class="st">&quot;drerio_gene_ensembl&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>                             <span class="at">attributes =</span> <span class="st">&quot;go_id&quot;</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>                             <span class="at">filters    =</span> <span class="st">&quot;zfin_id&quot;</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="fu">head</span>(GO_tbl.BrainGenes)</span></code></pre></div>
+<pre><code>            zfin_id      go_id
+1 ZDB-GENE-000210-6 GO:0060037
+2 ZDB-GENE-000210-6 GO:0046983
+3 ZDB-GENE-000210-7 GO:0046983
+4 ZDB-GENE-000328-4 GO:0007275
+5 ZDB-GENE-000328-4 GO:0007166
+6 ZDB-GENE-000328-4 GO:0035567</code></pre>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

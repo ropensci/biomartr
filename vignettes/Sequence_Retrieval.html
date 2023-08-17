@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2023-08-17" />
+
+<title>Sequence Retrieval</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Sequence Retrieval</h1>
+<h4 class="date">2023-08-17</h4>
+
+
+
+<div id="biological-sequence-retrieval" class="section level2">
+<h2>Biological Sequence Retrieval</h2>
+<p>The <code>biomartr</code> package allows users to retrieve biological
+sequences in a very simple and intuitive way.</p>
+<p>Using <code>biomartr</code>, users can retrieve either genomes,
+proteomes, CDS, RNA, GFF, and genome assembly statistics data using the
+specialized functions:</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> To make sure that you have a
+sufficiently stable (internet) connection between R and the respective
+databases, please set the default <code>timeout</code> setting
+<strong>on your local machine</strong> from 60sec to at least 30000sec
+before running any retrieval functions via:</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">30000</span>)</span></code></pre></div>
+</div>
+<div id="topics" class="section level2">
+<h2>Topics</h2>
+<ul>
+<li><a href="#getting-started-with-sequence-retrieval">0. Getting
+Started with Sequence Retrieval</a>
+<ul>
+<li><a href="#listing-the-total-number-of-available-genomes">0.1 Listing
+the total number of available genomes</a></li>
+</ul></li>
+<li><a href="#genome-retrieval">1. Genome retrieval with
+<code>getGenome()</code></a>
+<ul>
+<li><a href="#listing-the-total-number-of-available-genomes">A. list
+total number of available genomes in each database</a></li>
+<li><a href="#retrieving-kingdom-group-and-subgroup-information">B.
+dealing with kingdoms, groups, and subgroups</a></li>
+<li><a href="#example-ncbi-refseq">1.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank">1.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl">1.3 from ENSEMBL</a></li>
+</ul></li>
+<li><a href="#genomeset-retrieval">1.B. Multiple genome retrieval with
+<code>getGenomeSet()</code></a></li>
+<li><a href="#proteome-retrieval">2. Proteome retrieval with
+<code>getProteome()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-1">2.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-1">2.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-1">2.3 from ENSEMBL</a></li>
+<li><a href="#example-retrieval-uniprot">2.5 from UniProt</a></li>
+</ul></li>
+<li><a href="#proteomeset-retrieval">2.B. Multiple proteome retrieval
+with <code>getProteomeSet()</code></a></li>
+<li><a href="#cds-retrieval">3. Coding sequence retrieval with
+<code>getCDS()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-2">3.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-2">3.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-2">3.3 from ENSEMBL</a></li>
+</ul></li>
+<li><a href="#cdsset-retrieval">3.B. Multiple coding sequence retrieval
+with <code>getCDSSet()</code></a></li>
+<li><a href="#rna-retrieval">4. RNA retrieval with
+<code>getRNA()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-3">4.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-3">4.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-3">4.3 from ENSEMBL</a></li>
+</ul></li>
+<li><a href="#rnaset-retrieval">4.B. Multiple RNA retrieval with
+<code>getRNASet()</code></a></li>
+<li><a href="#retrieve-the-annotation-file-of-a-particular-genome">5.
+GFF retrieval with <code>getGFF()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-4">5.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-4">5.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-4">5.3 from ENSEMBL</a></li>
+</ul></li>
+<li><a href="#gffset-retrieval">5.B. Multiple GFF retrieval with
+<code>getGFFSet()</code></a></li>
+<li><a href="#retrieve-the-annotation-file-of-a-particular-genome">6.
+GTF retrieval with <code>getGTF()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-5">6.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-5">6.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-5">6.3 from ENSEMBL</a></li>
+</ul></li>
+<li><a href="#repeat-masker-retrieval">7. Repeat Masker Annotation file
+retrieval with <code>getRepeatMasker()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-6">7.1 from NCBI RefSeq</a></li>
+</ul></li>
+<li><a href="#genome-assembly-stats-retrieval">8. Genome Assembly Stats
+Retrieval with <code>getAssemblyStats()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-7">8.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-6">8.2 from NCBI Genbank</a></li>
+</ul></li>
+<li><a href="#collection-retrieval">9. Collection (Genome, Proteome,
+CDS, RNA, GFF, Repeat Masker, AssemblyStats) retrieval with
+<code>getCollection()</code></a>
+<ul>
+<li><a href="#example-ncbi-refseq-8">9.1 from NCBI RefSeq</a></li>
+<li><a href="#example-ncbi-genbank-7">9.2 from NCBI Genbank</a></li>
+<li><a href="#example-ensembl-6">9.3 from NCBI ENSEMBL</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="getting-started-with-sequence-retrieval" class="section level2">
+<h2>Getting Started with Sequence Retrieval</h2>
+<p>First users can check whether or not the genome, proteome, CDS, RNA,
+GFF, GTF, or genome assembly statistics of their interest is available
+for download.</p>
+<p>Using the scientific name of the organism of interest, users can
+check whether the corresponding genome is available via the
+<code>is.genome.available()</code> function.</p>
+<p>Please note that the first time you run this command it might take a
+while, because during the initial execution of this function all
+necessary information is retrieved from NCBI and then stored locally.
+All further runs are then much faster.</p>
+<div id="example-ncbi-refseq-is.genome.available" class="section level3">
+<h3>Example <code>NCBI RefSeq</code> (?is.genome.available):</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># checking whether or not the Homo sapiens </span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># genome is avaialable for download</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>)</span></code></pre></div>
+<pre><code>A reference or representative genome assembly is available for &#39;Homo sapiens&#39;.
+[1] TRUE</code></pre>
+<p>In the case of the human genome, there are more than one entry in the
+NCBI RefSeq database (see message). By specifying the argument ‘details
+= TRUE’ users can retrieve all information for ‘Homo sapiens’ that is
+stored in NCBI RefSeq.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># checking whether or not the Homo sapiens </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># genome is avaialable for download</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>  assembly_accessi bioproject biosample wgs_master refseq_category taxid
+  &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt;
+1 GCF_000001405.38  PRJNA168   NA        NA         reference geno  9606
+# ... with 15 more variables: species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
+<p>Here, we find one possible versions of the human genome having the
+<code>assembly_accession</code> ID <code>GCF_000001405.38</code>.</p>
+<p>When retrieving a genome with e.g. <code>getGenome()</code> the
+<code>organism</code> argument can also be specified using the
+<code>assembly_accession</code> ID instead of the scientific name of the
+organism. This is true for all <code>get*()</code> functions. Hence,
+instead of writing
+<code>getGenome(db = &quot;refseq&quot;, organism = &quot;Homo sapiens&quot;)</code>, users
+can specify
+<code>getGenome(db = &quot;refseq&quot;, organism = &quot;GCF_000001405.38&quot;)</code>.
+This is particularly useful when more than one entry is available for
+one organism.</p>
+<p><strong>Please note that the <code>assembly_accession</code> id might
+change internally in external databases such as NCBI RefSeq. Thus when
+writing automated scripts using the <code>assembly_accession</code> id
+they might stop working due to the internal change of ids at RefSeq.
+Recently, I had the case where the <code>assembly_accession</code> id
+was changed at RefSeq from <code>GCF_000001405.37</code> to
+<code>GCF_000001405.38</code>. Thus, scripts based on screening for
+entries with <code>is.genome.available()</code> stopped working, because
+the id <code>GCF_000001405.37</code> couldn’t be found
+anymore.</strong></p>
+<p>In some cases users will find several entries for the same scientific
+name. This might be due to the fact that ecotypes, strains, or other
+types of sub-species are available in the respective databases.</p>
+<p>For example. when we search for the bacterium
+<code>Mycobacterium tuberculosis</code> in NCBI RefSeq we get 5377
+hits.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">organism =</span> <span class="st">&quot;Mycobacterium tuberculosis&quot;</span>, <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>A tibble: 6,744 x 21
+   assembly_accessi bioproject  biosample  wgs_master  refseq_category
+   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;          
+ 1 GCF_000729745.1   PRJNA224116 SAMN02899 JPFP000000 na             
+ 2 GCF_000729755.1   PRJNA224116 SAMN02899 JPFQ000000 na             
+ 3 GCF_000729765.1   PRJNA224116 SAMN02899 JPFR000000 na             
+ 4 GCF_000749605.1   PRJNA224116 SAMN02902 JQES000000 na             
+ 5 GCF_000749615.1   PRJNA224116 SAMN02902 JQER000000 na             
+ 6 GCF_000749625.1   PRJNA224116 SAMN02902 JQEQ000000 na             
+ 7 GCF_000749665.1   PRJNA224116 SAMN02902 JQEV000000 na             
+ 8 GCF_000749675.1   PRJNA224116 SAMN02902 JQET000000 na             
+ 9 GCF_000749685.1   PRJNA224116 SAMN02902 JQEN000000 na             
+10 GCF_000749725.1   PRJNA224116 SAMN02902 JQEM000000 na             
+  with 6,734 more rows, and 16 more variables: taxid &lt;int&gt;,
+   species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+   excluded_from_refseq &lt;chr&gt;</code></pre>
+<p>When looking at the names of these organisms we see that they consist
+of different strains of <code>Mycobacterium tuberculosis</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">is.genome.available</span>(<span class="at">organism =</span> <span class="st">&quot;Mycobacterium tuberculosis&quot;</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                         <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                         <span class="at">details =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>organism_name)</span></code></pre></div>
+<pre><code>[1] &quot;Mycobacterium tuberculosis CDC1551&quot;     
+[2] &quot;Mycobacterium tuberculosis H37Ra&quot;       
+[3] &quot;Mycobacterium tuberculosis F11&quot;         
+[4] &quot;Mycobacterium tuberculosis KZN 1435&quot;    
+[5] &quot;Mycobacterium tuberculosis SUMu001&quot;     
+[6] &quot;Mycobacterium tuberculosis str. Haarlem&quot;</code></pre>
+<p>Now we can use the <code>assembly_accession</code> id to retrieve the
+<code>Mycobacterium tuberculosis</code> strain we are interested in,
+e.g. <code>Mycobacterium tuberculosis CDC1551</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>MtbCDC1551 <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>                        <span class="at">organism =</span> <span class="st">&quot;GCF_000008585.1&quot;</span>,  </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                        <span class="at">path   =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;genomes&quot;</span>), </span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>                        <span class="at">reference =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>                        </span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>MtbCDC1551_genome <span class="ot">&lt;-</span> <span class="fu">read_genome</span>(MtbCDC1551)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>MtbCDC1551_genome</span></code></pre></div>
+<pre><code>A DNAStringSet instance of length 1
+      width seq                             names               
+[1] 4403837 TTGACCGATGACCC...AGGGAGATACGTCG NC_002755.2 Mycob...</code></pre>
+<div id="using-the-ncbi-taxonomy-id-instead-of-the-scientific-name-to-screen-for-organism-availability" class="section level4">
+<h4>Using the NCBI Taxonomy ID instead of the scientific name to screen
+for organism availability</h4>
+<p>Instead of specifying the <code>scientific name</code> of the
+organism of interest users can specify the <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy</a>
+identifier (= <code>taxid</code>) of the corresponding organism. For
+example, the <code>taxid</code> of <code>Homo sapiens</code> is
+<code>9606</code>. Now users can specify <code>organism = &quot;9606&quot;</code>
+to retrieve entries for <code>Homo sapiens</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># checking availability for Homo sapiens using its taxid</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;9606&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>  assembly_accession bioproject biosample wgs_master refseq_category  taxid
+  &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;int&gt;
+1 GCF_000001405.38   PRJNA168   NA        NA         reference genome  9606
+# ... with 15 more variables: species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
+</div>
+<div id="using-the-accession-id-instead-of-the-scientific-name-or-taxid-to-screen-for-organism-availability" class="section level4">
+<h4>Using the accession ID instead of the scientific name or taxid to
+screen for organism availability</h4>
+<p>Finally, instead of specifying either the
+<code>scientific name</code> of the organism of interest nor the
+<code>taxid</code>, users can specify the accession ID of the organism
+of interest. In the following example we use the accession ID of
+<code>Homo sapiens</code> (= <code>GCF_000001405.38</code>):</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># checking availability for Homo sapiens using its taxid</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;GCF_000001405.38&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>assembly_accession bioproject biosample wgs_master refseq_category  taxid
+  &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;int&gt;
+1 GCF_000001405.38   PRJNA168   NA        NA         reference genome  9606
+# ... with 15 more variables: species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;</code></pre>
+</div>
+<div id="a-small-negative-example" class="section level4">
+<h4>A small negative example</h4>
+<p>In some cases your organism of interest will not be available in
+<code>NCBI RefSeq</code>. Here an example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># check genome availability for Candida glabrata</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Candida glabrata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>Unfortunatey, no entry <span class="cf">for</span> <span class="st">&#39;Candida glabrata&#39;</span> was found <span class="cf">in</span> the <span class="st">&#39;refseq&#39;</span> database. </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>Please consider specifying <span class="st">&#39;db = genbank&#39;</span> or <span class="st">&#39;db = ensembl&#39;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>to check whether <span class="st">&#39;Candida glabrata&#39;</span> is availabe <span class="cf">in</span> these databases.</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span></code></pre></div>
+<p>When now checking the availability in <code>NCBI Genbank</code> we
+find that indeed ‘Candida glabrata’ is available:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># check genome availability for Candida glabrata</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Candida glabrata&quot;</span>)</span></code></pre></div>
+<pre><code>Only a non-reference genome assembly is available for &#39;Candida glabrata&#39;. 
+Please make sure to specify the argument &#39;reference = FALSE&#39; when running any get*() function.
+[1] TRUE</code></pre>
+<p>Although, an entry is available the
+<code>is.genome.available()</code> warns us that only a non-reference
+genome is available for ‘Candida glabrata’. To then retrieve the
+e.g. genome etc. files users need to specify the
+<code>reference = FALSE</code> argument in the <code>get*()</code>
+functions.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># retrieve non-reference genome </span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">getGenome</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Candida glabrata&quot;</span>, <span class="at">reference =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>Unfortunately no genome file could be found for organism &#39;Candida glabrata&#39;. Thus, the download of this organism has been omitted. Have you tried to specify &#39;reference = FALSE&#39; ?
+[1] &quot;Not available&quot;</code></pre>
+</div>
+</div>
+<div id="example-ncbi-genbank-is.genome.available" class="section level3">
+<h3>Example <code>NCBI Genbank</code> (?is.genome.available):</h3>
+<p>Test whether or not the genome of <code>Homo sapiens</code> is
+present at NCBI Genbank.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># checking whether or not the Homo sapiens </span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co"># genome is avaialable for download</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>)</span></code></pre></div>
+<pre><code>A reference or representative genome assembly is available for &#39;Homo sapiens&#39;.                           
+More than one entry was found for &#39;Homo sapiens&#39;. Please consider to run the function &#39;is.genome.available()&#39; and specify &#39;is.genome.available(organism = Homo sapiens, db = genbank, details = TRUE)&#39;. This will allow you to select the &#39;assembly_accession&#39; identifier that can then be specified in all get*() functions.
+[1] TRUE</code></pre>
+<p>Now with <code>details = TRUE</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># checking whether or not the Homo sapiens </span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co"># genome is avaialable for download</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code> A tibble: 1,041 x 23                                                                                   
+   assembly_accession bioproject biosample  wgs_master refseq_category
+   &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          
+ 1 GCA_000001405.28   PRJNA31257 NA         NA         reference geno
+ 2 GCA_000002115.2    PRJNA1431  SAMN02981 AADD00000 na             
+ 3 GCA_000002125.2    PRJNA19621 SAMN02981 ABBA00000 na             
+ 4 GCA_000002135.3    PRJNA10793 NA         NA         na             
+ 5 GCA_000004845.2    PRJNA42199 SAMN00003 ADDF00000 na             
+ 6 GCA_000005465.1    PRJNA42201 NA         DAAB00000 na             
+ 7 GCA_000181135.1    PRJNA28335 SAMN00001 ABKV00000 na             
+ 8 GCA_000185165.1    PRJNA59877 SAMN02981 AEKP00000 na             
+ 9 GCA_000212995.1    PRJNA19621 SAMN02981 ABSL00000 na             
+10 GCA_000252825.1    PRJNA19621 SAMN02981 ABBA00000 na             
+#  with 1,031 more rows, and 18 more variables: taxid &lt;int&gt;,
+#   species_taxid &lt;int&gt;, organism_name &lt;chr&gt;,
+#   infraspecific_name &lt;chr&gt;, isolate &lt;chr&gt;, version_status &lt;chr&gt;,
+#   assembly_level &lt;chr&gt;, release_type &lt;chr&gt;, genome_rep &lt;chr&gt;,
+#   seq_rel_date &lt;date&gt;, asm_name &lt;chr&gt;, submitter &lt;chr&gt;,
+#   gbrs_paired_asm &lt;chr&gt;, paired_asm_comp &lt;chr&gt;, ftp_path &lt;chr&gt;,
+#   excluded_from_refseq &lt;chr&gt;, X22 &lt;chr&gt;, X23 &lt;chr&gt;</code></pre>
+<p>As you can see there are several versions of the
+<code>Homo sapiens</code> genome available for download from NCBI
+Genbank. Using the <code>assembly_accession</code> id will now allow to
+specify which version shall be retrieved.</p>
+</div>
+<div id="using-is.genome.available-with-ensembl" class="section level3">
+<h3>Using <code>is.genome.available()</code> with ENSEMBL</h3>
+<p>Users can also specify <code>db = &quot;ensembl&quot;</code> to retrieve
+available organisms provided by ENSEMBL. Again, users might experience a
+delay in the execution of this function when running it for the first
+time. This is due to the download of ENSEMBL information which is then
+stored internally to enable a much faster execution of this function in
+following runs. The corresponding information files are stored at
+<code>file.path(tempdir(), &quot;ensembl_summary.txt&quot;)</code>.</p>
+</div>
+<div id="example-ensembl-is.genome.available" class="section level3">
+<h3>Example <code>ENSEMBL</code> (?is.genome.available):</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># cheking whether Homo sapiens is available in the ENSEMBL database</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>)</span></code></pre></div>
+<pre><code>A reference or representative genome assembly is available for &#39;Homo sapiens&#39;.
+[1] TRUE</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># retrieve details for Homo sapiens</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>  division           assembly accession  release name  taxon_id strain
+  &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; 
+1 EnsemblVertebrates GRCh38   GCA_00000     104 homo     9606 NA    
+#  with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
+#   strain_collection &lt;chr&gt;</code></pre>
+<p>Again, users can either specify the <code>taxid</code> or
+<code>accession id</code> when searching for organism entries.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co"># retrieve details for Homo sapiens using taxid</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;9606&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>division           assembly accession  release name  taxon_id strain
+  &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; 
+1 EnsemblVertebrates GRCh38   GCA_00000     104 homo     9606 NA    
+#  with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
+#   strain_collection &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co"># retrieve details for Homo sapiens using accession id</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">organism =</span> <span class="st">&quot;GCA_000001405.28&quot;</span>, <span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code> division           assembly accession  release name  taxon_id strain
+  &lt;chr&gt;              &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt; 
+1 EnsemblVertebrates GRCh38   GCA_00000     104 homo     9606 NA    
+#  with 3 more variables: display_name &lt;chr&gt;, common_name &lt;chr&gt;,
+#   strain_collection &lt;chr&gt;</code></pre>
+<p><strong>Please note that the <code>accession</code> id can change
+internally at ENSEMBL. E.g. in a recent case the <code>accession</code>
+id changed from <code>GCA_000001405.25</code> to
+<code>GCA_000001405.27</code>. Hence, please be careful and take this
+issue into account when you build automated retrieval scripts that are
+based on <code>accession</code> ids.</strong></p>
+</div>
+<div id="example-uniprot-is.genome.available" class="section level3">
+<h3>Example <code>UniProt</code> (?is.genome.available):</h3>
+<p>Users can also check the availability of proteomes in the <a href="https://www.uniprot.org">UniProt database</a> by specifying:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co"># retrieve information from UniProt</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;uniprot&quot;</span>, <span class="st">&quot;Homo sapiens&quot;</span>, <span class="at">details =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>A reference or representative genome assembly is available for &#39;Homo sapiens&#39;.
+More than one entry was found for &#39;Homo sapiens&#39;. Please consider to run the function &#39;is.genome.available()&#39; and specify &#39;is.genome.available(organism = Homo sapiens, db = uniprot, details = TRUE)&#39;. This will allow you to select the &#39;assembly_accession&#39; identifier that can then be specified in all get*() functions.
+[1] TRUE</code></pre>
+<p>or with details:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co"># retrieve information from UniProt</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;uniprot&quot;</span>, <span class="st">&quot;Homo sapiens&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code> A tibble: 29 x 16
+   name          description        isReferenceProte isRepresentativ
+   &lt;chr&gt;         &lt;chr&gt;              &lt;lgl&gt;             &lt;lgl&gt;           
+ 1 Homo sapiens Homo sapiens (Hom TRUE              TRUE            
+ 2 Human associ NA                 FALSE             TRUE            
+ 3 Human respir NA                 FALSE             FALSE           
+ 4 Human respir NA                 FALSE             FALSE           
+ 5 Human respir NA                 FALSE             FALSE           
+ 6 Human respir NA                 FALSE             FALSE           
+ 7 Human respir NA                 FALSE             FALSE           
+ 8 Human respir NA                 FALSE             FALSE           
+ 9 Human respir NA                 FALSE             FALSE           
+10 Human respir NA                 FALSE             FALSE           
+#  with 19 more rows, and 12 more variables:
+#   genomeAssembly &lt;df[,4]&gt;, dbReference &lt;list&gt;, component &lt;list&gt;,
+#   reference &lt;list&gt;, annotationScore &lt;df[,1]&gt;, scores &lt;list&gt;,
+#   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
+#   superregnum &lt;chr&gt;, strain &lt;chr&gt;</code></pre>
+<p>Users can also search available species at UniProt via
+<code>taxid</code> or <code>upid</code> id.</p>
+<p>Here <code>9606</code> defines the taxonomy id for
+<code>Homo sapiens</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co"># retrieve information from UniProt</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;uniprot&quot;</span>, <span class="st">&quot;9606&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code> A tibble: 3 x 15
+  name  description isReferenceProt isRepresentativ genomeAssembly$
+  &lt;chr&gt; &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;chr&gt;           
+1 Homo Homo sapie TRUE             TRUE             Ensembl         
+2 Homo NA          FALSE            FALSE            ENA/EMBL        
+3 Homo NA          FALSE            FALSE            ENA/EMBL        
+#  with 10 more variables: dbReference &lt;list&gt;, component &lt;list&gt;,
+#   reference &lt;list&gt;, annotationScore &lt;df[,1]&gt;, scores &lt;list&gt;,
+#   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
+#   superregnum &lt;chr&gt;</code></pre>
+<p>Here <code>UP000005640</code> defines the <code>upid</code> for
+<code>Homo sapiens</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="co"># retrieve information from UniProt</span></span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">is.genome.available</span>(<span class="at">db =</span> <span class="st">&quot;uniprot&quot;</span>, <span class="st">&quot;UP000005640&quot;</span>, <span class="at">details =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code> name  description isReferenceProt isRepresentativ genomeAssembly$
+  &lt;chr&gt; &lt;chr&gt;       &lt;lgl&gt;            &lt;lgl&gt;            &lt;chr&gt;           
+1 Homo Homo sapie TRUE             TRUE             Ensembl         
+#  with 10 more variables: dbReference &lt;list&gt;, component &lt;list&gt;,
+#   reference &lt;list&gt;, annotationScore &lt;df[,1]&gt;, scores &lt;list&gt;,
+#   upid &lt;chr&gt;, modified &lt;dbl&gt;, taxonomy &lt;int&gt;, source &lt;chr&gt;,
+#   superregnum &lt;chr&gt;</code></pre>
+<p>In general, the argument <code>db</code> specifies from which
+database (<code>refseq</code>, <code>genbank</code>,
+<code>ensembl</code> or <code>uniprot</code>) organism information shall
+be retrieved. Options are:</p>
+<ul>
+<li><code>db = &#39;refseq&#39;</code></li>
+<li><code>db = &#39;genbank&#39;</code></li>
+<li><code>db = &#39;ensembl&#39;</code></li>
+<li><code>db = &#39;uniprot&#39;</code></li>
+</ul>
+</div>
+<div id="listing-the-total-number-of-available-genomes" class="section level3">
+<h3>Listing the total number of available genomes</h3>
+<p>In some cases it might be useful to check how many genomes (in total)
+are available in the different databases.</p>
+<p>Users can determine the total number of available genomes using the
+<code>listGenomes()</code> function.</p>
+<p>Example <code>refseq</code>:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">listGenomes</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>))</span></code></pre></div>
+<pre><code>[1] 24910</code></pre>
+<p>Example <code>genbank</code>:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">listGenomes</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>))</span></code></pre></div>
+<pre><code>[1] 35298</code></pre>
+<p>Example <code>ensembl</code>:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">listGenomes</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>))</span></code></pre></div>
+<pre><code>[1] 310</code></pre>
+<p>Hence, currently 24910 genomes (including all kingdoms of life) are
+stored on <code>NCBI RefSeq</code> (as of 16/11/2021).</p>
+</div>
+<div id="retrieving-kingdom-group-and-subgroup-information" class="section level3">
+<h3>Retrieving kingdom, group and subgroup information</h3>
+<p>Using this example users can retrieve the number of available species
+for each kingdom of life:</p>
+<p>Example <code>refseq</code>:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="co"># the number of genomes available for each kingdom</span></span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="fu">listKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>)</span></code></pre></div>
+<pre><code>    Archaea  Bacteria Eukaryota   Viruses 
+      330     11797      1002     10637 </code></pre>
+<p>Example <code>genbank</code>:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="co"># the number of genomes available for each kingdom</span></span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="fu">listKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>)</span></code></pre></div>
+<pre><code>  Archaea  Bacteria Eukaryota 
+     1651     25904      7742</code></pre>
+<p>Example <code>ENSEMBL</code>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="co"># the number of genomes available for each kingdom</span></span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="fu">listKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>)</span></code></pre></div>
+<pre><code>EnsemblVertebrates 
+               310</code></pre>
+</div>
+<div id="analogous-computations-can-be-performed-for-groups-and-subgroups" class="section level3">
+<h3>Analogous computations can be performed for <code>groups</code> and
+<code>subgroups</code></h3>
+<p>Unfortunately, <code>ENSEMBL</code> does not provide group or
+subgroup information. Therefore, group and subgroup listings are limited
+to <code>refseq</code> and <code>genbank</code>.</p>
+<p>Example <code>refseq</code>:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="co"># the number of genomes available for each group</span></span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="fu">listGroups</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>)</span></code></pre></div>
+<pre><code> Abditibacteriota 
+                                               1 
+                               Acidithiobacillia 
+                                               8 
+                                  Acidobacteriia 
+                                              22 
+                                Ackermannviridae 
+                                              65 
+                                  Actinobacteria 
+                                            2640 
+                                    Adenoviridae 
+                                              64 
+                                    Adomaviridae 
+                                               2 
+                                    Aliusviridae 
+                                               2 
+                               Alloherpesviridae 
+                                              13 
+                               Alphaflexiviridae 
+                                              62 
+                             Alphaproteobacteria 
+                                            1762 
+  ...</code></pre>
+<p>Example <code>genbank</code>:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="co"># the number of genomes available for each group</span></span>
+<span id="cb56-2"><a href="#cb56-2" tabindex="-1"></a><span class="fu">listGroups</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>)</span></code></pre></div>
+<pre><code>                       Abditibacteriota                       Acidithiobacillia 
+                                      1                                       8 
+                         Acidobacteriia                          Actinobacteria 
+                                     24                                    1596 
+                    Alphaproteobacteria                              Amphibians 
+                                   1604                                       6 
+                          Apicomplexans                               Aquificae 
+                                     47                                       7 
+                           Archaeoglobi                         Armatimonadetes 
+                                      5                                      38 
+                            Ascomycetes                Bacteria candidate phyla 
+                                    689                                    3532 
+           Bacteroidetes/Chlorobi group                               Balneolia 
+                                   2247                                      44 
+                         Basidiomycetes                      Betaproteobacteria 
+                                    204                                     751 
+                                  Birds                          Blastocatellia 
+                                     80                                       2 
+                           Caldisericia                  candidate division WS1 
+                                      1                                       1 
+        candidate division Zixibacteria               Candidatus Aegiribacteria 
+                                     17                                       1 
+             Candidatus Aenigmarchaeota               Candidatus Bathyarchaeota 
+                                     14                                      42 
+               Candidatus Cloacimonetes               Candidatus Diapherotrites 
+                                     88                                      11 
+            Candidatus Fermentibacteria            Candidatus Geothermarchaeota 
+                                      8                                       3 
+           Candidatus Heimdallarchaeota              Candidatus Hydrogenedentes 
+                                      4                                      10 
+                Candidatus Korarchaeota                    Candidatus Kryptonia 
+                                      1                                       4 
+        Candidatus Lambdaproteobacteria              Candidatus Latescibacteria 
+                                      6                                      13 
+               Candidatus Lokiarchaeota               Candidatus Marinimicrobia 
+                                      2                                      92 
+               Candidatus Marsarchaeota                Candidatus Micrarchaeota 
+                                     15                                      35 
+                Candidatus Moduliflexus             Candidatus Muproteobacteria 
+                                      1                                      14 
+           Candidatus Nanohaloarchaeota                Candidatus Odinarchaeota 
+                                     16                                       1 
+                Candidatus Omnitrophica                Candidatus Pacearchaeota 
+                                    126                                      41 
+               Candidatus Parvarchaeota                Candidatus Tectomicrobia 
+                                     11                                       6 
+               Candidatus Thorarchaeota                 Candidatus Vecturithrix 
+                                      7                                       1 
+         Candidatus Verstraetearchaeota               Candidatus Woesearchaeota 
+                                      5                                      36 
+                             Chlamydiae                             Chloroflexi 
+                                     43                                     403 
+                         Chrysiogenetes                    Coprothermobacterota 
+                                      1                                       1 
+                          Crenarchaeota     Cyanobacteria/Melainabacteria group 
+                                     54                                     172 
+                        Deferribacteres                     Deinococcus-Thermus 
+                                      8                                      27 
+             delta/epsilon subdivisions                            Dictyoglomia 
+                                    615                                       1 
+                          Elusimicrobia                            Endomicrobia 
+                                      1                                       2 
+                  environmental samples                           Fibrobacteres 
+                                      3                                      15 
+                             Firmicutes                                  Fishes 
+                                   2663                                     168 
+                              Flatworms                           Fusobacteriia 
+                                     35                                      29 
+                    Gammaproteobacteria                        Gemmatimonadetes 
+                                   2041                                      82 
+                            Green Algae                            Hadesarchaea 
+                                     30                                       5 
+                           Halobacteria                              Holophagae 
+                                    162                                       9 
+                      Hydrogenophilalia                                 Insects 
+                                     32                                     280 
+                           Kinetoplasts                      Kiritimatiellaeota 
+                                     33                                       3 
+                            Land Plants                           Lentisphaerae 
+                                    282                                      32 
+                                Mammals                         Methanobacteria 
+                                    145                                      31 
+                           Methanococci                         Methanomicrobia 
+                                      2                                      77 
+                  Methanonatronarchaeia                             Methanopyri 
+                                      2                                       1 
+                          Nanoarchaeota nitrifying bacterium enrichment culture 
+                                     11                                       1 
+                            Nitrospinae                              Nitrospira 
+                                     19                                      31 
+                            Oligoflexia                                   Other 
+                                     87                                      15 
+                          Other Animals                             Other Fungi 
+                                    125                                      58 
+                           Other Plants                          Other Protists 
+                                      1                                     128 
+                         Planctomycetes                                Reptiles 
+                                    171                                      21 
+                           Rhodothermia                              Roundworms 
+                                      4                                      91 
+                           Solibacteres                            Spirochaetia 
+                                      7                                     115 
+                            Synergistia                             Tenericutes 
+                                     43                                     141 
+                         Thaumarchaeota                           Theionarchaea 
+                                     92                                       2 
+                            Thermococci                   Thermodesulfobacteria 
+                                     21                                       7 
+                         Thermoplasmata                             Thermotogae 
+                                    135                                      23 
+             unclassified Acidobacteria    unclassified Archaea (miscellaneous) 
+                                     94                                      52 
+  unclassified Bacteria (miscellaneous)                unclassified Caldiserica 
+                                    197                                      11 
+           unclassified Calditrichaeota              unclassified Elusimicrobia 
+                                      2                                     101 
+             unclassified Euryarchaeota                unclassified Nitrospirae 
+                                    348                                      90 
+            unclassified Proteobacteria            unclassified Rhodothermaeota 
+                                    130                                       4 
+              unclassified Spirochaetes              unclassified Synergistetes 
+                                     37                                       3 
+               unclassified Thermotogae                     uncultured archaeon 
+                                      1                                       1 
+            uncultured archaeon A07HB70             uncultured archaeon A07HN63 
+                                      1                                       1 
+            uncultured archaeon A07HR60             uncultured archaeon A07HR67 
+                                      1                                       1 
+                   uncultured bacterium                         Verrucomicrobia 
+                                      1                                     296 
+                     Zetaproteobacteria 
+                                     41 </code></pre>
+<blockquote>
+<p><strong><strong>Note</strong></strong> that when running the
+<code>listGenomes()</code> function for the first time, it might take a
+while until the function returns any results, because necessary
+information need to be downloaded from NCBI and ENSEMBL databases. All
+subsequent executions of <code>listGenomes()</code> will then respond
+very fast, because they will access the corresponding files stored on
+your hard drive.</p>
+</blockquote>
+</div>
+</div>
+<div id="downloading-biological-sequences-and-annotations" class="section level2">
+<h2>Downloading Biological Sequences and Annotations</h2>
+<p>After checking for the availability of sequence information for an
+organism of interest, the next step is to download the corresponding
+genome, proteome, CDS, or GFF file. The following functions allow users
+to download proteomes, genomes, CDS and GFF files from several database
+resources such as: <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a>. When a
+corresponding proteome, genome, CDS or GFF file was loaded to your
+hard-drive, a documentation <code>*.txt</code> file is generated storing
+<code>File Name</code>, <code>Organism</code>, <code>Database</code>,
+<code>URL</code>, <code>DATE</code>, <code>assembly_accession</code>,
+<code>bioproject</code>, <code>biosample</code>, <code>taxid</code>,
+<code>version_status</code>, <code>release_type</code>,
+<code>seq_rel_date</code> etc. information of the retrieved file. This
+way a better reproducibility of proteome, genome, CDS and GFF versions
+used for subsequent data analyses can be achieved.</p>
+<div id="genome-retrieval" class="section level3">
+<h3>Genome Retrieval</h3>
+<p>The easiest way to download a genome is to use the
+<code>getGenome()</code> function.</p>
+<p>In this example we will download the genome of
+<code>Homo sapiens</code>.</p>
+<p>The <code>getGenome()</code> function is an interface function to the
+<a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a> databases from
+which corresponding genomes can be retrieved.</p>
+<p>The <code>db</code> argument specifies from which database genome
+assemblies in <code>*.fasta</code> file format shall be retrieved.</p>
+<p>Options are:</p>
+<ul>
+<li><code>db = &quot;refseq&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a></li>
+<li><code>db = &quot;genbank&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a></li>
+<li><code>db = &quot;ensembl&quot;</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a></li>
+</ul>
+<p>Furthermore, users need to specify the <code>scientific name</code>,
+the <code>taxid</code> (= <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxnonomy</a>
+identifier), or the <code>accession identifier</code> of the organism of
+interest for which a genome assembly shall be downloaded,
+e.g. <code>organism = &quot;Homo sapiens&quot;</code> or
+<code>organism = &quot;9606&quot;</code> or
+<code>organism = &quot;GCF_000001405.37&quot;</code>. Finally, the
+<code>path</code> argument specifies the folder path in which the
+corresponding assembly shall be locally stored. In case users would like
+to store the genome file at a different location, they can specify the
+<code>path = file.path(&quot;put&quot;,&quot;your&quot;,&quot;path&quot;,&quot;here&quot;)</code> argument
+(e.g. <code>file.path(&quot;_ncbi_downloads&quot;,&quot;genomes&quot;)</code>).</p>
+</div>
+<div id="example-ncbi-refseq" class="section level3">
+<h3>Example NCBI RefSeq:</h3>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from refseq</span></span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a><span class="co"># and store the corresponding genome file in &#39;_ncbi_downloads/genomes&#39;</span></span>
+<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>HS.genome.refseq <span class="ot">&lt;-</span> <span class="fu">getGenome</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a>                               <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb58-5"><a href="#cb58-5" tabindex="-1"></a>                               <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;genomes&quot;</span>) )</span></code></pre></div>
+<p>In this example, <code>getGenome()</code> creates a directory named
+<code>&#39;_ncbi_downloads/genomes&#39;</code> into which the corresponding
+genome named <code>GCF_000001405.34_GRCh38.p8_genomic.fna.gz</code> is
+downloaded. The return value of <code>getGenome()</code> is the folder
+path to the downloaded genome file that can then be used as input to the
+<code>read_genome()</code> function. The variable
+<code>HS.genome.refseq</code> stores the path to the downloaded
+genome.</p>
+<p>Users can also omit the <code>path</code> argument if they wish to
+store the genome in their current working directory. E.g.:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from refseq</span></span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a><span class="co"># and store the corresponding genome file in &#39;_ncbi_downloads/genomes&#39;</span></span>
+<span id="cb59-3"><a href="#cb59-3" tabindex="-1"></a>HS.genome.refseq <span class="ot">&lt;-</span> <span class="fu">getGenome</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb59-4"><a href="#cb59-4" tabindex="-1"></a>                               <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>)</span></code></pre></div>
+<p>Subsequently, users can use the <code>read_genome()</code> function
+to import the genome into the R session. Users can choose to work with
+the genome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a>
+object (<code>obj.type = &quot;Biostrings&quot;</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>
+object (<code>obj.type = &quot;data.table&quot;</code>) by specifying the
+<code>obj.type</code> argument of the <code>read_genome()</code>
+function.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a><span class="co"># import downloaded genome as Biostrings object</span></span>
+<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a>Human_Genome <span class="ot">&lt;-</span> <span class="fu">read_genome</span>(<span class="at">file =</span> HS.genome.refseq)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a>Human_Genome</span></code></pre></div>
+<pre><code>  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...</code></pre>
+<p>Internally, a text file named
+<code>doc_Homo_sapiens_db_refseq.txt</code> is generated. The
+information stored in this log file is structured as follows:</p>
+<pre><code>File Name: Homo_sapiens_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_genomic.fna.gz
+Download_Date: Sat Oct 22 12:41:07 2016
+refseq_category: reference genome
+assembly_accession: GCF_000001405.35
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-09-26
+submitter: Genome Reference Consortium</code></pre>
+<p>In addition, the genome summary statistics for the retrieved species
+is stored locally
+(<code>doc_Homo_sapiens_db_refseq_summary_statistics.tsv</code>) to
+provide users with insights regarding the genome assembly quality (see
+<code>?summary_genome()</code> for details). This file can be used as
+<code>Supplementary Information</code> file in publications to
+facilitate reproducible research. Most comparative genomics studies do
+not consider differences in genome assembly qualities when comparing the
+genomes of diverse species. This way, they expose themselves to
+technical artifacts that might generate patterns mistaken to be of
+biological relevance whereas in reality they just reflect the difference
+in genome assembly quality. Considering the quality of genome assemblies
+when downloading the genomic sequences will help researchers to avoid
+these pitfalls.</p>
+<p>The summary statistics include:</p>
+<ul>
+<li><p><code>genome_size_mbp</code>: Genome size in mega base
+pairs</p></li>
+<li><p><code>n50_mbp</code>: The N50 contig size of the genome assembly
+in mega base pairs</p></li>
+<li><p><code>n_seqs</code>: The number of chromosomes/scaffolds/contigs
+of the genome assembly file</p></li>
+<li><p><code>n_nnn</code>: The absolute number of NNNs (over all
+chromosomes or scaffolds or contigs) in the genome assembly
+file</p></li>
+<li><p><code>rel_nnn</code>: The percentage (relative frequency) of NNNs
+(over all chromosomes or scaffolds or contigs) compared to the total
+number of nucleotides in the genome assembly file</p></li>
+<li><p><code>genome_entropy</code>: The Shannon Entropy of the genome
+assembly file (median entropy over all individual chromosome
+entropies)</p></li>
+<li><p><code>n_gc</code>: The total number of GCs (over all chromosomes
+or scaffolds or contigs) in the genome assembly file</p></li>
+<li><p><code>rel_gc</code>: The (relative frequency) of GCs (over all
+chromosomes or scaffolds or contigs) compared to the total number of
+nucleotides in the genome assembly file</p></li>
+</ul>
+<p>In summary, the <code>getGenome()</code> and
+<code>read_genome()</code> functions allow users to retrieve genome
+assemblies by specifying the scientific name of the organism of interest
+and allow them to import the retrieved genome assembly e.g. as
+<code>Biostrings</code> object. Thus, users can then perform the
+<code>Biostrings notation</code> to work with downloaded genomes and can
+rely on the log file generated by <code>getGenome()</code> to better
+document the source and version of genome assemblies used for subsequent
+studies.</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb64-3"><a href="#cb64-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb64-4"><a href="#cb64-4" tabindex="-1"></a>Human_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb64-5"><a href="#cb64-5" tabindex="-1"></a>                           <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb64-6"><a href="#cb64-6" tabindex="-1"></a>                           <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;genomes&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb64-7"><a href="#cb64-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>Human_Genome</span></code></pre></div>
+<pre><code>  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN NC_000001.11 Homo...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC NT_187361.1 Homo ...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC NT_187362.1 Homo ...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC NT_187363.1 Homo ...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC NT_187364.1 Homo ...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC NT_187685.1 Homo ...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC NT_187686.1 Homo ...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC NT_187687.1 Homo ...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC NT_113949.2 Homo ...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG NC_012920.1 Homo ...</code></pre>
+<div id="use-taxid-id-for-genome-retrieval" class="section level4">
+<h4>Use <code>taxid</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name in the
+argument <code>organism</code> users can specify the
+<code>taxonomy</code> id of the corresponding organism. Here, we specify
+the taxonomy id <code>559292</code> which encodes the species
+<code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb67-4"><a href="#cb67-4" tabindex="-1"></a>Scerevisiae_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(</span>
+<span id="cb67-5"><a href="#cb67-5" tabindex="-1"></a>            <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>,</span>
+<span id="cb67-6"><a href="#cb67-6" tabindex="-1"></a>            <span class="at">organism =</span> <span class="st">&quot;559292&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-7"><a href="#cb67-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a>Scerevisiae_Genome</span></code></pre></div>
+<pre><code>A DNAStringSet instance of length 17
+       width seq                                      names               
+ [1]  230218 CCACACCACACCCACACAC...GGGTGTGGTGTGTGTGGG NC_001133.9 Sacch...
+ [2]  813184 AAATAGCCCTCATGTACGT...TGTGGTGTGTGGGTGTGT NC_001134.8 Sacch...
+ [3]  316620 CCCACACACCACACCCACA...GTGGGTGTGGTGTGTGTG NC_001135.5 Sacch...
+ [4] 1531933 ACACCACACCCACACCACA...GTAGTAAGTAGCTTTTGG NC_001136.10 Sacc...
+ [5]  576874 CGTCTCCTCCAAGCCCTGT...ATTTTCATTTTTTTTTTT NC_001137.3 Sacch...
+ ...     ... ...
+[13]  924431 CCACACACACACCACACCC...TGTGGTGTGTGTGTGGGG NC_001145.3 Sacch...
+[14]  784333 CCGGCTTTCTGACCGAAAT...TGTGGGTGTGGTGTGGGT NC_001146.8 Sacch...
+[15] 1091291 ACACCACACCCACACCACA...TGTGTGGGTGTGGTGTGT NC_001147.6 Sacch...
+[16]  948066 AAATAGCCCTCATGTACGT...TTTAATTTCGGTCAGAAA NC_001148.4 Sacch...
+[17]   85779 TTCATAATTAATTTTTTAT...TATAATATAATATCCATA NC_001224.1 Sacch...</code></pre>
+</div>
+<div id="use-assembly_accession-id-for-genome-retrieval" class="section level4">
+<h4>Use <code>assembly_accession</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name or taxonomy
+in the argument <code>organism</code> users can specify the
+<code>assembly_accession</code> id of the corresponding organism. Here,
+we specify the <code>assembly_accession</code> id
+<code>GCF_000146045.2</code> which encodes the species
+<code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb70-4"><a href="#cb70-4" tabindex="-1"></a>Scerevisiae_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(</span>
+<span id="cb70-5"><a href="#cb70-5" tabindex="-1"></a>            <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>,</span>
+<span id="cb70-6"><a href="#cb70-6" tabindex="-1"></a>            <span class="at">organism =</span> <span class="st">&quot;GCF_000146045.2&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb70-7"><a href="#cb70-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" tabindex="-1"></a>Scerevisiae_Genome</span></code></pre></div>
+<pre><code> A DNAStringSet instance of length 17
+       width seq                                                    names               
+ [1]  230218 CCACACCACACCCACACACCCACACA...GTGGTGTGGGTGTGGTGTGTGTGGG NC_001133.9 Sacch...
+ [2]  813184 AAATAGCCCTCATGTACGTCTCCTCC...GTGTGGGTGTGGTGTGTGGGTGTGT NC_001134.8 Sacch...
+ [3]  316620 CCCACACACCACACCCACACCACACC...GGGTGTGGTGGGTGTGGTGTGTGTG NC_001135.5 Sacch...
+ [4] 1531933 ACACCACACCCACACCACACCCACAC...AATAAAGGTAGTAAGTAGCTTTTGG NC_001136.10 Sacc...
+ [5]  576874 CGTCTCCTCCAAGCCCTGTTGTCTCT...GGGTTTCATTTTCATTTTTTTTTTT NC_001137.3 Sacch...
+ ...     ... ...
+[13]  924431 CCACACACACACCACACCCACACCAC...GTGTGGGTGTGGTGTGTGTGTGGGG NC_001145.3 Sacch...
+[14]  784333 CCGGCTTTCTGACCGAAATTAAAAAA...GGGTGTGTGTGGGTGTGGTGTGGGT NC_001146.8 Sacch...
+[15] 1091291 ACACCACACCCACACCACACCCACAC...GAGAGAGTGTGTGGGTGTGGTGTGT NC_001147.6 Sacch...
+[16]  948066 AAATAGCCCTCATGTACGTCTCCTCC...TTTTTTTTTTAATTTCGGTCAGAAA NC_001148.4 Sacch...
+[17]   85779 TTCATAATTAATTTTTTATATATATA...GCTTAATTATAATATAATATCCATA NC_001224.1 Sacch...</code></pre>
+</div>
+</div>
+<div id="example-ncbi-genbank" class="section level3">
+<h3>Example NCBI Genbank:</h3>
+<p>Genome retrieval from <code>NCBI Genbank</code>.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from Genbank</span></span>
+<span id="cb73-2"><a href="#cb73-2" tabindex="-1"></a><span class="co"># and store the corresponding genome file in &#39;_ncbi_downloads/genomes&#39;</span></span>
+<span id="cb73-3"><a href="#cb73-3" tabindex="-1"></a>HS.genome.genbank <span class="ot">&lt;-</span> <span class="fu">getGenome</span>( <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>, </span>
+<span id="cb73-4"><a href="#cb73-4" tabindex="-1"></a>                                <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb73-5"><a href="#cb73-5" tabindex="-1"></a>                                <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;genomes&quot;</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" tabindex="-1"></a><span class="co"># import downloaded genome as Biostrings object</span></span>
+<span id="cb74-2"><a href="#cb74-2" tabindex="-1"></a>Human_Genome <span class="ot">&lt;-</span> <span class="fu">read_genome</span>(<span class="at">file =</span> HS.genome.genbank)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb75-2"><a href="#cb75-2" tabindex="-1"></a>Human_Genome</span></code></pre></div>
+<pre><code>  A DNAStringSet instance of length 551
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN CM000663.2 Homo s...
+  [2]    175055 GAATTCAGCTGAGAAGAACAGGCA...TGTTTGTCAGTCACATAGAATTC KI270706.1 Homo s...
+  [3]     32032 AGGGGTCTGCTTAGAGAGGGTCTC...TGACTTACGTTGACGTGGAATTC KI270707.1 Homo s...
+  [4]    127682 GATCGAGACTATCCTGGCTAACAC...ATTGTCAATTGGGACCTTTGATC KI270708.1 Homo s...
+  [5]     66860 GAATTCATTCGATGACGATTCCAT...AAAAAACTCTCAGCCACGAATTC KI270709.1 Homo s...
+  ...       ... ...
+[547]    170148 TTTCTTTCTTTTTTTTTTTTTTGT...GTCACAGGACTCATGGGGAATTC KI270931.1 Homo s...
+[548]    215732 TGTGGTGAGGACCCTTAAGATCTA...GTCACAGGACTCATGGGGAATTC KI270932.1 Homo s...
+[549]    170537 TCTACTCTCCCATGCTTGCCTCGG...GTCACAGGACTCATGGGGAATTC KI270933.1 Homo s...
+[550]    177381 GATCTATCTGTATCTCCACAGGTG...GTCACAGGACTCATGGGGAATTC GL000209.2 Homo s...
+[551]     16569 GATCACAGGTCTATCACCCTATTA...CCCTTAAATAAGACATCACGATG J01415.2 Homo sap...</code></pre>
+<div id="use-taxonomy-id-for-genome-retrieval" class="section level4">
+<h4>Use <code>taxonomy</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name in the
+argument <code>organism</code> users can specify the
+<code>taxonomy</code> id of the corresponding organism. Here, we specify
+the taxonomy id <code>559292</code> which encodes the species
+<code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb77-2"><a href="#cb77-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb77-3"><a href="#cb77-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb77-4"><a href="#cb77-4" tabindex="-1"></a>Scerevisiae_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(</span>
+<span id="cb77-5"><a href="#cb77-5" tabindex="-1"></a>            <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>,</span>
+<span id="cb77-6"><a href="#cb77-6" tabindex="-1"></a>            <span class="at">organism =</span> <span class="st">&quot;559292&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb77-7"><a href="#cb77-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" tabindex="-1"></a>Scerevisiae_Genome</span></code></pre></div>
+<pre><code>A DNAStringSet instance of length 16
+       width seq                                names               
+ [1]  230218 CCACACCACACCCACA...TGTGGTGTGTGTGGG BK006935.2 TPA_in...
+ [2]  813184 AAATAGCCCTCATGTA...GGTGTGTGGGTGTGT BK006936.2 TPA_in...
+ [3]  316620 CCCACACACCACACCC...GGTGTGGTGTGTGTG BK006937.2 TPA_in...
+ [4] 1531933 ACACCACACCCACACC...GTAAGTAGCTTTTGG BK006938.2 TPA_in...
+ [5]  576874 CGTCTCCTCCAAGCCC...TTCATTTTTTTTTTT BK006939.2 TPA_in...
+ ...     ... ...
+[12] 1078177 CACACACACACACCAC...ACATGAGGGCTATTT BK006945.2 TPA_in...
+[13]  924431 CCACACACACACCACA...GGTGTGTGTGTGGGG BK006946.2 TPA_in...
+[14]  784333 CCGGCTTTCTGACCGA...GGGTGTGGTGTGGGT BK006947.3 TPA_in...
+[15] 1091291 ACACCACACCCACACC...GTGGGTGTGGTGTGT BK006948.2 TPA_in...
+[16]  948066 AAATAGCCCTCATGTA...AATTTCGGTCAGAAA BK006949.2 TPA_in...</code></pre>
+</div>
+<div id="use-assembly_accession-id-for-genome-retrieval-1" class="section level4">
+<h4>Use <code>assembly_accession</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name or taxonomy
+in the argument <code>organism</code> users can specify the
+<code>assembly_accession</code> id of the corresponding organism. Here,
+we specify the <code>assembly_accession</code> id
+<code>GCA_000146045.2</code> which encodes the species
+<code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb80-2"><a href="#cb80-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb80-3"><a href="#cb80-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb80-4"><a href="#cb80-4" tabindex="-1"></a>Scerevisiae_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(</span>
+<span id="cb80-5"><a href="#cb80-5" tabindex="-1"></a>            <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>,</span>
+<span id="cb80-6"><a href="#cb80-6" tabindex="-1"></a>            <span class="at">organism =</span> <span class="st">&quot;GCA_000146045.2&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-7"><a href="#cb80-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" tabindex="-1"></a>Scerevisiae_Genome</span></code></pre></div>
+<pre><code>A DNAStringSet instance of length 16
+       width seq                                  names               
+ [1]  230218 CCACACCACACCCACAC...GTGTGGTGTGTGTGGG BK006935.2 TPA_in...
+ [2]  813184 AAATAGCCCTCATGTAC...TGGTGTGTGGGTGTGT BK006936.2 TPA_in...
+ [3]  316620 CCCACACACCACACCCA...GGGTGTGGTGTGTGTG BK006937.2 TPA_in...
+ [4] 1531933 ACACCACACCCACACCA...AGTAAGTAGCTTTTGG BK006938.2 TPA_in...
+ [5]  576874 CGTCTCCTCCAAGCCCT...TTTCATTTTTTTTTTT BK006939.2 TPA_in...
+ ...     ... ...
+[12] 1078177 CACACACACACACCACC...TACATGAGGGCTATTT BK006945.2 TPA_in...
+[13]  924431 CCACACACACACCACAC...TGGTGTGTGTGTGGGG BK006946.2 TPA_in...
+[14]  784333 CCGGCTTTCTGACCGAA...TGGGTGTGGTGTGGGT BK006947.3 TPA_in...
+[15] 1091291 ACACCACACCCACACCA...TGTGGGTGTGGTGTGT BK006948.2 TPA_in...
+[16]  948066 AAATAGCCCTCATGTAC...TAATTTCGGTCAGAAA BK006949.2 TPA_in...</code></pre>
+<p>In addition, the genome summary statistics for the retrieved species
+is stored locally
+(<code>doc_saccharomyces_cerevisiae_db_genbank_summary_statistics.tsv</code>)
+to provide users with insights regarding the genome assembly quality
+(see <code>?summary_genome()</code> for details). This file can be used
+as <code>Supplementary Information</code> file in publications to
+facilitate reproducible research. Most comparative genomics studies do
+not consider differences in genome assembly qualities when comparing the
+genomes of diverse species. This way, they expose themselves to
+technical artifacts that might generate patterns mistaken to be of
+biological relevance whereas in reality they just reflect the difference
+in genome assembly quality. Considering the quality of genome assemblies
+when downloading the genomic sequences will help researchers to avoid
+these pitfalls.</p>
+<p>The summary statistics include:</p>
+<ul>
+<li><p><code>genome_size_mbp</code>: Genome size in mega base
+pairs</p></li>
+<li><p><code>n50_mbp</code>: The N50 contig size of the genome assembly
+in mega base pairs</p></li>
+<li><p><code>n_seqs</code>: The number of chromosomes/scaffolds/contigs
+of the genome assembly file</p></li>
+<li><p><code>n_nnn</code>: The absolute number of NNNs (over all
+chromosomes or scaffolds or contigs) in the genome assembly
+file</p></li>
+<li><p><code>rel_nnn</code>: The percentage (relative frequency) of NNNs
+(over all chromosomes or scaffolds or contigs) compared to the total
+number of nucleotides in the genome assembly file</p></li>
+<li><p><code>genome_entropy</code>: The Shannon Entropy of the genome
+assembly file (median entropy over all individual chromosome
+entropies)</p></li>
+<li><p><code>n_gc</code>: The total number of GCs (over all chromosomes
+or scaffolds or contigs) in the genome assembly file</p></li>
+<li><p><code>rel_gc</code>: The (relative frequency) of GCs (over all
+chromosomes or scaffolds or contigs) compared to the total number of
+nucleotides in the genome assembly file</p></li>
+</ul>
+</div>
+</div>
+<div id="example-ensembl" class="section level3">
+<h3>Example ENSEMBL:</h3>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from ENSEMBL</span></span>
+<span id="cb83-2"><a href="#cb83-2" tabindex="-1"></a><span class="co"># and store the corresponding genome file in &#39;_ncbi_downloads/genomes&#39;</span></span>
+<span id="cb83-3"><a href="#cb83-3" tabindex="-1"></a>HS.genome.ensembl <span class="ot">&lt;-</span> <span class="fu">getGenome</span>( <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb83-4"><a href="#cb83-4" tabindex="-1"></a>                                <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb83-5"><a href="#cb83-5" tabindex="-1"></a>                                <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;genomes&quot;</span>) ,</span>
+<span id="cb83-6"><a href="#cb83-6" tabindex="-1"></a>                                <span class="at">assembly_type =</span> <span class="st">&quot;primary_assembly&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" tabindex="-1"></a><span class="co"># import downloaded genome as Biostrings object</span></span>
+<span id="cb84-2"><a href="#cb84-2" tabindex="-1"></a>Human_Genome <span class="ot">&lt;-</span> <span class="fu">read_genome</span>(<span class="at">file =</span> HS.genome.ensembl)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb85-2"><a href="#cb85-2" tabindex="-1"></a>Human_Genome</span></code></pre></div>
+<pre><code>  A DNAStringSet instance of length 524
+          width seq                                                names               
+  [1] 248956422 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 1 dna:chromosome ...
+  [2] 242193529 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 2 dna:chromosome ...
+  [3] 198295559 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 3 dna:chromosome ...
+  [4] 190214555 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 4 dna:chromosome ...
+  [5] 181538259 NNNNNNNNNNNNNNNNNNNNNNNN...NNNNNNNNNNNNNNNNNNNNNNN 5 dna:chromosome ...
+  ...       ... ...
+[520]       993 GCCCCACGTCCGGGAGGGAGGTGG...GAGGGAGGTGGGGGGTCAGCCCT KI270539.1 dna:sc...
+[521]       990 TTTCATAGAGCATGTTTGAAACAC...TCAGAAACTTGTTGTGATGTGTG KI270385.1 dna:sc...
+[522]       981 AGATTTCGTTGGAACGGGATAAAC...TCAGCTTTCAAACACTCTTTTTG KI270423.1 dna:sc...
+[523]       971 ATTTGCGATGTGTGTTCTCAACTA...TTGGATAGCTTTGAAGTTTTCGT KI270392.1 dna:sc...
+[524]       970 AAGTGGATATTTGGATAGCTTTGA...TCCTCAATAACAGAGTTGAACCT KI270394.1 dna:sc...</code></pre>
+<p>If you are using <code>db = &quot;ensembl&quot;</code> you can set
+<code>assembly_type = &quot;primary_assembly&quot;</code>. For the human genome
+the toplevel genome assembly size is &gt; 70 GB uncompressed, while
+primary assembly is just a few GB. Users can also specify the
+<code>release</code> argument which denotes the database release version
+of ENSEMBL (<code>db = &quot;ensembl&quot;</code>) in case they wish to download
+archived vgenome versions. Default is release = NULL meaning that the
+most recent database version is used.</p>
+<p>In addition, the genome summary statistics for the retrieved species
+is stored locally
+(<code>doc_homo_sapiens_db_ensembl_summary_statistics.tsv</code>) to
+provide users with insights regarding the genome assembly quality (see
+<code>?summary_genome()</code> for details). This file can be used as
+<code>Supplementary Information</code> file in publications to
+facilitate reproducible research. Most comparative genomics studies do
+not consider differences in genome assembly qualities when comparing the
+genomes of diverse species. This way, they expose themselves to
+technical artifacts that might generate patterns mistaken to be of
+biological relevance whereas in reality they just reflect the difference
+in genome assembly quality. Considering the quality of genome assemblies
+when downloading the genomic sequences will help researchers to avoid
+these pitfalls.</p>
+<p>The summary statistics include:</p>
+<ul>
+<li><p><code>genome_size_mbp</code>: Genome size in mega base
+pairs</p></li>
+<li><p><code>n50_mbp</code>: The N50 contig size of the genome assembly
+in mega base pairs</p></li>
+<li><p><code>n_seqs</code>: The number of chromosomes/scaffolds/contigs
+of the genome assembly file</p></li>
+<li><p><code>n_nnn</code>: The absolute number of NNNs (over all
+chromosomes or scaffolds or contigs) in the genome assembly
+file</p></li>
+<li><p><code>rel_nnn</code>: The percentage (relative frequency) of NNNs
+(over all chromosomes or scaffolds or contigs) compared to the total
+number of nucleotides in the genome assembly file</p></li>
+<li><p><code>genome_entropy</code>: The Shannon Entropy of the genome
+assembly file (median entropy over all individual chromosome
+entropies)</p></li>
+<li><p><code>n_gc</code>: The total number of GCs (over all chromosomes
+or scaffolds or contigs) in the genome assembly file</p></li>
+<li><p><code>rel_gc</code>: The (relative frequency) of GCs (over all
+chromosomes or scaffolds or contigs) compared to the total number of
+nucleotides in the genome assembly file</p></li>
+</ul>
+<div id="use-taxonomy-id-for-genome-retrieval-1" class="section level4">
+<h4>Use <code>taxonomy</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name in the
+argument <code>organism</code> users can specify the
+<code>taxonomy</code> id of the corresponding organism. Here, we specify
+the taxonomy id <code>4932</code> which encodes the species
+<code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb87-2"><a href="#cb87-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb87-3"><a href="#cb87-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb87-4"><a href="#cb87-4" tabindex="-1"></a>Scerevisiae_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(</span>
+<span id="cb87-5"><a href="#cb87-5" tabindex="-1"></a>            <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>,</span>
+<span id="cb87-6"><a href="#cb87-6" tabindex="-1"></a>            <span class="at">organism =</span> <span class="st">&quot;4932&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb87-7"><a href="#cb87-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" tabindex="-1"></a>Scerevisiae_Genome</span></code></pre></div>
+<pre><code>  A DNAStringSet instance of length 17
+       width seq                            names               
+ [1]  230218 CCACACCACACCCA...TGGTGTGTGTGGG I dna:chromosome ...
+ [2]  813184 AAATAGCCCTCATG...TGTGTGGGTGTGT II dna:chromosome...
+ [3]  316620 CCCACACACCACAC...TGTGGTGTGTGTG III dna:chromosom...
+ [4] 1531933 ACACCACACCCACA...AAGTAGCTTTTGG IV dna:chromosome...
+ [5]  576874 CGTCTCCTCCAAGC...CATTTTTTTTTTT V dna:chromosome ...
+ ...     ... ...
+[13]  924431 CCACACACACACCA...TGTGTGTGTGGGG XIII dna:chromoso...
+[14]  784333 CCGGCTTTCTGACC...GTGTGGTGTGGGT XIV dna:chromosom...
+[15] 1091291 ACACCACACCCACA...GGGTGTGGTGTGT XV dna:chromosome...
+[16]  948066 AAATAGCCCTCATG...TTTCGGTCAGAAA XVI dna:chromosom...
+[17]   85779 TTCATAATTAATTT...TATAATATCCATA Mito dna:chromoso...</code></pre>
+</div>
+<div id="use-assembly_accession-id-for-genome-retrieval-2" class="section level4">
+<h4>Use <code>assembly_accession</code> id for genome retrieval</h4>
+<p>Alternatively, instead of specifying the scientific name or taxonomy
+in the argument <code>organism</code> users can specify the
+<code>assembly_accession</code> id of the corresponding organism. Here,
+we specify the <code>assembly_accession</code> id
+<code>GCA_000146045.2</code> which encodes the species
+<code>Saccharomyces cerevisiae</code>.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb90-2"><a href="#cb90-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb90-3"><a href="#cb90-3" tabindex="-1"></a><span class="co"># import genome as Biostrings object</span></span>
+<span id="cb90-4"><a href="#cb90-4" tabindex="-1"></a>Scerevisiae_Genome <span class="ot">&lt;-</span> <span class="fu">getGenome</span>(</span>
+<span id="cb90-5"><a href="#cb90-5" tabindex="-1"></a>            <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>,</span>
+<span id="cb90-6"><a href="#cb90-6" tabindex="-1"></a>            <span class="at">organism =</span> <span class="st">&quot;GCA_000146045.2&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb90-7"><a href="#cb90-7" tabindex="-1"></a>    <span class="fu">read_genome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" tabindex="-1"></a>Scerevisiae_Genome</span></code></pre></div>
+<pre><code>  A DNAStringSet instance of length 17
+       width seq                                names               
+ [1]  230218 CCACACCACACCCACA...TGTGGTGTGTGTGGG I dna:chromosome ...
+ [2]  813184 AAATAGCCCTCATGTA...GGTGTGTGGGTGTGT II dna:chromosome...
+ [3]  316620 CCCACACACCACACCC...GGTGTGGTGTGTGTG III dna:chromosom...
+ [4] 1531933 ACACCACACCCACACC...GTAAGTAGCTTTTGG IV dna:chromosome...
+ [5]  439888 CACACACACCACACCC...GTGTGGTGTGTGTGT IX dna:chromosome...
+ ...     ... ...
+[13] 1078177 CACACACACACACCAC...ACATGAGGGCTATTT XII dna:chromosom...
+[14]  924431 CCACACACACACCACA...GGTGTGTGTGTGGGG XIII dna:chromoso...
+[15]  784333 CCGGCTTTCTGACCGA...GGGTGTGGTGTGGGT XIV dna:chromosom...
+[16] 1091291 ACACCACACCCACACC...GTGGGTGTGGTGTGT XV dna:chromosome...
+[17]  948066 AAATAGCCCTCATGTA...AATTTCGGTCAGAAA XVI dna:chromosom...</code></pre>
+</div>
+</div>
+<div id="genomeset-retrieval" class="section level3">
+<h3>GenomeSet Retrieval</h3>
+<p>The <code>getGenomeSet()</code> function enables users to retrieve
+genome files for multiple species. This is convenient when users wish to
+bulk download a particular set of species. Internally, a folder named
+<code>set_genomes</code> is generated in which genomes and genome info
+files are stored. In addition, users can specify the arguments:
+<code>clean_retrieval</code> and <code>gunzip</code> (both are
+<code>TRUE</code> by default) to clean file names and automatically
+unzip downloaded files.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" tabindex="-1"></a><span class="co"># specify the species names</span></span>
+<span id="cb93-2"><a href="#cb93-2" tabindex="-1"></a>download_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb93-3"><a href="#cb93-3" tabindex="-1"></a>                      <span class="st">&quot;Arabidopsis lyrata&quot;</span>, </span>
+<span id="cb93-4"><a href="#cb93-4" tabindex="-1"></a>                      <span class="st">&quot;Capsella rubella&quot;</span>)</span>
+<span id="cb93-5"><a href="#cb93-5" tabindex="-1"></a><span class="co"># retrieve these three species from NCBI RefSeq                       </span></span>
+<span id="cb93-6"><a href="#cb93-6" tabindex="-1"></a>biomartr<span class="sc">::</span><span class="fu">getGenomeSet</span>(<span class="st">&quot;refseq&quot;</span>, <span class="at">organisms =</span> download_species, <span class="at">path =</span> <span class="st">&quot;set_genomes&quot;</span>)</span></code></pre></div>
+<p>If the download process was interrupted, users can re-run the
+function and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument <code>update = TRUE</code>.</p>
+</div>
+<div id="proteome-retrieval" class="section level3">
+<h3>Proteome Retrieval</h3>
+<p>The <code>getProteome()</code> function is an interface function to
+the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI
+RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI
+Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a>,
+and <a href="https://www.uniprot.org/">UniProt</a> databases from which
+corresponding proteomes can be retrieved. It works analogous to
+<code>getGenome()</code>.</p>
+<p>The <code>db</code> argument specifies from which database proteomes
+in <code>*.fasta</code> file format shall be retrieved.</p>
+<p>Options are:</p>
+<ul>
+<li><code>db = &quot;refseq&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a></li>
+<li><code>db = &quot;genbank&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a></li>
+<li><code>db = &quot;ensembl&quot;</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a></li>
+<li><code>db = &quot;uniprot&quot;</code> for retrieval from <a href="https://www.uniprot.org/">UniProt</a></li>
+</ul>
+<p>Furthermore, again users need to specify the scientific name of the
+organism of interest for which a proteomes shall be downloaded,
+e.g. <code>organism = &quot;Homo sapiens&quot;</code>. Finally, the
+<code>path</code> argument specifies the folder path in which the
+corresponding proteome shall be locally stored. In case users would like
+to store the proteome file at a different location, they can specify the
+<code>path = file.path(&quot;put&quot;,&quot;your&quot;,&quot;path&quot;,&quot;here&quot;)</code> argument.</p>
+</div>
+<div id="example-ncbi-refseq-1" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" tabindex="-1"></a><span class="co"># download the proteome of Homo sapiens from refseq</span></span>
+<span id="cb94-2"><a href="#cb94-2" tabindex="-1"></a><span class="co"># and store the corresponding proteome file in &#39;_ncbi_downloads/proteomes&#39;</span></span>
+<span id="cb94-3"><a href="#cb94-3" tabindex="-1"></a>HS.proteome.refseq <span class="ot">&lt;-</span> <span class="fu">getProteome</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb94-4"><a href="#cb94-4" tabindex="-1"></a>                                   <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb94-5"><a href="#cb94-5" tabindex="-1"></a>                                   <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;proteomes&quot;</span>))</span></code></pre></div>
+<p>In this example, <code>getProteome()</code> creates a directory named
+<code>&#39;_ncbi_downloads/proteomes&#39;</code> into which the corresponding
+genome named <code>GCF_000001405.34_GRCh38.p8_protein.faa.gz</code> is
+downloaded. The return value of <code>getProteome()</code> is the folder
+path to the downloaded proteome file that can then be used as input to
+the <code>read_proteome()</code> function. The variable
+<code>HS.proteome.refseq</code> stores the path to the downloaded
+proteome. Subsequently, users can use the <code>read_proteome()</code>
+function to import the proteome into the R session. Users can choose to
+work with the proteome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a>
+object (<code>obj.type = &quot;Biostrings&quot;</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>
+object (<code>obj.type = &quot;data.table&quot;</code>) by specifying the
+<code>obj.type</code> argument of the <code>read_proteome()</code>
+function.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" tabindex="-1"></a><span class="co"># import proteome as Biostrings object</span></span>
+<span id="cb95-2"><a href="#cb95-2" tabindex="-1"></a>Human_Proteome <span class="ot">&lt;-</span> <span class="fu">read_proteome</span>(<span class="at">file =</span> HS.proteome.refseq)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" tabindex="-1"></a>Human_Proteome</span></code></pre></div>
+<pre><code>A AAStringSet instance of length 113620
+         width seq                          names               
+     [1]  1474 MGKNKLLHPSLVL...YNAPCSKDLGNA NP_000005.2 alpha...
+     [2]   290 MDIEAYFERIGYK...LVPKPGDGSLTI NP_000006.2 aryla...
+     [3]   421 MAAGFGRCCRVLR...IVAREHIDKYKN NP_000007.1 mediu...
+     [4]   412 MAAALLARASGPA...VIAGHLLRSYRS NP_000008.1 short...
+     [5]   655 MQAARMAASLGRQ...RGGVVTSNPLGF NP_000009.1 very ...
+     ...   ... ...
+[113616]    98 MPLIYMNIMLAFT...LDYVHNLNLLQC YP_003024034.1 NA...
+[113617]   459 MLKLIVPTIMLLP...SLNPDIITGFSS YP_003024035.1 NA...
+[113618]   603 MTMHTTMTTLTLT...FFPLILTLLLIT YP_003024036.1 NA...
+[113619]   174 MMYALFLLSVGLV...GVYIVIEIARGN YP_003024037.1 NA...
+[113620]   380 MTPMRKTNPLMKL...ISLIENKMLKWA YP_003024038.1 cy...</code></pre>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb98-2"><a href="#cb98-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb98-3"><a href="#cb98-3" tabindex="-1"></a><span class="co"># import proteome as Biostrings object</span></span>
+<span id="cb98-4"><a href="#cb98-4" tabindex="-1"></a>Human_Proteome <span class="ot">&lt;-</span> <span class="fu">getProteome</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb98-5"><a href="#cb98-5" tabindex="-1"></a>                               <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb98-6"><a href="#cb98-6" tabindex="-1"></a>                               <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;proteomes&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb98-7"><a href="#cb98-7" tabindex="-1"></a>    <span class="fu">read_proteome</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" tabindex="-1"></a>Human_Proteome</span></code></pre></div>
+<pre><code> A AAStringSet instance of length 113620
+         width seq                          names               
+     [1]  1474 MGKNKLLHPSLVL...YNAPCSKDLGNA NP_000005.2 alpha...
+     [2]   290 MDIEAYFERIGYK...LVPKPGDGSLTI NP_000006.2 aryla...
+     [3]   421 MAAGFGRCCRVLR...IVAREHIDKYKN NP_000007.1 mediu...
+     [4]   412 MAAALLARASGPA...VIAGHLLRSYRS NP_000008.1 short...
+     [5]   655 MQAARMAASLGRQ...RGGVVTSNPLGF NP_000009.1 very ...
+     ...   ... ...
+[113616]    98 MPLIYMNIMLAFT...LDYVHNLNLLQC YP_003024034.1 NA...
+[113617]   459 MLKLIVPTIMLLP...SLNPDIITGFSS YP_003024035.1 NA...
+[113618]   603 MTMHTTMTTLTLT...FFPLILTLLLIT YP_003024036.1 NA...
+[113619]   174 MMYALFLLSVGLV...GVYIVIEIARGN YP_003024037.1 NA...
+[113620]   380 MTPMRKTNPLMKL...ISLIENKMLKWA YP_003024038.1 cy...</code></pre>
+</div>
+<div id="example-ncbi-genbank-1" class="section level3">
+<h3>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" tabindex="-1"></a><span class="co"># download the proteome of Homo sapiens from genbank</span></span>
+<span id="cb101-2"><a href="#cb101-2" tabindex="-1"></a><span class="co"># and store the corresponding proteome file in &#39;_ncbi_downloads/proteomes&#39;</span></span>
+<span id="cb101-3"><a href="#cb101-3" tabindex="-1"></a>HS.proteome.genbank <span class="ot">&lt;-</span> <span class="fu">getProteome</span>( <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>, </span>
+<span id="cb101-4"><a href="#cb101-4" tabindex="-1"></a>                                   <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb101-5"><a href="#cb101-5" tabindex="-1"></a>                                   <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;proteomes&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" tabindex="-1"></a><span class="co"># import proteome as Biostrings object</span></span>
+<span id="cb102-2"><a href="#cb102-2" tabindex="-1"></a>Human_Proteome <span class="ot">&lt;-</span> <span class="fu">read_proteome</span>(<span class="at">file =</span> HS.proteome.genbank)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" tabindex="-1"></a>Human_Proteome</span></code></pre></div>
+<pre><code>A AAStringSet instance of length 13
+     width seq                              names               
+ [1]   318 MPMANLLLLIVPILI...VSMPITISSIPPQT AAB58943.1 NADH d...
+ [2]   347 MNPLAQPVIYSTIFA...TLLLPISPFMLMIL AAB58944.1 NADH d...
+ [3]   513 MFADRWLFSTNHKDI...PPYHTFEEPVYMKS AAB58945.1 cytoch...
+ [4]   227 MAHAAQVGLQDATSP...IPLKIFEMGPVFTL AAB58946.1 cytoch...
+ [5]    68 MPQLNTTVWPTMITP...WTKICSLHSLPPQS AAB58947.1 ATPase...
+ ...   ... ...
+ [9]    98 MPLIYMNIMLAFTIS...YGLDYVHNLNLLQC AAB58951.1 NADH d...
+[10]   459 MLKLIVPTIMLLPLT...LLSLNPDIITGFSS AAB58952.1 NADH d...
+[11]   603 MTMHTTMTTLTLTSL...SFFFPLILTLLLIT AAB58953.1 NADH d...
+[12]   174 MMYALFLLSVGLVMG...FVGVYIVIEIARGN AAB58954.1 NADH d...
+[13]   380 MTPMRKTNPLMKLIN...PTISLIENKMLKWA AAB58955.3 cytoch...</code></pre>
+</div>
+<div id="example-ensembl-1" class="section level3">
+<h3>Example <code>ENSEMBL</code>:</h3>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" tabindex="-1"></a><span class="co"># download the proteome of Homo sapiens from ENSEMBL</span></span>
+<span id="cb105-2"><a href="#cb105-2" tabindex="-1"></a><span class="co"># and store the corresponding proteome file in &#39;_ncbi_downloads/proteomes&#39;</span></span>
+<span id="cb105-3"><a href="#cb105-3" tabindex="-1"></a>HS.proteome.ensembl <span class="ot">&lt;-</span> <span class="fu">getProteome</span>( <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb105-4"><a href="#cb105-4" tabindex="-1"></a>                                   <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb105-5"><a href="#cb105-5" tabindex="-1"></a>                                   <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;proteomes&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" tabindex="-1"></a><span class="co"># import proteome as Biostrings object</span></span>
+<span id="cb106-2"><a href="#cb106-2" tabindex="-1"></a>Human_Proteome <span class="ot">&lt;-</span> <span class="fu">read_proteome</span>(<span class="at">file =</span> HS.proteome.ensembl)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" tabindex="-1"></a>Human_Proteome</span></code></pre></div>
+<pre><code>  A AAStringSet instance of length 107844
+         width seq                          names               
+     [1]     3 PSY                          ENSP00000451515.1...
+     [2]     4 TGGY                         ENSP00000452494.1...
+     [3]     2 EI                           ENSP00000451042.1...
+     [4]     4 GTGG                         ENSP00000487941.1...
+     [5]     4 GTGG                         ENSP00000488240.1...
+     ...   ... ...
+[107840]   135 MLQKKIEEKDLKV...LNHICKVPLAIK ENSP00000495237.1...
+[107841]   166 MEHAFTPLEPLLS...IIQEESLIYLLQ ENSP00000496198.1...
+[107842]    42 MEVPTAYMISPKE...GLKSENTMLLRC ENSP00000495723.1...
+[107843]   508 MPSMLERISKNLV...GTLSLLQQLAEA ENSP00000496548.1...
+[107844]   508 MPSMLERISKNLV...GTLSLLQQLAEA ENSP00000494855.1...</code></pre>
+<p>Users can also specify the <code>release</code> argument which
+denotes the database release version of ENSEMBL
+(<code>db = &quot;ensembl&quot;</code>) in case they wish to download archived
+vgenome versions. Default is release = NULL meaning that the most recent
+database version is used.</p>
+</div>
+<div id="example-retrieval-uniprot" class="section level3">
+<h3>Example Retrieval <code>Uniprot</code>:</h3>
+<p>Another way of retrieving proteome sequences is from the <a href="https://www.uniprot.org/">UniProt</a> database.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" tabindex="-1"></a><span class="co"># download the proteome of Mus musculus from UniProt</span></span>
+<span id="cb109-2"><a href="#cb109-2" tabindex="-1"></a><span class="co"># and store the corresponding proteome file in &#39;_uniprot_downloads/proteomes&#39;</span></span>
+<span id="cb109-3"><a href="#cb109-3" tabindex="-1"></a>Mm.proteome.uniprot<span class="ot">&lt;-</span> <span class="fu">getProteome</span>( <span class="at">db       =</span> <span class="st">&quot;uniprot&quot;</span>, </span>
+<span id="cb109-4"><a href="#cb109-4" tabindex="-1"></a>                                   <span class="at">organism =</span> <span class="st">&quot;Mus musculus&quot;</span>,</span>
+<span id="cb109-5"><a href="#cb109-5" tabindex="-1"></a>                                   <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_uniprot_downloads&quot;</span>,<span class="st">&quot;proteomes&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" tabindex="-1"></a><span class="co"># import proteome as Biostrings object</span></span>
+<span id="cb110-2"><a href="#cb110-2" tabindex="-1"></a>Mouse_Proteome <span class="ot">&lt;-</span> <span class="fu">read_proteome</span>(<span class="at">file =</span> Mm.proteome.uniprot)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" tabindex="-1"></a>Mouse_Proteome</span></code></pre></div>
+<pre><code>A AAStringSet instance of length 84522
+        width seq                                  names               
+    [1]   781 MATQADLMELDMAMEPD...LPPGDSNQLAWFDTDL sp|Q02248|CTNB1_M...
+    [2]  2531 MPRLLTPLLCLTLLPAL...PTTMPSQITHIPEAFK sp|Q01705|NOTC1_M...
+    [3]   437 MLLLLARCFLVILASSL...LDSETMHPLGMAVKSS sp|Q62226|SHH_MOU...
+    [4]   380 MKKPIGILSPGVALGTA...VKCKKCTEIVDQFVCK sp|P22725|WNT5A_M...
+    [5]   387 MEESQSDISLELPLSQE...SRHKKTMVKKVGPDSD sp|P02340|P53_MOU...
+    ...   ... ...
+[84518]   459 MLKIILPSLMLLPLTWL...LILLTTSPKLITGLTM tr|A0A0F6PZ84|A0A...
+[84519]   380 MTNMRKTHPLFKIINHS...LMPISGIIEDKMLKLY tr|U3TEV9|U3TEV9_...
+[84520]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PXN8|A0A...
+[84521]   172 MNNYIFVLSSLFLVGCL...WSLFAGIFIIIEITRD tr|A0A0F6PXK9|A0A...
+[84522]   381 MTNMRKTHPLFKIINHS...MPISGIIEDKMLKLYP tr|A0A0F6PYR5|A0A...</code></pre>
+</div>
+<div id="proteomeset-retrieval" class="section level3">
+<h3>ProteomeSet Retrieval</h3>
+<p>The <code>getProteomeSet()</code> function enables users to retrieve
+proteome files for multiple species. This is convenient when users wish
+to bulk download a particular set of species. Internally, a folder named
+<code>set_proteomes</code> is generated in which proteomes and proteome
+info files are stored. In addition, users can specify the arguments:
+<code>clean_retrieval</code> and <code>gunzip</code> (both are
+<code>TRUE</code> by default) to clean file names and automatically
+unzip downloaded files.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" tabindex="-1"></a><span class="co"># specify the species names</span></span>
+<span id="cb113-2"><a href="#cb113-2" tabindex="-1"></a>download_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb113-3"><a href="#cb113-3" tabindex="-1"></a>                      <span class="st">&quot;Arabidopsis lyrata&quot;</span>, </span>
+<span id="cb113-4"><a href="#cb113-4" tabindex="-1"></a>                      <span class="st">&quot;Capsella rubella&quot;</span>)</span>
+<span id="cb113-5"><a href="#cb113-5" tabindex="-1"></a><span class="co"># retrieve these three species from NCBI RefSeq                       </span></span>
+<span id="cb113-6"><a href="#cb113-6" tabindex="-1"></a>biomartr<span class="sc">::</span><span class="fu">getProteomeSet</span>(<span class="st">&quot;refseq&quot;</span>, <span class="at">organisms =</span> download_species, <span class="at">path =</span> <span class="st">&quot;set_proteomes&quot;</span>)</span></code></pre></div>
+<p>If the download process was interrupted, users can re-run the
+function and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument <code>update = TRUE</code>.</p>
+</div>
+<div id="cds-retrieval" class="section level3">
+<h3>CDS Retrieval</h3>
+<p>The <code>getCDS()</code> function is an interface function to the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a> databases from
+which corresponding CDS files can be retrieved. It works analogous to
+<code>getGenome()</code> and <code>getProteome()</code>.</p>
+<p>The <code>db</code> argument specifies from which database proteomes
+in <code>*.fasta</code> file format shall be retrieved.</p>
+<p>Options are:</p>
+<ul>
+<li><code>db = &quot;refseq&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a></li>
+<li><code>db = &quot;genbank&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a></li>
+<li><code>db = &quot;ensembl&quot;</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a></li>
+</ul>
+<p>Furthermore, again users need to specify the scientific name of the
+organism of interest for which a proteomes shall be downloaded,
+e.g. <code>organism = &quot;Homo sapiens&quot;</code>. Finally, the
+<code>path</code> argument specifies the folder path in which the
+corresponding CDS file shall be locally stored. In case users would like
+to store the CDS file at a different location, they can specify the
+<code>path = file.path(&quot;put&quot;,&quot;your&quot;,&quot;path&quot;,&quot;here&quot;)</code> argument.</p>
+</div>
+<div id="example-ncbi-refseq-2" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from refseq</span></span>
+<span id="cb114-2"><a href="#cb114-2" tabindex="-1"></a><span class="co"># and store the corresponding genome CDS file in &#39;_ncbi_downloads/CDS&#39;</span></span>
+<span id="cb114-3"><a href="#cb114-3" tabindex="-1"></a>HS.cds.refseq <span class="ot">&lt;-</span> <span class="fu">getCDS</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb114-4"><a href="#cb114-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb114-5"><a href="#cb114-5" tabindex="-1"></a>                         <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;CDS&quot;</span>))</span></code></pre></div>
+<p>In this example, <code>getCDS()</code> creates a directory named
+<code>&#39;_ncbi_downloads/CDS&#39;</code> into which the corresponding genome
+named <code>Homo_sapiens_cds_from_genomic_refseq.fna.gz</code> is
+downloaded. The return value of <code>getCDS()</code> is the folder path
+to the downloaded genome file that can then be used as input to the
+<code>read_cds()</code> function. The variable
+<code>HS.cds.refseq</code> stores the path to the downloaded CDS file.
+Subsequently, users can use the <code>read_cds()</code> function to
+import the genome into the R session. Users can choose to work with the
+genome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a>
+object (<code>obj.type = &quot;Biostrings&quot;</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>
+object (<code>obj.type = &quot;data.table&quot;</code>) by specifying the
+<code>obj.type</code> argument of the <code>read_cds()</code>
+function.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" tabindex="-1"></a><span class="co"># import downloaded CDS as Biostrings object</span></span>
+<span id="cb115-2"><a href="#cb115-2" tabindex="-1"></a>Human_CDS <span class="ot">&lt;-</span> <span class="fu">read_cds</span>(<span class="at">file     =</span> HS.cds.refseq, </span>
+<span id="cb115-3"><a href="#cb115-3" tabindex="-1"></a>                      <span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb116-2"><a href="#cb116-2" tabindex="-1"></a>Human_CDS</span></code></pre></div>
+<pre><code> A BStringSet instance of length 114967
+          width seq                                                names               
+     [1]    918 ATGGTGACTGAATTCATTTTTCTG...CACATTCTAGTGTAAAGTTTTAG lcl|NC_000001.11_...
+     [2]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [3]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [4]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [5]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     ...    ... ...
+[114963]    297 ATGCCCCTCATTTACATAAATATT...ACCTAAACCTACTCCAATGCTAA lcl|NC_012920.1_c...
+[114964]   1378 ATGCTAAAACTAATCGTCCCAACA...CATCATTACCGGGTTTTCCTCTT lcl|NC_012920.1_c...
+[114965]   1812 ATAACCATGCACACTACTATAACC...TAACCCTACTCCTAATCACATAA lcl|NC_012920.1_c...
+[114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
+[114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...</code></pre>
+<p>Internally, a text file named
+<code>doc_Homo_sapiens_db_refseq.txt</code> is generated. The
+information stored in this log file is structured as follows:</p>
+<pre><code>File Name: Homo_sapiens_cds_from_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_cds_from_genomic.fna.gz
+Download_Date: Sun Oct 23 17:19:05 2016
+refseq_category: reference genome
+assembly_accession: GCF_000001405.35
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2016-09-26
+submitter: Genome Reference Consortium</code></pre>
+<p>In summary, the <code>getCDS()</code> and <code>read_cds()</code>
+functions allow users to retrieve CDS files by specifying the scientific
+name of the organism of interest and allow them to import the retrieved
+CDS file e.g. as <code>Biostrings</code> object. Thus, users can then
+perform the <code>Biostrings notation</code> to work with downloaded CDS
+and can rely on the log file generated by <code>getCDS()</code> to
+better document the source and version of CDS used for subsequent
+studies.</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb119-2"><a href="#cb119-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb119-3"><a href="#cb119-3" tabindex="-1"></a><span class="co"># import CDS as Biostrings object</span></span>
+<span id="cb119-4"><a href="#cb119-4" tabindex="-1"></a>Human_CDS <span class="ot">&lt;-</span> <span class="fu">getCDS</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb119-5"><a href="#cb119-5" tabindex="-1"></a>                     <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb119-6"><a href="#cb119-6" tabindex="-1"></a>                     <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;CDS&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb119-7"><a href="#cb119-7" tabindex="-1"></a>    <span class="fu">read_cds</span>(<span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" tabindex="-1"></a>Human_CDS</span></code></pre></div>
+<pre><code> A BStringSet instance of length 114967
+          width seq                                                names               
+     [1]    918 ATGGTGACTGAATTCATTTTTCTG...CACATTCTAGTGTAAAGTTTTAG lcl|NC_000001.11_...
+     [2]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [3]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [4]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     [5]    402 ATGAGTGACAGCATCAACTTCTCT...CAGGACCCAGGCACAGGCATTAG lcl|NC_000001.11_...
+     ...    ... ...
+[114963]    297 ATGCCCCTCATTTACATAAATATT...ACCTAAACCTACTCCAATGCTAA lcl|NC_012920.1_c...
+[114964]   1378 ATGCTAAAACTAATCGTCCCAACA...CATCATTACCGGGTTTTCCTCTT lcl|NC_012920.1_c...
+[114965]   1812 ATAACCATGCACACTACTATAACC...TAACCCTACTCCTAATCACATAA lcl|NC_012920.1_c...
+[114966]    525 ATGATGTATGCTTTGTTTCTGTTG...TTGAGATTGCTCGGGGGAATAGG lcl|NC_012920.1_c...
+[114967]   1141 ATGACCCCAATACGCAAAACTAAC...AAACAAAATACTCAAATGGGCCT lcl|NC_012920.1_c...</code></pre>
+</div>
+<div id="example-ncbi-genbank-2" class="section level3">
+<h3>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from genbank</span></span>
+<span id="cb122-2"><a href="#cb122-2" tabindex="-1"></a><span class="co"># and store the corresponding genome CDS file in &#39;_ncbi_downloads/CDS&#39;</span></span>
+<span id="cb122-3"><a href="#cb122-3" tabindex="-1"></a>HS.cds.genbank <span class="ot">&lt;-</span> <span class="fu">getCDS</span>( <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>, </span>
+<span id="cb122-4"><a href="#cb122-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb122-5"><a href="#cb122-5" tabindex="-1"></a>                         <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;CDS&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" tabindex="-1"></a><span class="co"># import downloaded CDS as Biostrings object</span></span>
+<span id="cb123-2"><a href="#cb123-2" tabindex="-1"></a>Human_CDS <span class="ot">&lt;-</span> <span class="fu">read_cds</span>(<span class="at">file     =</span> HS.cds.genbank, </span>
+<span id="cb123-3"><a href="#cb123-3" tabindex="-1"></a>                      <span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb124-2"><a href="#cb124-2" tabindex="-1"></a>Human_CDS</span></code></pre></div>
+<pre><code>  A BStringSet instance of length 13
+     width seq                                                     names               
+ [1]   956 ATACCCATGGCCAACCTCCTACTCCT...ATCTCCAGCATTCCCCCTCAAACCTA lcl|J01415.2_cds_...
+ [2]  1042 ATTAATCCCCTGGCCCAACCCGTCAT...CTCCCCTTTTATACTAATAATCTTAT lcl|J01415.2_cds_...
+ [3]  1542 ATGTTCGCCGACCGTTGACTATTCTC...AAGAACCCGTATACATAAAATCTAGA lcl|J01415.2_cds_...
+ [4]   684 ATGGCACATGCAGCGCAAGTAGGTCT...AAATAGGGCCCGTATTTACCCTATAG lcl|J01415.2_cds_...
+ [5]   207 ATGCCCCAACTAAATACTACCGTATG...TTCATTCATTGCCCCCACAATCCTAG lcl|J01415.2_cds_...
+ ...   ... ...
+ [9]   297 ATGCCCCTCATTTACATAAATATTAT...ATAACCTAAACCTACTCCAATGCTAA lcl|J01415.2_cds_...
+[10]  1378 ATGCTAAAACTAATCGTCCCAACAAT...CGACATCATTACCGGGTTTTCCTCTT lcl|J01415.2_cds_...
+[11]  1812 ATAACCATGCACACTACTATAACCAC...TCCTAACCCTACTCCTAATCACATAA lcl|J01415.2_cds_...
+[12]   525 ATGATGTATGCTTTGTTTCTGTTGAG...TAATTGAGATTGCTCGGGGGAATAGG lcl|J01415.2_cds_...
+[13]  1141 ATGACCCCAATACGCAAAACTAACCC...TGAAAACAAAATACTCAAATGGGCCT lcl|J01415.2_cds_...</code></pre>
+</div>
+<div id="example-ensembl-2" class="section level3">
+<h3>Example <code>ENSEMBL</code>:</h3>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" tabindex="-1"></a><span class="co"># download the genome of Homo sapiens from ensembl</span></span>
+<span id="cb126-2"><a href="#cb126-2" tabindex="-1"></a><span class="co"># and store the corresponding genome CDS file in &#39;_ncbi_downloads/CDS&#39;</span></span>
+<span id="cb126-3"><a href="#cb126-3" tabindex="-1"></a>HS.cds.ensembl <span class="ot">&lt;-</span> <span class="fu">getCDS</span>( <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb126-4"><a href="#cb126-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb126-5"><a href="#cb126-5" tabindex="-1"></a>                         <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;CDS&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" tabindex="-1"></a><span class="co"># import downloaded CDS as Biostrings object</span></span>
+<span id="cb127-2"><a href="#cb127-2" tabindex="-1"></a>Human_CDS <span class="ot">&lt;-</span> <span class="fu">read_cds</span>(<span class="at">file     =</span> HS.cds.ensembl, </span>
+<span id="cb127-3"><a href="#cb127-3" tabindex="-1"></a>                      <span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb128-2"><a href="#cb128-2" tabindex="-1"></a>Human_CDS</span></code></pre></div>
+<pre><code>  A BStringSet instance of length 102915
+          width seq                                                names               
+     [1]     13 ACTGGGGGATACG                                      ENST00000448914.1...
+     [2]     12 GGGACAGGGGGC                                       ENST00000631435.1...
+     [3]     12 GGGACAGGGGGC                                       ENST00000632684.1...
+     [4]      9 CCTTCCTAC                                          ENST00000434970.2...
+     [5]      8 GAAATAGT                                           ENST00000415118.1...
+     ...    ... ...
+[102911]   1665 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000436984.6...
+[102912]   1920 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000439889.6...
+[102913]   2094 ATGCTACTGCCACTGCTGCTGTCC...ATGCAGAAGTCAAGTTCCAATGA ENST00000339313.9...
+[102914]    466 ATGCTACTGCCACTGCTGCTGTCC...AGCCCTGGACCTCTCTGTGCAGT ENST00000529627.1...
+[102915]    559 ATGCGGAGATGCTACTGCCACTGC...CCTCACCTGCCATGTGGACTTCT ENST00000530476.1...</code></pre>
+<p>Users can also specify the <code>release</code> argument which
+denotes the database release version of ENSEMBL
+(<code>db = &quot;ensembl&quot;</code>) in case they wish to download archived
+vgenome versions. Default is release = NULL meaning that the most recent
+database version is used.</p>
+</div>
+<div id="cdsset-retrieval" class="section level3">
+<h3>CDSSet Retrieval</h3>
+<p>The <code>getCDSSet()</code> function enables users to retrieve CDS
+files for multiple species. This is convenient when users wish to bulk
+download a particular set of species. Internally, a folder named
+<code>set_cds</code> is generated in which CDS and CDS info files are
+stored. In addition, users can specify the arguments:
+<code>clean_retrieval</code> and <code>gunzip</code> (both are
+<code>TRUE</code> by default) to clean file names and automatically
+unzip downloaded files.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" tabindex="-1"></a><span class="co"># specify the species names</span></span>
+<span id="cb130-2"><a href="#cb130-2" tabindex="-1"></a>download_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb130-3"><a href="#cb130-3" tabindex="-1"></a>                      <span class="st">&quot;Arabidopsis lyrata&quot;</span>, </span>
+<span id="cb130-4"><a href="#cb130-4" tabindex="-1"></a>                      <span class="st">&quot;Capsella rubella&quot;</span>)</span>
+<span id="cb130-5"><a href="#cb130-5" tabindex="-1"></a><span class="co"># retrieve these three species from NCBI RefSeq                       </span></span>
+<span id="cb130-6"><a href="#cb130-6" tabindex="-1"></a>biomartr<span class="sc">::</span><span class="fu">getCDSSet</span>(<span class="st">&quot;refseq&quot;</span>, <span class="at">organisms =</span> download_species, <span class="at">path =</span> <span class="st">&quot;set_cds&quot;</span>)</span></code></pre></div>
+<p>If the download process was interrupted, users can re-run the
+function and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument <code>update = TRUE</code>.</p>
+</div>
+<div id="rna-retrieval" class="section level3">
+<h3>RNA Retrieval</h3>
+<p>The <code>getRNA()</code> function is an interface function to the <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a>, <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a>, <a href="https://www.ensembl.org/index.html">ENSEMBL</a> databases from
+which corresponding RNA files can be retrieved. It works analogous to
+<code>getGenome()</code>, <code>getProteome()</code>, and
+<code>getCDS()</code>.</p>
+<p>The <code>db</code> argument specifies from which database proteomes
+in <code>*.fasta</code> file format shall be retrieved.</p>
+<p>Options are:</p>
+<ul>
+<li><code>db = &quot;refseq&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/refseq/about/">NCBI RefSeq</a></li>
+<li><code>db = &quot;genbank&quot;</code> for retrieval from <a href="https://www.ncbi.nlm.nih.gov/genbank/about/">NCBI Genbank</a></li>
+<li><code>db = &quot;ensembl&quot;</code> for retrieval from <a href="https://www.ensembl.org/index.html">ENSEMBL</a></li>
+</ul>
+<p>Furthermore, again users need to specify the scientific name of the
+organism of interest for which a proteomes shall be downloaded,
+e.g. <code>organism = &quot;Homo sapiens&quot;</code>. Finally, the
+<code>path</code> argument specifies the folder path in which the
+corresponding RNA file shall be locally stored. In case users would like
+to store the RNA file at a different location, they can specify the
+<code>path = file.path(&quot;put&quot;,&quot;your&quot;,&quot;path&quot;,&quot;here&quot;)</code> argument.</p>
+</div>
+<div id="example-ncbi-refseq-3" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" tabindex="-1"></a><span class="co"># download the RNA of Homo sapiens from refseq</span></span>
+<span id="cb131-2"><a href="#cb131-2" tabindex="-1"></a><span class="co"># and store the corresponding RNA file in &#39;_ncbi_downloads/RNA&#39;</span></span>
+<span id="cb131-3"><a href="#cb131-3" tabindex="-1"></a>HS.rna.refseq <span class="ot">&lt;-</span> <span class="fu">getRNA</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb131-4"><a href="#cb131-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb131-5"><a href="#cb131-5" tabindex="-1"></a>                         <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;RNA&quot;</span>))</span></code></pre></div>
+<p>In this example, <code>getRNA()</code> creates a directory named
+<code>&#39;_ncbi_downloads/RNA&#39;</code> into which the corresponding RNA file
+named <code>Homo_sapiens_rna_from_genomic_refseq.fna.gz</code> is
+downloaded. The return value of <code>getRNA()</code> is the folder path
+to the downloaded genome file that can then be used as input to the
+<code>read_rna()</code> function. The variable
+<code>HS.rna.refseq</code> stores the path to the downloaded RNA file.
+Subsequently, users can use the <code>read_cds()</code> function to
+import the genome into the R session. Users can choose to work with the
+genome sequence in R either as <a href="https://bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a>
+object (<code>obj.type = &quot;Biostrings&quot;</code>) or <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>
+object (<code>obj.type = &quot;data.table&quot;</code>) by specifying the
+<code>obj.type</code> argument of the <code>read_rna()</code>
+function.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" tabindex="-1"></a><span class="co"># import downloaded RNA as Biostrings object</span></span>
+<span id="cb132-2"><a href="#cb132-2" tabindex="-1"></a>Human_rna <span class="ot">&lt;-</span> <span class="fu">read_rna</span>(<span class="at">file     =</span> HS.rna.refseq, </span>
+<span id="cb132-3"><a href="#cb132-3" tabindex="-1"></a>                      <span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb133-2"><a href="#cb133-2" tabindex="-1"></a>Human_rna</span></code></pre></div>
+<pre><code>   A BStringSet instance of length 164136
+          width seq                                                                                       names               
+     [1]   1652 CTTGCCGTCAGCCTTTTCTTTGACCTCTTCTTTCTGTTCATGT...CACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTG lcl|NC_000001.11_...
+     [2]   1769 TCCGGCAGAGCGGAAGCGGCGGCGGGAGCTTCCGGGAGGGCGG...ACCAACAGTGTGCTTTTAATAAAGGATCTCTAGCTGTGCAGGA lcl|NC_000001.11_...
+     [3]     68 TGTGGGAGAGGAACATGGGCTCAGGACAGCGGGTGTCAGCTTGCCTGACCCCCATGTCGCCTCTGTAG                      lcl|NC_000001.11_...
+     [4]     23 TGACCCCCATGTCGCCTCTGTAG                                                                   lcl|NC_000001.11_...
+     [5]     23 GAGAGGAACATGGGCTCAGGACA                                                                   lcl|NC_000001.11_...
+     ...    ... ...
+[164132]     59 GAGAAAGCTCACAAGAACTGCTAACTCATGCCCCCATGTCTAACAACATGGCTTTCTCA                               lcl|NC_012920.1_t...
+[164133]     71 ACTTTTAAAGGATAACAGCTATCCATTGGTCTTAGGCCCCAAAAATTTTGGTGCAACTCCAAATAAAAGTA                   lcl|NC_012920.1_t...
+[164134]     69 GTTCTTGTAGTTGAAATACAACGATGGTTTTTCATATCATTGGTCGTGGTTGTAGTCCGTGCGAGAATA                     lcl|NC_012920.1_t...
+[164135]     66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                        lcl|NC_012920.1_t...
+[164136]     68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                      lcl|NC_012920.1_t...</code></pre>
+<p>Internally, a text file named
+<code>doc_Homo_sapiens_db_refseq.txt</code> is generated. The
+information stored in this log file is structured as follows:</p>
+<pre><code>File Name: Homo_sapiens_rna_from_genomic_refseq.fna.gz
+Organism Name: Homo_sapiens
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_rna_from_genomic.fna.gz
+Download_Date: Wed Mar 15 16:46:45 2017
+refseq_category: reference genome
+assembly_accession: GCF_000001405.36
+bioproject: PRJNA168
+biosample: NA
+taxid: 9606
+infraspecific_name: NA
+version_status: latest
+release_type: Patch
+genome_rep: Full
+seq_rel_date: 2017-01-06
+submitter: Genome Reference Consortium</code></pre>
+<p>In summary, the <code>getRNA()</code> and <code>read_rna()</code>
+functions allow users to retrieve RNA files by specifying the scientific
+name of the organism of interest and allow them to import the retrieved
+RNA file e.g. as <code>Biostrings</code> object. Thus, users can then
+perform the <code>Biostrings notation</code> to work with downloaded RNA
+and can rely on the log file generated by <code>getRNA()</code> to
+better document the source and version of RNA used for subsequent
+studies.</p>
+<p>Alternatively, users can perform the pipeline logic of the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" tabindex="-1"></a><span class="co"># install.packages(&quot;magrittr&quot;)</span></span>
+<span id="cb136-2"><a href="#cb136-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb136-3"><a href="#cb136-3" tabindex="-1"></a><span class="co"># import RNA as Biostrings object</span></span>
+<span id="cb136-4"><a href="#cb136-4" tabindex="-1"></a>Human_rna <span class="ot">&lt;-</span> <span class="fu">getRNA</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb136-5"><a href="#cb136-5" tabindex="-1"></a>                     <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb136-6"><a href="#cb136-6" tabindex="-1"></a>                     <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;RNA&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb136-7"><a href="#cb136-7" tabindex="-1"></a>    <span class="fu">read_cds</span>(<span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" tabindex="-1"></a>Human_rna</span></code></pre></div>
+<pre><code>   A BStringSet instance of length 164136
+          width seq                                                                                       names               
+     [1]   1652 CTTGCCGTCAGCCTTTTCTTTGACCTCTTCTTTCTGTTCATGT...CACAGCTAGAGATCCTTTATTAAAAGCACACTGTTGGTTTCTG lcl|NC_000001.11_...
+     [2]   1769 TCCGGCAGAGCGGAAGCGGCGGCGGGAGCTTCCGGGAGGGCGG...ACCAACAGTGTGCTTTTAATAAAGGATCTCTAGCTGTGCAGGA lcl|NC_000001.11_...
+     [3]     68 TGTGGGAGAGGAACATGGGCTCAGGACAGCGGGTGTCAGCTTGCCTGACCCCCATGTCGCCTCTGTAG                      lcl|NC_000001.11_...
+     [4]     23 TGACCCCCATGTCGCCTCTGTAG                                                                   lcl|NC_000001.11_...
+     [5]     23 GAGAGGAACATGGGCTCAGGACA                                                                   lcl|NC_000001.11_...
+     ...    ... ...
+[164132]     59 GAGAAAGCTCACAAGAACTGCTAACTCATGCCCCCATGTCTAACAACATGGCTTTCTCA                               lcl|NC_012920.1_t...
+[164133]     71 ACTTTTAAAGGATAACAGCTATCCATTGGTCTTAGGCCCCAAAAATTTTGGTGCAACTCCAAATAAAAGTA                   lcl|NC_012920.1_t...
+[164134]     69 GTTCTTGTAGTTGAAATACAACGATGGTTTTTCATATCATTGGTCGTGGTTGTAGTCCGTGCGAGAATA                     lcl|NC_012920.1_t...
+[164135]     66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                        lcl|NC_012920.1_t...
+[164136]     68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                      lcl|NC_012920.1_t...</code></pre>
+</div>
+<div id="example-ncbi-genbank-3" class="section level3">
+<h3>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" tabindex="-1"></a><span class="co"># download the RNA of Homo sapiens from genbank</span></span>
+<span id="cb139-2"><a href="#cb139-2" tabindex="-1"></a><span class="co"># and store the corresponding genome RNA file in &#39;_ncbi_downloads/RNA&#39;</span></span>
+<span id="cb139-3"><a href="#cb139-3" tabindex="-1"></a>HS.rna.genbank <span class="ot">&lt;-</span> <span class="fu">getRNA</span>( <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>, </span>
+<span id="cb139-4"><a href="#cb139-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb139-5"><a href="#cb139-5" tabindex="-1"></a>                         <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;RNA&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" tabindex="-1"></a><span class="co"># import downloaded RNA as Biostrings object</span></span>
+<span id="cb140-2"><a href="#cb140-2" tabindex="-1"></a>Human_rna <span class="ot">&lt;-</span> <span class="fu">read_cds</span>(<span class="at">file     =</span> HS.rna.genbank, </span>
+<span id="cb140-3"><a href="#cb140-3" tabindex="-1"></a>                      <span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb141-2"><a href="#cb141-2" tabindex="-1"></a>Human_rna</span></code></pre></div>
+<pre><code>  A BStringSet instance of length 24
+     width seq                                                                                            names               
+ [1]    71 GTTTATGTAGCTTACCTCCTCAAAGCAATACACTGAAAATGTTTAGACGGGCTCACATCACCCCATAAACA                        lcl|J01415.2_trna...
+ [2]   954 AATAGGTTTGGTCCTAGCCTTTCTATTAGCTCTTAGTAAGATTACA...AAGTCGTAACATGGTAAGTGTACTGGAAAGTGCACTTGGACGAAC lcl|J01415.2_rrna...
+ [3]    69 CAGAGTGTAGCTTAACACAAAGCACCCAACTTACACTTAGGAGATTTCAACTTAACTTGACCGCTCTGA                          lcl|J01415.2_trna...
+ [4]  1559 GCTAAACCTAGCCCCAAACCCACTCCACCTTACTACCAGACAACCT...ATCTCAACTTAGTATTATACCCACACCCACCCAAGAACAGGGTTT lcl|J01415.2_rrna...
+ [5]    75 GTTAAGATGGCAGAGCCCGGTAATCGCATAAAACTTAAAACTTTACAGTCAGAGGTTCAATTCCTCTTCTTAACA                    lcl|J01415.2_trna...
+ ...   ... ...
+[20]    59 GAGAAAGCTCACAAGAACTGCTAACTCATGCCCCCATGTCTAACAACATGGCTTTCTCA                                    lcl|J01415.2_trna...
+[21]    71 ACTTTTAAAGGATAACAGCTATCCATTGGTCTTAGGCCCCAAAAATTTTGGTGCAACTCCAAATAAAAGTA                        lcl|J01415.2_trna...
+[22]    69 GTTCTTGTAGTTGAAATACAACGATGGTTTTTCATATCATTGGTCGTGGTTGTAGTCCGTGCGAGAATA                          lcl|J01415.2_trna...
+[23]    66 GTCCTTGTAGTATAAACTAATACACCAGTCTTGTAAACCGGAGATGAAAACCTTTTTCCAAGGACA                             lcl|J01415.2_trna...
+[24]    68 CAGAGAATAGTTTAAATTAGAATCTTAGCTTTGGGTGCTAATGGTGGAGTTAAAGACTTTTTCTCTGA                           lcl|J01415.2_trna...</code></pre>
+</div>
+<div id="example-ensembl-3" class="section level3">
+<h3>Example <code>ENSEMBL</code>:</h3>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" tabindex="-1"></a><span class="co"># download the RNA of Homo sapiens from ensembl</span></span>
+<span id="cb143-2"><a href="#cb143-2" tabindex="-1"></a><span class="co"># and store the corresponding genome RNA file in &#39;_ncbi_downloads/RNA&#39;</span></span>
+<span id="cb143-3"><a href="#cb143-3" tabindex="-1"></a>HS.rna.ensembl <span class="ot">&lt;-</span> <span class="fu">getRNA</span>( <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb143-4"><a href="#cb143-4" tabindex="-1"></a>                          <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>,</span>
+<span id="cb143-5"><a href="#cb143-5" tabindex="-1"></a>                          <span class="at">path     =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;RNA&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" tabindex="-1"></a><span class="co"># import downloaded RNA as Biostrings object</span></span>
+<span id="cb144-2"><a href="#cb144-2" tabindex="-1"></a>Human_rna <span class="ot">&lt;-</span> <span class="fu">read_cds</span>(<span class="at">file     =</span> HS.rna.ensembl, </span>
+<span id="cb144-3"><a href="#cb144-3" tabindex="-1"></a>                      <span class="at">obj.type =</span> <span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" tabindex="-1"></a><span class="co"># look at the Biostrings object</span></span>
+<span id="cb145-2"><a href="#cb145-2" tabindex="-1"></a>Human_rna</span></code></pre></div>
+<pre><code>  A BStringSet instance of length 36701
+         width seq                                                                                        names               
+    [1]    104 GTGCTCACTTTGGCAACATACATACTAAAATTGGACGGATACAG...GCACAAGGATGACATGCAAATTCATGAAGCATTCCATATTTTT ENST00000516494.2...
+    [2]    164 TTAACTACCTGACAGAGGAGATACTGTGATCATGAAAGTGGTTT...CATAATTTCTGGTGGTAGGGGACTGCGTTCATGTTCTCCCCTA ENST00000627793.1...
+    [3]    114 ACACTGGTTTCTCTTCAGATCGAATAAATCTTTCGCCTTTTACT...AGTTATAAGCTAATTTTTTGTAAGCCTTGCCCTGGGGAGGCAG ENST00000629478.1...
+    [4]     64 CAGTGTTACACCTCTTTTAGAATTTATCTATCAGGTTTTCCAGTGTTCACTGAAATTTGTCTCT                           ENST00000629187.1...
+    [5]    107 GTGTTGGCCTGGGCAGCACGTATACTAAAGTTGGAATGACACAG...GCGCAAGGATGATGTGCAAATTCGTGACAAGTTCCATATTTTT ENST00000631612.1...
+    ...    ... ...
+[36697]     90 GGCTAGTCCAAATGTAGTGGTGTTCCAAACTAATTAATCACAACCAGTTACAGATTTCTTGTTTTCTTTTCCACTCACACTTAGCCTTAA ENST00000410951.1...
+[36698]    109 GGCTGATCTGAAGATGATGAGTTATCTCAATTGATTGTTCAGCC...TCTATTCTTTCCTCTCTTCTCACTACTGCACTTGGCTAGGAAA ENST00000410462.2...
+[36699]    109 GGTGGGTCCAAAGGTAGCAAGTTATCTCAATTGATCACAGTCAG...CATTCTATCACCCCTTCTCATTACTGTACTTGACTAGTCTTTT ENST00000364501.1...
+[36700]    293 GGATATGAGGGCGATCTGGCAGGGACATCTGTCACCCCACTGAT...AAAATTAGCTGGGCATAGTGGCGTGCACCTGTCGTCCTAGCTA ENST00000365097.1...
+[36701]    172 TTGAAGGCGTGGAGACTGAAGTCCTCTCTATATCCACAGAACAG...AAGAGGGCTGTTCAGTCTCCATGCCCTTCAATCCTTGGCTACT ENST00000615087.1...</code></pre>
+<p>Users can also specify the <code>release</code> argument which
+denotes the database release version of ENSEMBL
+(<code>db = &quot;ensembl&quot;</code>) in case they wish to download archived
+vgenome versions. Default is release = NULL meaning that the most recent
+database version is used.</p>
+</div>
+<div id="rnaset-retrieval" class="section level3">
+<h3>RNASet Retrieval</h3>
+<p>The <code>getRNASet()</code> function enables users to retrieve RNA
+files for multiple species. This is convenient when users wish to bulk
+download a particular set of species. Internally, a folder named
+<code>set_rna</code> is generated in which RNA and RNA info files are
+stored. In addition, users can specify the arguments:
+<code>clean_retrieval</code> and <code>gunzip</code> (both are
+<code>TRUE</code> by default) to clean file names and automatically
+unzip downloaded files.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" tabindex="-1"></a><span class="co"># specify the species names</span></span>
+<span id="cb147-2"><a href="#cb147-2" tabindex="-1"></a>download_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb147-3"><a href="#cb147-3" tabindex="-1"></a>                      <span class="st">&quot;Arabidopsis lyrata&quot;</span>, </span>
+<span id="cb147-4"><a href="#cb147-4" tabindex="-1"></a>                      <span class="st">&quot;Capsella rubella&quot;</span>)</span>
+<span id="cb147-5"><a href="#cb147-5" tabindex="-1"></a><span class="co"># retrieve these three species from NCBI RefSeq                       </span></span>
+<span id="cb147-6"><a href="#cb147-6" tabindex="-1"></a>biomartr<span class="sc">::</span><span class="fu">getRNASet</span>(<span class="st">&quot;refseq&quot;</span>, <span class="at">organisms =</span> download_species, <span class="at">path =</span> <span class="st">&quot;set_rna&quot;</span>)</span></code></pre></div>
+<p>If the download process was interrupted, users can re-run the
+function and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument <code>update = TRUE</code>.</p>
+</div>
+<div id="retrieve-the-annotation-file-of-a-particular-genome" class="section level3">
+<h3>Retrieve the annotation file of a particular genome</h3>
+<p>Finally, users can download the corresponding annotation
+<code>.gff</code> files for particular genomes of interest using the
+<code>getGFF()</code> or alternatively for <code>ensembl</code> the
+<code>getGTF()</code> function.</p>
+</div>
+<div id="example-ncbi-refseq-4" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" tabindex="-1"></a><span class="co"># download the GFF file of Homo sapiens from refseq</span></span>
+<span id="cb148-2"><a href="#cb148-2" tabindex="-1"></a><span class="co"># and store the corresponding file in &#39;_ncbi_downloads/annotation&#39;</span></span>
+<span id="cb148-3"><a href="#cb148-3" tabindex="-1"></a>HS.gff.refseq <span class="ot">&lt;-</span> <span class="fu">getGFF</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb148-4"><a href="#cb148-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb148-5"><a href="#cb148-5" tabindex="-1"></a>                         <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;annotation&quot;</span>))</span></code></pre></div>
+<p>After downloading the <code>.gff</code> file, users can import the
+<code>.gff</code> file with <code>read_gff()</code>.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" tabindex="-1"></a><span class="co"># import downloaded GFF file</span></span>
+<span id="cb149-2"><a href="#cb149-2" tabindex="-1"></a>Human_GFF <span class="ot">&lt;-</span> <span class="fu">read_gff</span>(<span class="at">file =</span> HS.gff.refseq)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" tabindex="-1"></a>Human_GFF</span></code></pre></div>
+<pre><code>          seqid     source       type start       end score strand phase
+          &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt; &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;  &lt;chr&gt; &lt;dbl&gt;
+1  NC_000001.11     RefSeq     region     1 248956422     0      +     0
+2  NC_000001.11 BestRefSeq       gene 11874     14409     0      +     0
+3  NC_000001.11 BestRefSeq transcript 11874     14409     0      +     0
+4  NC_000001.11 BestRefSeq       exon 11874     12227     0      +     0
+5  NC_000001.11 BestRefSeq       exon 12613     12721     0      +     0
+6  NC_000001.11 BestRefSeq       exon 13221     14409     0      +     0
+7  NC_000001.11 BestRefSeq       gene 14362     29370     0      -     0
+8  NC_000001.11 BestRefSeq transcript 14362     29370     0      -     0
+9  NC_000001.11 BestRefSeq       exon 29321     29370     0      -     0
+10 NC_000001.11 BestRefSeq       exon 24738     24891     0      -     0</code></pre>
+<div id="removing-corrupt-lines-from-downloaded-gff-files" class="section level4">
+<h4>Removing corrupt lines from downloaded GFF files</h4>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases
+include corrupt lines that have more than 65000 characters. This leads
+to problems when trying to import such annotation files into R. To
+overcome this issue users can specify the
+<code>remove_annotation_outliers = TRUE</code> argument to remove such
+outlier lines and overwrite the downloaded annotation file. This will
+make any downstream analysis with this annotation file much more
+reliable.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" tabindex="-1"></a>Ath_path <span class="ot">&lt;-</span> biomartr<span class="sc">::</span><span class="fu">getGFF</span>(<span class="at">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>, <span class="at">remove_annotation_outliers =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>Starting GFF retrieval of &#39;Arabidopsis thaliana&#39; from refseq ...
+
+
+|============================================| 100%   52 MB
+File _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz exists already. Thus, download has been skipped.
+Importing &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz&#39; ...
+|============================================| 100%  434 MB
+Reading annotation file &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz&#39; and removing all outlier lines with number of characters greater 65000 ...
+Overwriting &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz&#39; with removed outlier lines ...
+Unzipping file _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff.gz&#39; ...
+The new annotation file was created and has been stored at &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_refseq.gff&#39;.
+The outlier lines were stored in a separate file to explore at &#39;/var/folders/3x/6bbw6ds1039gpwny1m0hn8r80000gp/T//RtmpuVjnsC/Arabidopsis_thaliana_genomic_refseq.gff.gz_outlier_lines.txt&#39;.</code></pre>
+</div>
+</div>
+<div id="example-ncbi-genbank-4" class="section level3">
+<h3>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" tabindex="-1"></a><span class="co"># download the GFF file of Homo sapiens from genbank</span></span>
+<span id="cb154-2"><a href="#cb154-2" tabindex="-1"></a><span class="co"># and store the corresponding file in &#39;_ncbi_downloads/annotation&#39;</span></span>
+<span id="cb154-3"><a href="#cb154-3" tabindex="-1"></a>HS.gff.genbank <span class="ot">&lt;-</span> <span class="fu">getGFF</span>( <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>, </span>
+<span id="cb154-4"><a href="#cb154-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb154-5"><a href="#cb154-5" tabindex="-1"></a>                         <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;_ncbi_downloads&quot;</span>,<span class="st">&quot;annotation&quot;</span>))</span></code></pre></div>
+<p>After downloading the <code>.gff</code> file, users can import the
+<code>.gff</code> file with <code>read_gff()</code>.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" tabindex="-1"></a><span class="co"># import downloaded GFF file</span></span>
+<span id="cb155-2"><a href="#cb155-2" tabindex="-1"></a>Human_GFF <span class="ot">&lt;-</span> <span class="fu">read_gff</span>(<span class="at">file =</span> HS.gff.genbank)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" tabindex="-1"></a><span class="co"># show all elements of the data.frame</span></span>
+<span id="cb156-2"><a href="#cb156-2" tabindex="-1"></a><span class="co"># options(tibble.print_max = Inf)</span></span>
+<span id="cb156-3"><a href="#cb156-3" tabindex="-1"></a>Human_GFF</span></code></pre></div>
+<pre><code>        seqid  source       type     start       end score strand phase
+        &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;  &lt;chr&gt; &lt;dbl&gt;
+1  CM000663.2 Genbank     region         1 248956422     0      +     0
+2  CM000663.2 Genbank centromere 122026460 125184587     0      +     0
+3  KI270706.1 Genbank     region         1    175055     0      +     0
+4  KI270707.1 Genbank     region         1     32032     0      +     0
+5  KI270708.1 Genbank     region         1    127682     0      +     0
+6  KI270709.1 Genbank     region         1     66860     0      +     0
+7  KI270710.1 Genbank     region         1     40176     0      +     0
+8  KI270711.1 Genbank     region         1     42210     0      +     0
+9  KI270712.1 Genbank     region         1    176043     0      +     0
+10 KI270713.1 Genbank     region         1     40745     0      +     0</code></pre>
+<div id="removing-corrupt-lines-from-downloaded-gff-files-1" class="section level4">
+<h4>Removing corrupt lines from downloaded GFF files</h4>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases
+include corrupt lines that have more than 65000 characters. This leads
+to problems when trying to import such annotation files into R. To
+overcome this issue users can specify the
+<code>remove_annotation_outliers = TRUE</code> argument to remove such
+outlier lines and overwrite the downloaded annotation file. This will
+make any downstream analysis with this annotation file much more
+reliable.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" tabindex="-1"></a>Ath_path <span class="ot">&lt;-</span> biomartr<span class="sc">::</span><span class="fu">getGFF</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>,</span>
+<span id="cb158-2"><a href="#cb158-2" tabindex="-1"></a>             <span class="at">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>,</span>
+<span id="cb158-3"><a href="#cb158-3" tabindex="-1"></a>             <span class="at">remove_annotation_outliers =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>Starting GFF retrieval of &#39;Arabidopsis thaliana&#39; from genbank ...
+
+Completed!
+Now continue with species download ...
+GFF download of Arabidopsis_thaliana is completed!
+Checking md5 hash of file: _ncbi_downloads/annotation/Arabidopsis_thaliana_md5checksums.txt ...
+The md5 hash of file &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_md5checksums.txt&#39; matches!
+Importing &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz&#39; ...
+Reading annotation file &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz&#39; and removing all outlier lines with number of characters greater 65000 ...
+Overwriting &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz&#39; with removed outlier lines ...
+Unzipping file _ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff.gz&#39; ...
+The new annotation file was created and has been stored at &#39;_ncbi_downloads/annotation/Arabidopsis_thaliana_genomic_genbank.gff&#39;.
+The outlier lines were stored in a separate file to explore at &#39;/var/folders/3x/6bbw6ds1039gpwny1m0hn8r80000gp/T//RtmpuVjnsC/Arabidopsis_thaliana_genomic_genbank.gff.gz_outlier_lines.txt&#39;.</code></pre>
+</div>
+</div>
+<div id="example-ensembl-4" class="section level3">
+<h3>Example <code>ENSEMBL</code>:</h3>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" tabindex="-1"></a><span class="co"># download the GFF file of Homo sapiens from ENSEMBL</span></span>
+<span id="cb160-2"><a href="#cb160-2" tabindex="-1"></a><span class="co"># and store the corresponding file in &#39;ensembl/annotation&#39;</span></span>
+<span id="cb160-3"><a href="#cb160-3" tabindex="-1"></a>HS.gff.ensembl <span class="ot">&lt;-</span> <span class="fu">getGFF</span>( <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb160-4"><a href="#cb160-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb160-5"><a href="#cb160-5" tabindex="-1"></a>                         <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;ensembl&quot;</span>,<span class="st">&quot;annotation&quot;</span>))</span></code></pre></div>
+<p>After downloading the <code>.gff</code> file, users can import the
+<code>.gff</code> file with <code>read_gff()</code>.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" tabindex="-1"></a><span class="co"># import downloaded GFF file</span></span>
+<span id="cb161-2"><a href="#cb161-2" tabindex="-1"></a>Human_GFF <span class="ot">&lt;-</span> <span class="fu">read_gff</span>(<span class="at">file =</span> HS.gff.ensembl)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" tabindex="-1"></a><span class="co"># show all elements of the data.frame</span></span>
+<span id="cb162-2"><a href="#cb162-2" tabindex="-1"></a><span class="co"># options(tibble.print_max = Inf)</span></span>
+<span id="cb162-3"><a href="#cb162-3" tabindex="-1"></a>Human_GFF</span></code></pre></div>
+<pre><code>   seqid source              type start       end   score strand phase
+   &lt;int&gt;  &lt;chr&gt;             &lt;chr&gt; &lt;int&gt;     &lt;int&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
+1      1 GRCh38        chromosome     1 248956422       .      .     0
+2      1      . biological_region 10469     11240 1.3e+03      .     0
+3      1      . biological_region 10650     10657   0.999      +     0
+4      1      . biological_region 10655     10657   0.999      -     0
+5      1      . biological_region 10678     10687   0.999      +     0
+6      1      . biological_region 10681     10688   0.999      -     0
+7      1      . biological_region 10707     10716   0.999      +     0
+8      1      . biological_region 10708     10718   0.999      -     0
+9      1      . biological_region 10735     10747   0.999      -     0
+10     1      . biological_region 10737     10744   0.999      +     0</code></pre>
+<p>Users can also specify the <code>release</code> argument which
+denotes the database release version of ENSEMBL
+(<code>db = &quot;ensembl&quot;</code>) in case they wish to download archived
+vgenome versions. Default is release = NULL meaning that the most recent
+database version is used.</p>
+<div id="removing-corrupt-lines-from-downloaded-gff-files-2" class="section level4">
+<h4>Removing corrupt lines from downloaded GFF files</h4>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases
+include corrupt lines that have more than 65000 characters. This leads
+to problems when trying to import such annotation files into R. To
+overcome this issue users can specify the
+<code>remove_annotation_outliers = TRUE</code> argument to remove such
+outlier lines and overwrite the downloaded annotation file. This will
+make any downstream analysis with this annotation file much more
+reliable.</p>
+<p>Alternatively for <code>getGTF()</code>:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" tabindex="-1"></a><span class="co"># download the GTF file of Homo sapiens from ENSEMBL</span></span>
+<span id="cb164-2"><a href="#cb164-2" tabindex="-1"></a><span class="co"># and store the corresponding file in &#39;ensembl/annotation&#39;</span></span>
+<span id="cb164-3"><a href="#cb164-3" tabindex="-1"></a>HS.gtf.ensembl <span class="ot">&lt;-</span> <span class="fu">getGTF</span>( <span class="at">db       =</span> <span class="st">&quot;ensembl&quot;</span>, </span>
+<span id="cb164-4"><a href="#cb164-4" tabindex="-1"></a>                         <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb164-5"><a href="#cb164-5" tabindex="-1"></a>                         <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;ensembl&quot;</span>,<span class="st">&quot;annotation&quot;</span>),</span>
+<span id="cb164-6"><a href="#cb164-6" tabindex="-1"></a>                         <span class="at">assembly_type =</span> <span class="st">&quot;primary_assembly&quot;</span>)</span></code></pre></div>
+<p>Taken together, <code>getGFF()</code> or <code>getGTF()</code> in
+combination with <code>getGenome()</code>, <code>getProteome()</code>,
+<code>getRNA()</code> and <code>getCDS()</code> allows users to retrieve
+the genome information together with the corresponding <code>.gff</code>
+or <code>gtf</code> annotation file to make sure that they both have the
+same version and origin.</p>
+</div>
+</div>
+<div id="gffset-retrieval" class="section level3">
+<h3>GFFSet Retrieval</h3>
+<p>The <code>getGFFSet()</code> function enables users to retrieve GFF
+files for multiple species. This is convenient when users wish to bulk
+download a particular set of species. Internally, a folder named
+<code>set_gff</code> is generated in which GFF and GFF info files are
+stored. In addition, users can specify the arguments:
+<code>clean_retrieval</code> and <code>gunzip</code> (both are
+<code>TRUE</code> by default) to clean file names and automatically
+unzip downloaded files.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" tabindex="-1"></a><span class="co"># specify the species names</span></span>
+<span id="cb165-2"><a href="#cb165-2" tabindex="-1"></a>download_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb165-3"><a href="#cb165-3" tabindex="-1"></a>                      <span class="st">&quot;Arabidopsis lyrata&quot;</span>, </span>
+<span id="cb165-4"><a href="#cb165-4" tabindex="-1"></a>                      <span class="st">&quot;Capsella rubella&quot;</span>)</span>
+<span id="cb165-5"><a href="#cb165-5" tabindex="-1"></a><span class="co"># retrieve these three species from NCBI RefSeq                       </span></span>
+<span id="cb165-6"><a href="#cb165-6" tabindex="-1"></a>biomartr<span class="sc">::</span><span class="fu">getGFFSet</span>(<span class="st">&quot;refseq&quot;</span>, <span class="at">organisms =</span> download_species, <span class="at">path =</span> <span class="st">&quot;set_gff&quot;</span>)</span></code></pre></div>
+<p>If the download process was interrupted, users can re-run the
+function and it will only download missing genomes. In cases users wish
+to download everything again and updating existing genomes, they may
+specify the argument <code>update = TRUE</code>.</p>
+<p>In some cases, <code>GFF</code> files stored at NCBI databases
+include corrupt lines that have more than 65000 characters. This leads
+to problems when trying to import such annotation files into R. To
+overcome this issue users can specify the
+<code>remove_annotation_outliers = TRUE</code> argument to remove such
+outlier lines and overwrite the downloaded annotation file. This will
+make any downstream analysis with this annotation file much more
+reliable.</p>
+</div>
+</div>
+<div id="repeat-masker-retrieval" class="section level2">
+<h2>Repeat Masker Retrieval</h2>
+<p><a href="https://www.repeatmasker.org">Repeat Masker</a> is a tool
+for screening DNA sequences for interspersed repeats and low complexity
+DNA sequences. NCBI stores the <code>Repeat Masker</code> for sevel
+species in their databases and can be retrieved using
+<code>getRepeatMasker()</code> and imported via
+<code>read_rm()</code>.</p>
+<div id="example-ncbi-refseq-5" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" tabindex="-1"></a><span class="co"># download repeat masker annotation file for Homo sapiens</span></span>
+<span id="cb166-2"><a href="#cb166-2" tabindex="-1"></a>Hsapiens_rm <span class="ot">&lt;-</span> <span class="fu">getRepeatMasker</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb166-3"><a href="#cb166-3" tabindex="-1"></a>                                 <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb166-4"><a href="#cb166-4" tabindex="-1"></a>                                 <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;refseq&quot;</span>,<span class="st">&quot;TEannotation&quot;</span>))</span></code></pre></div>
+<p>Now users can import the TE annotation file using
+<code>read_rm()</code>.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" tabindex="-1"></a><span class="co"># import TE annotation file</span></span>
+<span id="cb167-2"><a href="#cb167-2" tabindex="-1"></a>Hsapiens_rm_import <span class="ot">&lt;-</span> <span class="fu">read_rm</span>(<span class="st">&quot;refseq/TEannotation/Homo_sapiens_rm_refseq.out.gz&quot;</span>)</span>
+<span id="cb167-3"><a href="#cb167-3" tabindex="-1"></a><span class="co"># look at data</span></span>
+<span id="cb167-4"><a href="#cb167-4" tabindex="-1"></a>Hsapiens_rm_import</span></code></pre></div>
+</div>
+</div>
+<div id="genome-assembly-stats-retrieval" class="section level2">
+<h2>Genome Assembly Stats Retrieval</h2>
+<p>By specifying the scientific name of an organism of interest the
+corresponding genome assembly stats file storing the assembly statistics
+of the organism of interest can be downloaded and stored locally.</p>
+<div id="example-ncbi-refseq-6" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" tabindex="-1"></a><span class="co"># download genome assembly stats file for Homo sapiens</span></span>
+<span id="cb168-2"><a href="#cb168-2" tabindex="-1"></a>Hsapiens_stats <span class="ot">&lt;-</span> <span class="fu">getAssemblyStats</span>( <span class="at">db       =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb168-3"><a href="#cb168-3" tabindex="-1"></a>                                 <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb168-4"><a href="#cb168-4" tabindex="-1"></a>                                 <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;refseq&quot;</span>,<span class="st">&quot;AssemblyStats&quot;</span>))</span></code></pre></div>
+<p>Now users can import the TE annotation file using
+<code>read_rm()</code>.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" tabindex="-1"></a><span class="co"># import TE annotation file</span></span>
+<span id="cb169-2"><a href="#cb169-2" tabindex="-1"></a>Hsapiens_stats_import <span class="ot">&lt;-</span> <span class="fu">read_assemblystats</span>(Hsapiens_stats)</span>
+<span id="cb169-3"><a href="#cb169-3" tabindex="-1"></a><span class="co"># look at data</span></span>
+<span id="cb169-4"><a href="#cb169-4" tabindex="-1"></a>Hsapiens_stats_import</span></code></pre></div>
+<pre><code> A tibble: 1,196 x 6
+   unit_name molecule_name molecule_type sequence_type statistic         value
+   &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
+ 1 all       all           all           all           total-length         NA
+ 2 all       all           all           all           spanned-gaps        661
+ 3 all       all           all           all           unspanned-gaps      349
+ 4 all       all           all           all           region-count        317
+ 5 all       all           all           all           scaffold-count      875
+ 6 all       all           all           all           scaffold-N50   59364414
+ 7 all       all           all           all           scaffold-L50         17
+ 8 all       all           all           all           scaffold-N75   31699399
+ 9 all       all           all           all           scaffold-N90    7557127
+10 all       all           all           all           contig-count       1536</code></pre>
+</div>
+<div id="example-ncbi-genbank-5" class="section level3">
+<h3>Example <code>NCBI Genbank</code>:</h3>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" tabindex="-1"></a><span class="co"># download genome assembly stats file for Homo sapiens</span></span>
+<span id="cb171-2"><a href="#cb171-2" tabindex="-1"></a>Hsapiens_stats <span class="ot">&lt;-</span> <span class="fu">getAssemblyStats</span>( <span class="at">db       =</span> <span class="st">&quot;genbank&quot;</span>, </span>
+<span id="cb171-3"><a href="#cb171-3" tabindex="-1"></a>                                 <span class="at">organism =</span> <span class="st">&quot;Homo sapiens&quot;</span>, </span>
+<span id="cb171-4"><a href="#cb171-4" tabindex="-1"></a>                                 <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;genbank&quot;</span>,<span class="st">&quot;AssemblyStats&quot;</span>))</span></code></pre></div>
+<p>Now users can import the TE annotation file using
+<code>read_rm()</code>.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" tabindex="-1"></a><span class="co"># import TE annotation file</span></span>
+<span id="cb172-2"><a href="#cb172-2" tabindex="-1"></a>Hsapiens_stats_import <span class="ot">&lt;-</span> <span class="fu">read_assemblystats</span>(Hsapiens_stats)</span>
+<span id="cb172-3"><a href="#cb172-3" tabindex="-1"></a><span class="co"># look at data</span></span>
+<span id="cb172-4"><a href="#cb172-4" tabindex="-1"></a>Hsapiens_stats_import</span></code></pre></div>
+<pre><code> A tibble: 1,196 x 6
+   unit_name molecule_name molecule_type sequence_type statistic         value
+   &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;             &lt;int&gt;
+ 1 all       all           all           all           total-length         NA
+ 2 all       all           all           all           spanned-gaps        661
+ 3 all       all           all           all           unspanned-gaps      349
+ 4 all       all           all           all           region-count        317
+ 5 all       all           all           all           scaffold-count      875
+ 6 all       all           all           all           scaffold-N50   59364414
+ 7 all       all           all           all           scaffold-L50         17
+ 8 all       all           all           all           scaffold-N75   31699399
+ 9 all       all           all           all           scaffold-N90    7557127
+10 all       all           all           all           contig-count       1536</code></pre>
+</div>
+</div>
+<div id="collection-retrieval" class="section level2">
+<h2>Collection Retrieval</h2>
+<p>The automated retrieval of collections (= Genome, Proteome, CDS, RNA,
+GFF, Repeat Masker, AssemblyStats) will make sure that the genome file
+of an organism will match the CDS, proteome, RNA, GFF, etc file and was
+generated using the same genome assembly version. One aspect of why
+genomics studies fail in computational and biological reproducibility is
+that it is not clear whether CDS, proteome, RNA, GFF, etc files used in
+a proposed analysis were generated using the same genome assembly file
+denoting the same genome assembly version. To avoid this seemingly
+trivial mistake we encourage users to retrieve genome file collections
+using the <code>biomartr</code> function <code>getCollection()</code>
+and attach the corresponding output as Supplementary Data to the
+respective genomics study to ensure computational and biological
+reproducibility.</p>
+<p>By specifying the scientific name of an organism of interest a
+collection consisting of the genome file, proteome file, CDS file, RNA
+file, GFF file, Repeat Masker file, AssemblyStats file of the organism
+of interest can be downloaded and stored locally.</p>
+<div id="example-ncbi-refseq-7" class="section level3">
+<h3>Example <code>NCBI RefSeq</code>:</h3>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" tabindex="-1"></a><span class="co"># download collection for Saccharomyces cerevisiae</span></span>
+<span id="cb174-2"><a href="#cb174-2" tabindex="-1"></a><span class="fu">getCollection</span>( <span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>, </span>
+<span id="cb174-3"><a href="#cb174-3" tabindex="-1"></a>               <span class="at">organism =</span> <span class="st">&quot;Saccharomyces cerevisiae&quot;</span>, </span>
+<span id="cb174-4"><a href="#cb174-4" tabindex="-1"></a>               <span class="at">path =</span> <span class="fu">file.path</span>(<span class="st">&quot;refseq&quot;</span>,<span class="st">&quot;Collections&quot;</span>))</span></code></pre></div>
+<p>Internally, the <code>getCollection()</code> function will now
+generate a folder named
+<code>refseq/Collection/Saccharomyces_erevisiae</code> and will store
+all genome and annotation files for
+<code>Saccharomyces cerevisiae</code> in the same folder. In addition,
+the exact genoem and annotation version will be logged in the
+<code>doc</code> folder.</p>
+<pre><code>Genome download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file &#39;refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt&#39; matches!
+The genome of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_genomic_refseq.fna.gz&#39;.
+Starting proteome retrieval of &#39;Saccharomyces cerevisiae&#39; from refseq ...
+
+
+Proteome download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file &#39;refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt&#39; matches!
+The proteome of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_protein_refseq.faa.gz&#39; .
+Starting CDS retrieval of &#39;Saccharomyces cerevisiae&#39; from refseq ...
+
+
+CDS download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file &#39;refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt&#39; matches!
+The genomic CDS of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz&#39; .
+Starting GFF retrieval of &#39;Saccharomyces cerevisiae&#39; from refseq ...
+
+
+GFF download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file &#39;refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt&#39; matches!
+The *.gff annotation file of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_genomic_refseq.gff.gz&#39;.
+Starting RNA retrieval of &#39;Saccharomyces cerevisiae&#39; from refseq ...
+
+
+RNA download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file &#39;refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt&#39; matches!
+The genomic RNA of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_rna_from_genomic_refseq.fna.gz&#39; .
+Starting Repeat Masker retrieval of &#39;Saccharomyces cerevisiae&#39; from refseq ...
+
+
+RepeatMasker download is completed!
+Checking md5 hash of file: refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt ...
+The md5 hash of file &#39;refseq/Collections/Saccharomyces_cerevisiae_md5checksums.txt&#39; matches!
+The Repeat Masker output file of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_rm_refseq.out.gz&#39;.
+Starting assembly quality stats retrieval of &#39;Saccharomyces cerevisiae&#39; from refseq ...
+
+Genome assembly quality stats file download completed!
+The assembly statistics file of &#39;Saccharomyces_cerevisiae&#39; has been downloaded to &#39;refseq/Collections&#39; and has been named &#39;Saccharomyces_cerevisiae_assembly_stats_refseq.txt&#39;.
+Collection retrieval finished successfully!
+
+
+We retrieved the genome assembly and checked the annotation for &#39;Saccharomyces cerevisiae&#39; (taxid: 559292, strain=S288C) from &#39;ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt&#39; (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).</code></pre>
+<blockquote>
+<p>Users can now simply attach the output folder as supplementary data
+in their study and state in the materials sections. This way,
+computational and biological reproducibility can be standardized and
+indeed will become trivial in the context of genome version and
+annotation version.</p>
+</blockquote>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
