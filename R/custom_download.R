@@ -31,7 +31,6 @@ custom_download <- function(url, ...) {
 
         if (operating_sys == "Windows") {
             downloader::download(url = url, ...,
-                                 method = "internal",
                                  cacheOK = FALSE,
                                  quiet = TRUE)
         }
