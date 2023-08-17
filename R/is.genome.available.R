@@ -111,8 +111,8 @@ is.genome.available <-
                     message("A reference or representative genome assembly is available for '", organism, "'.")
                     if (nrow(selected.organism) > 1) {
                         message("More than one entry was found for '", organism, "'.",
-                                " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = ",
-                                organism, ", db = ",db, ", details = TRUE)'.",
+                                " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = '",
+                                organism, "', db = '",db, "', details = TRUE)'.",
                                 " This will allow you to select the 'assembly_accession' identifier that can then be ",
                                 "specified in all get*() functions.")
                     }
@@ -245,6 +245,7 @@ is.genome.available <-
 
 is.genome.available.refseq.genbank <- function(db = "refseq",
                                                organism,
+                                               skip_bacteria = TRUE,
                                                details = FALSE) {
   # if AssemblyFilesAllKingdoms.txt file was already
   # generated/downloaded then use the local version
@@ -252,7 +253,7 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
   if (file.exists(file.path(
     tempdir(),
     paste0("AssemblyFilesAllKingdoms_", db, ".txt")
-  ))) {
+  )) & skip_bacteria) {
     suppressWarnings(
       AssemblyFilesAllKingdoms <-
         readr::read_tsv(
@@ -260,6 +261,7 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
             tempdir(),
             paste0("AssemblyFilesAllKingdoms_", db, ".txt")
           ),
+          comment = "#",
           col_names = c(
             "assembly_accession",
             "bioproject",
@@ -281,9 +283,25 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
             "gbrs_paired_asm",
             "paired_asm_comp",
             "ftp_path",
-            "excluded_from_refseq"
+            "excluded_from_refseq",
+            "relation_to_type_material",
+            "asm_not_live_date",
+            "assembly_type",
+            "group",
+            "genome_size",
+            "genome_size_ungapped",
+            "gc_percent",
+            "replicon_count",
+            "scaffold_count",
+            "contig_count",
+            "annotation_provider",
+            "annotation_name",
+            "annotation_date",
+            "total_gene_count",
+            "protein_coding_gene_count",
+            "non_coding_gene_count",
+            "pubmed_id"
           ),
-          comment = "#",
           col_types = readr::cols(
             assembly_accession = readr::col_character(),
             bioproject = readr::col_character(),
@@ -305,7 +323,24 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
             gbrs_paired_asm = readr::col_character(),
             paired_asm_comp = readr::col_character(),
             ftp_path = readr::col_character(),
-            excluded_from_refseq = readr::col_character()
+            excluded_from_refseq = readr::col_character(),
+            relation_to_type_material = readr::col_character(),
+            asm_not_live_date = readr::col_character(),
+            assembly_type = readr::col_character(),
+            group = readr::col_character(),
+            genome_size = readr::col_integer(),
+            genome_size_ungapped = readr::col_integer(),
+            gc_percent = readr::col_double(),
+            replicon_count = readr::col_integer(),
+            scaffold_count = readr::col_integer(),
+            contig_count = readr::col_integer(),
+            annotation_provider = readr::col_character(),
+            annotation_name = readr::col_character(),
+            annotation_date = readr::col_date(format = "%m/%d/%y"),
+            total_gene_count = readr::col_integer(),
+            protein_coding_gene_count = readr::col_integer(),
+            non_coding_gene_count = readr::col_integer(),
+            pubmed_id = readr::col_character()
           )
         )
     )
@@ -318,6 +353,7 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
     storeAssemblyFiles <- vector("list", length(kgdoms))
 
     for (i in seq_along(kgdoms)) {
+      if ()
       storeAssemblyFiles[i] <-
         list(getSummaryFile(db = db, kingdom = kgdoms[i]))
     }

@@ -21,6 +21,10 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @inheritParams getENSEMBL.Seq
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which
@@ -70,6 +74,7 @@ getGenome <-
     function(db = "refseq",
              organism,
              reference = FALSE,
+             skip_bacteria = TRUE,
              release = NULL,
              gunzip = FALSE,
              path = file.path("_ncbi_downloads", "genomes"),
@@ -110,9 +115,9 @@ getGenome <-
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria)
 
-            # test wheter or not genome is available
+            # test whether or not genome is available
             if (!suppressMessages(is.genome.available(organism = organism, db = db))) {
                     message(
                             "Unfortunately no genome file could be found for organism '",

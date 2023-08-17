@@ -4,6 +4,10 @@
 #' from NCBI for all kingdoms.
 #' The assembly_summary.txt files store available species on NCBI. 
 #' @param db database name. E.g. \code{refseq} or \code{genbank}.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.    
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
@@ -13,7 +17,7 @@
 #' @seealso \code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}} 
 #' @export
 
-getKingdomAssemblySummary <- function(db) {
+getKingdomAssemblySummary <- function(db, skip_bacteria = TRUE) {
     if (!is.element(db, c("refseq", "genbank")))
         stop("Please select one of the available data bases:
              'refseq' or 'genbank'")
@@ -24,7 +28,7 @@ getKingdomAssemblySummary <- function(db) {
         if (file.exists(file.path(
             tempdir(),
             paste0("AssemblyFilesAllKingdoms_", db, ".txt")
-        ))) {
+        )) & skip_bacteria) {
             suppressWarnings(
                 AssemblyFilesAllKingdoms <-
                     readr::read_delim(
@@ -58,7 +62,24 @@ getKingdomAssemblySummary <- function(db) {
                             gbrs_paired_asm = readr::col_character(),
                             paired_asm_comp = readr::col_character(),
                             ftp_path = readr::col_character(),
-                            excluded_from_refseq = readr::col_character()
+                            excluded_from_refseq = readr::col_character(),
+                            relation_to_type_material = readr::col_character(),
+                            asm_not_live_date = readr::col_character(),
+                            assembly_type = readr::col_character(),
+                            group = readr::col_character(),
+                            genome_size = readr::col_integer(),
+                            genome_size_ungapped = readr::col_integer(),
+                            gc_percent = readr::col_double(),
+                            replicon_count = readr::col_integer(),
+                            scaffold_count = readr::col_integer(),
+                            contig_count = readr::col_integer(),
+                            annotation_provider = readr::col_character(),
+                            annotation_name = readr::col_character(),
+                            annotation_date = readr::col_date(format = "%m/%d/%y"),
+                            total_gene_count = readr::col_integer(),
+                            protein_coding_gene_count = readr::col_integer(),
+                            non_coding_gene_count = readr::col_integer(),
+                            pubmed_id = readr::col_character()
                         )
                     )
             )
@@ -66,16 +87,32 @@ getKingdomAssemblySummary <- function(db) {
             # otherwise download all assembly_summary.txt files for all kingdoms
             # and store the AssemblyFilesAllKingdoms.txt file locally
             # retrieve the assembly_summary.txt files for all kingdoms
-            message("It seems that this is the first time you run this command for ",db,".")
+            cat("It seems that this is the first time you run this command for",db,".")
+            cat("\n")
             message("Thus, 'assembly_summary.txt' files for all kingdoms will be retrieved from ",db,". ")
             message("Don't worry this has to be done only once if you don't restart your R session.")
             message("\n")
             kgdoms <- getKingdoms(db = db)
             storeAssemblyFiles <- vector("list", length(kgdoms))
             
+            if (skip_bacteria){
+                cat( "Due to its extended dataset size (>700 MB) the GenBank Kingdom 'bacteria' will not be downloaded by default anymore. To also include 'bacteria' please specify the argument 'skip_bacteria = FALSE'" )
+                cat("\n")
+                cat("\n")
+            }
+                
+            
             for (i in seq_along(kgdoms)) {
-                storeAssemblyFiles[i] <-
-                    list(getSummaryFile(db = db, kingdom = kgdoms[i]))
+                if (kgdoms[i] == "bacteria" && db == "genbank" && skip_bacteria){
+                    cat("--------> Skipping bacteria download .....")
+                    cat("\n")
+                    cat("\n")
+                } else {
+                    cat("-> Starting download for:", kgdoms[i])
+                    cat("\n")
+                    storeAssemblyFiles[i] <-
+                        list(getSummaryFile(db = db, kingdom = kgdoms[i]))
+                }
             }
             
             AssemblyFilesAllKingdoms <-
