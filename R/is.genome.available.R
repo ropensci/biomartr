@@ -353,7 +353,6 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
     storeAssemblyFiles <- vector("list", length(kgdoms))
 
     for (i in seq_along(kgdoms)) {
-      if ()
       storeAssemblyFiles[i] <-
         list(getSummaryFile(db = db, kingdom = kgdoms[i]))
     }
