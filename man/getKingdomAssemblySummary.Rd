@@ -32,7 +32,7 @@ test2
 }
 }
 \seealso{
-\code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}}
+\code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}}, \code{\link{get.ensembl.info}}
 }
 \author{
 Hajk-Georg Drost

@@ -8,10 +8,12 @@ getCollection(
   db = "refseq",
   organism,
   reference = TRUE,
+  skip_bacteria = TRUE,
   release = NULL,
   gunzip = FALSE,
   remove_annotation_outliers = FALSE,
-  path = file.path("_db_downloads", "collections")
+  path = file.path("_db_downloads", "collections"),
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -32,6 +34,11 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
+
 \item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
@@ -43,6 +50,8 @@ will be stored at \code{\link{tempdir}} for further exploration.}
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding collection shall be stored. Default is 
 \code{path} = \code{file.path("_db_downloads","collections")}.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded genome.

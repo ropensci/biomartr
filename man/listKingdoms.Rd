@@ -9,8 +9,7 @@ listKingdoms(db = "refseq")
 \arguments{
 \item{db}{a character string specifying the database for which genome 
 availability shall be checked, 
-e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, 
-\code{db = "ensemblgenomes"}.}
+e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}.}
 }
 \description{
 Users can retrieve the available number of sequenced 
@@ -24,8 +23,6 @@ listKingdoms(db = "refseq")
 listKingdoms(db = "genbank")
 # example for ensembl
 listKingdoms(db = "ensembl")
-# example for ensemblgenomes
-listKingdoms(db = "ensemblgenomes")
 }
 }
 \seealso{

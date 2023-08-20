@@ -4,7 +4,12 @@
 \alias{is.genome.available}
 \title{Check Genome Availability}
 \usage{
-is.genome.available(db = "refseq", organism, details = FALSE)
+is.genome.available(
+  db = "refseq",
+  organism,
+  skip_bacteria = "TRUE",
+  details = FALSE
+)
 }
 \arguments{
 \item{db}{a character string specifying the database from which the genome
@@ -22,6 +27,11 @@ shall be retrieved:
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
 \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 }}
+
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
 
 \item{details}{a logical value specifying whether or not details on genome
 size, kingdom, etc. shall be printed to the console intead of a

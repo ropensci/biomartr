@@ -4,7 +4,13 @@
 \alias{listGenomes}
 \title{List All Available Genomes either by kingdom, group, or subgroup}
 \usage{
-listGenomes(db = "refseq", type = "all", subset = NULL, details = FALSE)
+listGenomes(
+  db = "refseq",
+  type = "all",
+  subset = NULL,
+  details = FALSE,
+  skip_bacteria = FALSE
+)
 }
 \arguments{
 \item{db}{a character string specifying the database for which genome 
@@ -39,6 +45,11 @@ as
 \item \code{subgroup} 
 \item \code{file_size_MB}, etc.
 }}
+
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
 }
 \description{
 This function retrieves the names of all genomes available on 

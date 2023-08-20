@@ -12,7 +12,8 @@ getGenome(
   release = NULL,
   gunzip = FALSE,
   path = file.path("_ncbi_downloads", "genomes"),
-  assembly_type = "toplevel"
+  assembly_type = "toplevel",
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -58,6 +59,8 @@ As an example the toplevel fasta genome in human is over 70 GB uncompressed.
 To get primary assembly with 1 chromosome variant per chromosome:
 \code{assembly_type = "primary_assembly")}.
 As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded genome.
