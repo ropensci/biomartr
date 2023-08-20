@@ -31,6 +31,10 @@
 #' \item \code{subgroup} 
 #' \item \code{file_size_MB}, etc.
 #' }
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI 
 #' and creates a directory '_ncbi_downloads' in the \code{temdir()}
@@ -57,7 +61,8 @@ listGenomes <-
     function(db = "refseq",
              type = "all",
              subset = NULL,
-             details = FALSE) {
+             details = FALSE,
+             skip_bacteria = FALSE) {
         if (!is.element(db, c("refseq", "genbank", 
                               "ensembl")))
             stop(
@@ -81,7 +86,7 @@ listGenomes <-
             
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
             # join tables to retrieve kingdom, group, subgroup information for 
             # refseq/genbank organisms
@@ -256,7 +261,7 @@ listGenomes <-
                     call. = FALSE
                 )
             
-            ensemblinfo <- get.ensembl.info()
+            ensemblinfo <- getENSEMBLInfo()
             
             if (details) {
                 if (type == "all")
