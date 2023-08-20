@@ -31,6 +31,7 @@
 #' the corresponding genome shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
 #' @inheritParams getGTF
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -78,7 +79,8 @@ getGenome <-
              release = NULL,
              gunzip = FALSE,
              path = file.path("_ncbi_downloads", "genomes"),
-             assembly_type = "toplevel"
+             assembly_type = "toplevel",
+             mute_citation = FALSE
              #kingdom_assembly_summary_file = NULL
              ) {
 
@@ -115,10 +117,10 @@ getGenome <-
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db, skip_bacteria)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
 
             # test whether or not genome is available
-            if (!suppressMessages(is.genome.available(organism = organism, db = db))) {
+            if (!suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))) {
                     message(
                             "Unfortunately no genome file could be found for organism '",
                             organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
@@ -364,6 +366,7 @@ getGenome <-
                                             "'."
                                     )
                             )
+                      please_cite_biomartr(mute_citation = mute_citation)
                     }
 
                     if (gunzip) {
@@ -378,6 +381,7 @@ getGenome <-
                                             "'."
                                     )
                             )
+                      please_cite_biomartr(mute_citation = mute_citation)
                     }
 
                     if (gunzip) {
@@ -389,11 +393,13 @@ getGenome <-
                                                                                paste0(
                                                                                        local.org, "_genomic_", db, ".fna"
                                                                                )))
+                            please_cite_biomartr(mute_citation = mute_citation)
                             return(file.path(path,
                                              paste0(
                                                      local.org, "_genomic_", db, ".fna"
                                              )))
                     } else {
+                      please_cite_biomartr(mute_citation = mute_citation)
                             return(file.path(path,
                                              paste0(
                                                      local.org, "_genomic_", db, ".fna.gz"
@@ -552,6 +558,7 @@ getGenome <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
 
                 if (gunzip) {
@@ -566,13 +573,16 @@ getGenome <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
 
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
+                        please_cite_biomartr(mute_citation = mute_citation)
                         return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
                 } else {
+                        please_cite_biomartr(mute_citation = mute_citation)
                         return(genome.path[1])
                 }
             }
@@ -742,6 +752,8 @@ getGenome <-
                 } else {
                         return(genome.path[1])
                 }
+                
+                please_cite_biomartr(mute_citation = mute_citation)
         }
     }
 }
