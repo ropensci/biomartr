@@ -3,8 +3,7 @@
 #' genomes per kingdom.
 #' @param db a character string specifying the database for which genome 
 #' availability shall be checked, 
-#' e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}, 
-#' \code{db = "ensemblgenomes"}. 
+#' e.g. \code{db = "refseq"}, \code{db = "genbank"}, \code{db = "ensembl"}.
 #' @author Hajk-Georg Drost
 #' @examples 
 #' \dontrun{
@@ -14,8 +13,6 @@
 #' listKingdoms(db = "genbank")
 #' # example for ensembl
 #' listKingdoms(db = "ensembl")
-#' # example for ensemblgenomes
-#' listKingdoms(db = "ensemblgenomes")
 #' }
 #' @seealso \code{\link{listGenomes}}, \code{\link{is.genome.available}}, 
 #' \code{\link{listGroups}}
@@ -39,7 +36,7 @@ listKingdoms <- function(db = "refseq") {
         return(table(uniq.species$kingdoms))
     }
     
-    if (is.element(db, c("ensembl", "ensemblgenomes"))) {
+    if (is.element(db, c("ensembl"))) {
         uniq.species <-
             dplyr::summarise(
                 dplyr::group_by(listgenomes.data, name, division),
