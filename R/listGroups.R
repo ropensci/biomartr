@@ -67,7 +67,7 @@ listGroups <-
                         dplyr::filter(
                             listgenomes.data,
                             kingdoms == "Eukaryota",
-                            group == "Animals",
+                            group.y == "Animals",
                             subgroup == "Mammals"
                         )
                 }
@@ -78,7 +78,7 @@ listGroups <-
                         dplyr::filter(
                             listgenomes.data,
                             kingdoms == "Eukaryota",
-                            group == "Animals",
+                            group.y == "Animals",
                             subgroup %in% c(
                                 "Insects",
                                 "Other Animals",
@@ -94,7 +94,7 @@ listGroups <-
                         dplyr::filter(
                             listgenomes.data,
                             kingdoms == "Eukaryota",
-                            group == "Animals",
+                            group.y == "Animals",
                             subgroup %in% c("Amphibians", "Birds", "Fishes", 
                                             "Reptiles")
                         )
@@ -106,7 +106,7 @@ listGroups <-
                 listgenomes.data <-
                     dplyr::filter(listgenomes.data,
                                   kingdoms == "Eukaryota",
-                                  group == "Plants")
+                                  group.y == "Plants")
             }
             # case Fungi
             if (is.element(kingdom, c("fungi"))) {
@@ -114,7 +114,7 @@ listGroups <-
                 listgenomes.data <-
                     dplyr::filter(listgenomes.data,
                                   kingdoms == "Eukaryota",
-                                  group == "Fungi")
+                                  group.y == "Fungi")
             }
             # case Protozoa
             if (is.element(kingdom, c("protozoa"))) {
@@ -122,7 +122,7 @@ listGroups <-
                 listgenomes.data <-
                     dplyr::filter(listgenomes.data,
                                   kingdoms == "Eukaryota",
-                                  group == "Protists")
+                                  group.y == "Protists")
             }
             # case Viruses
             if (is.element(kingdom, c("viral"))) {
