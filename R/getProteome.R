@@ -19,12 +19,17 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.   
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding proteome shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -63,9 +68,11 @@ getProteome <-
     function(db = "refseq",
              organism,
              reference = TRUE,
+             skip_bacteria = TRUE,
              release = NULL,
              gunzip = FALSE,
-             path = file.path("_ncbi_downloads", "proteomes")) {
+             path = file.path("_ncbi_downloads", "proteomes"),
+             mute_citation = FALSE) {
         if (!is.element(db, c("refseq", "genbank", 
                               "ensembl", "uniprot", "ensemblgenomes")))
             stop(
@@ -91,10 +98,10 @@ getProteome <-
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test wheter or not genome is available
-            if (!suppressMessages(is.genome.available(organism = organism, db = db))){
+            # test whether or not genome is available
+            if (!suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))){
                     message(
                             "Unfortunately no proteome file could be found for organism '",
                             organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
@@ -339,6 +346,7 @@ getProteome <-
                                             "' ."
                                     )
                             )
+                      please_cite_biomartr(mute_citation = mute_citation)
                             
                     }
                     
@@ -354,7 +362,7 @@ getProteome <-
                                             "' ."
                                     )
                             )
-                            
+                      please_cite_biomartr(mute_citation = mute_citation)
                     }
                     
                     if (gunzip) {
@@ -364,9 +372,11 @@ getProteome <-
                                                                                                                           paste0(local.org, "_protein_", db, ".faa")))
                             return(file.path(path,
                                              paste0(local.org, "_protein_", db, ".faa")))
+                            please_cite_biomartr(mute_citation = mute_citation)
                     } else {
                             return(file.path(path,
                                              paste0(local.org, "_protein_", db, ".faa.gz")))
+                      please_cite_biomartr(mute_citation = mute_citation)
                     }
                     
                 } else {
@@ -523,6 +533,7 @@ getProteome <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
@@ -537,14 +548,17 @@ getProteome <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(proteome.path[1], destname = unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
                         return(unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
+                        please_cite_biomartr(mute_citation = mute_citation)
                 } else {
                         return(proteome.path[1])
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
             }
         }
@@ -690,6 +704,7 @@ getProteome <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
@@ -704,13 +719,17 @@ getProteome <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(proteome.path[1], destname = unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
+                        please_cite_biomartr(mute_citation = mute_citation)
                         return(unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
                 } else {
+                  please_cite_biomartr(mute_citation = mute_citation)
+                  
                         return(proteome.path[1])
                 }
             }
@@ -723,7 +742,7 @@ getProteome <-
                 }
                 
                 getUniProtSeq(organism = organism, path = path, update = TRUE, gunzip = gunzip)
-                
+                please_cite_biomartr(mute_citation = mute_citation)
         }
     }
 
