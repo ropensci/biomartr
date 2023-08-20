@@ -19,7 +19,7 @@
 #' test2 <- getKingdomAssemblySummary(db = "genbank", skip_bacteria = FALSE)
 #' test2
 #' }
-#' @seealso \code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}} 
+#' @seealso \code{\link{getSummaryFile}}, \code{\link{getMetaGenomeSummary}}, \code{\link{get.ensembl.info}} 
 #' @export
 
 getKingdomAssemblySummary <- function(db, skip_bacteria = TRUE) {
@@ -101,14 +101,14 @@ getKingdomAssemblySummary <- function(db, skip_bacteria = TRUE) {
             storeAssemblyFiles <- vector("list", length(kgdoms))
             
             if (skip_bacteria){
-                cat( "Due to its extended dataset size (>700 MB) the GenBank Kingdom 'bacteria' will not be downloaded by default anymore. To also include 'bacteria' please specify the argument 'skip_bacteria = FALSE'" )
+                cat( "Due to its extended dataset size (GenBank: >700 MB, RefSeq: >150 MB) Kingdom 'bacteria' will not be downloaded by default anymore. To also include 'bacteria' please specify the argument 'skip_bacteria = FALSE'" )
                 cat("\n")
                 cat("\n")
             }
                 
             
             for (i in seq_along(kgdoms)) {
-                if (kgdoms[i] == "bacteria" && db == "genbank" && skip_bacteria){
+                if (kgdoms[i] == "bacteria" && (db == "genbank" || db == "refseq") && skip_bacteria){
                     cat("--------> Skipping bacteria download .....")
                     cat("\n")
                     cat("\n")
