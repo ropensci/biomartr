@@ -2,11 +2,32 @@
 #' @description Retrieve species and genome information from
 #' http://rest.ensembl.org/info/species?content-type=application/json/.
 #' @author Hajk-Georg Drost
-#' @return a tibble table with info
+#' @return a tibble table storing info for all available ENSEMBL divisions.
+#' @examples
+#' \dontrun{
+#' # look at available divisions
+#' ensembl_divisions()
+#' # retrieve information for all ENSEMBL divisions at once
+#' test <- getENSEMBLInfo()
+#' test
+#' # retrieve information for a particular ENSEMBL division (e.g. EnsemblVertebrates)
+#' test_vertebrates <- get.ensembl.info(update = TRUE, division = "EnsemblVertebrates")
+#' test_vertebrates
+#' }
+#' @seealso \code{\link{ensembl_divisions}}, \code{\link{get.ensembl.info}}, \code{\link{getKingdomAssemblySummary}}
 #' @export
 getENSEMBLInfo <- function() {
-    ENSEMBLInfoTable <- get.ensembl.info(update = TRUE)
-    return(ENSEMBLInfoTable)
+  
+    all_divisions <- ensembl_divisions()
+    ENSEMBLInfoTable <- vector("list", length(all_divisions))
+    
+    for (i in seq_len(length(all_divisions))) {
+      cat("Starting information retrieval for:", all_divisions[i])
+      cat("\n")
+      ENSEMBLInfoTable[[i]] <- get.ensembl.info(update = TRUE, division = all_divisions[i])
+    }
+    
+    return(dplyr::bind_rows(ENSEMBLInfoTable))
 }
 
 ensembl_assembly_hits <- function(organism) {
