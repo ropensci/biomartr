@@ -3,11 +3,24 @@
 #' (https://rest.ensembl.org/info/species?content-type=application/json)
 #' and internally stores the output to use this information for subsequent
 #' retrieval function calls.
-#' @param update logical, default FALSE. If TRUE, force re-download of info
-#' @inheritParams ensembl_rest_url_species
+#' @param update logical, default FALSE. If TRUE, force re-download of info.
+#' @param division the ENSEMBL database (division) for which information shall 
+#' be retrieved (available options can be obtained with \code{\link{ensembl_divisions}}).
 #' @author Hajk-Georg Drost
-#' @noRd
-get.ensembl.info <- function(update = FALSE, division = "EnsemblVertebrates") {
+#' @examples
+#' \dontrun{
+#' # Look at available ENSEMBL division options
+#' ensembl_divisions()
+#' # Retrieve available information for EnsemblVertebrates
+#' example <- get.ensembl.info(division = "EnsemblVertebrates")
+#' example
+#' # Update information file stored in the tempdir() folder.
+#' example_update <- get.ensembl.info(division = "EnsemblVertebrates", update = TRUE)
+#' example_update
+#' }
+#' @seealso \code{\link{ensembl_divisions}}, \code{\link{getKingdomAssemblySummary}}, \code{\link{getENSEMBLInfo}}
+#' @export
+get.ensembl.info <- function(update = FALSE, division) {
   tmp_file <- file.path(tempdir(), paste0(division, "_info.tsv"))
   if (file.exists(tmp_file) &&
         !update) {
@@ -59,14 +72,25 @@ get.ensembl.info <- function(update = FALSE, division = "EnsemblVertebrates") {
     return(ensembl.info)
 }
 
+
+
+
 ensembl_rest_url <- function() {
   "https://rest.ensembl.org"
 }
 
+#' @title List all available ENSEMBL divisions
+#' @description
+#' Retrieve a list of available databases on ENSEMBL for which \code{get.ensembl.info} can be retrieved.
+#' @author Hajk-Georg Drost
+#' @examples
+#' ensembl_divisions()
+#' @export
 ensembl_divisions <- function() {
   c("EnsemblVertebrates", "EnsemblPlants", "EnsemblFungi", "EnsemblMetazoa",
     "EnsemblBacteria")
 }
+
 ensembl_divisions_short <- function() {
   c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
     EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa")
