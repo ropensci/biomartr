@@ -19,6 +19,10 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome. 
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param remove_annotation_outliers shall outlier lines be removed from the input annotation_file?
@@ -27,6 +31,7 @@
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding collection shall be stored. Default is 
 #' \code{path} = \code{file.path("_db_downloads","collections")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -58,10 +63,12 @@ getCollection <-
         function(db = "refseq",
                  organism,
                  reference = TRUE,
+                 skip_bacteria = TRUE,
                  release = NULL,
                  gunzip = FALSE,
                  remove_annotation_outliers = FALSE,
-                 path = file.path("_db_downloads","collections")
+                 path = file.path("_db_downloads","collections"),
+                 mute_citation = FALSE
         ) {
         
         new_name <- stringr::str_replace_all(organism," ","_")
@@ -84,9 +91,11 @@ getCollection <-
                         db = db,
                         organism = organism,
                         reference = reference,
+                        skip_bacteria = skip_bacteria,
                         release = release,
                         gunzip = gunzip,
-                        path = path
+                        path = path,
+                        mute_citation = TRUE
                 )
         message("\n")
         # retrieve proteome 
@@ -95,9 +104,11 @@ getCollection <-
                         db = db,
                         organism = organism,
                         reference = reference,
+                        skip_bacteria = skip_bacteria,
                         release = release,
                         gunzip = gunzip,
-                        path = path
+                        path = path,
+                        mute_citation = TRUE
                 )
         
         message("\n")
@@ -206,6 +217,7 @@ getCollection <-
                 
                 message("Collection retrieval finished successfully!")
                 message("\n")
+                please_cite_biomartr(mute_citation = mute_citation)
                 return(file.path(getwd(), path))
                 
         }
@@ -231,6 +243,7 @@ getCollection <-
                 
                 message("Collection retrieval finished successfully!")
                 message("\n")
+                please_cite_biomartr(mute_citation = mute_citation)
                 return(file.path(getwd(), path))
                 
         }
