@@ -40,6 +40,11 @@ for further exploration.}
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding annotation file shall be stored. Default is 
 \code{path = file.path("_ncbi_downloads","genomes")}.}
+
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
 }
 \value{
 File path to downloaded annotation file.
