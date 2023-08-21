@@ -19,11 +19,16 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) 
 #' in which the corresponding CDS file shall be stored. 
 #' Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @return File path to downloaded CDS file.
 #' @examples 
@@ -47,9 +52,11 @@ getCDS <-
     function(db = "refseq",
              organism,
              reference = FALSE,
+             skip_bacteria = TRUE,
              release = NULL,
              gunzip = FALSE,
-             path = file.path("_ncbi_downloads", "CDS")) {
+             path = file.path("_ncbi_downloads", "CDS"),
+             mute_citation = FALSE) {
             
         if (!is.element(db, c("refseq", "genbank", 
                               "ensembl")))
@@ -74,10 +81,10 @@ getCDS <-
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test wheter or not genome is available
-            suppressMessages(is.genome.available(organism = organism, db = db))
+            # test whether or not species is available
+            suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
@@ -353,6 +360,7 @@ getCDS <-
                                             "' ."
                                     )
                             )
+                      please_cite_biomartr(mute_citation = mute_citation)
                             
                     }
                     
@@ -361,10 +369,12 @@ getCDS <-
                             R.utils::gunzip(file.path(path,
                                                       paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")), destname = file.path(path,
                                                                                                                            paste0(local.org, "_cds_from_genomic_", db, ".fna")))
+                            please_cite_biomartr(mute_citation = mute_citation)
                             return(file.path(path,
                                              paste0(local.org, "_cds_from_genomic_", db, ".fna")))
                     } else {
-                            return(file.path(path,
+                      please_cite_biomartr(mute_citation = mute_citation)      
+                      return(file.path(path,
                                              paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")))
                     }
                 } else {
@@ -521,6 +531,7 @@ getCDS <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
@@ -535,14 +546,17 @@ getCDS <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(cds.path[1], destname = unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
+                        please_cite_biomartr(mute_citation = mute_citation)
                         return(unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
                 } else {
-                        return(cds.path[1])
+                  please_cite_biomartr(mute_citation = mute_citation)      
+                  return(cds.path[1])
                 }
             }
         }
