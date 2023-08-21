@@ -100,7 +100,7 @@ getProteome <-
             AssemblyFilesAllKingdoms <-
                 getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test whether or not genome is available
+            # test whether or not species is available
             if (!suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))){
                     message(
                             "Unfortunately no proteome file could be found for organism '",
