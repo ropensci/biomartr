@@ -120,7 +120,8 @@ getCollection <-
                         reference = reference,
                         release = release,
                         gunzip = gunzip,
-                        path = path
+                        path = path,
+                        mute_citation = TRUE
                 )
         message("\n")
         # retrieve corresponding gff file
