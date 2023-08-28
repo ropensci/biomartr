@@ -579,10 +579,8 @@ getGenome <-
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
-                        please_cite_biomartr(mute_citation = mute_citation)
                         return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
                 } else {
-                        please_cite_biomartr(mute_citation = mute_citation)
                         return(genome.path[1])
                 }
             }
