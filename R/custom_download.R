@@ -36,7 +36,7 @@ custom_download <- function(url, ...) {
         }
     } else {
         message(
-            "The FTP link: '",url,"' seems not to be available at the moment. This might be due to an instable internet connection, a firewall issue, or wrong organism name. Could you please try to re-run the function to see whether it works now?"
+            "The FTP link: '",url,"' seems not to be available at the moment. This might either be due to an instable internet connection, a firewall issue, a wrong organism name, or due to the fact that the specified organism is not available in the database you selected. If it is an internet connection issue, could you please try to re-run the function to see whether it works now?"
         )
         return(FALSE)
     }
