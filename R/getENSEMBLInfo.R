@@ -17,17 +17,17 @@
 #' @seealso \code{\link{ensembl_divisions}}, \code{\link{get.ensembl.info}}, \code{\link{getKingdomAssemblySummary}}
 #' @export
 getENSEMBLInfo <- function() {
+  all_divisions <- ensembl_divisions()
+  ENSEMBLInfoTable <- vector("list", length(all_divisions))
   
-    all_divisions <- ensembl_divisions()
-    ENSEMBLInfoTable <- vector("list", length(all_divisions))
-    
-    for (i in seq_len(length(all_divisions))) {
-      cat("Starting information retrieval for:", all_divisions[i])
-      cat("\n")
-      ENSEMBLInfoTable[[i]] <- get.ensembl.info(update = TRUE, division = all_divisions[i])
-    }
-    
-    return(dplyr::bind_rows(ENSEMBLInfoTable))
+  for (i in seq_len(length(all_divisions))) {
+    cat("Starting information retrieval for:", all_divisions[i])
+    cat("\n")
+    ENSEMBLInfoTable[[i]] <-
+      get.ensembl.info(update = TRUE, division = all_divisions[i])
+  }
+  
+  return(dplyr::bind_rows(ENSEMBLInfoTable))
 }
 
 ensembl_assembly_hits <- function(organism) {
@@ -37,13 +37,18 @@ ensembl_assembly_hits <- function(organism) {
       db = "ensembl",
       details = TRUE
     ))
-
+  
   if (nrow(ensembl_summary) == 0) {
-    message("Unfortunately, organism '",organism,"' does not exist in this database. ",
-            "Could it be that the organism name is misspelled? Thus, download has been omitted.")
+    message(
+      "Unfortunately, organism '",
+      organism,
+      "' does not exist in this database. ",
+      "Could it be that the organism name is misspelled? Thus, download has been omitted."
+    )
     return(FALSE)
   }
-  ensembl_summary <- ensembl_summaries_filter(ensembl_summary, organism)
+  ensembl_summary <-
+    ensembl_summaries_filter(ensembl_summary, organism)
   return(ensembl_summary)
 }
 
@@ -53,7 +58,8 @@ ensembl_summaries_filter <- function(ensembl_summary, organism) {
     ensembl_summary_copy <- ensembl_summary
     if (is.taxid(organism)) {
       ensembl_summary <-
-        dplyr::filter(ensembl_summary, taxon_id == as.integer(organism),
+        dplyr::filter(ensembl_summary,
+                      taxon_id == as.integer(organism),
                       !is.na(assembly))
     } else {
       ensembl_summary <-
@@ -64,8 +70,8 @@ ensembl_summaries_filter <- function(ensembl_summary, organism) {
           !is.na(assembly)
         )
       if (nrow(ensembl_summary) == 0) {
-        ensembl_summary <- dplyr::filter(ensembl_summary_copy,
-                                         !is.na(assembly))
+        ensembl_summary <-
+          dplyr::filter(ensembl_summary_copy, !is.na(assembly))
       }
     }
     if (nrow(ensembl_summary) == 0) {
@@ -84,42 +90,50 @@ is.taxid <- function(x) {
 #'
 #' @param division "EnsemblVertebrates", alternatives: "EnsemblPlants", "EnsemblFungi"
 #' @noRd
-is.genome.available.ensembl <- function(db = "ensembl", organism,
-                                        details = FALSE, divisions = ensembl_divisions()) {
+is.genome.available.ensembl <- function(db = "ensembl",
+                                        organism,
+                                        details = FALSE,
+                                        divisions = ensembl_divisions()) {
   name <- accession <- accession <- assembly <- taxon_id <- NULL
   new.organism <- stringr::str_replace_all(organism, " ", "_")
-
+  
   # For each ensembl division, check if it exists
   for (division in ensembl_divisions()) {
     ensembl.available.organisms <- get.ensembl.info(division = division)
-    ensembl.available.organisms <- dplyr::filter(ensembl.available.organisms, !is.na(assembly))
-
+    ensembl.available.organisms <-
+      dplyr::filter(ensembl.available.organisms, !is.na(assembly))
+    
     if (!is.taxid(organism)) {
       selected.organism <-
         dplyr::filter(
           ensembl.available.organisms,
           stringr::str_detect(name,
                               stringr::str_to_lower(new.organism)) |
-            accession == organism, !is.na(assembly)
+            accession == organism,!is.na(assembly)
         )
     } else {
       selected.organism <-
         dplyr::filter(
-          ensembl.available.organisms, taxon_id == as.integer(organism), !is.na(assembly))
-
+          ensembl.available.organisms,
+          taxon_id == as.integer(organism),!is.na(assembly)
+        )
+      
     }
-    if (nrow(selected.organism) > 0) break
+    if (nrow(selected.organism) > 0)
+      break
   }
-
-
-
+  
+  
+  
   if (!details) {
     if (nrow(selected.organism) == 0) {
       organism_no_hit_message_zero(organism, db)
       return(FALSE)
     }
     if (nrow(selected.organism) > 0) {
-      message("A reference or representative genome assembly is available for '", organism, "'.")
+      message("A reference or representative genome assembly is available for '",
+              organism,
+              "'.")
       if (nrow(selected.organism) > 1) {
         organism_no_hit_message_more_than_one(organism, db)
       }
@@ -139,18 +153,28 @@ organism_no_hit_message_zero <- function(organism, db) {
     "' database. ",
     "Please consider specifying ",
     paste0("'db = ", dplyr::setdiff(
-      c("refseq", "genbank", "ensembl", "ensemblgenomes", "uniprot"), db
+      c("refseq", "genbank", "ensembl", "ensemblgenomes", "uniprot"),
+      db
     ), collapse = "' or "),
-    "' to check whether '",organism,"' is available in these databases."
+    "' to check whether '",
+    organism,
+    "' is available in these databases."
   )
 }
 
 organism_no_hit_message_more_than_one <- function(organism, db) {
-  message("More than one entry was found for '", organism, "'.",
-          " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = ",
-          organism, ", db = ",db, ", details = TRUE)'.",
-          " This will allow you to select the 'assembly_accession' identifier that can then be ",
-          "specified in all get*() functions.")
+  message(
+    "More than one entry was found for '",
+    organism,
+    "'.",
+    " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = ",
+    organism,
+    ", db = ",
+    db,
+    ", details = TRUE)'.",
+    " This will allow you to select the 'assembly_accession' identifier that can then be ",
+    "specified in all get*() functions."
+  )
 }
 
 all_bacterias_info <- function() {
@@ -217,15 +241,16 @@ all_bacterias_info <- function() {
 }
 
 get_bacteria_collection_id <- function(ensembl_summary) {
-  if (ensembl_summary$division[1] != "EnsemblBacteria") return("")
-
+  if (ensembl_summary$division[1] != "EnsemblBacteria")
+    return("")
+  
   get.org.info <- ensembl_summary[1,]
   bacteria.info <- all_bacterias_info()
   assembly <- NULL
   bacteria.info <-
     dplyr::filter(bacteria.info,
                   assembly == get.org.info$assembly)
-
+  
   if (nrow(bacteria.info) == 0) {
     message(
       "Unfortunately organism '",
@@ -235,7 +260,7 @@ get_bacteria_collection_id <- function(ensembl_summary) {
     )
     return(FALSE)
   }
-
+  
   if (is.na(bacteria.info$core_db[1])) {
     message(
       "Unfortunately organism '",
@@ -248,6 +273,6 @@ get_bacteria_collection_id <- function(ensembl_summary) {
   bacteria_collection <- paste0(paste0(unlist(
     stringr::str_split(bacteria.info$core_db[1], "_")
   )[1:3], collapse = "_"), "/")
-
+  
   return(bacteria_collection)
 }
