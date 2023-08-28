@@ -14,6 +14,10 @@
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
@@ -23,6 +27,7 @@
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding annotation file shall be stored. Default is 
 #' \code{path = file.path("_ncbi_downloads","genomes")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -61,10 +66,12 @@ getGFF <-
     function(db = "refseq",
              organism,
              reference = FALSE,
+             skip_bacteria = TRUE,
              release = NULL,
              gunzip = FALSE,
              remove_annotation_outliers = FALSE,
-             path = file.path("_ncbi_downloads", "annotation")) {
+             path = file.path("_ncbi_downloads", "annotation"),
+             mute_citation = FALSE) {
         
        if (!is.element(db, c("refseq", "genbank", "ensembl")))
             stop(
@@ -87,10 +94,10 @@ getGFF <-
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test wheter or not genome is available
-            suppressMessages(is.genome.available(organism = organism, db = db))
+            # test whether or not genome is available
+            suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
@@ -505,6 +512,7 @@ getGFF <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
@@ -519,6 +527,7 @@ getGFF <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
