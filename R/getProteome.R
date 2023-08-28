@@ -372,11 +372,9 @@ getProteome <-
                                                                                                                           paste0(local.org, "_protein_", db, ".faa")))
                             return(file.path(path,
                                              paste0(local.org, "_protein_", db, ".faa")))
-                            please_cite_biomartr(mute_citation = mute_citation)
                     } else {
                             return(file.path(path,
                                              paste0(local.org, "_protein_", db, ".faa.gz")))
-                      please_cite_biomartr(mute_citation = mute_citation)
                     }
                     
                 } else {
@@ -555,10 +553,8 @@ getProteome <-
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(proteome.path[1], destname = unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
                         return(unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
-                        please_cite_biomartr(mute_citation = mute_citation)
                 } else {
                         return(proteome.path[1])
-                  please_cite_biomartr(mute_citation = mute_citation)
                 }
             }
         }
