@@ -118,6 +118,7 @@ getCollection <-
                         db = db,
                         organism = organism,
                         reference = reference,
+                        skip_bacteria = skip_bacteria,
                         release = release,
                         gunzip = gunzip,
                         path = path,
@@ -130,10 +131,12 @@ getCollection <-
                         db = db,
                         organism = organism,
                         reference = reference,
+                        skip_bacteria = skip_bacteria,
                         release = release,
                         gunzip = gunzip,
                         remove_annotation_outliers = remove_annotation_outliers,
-                        path = path
+                        path = path,
+                        mute_citation = TRUE
                 )
         message("\n")
         if (is.element(db, c("ensembl", "ensemblgenomes"))) {
