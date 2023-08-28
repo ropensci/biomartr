@@ -552,10 +552,8 @@ getCDS <-
                 if (gunzip) {
                         message("Unzipping downloaded file ...")
                         R.utils::gunzip(cds.path[1], destname = unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
-                        please_cite_biomartr(mute_citation = mute_citation)
                         return(unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
                 } else {
-                  please_cite_biomartr(mute_citation = mute_citation)      
                   return(cds.path[1])
                 }
             }
