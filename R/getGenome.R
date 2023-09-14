@@ -110,7 +110,7 @@ getGenome <-
 
             message("\n")
         } else {
-            message("Starting genome retrieval of '", organism, "' from ", db, " ...")
+            message("-> Starting genome retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         }
 
@@ -250,7 +250,16 @@ getGenome <-
                                     mode = "wb"
                                 )
                             )
-
+                        }, error = function(e) {
+                          message(
+                            "The download session seems to have timed out at the FTP site '",
+                            download_url, "'. This could be due to an overload of queries to the databases.",
+                            " Please restart this function to continue the data retrieval process or wait ",
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+                          )
+                          return("Not available")
+                        })
+                    }
                             # download md5checksum file for organism of interest
                             custom_download(
                              paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
@@ -259,8 +268,8 @@ getGenome <-
                                 mode = "wb"
                             )
 
-                            message("Genome download of ", organism, " is completed!")
-
+                            message("-> Genome download of ", organism, " is completed!")
+                        
                             # test check sum
                             md5_file_path <- file.path(path,
                                                        paste0(local.org,
@@ -271,13 +280,16 @@ getGenome <-
                             file_name <- NULL
 
                             md5_sum <- dplyr::filter(md5_file,
-                                       file_name == paste0(" ./", paste0(
+                                       file_name == paste0("./", paste0(
                                            basename(FoundOrganism$ftp_path),
                                            "_genomic.fna.gz"
                                        )))$md5
 
-                            message("Checking md5 hash of file: ",
-                                    md5_file_path , " ...")
+                            message("-> Checking md5 hash of file: ",
+                                    file.path(
+                                      path,
+                                      paste0(local.org, "_genomic_", db, ".fna.gz")
+                                    ), " (md5: ",md5_sum, ")" , " ...")
 
 
                             if (!(tools::md5sum(file.path(
@@ -293,17 +305,8 @@ getGenome <-
                                     )
                                 )
                    unlink(md5_file_path)
-            message("The md5 hash of file '", md5_file_path, "' matches!")
-                        }, error = function(e) {
-                            message(
-                                "The download session seems to have timed out at the FTP site '",
-                                download_url, "'. This could be due to an overload of queries to the databases.",
-                                " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                            )
-                            return("Not available")
-                            })
-                    }
+            message("-> The md5 hash of file '", md5_file_path, "' matches!")
+                        
 
                     docFile(
                         file.name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
@@ -357,7 +360,7 @@ getGenome <-
                     if (!gunzip) {
                             message(
                                     paste0(
-                                            "The genome of '",
+                                            "-> The genome of '",
                                             organism,
                                             "' has been downloaded to '",
                                             path,
@@ -372,7 +375,7 @@ getGenome <-
                     if (gunzip) {
                             message(
                                     paste0(
-                                            "The genome of '",
+                                            "-> The genome of '",
                                             organism,
                                             "' has been downloaded to '",
                                             path,
@@ -385,7 +388,7 @@ getGenome <-
                     }
 
                     if (gunzip) {
-                            message("Unzipping downloaded file ...")
+                            message("-> Unzipping downloaded file ...")
                             R.utils::gunzip(file.path(path,
                                                       paste0(
                                                               local.org, "_genomic_", db, ".fna.gz"
@@ -393,13 +396,11 @@ getGenome <-
                                                                                paste0(
                                                                                        local.org, "_genomic_", db, ".fna"
                                                                                )))
-                            please_cite_biomartr(mute_citation = mute_citation)
                             return(file.path(path,
                                              paste0(
                                                      local.org, "_genomic_", db, ".fna"
                                              )))
                     } else {
-                      please_cite_biomartr(mute_citation = mute_citation)
                             return(file.path(path,
                                              paste0(
                                                      local.org, "_genomic_", db, ".fna.gz"
