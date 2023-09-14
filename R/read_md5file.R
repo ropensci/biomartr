@@ -4,6 +4,7 @@
 #' @param md5path path to md5checksum.txt file.
 #' @author Hajk-Georg Drost
 #' @noRd
+#' @export
 read_md5file <- function(md5path) {
     
     if (!file.exists(md5path))
