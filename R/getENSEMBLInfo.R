@@ -19,14 +19,14 @@
 getENSEMBLInfo <- function() {
   all_divisions <- ensembl_divisions()
   ENSEMBLInfoTable <- vector("list", length(all_divisions))
-  
+
   for (i in seq_len(length(all_divisions))) {
     cat("Starting information retrieval for:", all_divisions[i])
     cat("\n")
     ENSEMBLInfoTable[[i]] <-
       get.ensembl.info(update = TRUE, division = all_divisions[i])
   }
-  
+
   return(dplyr::bind_rows(ENSEMBLInfoTable))
 }
 
@@ -37,7 +37,7 @@ ensembl_assembly_hits <- function(organism) {
       db = "ensembl",
       details = TRUE
     ))
-  
+
   if (nrow(ensembl_summary) == 0) {
     message(
       "Unfortunately, organism '",
@@ -96,13 +96,13 @@ is.genome.available.ensembl <- function(db = "ensembl",
                                         divisions = ensembl_divisions()) {
   name <- accession <- accession <- assembly <- taxon_id <- NULL
   new.organism <- stringr::str_replace_all(organism, " ", "_")
-  
+
   # For each ensembl division, check if it exists
   for (division in ensembl_divisions()) {
     ensembl.available.organisms <- get.ensembl.info(division = division)
     ensembl.available.organisms <-
       dplyr::filter(ensembl.available.organisms, !is.na(assembly))
-    
+
     if (!is.taxid(organism)) {
       selected.organism <-
         dplyr::filter(
@@ -117,14 +117,14 @@ is.genome.available.ensembl <- function(db = "ensembl",
           ensembl.available.organisms,
           taxon_id == as.integer(organism),!is.na(assembly)
         )
-      
+
     }
     if (nrow(selected.organism) > 0)
       break
   }
-  
-  
-  
+
+
+
   if (!details) {
     if (nrow(selected.organism) == 0) {
       organism_no_hit_message_zero(organism, db)
@@ -243,14 +243,14 @@ all_bacterias_info <- function() {
 get_bacteria_collection_id <- function(ensembl_summary) {
   if (ensembl_summary$division[1] != "EnsemblBacteria")
     return("")
-  
+
   get.org.info <- ensembl_summary[1,]
   bacteria.info <- all_bacterias_info()
   assembly <- NULL
   bacteria.info <-
     dplyr::filter(bacteria.info,
-                  assembly == get.org.info$assembly)
-  
+                  assembly == gsub("_$", "", get.org.info$assembly))
+
   if (nrow(bacteria.info) == 0) {
     message(
       "Unfortunately organism '",
@@ -260,7 +260,7 @@ get_bacteria_collection_id <- function(ensembl_summary) {
     )
     return(FALSE)
   }
-  
+
   if (is.na(bacteria.info$core_db[1])) {
     message(
       "Unfortunately organism '",
@@ -273,6 +273,6 @@ get_bacteria_collection_id <- function(ensembl_summary) {
   bacteria_collection <- paste0(paste0(unlist(
     stringr::str_split(bacteria.info$core_db[1], "_")
   )[1:3], collapse = "_"), "/")
-  
+
   return(bacteria_collection)
 }
