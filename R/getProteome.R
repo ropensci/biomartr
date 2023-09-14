@@ -91,7 +91,7 @@ getProteome <-
                 
                 message("\n")
         } else {
-            message("Starting proteome retrieval of '", organism, "' from ", db, " ...")
+            message("-> Starting proteome retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         }
         
@@ -216,7 +216,7 @@ getProteome <-
                         paste0(local.org, "_protein_", db, ".faa.gz")
                     ))) {
                         message(
-                            "File ",
+                            "-> File ",
                             file.path(
                                 path,
                                 paste0(local.org, "_protein_", db, ".faa.gz")
@@ -237,7 +237,7 @@ getProteome <-
                                 )
                             )
                             
-                            message("Proteome download of ", organism, " is completed!")
+                            message("-> Proteome download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
@@ -247,6 +247,17 @@ getProteome <-
                                 mode = "wb"
                             )
                             
+                        }, error = function(e){
+                          message(
+                            "The download session seems to have timed out at the FTP site '",
+                            download_url, "'. This could be due to an overload of queries to the databases.",
+                            " Please restart this function to continue the data retrieval process or wait ",
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+                          )
+                          return("Not available")
+                        })
+                    }
+                      
                             # test check sum
                             md5_file_path <- file.path(path, 
                                                        paste0(local.org, 
@@ -257,13 +268,16 @@ getProteome <-
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                            file_name == paste0(" ./", paste0(
+                                            file_name == paste0("./", paste0(
                                             basename(FoundOrganism$ftp_path),
                                                 "_protein.faa.gz"
                                             )))$md5
                             
-                            message("Checking md5 hash of file: ", 
-                                    md5_file_path , " ...")
+                            message("-> Checking md5 hash of file: ", 
+                                    file.path(
+                                      path,
+                                      paste0(local.org, "_protein_", db, ".faa.gz")
+                                    ), " (md5: ", md5_sum ,")", " ...")
                             
                             if (!(tools::md5sum(file.path(
                                 path,
@@ -279,18 +293,10 @@ getProteome <-
                                     )
                                 )
                             unlink(md5_file_path)
-                message("The md5 hash of file '", md5_file_path, "' matches!")
+                message("-> The md5 hash of file '", md5_file_path, "' matches!")
                             
-                        }, error = function(e){
-                            message(
-                                "The download session seems to have timed out at the FTP site '",
-                                download_url, "'. This could be due to an overload of queries to the databases.",
-                                " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                            )
-                            return("Not available")
-                        })
-                    }
+                        
+          
                     
                     docFile(
                         file.name = paste0(local.org, "_protein.faa.gz"),
@@ -337,7 +343,7 @@ getProteome <-
                     if (!gunzip) {
                             message(
                                     paste0(
-                                            "The proteome of '",
+                                            "-> The proteome of '",
                                             organism,
                                             "' has been downloaded to '",
                                             path,
@@ -353,7 +359,7 @@ getProteome <-
                     if (gunzip) {
                             message(
                                     paste0(
-                                            "The proteome of '",
+                                            "-> The proteome of '",
                                             organism,
                                             "' has been downloaded to '",
                                             path,
@@ -366,7 +372,7 @@ getProteome <-
                     }
                     
                     if (gunzip) {
-                            message("Unzipping downloaded file ...")
+                            message("-> Unzipping downloaded file ...")
                             R.utils::gunzip(file.path(path,
                                                       paste0(local.org, "_protein_", db, ".faa.gz")), destname = file.path(path,
                                                                                                                           paste0(local.org, "_protein_", db, ".faa")))
@@ -537,7 +543,7 @@ getProteome <-
                 if (gunzip) {
                         message(
                                 paste0(
-                                        "The proteome of '",
+                                        "-> The proteome of '",
                                         ensembl_summary$display_name[1],
                                         "' has been downloaded to '",
                                         path,
@@ -550,7 +556,7 @@ getProteome <-
                 }
                 
                 if (gunzip) {
-                        message("Unzipping downloaded file ...")
+                        message("-> Unzipping downloaded file ...")
                         R.utils::gunzip(proteome.path[1], destname = unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
                         return(unlist(stringr::str_replace(proteome.path[1], "[.]gz", "")))
                 } else {
