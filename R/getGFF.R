@@ -87,7 +87,7 @@ getGFF <-
                     message("Starting GFF retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         } else {
-            message("Starting GFF retrieval of '", organism, "' from ", db, " ...")
+            message("-> Starting GFF retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         }
         
@@ -209,7 +209,7 @@ getGFF <-
                         paste0(local.org, "_genomic_", db, ".gff.gz")
                     ))) {
                         message(
-                            "File ",
+                            "-> File ",
                             file.path(
                                 path,
                                 paste0(local.org, "_genomic_", db, ".gff.gz")
@@ -229,8 +229,19 @@ getGFF <-
                                     mode = "wb"
                                 )
                             )
-                            
-                            message("GFF download of ", organism, " is completed!")
+                        }, error = function(e)
+                        {
+                          message(
+                            "The download session seems to have timed out at the FTP site '",
+                            download_url, "'. This could be due to an overload of queries to the databases.",
+                            " Please restart this function to continue the data retrieval process or wait ",
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+                          )
+                          return("Not available")
+                        })
+                    }
+                  
+                            message("-> GFF download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
@@ -250,13 +261,16 @@ getGFF <-
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                            file_name == paste0(" ./", paste0(
+                                            file_name == paste0("./", paste0(
                                             basename(FoundOrganism$ftp_path),
                                                          "_genomic.gff.gz"
                                                      )))$md5
                             
-                            message("Checking md5 hash of file: ", 
-                                    md5_file_path , " ...")
+                            message("-> Checking md5 hash of file: ", 
+                                    file.path(
+                                      path,
+                                      paste0(local.org, "_genomic_", db, ".gff.gz")
+                                    ) , " (md5: ", md5_sum, ")", " ...")
                             
                             if (!(tools::md5sum(file.path(
                                 path,
@@ -272,20 +286,8 @@ getGFF <-
                                     )
                                 )
                             unlink(md5_file_path)
-               message("The md5 hash of file '", md5_file_path, "' matches!")
+               message("-> The md5 hash of file '", md5_file_path, "' matches!")
                             
-                        }, error = function(e)
-                        {
-                            message(
-                                "The download session seems to have timed out at the FTP site '",
-                                download_url, "'. This could be due to an overload of queries to the databases.",
-                                " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                            )
-                            return("Not available")
-                        })
-                    }
-                    
                     
                     docFile(
                         file.name = paste0(local.org, "_genomic_", db, 
