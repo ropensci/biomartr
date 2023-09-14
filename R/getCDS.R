@@ -74,7 +74,7 @@ getCDS <-
                 if (is.na(organism_name))
                         message("Starting CDS retrieval of '", organism, "' from ", db, " ...")
         } else {
-            message("Starting CDS retrieval of '", organism, "' from ", db, " ...")
+            message("-> Starting CDS retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         }
         
@@ -228,8 +228,19 @@ getCDS <-
                                     mode = "wb"
                                 )
                             )
-                            
-                            message("CDS download of ", organism, " is completed!")
+                        }, error = function(e)
+                        {
+                          message(
+                            "The download session seems to have timed out at the FTP site '",
+                            download_url, "'. This could be due to an overload of queries to the databases.",
+                            " Please restart this function to continue the data retrieval process or wait ",
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+                          )
+                          return("Not available")
+                        })
+                    }
+                  
+                            message("-> CDS download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
@@ -249,13 +260,17 @@ getCDS <-
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                            file_name == paste0(" ./", paste0(
+                                            file_name == paste0("./", paste0(
                                             basename(FoundOrganism$ftp_path),
                                                     "_cds_from_genomic.fna.gz"
                                                      )))$md5
                             
-                            message("Checking md5 hash of file: ", 
-                                    md5_file_path , " ...")
+                            message("-> Checking md5 hash of file: ", 
+                                    file.path(
+                                      path,
+                                      paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")
+                                    ) , " (md5: ", md5_sum, ")"," ...")
+                            
                             if (!(tools::md5sum(file.path(
                                 path,
                         paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")
@@ -270,19 +285,8 @@ getCDS <-
                                     )
                                 )
                             unlink(md5_file_path)
-                message("The md5 hash of file '", md5_file_path, "' matches!")
-                            
-                        }, error = function(e)
-                        {
-                            message(
-                                "The download session seems to have timed out at the FTP site '",
-                                download_url, "'. This could be due to an overload of queries to the databases.",
-                                " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                            )
-                            return("Not available")
-                        })
-                    }
+                message("-> The md5 hash of file '", md5_file_path, "' matches!")
+                          
                     
                     docFile(
                         file.name = paste0(
@@ -333,7 +337,7 @@ getCDS <-
                     
                     message(
                         paste0(
-                            "The genomic CDS of '",
+                            "-> The genomic CDS of '",
                             organism,
                             "' has been downloaded to '",
                             path,
@@ -347,33 +351,30 @@ getCDS <-
                             "' ."
                         )
                     )
+                    please_cite_biomartr(mute_citation = mute_citation)
                     
                     if (gunzip) {
                             message(
                                     paste0(
-                                            "The proteome of '",
+                                            "The genomic CDS of '",
                                             organism,
                                             "' has been downloaded to '",
                                             path,
                                             "' and has been named '",
-                                            paste0(local.org, "_protein_", db, ".faa"),
+                                            paste0(local.org, "_cds_from_genomic_", db, ".fna"),
                                             "' ."
                                     )
                             )
-                      please_cite_biomartr(mute_citation = mute_citation)
-                            
                     }
                     
                     if (gunzip) {
-                            message("Unzipping downloaded file ...")
+                            message("-> Unzipping downloaded file ...")
                             R.utils::gunzip(file.path(path,
                                                       paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")), destname = file.path(path,
                                                                                                                            paste0(local.org, "_cds_from_genomic_", db, ".fna")))
-                            please_cite_biomartr(mute_citation = mute_citation)
                             return(file.path(path,
                                              paste0(local.org, "_cds_from_genomic_", db, ".fna")))
                     } else {
-                      please_cite_biomartr(mute_citation = mute_citation)      
                       return(file.path(path,
                                              paste0(local.org, "_cds_from_genomic_", db, ".fna.gz")))
                     }
@@ -522,7 +523,7 @@ getCDS <-
                 if (!gunzip) {
                         message(
                                 paste0(
-                                        "The CDS of '",
+                                        "-> The CDS of '",
                                         ensembl_summary$display_name[1],
                                         "' has been downloaded to '",
                                         path,
@@ -537,7 +538,7 @@ getCDS <-
                 if (gunzip) {
                         message(
                                 paste0(
-                                        "The CDS of '",
+                                        "-> The CDS of '",
                                         ensembl_summary$display_name[1],
                                         "' has been downloaded to '",
                                         path,
@@ -550,7 +551,7 @@ getCDS <-
                 }
                 
                 if (gunzip) {
-                        message("Unzipping downloaded file ...")
+                        message("-> Unzipping downloaded file ...")
                         R.utils::gunzip(cds.path[1], destname = unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
                         return(unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
                 } else {
@@ -692,7 +693,7 @@ getCDS <-
                 if (!gunzip) {
                         message(
                                 paste0(
-                                        "The CDS of '",
+                                        "-> The CDS of '",
                                         ensembl_summary$display_name,
                                         "' has been downloaded to '",
                                         path,
@@ -701,12 +702,13 @@ getCDS <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
                         message(
                                 paste0(
-                                        "The CDS of '",
+                                        "-> The CDS of '",
                                         ensembl_summary$display_name,
                                         "' has been downloaded to '",
                                         path,
@@ -715,10 +717,11 @@ getCDS <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
-                        message("Unzipping downloaded file ...")
+                        message("-> Unzipping downloaded file ...")
                         R.utils::gunzip(cds.path[1], destname = unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
                         return(unlist(stringr::str_replace(cds.path[1], "[.]gz", "")))
                 } else {
