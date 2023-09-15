@@ -4,11 +4,13 @@
 \alias{getDatasets}
 \title{Retrieve All Available Datasets for a BioMart Database}
 \usage{
-getDatasets(mart)
+getDatasets(mart, mute_citation = FALSE)
 }
 \arguments{
 \item{mart}{a character string specifying the database (mart) for 
 which datasets shall be listed.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \description{
 This funcion queries the BioMart API and returns a table

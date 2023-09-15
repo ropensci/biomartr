@@ -4,7 +4,7 @@
 \alias{biomart}
 \title{Main BioMart Query Function}
 \usage{
-biomart(genes, mart, dataset, attributes, filters, ...)
+biomart(genes, mart, dataset, attributes, filters, mute_citation = FALSE, ...)
 }
 \arguments{
 \item{genes}{a character vector storing the gene ids of a organisms
@@ -22,6 +22,8 @@ used, e.g. \code{attributes} =
 
 \item{filters}{a character vector specifying the filter (query key) for the 
 BioMart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 
 \item{...}{additional parameters for the
 \code{\link[biomaRt]{getBM}} function.}

@@ -4,7 +4,7 @@
 \alias{getAttributes}
 \title{Retrieve All Available Attributes for a Specific Dataset}
 \usage{
-getAttributes(mart, dataset)
+getAttributes(mart, dataset, mute_citation = FALSE)
 }
 \arguments{
 \item{mart}{a character string specifying the database (mart) 
@@ -12,6 +12,8 @@ for which datasets shall be listed.}
 
 \item{dataset}{a character string specifying the dataset for which 
 attributes shall be listed.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \description{
 This function queries the BioMart Interface and returns a table

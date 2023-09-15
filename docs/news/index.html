@@ -70,10 +70,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.4" id="biomartr-104"><a href="https://github.com/ropensci/biomartr/releases/tag/v1.0.4" class="external-link">biomartr 1.0.4</a><a class="anchor" aria-label="anchor" href="#biomartr-104"></a></h2>
+<h2 class="page-header" data-toc-text="1.0.4" id="biomartr-104"><a href="https://github.com/ropensci/biomartr/releases/tag/v1.0.4" class="external-link">biomartr 1.0.4</a><small>2023-06-20</small><a class="anchor" aria-label="anchor" href="#biomartr-104"></a></h2>
 <div class="section level4">
 <h4 id="new-features-1-0-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-0-4"></a></h4>
-<ul><li>in <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code> all columns of the <code>assembly_summary.txt</code> are now specified with names and correct data types (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)</li>
+<ul><li>in <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code> all columns of the <code>assembly_summary.txt</code> are now specified with names and correct data types (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)<br></li>
+<li>all <code>get*()</code> functions, the <code><a href="../reference/getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code>, and <code>is.genome.available.refseq.genbank()</code> all receive a new argument <code>skip_bacteria</code> which is set to <code>TRUE</code> by default. This ensures that the huge dataset file for <code>bacteria</code> is not downloaded by default when retrieving summary files from <code>GenBank</code>. Users who wish to retrieved data from particular bacteria can actively set <code>skip_bacteria = TRUE</code> in all <code>get*()</code> functions.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="bug-fixes-1-0-4">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-4"></a></h4>
@@ -308,7 +309,7 @@
 <li><p>new internal helper function <code>getENSEMBL.Annotation()</code> acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval</p></li>
 <li><p>new internal helper function <code>getENSEMBLGENOMES.Annotation()</code> acting as main interface function to communicate with the ENSEMBL database API for GFF retrieval</p></li>
 <li><p>new internal helper function <code>get.ensemblgenome.info()</code> to retrieve general organism information from ENSEMBLGENOMES</p></li>
-<li><p>new internal helper function <code>get.ensembl.info()</code> to retrieve general organism information from ENSEMBL</p></li>
+<li><p>new internal helper function <code><a href="../reference/get.ensembl.info.html">get.ensembl.info()</a></code> to retrieve general organism information from ENSEMBL</p></li>
 <li><p>new internal helper function <code><a href="../reference/getGENOMEREPORT.html">getGENOMEREPORT()</a></code> to retrieve the genome reports file from <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt" class="uri">ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt</a></p></li>
 <li><p>new internal helper function <code>connected.to.internet()</code> enabling internet connection check</p></li>
 </ul></div>

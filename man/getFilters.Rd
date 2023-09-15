@@ -4,7 +4,7 @@
 \alias{getFilters}
 \title{Retrieve All Available Filters for a Specific Dataset}
 \usage{
-getFilters(mart, dataset)
+getFilters(mart, dataset, mute_citation = FALSE)
 }
 \arguments{
 \item{mart}{a character string specifying the database (mart) for which 
@@ -12,6 +12,8 @@ datasets shall be listed.}
 
 \item{dataset}{a character string specifying the dataset for which filters 
 shall be listed.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \description{
 This funcion queries the BioMart API and returns a table

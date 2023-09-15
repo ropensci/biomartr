@@ -93,10 +93,12 @@ This is useful when comparing genomes with large difference in genome assembly q
 <span>  db <span class="op">=</span> <span class="st">"refseq"</span>,</span>
 <span>  <span class="va">organism</span>,</span>
 <span>  reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  skip_bacteria <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  release <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gunzip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"_ncbi_downloads"</span>, <span class="st">"genomes"</span><span class="op">)</span>,</span>
-<span>  assembly_type <span class="op">=</span> <span class="st">"toplevel"</span></span>
+<span>  assembly_type <span class="op">=</span> <span class="st">"toplevel"</span>,</span>
+<span>  mute_citation <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -119,6 +121,13 @@ shall be retrieved:</p><ul><li><p><code>db = "refseq"</code></p></li>
 
 <dt>reference</dt>
 <dd><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.</p></dd>
+
+
+<dt>skip_bacteria</dt>
+<dd><p>Due to its enormous dataset size (&gt; 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify <code>skip_bacteria = FALSE</code>. When <code>skip_bacteria = FALSE</code> is set then the 
+bacterial summary file will be downloaded.</p></dd>
 
 
 <dt>release</dt>
@@ -149,6 +158,10 @@ To get primary assembly with 1 chromosome variant per chromosome:
 <code>assembly_type = "primary_assembly")</code>.
 As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:</p></dd>
 
+
+<dt>mute_citation</dt>
+<dd><p>logical value indicating whether citation message should be muted.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -171,7 +184,7 @@ no download process will be performed.</p>
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="getGenomeSet.html">getGenomeSet</a></code>, <code><a href="getProteome.html">getProteome</a></code>, <code><a href="getCDS.html">getCDS</a></code>,
 <code><a href="getGFF.html">getGFF</a></code>, <code><a href="getRNA.html">getRNA</a></code>, <code><a href="getRepeatMasker.html">getRepeatMasker</a></code>,
-<code><a href="getAssemblyStats.html">getAssemblyStats</a></code>, <code><a href="summary_genome.html">summary_genome</a></code>,
+<code><a href="getAssemblyStats.html">getAssemblyStats</a></code>, <code><a href="summary_genome.html">summary_genome</a></code>, <code><a href="getCollection.html">getCollection</a></code>,
 <code><a href="meta.retrieval.html">meta.retrieval</a></code>, <code><a href="meta.retrieval.all.html">meta.retrieval.all</a></code>, <code><a href="read_genome.html">read_genome</a></code></p></div>
     </div>
     <div id="author">

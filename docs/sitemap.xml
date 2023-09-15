@@ -61,6 +61,12 @@
     <loc>/reference/download.database.html</loc>
   </url>
   <url>
+    <loc>/reference/ensembl_divisions.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get.ensembl.info.html</loc>
+  </url>
+  <url>
     <loc>/reference/getAssemblyStats.html</loc>
   </url>
   <url>
