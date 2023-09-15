@@ -8,7 +8,9 @@ getRepeatMasker(
   db = "refseq",
   organism,
   reference = FALSE,
-  path = file.path("_ncbi_downloads", "repeatmasker")
+  skip_bacteria = TRUE,
+  path = file.path("_ncbi_downloads", "repeatmasker"),
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -55,29 +57,29 @@ no download process will be performed.
 \examples{
 \dontrun{
 
-# download the Repeat Masker output file of Arabidopsis thaliana from refseq
+# download the Repeat Masker output file of Homo sapiens from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
 file_path <- getRepeatMasker( db       = "refseq", 
-             organism = "Arabidopsis thaliana", 
+             organism = "Homo sapiens", 
              path = file.path("_ncbi_downloads","repeatmasker"))
 
-Ath_repeatmasker <- read_rm(file_path)
+Hsap_repeatmasker <- read_rm(file_path)
 
 
-# download the Repeat Masker output file of Arabidopsis thaliana from genbank
+# download the Repeat Masker output file of Homo sapiens from genbank
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
 file_path <- getRepeatMasker( db       = "genbank", 
-             organism = "Arabidopsis thaliana", 
+             organism = "Homo sapiens", 
              path = file.path("_ncbi_downloads","repeatmasker"))
 
-Ath_repeatmasker <- read_rm(file_path)
+Hsap_repeatmasker <- read_rm(file_path)
 }
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
-\code{\link{read_rm}}, \code{\link{getGenome}}
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
+\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
+\code{\link{read_rm}}
 }
 \author{
 Hajk-Georg Drost
