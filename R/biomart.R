@@ -14,6 +14,7 @@
 #' BioMart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.
 #' @param ... additional parameters for the
 #'  \code{\link[biomaRt]{getBM}} function.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details This function is the main query function of the biomartr package.
 #'
@@ -58,29 +59,30 @@ biomart <- function(genes,
                     dataset,
                     attributes,
                     filters,
+                    mute_citation = FALSE,
                     ...) {
         
         message("Starting BioMart query ...")
         
     if (stringr::str_detect(mart, "ENSEMBL"))
         # connect to BioMart API
-        m <- biomaRt::useMart(mart, host = "www.ensembl.org")
+        m <- biomaRt::useMart(mart, host = "https://www.ensembl.org")
     
     if (stringr::str_detect(mart, "plants"))
         # connect to BioMart API
-        m <- biomaRt::useMart(mart, host = "plants.ensembl.org")
+        m <- biomaRt::useMart(mart, host = "https://plants.ensembl.org")
     
     if (stringr::str_detect(mart, "fung"))
         # connect to BioMart API
-        m <- biomaRt::useMart(mart, host = "fungi.ensembl.org")
+        m <- biomaRt::useMart(mart, host = "https://fungi.ensembl.org")
     
     if (stringr::str_detect(mart, "protist"))
         # connect to BioMart API
-        m <- biomaRt::useMart(mart, host = "protist.ensembl.org")
+        m <- biomaRt::useMart(mart, host = "https://protist.ensembl.org")
     
     if (stringr::str_detect(mart, "metazoa"))
         # connect to BioMart API
-        m <- biomaRt::useMart(mart, host = "metazoa.ensembl.org")
+        m <- biomaRt::useMart(mart, host = "https://metazoa.ensembl.org")
     
     d <- biomaRt::useDataset(dataset = dataset, mart = m)
     
@@ -103,6 +105,7 @@ biomart <- function(genes,
     tbl_biomart <-
         merge(query, genes, by = filters, incomparables = NA)
     
+    please_cite_biomartr(mute_citation = mute_citation)
     return(tbl_biomart)
     
 }
