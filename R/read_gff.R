@@ -12,23 +12,31 @@
 #' @export
 
 read_gff <- function(file) {
-    # read gtf file content
-    suppressWarnings(
+    # read gff file content
         gff.input <-
             readr::read_delim(
                 file = file,
                 delim = "\t",
                 col_names = FALSE,
-                comment = "#"
+                comment = "#",
+                col_types = readr::cols(
+                  "X1" = readr::col_character(),
+                  "X2" = readr::col_character(),
+                  "X3" = readr::col_character(),
+                  "X4" = readr::col_integer(),
+                  "X5" = readr::col_integer(),
+                  "X6" = readr::col_character(),
+                  "X7" = readr::col_character(),
+                  "X8" = readr::col_character(),
+                  "X9" = readr::col_character()
+                )
             )
-    )
     
     if (!file.exists(file))
         stop("The file path you specified does not seem to exist: '", file,"'.", call. = FALSE)
     
     if (ncol(gff.input) > 9)
         stop("The gff file format can not store more than 9 columns!", call. = FALSE)
-    
     
     # name standardized columns
     gffNames <- c("seqid",
@@ -40,10 +48,9 @@ read_gff <- function(file) {
                   "strand",
                   "phase",
                   "attribute")
-    
-    names(gff.input)[seq_len(ncol(gff.input))] <-
-        gffNames[seq_len(ncol(gff.input))]
-    
+
+    names(gff.input) <- gffNames
+
     return(gff.input)
 }
 
