@@ -14,9 +14,14 @@
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding file shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","repeatmasker")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -40,14 +45,6 @@
 #' 
 #' Hsap_repeatmasker <- read_rm(file_path)
 #' 
-#' 
-#' # download the Repeat Masker output file of Homo sapiens from genbank
-#' # and store the corresponding genome file in '_ncbi_downloads/genomes'
-#' file_path <- getRepeatMasker( db       = "genbank", 
-#'              organism = "Homo sapiens", 
-#'              path = file.path("_ncbi_downloads","repeatmasker"))
-#' 
-#' Hsap_repeatmasker <- read_rm(file_path)
 #' }
 #' 
 #' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
@@ -79,7 +76,7 @@ getRepeatMasker <-
             AssemblyFilesAllKingdoms <-
                 getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test wheter or not genome is available
+            # test whether or not genome is available
             suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))
             
             if (!file.exists(path)) {
@@ -250,6 +247,8 @@ getRepeatMasker <-
                                                        "_rm.out.gz"
                                                      )))$md5
                             
+                            # check if md5 info is available
+                            if (!is.character(md5_sum)){
                             message("-> Checking md5 hash of file: ", 
                                     file.path(
                                       path,
@@ -271,6 +270,7 @@ getRepeatMasker <-
                               )
                             unlink(md5_file_path)
                             message("The md5 hash of file '", md5_file_path, "' matches!")
+                            }
                     
                     docFile(
                         file.name = paste0(local.org, "_rm_", db, 
