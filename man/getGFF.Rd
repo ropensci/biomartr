@@ -77,16 +77,28 @@ no download process will be performed.
 \dontrun{
 # download the annotation of Arabidopsis thaliana from refseq
 # and store the corresponding genome file in '_ncbi_downloads/annotation'
-getGFF( db       = "refseq", 
+Athal_gff <- getGFF( db       = "refseq", 
                organism = "Arabidopsis thaliana", 
-               path = file.path("_ncbi_downloads","annotation"))
+               path = file.path("_ncbi_downloads","annotation"),
+               remove_annotation_outliers = TRUE)
+Athal_gff_import <- read_gff(Athal_gff)
 
 
 # download the genome of Arabidopsis thaliana from genbank
 # and store the corresponding genome file in '_ncbi_downloads/annotation'
-getGFF( db       = "genbank", 
+Athal_gff <- getGFF( db       = "genbank", 
                organism = "Arabidopsis thaliana", 
-               path = file.path("_ncbi_downloads","annotation"))
+               path = file.path("_ncbi_downloads","annotation"),
+               remove_annotation_outliers = TRUE)
+Athal_gff_import <- read_gff(Athal_gff)
+
+# download the genome of Homo sapiens from ensembl
+# and store the corresponding genome file in '_ncbi_downloads/annotation'
+Hsap_gff <- getGFF( db       = "ensembl", 
+               organism = "Homo sapiens", 
+               path = file.path("_ncbi_downloads","annotation"),
+               remove_annotation_outliers = TRUE)
+Hsap_gff_import <- read_gff(Hsap_gff)
 
 }
 
