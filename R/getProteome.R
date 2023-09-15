@@ -273,6 +273,8 @@ getProteome <-
                                                 "_protein.faa.gz"
                                             )))$md5
                             
+                            # check if md5 info is available
+                            if (!is.character(md5_sum)){
                             message("-> Checking md5 hash of file: ", 
                                     file.path(
                                       path,
@@ -294,7 +296,7 @@ getProteome <-
                                 )
                             unlink(md5_file_path)
                 message("-> The md5 hash of file '", md5_file_path, "' matches!")
-                            
+          }             
                         
           
                     
