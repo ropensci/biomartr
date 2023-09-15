@@ -44,16 +44,28 @@
 #' @examples \dontrun{
 #' # download the annotation of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome file in '_ncbi_downloads/annotation'
-#' getGFF( db       = "refseq", 
+#' Athal_gff <- getGFF( db       = "refseq", 
 #'                organism = "Arabidopsis thaliana", 
-#'                path = file.path("_ncbi_downloads","annotation"))
+#'                path = file.path("_ncbi_downloads","annotation"),
+#'                remove_annotation_outliers = TRUE)
+#' Athal_gff_import <- read_gff(Athal_gff)
 #' 
 #' 
 #' # download the genome of Arabidopsis thaliana from genbank
 #' # and store the corresponding genome file in '_ncbi_downloads/annotation'
-#' getGFF( db       = "genbank", 
+#' Athal_gff <- getGFF( db       = "genbank", 
 #'                organism = "Arabidopsis thaliana", 
-#'                path = file.path("_ncbi_downloads","annotation"))
+#'                path = file.path("_ncbi_downloads","annotation"),
+#'                remove_annotation_outliers = TRUE)
+#' Athal_gff_import <- read_gff(Athal_gff)
+#' 
+#' # download the genome of Homo sapiens from ensembl
+#' # and store the corresponding genome file in '_ncbi_downloads/annotation'
+#' Hsap_gff <- getGFF( db       = "ensembl", 
+#'                organism = "Homo sapiens", 
+#'                path = file.path("_ncbi_downloads","annotation"),
+#'                remove_annotation_outliers = TRUE)
+#' Hsap_gff_import <- read_gff(Hsap_gff)
 #' 
 #' }
 #' 
@@ -345,11 +357,11 @@ getGFF <-
                                             "' ."
                                     )
                             )
-                            
+                      please_cite_biomartr(mute_citation = mute_citation)
                     }
                     
                     if (gunzip) {
-                            message("Unzipping downloaded file ...")
+                            message("-> Unzipping downloaded file ...")
                             R.utils::gunzip(file.path(path,
                                                       paste0(local.org, "_genomic_", db, ".gff.gz")), destname = file.path(path,
                                                                                                                                     paste0(local.org, "_genomic_", db, ".gff")))
@@ -362,6 +374,7 @@ getGFF <-
                     } else {
                         output_path <- check_annotation_biomartr(file.path(path,
                                                             paste0(local.org, "_genomic_", db, ".gff.gz")), remove_annotation_outliers = remove_annotation_outliers)
+                        please_cite_biomartr(mute_citation = mute_citation)
                             return(output_path)
                     }
                 } else {
@@ -520,7 +533,7 @@ getGFF <-
                 if (gunzip) {
                         message(
                                 paste0(
-                                        "The GFF of '",
+                                        "-> The GFF of '",
                                         ensembl_summary$display_name[1],
                                         "' has been downloaded to '",
                                         path,
@@ -533,7 +546,7 @@ getGFF <-
                 }
                 
                 if (gunzip) {
-                        message("Unzipping downloaded file ...")
+                        message("-> Unzipping downloaded file ...")
                         R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
                         
                         output_path <- check_annotation_biomartr(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")), remove_annotation_outliers = remove_annotation_outliers)
@@ -687,6 +700,7 @@ getGFF <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
@@ -701,10 +715,11 @@ getGFF <-
                                         "'."
                                 )
                         )
+                  please_cite_biomartr(mute_citation = mute_citation)
                 }
                 
                 if (gunzip) {
-                        message("Unzipping downloaded file ...")
+                        message("-> Unzipping downloaded file ...")
                         R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
                         
                         return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
