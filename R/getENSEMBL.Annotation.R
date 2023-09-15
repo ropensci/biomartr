@@ -104,10 +104,10 @@ getENSEMBL.Annotation <-
         
         # construct retrieval query
         if (is.null(release))
-                core_path <- "ftp://ftp.ensembl.org/pub/current_gff3/"
+                core_path <- "https://ftp.ensembl.org/pub/current_gff3/"
         
         if (!is.null(release))
-                core_path <- paste0("ftp://ftp.ensembl.org/pub/release-", release ,"/gff3/")
+                core_path <- paste0("https://ftp.ensembl.org/pub/release-", release ,"/gff3/")
         
             json.qry.info <- rest_api_status
         # construct retrieval query
