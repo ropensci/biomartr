@@ -18,12 +18,17 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding
 #' CDS file shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","RNA")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @return File path to downloaded RNA file.
 #' @examples 
@@ -38,7 +43,7 @@
 #' }
 #' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, 
 #' \code{\link{getGTF}}, \code{\link{getGFF}}, \code{\link{getRepeatMasker}}, 
-#' \code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, 
+#' \code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
 #' \code{\link{read_cds}}, \code{\link{getCDS}}
 #' @export
 
@@ -46,8 +51,12 @@ getRNA <-
     function(db = "refseq",
              organism,
              reference = FALSE,
+             skip_bacteria = TRUE,
              release = NULL,
-             path = file.path("_ncbi_downloads", "RNA")) {
+             path = file.path("_ncbi_downloads", "RNA"),
+             mute_citation = FALSE) {
+      
+      
         if (!is.element(db, c("refseq", "genbank", "ensembl")))
             stop(
                 "Please select one of the available data bases: 
@@ -59,21 +68,21 @@ getRNA <-
                 organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name[1]
                 
                 if (!is.na(organism_name))
-                        message("Starting RNA retrieval of '", organism_name, "' from ", db, " ...")
+                        message("-> Starting RNA retrieval of '", organism_name, "' from ", db, " ...")
                 if (is.na(organism_name))
-                        message("Starting RNA retrieval of '", organism, "' from ", db, " ...")
+                        message("-> Starting RNA retrieval of '", organism, "' from ", db, " ...")
         } else {
-            message("Starting RNA retrieval of '", organism, "' from ", db, " ...")
+            message("-> Starting RNA retrieval of '", organism, "' from ", db, " ...")
             message("\n")
         }
         
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test wheter or not genome is available
-            suppressMessages(is.genome.available(organism = organism, db = db))
+            # test whether or not genome is available
+            suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
@@ -219,8 +228,18 @@ getRNA <-
                                     mode = "wb"
                                 )
                             )
-                            
-                            message("RNA download of ", organism, " is completed!")
+                        }, error = function(e) {
+                          message(
+                            "The download session seems to have timed out at the FTP site '",
+                            download_url, "'. This could be due to an overload of queries to the databases.",
+                            " Please restart this function to continue the data retrieval process or wait ",
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+                          )
+                          return(FALSE)
+                        })
+                    }
+                  
+                            message("-> RNA download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
@@ -240,13 +259,16 @@ getRNA <-
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                            file_name == paste0(" ./", paste0(
+                                            file_name == paste0("./", paste0(
                                              basename(FoundOrganism$ftp_path),
                                                     "_rna_from_genomic.fna.gz"
                                                      )))$md5
                             
-                            message("Checking md5 hash of file: ", 
-                                    md5_file_path , " ...")
+                            message("-> Checking md5 hash of file: ", 
+                                    file.path(
+                                      path,
+                                      paste0(local.org, "_rna_from_genomic_", db, ".fna.gz")
+                                    ) , " (md5: ", md5_sum, ")", " ...")
                             
                             if (!(tools::md5sum(file.path(
                                 path,
@@ -262,17 +284,8 @@ getRNA <-
                                     )
                                 )
                             unlink(md5_file_path)
-                message("The md5 hash of file '", md5_file_path, "' matches!")
-                        }, error = function(e) {
-                            message(
-                                "The download session seems to have timed out at the FTP site '",
-                                download_url, "'. This could be due to an overload of queries to the databases.",
-                                " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                            )
-                            return(FALSE)
-                        })
-                    }
+                message("-> The md5 hash of file '", md5_file_path, "' matches!")
+                        
                     
                     docFile(
                         file.name = paste0(
@@ -323,7 +336,7 @@ getRNA <-
                     
                     message(
                         paste0(
-                            "The genomic RNA of '",
+                            "-> The genomic RNA of '",
                             organism,
                             "' has been downloaded to '",
                             path,
@@ -337,7 +350,7 @@ getRNA <-
                             "' ."
                         )
                     )
-                    
+                    please_cite_biomartr(mute_citation = mute_citation)
                     return(file.path(
                         path,
                         paste0(
@@ -490,7 +503,7 @@ getRNA <-
                 
                 message(
                     paste0(
-                        "The RNA of '",
+                        "-> The RNA of '",
                         organism,
                         "' has been downloaded to '",
                         path,
@@ -499,7 +512,7 @@ getRNA <-
                         "'."
                     )
                 )
-                
+                please_cite_biomartr(mute_citation = mute_citation)
                 return(rna.path[1])
             }
         }
