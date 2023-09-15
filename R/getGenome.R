@@ -285,6 +285,8 @@ getGenome <-
                                            "_genomic.fna.gz"
                                        )))$md5
 
+                            # check if md5 info is available
+                            if (!is.character(md5_sum)){
                             message("-> Checking md5 hash of file: ",
                                     file.path(
                                       path,
@@ -306,7 +308,7 @@ getGenome <-
                                 )
                    unlink(md5_file_path)
             message("-> The md5 hash of file '", md5_file_path, "' matches!")
-                        
+      }        
 
                     docFile(
                         file.name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
