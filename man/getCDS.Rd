@@ -74,7 +74,7 @@ Ath_CDS <- read_cds(file_path, format = "fasta")
 \seealso{
 \code{\link{getGenome}}, \code{\link{getProteome}}, 
 \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, 
+\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
 \code{\link{read_cds}}
 }
 \author{

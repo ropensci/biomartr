@@ -8,8 +8,10 @@ getRNA(
   db = "refseq",
   organism,
   reference = FALSE,
+  skip_bacteria = TRUE,
   release = NULL,
-  path = file.path("_ncbi_downloads", "RNA")
+  path = file.path("_ncbi_downloads", "RNA"),
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -30,6 +32,11 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
+
 \item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used.}
 
@@ -37,6 +44,8 @@ that the most recent database version is used.}
 the corresponding
 CDS file shall be stored. Default is 
 \code{path} = \code{file.path("_ncbi_downloads","RNA")}.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded RNA file.
@@ -62,7 +71,7 @@ Ath_RNA <- read_rna(file_path, format = "fasta")
 \seealso{
 \code{\link{getGenome}}, \code{\link{getProteome}}, 
 \code{\link{getGTF}}, \code{\link{getGFF}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, 
+\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
 \code{\link{read_cds}}, \code{\link{getCDS}}
 }
 \author{

@@ -113,7 +113,7 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 \seealso{
 \code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}},
 \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{summary_genome}},
+\code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, \code{\link{getCollection}},
 \code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
 }
 \author{

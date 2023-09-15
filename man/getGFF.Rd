@@ -106,7 +106,7 @@ Hsap_gff_import <- read_gff(Hsap_gff)
 \seealso{
 \code{\link{getProteome}}, \code{\link{getCDS}}, 
 \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}
+\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}
 }
 \author{
 Hajk-Georg Drost
