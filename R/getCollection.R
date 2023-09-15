@@ -46,11 +46,20 @@
 #' no download process will be performed.
 #' @return File path to downloaded genome.
 #' @examples \dontrun{
-#' 
-#' # download the collection of Arabidopsis thaliana from refseq
+#' # download the collection of Homo sapiens from refseq
 #' # and store the corresponding genome file in '_ncbi_downloads/collection'
-#'  getCollection( db       = "refseq", 
-#'              organism = "Arabidopsis thaliana", 
+#'  Hsap_collection <- getCollection( db       = "refseq", 
+#'              organism = "Homo sapiens", 
+#'              path = file.path("_db_downloads","collections"))
+#' # download the collection of Homo sapiens from genbank
+#' # and store the corresponding genome file in '_ncbi_downloads/collection'
+#'  Hsap_collection <- getCollection( db       = "genbank", 
+#'              organism = "Homo sapiens", 
+#'              path = file.path("_db_downloads","collections"))
+#' # download the collection of Homo sapiens from ensembl
+#' # and store the corresponding genome file in '_ncbi_downloads/collection'
+#'  Hsap_collection <- getCollection( db       = "ensembl", 
+#'              organism = "Homo sapiens", 
 #'              path = file.path("_db_downloads","collections"))
 #' }
 #' 
@@ -72,12 +81,12 @@ getCollection <-
         ) {
         
         new_name <- stringr::str_replace_all(organism," ","_")
-        message("Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
+        message("-> Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
             
         org_exists <- is.genome.available(db = db, organism, details = TRUE)   
         
         if (isFALSE(org_exists) || length(org_exists) == 0)
-            stop("No entry was found for organism ",organism,". Could the name be misspelled?",  call. = FALSE)
+            stop("-> No entry was found for organism ",organism,". Could the name be misspelled?",  call. = FALSE)
         
 
         if (!file.exists(file.path(path, db, new_name)))
@@ -139,7 +148,7 @@ getCollection <-
                         mute_citation = TRUE
                 )
         message("\n")
-        if (is.element(db, c("ensembl", "ensemblgenomes"))) {
+        if (is.element(db, c("ensembl"))) {
                 species_gtf <-
                         getGTF(
                                 db = db,
@@ -156,7 +165,9 @@ getCollection <-
                         db = db,
                         organism = organism,
                         reference = reference,
-                        path = path
+                        skip_bacteria = skip_bacteria,
+                        path = path,
+                        mute_citation = TRUE
                 )
         message("\n")
         
@@ -167,7 +178,9 @@ getCollection <-
                                 db = db,
                                 organism = organism,
                                 reference = reference,
-                                path = path
+                                skip_bacteria = skip_bacteria,
+                                path = path,
+                                mute_citation = TRUE
                         )
                 message("\n")
                 
@@ -177,7 +190,9 @@ getCollection <-
                                 db = db,
                                 organism = organism,
                                 reference = reference,
-                                path = path
+                                skip_bacteria = skip_bacteria,
+                                path = path,
+                                mute_citation = TRUE
                         )
         }
         
@@ -219,7 +234,7 @@ getCollection <-
                         )
                 
                 
-                message("Collection retrieval finished successfully!")
+                message("-> Collection retrieval finished successfully!")
                 message("\n")
                 please_cite_biomartr(mute_citation = mute_citation)
                 return(file.path(getwd(), path))
@@ -245,7 +260,7 @@ getCollection <-
                         )
                 
                 
-                message("Collection retrieval finished successfully!")
+                message("-> Collection retrieval finished successfully!")
                 message("\n")
                 please_cite_biomartr(mute_citation = mute_citation)
                 return(file.path(getwd(), path))
