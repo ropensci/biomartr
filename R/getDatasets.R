@@ -3,6 +3,7 @@
 #' storing all available datasets for a selected BioMart databases.
 #' @param mart a character string specifying the database (mart) for 
 #' which datasets shall be listed.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
@@ -16,7 +17,7 @@
 #' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 
-getDatasets <- function(mart) {
+getDatasets <- function(mart, mute_citation = FALSE) {
     if (!is.character(mart))
         stop("Please use a character string as mart.", call. = FALSE)
     
@@ -109,6 +110,7 @@ paste0("http://metazoa.ensembl.org:80/biomart/martservice?",
                                     V5 = "")
         
         colnames(dsBioMart) <- c("dataset", "description", "version")
+        please_cite_biomartr(mute_citation = mute_citation)
         
         return(tibble::as_tibble(dsBioMart))
     }, error = function(e)
