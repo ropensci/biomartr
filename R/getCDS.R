@@ -264,7 +264,8 @@ getCDS <-
                                             basename(FoundOrganism$ftp_path),
                                                     "_cds_from_genomic.fna.gz"
                                                      )))$md5
-                            
+                            # check if md5 info is available
+                            if (!is.character(md5_sum)){
                             message("-> Checking md5 hash of file: ", 
                                     file.path(
                                       path,
@@ -286,7 +287,7 @@ getCDS <-
                                 )
                             unlink(md5_file_path)
                 message("-> The md5 hash of file '", md5_file_path, "' matches!")
-                          
+            }             
                     
                     docFile(
                         file.name = paste0(
