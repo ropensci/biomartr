@@ -4,7 +4,7 @@
 \alias{organismBM}
 \title{Retrieve Ensembl Biomart marts and datasets for a query organism}
 \usage{
-organismBM(organism = NULL, update = FALSE, mute_citation = FALSE)
+organismBM(organism = NULL, update = FALSE, mute_citation = TRUE)
 }
 \arguments{
 \item{organism}{a character string specifying the scientific name of a 
