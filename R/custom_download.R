@@ -69,6 +69,7 @@ test_url_status <- function(url, organism) {
 #' makes a test query.
 #' @author Hajk-Georg Drost
 #' @importFrom  RCurl url.exists
+#' @importFrom XML getHTMLLinks
 #' @noRd
 #' @import curl
 exists.ftp.file.new <- function(url, file.path) {
@@ -77,13 +78,10 @@ exists.ftp.file.new <- function(url, file.path) {
   if (!RCurl::url.exists(url_dir_safe))
     return(FALSE)
 
-  con <- RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  con <- RCurl::getURL(url_dir_safe, ftp.use.epsv = FALSE, dirlistonly = TRUE)
 
-  ftp.content <-
-    suppressMessages(readr::read_delim(con,
-                                       delim = "\n",
-                                       col_names = FALSE))
+  dir_files <- XML::getHTMLLinks(con)
 
   return(is.element(as.character(basename(file.path)),
-                    as.character(ftp.content$X1)))
+                    dir_files))
 }
