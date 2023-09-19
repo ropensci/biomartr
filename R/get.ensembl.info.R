@@ -4,7 +4,7 @@
 #' and internally stores the output to use this information for subsequent
 #' retrieval function calls.
 #' @param update logical, default FALSE. If TRUE, force re-download of info.
-#' @param division the ENSEMBL database (division) for which information shall 
+#' @param division the ENSEMBL database (division) for which information shall
 #' be retrieved (available options can be obtained with \code{\link{ensembl_divisions}}).
 #' @author Hajk-Georg Drost
 #' @examples
@@ -136,11 +136,11 @@ ensembl_rest_url_assembly <- function(organism) {
   ))
 }
 
-ensembl_ftp_server_url <- function(division) {
+ensembl_ftp_server_url <- function(division = "EnsemblVertebrates") {
   if (division == "EnsemblVertebrates") {
-    "ftp://ftp.ensembl.org"
+    "https://ftp.ensembl.org"
   } else {
-    "ftp://ftp.ensemblgenomes.org"
+    "http://ftp.ensemblgenomes.org"
   }
 }
 
@@ -158,28 +158,32 @@ ensembl_ftp_server_url_release_style <- function(division, release = NULL) {
   }
 }
 
-ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL) {
+ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL, format = "gtf") {
+  format_short <- paste0(format, "/")
+  format <- paste0("/", format_short)
   if (division == "EnsemblVertebrates") {
     if (is.null(release)) {
-      "pub/current_gtf/"
-    } else paste0("pub/release-", release ,"/gtf/")
+      paste0("pub/current_", format_short)
+    } else paste0("pub/release-", release , format)
 
   } else {ensembl_divisions
     short_name <- ensembl_divisions_short()[division]
     if (is.null(release)) {
-      paste0("pub/current/", short_name, "/gtf/")
-    } else paste0("pub/release-", release ,"/", short_name, "/gtf/")
+      paste0("pub/current/", short_name, format)
+    } else paste0("pub/release-", release ,"/", short_name, format)
   }
 }
+
 
 ensembl_ftp_server_url_fasta <- function(division, release = NULL) {
   file.path(ensembl_ftp_server_url(division),
             ensembl_ftp_server_url_release_style(division, release))
 }
 
-ensembl_ftp_server_url_gtf <- function(division, release = NULL) {
+ensembl_ftp_server_url_gtf <- function(division = "EnsemblVertebrates",
+                                       release = NULL, format = "gtf") {
   file.path(ensembl_ftp_server_url(division),
-            ensembl_ftp_server_url_release_style_gtf(division, release))
+            ensembl_ftp_server_url_release_style_gtf(division, release, format))
 }
 
 ensembl_ftp_server_query_full <- function(core_path, new.organism, type,

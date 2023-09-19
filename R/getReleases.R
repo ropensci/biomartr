@@ -22,40 +22,19 @@ getReleases <- function(db = "ensembl") {
             call. = FALSE
         )
 
-    if (db == "ensembl") {
+    if (db %in% c("ensembl", "ensemblgenomes")) {
 
         tryCatch({
-        current_release <-
-            jsonlite::fromJSON(
-"https://rest.ensembl.org/info/data/?content-type=application/json")$releases
+        current_release <- ensembl_current_release()
         }, error = function(e)
             message(
-                "The API 'https://rest.ensembl.org' does not seem
-                to be reachable. Could you please check whether you are connected to the internet?
-                Is it possible to access the homepage 'http://rest.ensembl.org'
-                via your browser?"
+                "The ensembl rest API '", ensembl_rest_url(), "' does not seem to be reachable.
+                Could you please check whether you are connected to the internet?
+                Is it possible to access the homepage '", ensembl_rest_url(),
+                "' via your browser?"
             ))
 
         message("The current ENSEMBL release is release-", current_release, ".")
-        return(paste0("release-", seq_len(current_release)))
-    }
-
-    if (db == "ensemblgenomes") {
-
-        tryCatch({
-            current_release <-
-                jsonlite::fromJSON(
-"https://rest.ensembl.org/info/data/?content-type=application/json")$releases
-        }, error = function(e)
-          message(
-            "The API 'http://rest.ensembl.org' does not seem
-                to be reachable. Could you please check whether you are connected to the internet?
-                Is it possible to access the homepage 'https://rest.ensembl.org'
-                via your browser?"
-          ))
-
-        message("The current ENSEMBL release is release-",
-                current_release, ".")
         return(paste0("release-", seq_len(current_release)))
     }
 }
