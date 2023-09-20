@@ -34,9 +34,9 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
@@ -49,16 +49,6 @@ if the standard format before that.}
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding genome shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
-
-\item{assembly_type}{a character string specifying from which assembly type the genome
-shall be retrieved from (ensembl only, else this argument is ignored):
-Default is
-\code{assembly_type = "toplevel")}.
-This will give you all multi-chromosomes (copies of the same chromosome with small variations).
-As an example the toplevel fasta genome in human is over 70 GB uncompressed.
-To get primary assembly with 1 chromosome variant per chromosome:
-\code{assembly_type = "primary_assembly")}.
-As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
 }

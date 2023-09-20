@@ -86,9 +86,28 @@ is.taxid <- function(x) {
   return(stringr::str_count(x, "[:digit:]") == nchar(x))
 }
 
+validate_release <- function(release, ensembl_summary) {
+  if (!is.null(release)) {
+    release <- as.numeric(release)
+    if (!is.element(release, ensembl_all_releases()))
+      stop("Please provide a release number that is supported by ENSEMBL.", call. = FALSE)
+  } else release <- ensembl_current_release(ensembl_summary$division[1])
+
+  if (is.numeric(release)) {
+    if (release <= 46) {
+      message("ensembl release <= 46 is not supported")
+      return(FALSE)
+    }
+  }
+  return(release)
+}
+
 #' Check if genome is available in ensembl
-#'
-#' @param division "EnsemblVertebrates", alternatives: "EnsemblPlants", "EnsemblFungi"
+#' @param organism which organism, scientific name
+#' @param details logical, default FALSE, return logical only, else table of info
+#' @param division "EnsemblVertebrates", alternatives: "EnsemblPlants",
+#' "EnsemblFungi", "EnsemblMetazoa" and "EnsemblProtists"
+#' @return logical, if details is TRUE, then returns table of details.
 #' @noRd
 is.genome.available.ensembl <- function(db = "ensembl",
                                         organism,
@@ -177,27 +196,33 @@ organism_no_hit_message_more_than_one <- function(organism, db) {
   )
 }
 
-all_bacterias_info <- function() {
-  if (!file.exists(file.path(tempdir(), "EnsemblBacteria.txt"))) {
+collection_table <- function(division = "EnsemblBacteria") {
+  base_name_file <- paste0(division, ".txt")
+  local_file <- file.path(tempdir(), base_name_file)
+
+  if (!file.exists(local_file)) {
+    url <- paste0(ensembl_ftp_server_url(division),"/",
+                  ensembl_ftp_server_url_release(division),
+                  "species_", base_name_file)
     tryCatch({
       custom_download(
-        "ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt",
-        destfile = file.path(tempdir(), "EnsemblBacteria.txt"),
+        url,
+        destfile = local_file,
         mode = "wb"
       )
     }, error = function(e) {
       message(
-        "Something went wrong when accessing the API 'http://rest.ensemblgenomes.org'.",
+        "Something went wrong when accessing the the file",
         " Are you connected to the internet? ",
-        "Is the homepage 'ftp://ftp.ensemblgenomes.org/pub/current/bacteria/species_EnsemblBacteria.txt' ",
+        "Is the homepage '", url,"' ",
         "currently available? Could it be that the scientific name is mis-spelled or includes special characters such as '.' or '('?"
       )
     })
   }
   suppressWarnings(
-    bacteria.info <-
+    collection <-
       readr::read_delim(
-        file.path(tempdir(), "EnsemblBacteria.txt"),
+        local_file,
         delim = "\t",
         quote = "\"",
         escape_backslash = FALSE,
@@ -240,18 +265,20 @@ all_bacterias_info <- function() {
   )
 }
 
-get_bacteria_collection_id <- function(ensembl_summary) {
-  if (ensembl_summary$division[1] != "EnsemblBacteria")
-    return("")
+get_collection_id <- function(ensembl_summary) {
+  division <- ensembl_summary$division[1]
+  if (!(division %in% c("EnsemblBacteria", "EnsemblFungi",
+                                           "EnsemblProtists")))
+    return("") # Only these have collection folder structure
 
   get.org.info <- ensembl_summary[1,]
-  bacteria.info <- all_bacterias_info()
+  collection_info <- collection_table(division)
   assembly <- NULL
-  bacteria.info <-
-    dplyr::filter(bacteria.info,
+  collection_info <-
+    dplyr::filter(collection_info,
                   assembly == gsub("_$", "", get.org.info$assembly))
 
-  if (nrow(bacteria.info) == 0) {
+  if (nrow(collection_info) == 0) {
     message(
       "Unfortunately organism '",
       ensembl_summary$display_name,
@@ -261,18 +288,91 @@ get_bacteria_collection_id <- function(ensembl_summary) {
     return(FALSE)
   }
 
-  if (is.na(bacteria.info$core_db[1])) {
-    message(
-      "Unfortunately organism '",
-      ensembl_summary$display_name,
-      "' was not assigned to a bacteria collection.
-                    Thus download for this species is omitted."
-    )
-    return(FALSE)
+  if (is.na(collection_info$core_db[1]) || collection_info$core_db[1] == "N") {
+    # TODO make sure this is safe
+    # In theory this should mean that the file exist outside collection folders
+    return("")
   }
-  bacteria_collection <- paste0(paste0(unlist(
-    stringr::str_split(bacteria.info$core_db[1], "_")
+  collection <- paste0(paste0(unlist(
+    stringr::str_split(collection_info$core_db[1], "_")
   )[1:3], collapse = "_"), "/")
 
-  return(bacteria_collection)
+  return(collection)
+}
+
+
+assembly_summary_and_rest_status <- function(organism) {
+  ensembl_summary <- ensembl_assembly_hits(organism)
+  if (isFALSE(ensembl_summary)) return(FALSE)
+
+  # Check if assembly can be reached (TODO: remove, as this is already done)
+  new.organism <- ensembl_proper_organism_name(ensembl_summary)
+  rest_url <- ensembl_rest_url_assembly(new.organism)
+  rest_api_status <- test_url_status(url = rest_url, organism = organism)
+  if (isFALSE(rest_api_status)) return(FALSE)
+  json.qry.info <- rest_api_status
+  return(list(new.organism = new.organism,
+              ensembl_summary = ensembl_summary,
+              json.qry.info = json.qry.info))
+}
+
+write_assembly_docs_ensembl <- function(genome.path, new.organism, db, json.qry.info,
+                                        path = dirname(genome.path[1]), append = NULL) {
+  # generate Genome documentation
+  sink(file.path(path, paste0("doc_", new.organism, "_db_", db, append,".txt")))
+
+  cat(paste0("File Name: ", genome.path[1]))
+  cat("\n")
+  cat(paste0("Download Path: ", genome.path[2]))
+  cat("\n")
+  cat(paste0("Organism Name: ", new.organism))
+  cat("\n")
+  cat(paste0("Database: ", db))
+  cat("\n")
+  cat(paste0("Download_Date: ", date()))
+  cat("\n")
+  cat(paste0("assembly_name: ", json.qry.info$assembly_name))
+  cat("\n")
+  cat(paste0("assembly_date: ", json.qry.info$assembly_date))
+  cat("\n")
+  cat(
+    paste0(
+      "genebuild_last_geneset_update: ",
+      json.qry.info$genebuild_last_geneset_update
+    )
+  )
+  cat("\n")
+  cat(paste0(
+    "assembly_accession: ",
+    json.qry.info$assembly_accession
+  ))
+  cat("\n")
+  cat(
+    paste0(
+      "genebuild_initial_release_date: ",
+      json.qry.info$genebuild_initial_release_date
+    )
+  )
+
+  sink()
+
+  doc <- tibble::tibble(
+    file_name = genome.path[1],
+    download_path = genome.path[2],
+    organism = new.organism,
+    database = db,
+    download_data = date(),
+    assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
+    assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
+    genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
+    assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
+    genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
+
+  )
+
+  readr::write_tsv(doc, file = file.path(
+    path,
+    paste0("doc_", new.organism, "_db_", db, append, ".tsv"))
+  )
+  return(invisible(NULL))
 }

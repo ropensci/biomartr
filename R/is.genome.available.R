@@ -15,10 +15,10 @@
 #' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
-#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023),
 #' the bacterial summary file will not be loaded by default anymore. If users
-#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
-#' bacterial summary file will be downloaded.   
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
+#' bacterial summary file will be downloaded.
 #' @param details a logical value specifying whether or not details on genome
 #' size, kingdom, etc. shall be printed to the console intead of a
 #' boolean value.
@@ -67,67 +67,8 @@ is.genome.available <-
           return(is.genome.available.refseq.genbank(db = db, organism = organism, details = details))
         }
 
-        if (db == "ensembl") {
+        if (db %in% c("ensembl", "ensemblgenomes")) {
           return(is.genome.available.ensembl(db, organism, details))
-        }
-
-        if (db == "ensemblgenomes") {
-            new.organism <- stringr::str_replace_all(organism, " ", "_")
-
-            name <- accession <- assembly <- taxon_id <- NULL
-
-            ensembl.available.organisms <- get.ensemblgenome.info()
-            ensembl.available.organisms <- dplyr::filter(ensembl.available.organisms, !is.na(assembly))
-
-            if (!is.taxid(organism)) {
-                selected.organism <-
-                    dplyr::filter(
-                        ensembl.available.organisms,
-                        stringr::str_detect(name,
-                                            stringr::str_to_lower(new.organism)) |
-                            accession == organism, !is.na(assembly)
-                    )
-            } else {
-                selected.organism <-
-                    dplyr::filter(
-                        ensembl.available.organisms, taxon_id == as.integer(organism), !is.na(assembly))
-
-            }
-
-            if (!details) {
-
-                if (nrow(selected.organism) == 0) {
-                    message(
-                        "Unfortunatey, no entry for '",
-                        organism,
-                        "' was found in the '",
-                        db,
-                        "' database. ",
-                        "Please consider specifying ",
-                        paste0("'db = ", dplyr::setdiff(
-                            c("refseq", "genbank", "ensembl", "ensemblgenomes", "uniprot"), db
-                        ), collapse = "' or "),
-                        "' to check whether '",organism,"' is available in these databases."
-                    )
-                    return(FALSE)
-                }
-
-                if (nrow(selected.organism) > 0) {
-                    message("A reference or representative genome assembly is available for '", organism, "'.")
-                    if (nrow(selected.organism) > 1) {
-                        message("More than one entry was found for '", organism, "'.",
-                                " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = '",
-                                organism, "', db = '",db, "', details = TRUE)'.",
-                                " This will allow you to select the 'assembly_accession' identifier that can then be ",
-                                "specified in all get*() functions.")
-                    }
-                    return(TRUE)
-                }
-
-            }
-
-            if (details)
-                return(selected.organism)
         }
 
         if (db == "uniprot") {
@@ -256,7 +197,7 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
   organism_name <- assembly_accession <- taxid <- NULL
 
   AssemblyFilesAllKingdoms <- getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
-    
+
   orgs <-
     stringr::str_replace_all(AssemblyFilesAllKingdoms$organism_name,
                              "\\(", "")

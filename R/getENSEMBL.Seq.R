@@ -81,9 +81,8 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
         custom_download(url = ensembl.qry,
                         destfile = local_file,
                         mode = "wb")
-
-        return(c(local_file, ensembl.qry))
     }
+    return(c(local_file, ensembl.qry))
 }
 
 ensembl_seq_file_base <- function(new.organism, assembly_option, type,
@@ -146,5 +145,4 @@ ensembl_proper_organism_name <- function(ensembl_summary) {
 lower_cap_underscore_organism_name <- function(organism) {
   stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
 }
-
 

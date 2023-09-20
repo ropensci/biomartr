@@ -21,9 +21,9 @@
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023),
 #' the bacterial summary file will not be loaded by default anymore. If users
-#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 #' bacterial summary file will be downloaded.
 #' @inheritParams getENSEMBL.Seq
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
@@ -100,19 +100,8 @@ getGenome <-
             stop("Please specify 'reference' as either TRUE or FALSE.", call. = FALSE)
 
 
-        if (db == "ensemblgenomes") {
-            organism_name <- is.genome.available(db = db, organism = organism, details = TRUE)$display_name[1]
-
-            if (!is.na(organism_name))
-                    message("Starting genome retrieval of '", organism_name, "' from ", db, " ...")
-            if (is.na(organism_name))
-                    message("Starting genome retrieval of '", organism, "' from ", db, " ...")
-
-            message("\n")
-        } else {
-            message("-> Starting genome retrieval of '", organism, "' from ", db, " ...")
-            message("\n")
-        }
+      message("-> Starting genome retrieval of '", organism, "' from ", db, " ...")
+      message("\n")
 
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
@@ -269,7 +258,7 @@ getGenome <-
                             )
 
                             message("-> Genome download of ", organism, " is completed!")
-                        
+
                             # test check sum
                             md5_file_path <- file.path(path,
                                                        paste0(local.org,
@@ -308,7 +297,7 @@ getGenome <-
                                 )
                    unlink(md5_file_path)
             message("-> The md5 hash of file '", md5_file_path, "' matches!")
-      }        
+      }
 
                     docFile(
                         file.name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
@@ -418,345 +407,50 @@ getGenome <-
             }
         }
 
-        if (db == "ensembl") {
+        if (db %in% c("ensembl", "ensemblgenomes")) {
             # create result folder
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
             }
 
             # download genome sequence from ENSEMBL
-                genome.path <-
-                        getENSEMBL.Seq(
-                                organism,
-                                type = "dna",
-                                id.type = assembly_type,
-                                release = release,
-                                path = path
-                        )
+            genome.path <-
+                    getENSEMBL.Seq(
+                            organism,
+                            type = "dna",
+                            id.type = assembly_type,
+                            release = release,
+                            path = path
+                    )
 
             if (is.logical(genome.path[1])) {
                 if (!genome.path[1])
                     return(FALSE)
             } else {
+              format <- "genome"
+              info <- assembly_summary_and_rest_status(organism)
+              write_assembly_docs_ensembl(genome.path, new.organism = info$new.organism,
+                                          db = db, json.qry.info = info$json.qry.info)
 
-                taxon_id <- assembly <- name <- accession <- NULL
+              final_path <- genome.path[1]
+              if (gunzip) {
+                final_path <- unlist(stringr::str_replace(final_path, "[.]gz", ""))
+              }
 
-                ensembl_summary <-
-                    suppressMessages(is.genome.available(
-                        organism = organism,
-                        db = "ensembl",
-                        details = TRUE
-                    ))
+              message("-> The ", toupper(format), " '", info$ensembl_summary$display_name[1],
+                      "' has been downloaded to '", path,
+                      "' and has been named '", basename(final_path), "'."
+              )
 
-                if (nrow(ensembl_summary) > 1) {
-                    if (is.taxid(organism)) {
-                        ensembl_summary <-
-                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
-                    } else {
+              if (gunzip) {
+                message("-> Unzipping downloaded file ...")
+                R.utils::gunzip(genome.path[1], destname = final_path)
+              }
 
-                        ensembl_summary <-
-                            dplyr::filter(
-                                ensembl_summary,
-                                (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                                    (accession == organism),
-                                    !is.na(assembly)
-                            )
-                    }
-                }
-
-                new.organism <- ensembl_summary$name[1]
-                new.organism <-
-                    paste0(
-                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
-                        stringr::str_sub(new.organism, 2, nchar(new.organism))
-                    )
-
-                url_api <- paste0(
-                    "http://rest.ensembl.org/info/assembly/",
-                    new.organism,
-                    "?content-type=application/json"
-                )
-
-                # choose only first entry if not specified otherwise
-                if (length(url_api) > 1)
-                    url_api <- url_api[1]
-
-                if (curl::curl_fetch_memory(url_api)$status_code != 200) {
-                    message("The API call '",url_api,"' did not work. This might be due to a non-existing organism that you specified or a corrupted internet or firewall connection.")
-                    return("Not available")
-                }
-
-                # retrieve information from API
-                json.qry.info <- jsonlite::fromJSON(url_api)
-
-                # generate Genome documentation
-                sink(file.path(
-                    path,
-                    paste0("doc_", new.organism, "_db_", db, ".txt")
-                ))
-
-                cat(paste0("File Name: ", genome.path[1]))
-                cat("\n")
-                cat(paste0("Download Path: ", genome.path[2]))
-                cat("\n")
-                cat(paste0("Organism Name: ", new.organism))
-                cat("\n")
-                cat(paste0("Database: ", db))
-                cat("\n")
-                cat(paste0("Download_Date: ", date()))
-                cat("\n")
-                cat(paste0("assembly_name: ", ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none")))
-                cat("\n")
-                cat(paste0("assembly_date: ", ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none")))
-                cat("\n")
-                cat(
-                    paste0(
-                        "genebuild_last_geneset_update: ",
-                        ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none")
-                    )
-                )
-                cat("\n")
-                cat(paste0(
-                    "assembly_accession: ",
-                    ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none")
-                ))
-                cat("\n")
-                cat(
-                    paste0(
-                        "genebuild_initial_release_date: ",
-                        ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
-                    )
-                )
-
-                sink()
-
-                doc <- tibble::tibble(
-                        file_name = genome.path[1],
-                        download_path = genome.path[2],
-                        organism = new.organism,
-                        database = db,
-                        download_data = date(),
-                        assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
-                        assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
-                        genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
-                        assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
-                        genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
-
-                )
-
-                readr::write_tsv(doc, file = file.path(
-                        path,
-                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
-                        )
-
-                if (!gunzip) {
-                        message(
-                                paste0(
-                                        "The genome of '",
-                                        organism,
-                                        "' has been downloaded to '",
-                                        path,
-                                        "' and has been named '",
-                                        basename(genome.path[1]),
-                                        "'."
-                                )
-                        )
-                  please_cite_biomartr(mute_citation = mute_citation)
-                }
-
-                if (gunzip) {
-                        message(
-                                paste0(
-                                        "The genome of '",
-                                        organism,
-                                        "' has been downloaded to '",
-                                        path,
-                                        "' and has been named '",
-                                        basename(unlist(stringr::str_replace(genome.path[1], "[.]gz", ""))),
-                                        "'."
-                                )
-                        )
-                  please_cite_biomartr(mute_citation = mute_citation)
-                }
-
-                if (gunzip) {
-                        message("Unzipping downloaded file ...")
-                        R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
-                        return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
-                } else {
-                        return(genome.path[1])
-                }
+              please_cite_biomartr(mute_citation = mute_citation)
+              return(final_path)
             }
         }
-
-        if (db == "ensemblgenomes") {
-            # create result folder
-            if (!file.exists(path)) {
-                dir.create(path, recursive = TRUE)
-            }
-
-            # download genome sequence from ENSEMBLGENOMES
-                genome.path <-
-                        getENSEMBLGENOMES.Seq(organism,
-                                              release = release,
-                                              type = "dna",
-                                              id.type = assembly_type,
-                                              path = path)
-
-            if (is.logical(genome.path[1])) {
-                if (!genome.path[1])
-                    return(FALSE)
-            } else {
-
-                taxon_id <- assembly <- name <- accession <- NULL
-
-                ensembl_summary <-
-                    suppressMessages(is.genome.available(
-                        organism = organism,
-                        db = "ensemblgenomes",
-                        details = TRUE
-                    ))
-
-                if (nrow(ensembl_summary) > 1) {
-                    if (is.taxid(organism)) {
-                        ensembl_summary <-
-                            dplyr::filter(ensembl_summary, taxon_id == as.integer(organism), !is.na(assembly))
-                    } else {
-
-                        ensembl_summary <-
-                            dplyr::filter(
-                                ensembl_summary,
-                                (name == stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))) |
-                                    (accession == organism),
-                                    !is.na(assembly)
-                            )
-                    }
-                }
-
-                new.organism <- stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
-                new.organism <-
-                    paste0(
-                        stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
-                        stringr::str_sub(new.organism, 2, nchar(new.organism))
-                    )
-
-                url_api <- paste0(
-                    "http://rest.ensembl.org/info/assembly/",
-                    new.organism,
-                    "?content-type=application/json"
-                )
-
-                # choose only first entry if not specified otherwise
-                if (length(url_api) > 1)
-                    url_api <- url_api[1]
-
-                if (curl::curl_fetch_memory(url_api)$status_code != 200) {
-                    message("The API call '",url_api,"' did not work. This might be due to a non-existing organism that you specified or a corrupted internet or firewall connection.")
-                    return("Not available")
-                }
-
-                # retrieve information from API
-                json.qry.info <- jsonlite::fromJSON(url_api)
-
-                # generate Genome documentation
-                sink(file.path(
-                    path,
-                    paste0("doc_", new.organism, "_db_", db, ".txt")
-                ))
-
-                cat(paste0("File Name: ", genome.path[1]))
-                cat("\n")
-                cat(paste0("Download Path: ", genome.path[2]))
-                cat("\n")
-                cat(paste0("Organism Name: ", new.organism))
-                cat("\n")
-                cat(paste0("Database: ", db))
-                cat("\n")
-                cat(paste0("Download_Date: ", date()))
-                cat("\n")
-                cat(paste0("assembly_name: ", ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none")))
-                cat("\n")
-                cat(paste0("assembly_date: ", ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none")))
-                cat("\n")
-                cat(
-                    paste0(
-                        "genebuild_last_geneset_update: ",
-                        ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none")
-                    )
-                )
-                cat("\n")
-                cat(paste0(
-                    "assembly_accession: ",
-                    ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none")
-                ))
-                cat("\n")
-                cat(
-                    paste0(
-                        "genebuild_initial_release_date: ",
-                        ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
-                    )
-                )
-
-                sink()
-
-                doc <- tibble::tibble(
-                        file_name = genome.path[1],
-                        download_path = genome.path[2],
-                        organism = new.organism,
-                        database = db,
-                        download_data = date(),
-                        assembly_name = ifelse(!is.null(json.qry.info$assembly_name), json.qry.info$assembly_name, "none"),
-                        assembly_date = ifelse(!is.null(json.qry.info$assembly_date), json.qry.info$assembly_date, "none"),
-                        genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
-                        assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
-                        genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
-
-                )
-
-                readr::write_tsv(doc, file = file.path(
-                        path,
-                        paste0("doc_", new.organism, "_db_", db, ".tsv"))
-                )
-
-                if (!gunzip) {
-                        message(
-                                paste0(
-                                        "The genome of '",
-                                        organism,
-                                        "' has been downloaded to '",
-                                        path,
-                                        "' and has been named '",
-                                        basename(genome.path[1]),
-                                        "'."
-                                )
-                        )
-                }
-
-                if (gunzip) {
-                        message(
-                                paste0(
-                                        "The genome of '",
-                                        organism,
-                                        "' has been downloaded to '",
-                                        path,
-                                        "' and has been named '",
-                                        basename(unlist(stringr::str_replace(genome.path[1], "[.]gz", ""))),
-                                        "'."
-                                )
-                        )
-                }
-
-                if (gunzip) {
-                        message("Unzipping downloaded file ...")
-                        R.utils::gunzip(genome.path[1], destname = unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
-                        return(unlist(stringr::str_replace(genome.path[1], "[.]gz", "")))
-                } else {
-                        return(genome.path[1])
-                }
-                
-                please_cite_biomartr(mute_citation = mute_citation)
-        }
-    }
 }
 
 
