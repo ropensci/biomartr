@@ -120,7 +120,8 @@ refseq_genbank_download_post_processing <- function(info, organism, db, path,
                                                     remove_annotation_outliers,
                                                     format,
                                                     analyse_genome = FALSE) {
-  if (is.logical(info[1]) && !info) return("Not available")
+  if ((is.logical(info[1]) && !info) || (info[1] == "Not available"))
+    return("Not available")
 
   local.org <- info$local.org
   local_file <- info$local_file

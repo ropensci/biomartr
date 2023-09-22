@@ -15,51 +15,40 @@
 #' \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGroups}}
 #' @export
 
-getKingdoms <- function(db = "refseq"){
+getKingdoms <- function(db = "refseq") {
   withr::local_options(timeout = max(30000000, getOption("timeout")))
 
     if (!is.element(db, c("refseq", "genbank","ensembl", "ensemblgenomes")))
         stop("Please select one of the available data bases: 'refseq',
              'genbank', 'ensembl', or 'ensemblgenomes'.", call. = FALSE)
+    genbank_kingdom <- getKingdomGenbank()
 
     if (db == "refseq") {
-        return(
-            c(
-                "archaea",
-                "bacteria",
-                "fungi",
-                "invertebrate",
-                "plant",
-                "protozoa",
-                "vertebrate_mammalian",
-                "vertebrate_other",
-                "viral"
-            )
-        )
+        return(c(genbank_kingdom, "viral"))
     }
 
     if (db == "genbank") {
-        return(
-            c(
-                "archaea",
-                "bacteria",
-                "fungi",
-                "invertebrate",
-                "plant",
-                "protozoa",
-                "vertebrate_mammalian",
-                "vertebrate_other"
-            )
-        )
+        return(genbank_kingdom)
     }
 
     if (db %in% c("ensembl", "ensemblgenomes")) {
-        ensemblinfo <- get.ensembl.info()
-        return(names(ensemblinfo$division))
+        ensembl_kingdoms <- ensembl_divisions_short()
+        return(ensembl_kingdoms)
     }
 }
 
-
+getKingdomGenbank <- function() {
+  c(
+    "archaea",
+    "bacteria",
+    "fungi",
+    "invertebrate",
+    "plant",
+    "protozoa",
+    "vertebrate_mammalian",
+    "vertebrate_other"
+  )
+}
 
 
 

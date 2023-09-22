@@ -1,2 +1,0 @@
-file_name	organism	url	database	path	refseq_category	assembly_accession	bioproject	biosample	taxid	infraspecific_name	version_status	release_type	genome_rep	seq_rel_date	submitter
-Saccharomyces_cerevisiae_genomic_refseq.fna.gz	Saccharomyces_cerevisiae	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt	refseq	_ncbi_downloads/genomeassembly_stats	reference genome	GCF_000146045.2	PRJNA128	na	559292	strain=S288C	latest	Major	Full	2014-12-17	Saccharomyces Genome Database

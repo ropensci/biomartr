@@ -46,6 +46,7 @@ custom_download <- function(url, ...) {
 #' An wrapper to custom_download which checks if local files exists
 #' @noRd
 custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl", ...) {
+  withr::local_options(timeout = max(30000000, getOption("timeout")))
 
   if (file.exists(local_file)) {
     message("File ", local_file,

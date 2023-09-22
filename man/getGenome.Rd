@@ -13,7 +13,8 @@ getGenome(
   gunzip = FALSE,
   path = file.path("_ncbi_downloads", "genomes"),
   assembly_type = "toplevel",
-  mute_citation = FALSE
+  mute_citation = FALSE,
+  analyse_genome = FALSE
 )
 }
 \arguments{

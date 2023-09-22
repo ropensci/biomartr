@@ -17,8 +17,8 @@ getMarts()
  }
 }
 \seealso{
-\code{\link{getDatasets}}, \code{\link{getAttributes}}, 
-\code{\link{getFilters}}, \code{\link{organismBM}}, 
+\code{\link{getDatasets}}, \code{\link{getAttributes}},
+\code{\link{getFilters}}, \code{\link{organismBM}},
 \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 \author{

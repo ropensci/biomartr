@@ -89,9 +89,13 @@ ensembl_divisions <- function() {
     "EnsemblBacteria", "EnsemblProtists")
 }
 
-ensembl_divisions_short <- function() {
-  c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
+ensembl_divisions_short <- function(ensembl_as_empty = TRUE, bacteria = TRUE) {
+  div  <-
+    c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
     EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa", EnsemblProtists = "protists")
+  if (!ensembl_as_empty) div[1] <- "ensembl"
+  if (!bacteria) div <- div[!(div == "bacteria")]
+  return(div)
 }
 
 ensembl_rest_url_species <- function() {

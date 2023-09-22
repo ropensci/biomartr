@@ -146,3 +146,32 @@ md5_sum_test <- function(md5_local, md5_url, local_file, file_url) {
 }
 
 test <- function(x){ print(paste0("Test ",x," passed.","\n"))}
+
+#' Get directory to store back end files like kingdom summaries etc
+#' @param non_temp_cache "~/.biomartr_cache_dir.rds",
+#' @return reads the rds file, and returns the path for local cache, if not
+#' existing, use tempdir().
+#' @export
+#' @examples
+#' cachedir()
+#' @family cachedir
+cachedir <- function(non_temp_cache = "~/.biomartr_cache_dir.rds") {
+  if (file.exists(non_temp_cache)) {
+    readRDS(non_temp_cache)
+  } else tempdir()
+}
+
+#' Set directory to store back end files like kingdom summaries etc
+#' @param path
+#' @return invisible(NULL), only save the file to path location
+#' @export
+#' @examples
+#' # By default it is tmpdir()
+#' cachedir()
+#' # cachedir_set("~/Bio_data/biomartr_cache/")
+#' cachedir()
+#' @family cachedir
+cachedir_set <- function(path) {
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
+  saveRDS(path, file = "~/.biomartr_cache_dir.rds")
+}
