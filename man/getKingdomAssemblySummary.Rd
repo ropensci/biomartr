@@ -2,27 +2,33 @@
 % Please edit documentation in R/getKingdomAssemblySummary.R
 \name{getKingdomAssemblySummary}
 \alias{getKingdomAssemblySummary}
-\title{Retrieve and summarise the assembly_summary.txt files from 
+\title{Retrieve and summarise the assembly_summary.txt files from
 NCBI for all kingdoms}
 \usage{
-getKingdomAssemblySummary(db, skip_bacteria = TRUE)
+getKingdomAssemblySummary(
+  db,
+  skip_bacteria = TRUE,
+  file = assemblies_info_path(db)
+)
 }
 \arguments{
 \item{db}{database name. E.g. \code{refseq} or \code{genbank}.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
+
+\item{file}{path, local path to total summary file, default is in tmp folder.}
 }
 \description{
-Retrieval function of the assembly_summary.txt file 
+Retrieval function of the assembly_summary.txt file
 from NCBI for all kingdoms.
 The assembly_summary.txt files store available species on NCBI.
 }
 \examples{
 \dontrun{
-# This example will run the default version of this function 
+# This example will run the default version of this function
 # whereby information for Bacteria are not downloaded
 test <- getKingdomAssemblySummary(db = "genbank", skip_bacteria = TRUE)
 test

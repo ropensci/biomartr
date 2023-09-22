@@ -162,7 +162,7 @@ cachedir <- function(non_temp_cache = "~/.biomartr_cache_dir.rds") {
 }
 
 #' Set directory to store back end files like kingdom summaries etc
-#' @param path
+#' @param path the path to cache dir, example "~/Bio_data/biomartr_cache/"
 #' @return invisible(NULL), only save the file to path location
 #' @export
 #' @examples

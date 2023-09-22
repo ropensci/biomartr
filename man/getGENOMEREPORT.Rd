@@ -4,14 +4,16 @@
 \alias{getGENOMEREPORT}
 \title{Retrieve NCBI GENOME_REPORTS file}
 \usage{
-getGENOMEREPORT()
+getGENOMEREPORT(
+  local_file = file.path(cachedir(), "_ncbi_downloads", "overview.txt")
+)
 }
 \description{
-Retrieves NCBI GENOME_REPORTS file from 
+Retrieves NCBI GENOME_REPORTS file from
 ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
 }
 \examples{
-\dontrun{ 
+\dontrun{
 report <- getGENOMEREPORT()
 report
 }
