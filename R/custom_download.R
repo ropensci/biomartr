@@ -45,7 +45,7 @@ custom_download <- function(url, ...) {
 
 #' An wrapper to custom_download which checks if local files exists
 #' @noRd
-custom_download_check_local <- function(url, local_file, rest_api_status, ...) {
+custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl", ...) {
 
   if (file.exists(local_file)) {
     message("File ", local_file,
@@ -61,11 +61,21 @@ custom_download_check_local <- function(url, local_file, rest_api_status, ...) {
     tryCatch({
       custom_download(url, destfile = local_file, mode = "wb")
     }, error = function(e)
-      message(
-        "Something went wrong while trying to reach the file '",url,
-        "'. This could be due to an instable internet connection or incorrect file path on the ENSEMBL ftp server. Please check if you are able to reach '",url, "' in your web browser.",
-        " In some cases ENSEMBL released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact the ENSEMBL helpdesk."
-      ))
+      if (db == "ensembl") {
+        message(
+          "Something went wrong while trying to reach the file '",url,
+          "'. This could be due to an instable internet connection or incorrect file path on the ENSEMBL ftp server. Please check if you are able to reach '",url, "' in your web browser.",
+          " In some cases ENSEMBL released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact the ENSEMBL helpdesk."
+        )
+      } else {
+        message(
+          "The download session seems to have timed out at the FTP site '",
+          download_url, "'. This could be due to an overload of queries to the databases.",
+          " Please restart this function to continue the data retrieval process or wait ",
+          "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+        )
+      }
+      )
   }
   return(invisible(NULL))
 }

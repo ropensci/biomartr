@@ -12,7 +12,7 @@ test_that("The getGenome() interface works properly for NCBI RefSeq (including w
         ),
         format = "fasta"
     ))
-    
+
     # test proper use of internal referece files when command is repeated
     expect_output(read_genome(
         getGenome(
@@ -67,7 +67,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank (including 
         ),
         format = "fasta"
     ))
-    
+
     # test proper use of internal referece files when command is repeated
     expect_output(read_genome(
         getGenome(
@@ -91,7 +91,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank using taxid
         ),
         format = "fasta"
     ))
-    
+
     # test proper use of internal referece files when command is repeated
     expect_output(read_genome(
         getGenome(
@@ -115,7 +115,7 @@ test_that("The getGenome() interface works properly for NCBI Genbank using acces
         ),
         format = "fasta"
     ))
-    
+
     # test proper use of internal referece files when command is repeated
     expect_output(read_genome(
         getGenome(
@@ -128,9 +128,9 @@ test_that("The getGenome() interface works properly for NCBI Genbank using acces
 })
 
 test_that("The getGenome() interface works properly for ENSEMBL (including repeating function call)..",{
-        
+
         skip_on_cran()
-        skip_on_travis()    
+        skip_on_travis()
     # test proper download from ENSEMBL
         expect_output(read_genome(
             getGenome(
@@ -140,7 +140,7 @@ test_that("The getGenome() interface works properly for ENSEMBL (including repea
             ),
             format = "fasta"
         ))
-        
+
         expect_output(read_genome(
             getGenome(
                 db       = "ensembl",
@@ -152,9 +152,9 @@ test_that("The getGenome() interface works properly for ENSEMBL (including repea
 })
 
 test_that("The getGenome() interface works properly for ENSEMBL using taxid (including repeating function call)..",{
-    
+
     skip_on_cran()
-    skip_on_travis()    
+    skip_on_travis()
     # test proper download from ENSEMBL
     expect_output(read_genome(
         getGenome(
@@ -164,7 +164,7 @@ test_that("The getGenome() interface works properly for ENSEMBL using taxid (inc
         ),
         format = "fasta"
     ))
-    
+
     expect_output(read_genome(
         getGenome(
             db       = "ensembl",
@@ -177,9 +177,9 @@ test_that("The getGenome() interface works properly for ENSEMBL using taxid (inc
 
 
 test_that("The getGenome() interface works properly for ENSEMBL using accession id (including repeating function call)..",{
-    
+
     skip_on_cran()
-    skip_on_travis()    
+    skip_on_travis()
     # test proper download from ENSEMBL
     expect_output(read_genome(
         getGenome(
@@ -189,7 +189,7 @@ test_that("The getGenome() interface works properly for ENSEMBL using accession 
         ),
         format = "fasta"
     ))
-    
+
     expect_output(read_genome(
         getGenome(
             db       = "ensembl",
@@ -200,10 +200,29 @@ test_that("The getGenome() interface works properly for ENSEMBL using accession 
     ))
 })
 
+test_that("The getGenome() interface works properly for ENSEMBL with collections",{
+
+  skip_on_cran()
+  skip_on_travis()
+  # test proper download from ENSEMBL
+  # Bacteria
+  getGenome(db       = "ensembl",
+            organism = "Escherichia coli",
+            path = tempdir(), mute_citation = TRUE)
+  # Fungi
+  getGenome(db       = "ensembl",
+            organism = "Acremonium chrysogenum",
+            path = tempdir(), mute_citation = TRUE)
+  # Protists
+  getGenome(db       = "ensembl",
+            organism = "Babesia bigemina",
+            path = tempdir(), mute_citation = TRUE)
+})
+
 test_that("The getGenome() error messages work properly for ENSEMBL..", {
     skip_on_cran()
     skip_on_travis()
-    
+
     expect_output(getGenome(
         db       = "ensembl",
         organism = "Saccharomyces cerevisi",
@@ -214,7 +233,7 @@ test_that("The getGenome() error messages work properly for ENSEMBL..", {
 test_that("The getGenome() error messages work properly for NCBI RefSeq", {
     skip_on_cran()
     skip_on_travis()
-    
+
     expect_equal(getGenome(
         db       = "refseq",
         organism = "Saccharomycesi",

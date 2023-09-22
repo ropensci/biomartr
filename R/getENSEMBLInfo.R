@@ -367,7 +367,6 @@ write_assembly_docs_ensembl <- function(genome.path, new.organism, db, json.qry.
     genebuild_last_geneset_update = ifelse(!is.null(json.qry.info$genebuild_last_geneset_update), json.qry.info$genebuild_last_geneset_update, "none"),
     assembly_accession = ifelse(!is.null(json.qry.info$assembly_accession), json.qry.info$assembly_accession, "none"),
     genebuild_initial_release_date = ifelse(!is.null(json.qry.info$genebuild_initial_release_date), json.qry.info$genebuild_initial_release_date, "none")
-
   )
 
   readr::write_tsv(doc, file = file.path(
@@ -376,3 +375,23 @@ write_assembly_docs_ensembl <- function(genome.path, new.organism, db, json.qry.
   )
   return(invisible(NULL))
 }
+
+ensembl_download_post_processing <- function(genome.path, organism, format,
+                                             remove_annotation_outliers = FALSE,
+                                             gunzip = FALSE, db = "ensembl") {
+  if (is.logical(genome.path[1]) && !genome.path) {
+    return(FALSE)
+  } else {
+    # Format specific behaviors
+    if (format == "gtf") {append <- "_gtf_"} else append <- NULL
+
+    info <- assembly_summary_and_rest_status(organism)
+
+    write_assembly_docs_ensembl(genome.path, new.organism = info$new.organism,
+                                db = db, json.qry.info = info$json.qry.info, append = append)
+    local_file <- genome.path[1]
+    return(gunzip_and_check(local_file, gunzip, remove_annotation_outliers, format))
+  }
+}
+
+

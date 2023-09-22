@@ -13,10 +13,8 @@
 #' @author Hajk-Georg Drost
 #' @noRd
 
-getENSEMBLGENOMES.Annotation <- function(organism, type = "dna",
-                                         id.type = "toplevel", release = NULL,
-                                         path) {
-  getENSEMBL.Annotation(organism, type, id.type, release, path)
+getENSEMBLGENOMES.Annotation <- function(organism, type = "dna", release = NULL, path) {
+  getENSEMBL.Annotation(organism, type = type, path = path, release = release)
 }
 
 #' This will be deprecated, use getENSEMBL.gtf.
@@ -24,10 +22,8 @@ getENSEMBLGENOMES.Annotation <- function(organism, type = "dna",
 #' @author Hajk-Georg Drost
 #' @noRd
 
-getENSEMBLGENOMES.gtf <- function(organism, type = "dna",
-                                  id.type = "toplevel", path) {
-  getENSEMBL.gtf(organism, type = "dna",
-                 id.type = "toplevel", path, release)
+getENSEMBLGENOMES.gtf <- function(organism, type = "dna", path, release = NULL) {
+  getENSEMBL.gtf(organism, type = type, path = path, release = release)
 }
 
 #' @title Helper function for retrieving biological sequence files from
@@ -40,7 +36,7 @@ getENSEMBLGENOMES.gtf <- function(organism, type = "dna",
 
 getENSEMBLGENOMES.Seq <- function(organism, release = NULL, type = "dna",
                                   id.type = "toplevel", path) {
-  getENSEMBL.Seq(organism, release, type, id.type, release, path)
+  getENSEMBL.Seq(organism, type = type, id.type = id.type, release = release, path)
 }
 
 #' @title Retrieve ENSEMBLGENOMES info file
@@ -54,6 +50,6 @@ getENSEMBLGENOMES.Seq <- function(organism, release = NULL, type = "dna",
 #' }
 #' @export
 getENSEMBLGENOMESInfo <- function() {
-  ENSEMBLGENOMESInfoTable <- get.ensemblgenome.info(update = TRUE)
+  ENSEMBLGENOMESInfoTable <- get.ensembl.info(update = TRUE)
   return(ENSEMBLGENOMESInfoTable)
 }

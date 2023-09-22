@@ -7,9 +7,9 @@
 getKingdoms(db = "refseq")
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
-shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"}, 
-\code{db = "ensembl"}, \code{db = "ensemblgenomes"}. 
+\item{db}{a character string specifying the database from which the genome
+shall be retrieved: \code{db = "refseq"}, \code{db = "genbank"},
+\code{db = "ensembl"}, \code{db = "ensemblgenomes"}.
 Default is \code{db = "refseq"}.}
 }
 \description{
@@ -23,7 +23,7 @@ getKingdoms(db = "refseq")
 getKingdoms(db = "genbank")
 }
 \seealso{
-\code{\link{meta.retrieval}}, \code{\link{getGenome}}, 
+\code{\link{meta.retrieval}}, \code{\link{getGenome}},
 \code{\link{getProteome}}, \code{\link{getCDS}}, \code{\link{getGroups}}
 }
 \author{

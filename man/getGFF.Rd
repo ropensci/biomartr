@@ -13,7 +13,8 @@ getGFF(
   gunzip = FALSE,
   remove_annotation_outliers = FALSE,
   path = file.path("_ncbi_downloads", "annotation"),
-  mute_citation = FALSE
+  mute_citation = FALSE,
+  format = "gff3"
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ the corresponding annotation file shall be stored. Default is
 \code{path = file.path("_ncbi_downloads","genomes")}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
+
+\item{format}{"gff3", alternative "gtf" for ensembl.}
 }
 \value{
 File path to downloaded annotation file.

@@ -1,0 +1,2 @@
+file_name	organism	url	database	path	refseq_category	assembly_accession	bioproject	biosample	taxid	infraspecific_name	version_status	release_type	genome_rep	seq_rel_date	submitter
+Saccharomyces_cerevisiae_genomic_genbank.fna.gz	Saccharomyces_cerevisiae	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/001/740/915/GCA_001740915.1_ASM174091v1/GCA_001740915.1_ASM174091v1_assembly_stats.txt	genbank	_ncbi_downloads/genomeassembly_stats	na	GCA_001740915.1	PRJNA323691	SAMN05190390	4932	strain=beer029	latest	Major	Full	2016-09-21	VIB/KULeuven

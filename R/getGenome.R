@@ -71,8 +71,7 @@
 #' \code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
 #' @export
 
-getGenome <-
-    function(db = "refseq",
+getGenome <- function(db = "refseq",
              organism,
              reference = FALSE,
              skip_bacteria = TRUE,
@@ -80,8 +79,8 @@ getGenome <-
              gunzip = FALSE,
              path = file.path("_ncbi_downloads", "genomes"),
              assembly_type = "toplevel",
-             mute_citation = FALSE
-             #kingdom_assembly_summary_file = NULL
+             mute_citation = FALSE,
+             analyse_genome = FALSE
              ) {
 
        if (!is.element(db, c("refseq", "genbank", "ensembl")))
@@ -103,354 +102,30 @@ getGenome <-
       message("-> Starting genome retrieval of '", organism, "' from ", db, " ...")
       message("\n")
 
-        if (is.element(db, c("refseq", "genbank"))) {
-            # get Kingdom Assembly Summary file
-            AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
-
-            # test whether or not genome is available
-            if (!suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))) {
-                    message(
-                            "Unfortunately no genome file could be found for organism '",
-                            organism, "'. Thus, the download of this organism has been omitted. Have you tried to specify 'reference = FALSE' ?"
-                    )
-                    return("Not available")
-            }
-
-            if (!file.exists(path)) {
-                dir.create(path, recursive = TRUE)
-            }
-
-            organism_name <- taxid <-
-                refseq_category <- version_status <- assembly_accession <- ftp_path <- NULL
-
-            organism <-
-                stringr::str_replace_all(organism, "\\(", "")
-            organism <-
-                stringr::str_replace_all(organism, "\\)", "")
-
-            if (reference) {
-                if (!is.taxid(organism)) {
-                    FoundOrganism <-
-                        dplyr::filter(
-                            AssemblyFilesAllKingdoms,
-                            stringr::str_detect(organism_name, organism) |
-                                assembly_accession ==  organism,
-                            ((refseq_category == "representative genome") |
-                                 (refseq_category == "reference genome")
-                            ),
-                            (version_status == "latest"), !is.na(ftp_path)
-                        )
-                } else {
-                    FoundOrganism <-
-                        dplyr::filter(
-                            AssemblyFilesAllKingdoms,
-                            taxid == as.integer(organism),
-                            ((refseq_category == "representative genome") |
-                                 (refseq_category == "reference genome")
-                            ),
-                            (version_status == "latest"), !is.na(ftp_path))
-                }
-            } else {
-                if (!is.taxid(organism)) {
-                    FoundOrganism <-
-                        dplyr::filter(
-                            AssemblyFilesAllKingdoms,
-                            stringr::str_detect(organism_name, organism) |
-                                assembly_accession == organism,
-                            (version_status == "latest"), !is.na(ftp_path)
-                        )
-                } else {
-                    FoundOrganism <-
-                        dplyr::filter(
-                            AssemblyFilesAllKingdoms,
-                            taxid == as.integer(organism),
-                            (version_status == "latest"), !is.na(ftp_path)
-                        )
-                }
-            }
-
-            if (nrow(FoundOrganism) == 0) {
-                message(
-                    paste0(
-                        "----------> No reference genome or representative genome was found for '",
-                        organism, "'. Thus, download for this species has been omitted.",
-                        " Have you tried to specify getGenome(db = '",db,"', organism = '",organism,"' , reference = FALSE) ?",
-                        " Alternatively, you can retrieve genome assemblies using the NCBI accession ID or NCBI Taxonomy ID.",
-                        " See '?'is.genome.available' for examples."
-                    )
-                )
-                 return("Not available")
-            } else {
-                if (nrow(FoundOrganism) > 1) {
-                    warning(
-                        "More than one entry has been found for '",
-                        organism, "'. Only the first entry '", FoundOrganism$organism_name[1], "' has been used for subsequent genome retrieval.",
-                        " If you wish to download a different version, please use the NCBI accession ID when specifying the 'organism' argument.",
-                        " See ?is.genome.available for examples.", call. = FALSE
-                    )
-                    FoundOrganism <- FoundOrganism[1, ]
-                }
-
-                organism <-
-                    stringr::str_replace_all(organism, " ", "_")
-
-                download_url <-
-                    paste0(FoundOrganism$ftp_path,
-                           "/",
-                           paste0(
-                               basename(FoundOrganism$ftp_path),
-                               "_genomic.fna.gz"
-                           ))
-
-
-
-                # download_url <- paste0(query$ftp_path,query$`
-                # assembly_accession`,"_",query$asm_name,"_genomic.fna.gz")
-
-                local.org <-
-                    stringr::str_replace_all(organism, "-", "_")
-                local.org <-
-                    stringr::str_replace_all(organism, "\\/", "_")
-
-                if (nrow(FoundOrganism) == 1) {
-                    if (file.exists(file.path(
-                        path,
-                        paste0(local.org, "_genomic_", db, ".fna.gz")
-                    ))) {
-                        message(
-                            "File ",
-                            file.path(
-                                path,
-                                paste0(local.org, "_genomic_", db, ".fna.gz")
-                            ),
-                            " exists already. Thus, download has been skipped."
-                        )
-                    } else {
-                        tryCatch({
-                            utils::capture.output(
-                                custom_download(
-                                    download_url,
-                                    destfile = file.path(
-                                        path,
-                                        paste0(local.org,
-                                               "_genomic_", db, ".fna.gz")
-                                    ),
-                                    mode = "wb"
-                                )
-                            )
-                        }, error = function(e) {
-                          message(
-                            "The download session seems to have timed out at the FTP site '",
-                            download_url, "'. This could be due to an overload of queries to the databases.",
-                            " Please restart this function to continue the data retrieval process or wait ",
-                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                          )
-                          return("Not available")
-                        })
-                    }
-                            # download md5checksum file for organism of interest
-                            custom_download(
-                             paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
-                                file.path(path,
-                                        paste0(local.org, "_md5checksums.txt")),
-                                mode = "wb"
-                            )
-
-                            message("-> Genome download of ", organism, " is completed!")
-
-                            # test check sum
-                            md5_file_path <- file.path(path,
-                                                       paste0(local.org,
-                                                       "_md5checksums.txt"))
-                            md5_file <-
-                                read_md5file(md5_file_path)
-
-                            file_name <- NULL
-
-                            md5_sum <- dplyr::filter(md5_file,
-                                       file_name == paste0("./", paste0(
-                                           basename(FoundOrganism$ftp_path),
-                                           "_genomic.fna.gz"
-                                       )))$md5
-
-                            # check if md5 info is available
-                            if (!is.character(md5_sum)){
-                            message("-> Checking md5 hash of file: ",
-                                    file.path(
-                                      path,
-                                      paste0(local.org, "_genomic_", db, ".fna.gz")
-                                    ), " (md5: ",md5_sum, ")" , " ...")
-
-
-                            if (!(tools::md5sum(file.path(
-                                path,
-                                paste0(local.org, "_genomic_", db, ".fna.gz")
-                            )) == md5_sum))
-                                stop(
-                                    paste0(
-                                        "Please download the file '",
-                                        md5_file_path,
-            "' again. The md5 hash between the downloaded file and the file ", "stored at NCBI do not match.",
-                                        collapse = ""
-                                    )
-                                )
-                   unlink(md5_file_path)
-            message("-> The md5 hash of file '", md5_file_path, "' matches!")
+      # create result folder
+      if (!file.exists(path)) {
+        dir.create(path, recursive = TRUE)
       }
 
-                    docFile(
-                        file.name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
-                                           ".fna.gz"),
-                        organism  = organism,
-                        url       = download_url,
-                        database  = db,
-                        path      = path,
-                        refseq_category = FoundOrganism$refseq_category,
-                        assembly_accession = FoundOrganism$assembly_accession,
-                        bioproject = FoundOrganism$bioproject,
-                        biosample = FoundOrganism$biosample,
-                        taxid = FoundOrganism$taxid,
-                        infraspecific_name = FoundOrganism$infraspecific_name,
-                        version_status = FoundOrganism$version_status,
-                        release_type = FoundOrganism$release_type,
-                        genome_rep = FoundOrganism$genome_rep,
-                        seq_rel_date = FoundOrganism$seq_rel_date,
-                        submitter = FoundOrganism$submitter
-                    )
+    if (is.element(db, c("refseq", "genbank"))) {
+      info <- refseqGenbankSeq(db, organism, reference, skip_bacteria,
+                               release, gunzip,
+                               path, assembly_type)
+      return(refseq_genbank_download_post_processing(info, organism, db, path,
+                                                     gunzip,
+                                                     remove_annotation_outliers,
+                                                     format = "genome"))
+    }
 
-
-                    doc <- tibble::tibble(
-                            file_name = paste0(ifelse(is.taxid(organism), paste0("taxid_", local.org), local.org), "_genomic_", db,
-                                               ".fna.gz"),
-                            organism  = organism,
-                            url       = download_url,
-                            database  = db,
-                            path      = path,
-                            refseq_category = FoundOrganism$refseq_category,
-                            assembly_accession = FoundOrganism$assembly_accession,
-                            bioproject = FoundOrganism$bioproject,
-                            biosample = FoundOrganism$biosample,
-                            taxid = FoundOrganism$taxid,
-                            infraspecific_name = FoundOrganism$infraspecific_name,
-                            version_status = FoundOrganism$version_status,
-                            release_type = FoundOrganism$release_type,
-                            genome_rep = FoundOrganism$genome_rep,
-                            seq_rel_date = FoundOrganism$seq_rel_date,
-                            submitter = FoundOrganism$submitter
-
-                    )
-
-                    readr::write_tsv(doc, file = file.path(path, paste0("doc_",local.org,"_db_",db,".tsv")))
-
-                    genome_summary_stats <- summary_genome(file = file.path(path,
-                                                                            paste0(local.org, "_genomic_", db, ".fna.gz")), organism = organism)
-
-                    readr::write_tsv(genome_summary_stats, file = file.path(path, paste0("doc_",local.org,"_db_",db,"_summary_statistics.tsv")))
-
-                    if (!gunzip) {
-                            message(
-                                    paste0(
-                                            "-> The genome of '",
-                                            organism,
-                                            "' has been downloaded to '",
-                                            path,
-                                            "' and has been named '",
-                                            paste0(local.org, "_genomic_", db, ".fna.gz"),
-                                            "'."
-                                    )
-                            )
-                      please_cite_biomartr(mute_citation = mute_citation)
-                    }
-
-                    if (gunzip) {
-                            message(
-                                    paste0(
-                                            "-> The genome of '",
-                                            organism,
-                                            "' has been downloaded to '",
-                                            path,
-                                            "' and has been named '",
-                                            paste0(local.org, "_genomic_", db, ".fna"),
-                                            "'."
-                                    )
-                            )
-                      please_cite_biomartr(mute_citation = mute_citation)
-                    }
-
-                    if (gunzip) {
-                            message("-> Unzipping downloaded file ...")
-                            R.utils::gunzip(file.path(path,
-                                                      paste0(
-                                                              local.org, "_genomic_", db, ".fna.gz"
-                                                      )), destname = file.path(path,
-                                                                               paste0(
-                                                                                       local.org, "_genomic_", db, ".fna"
-                                                                               )))
-                            return(file.path(path,
-                                             paste0(
-                                                     local.org, "_genomic_", db, ".fna"
-                                             )))
-                    } else {
-                            return(file.path(path,
-                                             paste0(
-                                                     local.org, "_genomic_", db, ".fna.gz"
-                                             )))
-                    }
-                } else {
-                    message(
-                        "Something went wrong when trying to download file: ",
-                        download_url,
-                        " ... Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall?"
-                    )
-                }
-            }
-        }
-
-        if (db %in% c("ensembl", "ensemblgenomes")) {
-            # create result folder
-            if (!file.exists(path)) {
-                dir.create(path, recursive = TRUE)
-            }
-
-            # download genome sequence from ENSEMBL
-            genome.path <-
-                    getENSEMBL.Seq(
-                            organism,
-                            type = "dna",
-                            id.type = assembly_type,
-                            release = release,
-                            path = path
-                    )
-
-            if (is.logical(genome.path[1])) {
-                if (!genome.path[1])
-                    return(FALSE)
-            } else {
-              format <- "genome"
-              info <- assembly_summary_and_rest_status(organism)
-              write_assembly_docs_ensembl(genome.path, new.organism = info$new.organism,
-                                          db = db, json.qry.info = info$json.qry.info)
-
-              final_path <- genome.path[1]
-              if (gunzip) {
-                final_path <- unlist(stringr::str_replace(final_path, "[.]gz", ""))
-              }
-
-              message("-> The ", toupper(format), " '", info$ensembl_summary$display_name[1],
-                      "' has been downloaded to '", path,
-                      "' and has been named '", basename(final_path), "'."
-              )
-
-              if (gunzip) {
-                message("-> Unzipping downloaded file ...")
-                R.utils::gunzip(genome.path[1], destname = final_path)
-              }
-
-              please_cite_biomartr(mute_citation = mute_citation)
-              return(final_path)
-            }
-        }
+    if (db %in% c("ensembl", "ensemblgenomes")) {
+        genome.path <- getENSEMBL.Seq(organism, type = "dna",
+                                      id.type = assembly_type,
+                                      release = release,
+                                      path = path)
+        ensembl_download_post_processing(genome.path, organism,
+                                         format = "genome",
+                                         gunzip = gunzip)
+    }
 }
 
 

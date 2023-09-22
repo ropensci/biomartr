@@ -1,0 +1,16 @@
+File Name: Saccharomyces_cerevisiae_assembly_stats_refseq.txt
+Organism Name: Saccharomyces_cerevisiae
+Database: NCBI refseq
+URL: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt
+Download_Date: Wed Sep 20 17:10:38 2023
+refseq_category: reference genome
+assembly_accession: GCF_000146045.2
+bioproject: PRJNA128
+biosample: na
+taxid: 559292
+infraspecific_name: strain=S288C
+version_status: latest
+release_type: Major
+genome_rep: Full
+seq_rel_date: 2014-12-17
+submitter: Saccharomyces Genome Database
