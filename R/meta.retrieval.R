@@ -242,7 +242,8 @@ meta.retrieval <- function(db         = "refseq",
     }
 
     if (db %in% c("ensembl", "ensemblgenomes")) {
-        summary.file <- get.ensembl.info(division = kingdom)
+        ensembl_names <- getKingdoms(db = db)
+        summary.file <- get.ensembl.info(division = names(ensembl_names[which(ensembl_names == kingdom)]))
         FinalOrganisms <- unique(summary.file$name)
         FinalOrganisms <-
             stringr::str_replace_all(FinalOrganisms, "_", " ")
@@ -366,7 +367,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getGenome(db        = db,
                                           organism  = FinalOrganisms[i],
                                           reference = reference,
-                                          path      = kingdom)
+                                          path      = kingdom,
+                                          mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -376,7 +378,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getGenome(db       = db,
                                           organism = FinalOrganisms[i],
                                           reference = reference,
-                                          path     = path)
+                                          path     = path,
+                                          mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -388,7 +391,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getProteome(db       = db,
                                             organism = FinalOrganisms[i],
                                             reference = reference,
-                                            path     = kingdom)
+                                            path     = kingdom,
+                                            mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -398,7 +402,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getProteome(db       = db,
                                             organism = FinalOrganisms[i],
                                             reference = reference,
-                                            path     = path)
+                                            path     = path,
+                                            mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -410,7 +415,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getCDS(db       = db,
                                        organism = FinalOrganisms[i],
                                        reference = reference,
-                                       path     = kingdom)
+                                       path     = kingdom,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -420,7 +426,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getCDS(db       = db,
                                        organism = FinalOrganisms[i],
                                        reference = reference,
-                                       path     = path)
+                                       path     = path,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -432,7 +439,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getGFF(db       = db,
                                        organism = FinalOrganisms[i],
                                        reference = reference,
-                                       path     = kingdom)
+                                       path     = kingdom,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -442,7 +450,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getGFF(db       = db,
                                        organism = FinalOrganisms[i],
                                        reference = reference,
-                                       path     = path)
+                                       path     = path,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -453,7 +462,8 @@ meta.retrieval <- function(db         = "refseq",
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getGTF(db       = db,
                                        organism = FinalOrganisms[i],
-                                       path     = kingdom)
+                                       path     = kingdom,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -462,7 +472,8 @@ meta.retrieval <- function(db         = "refseq",
                 for (i in seq_len(length(FinalOrganisms))) {
                     paths[i] <- getGTF(db       = db,
                                        organism = FinalOrganisms[i],
-                                       path     = path)
+                                       path     = path,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -474,7 +485,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getRepeatMasker(db       = db,
                                                 organism = FinalOrganisms[i],
                                                 reference = reference,
-                                                path     = kingdom)
+                                                path     = kingdom,
+                                                mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -484,7 +496,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getRepeatMasker(db       = db,
                                                 organism = FinalOrganisms[i],
                                                 reference = reference,
-                                                path     = path)
+                                                path     = path,
+                                                mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -496,7 +509,8 @@ meta.retrieval <- function(db         = "refseq",
                     paths[i] <- getRNA(db       = db,
                                        organism = FinalOrganisms[i],
                                        reference = reference,
-                                       path     = kingdom)
+                                       path     = kingdom,
+                                       mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -506,7 +520,8 @@ meta.retrieval <- function(db         = "refseq",
                     getRNA(db       = db,
                            organism = FinalOrganisms[i],
                            reference = reference,
-                           path     = path)
+                           path     = path,
+                           mute_citation = TRUE)
                     message("\n")
                 }
             }
@@ -524,7 +539,8 @@ meta.retrieval <- function(db         = "refseq",
                                 organism = FinalOrganisms[i],
                                 reference = reference,
                                 path     = kingdom,
-                                type     = "import"
+                                type     = "import",
+                                mute_citation = TRUE
                             )
                         )
                         names(stats.files[i]) <- FinalOrganisms[i]
@@ -534,7 +550,8 @@ meta.retrieval <- function(db         = "refseq",
                             db       = db,
                             organism = FinalOrganisms[i],
                             reference = reference,
-                            path     = kingdom
+                            path     = kingdom,
+                            mute_citation = TRUE
                         )
                         message("\n")
                     }
@@ -550,7 +567,8 @@ meta.retrieval <- function(db         = "refseq",
                                 organism = FinalOrganisms[i],
                                 reference = reference,
                                 path     = path,
-                                type     = "import"
+                                type     = "import",
+                                mute_citation = TRUE
                             )
                         )
                         names(stats.files[i]) <- FinalOrganisms[i]
@@ -559,7 +577,8 @@ meta.retrieval <- function(db         = "refseq",
                             db       = db,
                             reference = reference,
                             organism = FinalOrganisms[i],
-                            path     = path
+                            path     = path,
+                            mute_citation = TRUE
                         )
                     }
                 }
@@ -642,6 +661,7 @@ meta.retrieval <- function(db         = "refseq",
         }
 
         message("The ", type,"s of all species have already been downloaded! You are up to date!")
+        please_cite_biomartr()
     }
 }
 
