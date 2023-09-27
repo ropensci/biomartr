@@ -26,12 +26,15 @@
 #' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 #' bacterial summary file will be downloaded.
 #' @inheritParams getENSEMBL.Seq
+#' @param assembly_type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
 #' @param gunzip a logical value indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding genome shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","genomes")}.
 #' @inheritParams getGTF
 #' @param mute_citation logical value indicating whether citation message should be muted.
+#' @param analyse_genome logical, default FALSE. If TRUE, get general genome statistics like
+#' gc content etc. For more details, see ?summary_genome
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -114,7 +117,8 @@ getGenome <- function(db = "refseq",
       return(refseq_genbank_download_post_processing(info, organism, db, path,
                                                      gunzip,
                                                      remove_annotation_outliers,
-                                                     format = "genome"))
+                                                     format = "genome",
+                                                     analyse_genome = analyse_genome))
     }
 
     if (db %in% c("ensembl", "ensemblgenomes")) {

@@ -51,7 +51,12 @@ if the standard format before that.}
 the corresponding genome shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
 
+\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
+
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
+
+\item{analyse_genome}{logical, default FALSE. If TRUE, get general genome statistics like
+gc content etc. For more details, see ?summary_genome}
 }
 \value{
 File path to downloaded genome.

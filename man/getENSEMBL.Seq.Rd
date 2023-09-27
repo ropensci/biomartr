@@ -17,7 +17,7 @@ getENSEMBL.Seq(
 
 \item{type}{biological sequence type.}
 
-\item{id.type}{a character, default "toplevel". id type of assembly, either toplevel or primary_assembly usually.}
+\item{id.type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used. \code{release = 75} would for human would give the stable

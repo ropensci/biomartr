@@ -1,6 +1,8 @@
 #' @title Retrieve NCBI GENOME_REPORTS file
 #' @description Retrieves NCBI GENOME_REPORTS file from
 #' ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
+#' @param local_file character, file path, default: file.path(cachedir(), "_ncbi_downloads", "overview.txt")
+#' @return a tibble object with the report
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{

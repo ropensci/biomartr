@@ -3,7 +3,7 @@
 #' organisms from ENSEMBL.
 #' @param organism scientific name of the organism of interest.
 #' @param type biological sequence type.
-#' @param id.type a character, default "toplevel". id type of assembly, either toplevel or primary_assembly usually.
+#' @param id.type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
 #' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used. \code{release = 75} would for human would give the stable
 #' GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data

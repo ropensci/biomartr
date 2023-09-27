@@ -43,12 +43,14 @@ that the most recent database version is used.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
-\item{update}{a logical value indicating whether or not files that were already downloaded and are still present in the 
+\item{update}{a logical value indicating whether or not files that were already downloaded and are still present in the
 output folder shall be updated and re-loaded (\code{update = TRUE} or whether the existing file shall be retained \code{update = FALSE} (Default)).}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding genomes shall be stored. Default is
 \code{path} = \code{"set_genomes"}.}
+
+\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
 }
 \value{
 File path to downloaded genomes.
@@ -73,8 +75,8 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-getGenomeSet("refseq", organisms = c("Arabidopsis thaliana", 
-                                     "Arabidopsis lyrata", 
+getGenomeSet("refseq", organisms = c("Arabidopsis thaliana",
+                                     "Arabidopsis lyrata",
                                      "Capsella rubella"))
 }
 
