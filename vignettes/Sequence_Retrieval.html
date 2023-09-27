@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2023-08-17" />
+<meta name="date" content="2023-09-21" />
 
 <title>Sequence Retrieval</title>
 
@@ -338,7 +338,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Sequence Retrieval</h1>
-<h4 class="date">2023-08-17</h4>
+<h4 class="date">2023-09-21</h4>
 
 
 
@@ -803,17 +803,25 @@ for each kingdom of life:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="co"># the number of genomes available for each kingdom</span></span>
 <span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="fu">listKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;refseq&quot;</span>)</span></code></pre></div>
 <pre><code>    Archaea  Bacteria Eukaryota   Viruses 
-      330     11797      1002     10637 </code></pre>
+      479     16255      1383     12916</code></pre>
 <p>Example <code>genbank</code>:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="co"># the number of genomes available for each kingdom</span></span>
 <span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="fu">listKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;genbank&quot;</span>)</span></code></pre></div>
 <pre><code>  Archaea  Bacteria Eukaryota 
-     1651     25904      7742</code></pre>
+     1902     32532     12404 </code></pre>
 <p>Example <code>ENSEMBL</code>:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="co"># the number of genomes available for each kingdom</span></span>
 <span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="fu">listKingdoms</span>(<span class="at">db =</span> <span class="st">&quot;ensembl&quot;</span>)</span></code></pre></div>
-<pre><code>EnsemblVertebrates 
-               310</code></pre>
+<pre><code>Starting information retrieval for: EnsemblVertebrates
+Starting information retrieval for: EnsemblPlants                 
+Starting information retrieval for: EnsemblFungi                  
+Starting information retrieval for: EnsemblMetazoa                
+Starting information retrieval for: EnsemblBacteria               
+                                                                  
+   EnsemblBacteria       EnsemblFungi     EnsemblMetazoa 
+             31332               1504                251 
+     EnsemblPlants EnsemblVertebrates 
+               150                317 </code></pre>
 </div>
 <div id="analogous-computations-can-be-performed-for-groups-and-subgroups" class="section level3">
 <h3>Analogous computations can be performed for <code>groups</code> and
