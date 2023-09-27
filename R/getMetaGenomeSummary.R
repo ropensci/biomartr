@@ -1,5 +1,5 @@
 #' @title Retrieve the assembly_summary.txt file from NCBI genbank metagenomes
-#' @description Retrieval function of the assembly_summary.txt file 
+#' @description Retrieval function of the assembly_summary.txt file
 #' from NCBI genbank metagenomes.
 #' This files stores all available metagenome projects on NCBI Genbank.
 #' @author Hajk-Georg Drost
@@ -8,38 +8,17 @@
 #' meta.summary <- getMetaGenomeSummary()
 #' meta.summary
 #' }
-#' @seealso \code{\link{getKingdomAssemblySummary}}, 
+#' @seealso \code{\link{getKingdomAssemblySummary}},
 #' \code{\link{getSummaryFile}}
 #' @export
- 
-getMetaGenomeSummary <- function() {
-    
-    if (!file.exists(file.path(tempdir(),
-                               "assembly_summary_metagenomes_genbank.txt"))) {
-        tryCatch({
-            suppressMessages(
-                downloader::download(
-  "ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt",
-                    destfile = file.path(
-                        tempdir(),
-                        "assembly_summary_metagenomes_genbank.txt"
-                    )
-                )
-            )
-        }, error = function(e)
-            message(
-                "Unfortunately, the FTP site 'ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt'",
-                " cannot be reached. This might be due to an instable internet connection or some issues with the firewall. ", 
-                "Are you able to access the FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' in your browser?",
-                " Please try to re-run this function and see if it may work then ..."
-            ))
-    }
-    
+
+getMetaGenomeSummary <- function(local_file = file.path(cachedir(), "assembly_summary_metagenomes_genbank.txt")) {
+    url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/assembly_summary.txt"
+    custom_download_check_local(url, local_file, NULL, db = "genbank")
     suppressWarnings(summary.file <-
                          tibble::as_tibble(
                              readr::read_delim(
-                                 file.path(tempdir(),
-                                    "assembly_summary_metagenomes_genbank.txt"),
+                                 local_file,
                                  comment = "#",
                                  delim = "\t",
                                  quote = "\"",
@@ -92,6 +71,6 @@ getMetaGenomeSummary <- function() {
                                  )
                              )
                          ))
-    
+
     return(summary.file)
 }

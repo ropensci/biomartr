@@ -99,7 +99,8 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
       return(refseq_genbank_download_post_processing(info, organism, db, path,
                                                      gunzip,
                                                      remove_annotation_outliers,
-                                                     format))
+                                                     format,
+                                                     mute_citation = mute_citation))
     }
 
     if (db == "ensembl") {
@@ -108,7 +109,8 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
                                              format = format)
         return(ensembl_download_post_processing(genome.path, organism, format,
                                                 remove_annotation_outliers,
-                                                gunzip))
+                                                gunzip,
+                                                mute_citation = mute_citation))
     }
 }
 

@@ -118,7 +118,8 @@ getGenome <- function(db = "refseq",
                                                      gunzip,
                                                      remove_annotation_outliers,
                                                      format = "genome",
-                                                     analyse_genome = analyse_genome))
+                                                     analyse_genome = analyse_genome,
+                                                     mute_citation = mute_citation))
     }
 
     if (db %in% c("ensembl", "ensemblgenomes")) {
@@ -128,7 +129,8 @@ getGenome <- function(db = "refseq",
                                       path = path)
         ensembl_download_post_processing(genome.path, organism,
                                          format = "genome",
-                                         gunzip = gunzip)
+                                         gunzip = gunzip,
+                                         mute_citation = mute_citation)
     }
 }
 
