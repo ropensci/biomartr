@@ -378,7 +378,8 @@ write_assembly_docs_ensembl <- function(genome.path, new.organism, db, json.qry.
 
 ensembl_download_post_processing <- function(genome.path, organism, format,
                                              remove_annotation_outliers = FALSE,
-                                             gunzip = FALSE, db = "ensembl") {
+                                             gunzip = FALSE, db = "ensembl",
+                                             mute_citation = FALSE) {
   if (is.logical(genome.path[1]) && !genome.path) {
     return(FALSE)
   } else {
@@ -390,7 +391,8 @@ ensembl_download_post_processing <- function(genome.path, organism, format,
     write_assembly_docs_ensembl(genome.path, new.organism = info$new.organism,
                                 db = db, json.qry.info = info$json.qry.info, append = append)
     local_file <- genome.path[1]
-    return(gunzip_and_check(local_file, gunzip, remove_annotation_outliers, format))
+
+    gunzip_and_check(local_file, gunzip, remove_annotation_outliers, format, mute_citation)
   }
 }
 
