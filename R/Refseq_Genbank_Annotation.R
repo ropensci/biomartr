@@ -119,7 +119,8 @@ refseq_genbank_download_post_processing <- function(info, organism, db, path,
                                                     gunzip,
                                                     remove_annotation_outliers,
                                                     format,
-                                                    analyse_genome = FALSE) {
+                                                    analyse_genome = FALSE,
+                                                    mute_citation = FALSE) {
   if ((is.logical(info[1]) && !info) || (info[1] == "Not available"))
     return("Not available")
 
@@ -158,5 +159,6 @@ refseq_genbank_download_post_processing <- function(info, organism, db, path,
   doc_file_path <- file.path(path,
                              paste0("doc_", local.org, "_db_", db, ".tsv"))
   readr::write_tsv(doc, file = doc_file_path)
-  gunzip_and_check(local_file, gunzip, remove_annotation_outliers, format)
+  gunzip_and_check(local_file, gunzip, remove_annotation_outliers, format,
+                   mute_citation = mute_citation)
 }
