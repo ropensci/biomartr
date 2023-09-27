@@ -4,25 +4,27 @@
 \alias{getSummaryFile}
 \title{Helper function to retrieve the assembly_summary.txt file from NCBI}
 \usage{
-getSummaryFile(db, kingdom)
+getSummaryFile(db, kingdom, file = assemblies_info_path(db, kingdom))
 }
 \arguments{
 \item{db}{database name. E.g. \code{refseq} or \code{genbank}.}
 
-\item{kingdom}{kingdom for which assembly_summary.txt file shall be 
+\item{kingdom}{kingdom for which assembly_summary.txt file shall be
 retrieved. See also \code{\link{getKingdoms}}.}
+
+\item{file}{path, local path to total summary file, default is in tmp folder.}
 }
 \description{
 Retrieval function of the assembly_summary.txt file from NCBI.
 }
 \examples{
-\dontrun{ 
+\dontrun{
 test <- getSummaryFile("refseq","plant")
 test
 }
 }
 \seealso{
-\code{\link{getKingdomAssemblySummary}}, 
+\code{\link{getKingdomAssemblySummary}},
 \code{\link{getMetaGenomeSummary}}
 }
 \author{

@@ -3,7 +3,7 @@
 #' organisms from ENSEMBL.
 #' @param organism scientific name of the organism of interest.
 #' @param type biological sequence type.
-#' @param id.type a character, default "toplevel". id type of assembly, either toplevel or primary_assembly usually.
+#' @param id.type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
 #' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used. \code{release = 75} would for human would give the stable
 #' GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
@@ -81,9 +81,8 @@ getENSEMBL.Seq <- function(organism, type = "dna", id.type = "toplevel", release
         custom_download(url = ensembl.qry,
                         destfile = local_file,
                         mode = "wb")
-
-        return(c(local_file, ensembl.qry))
     }
+    return(c(local_file, ensembl.qry))
 }
 
 ensembl_seq_file_base <- function(new.organism, assembly_option, type,
@@ -146,5 +145,4 @@ ensembl_proper_organism_name <- function(ensembl_summary) {
 lower_cap_underscore_organism_name <- function(organism) {
   stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
 }
-
 

@@ -4,8 +4,8 @@ test_that("The biomart() interface works properly..",{
 
     skip_on_cran()
     skip_on_travis()
-        
-    expect_output(getMarts())
+
+    expect_gt(nrow(getMarts()), 6)
     expect_output(
             biomart(
                 genes      = "GUCA2A",
@@ -15,5 +15,4 @@ test_that("The biomart() interface works properly..",{
                 filters    = "hgnc_symbol"
             )[1, 1:3]
         )
-
 })

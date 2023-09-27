@@ -1,43 +1,45 @@
 #' @title Retrieve NCBI GENOME_REPORTS file
-#' @description Retrieves NCBI GENOME_REPORTS file from 
+#' @description Retrieves NCBI GENOME_REPORTS file from
 #' ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt.
+#' @param local_file character, file path, default: file.path(cachedir(), "_ncbi_downloads", "overview.txt")
+#' @return a tibble object with the report
 #' @author Hajk-Georg Drost
 #' @examples
-#' \dontrun{ 
+#' \dontrun{
 #' report <- getGENOMEREPORT()
 #' report
 #' }
 #' @export
 
-getGENOMEREPORT <- function() {
+getGENOMEREPORT <- function(local_file = file.path(cachedir(), "_ncbi_downloads", "overview.txt")) {
   withr::local_options(timeout = max(30000000, getOption("timeout")))
-  
-    if (!file.exists(file.path(tempdir(), "_ncbi_downloads"))) {
-        dir.create(file.path(tempdir(), "_ncbi_downloads"))
+
+    if (!dir.exists(dirname(local_file))) {
+        dir.create(dirname(local_file), recursive = TRUE, showWarnings = FALSE)
     }
-    
-    if (!file.exists(file.path(tempdir(), "_ncbi_downloads", "overview.txt"))) {
+
+    if (!file.exists(local_file)) {
         tryCatch({
             downloader::download(
                "ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
-                file.path(tempdir(), "_ncbi_downloads", "overview.txt"),
+                local_file,
                 mode = "wb"
             )
         }, error = function(e)
             message(
-                "Unfortunately, the FTP site 
+                "Unfortunately, the FTP site
                 'ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt'
                 does not seem to be reachable. Is your current internet connection stable? Can you reach the
                 FTP site 'ftp://ftp.ncbi.nlm.nih.gov'?"
             ))
-        
+
         # NCBI limits requests to three per second
     }
-    
+
     suppressWarnings(
         ncbi_overview <-
             readr::read_tsv(
-                file.path(tempdir(), "_ncbi_downloads", "overview.txt"),
+                local_file,
                 comment = "#",
                 col_names = c(
                     "organism_name",
@@ -63,7 +65,7 @@ getGENOMEREPORT <- function() {
                 )
             )
     )
-    
+
     return(ncbi_overview)
 }
 

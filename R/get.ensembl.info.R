@@ -43,14 +43,12 @@ get.ensembl.info <- function(update = FALSE, division) {
         )
 
     } else {
-
-
         rest_url <- ensembl_rest_url_species_division(division)
         rest_api_status <- curl::curl_fetch_memory(rest_url)
         if (rest_api_status$status_code != 200) {
             message(
-                "The API 'https://rest.ensembl.org' does not seem to
-                respond or work properly. Is the homepage 'https://rest.ensembl.org' currently available?",
+                "The API '", ensembl_rest_url(), "' does not seem to
+                respond or work properly. Is the homepage '", ensembl_rest_url(), "' currently available?",
                 " Could it be that there is a firewall issue on your side? Please re-run the function and check if it works now."
             )
         }
@@ -88,12 +86,16 @@ ensembl_rest_url <- function() {
 #' @export
 ensembl_divisions <- function() {
   c("EnsemblVertebrates", "EnsemblPlants", "EnsemblFungi", "EnsemblMetazoa",
-    "EnsemblBacteria")
+    "EnsemblBacteria", "EnsemblProtists")
 }
 
-ensembl_divisions_short <- function() {
-  c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
-    EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa")
+ensembl_divisions_short <- function(ensembl_as_empty = TRUE, bacteria = TRUE) {
+  div  <-
+    c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
+    EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa", EnsemblProtists = "protists")
+  if (!ensembl_as_empty) div[1] <- "ensembl"
+  if (!bacteria) div <- div[!(div == "bacteria")]
+  return(div)
 }
 
 ensembl_rest_url_species <- function() {
@@ -144,34 +146,28 @@ ensembl_ftp_server_url <- function(division = "EnsemblVertebrates") {
   }
 }
 
-ensembl_ftp_server_url_release_style <- function(division, release = NULL) {
+ensembl_ftp_server_url_release <- function(division, release = NULL) {
   if (division == "EnsemblVertebrates") {
     if (is.null(release)) {
-      "pub/current_fasta/"
-    } else paste0("pub/release-", release ,"/fasta/")
+      "pub/current_"
+    } else paste0("pub/release-", release ,"/")
 
   } else {ensembl_divisions
     short_name <- ensembl_divisions_short()[division]
     if (is.null(release)) {
-      paste0("pub/current/", short_name, "/fasta/")
-    } else paste0("pub/release-", release ,"/", short_name, "/fasta/")
+      paste0("pub/current/", short_name, "/")
+    } else paste0("pub/release-", release ,"/", short_name, "/")
   }
 }
 
-ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL, format = "gtf") {
-  format_short <- paste0(format, "/")
-  format <- paste0("/", format_short)
-  if (division == "EnsemblVertebrates") {
-    if (is.null(release)) {
-      paste0("pub/current_", format_short)
-    } else paste0("pub/release-", release , format)
+ensembl_ftp_server_url_release_style <- function(division, release = NULL) {
+  release_stem <- ensembl_ftp_server_url_release(division, release)
+  paste0(release_stem, "fasta/")
+}
 
-  } else {ensembl_divisions
-    short_name <- ensembl_divisions_short()[division]
-    if (is.null(release)) {
-      paste0("pub/current/", short_name, format)
-    } else paste0("pub/release-", release ,"/", short_name, format)
-  }
+ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL, format = "gtf") {
+  release_stem <- ensembl_ftp_server_url_release(division, release)
+  paste0(release_stem, format, "/")
 }
 
 
@@ -189,11 +185,11 @@ ensembl_ftp_server_url_gtf <- function(division = "EnsemblVertebrates",
 ensembl_ftp_server_query_full <- function(core_path, new.organism, type,
                                           assembly_option, id.type,
                                           ensembl_summary) {
-  collection_for_bacteria_only <- get_bacteria_collection_id(ensembl_summary)
-  if (isFALSE(collection_for_bacteria_only)) return(FALSE)
+  collection_folder <- get_collection_id(ensembl_summary)
+  if (isFALSE(collection_folder)) return(FALSE)
   paste0(
     core_path,
-    collection_for_bacteria_only,
+    collection_folder,
     stringr::str_to_lower(new.organism),
     "/",
     type,

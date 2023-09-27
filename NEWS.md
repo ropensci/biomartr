@@ -1,3 +1,27 @@
+# [biomartr 1.0.5](https://github.com/ropensci/biomartr/releases/tag/v1.0.5)
+
+### Package generalization
+
+Over 5000 lines have been edited, most of them removed (#100), to generalize the package to make it more safe for future
+development. This progress is still ongoing.
+
+### New features
+
+- Ensembl genomes is no longer a different database compared to ensembl in biomaRt, since this split is artifical.
+It is adviced to use only "ensembl" as db from now on, but "ensemblgenomes" will still work.
+- Annotation did mean gff, but it should be both gff and gtf getter, with format specification, this is now fixed and generalized.
+- Added in new kingdom for ensembl: protists supportwith correct collection getters
+
+### Power user cache
+
+The package now supports caching of back end files which used to be saved to /tmp folder (i.e. lost on computer restart).
+This make it easy for power users who want higher speed. For more info, see the function ?cachedir_set
+
+### Bug fixes
+
+- Fixed many wrong urls and non working functions, more tests are added to make sure they work. 
+- Fixed fungi collection accessor for ensembl
+
 # [biomartr 1.0.4](https://github.com/ropensci/biomartr/releases/tag/v1.0.4)
 
 ### New Features

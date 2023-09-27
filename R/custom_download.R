@@ -1,6 +1,7 @@
 #' @title Helper function to perform customized downloads
 #' @description To achieve the most stable download experience,
 #' ftp file downloads are customized for each operating system.
+#' @param url the url to download
 #' @param ... additional arguments that shall be passed to
 #' \code{\link[downloader]{download}}
 #' @author Hajk-Georg Drost
@@ -40,6 +41,44 @@ custom_download <- function(url, ...) {
         )
         return(FALSE)
     }
+}
+
+#' An wrapper to custom_download which checks if local files exists
+#' @noRd
+custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl", ...) {
+  withr::local_options(timeout = max(30000000, getOption("timeout")))
+
+  if (file.exists(local_file)) {
+    message("File ", local_file,
+            " exists already. Thus, download has been skipped.")
+  } else {
+    if (!is.null(rest_api_status) && rest_api_status$release_coord_system_version == "not_found") {
+      message("Found organism but given release number did not specify existing file
+                     in ensembl, maybe it is too old? Check that it exists on ensembl
+                     first at all.")
+      return(FALSE)
+    }
+
+    tryCatch({
+      custom_download(url, destfile = local_file, mode = "wb")
+    }, error = function(e)
+      if (db == "ensembl") {
+        message(
+          "Something went wrong while trying to reach the file '",url,
+          "'. This could be due to an instable internet connection or incorrect file path on the ENSEMBL ftp server. Please check if you are able to reach '",url, "' in your web browser.",
+          " In some cases ENSEMBL released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact the ENSEMBL helpdesk."
+        )
+      } else {
+        message(
+          "The download session seems to have timed out at the FTP site '",
+          download_url, "'. This could be due to an overload of queries to the databases.",
+          " Please restart this function to continue the data retrieval process or wait ",
+          "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+        )
+      }
+      )
+  }
+  return(invisible(NULL))
 }
 
 test_url_status <- function(url, organism) {

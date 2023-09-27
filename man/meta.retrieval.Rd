@@ -16,17 +16,17 @@ meta.retrieval(
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 
 \itemize{
 \item \code{db = "refseq"}
-\item \code{db = "genbank"} 
+\item \code{db = "genbank"}
 \item \code{db = "emsembl"}
 }}
 
-\item{kingdom}{a character string specifying the kingdom of the organisms 
-of interest, e.g. 
+\item{kingdom}{a character string specifying the kingdom of the organisms
+of interest, e.g.
 
 \itemize{
 \item For \code{NCBI RefSeq}:
@@ -54,20 +54,25 @@ of interest, e.g.
 }
 \item For \code{ENSEMBL}:
 \itemize{
-\item \code{kingdom = "Ensembl"}
+\item \code{kingdom = "EnsemblVertebrates"}
+\item \code{kingdom = "EnsemblPlants"}
+\item \code{kingdom = "EnsemblFungi"}
+\item \code{kingdom = "EnsemblMetazoa"}
+\item \code{kingdom = "EnsemblBacteria"}
+\item \code{kingdom = "EnsemblProtists"}
 }
 }
 
 Available kingdoms can be retrieved with \code{\link{getKingdoms}}.}
 
-\item{group}{only species belonging to this subgroup will be downloaded. 
+\item{group}{only species belonging to this subgroup will be downloaded.
 Groups can be retrieved with \code{\link{getGroups}}.}
 
 \item{type}{type of sequences that shall be retrieved. Options are:
 
 \itemize{
  \item \code{type = "genome"} :
- (for genome assembly retrieval; see also \code{\link{getGenome}}), 
+ (for genome assembly retrieval; see also \code{\link{getGenome}}),
  \item \code{type = "proteome"} :
  (for proteome retrieval; see also \code{\link{getProteome}}),
  \item \code{type = "cds"} :
@@ -80,16 +85,16 @@ Groups can be retrieved with \code{\link{getGroups}}.}
  \item \code{type = "rna"} :
  (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
  \item \code{type = "rm"} :
- (for Repeat Masker output file retrieval; see also 
+ (for Repeat Masker output file retrieval; see also
  \code{\link{getRepeatMasker}}),
  \item \code{type = "assemblystats"} :
- (for genome assembly quality stats file retrieval; 
+ (for genome assembly quality stats file retrieval;
  see also \code{\link{getAssemblyStats}}).
  }}
 
 \item{restart_at_last}{a logical value indicating whether or not \code{meta.retrieval} should pick up at the last species when re-running the function.
 \itemize{
-\item If \code{restart_at_last = TRUE} (Default) then \code{meta.retrieval} will skip all organisms that are already present in the folder 
+\item If \code{restart_at_last = TRUE} (Default) then \code{meta.retrieval} will skip all organisms that are already present in the folder
 and will start downloading all remaining species. However, this way \code{meta.wretrieval} will not be able to check whether
 already downloaded organism files are corrupted or not by checking the md5 checksum.
 \item If \code{restart_at_last = FALSE} then \code{meta.retrieval} will start from the beginning and crawl through already downloaded
@@ -97,7 +102,7 @@ organism files and check whether already downloaded organism files are corrupted
 After checking existing files the function will start downloading all remaining organisms.
 }}
 
-\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database
 as either a reference genome or a representative genome. Options are:
 \itemize{
 \item \code{reference = FALSE} (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.
@@ -106,23 +111,23 @@ will not be downloaded.
 }}
 
 \item{combine}{just in case \code{type = "assemblystats"} is specified, shall
-assemby stats of individual species be imported and combined to a 
+assemby stats of individual species be imported and combined to a
 \code{\link{data.frame}}?}
 
-\item{path}{path to the folder in which downloaded genomes shall be stored. 
+\item{path}{path to the folder in which downloaded genomes shall be stored.
 By default the kingdom name is used to name the output folder.}
 }
 \value{
 a character vector storing the file paths of the retrieved files.
 }
 \description{
-Download genomes, proteomes, cds, gff, rna, or assembly stats 
+Download genomes, proteomes, cds, gff, rna, or assembly stats
 files of all species within a kingdom of life. After downloading users
 can unzip all files using \code{\link{clean.retrieval}}.
 }
 \details{
-This function aims to perform bulk retrieval of the genomes, 
-proteomes, cds, etc. of species that belong to the same kingdom of life or 
+This function aims to perform bulk retrieval of the genomes,
+proteomes, cds, etc. of species that belong to the same kingdom of life or
 to the same subgroup.
 }
 \examples{
@@ -130,36 +135,36 @@ to the same subgroup.
 # get all available kingdoms for refseq
 getKingdoms(db = "refseq")
 # download all vertebrate genomes from refseq
-meta.retrieval(kingdom = "vertebrate_mammalian", 
-               db = "refseq", 
+meta.retrieval(kingdom = "vertebrate_mammalian",
+               db = "refseq",
                type = "genome")
 
 # get all available kingdoms for genbank
 getKingdoms(db = "genbank")
 # download all vertebrate genomes from genbank
-meta.retrieval(kingdom = "vertebrate_mammalian", 
-               db = "genbank", 
+meta.retrieval(kingdom = "vertebrate_mammalian",
+               db = "genbank",
                type = "genome")
 
 
-# In case users do not wish to retrieve genomes from an entire kingdom, 
-# but rather from a subgoup (e.g. from species belonging to the 
-# Gammaproteobacteria class, a subgroup of the bacteria kingdom), 
+# In case users do not wish to retrieve genomes from an entire kingdom,
+# but rather from a subgoup (e.g. from species belonging to the
+# Gammaproteobacteria class, a subgroup of the bacteria kingdom),
 # they can use the following workflow"
-# First, users can again consult the getKingdoms() function to retrieve 
+# First, users can again consult the getKingdoms() function to retrieve
 # kingdom information.
 getKingdoms(db = "refseq")
 
-# In this example, we will choose the bacteria kingdom. 
-# Now, the getGroups() function allows users to obtain available 
+# In this example, we will choose the bacteria kingdom.
+# Now, the getGroups() function allows users to obtain available
 # subgroups of the bacteria kingdom.
 getGroups(db = "refseq", kingdom = "bacteria")
 
-# Now we choose the group Gammaproteobacteria and specify 
+# Now we choose the group Gammaproteobacteria and specify
 # the group argument in the meta.retrieval() function
-meta.retrieval(kingdom = "bacteria", 
-   roup = "Gammaproteobacteria", 
-   db = "refseq", 
+meta.retrieval(kingdom = "bacteria",
+   roup = "Gammaproteobacteria",
+   db = "refseq",
    type = "genome")
 }
 }
