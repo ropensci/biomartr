@@ -6,6 +6,7 @@
 
 ### Bug Fixes
 - whenever the low-level function `getKingdomAssemblySummary()` was called by all get*() functions, due to an error in the `assembly_summary.txt` file for viruses where the total gene count was stored as character and not as integer (as is the case for all other `assembly_summary.txt` files), an error occurred stating that `dplyr::bind_rows()` cannot join column $X35 due to differences in data types. This has now been resolved by parsing the correct data types with `readr`. Many thanks to ... for pointing this out to me. (#92)
+- fixing md5checks in all `get*()` functions
 
 # [biomartr 1.0.3](https://github.com/ropensci/biomartr/releases/tag/v1.0.3)
 
