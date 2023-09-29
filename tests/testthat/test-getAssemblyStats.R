@@ -12,8 +12,7 @@ test_that("The getAssemblyStats() downloads assembly stats file and reads
     Scerevisiae.stats <- getAssemblyStats(
         db = "refseq",
         organism = "Saccharomyces cerevisiae",
-        path = file.path("_ncbi_downloads",
-                         "genomeassembly_stats"),
+        path = tempdir(),
         mute_citation = TRUE
     )
 
@@ -37,8 +36,7 @@ test_that("The getAssemblyStats() downloads assembly stats file and reads raw
     Scerevisiae.stats <- getAssemblyStats(
         db = "genbank",
         organism = "Saccharomyces cerevisiae",
-        path = file.path("_ncbi_downloads",
-                         "genomeassembly_stats"),
+        path = tempdir(),
         mute_citation = TRUE
     )
 
@@ -58,8 +56,7 @@ test_that("The getAssemblyStats() downloads assembly stats file and imports file
         db = "refseq",
         organism = "Saccharomyces cerevisiae",
         type = "import",
-        path = file.path("_ncbi_downloads",
-                         "genomeassembly_stats"),
+        path = tempdir(),
         mute_citation = TRUE
     )
     expect_false(nrow(Scerevisiae.stats) == 0)
@@ -75,6 +72,7 @@ test_that("The getAssemblyStats() throws error when undefined 'type' is selected
                   db = "refseq",
                   organism = "Saccharomyces cerevisiae",
                   type = "somethingelse",
+                  path = tempdir(),
                   mute_citation = TRUE))
 })
 
@@ -88,6 +86,7 @@ test_that("The getAssemblyStats() throws error when undefined 'db' is selected
                   db = "somethingelse",
                   organism = "Saccharomyces cerevisiae",
                   type = "download",
+                  path = tempdir(),
                   mute_citation = TRUE))
 })
 
@@ -100,6 +99,7 @@ test_that("The getAssemblyStats() throws error when undefined 'organism' is sele
                   db = "refseq",
                   organism = "somethingelse",
                   type = "download",
+                  path = tempdir(),
                   mute_citation = TRUE))
 })
 

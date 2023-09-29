@@ -4,24 +4,27 @@ test_that("The getGenome() interface works properly for NCBI RefSeq (including w
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "refseq",
             organism = "Saccharomyces cerevisiae",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
 
     # test proper use of internal referece files when command is repeated
-    expect_output(read_genome(
+    out2 <- read_genome(
         getGenome(
             db       = "refseq",
             organism = "Saccharomyces cerevisiae",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+
+    expect_s4_class(out1, class = "DNAStringSet")
+    expect_false(any(out1 != out2))
 })
 
 
@@ -29,28 +32,30 @@ test_that("The getGenome() interface works properly for NCBI RefSeq using taxid.
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "refseq",
             organism = "559292",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
 })
 
 test_that("The getGenome() interface works properly for NCBI RefSeq using assembly id..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "refseq",
             organism = "GCF_000146045.2",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
 })
 
 
@@ -59,72 +64,78 @@ test_that("The getGenome() interface works properly for NCBI Genbank (including 
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "genbank",
             organism = "Saccharomyces cerevisiae",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
 
     # test proper use of internal referece files when command is repeated
-    expect_output(read_genome(
+    out2 <- read_genome(
         getGenome(
             db       = "genbank",
             organism = "Saccharomyces cerevisiae",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
+    expect_false(any(out1 != out2))
 })
 
 test_that("The getGenome() interface works properly for NCBI Genbank using taxid (including when command is repeated)..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "genbank",
             organism = "559292",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
 
     # test proper use of internal referece files when command is repeated
-    expect_output(read_genome(
+    out2 <- read_genome(
         getGenome(
             db       = "genbank",
             organism = "559292",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
+    expect_false(any(out1 != out2))
 })
 
 test_that("The getGenome() interface works properly for NCBI Genbank using accession ids (including when command is repeated)..", {
     skip_on_cran()
     skip_on_travis()
     # test proper download from genbank
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "genbank",
             organism = "GCA_000146045.2",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
 
     # test proper use of internal referece files when command is repeated
-    expect_output(read_genome(
+    out2 <- read_genome(
         getGenome(
             db       = "genbank",
             organism = "GCA_000146045.2",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
+    expect_false(any(out1 != out2))
 })
 
 test_that("The getGenome() interface works properly for ENSEMBL (including repeating function call)..",{
@@ -132,23 +143,25 @@ test_that("The getGenome() interface works properly for ENSEMBL (including repea
         skip_on_cran()
         skip_on_travis()
     # test proper download from ENSEMBL
-        expect_output(read_genome(
+        out1 <- read_genome(
             getGenome(
                 db       = "ensembl",
                 organism = "Saccharomyces cerevisiae",
                 path     = tempdir(), mute_citation = TRUE
             ),
             format = "fasta"
-        ))
+        )
 
-        expect_output(read_genome(
+        out2 <- read_genome(
             getGenome(
                 db       = "ensembl",
                 organism = "Saccharomyces cerevisiae",
                 path     = tempdir(), mute_citation = TRUE
             ),
             format = "fasta"
-        ))
+        )
+        expect_s4_class(out1, class = "DNAStringSet")
+        expect_false(any(out1 != out2))
 })
 
 test_that("The getGenome() interface works properly for ENSEMBL using taxid (including repeating function call)..",{
@@ -156,23 +169,25 @@ test_that("The getGenome() interface works properly for ENSEMBL using taxid (inc
     skip_on_cran()
     skip_on_travis()
     # test proper download from ENSEMBL
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "ensembl",
             organism = "4932",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
 
-    expect_output(read_genome(
+    out2 <- read_genome(
         getGenome(
             db       = "ensembl",
             organism = "4932",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
+    expect_false(any(out1 != out2))
 })
 
 
@@ -181,23 +196,25 @@ test_that("The getGenome() interface works properly for ENSEMBL using accession 
     skip_on_cran()
     skip_on_travis()
     # test proper download from ENSEMBL
-    expect_output(read_genome(
+    out1 <- read_genome(
         getGenome(
             db       = "ensembl",
             organism = "GCA_000146045.2",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
 
-    expect_output(read_genome(
+    out2 <- read_genome(
         getGenome(
             db       = "ensembl",
             organism = "GCA_000146045.2",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
-    ))
+    )
+    expect_s4_class(out1, class = "DNAStringSet")
+    expect_false(any(out1 != out2))
 })
 
 test_that("The getGenome() interface works properly for ENSEMBL with collections",{
@@ -224,11 +241,13 @@ test_that("The getGenome() error messages work properly for ENSEMBL..", {
     skip_on_cran()
     skip_on_travis()
 
-    expect_output(getGenome(
+    out1 <- getGenome(
         db       = "ensembl",
-        organism = "Saccharomyces cerevisi",
+        organism = "Saccharomycesi",
         path     = tempdir(), mute_citation = TRUE
-    ))
+    )
+    expect_type(out1, "logical")
+    expect_false(out1 == TRUE)
 })
 
 test_that("The getGenome() error messages work properly for NCBI RefSeq", {

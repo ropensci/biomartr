@@ -21,7 +21,7 @@
 #' @seealso \code{\link{ensembl_divisions}}, \code{\link{getKingdomAssemblySummary}}, \code{\link{getENSEMBLInfo}}
 #' @export
 get.ensembl.info <- function(update = FALSE, division) {
-  tmp_file <- file.path(tempdir(), paste0(division, "_info.tsv"))
+  tmp_file <- file.path(cachedir(), paste0(division, "_info.tsv"))
   if (file.exists(tmp_file) &&
         !update) {
         suppressWarnings(
@@ -160,20 +160,28 @@ ensembl_ftp_server_url_release <- function(division, release = NULL) {
   }
 }
 
-ensembl_ftp_server_url_release_style <- function(division, release = NULL) {
+ensembl_ftp_server_url_format <- function(division, release = NULL, format) {
   release_stem <- ensembl_ftp_server_url_release(division, release)
-  paste0(release_stem, "fasta/")
+  paste0(release_stem, format, "/")
+}
+
+ensembl_ftp_server_url_format_full <- function(division, release = NULL, format) {
+  file.path(ensembl_ftp_server_url(division),
+            ensembl_ftp_server_url_format(division, release, format))
+}
+
+ensembl_ftp_server_url_release_style_fasta <- function(division, release = NULL) {
+  ensembl_ftp_server_url_format(division, release, "fasta")
 }
 
 ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL, format = "gtf") {
-  release_stem <- ensembl_ftp_server_url_release(division, release)
-  paste0(release_stem, format, "/")
+  ensembl_ftp_server_url_format(division, release, format)
 }
 
 
 ensembl_ftp_server_url_fasta <- function(division, release = NULL) {
   file.path(ensembl_ftp_server_url(division),
-            ensembl_ftp_server_url_release_style(division, release))
+            ensembl_ftp_server_url_release_style_fasta(division, release))
 }
 
 ensembl_ftp_server_url_gtf <- function(division = "EnsemblVertebrates",
@@ -182,19 +190,3 @@ ensembl_ftp_server_url_gtf <- function(division = "EnsemblVertebrates",
             ensembl_ftp_server_url_release_style_gtf(division, release, format))
 }
 
-ensembl_ftp_server_query_full <- function(core_path, new.organism, type,
-                                          assembly_option, id.type,
-                                          ensembl_summary) {
-  collection_folder <- get_collection_id(ensembl_summary)
-  if (isFALSE(collection_folder)) return(FALSE)
-  paste0(
-    core_path,
-    collection_folder,
-    stringr::str_to_lower(new.organism),
-    "/",
-    type,
-    "/",
-    ensembl_seq_file_base(new.organism, assembly_option, type,
-                          id.type)
-  )
-}

@@ -6,24 +6,25 @@ test_that(
         skip_on_cran()
         skip_on_travis()
         # test proper download
-        read_rna(
+        out1 <- read_rna(
             getRNA(
                 db       = "refseq",
                 organism = "Saccharomyces cerevisiae",
-                path     = tempdir()
+                path     = tempdir(), mute_citation = TRUE
             ),
             format = "fasta"
         )
-        
+
         # test proper use of internal referece files when command is repeated
-        read_rna(
+        out2 <- read_rna(
             getRNA(
                 db       = "refseq",
                 organism = "Saccharomyces cerevisiae",
-                path     = tempdir()
+                path     = tempdir(), mute_citation = TRUE
             ),
             format = "fasta"
         )
+      expect_equal(out1, out2)
     }
 )
 
@@ -34,20 +35,21 @@ test_that(
         skip_on_cran()
         skip_on_travis()
         # test proper download
-        read_rna(getRNA(
+        out1 <- read_rna(getRNA(
             db       = "refseq",
             organism = "559292",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta")
-        
-        read_rna(getRNA(
+
+        out2 <- read_rna(getRNA(
             db       = "refseq",
             organism = "559292",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta")
-        
+
+        expect_equal(out1, out2)
     }
 )
 
@@ -56,20 +58,21 @@ test_that("The getRNA() interface to NCBI RefSeq works properly using assembly i
               skip_on_cran()
               skip_on_travis()
               # test proper download
-              read_rna(getRNA(
+              out1 <- read_rna(getRNA(
                   db       = "refseq",
                   organism = "GCF_000146045.2",
-                  path     = tempdir()
+                  path     = tempdir(), mute_citation = TRUE
               ),
               format = "fasta")
-              
-              read_rna(getRNA(
+
+              out2 <- read_rna(getRNA(
                   db       = "refseq",
                   organism = "GCF_000146045.2",
-                  path     = tempdir()
+                  path     = tempdir(), mute_citation = TRUE
               ),
               format = "fasta")
-              
+
+              expect_equal(out1, out2)
           })
 
 
@@ -79,25 +82,26 @@ test_that(
         skip_on_cran()
         skip_on_travis()
         # test proper download from genbank
-        read_rna(
+        out1 <- read_rna(
             getRNA(
                 db       = "genbank",
                 organism = "Saccharomyces cerevisiae",
-                path     = tempdir()
+                path     = tempdir(), mute_citation = TRUE
             ),
             format = "fasta"
         )
-        
+
         # test proper use of internal referece files when command is repeated
-        read_rna(
+        out2 <- read_rna(
             getRNA(
                 db       = "genbank",
                 organism = "Saccharomyces cerevisiae",
-                path     = tempdir()
+                path     = tempdir(), mute_citation = TRUE
             ),
             format = "fasta"
         )
-        
+
+        expect_equal(out1, out2)
     }
 )
 
@@ -106,20 +110,21 @@ test_that("The getRNA() interface to NCBI Genbank works properly using taxids (i
               skip_on_cran()
               skip_on_travis()
               # test proper download from genbank
-              read_rna(getRNA(
+              out1 <- read_rna(getRNA(
                   db       = "genbank",
                   organism = "559292",
-                  path     = tempdir()
+                  path     = tempdir(), mute_citation = TRUE
               ),
               format = "fasta")
-              
-              read_rna(getRNA(
+
+              out2 <- read_rna(getRNA(
                   db       = "genbank",
                   organism = "559292",
-                  path     = tempdir()
+                  path     = tempdir(), mute_citation = TRUE
               ),
               format = "fasta")
-              
+
+              expect_equal(out1, out2)
           })
 
 
@@ -129,20 +134,21 @@ test_that("The getRNA() interface to NCBI Genbank works properly using accession
               skip_on_cran()
               skip_on_travis()
               # test proper download from genbank
-              read_rna(getRNA(
+              out1 <- read_rna(getRNA(
                   db       = "genbank",
                   organism = "GCA_000146045.2",
-                  path     = tempdir()
+                  path     = tempdir(), mute_citation = TRUE
               ),
               format = "fasta")
-              
-              read_rna(getRNA(
+
+              out2 <- read_rna(getRNA(
                   db       = "genbank",
                   organism = "GCA_000146045.2",
-                  path     = tempdir()
+                  path     = tempdir(), mute_citation = TRUE
               ),
               format = "fasta")
-              
+
+              expect_equal(out1, out2)
           })
 
 
@@ -150,23 +156,25 @@ test_that("The getRNA() interface to Ensembl works properly (including when comm
     skip_on_cran()
     skip_on_travis()
     # test proper download from ensemblgenomes
-    read_rna(
+    out1 <- read_rna(
         getRNA(
             db       = "ensembl",
             organism = "Saccharomyces cerevisiae",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
     )
-    
-    read_rna(
+
+    out2 <- read_rna(
         getRNA(
             db       = "ensembl",
             organism = "Saccharomyces cerevisiae",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
     )
+
+    expect_equal(out1, out2)
 })
 
 
@@ -174,23 +182,25 @@ test_that("The getRNA() interface to Ensembl works properly using taxid (includi
     skip_on_cran()
     skip_on_travis()
     # test proper download from ensemblgenomes
-    read_rna(
+    out1 <- read_rna(
         getRNA(
             db       = "ensembl",
             organism = "4932",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
     )
-    
-    read_rna(
+
+    out2 <- read_rna(
         getRNA(
             db       = "ensembl",
             organism = "4932",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
     )
+
+    expect_equal(out1, out2)
 })
 
 
@@ -198,22 +208,24 @@ test_that("The getRNA() interface to Ensembl works properly using accession id (
     skip_on_cran()
     skip_on_travis()
     # test proper download from ensemblgenomes
-    read_rna(
+    out1 <- read_rna(
         getRNA(
             db       = "ensembl",
             organism = "GCA_000146045.2",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
     )
-    
-    read_rna(
+
+    out2 <- read_rna(
         getRNA(
             db       = "ensembl",
             organism = "GCA_000146045.2",
-            path     = tempdir()
+            path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
     )
+
+    expect_equal(out1, out2)
 })
 
