@@ -4,31 +4,11 @@
 #' interest the corresponding gff file storing the annotation  for the organism
 #' of interest can be downloaded and stored locally. GFF files can be retrieved
 #' from several databases.
-#' @param db a character string specifying the database from which the genome
-#' shall be retrieved:
-#' \itemize{
-#' \item \code{db = "refseq"}
-#' \item \code{db = "genbank"}
-#' \item \code{db = "ensembl"}
-#' }
-#' @param organism a character string specifying the scientific name of the
-#' organism of interest, e.g. \code{organism = "Homo sapiens"}.
-#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
-#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023),
-#' the bacterial summary file will not be loaded by default anymore. If users
-#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
-#' bacterial summary file will be downloaded.
-#' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-#' that the most recent database version is used.
-#' @param gunzip a logical value indicating whether or not files should be unzipped.
-#' @param remove_annotation_outliers shall outlier lines be removed from the input \code{annotation_file}?
-#' If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
-#' for further exploration.
+#' @inheritParams getGenome
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding annotation file shall be stored. Default is
 #' \code{path = file.path("_ncbi_downloads","genomes")}.
 #' @param format "gff3", alternative "gtf" for ensembl.
-#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -94,16 +74,14 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
     }
 
     if (is.element(db, c("refseq", "genbank"))) {
-      info <- refseqGenbankAnnotation(db, organism, reference, skip_bacteria,
-                              path, format)
+      info <- get_file_refseq_genbank(db, organism, reference, skip_bacteria,
+                                      release, gunzip, path, type = "gff")
       return(refseq_genbank_download_post_processing(info, organism, db, path,
                                                      gunzip,
                                                      remove_annotation_outliers,
                                                      format,
                                                      mute_citation = mute_citation))
-    }
-
-    if (db == "ensembl") {
+    } else if (db == "ensembl") {
         genome.path <- getENSEMBL.Annotation(organism, type = "dna",
                                              release = release, path = path,
                                              format = format)

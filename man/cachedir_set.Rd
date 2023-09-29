@@ -16,7 +16,7 @@ invisible(NULL), only save the file to path location
 Set directory to store back end files like kingdom summaries etc
 }
 \examples{
-# By default it is tmpdir()
+# By default it is tempdir()
 cachedir()
 # cachedir_set("~/Bio_data/biomartr_cache/")
 cachedir()

@@ -28,3 +28,32 @@ toupper_first_char <- function(string) {
                         stringr::str_sub(string,2,nchar(string)),
                         collapse = ""))
 }
+
+ensembl_fix_wrong_naming <- function(organism) {
+  organism <-
+    stringr::str_replace_all(organism, " sp ", " sp. ")
+  organism <-
+    stringr::str_replace_all(organism, " pv ", " pv. ")
+  organism <-
+    stringr::str_replace_all(organism, " str ", " str. ")
+  organism <-
+    stringr::str_replace_all(organism, " subsp ", " subsp. ")
+  organism <-
+    stringr::str_replace_all(organism, "\\(", "")
+  organism <-
+    stringr::str_replace_all(organism, "\\)", "")
+}
+
+ensembl_proper_organism_name <- function(ensembl_summary) {
+  new.organism <- ensembl_summary$name[1]
+  new.organism <-
+    paste0(
+      stringr::str_to_upper(stringr::str_sub(new.organism, 1, 1)),
+      stringr::str_sub(new.organism, 2, nchar(new.organism))
+    )
+  new.organism <- ensembl_fix_wrong_naming(new.organism)
+}
+
+lower_cap_underscore_organism_name <- function(organism) {
+  stringr::str_to_lower(stringr::str_replace_all(organism, " ", "_"))
+}

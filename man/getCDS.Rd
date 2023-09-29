@@ -16,7 +16,7 @@ getCDS(
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
@@ -24,7 +24,7 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism: 
+\item{organism}{there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -33,17 +33,20 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.}
+\item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used. \code{release = 75} would for human would give the stable
+GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
+if the standard format before that.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
-\item{path}{a character string specifying the location (a folder) 
-in which the corresponding CDS file shall be stored. 
+\item{path}{a character string specifying the location (a folder)
+in which the corresponding CDS file shall be stored.
 Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -52,19 +55,19 @@ Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.}
 File path to downloaded CDS file.
 }
 \description{
-Main retrieval function for coding sequences (CDS) 
+Main retrieval function for coding sequences (CDS)
 of an organism of interest.
-By specifying the scientific name of an organism of interest the 
-corresponding fasta-file storing the CDS information for the organism 
-of interest can be downloaded and stored locally. CDS files can be retrieved 
+By specifying the scientific name of an organism of interest the
+corresponding fasta-file storing the CDS information for the organism
+of interest can be downloaded and stored locally. CDS files can be retrieved
 from several databases.
 }
 \examples{
 \dontrun{
 # download the genome of Arabidopsis thaliana from refseq
 # and store the corresponding genome CDS file in '_ncbi_downloads/CDS'
-file_path <- getCDS( db       = "refseq", 
-             organism = "Arabidopsis thaliana", 
+file_path <- getCDS( db       = "refseq",
+             organism = "Arabidopsis thaliana",
              path     = file.path("_ncbi_downloads","CDS"))
 
 Ath_CDS <- read_cds(file_path, format = "fasta")
@@ -72,9 +75,9 @@ Ath_CDS <- read_cds(file_path, format = "fasta")
 }
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{getProteome}}, 
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
+\code{\link{getGenome}}, \code{\link{getProteome}},
+\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
+\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
 \code{\link{read_cds}}
 }
 \author{

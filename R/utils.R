@@ -112,7 +112,8 @@ gunzip_and_check <- function(file, gunzip = FALSE,
 #' the file named paste0("./", basename(file_url)) must exist in md5 name list.
 #' @noRd
 md5_sum_test <- function(md5_local, md5_url, local_file, file_url) {
-
+  if (!file.exists(local_file))
+    stop("The local file: ", local_file, " does not exist to check md5 sum of!")
   custom_download(
     md5_url,
     md5_local,
@@ -166,7 +167,7 @@ cachedir <- function(non_temp_cache = "~/.biomartr_cache_dir.rds") {
 #' @return invisible(NULL), only save the file to path location
 #' @export
 #' @examples
-#' # By default it is tmpdir()
+#' # By default it is tempdir()
 #' cachedir()
 #' # cachedir_set("~/Bio_data/biomartr_cache/")
 #' cachedir()

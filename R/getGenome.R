@@ -111,22 +111,21 @@ getGenome <- function(db = "refseq",
       }
 
     if (is.element(db, c("refseq", "genbank"))) {
-      info <- refseqGenbankSeq(db, organism, reference, skip_bacteria,
-                               release, gunzip,
-                               path, assembly_type)
-      return(refseq_genbank_download_post_processing(info, organism, db, path,
-                                                     gunzip,
-                                                     remove_annotation_outliers,
-                                                     format = "genome",
-                                                     analyse_genome = analyse_genome,
-                                                     mute_citation = mute_citation))
-    }
-
-    if (db %in% c("ensembl", "ensemblgenomes")) {
+      info <- get_file_refseq_genbank(db, organism, reference, skip_bacteria,
+                                      release, gunzip, path, assembly_type,
+                                      type = "genome")
+      refseq_genbank_download_post_processing(info, organism, db, path,
+                                              gunzip,
+                                              remove_annotation_outliers,
+                                              format = "genome",
+                                              analyse_genome = analyse_genome,
+                                              mute_citation = mute_citation)
+    } else if (db %in% c("ensembl", "ensemblgenomes")) {
         genome.path <- getENSEMBL.Seq(organism, type = "dna",
                                       id.type = assembly_type,
                                       release = release,
                                       path = path)
+
         ensembl_download_post_processing(genome.path, organism,
                                          format = "genome",
                                          gunzip = gunzip,

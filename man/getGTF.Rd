@@ -20,19 +20,21 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{a character string specifying the scientific name of the
-organism of interest, e.g. \code{organism = "Homo sapiens"}.}
-
-\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
-If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
-for further exploration.}
+\item{organism}{there are three options to characterize an organism:
+\itemize{
+\item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+\item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+\item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+}}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding annotation file shall be stored. Default is
 \code{path = file.path("_ncbi_downloads","genomes")}.}
 
-\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-that the most recent database version is used.}
+\item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used. \code{release = 75} would for human would give the stable
+GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
+if the standard format before that.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
 }

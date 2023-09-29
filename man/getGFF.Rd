@@ -26,8 +26,12 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{a character string specifying the scientific name of the
-organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+\item{organism}{there are three options to characterize an organism:
+\itemize{
+\item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+\item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+\item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+}}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
@@ -36,14 +40,7 @@ the bacterial summary file will not be loaded by default anymore. If users
 wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-that the most recent database version is used.}
-
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
-
-\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
-If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
-for further exploration.}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding annotation file shall be stored. Default is
