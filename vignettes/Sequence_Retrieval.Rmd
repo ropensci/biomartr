@@ -568,7 +568,7 @@ listKingdoms(db = "refseq")
 
 ```
     Archaea  Bacteria Eukaryota   Viruses 
-      330     11797      1002     10637 
+      479     16255      1383     12916
 ```
 
 Example `genbank`:
@@ -580,7 +580,7 @@ listKingdoms(db = "genbank")
 
 ```
   Archaea  Bacteria Eukaryota 
-     1651     25904      7742
+     1902     32532     12404 
 ```
 
 Example `ENSEMBL`:
@@ -591,8 +591,16 @@ listKingdoms(db = "ensembl")
 ```
 
 ```
-EnsemblVertebrates 
-               310
+Starting information retrieval for: EnsemblVertebrates
+Starting information retrieval for: EnsemblPlants                 
+Starting information retrieval for: EnsemblFungi                  
+Starting information retrieval for: EnsemblMetazoa                
+Starting information retrieval for: EnsemblBacteria               
+                                                                  
+   EnsemblBacteria       EnsemblFungi     EnsemblMetazoa 
+             31332               1504                251 
+     EnsemblPlants EnsemblVertebrates 
+               150                317 
 ```
 
 ### Analogous computations can be performed for `groups` and `subgroups`

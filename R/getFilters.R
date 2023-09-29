@@ -5,6 +5,7 @@
 #' datasets shall be listed.
 #' @param dataset a character string specifying the dataset for which filters 
 #' shall be listed.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
@@ -21,7 +22,7 @@
 #' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 #' @export
 
-getFilters <- function(mart, dataset){
+getFilters <- function(mart, dataset, mute_citation = FALSE){
     
     if ((!is.character(mart)) || (!is.character(dataset)))
         stop("Please use a character string as mart or dataset.", call. = FALSE)
@@ -114,6 +115,8 @@ getFilters <- function(mart, dataset){
                           stringsAsFactors = FALSE,
                           colClasses = rep("character", 2))
         colnames(filterBioMart) <- c("name", "description")
+        
+        please_cite_biomartr(mute_citation = mute_citation)
         
         return(filterBioMart)
         

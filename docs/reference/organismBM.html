@@ -79,7 +79,7 @@ for all available organisms for which biomart access is possible, or
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">organismBM</span><span class="op">(</span>organism <span class="op">=</span> <span class="cn">NULL</span>, update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">organismBM</span><span class="op">(</span>organism <span class="op">=</span> <span class="cn">NULL</span>, update <span class="op">=</span> <span class="cn">FALSE</span>, mute_citation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,6 +94,10 @@ available biomart connections are returned.</p></dd>
 <dd><p>a logical value specifying whether or not the local 
 listMart.txt and listDatasets.txt files shall be updated by remote access
  to BioMart.</p></dd>
+
+
+<dt>mute_citation</dt>
+<dd><p>logical value indicating whether citation message should be muted.</p></dd>
 
 </dl></div>
     <div id="details">

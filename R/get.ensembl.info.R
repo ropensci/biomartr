@@ -4,7 +4,7 @@
 #' and internally stores the output to use this information for subsequent
 #' retrieval function calls.
 #' @param update logical, default FALSE. If TRUE, force re-download of info.
-#' @param division the ENSEMBL database (division) for which information shall 
+#' @param division the ENSEMBL database (division) for which information shall
 #' be retrieved (available options can be obtained with \code{\link{ensembl_divisions}}).
 #' @author Hajk-Georg Drost
 #' @examples
@@ -21,7 +21,7 @@
 #' @seealso \code{\link{ensembl_divisions}}, \code{\link{getKingdomAssemblySummary}}, \code{\link{getENSEMBLInfo}}
 #' @export
 get.ensembl.info <- function(update = FALSE, division) {
-  tmp_file <- file.path(tempdir(), paste0(division, "_info.tsv"))
+  tmp_file <- file.path(cachedir(), paste0(division, "_info.tsv"))
   if (file.exists(tmp_file) &&
         !update) {
         suppressWarnings(
@@ -43,14 +43,12 @@ get.ensembl.info <- function(update = FALSE, division) {
         )
 
     } else {
-
-
         rest_url <- ensembl_rest_url_species_division(division)
         rest_api_status <- curl::curl_fetch_memory(rest_url)
         if (rest_api_status$status_code != 200) {
             message(
-                "The API 'https://rest.ensembl.org' does not seem to
-                respond or work properly. Is the homepage 'https://rest.ensembl.org' currently available?",
+                "The API '", ensembl_rest_url(), "' does not seem to
+                respond or work properly. Is the homepage '", ensembl_rest_url(), "' currently available?",
                 " Could it be that there is a firewall issue on your side? Please re-run the function and check if it works now."
             )
         }
@@ -88,12 +86,16 @@ ensembl_rest_url <- function() {
 #' @export
 ensembl_divisions <- function() {
   c("EnsemblVertebrates", "EnsemblPlants", "EnsemblFungi", "EnsemblMetazoa",
-    "EnsemblBacteria")
+    "EnsemblBacteria", "EnsemblProtists")
 }
 
-ensembl_divisions_short <- function() {
-  c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
-    EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa")
+ensembl_divisions_short <- function(ensembl_as_empty = TRUE, bacteria = TRUE) {
+  div  <-
+    c(EnsemblVertebrates = "", EnsemblPlants = "plants", EnsemblFungi = "fungi",
+    EnsemblBacteria = "bacteria", EnsemblMetazoa = "metazoa", EnsemblProtists = "protists")
+  if (!ensembl_as_empty) div[1] <- "ensembl"
+  if (!bacteria) div <- div[!(div == "bacteria")]
+  return(div)
 }
 
 ensembl_rest_url_species <- function() {
@@ -136,65 +138,55 @@ ensembl_rest_url_assembly <- function(organism) {
   ))
 }
 
-ensembl_ftp_server_url <- function(division) {
+ensembl_ftp_server_url <- function(division = "EnsemblVertebrates") {
   if (division == "EnsemblVertebrates") {
-    "ftp://ftp.ensembl.org"
+    "https://ftp.ensembl.org"
   } else {
-    "ftp://ftp.ensemblgenomes.org"
+    "http://ftp.ensemblgenomes.org"
   }
 }
 
-ensembl_ftp_server_url_release_style <- function(division, release = NULL) {
+ensembl_ftp_server_url_release <- function(division, release = NULL) {
   if (division == "EnsemblVertebrates") {
     if (is.null(release)) {
-      "pub/current_fasta/"
-    } else paste0("pub/release-", release ,"/fasta/")
+      "pub/current_"
+    } else paste0("pub/release-", release ,"/")
 
   } else {ensembl_divisions
     short_name <- ensembl_divisions_short()[division]
     if (is.null(release)) {
-      paste0("pub/current/", short_name, "/fasta/")
-    } else paste0("pub/release-", release ,"/", short_name, "/fasta/")
+      paste0("pub/current/", short_name, "/")
+    } else paste0("pub/release-", release ,"/", short_name, "/")
   }
 }
 
-ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL) {
-  if (division == "EnsemblVertebrates") {
-    if (is.null(release)) {
-      "pub/current_gtf/"
-    } else paste0("pub/release-", release ,"/gtf/")
-
-  } else {ensembl_divisions
-    short_name <- ensembl_divisions_short()[division]
-    if (is.null(release)) {
-      paste0("pub/current/", short_name, "/gtf/")
-    } else paste0("pub/release-", release ,"/", short_name, "/gtf/")
-  }
+ensembl_ftp_server_url_format <- function(division, release = NULL, format) {
+  release_stem <- ensembl_ftp_server_url_release(division, release)
+  paste0(release_stem, format, "/")
 }
+
+ensembl_ftp_server_url_format_full <- function(division, release = NULL, format) {
+  file.path(ensembl_ftp_server_url(division),
+            ensembl_ftp_server_url_format(division, release, format))
+}
+
+ensembl_ftp_server_url_release_style_fasta <- function(division, release = NULL) {
+  ensembl_ftp_server_url_format(division, release, "fasta")
+}
+
+ensembl_ftp_server_url_release_style_gtf <- function(division, release = NULL, format = "gtf") {
+  ensembl_ftp_server_url_format(division, release, format)
+}
+
 
 ensembl_ftp_server_url_fasta <- function(division, release = NULL) {
   file.path(ensembl_ftp_server_url(division),
-            ensembl_ftp_server_url_release_style(division, release))
+            ensembl_ftp_server_url_release_style_fasta(division, release))
 }
 
-ensembl_ftp_server_url_gtf <- function(division, release = NULL) {
+ensembl_ftp_server_url_gtf <- function(division = "EnsemblVertebrates",
+                                       release = NULL, format = "gtf") {
   file.path(ensembl_ftp_server_url(division),
-            ensembl_ftp_server_url_release_style_gtf(division, release))
+            ensembl_ftp_server_url_release_style_gtf(division, release, format))
 }
 
-ensembl_ftp_server_query_full <- function(core_path, new.organism, type,
-                                          assembly_option, id.type,
-                                          ensembl_summary) {
-  collection_for_bacteria_only <- get_bacteria_collection_id(ensembl_summary)
-  if (isFALSE(collection_for_bacteria_only)) return(FALSE)
-  paste0(
-    core_path,
-    collection_for_bacteria_only,
-    stringr::str_to_lower(new.organism),
-    "/",
-    type,
-    "/",
-    ensembl_seq_file_base(new.organism, assembly_option, type,
-                          id.type)
-  )
-}

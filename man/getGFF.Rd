@@ -13,11 +13,12 @@ getGFF(
   gunzip = FALSE,
   remove_annotation_outliers = FALSE,
   path = file.path("_ncbi_downloads", "annotation"),
-  mute_citation = FALSE
+  mute_citation = FALSE,
+  format = "gff3"
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
@@ -25,39 +26,38 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{a character string specifying the scientific name of the 
-organism of interest, e.g. \code{organism = "Homo sapiens"}.}
+\item{organism}{there are three options to characterize an organism:
+\itemize{
+\item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+\item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+\item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+}}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
-
-\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-that the most recent database version is used.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
-\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}? 
-If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
-for further exploration.}
-
-\item{path}{a character string specifying the location (a folder) in which 
-the corresponding annotation file shall be stored. Default is 
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding annotation file shall be stored. Default is
 \code{path = file.path("_ncbi_downloads","genomes")}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
+
+\item{format}{"gff3", alternative "gtf" for ensembl.}
 }
 \value{
 File path to downloaded annotation file.
 }
 \description{
-Main retrieval function for GFF files of an 
-organism of interest. By specifying the scientific name of an organism of 
-interest the corresponding gff file storing the annotation  for the organism 
-of interest can be downloaded and stored locally. GFF files can be retrieved 
+Main retrieval function for GFF files of an
+organism of interest. By specifying the scientific name of an organism of
+interest the corresponding gff file storing the annotation  for the organism
+of interest can be downloaded and stored locally. GFF files can be retrieved
 from several databases.
 }
 \details{
@@ -66,7 +66,7 @@ Internally this function loads the the overview.txt file from NCBI:
  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
- 
+
 and creates a directory '_ncbi_downloads/annotation' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
@@ -77,24 +77,36 @@ no download process will be performed.
 \dontrun{
 # download the annotation of Arabidopsis thaliana from refseq
 # and store the corresponding genome file in '_ncbi_downloads/annotation'
-getGFF( db       = "refseq", 
-               organism = "Arabidopsis thaliana", 
-               path = file.path("_ncbi_downloads","annotation"))
+Athal_gff <- getGFF( db       = "refseq",
+               organism = "Arabidopsis thaliana",
+               path = file.path("_ncbi_downloads","annotation"),
+               remove_annotation_outliers = TRUE)
+Athal_gff_import <- read_gff(Athal_gff)
 
 
 # download the genome of Arabidopsis thaliana from genbank
 # and store the corresponding genome file in '_ncbi_downloads/annotation'
-getGFF( db       = "genbank", 
-               organism = "Arabidopsis thaliana", 
-               path = file.path("_ncbi_downloads","annotation"))
+Athal_gff <- getGFF( db       = "genbank",
+               organism = "Arabidopsis thaliana",
+               path = file.path("_ncbi_downloads","annotation"),
+               remove_annotation_outliers = TRUE)
+Athal_gff_import <- read_gff(Athal_gff)
+
+# download the genome of Homo sapiens from ensembl
+# and store the corresponding genome file in '_ncbi_downloads/annotation'
+Hsap_gff <- getGFF( db       = "ensembl",
+               organism = "Homo sapiens",
+               path = file.path("_ncbi_downloads","annotation"),
+               remove_annotation_outliers = TRUE)
+Hsap_gff_import <- read_gff(Hsap_gff)
 
 }
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}
+\code{\link{getProteome}}, \code{\link{getCDS}},
+\code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
+\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}
 }
 \author{
 Hajk-Georg Drost

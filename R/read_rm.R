@@ -20,7 +20,7 @@ read_rm <- function(file) {
     })
     
     
-    rm_file <- tibble::as_tibble(do.call(rbind, rm_file))
+    rm_file <- as.data.frame(do.call(rbind, rm_file))
     colnames(rm_file) <- c(
         "sw_score",
         "perc_div",
@@ -38,6 +38,8 @@ read_rm <- function(file) {
         "in_repeat_end"
     )
     qry_end <- qry_start <- NULL
+    
+    rm_file <- tibble::as_tibble(rm_file)
     
     nrow_before_filtering <- nrow(rm_file)
         

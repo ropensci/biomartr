@@ -8,7 +8,9 @@ getRepeatMasker(
   db = "refseq",
   organism,
   reference = FALSE,
-  path = file.path("_ncbi_downloads", "repeatmasker")
+  skip_bacteria = TRUE,
+  path = file.path("_ncbi_downloads", "repeatmasker"),
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -24,9 +26,16 @@ organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+bacterial summary file will be downloaded.}
+
 \item{path}{a character string specifying the location (a folder) in which 
 the corresponding file shall be stored. Default is 
 \code{path} = \code{file.path("_ncbi_downloads","repeatmasker")}.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded Repeat Masker output file.
@@ -55,29 +64,21 @@ no download process will be performed.
 \examples{
 \dontrun{
 
-# download the Repeat Masker output file of Arabidopsis thaliana from refseq
+# download the Repeat Masker output file of Homo sapiens from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
 file_path <- getRepeatMasker( db       = "refseq", 
-             organism = "Arabidopsis thaliana", 
+             organism = "Homo sapiens", 
              path = file.path("_ncbi_downloads","repeatmasker"))
 
-Ath_repeatmasker <- read_rm(file_path)
+Hsap_repeatmasker <- read_rm(file_path)
 
-
-# download the Repeat Masker output file of Arabidopsis thaliana from genbank
-# and store the corresponding genome file in '_ncbi_downloads/genomes'
-file_path <- getRepeatMasker( db       = "genbank", 
-             organism = "Arabidopsis thaliana", 
-             path = file.path("_ncbi_downloads","repeatmasker"))
-
-Ath_repeatmasker <- read_rm(file_path)
 }
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
-\code{\link{read_rm}}, \code{\link{getGenome}}
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
+\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
+\code{\link{read_rm}}
 }
 \author{
 Hajk-Georg Drost

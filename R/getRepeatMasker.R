@@ -14,9 +14,14 @@
 #' @param organism a character string specifying the scientific name of the 
 #' organism of interest, e.g. \code{organism = "Homo sapiens"}.
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023), 
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+#' bacterial summary file will be downloaded.
 #' @param path a character string specifying the location (a folder) in which 
 #' the corresponding file shall be stored. Default is 
 #' \code{path} = \code{file.path("_ncbi_downloads","repeatmasker")}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #' 
@@ -32,34 +37,28 @@
 #' @return File path to downloaded Repeat Masker output file.
 #' @examples \dontrun{
 #' 
-#' # download the Repeat Masker output file of Arabidopsis thaliana from refseq
+#' # download the Repeat Masker output file of Homo sapiens from refseq
 #' # and store the corresponding genome file in '_ncbi_downloads/genomes'
 #' file_path <- getRepeatMasker( db       = "refseq", 
-#'              organism = "Arabidopsis thaliana", 
+#'              organism = "Homo sapiens", 
 #'              path = file.path("_ncbi_downloads","repeatmasker"))
 #' 
-#' Ath_repeatmasker <- read_rm(file_path)
+#' Hsap_repeatmasker <- read_rm(file_path)
 #' 
-#' 
-#' # download the Repeat Masker output file of Arabidopsis thaliana from genbank
-#' # and store the corresponding genome file in '_ncbi_downloads/genomes'
-#' file_path <- getRepeatMasker( db       = "genbank", 
-#'              organism = "Arabidopsis thaliana", 
-#'              path = file.path("_ncbi_downloads","repeatmasker"))
-#' 
-#' Ath_repeatmasker <- read_rm(file_path)
 #' }
 #' 
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}}, 
-#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
-#' \code{\link{read_rm}}, \code{\link{getGenome}}
+#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
+#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
+#' \code{\link{read_rm}}
 #' @export
 
 getRepeatMasker <-
     function(db = "refseq",
              organism,
              reference = FALSE,
-             path = file.path("_ncbi_downloads", "repeatmasker")) {
+             skip_bacteria = TRUE,
+             path = file.path("_ncbi_downloads", "repeatmasker"),
+             mute_citation = FALSE) {
         
     if (!is.element(db, c("refseq", "genbank")))
             stop(
@@ -69,16 +68,16 @@ getRepeatMasker <-
                 call. = FALSE
             )
         
-        message("Starting Repeat Masker retrieval of '", organism, "' from ", db, " ...")
+        message("-> Starting Repeat Masker retrieval of '", organism, "' from ", db, " ...")
         message("\n")
         
         if (is.element(db, c("refseq", "genbank"))) {
             # get Kingdom Assembly Summary file
             AssemblyFilesAllKingdoms <-
-                getKingdomAssemblySummary(db = db)
+                getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
             
-            # test wheter or not genome is available
-            suppressMessages(is.genome.available(organism = organism, db = db))
+            # test whether or not genome is available
+            suppressMessages(is.genome.available(organism = organism, db = db, skip_bacteria = skip_bacteria))
             
             if (!file.exists(path)) {
                 dir.create(path, recursive = TRUE)
@@ -191,7 +190,7 @@ getRepeatMasker <-
                         paste0(local.org, "_rm_", db, ".out.gz")
                     ))) {
                         message(
-                            "File ",
+                            "-> File ",
                             file.path(
                                 path,
                                 paste0(local.org, "_rm_", db, ".out.gz")
@@ -211,15 +210,26 @@ getRepeatMasker <-
                                     mode = "wb"
                                 )
                             )
+                        }, error = function(e)
+                        {
+                          message(
+                            "The download session seems to have timed out at the FTP site '",
+                            download_url, "'. This could be due to an overload of queries to the databases.",
+                            " Please restart this function to continue the data retrieval process or wait ",
+                            "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
+                          )
+                          return("Not available")
+                        })
+                    }
                             
-                            message("RepeatMasker download of ", organism, " is completed!")
+                            message("-> RepeatMasker download of ", organism, " is completed!")
                                 
                             # download md5checksum file for organism of interest
                             custom_download(
-                                paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
-                                file.path(path, 
-                                          paste0(local.org, "_md5checksums.txt")),
-                                mode = "wb"
+                              paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
+                              file.path(path, 
+                                        paste0(local.org, "_md5checksums.txt")),
+                              mode = "wb"
                             )
                             
                             # test check sum
@@ -227,45 +237,40 @@ getRepeatMasker <-
                                                        paste0(local.org, 
                                                               "_md5checksums.txt"))
                             md5_file <-
-                                read_md5file(md5_file_path)
+                              read_md5file(md5_file_path)
                             
                             file_name <- NULL
                             
                             md5_sum <- dplyr::filter(md5_file,
-                                                     file_name == paste0(" ./", paste0(
-                                                         basename(FoundOrganism$ftp_path),
-                                                         "_rm.out.gz"
+                                                     file_name == paste0("./", paste0(
+                                                       basename(FoundOrganism$ftp_path),
+                                                       "_rm.out.gz"
                                                      )))$md5
                             
-                            message("Checking md5 hash of file: ", 
-                                    md5_file_path , " ...")
+                            # check if md5 info is available
+                            if (!is.character(md5_sum)){
+                            message("-> Checking md5 hash of file: ", 
+                                    file.path(
+                                      path,
+                                      paste0(local.org, "_rm_", db, ".out.gz")
+                                    ) , " (md5: ", md5_sum, ")", " ...")
+                            
                             if (!(tools::md5sum(file.path(
-                                path,
-                                paste0(local.org, "_rm_", db, ".out.gz")
+                              path,
+                              paste0(local.org, "_rm_", db, ".out.gz")
                             )) == md5_sum))
-                                stop(
-                                    paste0(
-                                        "Please download the file '",
-                                        md5_file_path,
-                                        "' again. The md5 hash between the downloaded file and the file ",
-                                        "stored at NCBI do not match.",
-                                        collapse = ""
-                                    )
+                              stop(
+                                paste0(
+                                  "Please download the file '",
+                                  md5_file_path,
+                                  "' again. The md5 hash between the downloaded file and the file ",
+                                  "stored at NCBI do not match.",
+                                  collapse = ""
                                 )
+                              )
                             unlink(md5_file_path)
                             message("The md5 hash of file '", md5_file_path, "' matches!")
-                            
-                        }, error = function(e)
-                        {
-                            message(
-                                "The download session seems to have timed out at the FTP site '",
-                                download_url, "'. This could be due to an overload of queries to the databases.",
-                                " Please restart this function to continue the data retrieval process or wait ",
-                                "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
-                            )
-                            return("Not available")
-                        })
-                    }
+                            }
                     
                     docFile(
                         file.name = paste0(local.org, "_rm_", db, 
@@ -312,7 +317,7 @@ getRepeatMasker <-
                     
                     message(
                         paste0(
-                            "The Repeat Masker output file of '",
+                            "-> The Repeat Masker output file of '",
                             organism,
                             "' has been downloaded to '",
                             path,
@@ -321,6 +326,7 @@ getRepeatMasker <-
                             "'."
                         )
                     )
+                    please_cite_biomartr(mute_citation = mute_citation)
                     
                     return(file.path(
                         path,

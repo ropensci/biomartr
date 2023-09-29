@@ -4,7 +4,7 @@
 \alias{organismBM}
 \title{Retrieve Ensembl Biomart marts and datasets for a query organism}
 \usage{
-organismBM(organism = NULL, update = FALSE)
+organismBM(organism = NULL, update = FALSE, mute_citation = TRUE)
 }
 \arguments{
 \item{organism}{a character string specifying the scientific name of a 
@@ -14,6 +14,8 @@ available biomart connections are returned.}
 \item{update}{a logical value specifying whether or not the local 
 listMart.txt and listDatasets.txt files shall be updated by remote access
  to BioMart.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \description{
 This function returns either all available biomart connections 

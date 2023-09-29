@@ -79,11 +79,20 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-
-# download the collection of Arabidopsis thaliana from refseq
+# download the collection of Homo sapiens from refseq
 # and store the corresponding genome file in '_ncbi_downloads/collection'
- getCollection( db       = "refseq", 
-             organism = "Arabidopsis thaliana", 
+ Hsap_collection <- getCollection( db       = "refseq", 
+             organism = "Homo sapiens", 
+             path = file.path("_db_downloads","collections"))
+# download the collection of Homo sapiens from genbank
+# and store the corresponding genome file in '_ncbi_downloads/collection'
+ Hsap_collection <- getCollection( db       = "genbank", 
+             organism = "Homo sapiens", 
+             path = file.path("_db_downloads","collections"))
+# download the collection of Homo sapiens from ensembl
+# and store the corresponding genome file in '_ncbi_downloads/collection'
+ Hsap_collection <- getCollection( db       = "ensembl", 
+             organism = "Homo sapiens", 
              path = file.path("_db_downloads","collections"))
 }
 

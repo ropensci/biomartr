@@ -4,10 +4,12 @@
 \alias{getMetaGenomeSummary}
 \title{Retrieve the assembly_summary.txt file from NCBI genbank metagenomes}
 \usage{
-getMetaGenomeSummary()
+getMetaGenomeSummary(
+  local_file = file.path(cachedir(), "assembly_summary_metagenomes_genbank.txt")
+)
 }
 \description{
-Retrieval function of the assembly_summary.txt file 
+Retrieval function of the assembly_summary.txt file
 from NCBI genbank metagenomes.
 This files stores all available metagenome projects on NCBI Genbank.
 }
@@ -18,7 +20,7 @@ meta.summary
 }
 }
 \seealso{
-\code{\link{getKingdomAssemblySummary}}, 
+\code{\link{getKingdomAssemblySummary}},
 \code{\link{getSummaryFile}}
 }
 \author{

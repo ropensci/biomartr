@@ -13,7 +13,8 @@ getGenome(
   gunzip = FALSE,
   path = file.path("_ncbi_downloads", "genomes"),
   assembly_type = "toplevel",
-  mute_citation = FALSE
+  mute_citation = FALSE,
+  analyse_genome = FALSE
 )
 }
 \arguments{
@@ -34,9 +35,9 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
@@ -50,17 +51,12 @@ if the standard format before that.}
 the corresponding genome shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
 
-\item{assembly_type}{a character string specifying from which assembly type the genome
-shall be retrieved from (ensembl only, else this argument is ignored):
-Default is
-\code{assembly_type = "toplevel")}.
-This will give you all multi-chromosomes (copies of the same chromosome with small variations).
-As an example the toplevel fasta genome in human is over 70 GB uncompressed.
-To get primary assembly with 1 chromosome variant per chromosome:
-\code{assembly_type = "primary_assembly")}.
-As an example, the  primary_assembly fasta genome in human is only a few GB uncompressed:}
+\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
+
+\item{analyse_genome}{logical, default FALSE. If TRUE, get general genome statistics like
+gc content etc. For more details, see ?summary_genome}
 }
 \value{
 File path to downloaded genome.
@@ -113,7 +109,7 @@ Ath_genome <- read_genome(file_path, format = "fasta")
 \seealso{
 \code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}},
 \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{summary_genome}},
+\code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, \code{\link{getCollection}},
 \code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
 }
 \author{

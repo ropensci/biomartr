@@ -16,16 +16,15 @@ getProteome(
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 \item \code{db = "ensembl"}
-\item \code{db = "uniprot"}
 }}
 
-\item{organism}{there are three options to characterize an organism: 
+\item{organism}{there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -34,18 +33,20 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-that the most recent database version is used.}
+\item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used. \code{release = 75} would for human would give the stable
+GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
+if the standard format before that.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
-\item{path}{a character string specifying the location (a folder) in which 
-the corresponding proteome shall be stored. Default is 
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding proteome shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -55,16 +56,16 @@ File path to downloaded proteome.
 }
 \description{
 Main proteome retrieval function for an organism of interest.
-By specifying the scientific name of an organism of interest the 
+By specifying the scientific name of an organism of interest the
 corresponding fasta-file storing the proteome of the organism of interest
-can be downloaded and stored locally. Proteome files can be retrieved from 
+can be downloaded and stored locally. Proteome files can be retrieved from
 several databases.
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:
 
  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
- 
+
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
 
 and creates a directory '_ncbi_downloads/proteomes' to store
@@ -75,16 +76,16 @@ the proteome of interest as fasta file for future processing.
 
 # download the proteome of Arabidopsis thaliana from refseq
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-file_path <- getProteome( db       = "refseq", 
-             organism = "Arabidopsis thaliana", 
+file_path <- getProteome( db       = "refseq",
+             organism = "Arabidopsis thaliana",
              path     = file.path("_ncbi_downloads","proteomes") )
 
 Ath_proteome <- read_proteome(file_path, format = "fasta")
 
 # download the proteome of Arabidopsis thaliana from genbank
 # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
-file_path <- getProteome( db       = "genbank", 
-             organism = "Arabidopsis thaliana", 
+file_path <- getProteome( db       = "genbank",
+             organism = "Arabidopsis thaliana",
              path     = file.path("_ncbi_downloads","proteomes") )
 
 Ath_proteome <- read_proteome(file_path, format = "fasta")
@@ -92,8 +93,8 @@ Ath_proteome <- read_proteome(file_path, format = "fasta")
 }
 \seealso{
 \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}},
-\code{\link{getRNA}}, \code{\link{getRepeatMasker}}, 
-\code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}}, 
+\code{\link{getRNA}}, \code{\link{getRepeatMasker}},
+\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
 \code{\link{read_proteome}}
 }
 \author{

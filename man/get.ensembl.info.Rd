@@ -9,7 +9,7 @@ get.ensembl.info(update = FALSE, division)
 \arguments{
 \item{update}{logical, default FALSE. If TRUE, force re-download of info.}
 
-\item{division}{the ENSEMBL database (division) for which information shall 
+\item{division}{the ENSEMBL database (division) for which information shall
 be retrieved (available options can be obtained with \code{\link{ensembl_divisions}}).}
 }
 \description{

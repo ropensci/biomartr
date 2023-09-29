@@ -8,6 +8,7 @@
 #' @param update a logical value specifying whether or not the local 
 #' listMart.txt and listDatasets.txt files shall be updated by remote access
 #'  to BioMart. 
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details
 #' This function collects all available biomart connections and returns a table 
@@ -47,7 +48,7 @@
 #' \code{\link{organismAttributes}}
 #' @export
 
-organismBM <- function(organism = NULL, update = FALSE) {
+organismBM <- function(organism = NULL, update = FALSE, mute_citation = TRUE) {
     organism_name <- description <- mart <- dataset <- NULL
     
     message("Starting retrieval of all available BioMart datasets for ", organism, " ...")
@@ -101,7 +102,7 @@ organismBM <- function(organism = NULL, update = FALSE) {
             do.call(rbind, lapply(unlist(all_marts[ , "mart"]),
                                   function(mart) {
                                     message("Processing mart ", mart, " ...")
-                                      df <- getDatasets(mart = mart)
+                                      df <- getDatasets(mart = mart, mute_citation = TRUE)
                                       df <-
                                           dplyr::mutate(tibble::as_tibble(df), 
                                                 mart = rep(mart, nrow(df)))
@@ -157,6 +158,8 @@ organismBM <- function(organism = NULL, update = FALSE) {
                  organism,
                  "' has been found.")
         } else {
+          please_cite_biomartr(mute_citation = mute_citation)
+          
             return(dplyr::filter(
                 all_datasets,
                 stringr::str_detect(organism_name, organism)
