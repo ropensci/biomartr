@@ -14,6 +14,10 @@
 #' in the database as either a reference genome or a representative genome.
 #' @param release the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used.
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023),
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
+#' bacterial summary file will be downloaded.
 #' @param clean_retrieval logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.
 #' @param update a logical value indicating whether or not files that were already downloaded and are still present in the
 #' output folder shall be updated and re-loaded (\code{update = TRUE} or whether the existing file shall be retained \code{update = FALSE} (Default)).
@@ -51,6 +55,7 @@ getGenomeSet <-
              organisms,
              reference = FALSE,
              release = NULL,
+             skip_bacteria = TRUE,
              clean_retrieval = TRUE,
              gunzip = TRUE,
              update = FALSE,
@@ -112,7 +117,10 @@ getGenomeSet <-
                                       reference = reference,
                                       release = release,
                                       path     = path,
-                                      assembly_type = assembly_type)
+                                      assembly_type = assembly_type,
+                                      mute_citation = TRUE,
+                                      skip_bacteria = skip_bacteria
+                                      )
                 message("\n")
             }
 
@@ -129,6 +137,8 @@ getGenomeSet <-
             readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(basename(path), "_summary.csv")))
             message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all species has been stored at '",file.path(path, "documentation", paste0(basename(path), "_summary.csv")),"'.")
 
+            please_cite_biomartr()
+            
             if (clean_retrieval) {
                 message("\n")
                 message("Cleaning file names for more convenient downstream processing ...")
