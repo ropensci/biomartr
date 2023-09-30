@@ -32,6 +32,7 @@
 #' If TRUE, will download and overwrite the file.
 #' @param clean_retrieval, a logical, default FALSE. Cleaning file names for more convenient
 #'  downstream processing.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -73,7 +74,8 @@ getCollectionSet <-
            gunzip = TRUE,
            update = FALSE,
            remove_annotation_outliers = TRUE,
-           path = "set_collections") {
+           path = "set_collections",
+           mute_citation = FALSE) {
     message(
       "Starting collection retrieval of the following species: ",
       paste0(organisms, collapse = ", "),
@@ -130,7 +132,8 @@ getCollectionSet <-
                               gunzip = gunzip,
                               release = release,
                               remove_annotation_outliers = remove_annotation_outliers,
-                              path     = path)
+                              path     = path,
+                              mute_citation = TRUE)
         message("\n")
       }
 
@@ -147,6 +150,8 @@ getCollectionSet <-
       readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(basename(path), "_summary.csv")))
       message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all species has been stored at '",file.path(path, "documentation", paste0(basename(path), "_summary.csv")),"'.")
 
+      please_cite_biomartr(mute_citation = mute_citation)
+      
       if (clean_retrieval) {
         message("\n")
         message("Cleaning file names for more convenient downstream processing ...")
