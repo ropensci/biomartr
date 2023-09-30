@@ -86,14 +86,16 @@ BiocManager::install()
 # Install package dependencies
 BiocManager::install("Biostrings")
 BiocManager::install("biomaRt")
-
 ```
 
 Now users can install `biomartr` from CRAN:
 
 ```r
-# install biomartr 1.0.4
+# install biomartr 1.0.4 from CRAN
 install.packages("biomartr", dependencies = TRUE)
+
+# install the developer version containing the newest features
+BiocManager::install("ropensci/biomartr")
 ```
 
 ## Installation with Bioconda
