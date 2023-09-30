@@ -9,11 +9,13 @@ getGenomeSet(
   organisms,
   reference = FALSE,
   release = NULL,
+  skip_bacteria = TRUE,
   clean_retrieval = TRUE,
   gunzip = TRUE,
   update = FALSE,
   path = "set_genomes",
-  assembly_type = "toplevel"
+  assembly_type = "toplevel",
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -39,6 +41,11 @@ in the database as either a reference genome or a representative genome.}
 \item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used.}
 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
+bacterial summary file will be downloaded.}
+
 \item{clean_retrieval}{logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
@@ -51,6 +58,8 @@ the corresponding genomes shall be stored. Default is
 \code{path} = \code{"set_genomes"}.}
 
 \item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded genomes.
@@ -75,9 +84,22 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-getGenomeSet("refseq", organisms = c("Arabidopsis thaliana",
+# download the genomes of three different species at the same time
+##### Database: NCBI RefSeq
+getGenomeSet(db = "refseq", organisms = c("Arabidopsis thaliana",
                                      "Arabidopsis lyrata",
                                      "Capsella rubella"))
+# download the genomes of three different species at the same time
+#### Database: ENSEMBL
+getGenomeSet(db = "ensembl", organisms = c("Homo sapiens", 
+                                      "Mus musculus", 
+                                       "Caenorhabditis elegans"))
+                                       
+# download the genomes of three different species at the same time
+#### Database: UniProt
+getGenomeSet(db = "uniprot", organisms = c("Homo sapiens", 
+                                      "Mus musculus", 
+                                       "Caenorhabditis elegans"))
 }
 
 }

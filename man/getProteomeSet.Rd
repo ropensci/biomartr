@@ -9,10 +9,12 @@ getProteomeSet(
   organisms,
   reference = FALSE,
   release = NULL,
+  skip_bacteria = TRUE,
   clean_retrieval = TRUE,
   gunzip = TRUE,
   update = FALSE,
-  path = "set_proteomes"
+  path = "set_proteomes",
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -38,6 +40,11 @@ in the database as either a reference proteome or a representative proteome.}
 \item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used.}
 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
+bacterial summary file will be downloaded.}
+
 \item{clean_retrieval}{logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
@@ -46,7 +53,9 @@ that the most recent database version is used.}
 output folder shall be updated and re-loaded (\code{update = TRUE} or whether the existing file shall be retained \code{update = FALSE} (Default)).}
 
 \item{path}{a character string specifying the location (a folder) in which
-the corresponding proteomes shall be stored. Default is
+the corresponding proteomes shall be stored. Default is}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.
 \code{path} = \code{"set_proteomes"}.}
 }
 \value{
@@ -72,9 +81,23 @@ no download process will be performed.
 }
 \examples{
 \dontrun{
-getProteomeSet("refseq", organisms = c("Arabidopsis thaliana", 
+# download the proteomes of three different species at the same time
+#### Database: NCBI RefSeq
+getProteomeSet(db = "refseq", organisms = c("Arabidopsis thaliana", 
                                       "Arabidopsis lyrata", 
                                        "Capsella rubella"))
+                                       
+# download the proteomes of three different species at the same time
+#### Database: ENSEMBL
+getProteomeSet(db = "ensembl", organisms = c("Homo sapiens", 
+                                      "Mus musculus", 
+                                       "Caenorhabditis elegans"))
+                                       
+# download the proteomes of three different species at the same time
+#### Database: UniProt
+getProteomeSet(db = "uniprot", organisms = c("Homo sapiens", 
+                                      "Mus musculus", 
+                                       "Caenorhabditis elegans"))
 }
 
 }

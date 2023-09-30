@@ -13,7 +13,8 @@ getCollectionSet(
   gunzip = TRUE,
   update = FALSE,
   remove_annotation_outliers = TRUE,
-  path = "set_collections"
+  path = "set_collections",
+  mute_citation = FALSE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ will be stored at \code{\link{tempdir}} for further exploration.}
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding collection shall be stored. Default is
 \code{path} = \code{file.path("_db_downloads","collections")}.}
+
+\item{mute_citation}{logical value indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded genome.
