@@ -24,6 +24,7 @@
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding genomes shall be stored. Default is
 #' \code{path} = \code{"set_genomes"}.
+#' @param mute_citation logical value indicating whether citation message should be muted.
 #' @inheritParams getGTF
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
@@ -39,9 +40,22 @@
 #' no download process will be performed.
 #' @return File path to downloaded genomes.
 #' @examples \dontrun{
-#' getGenomeSet("refseq", organisms = c("Arabidopsis thaliana",
+#' # download the genomes of three different species at the same time
+#' ##### Database: NCBI RefSeq
+#' getGenomeSet(db = "refseq", organisms = c("Arabidopsis thaliana",
 #'                                      "Arabidopsis lyrata",
 #'                                      "Capsella rubella"))
+#' # download the genomes of three different species at the same time
+#' #### Database: ENSEMBL
+#' getGenomeSet(db = "ensembl", organisms = c("Homo sapiens", 
+#'                                       "Mus musculus", 
+#'                                        "Caenorhabditis elegans"))
+#'                                        
+#' # download the genomes of three different species at the same time
+#' #### Database: NCBI GenBank
+#' getGenomeSet(db = "genbank", organisms = c("Homo sapiens", 
+#'                                       "Mus musculus", 
+#'                                        "Caenorhabditis elegans"))
 #' }
 #'
 #' @seealso \code{\link{getProteomeSet}}, \code{\link{getCDSSet}},
@@ -60,7 +74,9 @@ getGenomeSet <-
              gunzip = TRUE,
              update = FALSE,
              path = "set_genomes",
-             assembly_type = "toplevel") {
+             assembly_type = "toplevel",
+             mute_citation = FALSE) {
+      
         message(
             "Starting genome retrieval of the following genomes: ",
             paste0(organisms, collapse = ", "),
@@ -137,7 +153,7 @@ getGenomeSet <-
             readr::write_excel_csv(summary_log, file.path(path, "documentation", paste0(basename(path), "_summary.csv")))
             message("A summary file (which can be used as supplementary information file in publications) containig retrieval information for all species has been stored at '",file.path(path, "documentation", paste0(basename(path), "_summary.csv")),"'.")
 
-            please_cite_biomartr()
+            please_cite_biomartr(mute_citation = mute_citation)
             
             if (clean_retrieval) {
                 message("\n")
