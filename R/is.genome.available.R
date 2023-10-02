@@ -47,19 +47,20 @@
 #' }
 #' @export
 
-is.genome.available <-
-    function(
-             db = "refseq",
-             organism,
-             skip_bacteria = "TRUE",
-             details = FALSE
-             ) {
+is.genome.available <- function(db = "refseq", organism,
+                                skip_bacteria = "TRUE", details = FALSE) {
+        all_db <- c(
+          "refseq",
+          "genbank",
+          "ensembl",
+          "ensemblgenomes",
+          "uniprot"
+        )
 
-        if (!is.element(db, c("refseq", "genbank",
-                              "ensembl", "uniprot", "ensemblgenomes")))
+        if (!is.element(db, all_db))
             stop(
-                "Please select one of the available data bases:
-                'refseq', 'genbank', 'ensembl', or 'uniprot', 'ensemblgenomes'",
+                "Please select one of the available data bases:\n",
+                paste(all_db, collapse = ", "),
                 call. = FALSE
             )
 
@@ -74,12 +75,12 @@ is.genome.available <-
         if (db == "uniprot") {
 
             if (is.taxid(organism)) {
-                unipreot_rest_url <- paste0(
+                uniprot_rest_url <- paste0(
                     "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&taxid=",
                     as.integer(organism)
                 )
 
-                rest_status_test <- curl_fetch_memory(unipreot_rest_url)
+                rest_status_test <- curl_fetch_memory(uniprot_rest_url)
 
                 if (rest_status_test$status_code != 200) {
                     message(
@@ -89,29 +90,21 @@ is.genome.available <-
                 }
                 uniprot_species_info <-
                     tibble::as_tibble(jsonlite::fromJSON(
-                        unipreot_rest_url
+                        uniprot_rest_url
                     ))
 
             } else {
 
                 organism_new <- stringr::str_replace_all(organism, " ", "%20")
 
-                unipreot_rest_url_name <- paste0(
+                uniprot_rest_url_name <- paste0(
                     "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&name=",
                     organism_new
                 )
 
-                rest_status_test_name <- curl_fetch_memory(unipreot_rest_url_name)
+                rest_status_test_name <- curl_fetch_memory(uniprot_rest_url_name)
 
-
-                unipreot_rest_url_upid <- paste0(
-                    "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&upid=",
-                    organism
-                )
-
-                rest_status_test_upid <- curl_fetch_memory(unipreot_rest_url_upid)
-
-                if ((rest_status_test_upid$status_code != 200) & (rest_status_test_name$status_code != 200)) {
+                if ((rest_status_test_name$status_code != 200)) {
                     message(
                         "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
                         " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
@@ -121,14 +114,7 @@ is.genome.available <-
                 if (rest_status_test_name$status_code == 200) {
                     uniprot_species_info <-
                         tibble::as_tibble(jsonlite::fromJSON(
-                            unipreot_rest_url_name
-                        ))
-                }
-
-                if (rest_status_test_upid$status_code == 200) {
-                    uniprot_species_info <-
-                        tibble::as_tibble(jsonlite::fromJSON(
-                            unipreot_rest_url_upid
+                            uniprot_rest_url_name
                         ))
                 }
             }
@@ -143,13 +129,7 @@ is.genome.available <-
                         "' database. ",
                         "Please consider specifying ",
                         paste0("'db = ", dplyr::setdiff(
-                            c(
-                                "refseq",
-                                "genbank",
-                                "ensembl",
-                                "ensemblgenomes",
-                                "uniprot"
-                            ),
+                            all_db,
                             db
                         ), collapse = "' or "),
                         "' to check whether '",

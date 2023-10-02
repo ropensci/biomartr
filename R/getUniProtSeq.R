@@ -4,104 +4,39 @@ getUniProtSeq <-
   function(organism,
            path = NULL,
            gunzip = FALSE,
-           update = FALSE) {
+           update = FALSE,
+           mute_citation = FALSE) {
     organism_new <- stringr::str_replace_all(organism, " ", "%20")
     organism_name_path <-
       stringr::str_replace_all(organism, " ", "_")
-    
+
     # retrieve all uniprot info for this organism
-    uniprot_species_info <- getUniProtInfo(organism = organism)
-    
-    name <-
-      upid <-
-      taxonomy <-
-      isReferenceProteome <- isRepresentativeProteome <- NULL
-    isRepresentativeProteome <- NULL
-    
-    uniprot_species_info <-
-      dplyr::filter(uniprot_species_info, stringr::str_detect(name, organism))
-    
-    if (nrow(uniprot_species_info) > 1) {
-      # message("There are more than one entry for '",organism,"'.",
-      #         " Please select the one below that you prefer and re-run this function using the full name you chose.")
-      # message("\n")
-      # message("Options are: ", paste0("organism = '",uniprot_species_info$name,"', "),".")
-      
-      uniprot_species_info <-
-        uniprot_species_info[1, ]
-    }
-    
-    uniprot_species_info <-
-      dplyr::select(
-        uniprot_species_info,
-        name,
-        upid,
-        taxonomy,
-        isReferenceProteome,
-        isRepresentativeProteome,
-        superregnum
-      )
-    
-    readr::write_tsv(uniprot_species_info,
-                     file.path(tempdir(), paste0(
-                       organism_name_path, "_uniprot_info.tsv"
-                     )))
-    
-    
+    uniprot_species_info <- getUniProtInfo(organism, update = update)
+
     if (nrow(uniprot_species_info) > 0) {
-      #organism_new <- stringr::str_replace_all(uniprot_species_info$name, " ", "%20")
-      
+      # TODO: Generalize this part too
       download_file <-
         paste0(uniprot_species_info$upid,
                "_",
                uniprot_species_info$taxonomy,
                ".fasta.gz")
-      
-      if (uniprot_species_info$superregnum == "arachea") {
-        query <-
-          paste0(
-            "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Archaea/",
-            uniprot_species_info$upid,"/",
-            download_file
-          )
-      }
-      
-      if (uniprot_species_info$superregnum == "bacteria") {
-        query <-
-          paste0(
-            "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Bacteria/",
-            uniprot_species_info$upid,"/",
-            download_file
-          )
-      }
-      
-      if (uniprot_species_info$superregnum == "eukaryota") {
-        query <-
-          paste0(
-            "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/",
-            uniprot_species_info$upid,"/",
-            download_file
-          )
-      }
-      
-      if (uniprot_species_info$superregnum == "viruses") {
-        query <-
-          paste0(
-            "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Viruses/",
-            uniprot_species_info$upid,"/",
-            download_file
-          )
-      }
-      
-      if (is.null(path))
-        custom_download(url = query, destfile = file.path(tempdir(), download_file))
-      
-      if (!is.null(path))
-        custom_download(url = query, destfile = file.path(path, download_file))
-      
-      tryCatch({
-        organism_fasta_file <-
-          Biostrings::readBStringSet(ifelse(is.null(path), file.path(tempdir(), download_file), file.path(path, download_file)))
+
+      # arachea
+      kingdom <- uniprot_species_info$superregnum
+      proteom_url <- "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes"
+      query <- file.path(proteom_url,
+                         stringr::str_to_title(kingdom),
+                         uniprot_species_info$upid,
+                         download_file)
+
+
+      local_proteome <- ifelse(is.null(path),
+                               file.path(tempdir(), download_file),
+                               file.path(path, download_file))
+      custom_download(url = query, destfile = local_proteome)
+
+      organism_fasta_file <- tryCatch({
+        Biostrings::readBStringSet(local_proteome)
       }, error = function(e)
         message(
           "Something went wrong when trying to access the Uniprot API .Thus the query ",
@@ -110,23 +45,24 @@ getUniProtSeq <-
           organism,
           "'. Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall?"
         ))
-      
+
+      path_or_wd <- ifelse(is.null(path), getwd(), path)
+      local_file <- file.path(path_or_wd,
+                              paste0(organism_name_path,
+                                     "_protein_uniprot.faa.gz"))
+
       Biostrings::writeXStringSet(
         organism_fasta_file,
-        filepath = file.path(
-          ifelse(is.null(path), getwd(), path),
-          paste0(organism_name_path,
-                 "_protein_uniprot.faa.gz")
-        ),
+        filepath = local_file,
         compress = TRUE
       )
-      
+
       docFile(
-        file.name = paste0(organism_name_path, "_protein_uniprot.faa.gz"),
+        file.name = basename(local_file),
         organism  = uniprot_species_info$name,
         url       = query,
         database  = "uniprot",
-        path      = ifelse(is.null(path), getwd(), path),
+        path      = path_or_wd,
         refseq_category = "",
         assembly_accession = "",
         bioproject = "",
@@ -139,60 +75,10 @@ getUniProtSeq <-
         seq_rel_date = "",
         submitter = ""
       )
-      
-      if (!gunzip) {
-        message(
-          paste0(
-            "The proteome of '",
-            organism,
-            "' has been downloaded to '",
-            ifelse(is.null(path), getwd(), path),
-            "' and has been named '",
-            paste0(organism_name_path, "_protein_uniprot.faa.gz"),
-            "' ."
-          )
-        )
-      }
-      
-      if (gunzip) {
-        message(
-          paste0(
-            "The proteome of '",
-            organism,
-            "' has been downloaded to '",
-            ifelse(is.null(path), getwd(), path),
-            "' and has been named '",
-            paste0(organism_name_path, "_protein_uniprot.faa"),
-            "' ."
-          )
-        )
-      }
-      
-      if (gunzip) {
-        message("Unzipping downloaded file ...")
-        R.utils::gunzip(file.path(
-          ifelse(is.null(path), getwd(), path),
-          paste0(organism_name_path,
-                 "_protein_uniprot.faa.gz")
-        ),
-        destname = file.path(
-          ifelse(is.null(path), getwd(), path),
-          paste0(organism_name_path,
-                 "_protein_uniprot.faa")
-        ))
-        return(file.path(
-          ifelse(is.null(path), getwd(), path),
-          paste0(organism_name_path,
-                 "_protein_uniprot.faa")
-        ))
-      } else {
-        return(file.path(
-          ifelse(is.null(path), getwd(), path),
-          paste0(organism_name_path,
-                 "_protein_uniprot.faa.gz")
-        ))
-      }
-      
+
+      gunzip_and_check(local_file, gunzip, format = "proteome",
+                       mute_citation = mute_citation)
+
     } else {
       warning(
         "Unfortunately, no entry for '",
@@ -201,5 +87,5 @@ getUniProtSeq <-
         call. = FALSE
       )
       return(NA)
-    }
   }
+}

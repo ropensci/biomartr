@@ -8,6 +8,10 @@
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding proteome shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
+#' @param update logical, default TRUE. (Uniprot only for now!)
+#' If species info file exists already,
+#' do not re download, makes it faster but the file can be old, i.e. no longer
+#' as complete as it could be.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -49,6 +53,7 @@ getProteome <-
              skip_bacteria = TRUE,
              release = NULL,
              gunzip = FALSE,
+             update = TRUE,
              path = file.path("_ncbi_downloads", "proteomes"),
              mute_citation = FALSE) {
   if (!is.element(db, c("refseq", "genbank",
@@ -99,9 +104,8 @@ getProteome <-
 
 
     } else if (db == "uniprot") {
-        getUniProtSeq(organism = organism, path = path, update = TRUE,
-                      gunzip = gunzip)
-        please_cite_biomartr(mute_citation = mute_citation)
+        getUniProtSeq(organism = organism, path = path, update = update,
+                      gunzip = gunzip, mute_citation = mute_citation)
     }
 }
 

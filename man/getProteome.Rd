@@ -11,6 +11,7 @@ getProteome(
   skip_bacteria = TRUE,
   release = NULL,
   gunzip = FALSE,
+  update = TRUE,
   path = file.path("_ncbi_downloads", "proteomes"),
   mute_citation = FALSE
 )
@@ -44,6 +45,11 @@ GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure t
 if the standard format before that.}
 
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+
+\item{update}{logical, default TRUE. (Uniprot only for now!)
+If species info file exists already,
+do not re download, makes it faster but the file can be old, i.e. no longer
+as complete as it could be.}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding proteome shall be stored. Default is
