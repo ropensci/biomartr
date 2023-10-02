@@ -83,21 +83,34 @@ no download process will be performed.
 \dontrun{
 # download the proteomes of three different species at the same time
 #### Database: NCBI RefSeq
-getProteomeSet(db = "refseq", organisms = c("Arabidopsis thaliana", 
+file_paths <- getProteomeSet(db = "refseq", organisms = c("Arabidopsis thaliana", 
                                       "Arabidopsis lyrata", 
                                        "Capsella rubella"))
+# look at file paths
+file_paths
                                        
+#### Database: NCBI Genbank
+file_paths <- getProteomeSet(db = "genbank", organisms = c("Arabidopsis thaliana", 
+                                      "Arabidopsis lyrata", 
+                                       "Capsella rubella"))
+# look at file paths
+file_paths
+
 # download the proteomes of three different species at the same time
 #### Database: ENSEMBL
-getProteomeSet(db = "ensembl", organisms = c("Homo sapiens", 
+file_paths <- getProteomeSet(db = "ensembl", organisms = c("Homo sapiens", 
                                       "Mus musculus", 
                                        "Caenorhabditis elegans"))
-                                       
+# look at file paths
+file_paths  
+                                      
 # download the proteomes of three different species at the same time
 #### Database: UniProt
-getProteomeSet(db = "uniprot", organisms = c("Homo sapiens", 
+file_paths <- getProteomeSet(db = "uniprot", organisms = c("Homo sapiens", 
                                       "Mus musculus", 
                                        "Caenorhabditis elegans"))
+# look at file paths
+file_paths
 }
 
 }

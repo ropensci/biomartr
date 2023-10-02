@@ -10,6 +10,7 @@ getUniProtSeq <-
     organism_name_path <-
       stringr::str_replace_all(organism, " ", "_")
 
+    message("-> Retrieve UniProt information for organism: ", organism)
     # retrieve all uniprot info for this organism
     uniprot_species_info <- getUniProtInfo(organism, update = update)
 
@@ -51,6 +52,8 @@ getUniProtSeq <-
                               paste0(organism_name_path,
                                      "_protein_uniprot.faa.gz"))
 
+      message("-> Write downloaded *.fasta file to local disk ...")
+
       Biostrings::writeXStringSet(
         organism_fasta_file,
         filepath = local_file,
@@ -76,9 +79,9 @@ getUniProtSeq <-
         submitter = ""
       )
 
+
       gunzip_and_check(local_file, gunzip, format = "proteome",
                        mute_citation = mute_citation)
-
     } else {
       warning(
         "Unfortunately, no entry for '",

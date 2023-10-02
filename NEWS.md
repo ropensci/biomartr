@@ -11,6 +11,8 @@ development. This progress is still ongoing.
 It is adviced to use only "ensembl" as db from now on, but "ensemblgenomes" will still work.
 - Annotation did mean gff, but it should be both gff and gtf getter, with format specification, this is now fixed and generalized.
 - Added in new kingdom for ensembl: protists supportwith correct collection getters
+- The retrieval from the `UniProt` database is now updated to the new API/FTP path system. Now users
+can retrieve proteomes using the functions `getProteome(db = "uniprot", ...)` and `getProteomeSet(db = "uniprot", ...)` (see #82)
 
 ### Power user cache
 
