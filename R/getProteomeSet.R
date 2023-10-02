@@ -48,21 +48,34 @@
 #' @examples \dontrun{
 #' # download the proteomes of three different species at the same time
 #' #### Database: NCBI RefSeq
-#' getProteomeSet(db = "refseq", organisms = c("Arabidopsis thaliana", 
+#' file_paths <- getProteomeSet(db = "refseq", organisms = c("Arabidopsis thaliana", 
 #'                                       "Arabidopsis lyrata", 
 #'                                        "Capsella rubella"))
+#' # look at file paths
+#' file_paths
 #'                                        
+#' #### Database: NCBI Genbank
+#' file_paths <- getProteomeSet(db = "genbank", organisms = c("Arabidopsis thaliana", 
+#'                                       "Arabidopsis lyrata", 
+#'                                        "Capsella rubella"))
+#' # look at file paths
+#' file_paths
+#' 
 #' # download the proteomes of three different species at the same time
 #' #### Database: ENSEMBL
-#' getProteomeSet(db = "ensembl", organisms = c("Homo sapiens", 
+#' file_paths <- getProteomeSet(db = "ensembl", organisms = c("Homo sapiens", 
 #'                                       "Mus musculus", 
 #'                                        "Caenorhabditis elegans"))
-#'                                        
+#' # look at file paths
+#' file_paths  
+#'                                       
 #' # download the proteomes of three different species at the same time
 #' #### Database: UniProt
-#' getProteomeSet(db = "uniprot", organisms = c("Homo sapiens", 
+#' file_paths <- getProteomeSet(db = "uniprot", organisms = c("Homo sapiens", 
 #'                                       "Mus musculus", 
 #'                                        "Caenorhabditis elegans"))
+#' # look at file paths
+#' file_paths
 #' }
 #'
 #' @seealso \code{\link{getGenomeSet}}, \code{\link{getCDSSet}},
@@ -170,11 +183,13 @@ getProteomeSet <-
             # return file paths of clean names (if selected) and unzipped files (if selected)
             new_files <- list.files(path)
             new_files <- new_files[-which(stringr::str_detect(new_files, "documentation"))]
+            new_files <- new_files[-which(stringr::str_detect(new_files, "UP0"))]
             
             return(file.path(path, new_files)) 
         } else {
             files <- file.path(path, list.files(path))
             files <- files[-which(stringr::str_detect(files, "documentation"))]
+            files <- files[-which(stringr::str_detect(files, "UP0"))]
             return(files)
         }      
     }

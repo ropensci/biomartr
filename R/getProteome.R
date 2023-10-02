@@ -19,24 +19,39 @@
 #' the proteome of interest as fasta file for future processing.
 #' @return File path to downloaded proteome.
 #' @examples \dontrun{
-#'
-#' # download the proteome of Arabidopsis thaliana from refseq
-#' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+#' # download the proteome of Arabidopsis thaliana from NCBI RefSeq
+#' # and store the corresponding proteome file in '_ncbi_downloads/refseq/proteomes'
 #' file_path <- getProteome( db       = "refseq",
 #'              organism = "Arabidopsis thaliana",
-#'              path     = file.path("_ncbi_downloads","proteomes") )
-#'
+#'              path     = file.path("_ncbi_downloads","refseq","proteomes") )
+#' # import proteome into R session
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #'
-#' # download the proteome of Arabidopsis thaliana from genbank
-#' # and store the corresponding proteome file in '_ncbi_downloads/proteomes'
+#' # download the proteome of Arabidopsis thaliana from NCBI Genbank
+#' # and store the corresponding proteome file in '_ncbi_downloads/genbank/proteomes'
 #' file_path <- getProteome( db       = "genbank",
 #'              organism = "Arabidopsis thaliana",
-#'              path     = file.path("_ncbi_downloads","proteomes") )
-#'
+#'              path     = file.path("_ncbi_downloads","genbank","proteomes") )
+#' # import proteome into R session
+#' Ath_proteome <- read_proteome(file_path, format = "fasta")
+#' 
+#  # download the proteome of Arabidopsis thaliana from UniProt
+#' # and store the corresponding proteome file in '_downloads/uniprot/proteomes'
+#' file_path <- getProteome( db       = "uniprot",
+#'              organism = "Arabidopsis thaliana",
+#'              path     = file.path("_downloads","uniprot","proteomes") )
+#'# import proteome into R session
+#'Ath_proteome <- read_proteome(file_path, format = "fasta")
+#' 
+#' # download the proteome of Arabidopsis thaliana from ENSEMBL
+#' # and store the corresponding proteome file in '_downloads/ensembl/proteomes'
+#' file_path <- getProteome( db       = "ensembl",
+#'              organism = "Arabidopsis thaliana",
+#'              path     = file.path("_downloads","ensembl","proteomes") )
+#' # import proteome into R session             
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' }
-#' @seealso \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}},
+#' @seealso \code{\link{getProteomeSet}}, \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}},
 #' \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
 #' \code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
 #' \code{\link{read_proteome}}
@@ -99,9 +114,14 @@ getProteome <-
 
 
     } else if (db == "uniprot") {
-        getUniProtSeq(organism = organism, path = path, update = TRUE,
-                      gunzip = gunzip)
+      proteome_storage_path <- getUniProtSeq(
+        organism = organism,
+        path = path,
+        update = TRUE,
+        gunzip = gunzip
+      )
         please_cite_biomartr(mute_citation = mute_citation)
+        return(proteome_storage_path)
     }
 }
 

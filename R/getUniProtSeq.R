@@ -8,7 +8,7 @@ getUniProtSeq <-
     organism_new <- stringr::str_replace_all(organism, " ", "%20")
     organism_name_path <-
       stringr::str_replace_all(organism, " ", "_")
-    
+    message("-> Retrieve UniProt information for organism: ", organism)
     # retrieve all uniprot info for this organism
     uniprot_species_info <- getUniProtInfo(organism = organism)
     
@@ -92,7 +92,7 @@ getUniProtSeq <-
             download_file
           )
       }
-      
+      message("-> Running download ...")
       if (is.null(path))
         custom_download(url = query, destfile = file.path(tempdir(), download_file))
       
@@ -110,7 +110,7 @@ getUniProtSeq <-
           organism,
           "'. Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall?"
         ))
-      
+      message("-> Write downloaded *.fasta file to local disk ...")
       Biostrings::writeXStringSet(
         organism_fasta_file,
         filepath = file.path(
@@ -169,7 +169,7 @@ getUniProtSeq <-
       }
       
       if (gunzip) {
-        message("Unzipping downloaded file ...")
+        message("-> Unzipping downloaded file ...")
         R.utils::gunzip(file.path(
           ifelse(is.null(path), getwd(), path),
           paste0(organism_name_path,
