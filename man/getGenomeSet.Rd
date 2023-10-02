@@ -96,8 +96,8 @@ getGenomeSet(db = "ensembl", organisms = c("Homo sapiens",
                                        "Caenorhabditis elegans"))
                                        
 # download the genomes of three different species at the same time
-#### Database: UniProt
-getGenomeSet(db = "uniprot", organisms = c("Homo sapiens", 
+#### Database: NCBI GenBank
+getGenomeSet(db = "genbank", organisms = c("Homo sapiens", 
                                       "Mus musculus", 
                                        "Caenorhabditis elegans"))
 }
