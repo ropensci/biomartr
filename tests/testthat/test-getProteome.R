@@ -256,7 +256,7 @@ test_that("The getProteome() interface to Uniprot works properly ..", {
   )
 
   expect_false(is.logical(c(out1, out2)))
-  expect_false(is.na(c(out1, out2)))
+  expect_false(anyNA(c(out1, out2)))
   expect_false(identical(out1, out2))
 })
 

@@ -92,8 +92,8 @@ ftp_url_ensembl <- function(core_path, new.organism, assembly,
   url_stem <- file.path(dir, ensembl_assembly_stem(new.organism, assembly))
 
   if (!is.null(type)) type <- paste0(type, ".")
-  if (!is.null(id.type)) id.type <- paste0(id.type, ".")
   if (!is.null(id.type) && id.type == "none") id.type <- NULL
+  if (!is.null(id.type)) id.type <- paste0(id.type, ".")
   release. <- release
   is_fasta <- format == "fasta"
   old_fasta_naming <- is_fasta && is.numeric(release) && release <= 75

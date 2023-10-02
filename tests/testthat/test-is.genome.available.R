@@ -162,18 +162,20 @@ test_that("The is.genome.available() error messages work properly..", {
 
 test_that("The is.genome.available() interface to Uniprot
           works properly..", {
-              skip_on_cran()
-              skip_on_travis()
-              # test whether interface to 'uniprot' works properly
-              is.genome.available(db = "uniprot",
-                                  organism = "Saccharomyces cerevisiae",
-                                  details = TRUE)
+    skip_on_cran()
+    skip_on_travis()
+    # test whether interface to 'uniprot' works properly
+    out1 <- is.genome.available(db = "uniprot",
+                        organism = "Saccharomyces cerevisiae",
+                        details = TRUE)
 
-              # test whether interface to 'uniprot' works properly without details
-              is.genome.available(db = "uniprot",
-                                  organism = "Saccharomyces cerevisiae")
+    # test whether interface to 'uniprot' works properly without details
+    out2 <- is.genome.available(db = "uniprot",
+                        organism = "Saccharomyces cerevisiae")
 
-          })
+    expect_true(nrow(out1) > 0)
+    expect_true(out2)
+})
 
 
 
