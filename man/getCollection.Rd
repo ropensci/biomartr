@@ -17,7 +17,7 @@ getCollection(
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the collection 
+\item{db}{a character string specifying the database from which the collection
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
@@ -25,7 +25,7 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism: 
+\item{organism}{there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -34,9 +34,9 @@ shall be retrieved:
 
 \item{reference}{a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
 \item{release}{the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning that the most recent database version is used.}
@@ -44,11 +44,11 @@ bacterial summary file will be downloaded.}
 \item{gunzip}{a logical value indicating whether or not files should be unzipped.}
 
 \item{remove_annotation_outliers}{shall outlier lines be removed from the input annotation_file?
-If yes, then the initial annotation_file will be overwritten and the removed outlier lines 
+If yes, then the initial annotation_file will be overwritten and the removed outlier lines
 will be stored at \code{\link{tempdir}} for further exploration.}
 
-\item{path}{a character string specifying the location (a folder) in which 
-the corresponding collection shall be stored. Default is 
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding collection shall be stored. Default is
 \code{path} = \code{file.path("_db_downloads","collections")}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -59,9 +59,9 @@ File path to downloaded genome.
 \description{
 Main collection retrieval function for an organism of interest.
 By specifying the scientific name of an organism of interest a collection consisting of
-the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats 
+the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats
 file of the organism of interest
-can be downloaded and stored locally. Collections can be retrieved from 
+can be downloaded and stored locally. Collections can be retrieved from
 several databases.
 }
 \details{
@@ -70,7 +70,7 @@ Internally this function loads the the overview.txt file from NCBI:
  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
- 
+
 and creates a directory '_ncbi_downloads/collection' to store
 the genome of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
@@ -81,26 +81,26 @@ no download process will be performed.
 \dontrun{
 # download the collection of Homo sapiens from refseq
 # and store the corresponding genome file in '_ncbi_downloads/collection'
- Hsap_collection <- getCollection( db       = "refseq", 
-             organism = "Homo sapiens", 
+ Hsap_collection <- getCollection( db       = "refseq",
+             organism = "Homo sapiens",
              path = file.path("_db_downloads","collections"))
 # download the collection of Homo sapiens from genbank
 # and store the corresponding genome file in '_ncbi_downloads/collection'
- Hsap_collection <- getCollection( db       = "genbank", 
-             organism = "Homo sapiens", 
+ Hsap_collection <- getCollection( db       = "genbank",
+             organism = "Homo sapiens",
              path = file.path("_db_downloads","collections"))
 # download the collection of Homo sapiens from ensembl
 # and store the corresponding genome file in '_ncbi_downloads/collection'
- Hsap_collection <- getCollection( db       = "ensembl", 
-             organism = "Homo sapiens", 
+ Hsap_collection <- getCollection( db       = "ensembl",
+             organism = "Homo sapiens",
              path = file.path("_db_downloads","collections"))
 }
 
 }
 \seealso{
-\code{\link{getGenomeSet}}, \code{\link{getProteomeSet}}, \code{\link{getCDSSet}}, 
-\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}}, 
+\code{\link{getGenomeSet}}, \code{\link{getProteomeSet}}, \code{\link{getCDSSet}},
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}},
+\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{meta.retrieval}},
 \code{\link{read_genome}}
 }
 \author{

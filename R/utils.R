@@ -7,6 +7,10 @@ clean.str.brackets <- function(string) {
     return(str.new)
 }
 
+is.taxid <- function(x) {
+  return(stringr::str_count(x, "[:digit:]") == nchar(x))
+}
+
 
 docFile <-
   function(file.name = doc$file_name,
@@ -28,11 +32,11 @@ docFile <-
            doc = NULL) {
     local.org <- stringr::str_replace_all(organism, "-", "_")
     local.org <- stringr::str_replace_all(organism, "\\/", "_")
-    
+
     sink(file.path(path, paste0(
       "doc_", local.org, "_db_", database, ".txt"
     )))
-    
+
     cat(paste0("File Name: ", file.name))
     cat("\n")
     cat(paste0("Organism Name: ", organism))
@@ -67,9 +71,9 @@ docFile <-
     cat(paste0("seq_rel_date: ", seq_rel_date))
     cat("\n")
     cat(paste0("submitter: ", submitter))
-    
+
     sink()
-    
+
   }
 
 

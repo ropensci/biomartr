@@ -55,14 +55,16 @@ select_assembly_refseq_genbank <- function(organism, AssemblyFilesAllKingdoms,
     return("Not available")
   }
   if (nrow(FoundOrganism) > 1) {
-    is_complete_genome <- FoundOrganism$assembly_level == "Complete Genome"
-    if (any(is_complete_genome)) {
-      FoundOrganism <- FoundOrganism[is_complete_genome == TRUE, ]
-    }
+
     is_reference_genome <- FoundOrganism$refseq_category == "reference genome"
     if (any(is_reference_genome)) {
       FoundOrganism <- FoundOrganism[is_reference_genome == TRUE, ]
     }
+    is_complete_genome <- FoundOrganism$assembly_level == "Complete Genome"
+    if (any(is_complete_genome)) {
+      FoundOrganism <- FoundOrganism[is_complete_genome == TRUE, ]
+    }
+
     FoundOrganism <- FoundOrganism[1, ]
 
     message(
