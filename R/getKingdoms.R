@@ -18,22 +18,20 @@
 getKingdoms <- function(db = "refseq") {
   withr::local_options(timeout = max(30000000, getOption("timeout")))
 
-    if (!is.element(db, c("refseq", "genbank","ensembl", "ensemblgenomes")))
+    if (!is.element(db, c("refseq", "genbank", "ensembl", "ensemblgenomes")))
         stop("Please select one of the available data bases: 'refseq',
              'genbank', 'ensembl', or 'ensemblgenomes'.", call. = FALSE)
-    genbank_kingdom <- getKingdomGenbank()
 
     if (db == "refseq") {
-        return(c(genbank_kingdom, "viral"))
+        return(getKingdomRefseq())
     }
 
     if (db == "genbank") {
-        return(genbank_kingdom)
+        return(getKingdomGenbank())
     }
 
     if (db %in% c("ensembl", "ensemblgenomes")) {
-        ensembl_kingdoms <- ensembl_divisions_short()
-        return(ensembl_kingdoms)
+        return(getKingdomEnsembl())
     }
 }
 
@@ -50,7 +48,13 @@ getKingdomGenbank <- function() {
   )
 }
 
+getKingdomRefseq <- function() {
+  c(getKingdomGenbank(), "viral")
+}
 
+getKingdomEnsembl <- function() {
+  ensembl_divisions_short()
+}
 
 
 

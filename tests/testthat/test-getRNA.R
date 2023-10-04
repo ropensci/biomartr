@@ -182,10 +182,11 @@ test_that("The getRNA() interface to Ensembl works properly using taxid (includi
     skip_on_cran()
     skip_on_travis()
     # test proper download from ensemblgenomes
+    # 4932
     out1 <- read_rna(
         getRNA(
             db       = "ensembl",
-            organism = "4932",
+            organism = "559292",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"
@@ -194,7 +195,7 @@ test_that("The getRNA() interface to Ensembl works properly using taxid (includi
     out2 <- read_rna(
         getRNA(
             db       = "ensembl",
-            organism = "4932",
+            organism = "559292",
             path     = tempdir(), mute_citation = TRUE
         ),
         format = "fasta"

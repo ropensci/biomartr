@@ -1,6 +1,8 @@
 #' @title Retrieve ENSEMBL info file
 #' @description Retrieve species and genome information from
 #' http://rest.ensembl.org/info/species?content-type=application/json/.
+#' @param update logical, default TRUE. Update cached list, if FALSE use existing
+#' (if it exists)
 #' @author Hajk-Georg Drost
 #' @return a tibble table storing info for all available ENSEMBL divisions.
 #' @examples
@@ -16,7 +18,7 @@
 #' }
 #' @seealso \code{\link{ensembl_divisions}}, \code{\link{get.ensembl.info}}, \code{\link{getKingdomAssemblySummary}}
 #' @export
-getENSEMBLInfo <- function() {
+getENSEMBLInfo <- function(update = TRUE) {
   all_divisions <- ensembl_divisions()
   ENSEMBLInfoTable <- vector("list", length(all_divisions))
 
@@ -24,7 +26,7 @@ getENSEMBLInfo <- function() {
     cat("Starting information retrieval for:", all_divisions[i])
     cat("\n")
     ENSEMBLInfoTable[[i]] <-
-      get.ensembl.info(update = TRUE, division = all_divisions[i])
+      get.ensembl.info(update, division = all_divisions[i])
   }
 
   return(dplyr::bind_rows(ENSEMBLInfoTable))
