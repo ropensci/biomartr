@@ -55,13 +55,24 @@ select_assembly_refseq_genbank <- function(organism, AssemblyFilesAllKingdoms,
     return("Not available")
   }
   if (nrow(FoundOrganism) > 1) {
+
+    is_reference_genome <- FoundOrganism$refseq_category == "reference genome"
+    if (any(is_reference_genome)) {
+      FoundOrganism <- FoundOrganism[is_reference_genome == TRUE, ]
+    }
+    is_complete_genome <- FoundOrganism$assembly_level == "Complete Genome"
+    if (any(is_complete_genome)) {
+      FoundOrganism <- FoundOrganism[is_complete_genome == TRUE, ]
+    }
+
+    FoundOrganism <- FoundOrganism[1, ]
+
     message(
       "More than one entry has been found for '",
       organism, "'. Only the first entry '", FoundOrganism$organism_name[1], "' has been used for subsequent genome retrieval.",
       " If you wish to download a different version, please use the NCBI accession ID when specifying the 'organism' argument.",
       " See ?is.genome.available for examples."
     )
-    FoundOrganism <- FoundOrganism[1, ]
   }
   return(FoundOrganism)
 }

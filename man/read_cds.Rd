@@ -13,18 +13,18 @@ read_cds(
 )
 }
 \arguments{
-\item{file}{a character string specifying the path to the file storing 
+\item{file}{a character string specifying the path to the file storing
 the CDS.}
 
-\item{format}{a character string specifying the file format used to store 
+\item{format}{a character string specifying the file format used to store
 the genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
 
-\item{obj.type}{a character string specifying the object stype in which the 
-genomic sequence shall be represented. 
-Either as \code{obj.type = "Biostrings"} (default) or as 
+\item{obj.type}{a character string specifying the object stype in which the
+genomic sequence shall be represented.
+Either as \code{obj.type = "Biostrings"} (default) or as
 \code{obj.type = "data.table"}.}
 
-\item{delete_corrupt}{a logical value specifying whether potential CDS 
+\item{delete_corrupt}{a logical value specifying whether potential CDS
 sequences that cannot be divided by 3 shall be
 be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
 
@@ -32,27 +32,36 @@ be excluded from the the dataset. Default is \code{delete_corrupt = FALSE}.}
 \code{\link[seqinr]{read.fasta}}.}
 }
 \value{
-A data.table storing the gene id in the first column and the 
+A data.table storing the gene id in the first column and the
 corresponding sequence as string in the second column.
 }
 \description{
-This function reads an organism specific CDS stored in a 
+This function reads an organism specific CDS stored in a
 defined file format.
 }
 \details{
-The \code{read.cds} function takes a string specifying the path 
+The \code{read.cds} function takes a string specifying the path
 to the cds file of interest as first argument.
 
-It is possible to read in different proteome file standards such as 
+It is possible to read in different proteome file standards such as
 \emph{fasta} or \emph{genebank}.
 
-CDS stored in fasta files can be downloaded from 
+CDS stored in fasta files can be downloaded from
 http://www.ensembl.org/info/data/ftp/index.html.
 }
 \seealso{
-\code{\link{getCDS}}, \code{\link{read_genome}}, 
-\code{\link{read_proteome}}, \code{\link{read_gff}}, \code{\link{read_rna}}
+Other cds: 
+\code{\link{getCDSSet}()},
+\code{\link{getCDS}()}
+
+Other readers: 
+\code{\link{read_genome}()},
+\code{\link{read_gff}()},
+\code{\link{read_proteome}()},
+\code{\link{read_rna}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{cds}
+\concept{readers}

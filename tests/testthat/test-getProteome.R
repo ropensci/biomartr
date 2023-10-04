@@ -239,6 +239,27 @@ test_that("The getProteome() interface to Ensembl works properly (For organisms 
   expect_false(is.logical(out))
 })
 
+test_that("The getProteome() interface to Uniprot works properly ..", {
+  skip_on_cran()
+  skip_on_travis()
+
+  out1 <- getProteome(
+    db       = "uniprot",
+    organism = "Saccharomyces cerevisiae",
+    path     = tempdir(), mute_citation = TRUE
+  )
+
+  out2 <- getProteome(
+    db       = "uniprot",
+    organism = "Homo sapiens",
+    path     = tempdir(), mute_citation = TRUE
+  )
+
+  expect_false(is.logical(c(out1, out2)))
+  expect_false(anyNA(c(out1, out2)))
+  expect_false(identical(out1, out2))
+})
+
 
 
 

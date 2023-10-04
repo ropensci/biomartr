@@ -7,15 +7,15 @@
 read_proteome(file, format = "fasta", obj.type = "Biostrings", ...)
 }
 \arguments{
-\item{file}{a character string specifying the path to the file storing 
+\item{file}{a character string specifying the path to the file storing
 the proteome.}
 
-\item{format}{a character string specifying the file format used to store the 
+\item{format}{a character string specifying the file format used to store the
 genome, e.g. \code{format = "fasta"} (default) or \code{format = "gbk"}.}
 
-\item{obj.type}{a character string specifying the object stype in which the 
-genomic sequence shall be represented. 
-Either as \code{obj.type = "Biostrings"} (default) or as 
+\item{obj.type}{a character string specifying the object stype in which the
+genomic sequence shall be represented.
+Either as \code{obj.type = "Biostrings"} (default) or as
 \code{obj.type = "data.table"}.}
 
 \item{...}{additional arguments that are used by
@@ -25,20 +25,29 @@ Either as \code{obj.type = "Biostrings"} (default) or as
 Either a \code{Biostrings} or \code{data.table} object.
 }
 \description{
-This function reads an organism specific proteome stored in a 
+This function reads an organism specific proteome stored in a
 defined file format.
 }
 \details{
-This function takes a string specifying the path to the 
+This function takes a string specifying the path to the
 proteome file of interest as first argument.
 
-It is possible to read in different proteome file standards such as 
+It is possible to read in different proteome file standards such as
 \emph{fasta} or \emph{genebank}.
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{read_genome}}, 
-\code{\link{read_gff}}, \code{\link{read_cds}}, \code{\link{read_rna}}
+Other readers: 
+\code{\link{read_cds}()},
+\code{\link{read_genome}()},
+\code{\link{read_gff}()},
+\code{\link{read_rna}()}
+
+Other proteome: 
+\code{\link{getProteomeSet}()},
+\code{\link{getProteome}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{proteome}
+\concept{readers}

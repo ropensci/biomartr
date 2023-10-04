@@ -14,9 +14,15 @@ getENSEMBL(
 )
 }
 \arguments{
-\item{organism}{scientific name of the organism of interest.}
+\item{organism}{Organism selector id,
+there are three options to characterize an organism:
+\itemize{
+\item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+\item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+\item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+}}
 
-\item{type}{biological sequence type.}
+\item{type}{character, biological sequence type (e.g. "dna", "cds")}
 
 \item{id.type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
 
@@ -27,8 +33,7 @@ if the standard format before that.}
 
 \item{path}{location where file shall be stored.}
 
-\item{format}{character, which format of data to get, either "fasta" for Fasta
-Sequence data, or one of c("gff3", "gtf") for annotation data.}
+\item{format}{"gff3", alternative "gtf" for ensembl.}
 }
 \value{
 either a character path to downloaded file, or a logical FALSE, specifying failure.

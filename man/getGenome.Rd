@@ -26,7 +26,8 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism:
+\item{organism}{Organism selector id,
+there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -45,15 +46,13 @@ that the most recent database version is used. \code{release = 75} would for hum
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
 
-\item{path}{a character string specifying the location (a folder) in which
-the corresponding genome shall be stored. Default is
-\code{path} = \code{file.path("_ncbi_downloads","genomes")}.}
+\item{path}{character, default location is paste0("set_", toupper(type))}
 
 \item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 
 \item{analyse_genome}{logical, default FALSE. If TRUE, get general genome statistics like
 gc content etc. For more details, see ?summary_genome}
@@ -78,40 +77,28 @@ Internally this function loads the the overview.txt file from NCBI:
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
 
-and creates a directory '_ncbi_downloads/genomes' to store
-the genome of interest as fasta file for future processing.
+and creates a directory relative to file type, if you get fasta genomes it will be
+_ncbi_downloads/genomes'.
 In case the corresponding fasta file already exists within the
 '_ncbi_downloads/genomes' folder and is accessible within the workspace,
 no download process will be performed.
-}
-\examples{
-\dontrun{
-
-# download the genome of Arabidopsis thaliana from refseq
-# and store the corresponding genome file in '_ncbi_downloads/genomes'
-file_path <- getGenome( db       = "refseq",
-             organism = "Arabidopsis thaliana",
-             path = file.path("_ncbi_downloads","genomes"))
-
-Ath_genome <- read_genome(file_path, format = "fasta")
-
-
-# download the genome of Arabidopsis thaliana from genbank
-# and store the corresponding genome file in '_ncbi_downloads/genomes'
-file_path <- getGenome( db       = "genbank",
-             organism = "Arabidopsis thaliana",
-             path = file.path("_ncbi_downloads","genomes"))
-
-Ath_genome <- read_genome(file_path, format = "fasta")
-}
-
+For other file types the same rule applies.
 }
 \seealso{
-\code{\link{getGenomeSet}}, \code{\link{getProteome}}, \code{\link{getCDS}},
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{summary_genome}}, \code{\link{getCollection}},
-\code{\link{meta.retrieval}}, \code{\link{meta.retrieval.all}}, \code{\link{read_genome}}
+Other getBio: 
+\code{\link{getBio}()},
+\code{\link{getCDS}()},
+\code{\link{getCollection}()},
+\code{\link{getGFF}()},
+\code{\link{getProteome}()},
+\code{\link{getRNA}()}
+
+Other genome: 
+\code{\link{getGenomeSet}()},
+\code{\link{read_genome}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{genome}
+\concept{getBio}

@@ -8,6 +8,10 @@ getMetaGenomeSummary(
   local_file = file.path(cachedir(), "assembly_summary_metagenomes_genbank.txt")
 )
 }
+\arguments{
+\item{local_file}{where to store this backend file, default:
+file.path(cachedir(), "assembly_summary_metagenomes_genbank.txt")}
+}
 \description{
 Retrieval function of the assembly_summary.txt file
 from NCBI genbank metagenomes.

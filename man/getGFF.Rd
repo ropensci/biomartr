@@ -26,7 +26,8 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism:
+\item{organism}{Organism selector id,
+there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -40,18 +41,27 @@ the bacterial summary file will not be loaded by default anymore. If users
 wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+that the most recent database version is used. \code{release = 75} would for human would give the stable
+GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
+if the standard format before that.}
+
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
+
+\item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
+If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
+for further exploration.}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding annotation file shall be stored. Default is
-\code{path = file.path("_ncbi_downloads","genomes")}.}
+\code{path = file.path("_ncbi_downloads","annotation")}.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 
 \item{format}{"gff3", alternative "gtf" for ensembl.}
 }
 \value{
-File path to downloaded annotation file.
+File path to downloaded genome.
 }
 \description{
 Main retrieval function for GFF files of an
@@ -67,11 +77,12 @@ Internally this function loads the the overview.txt file from NCBI:
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
 
-and creates a directory '_ncbi_downloads/annotation' to store
-the genome of interest as fasta file for future processing.
+and creates a directory relative to file type, if you get fasta genomes it will be
+_ncbi_downloads/genomes'.
 In case the corresponding fasta file already exists within the
-'_ncbi_downloads/annotation' folder and is accessible within the workspace,
+'_ncbi_downloads/genomes' folder and is accessible within the workspace,
 no download process will be performed.
+For other file types the same rule applies.
 }
 \examples{
 \dontrun{
@@ -104,10 +115,20 @@ Hsap_gff_import <- read_gff(Hsap_gff)
 
 }
 \seealso{
-\code{\link{getProteome}}, \code{\link{getCDS}},
-\code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}
+Other getBio: 
+\code{\link{getBio}()},
+\code{\link{getCDS}()},
+\code{\link{getCollection}()},
+\code{\link{getGenome}()},
+\code{\link{getProteome}()},
+\code{\link{getRNA}()}
+
+Other gff: 
+\code{\link{getGFFSet}()},
+\code{\link{read_gff}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{getBio}
+\concept{gff}

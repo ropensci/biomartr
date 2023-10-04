@@ -1,27 +1,13 @@
+#' @inherit getBio
 #' @title Genome Annotation Retrieval (GFF3)
 #' @description  Main retrieval function for GFF files of an
 #' organism of interest. By specifying the scientific name of an organism of
 #' interest the corresponding gff file storing the annotation  for the organism
 #' of interest can be downloaded and stored locally. GFF files can be retrieved
 #' from several databases.
-#' @inheritParams getGenome
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding annotation file shall be stored. Default is
-#' \code{path = file.path("_ncbi_downloads","genomes")}.
-#' @param format "gff3", alternative "gtf" for ensembl.
-#' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from NCBI:
-#'
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
-#'
-#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
-#'
-#' and creates a directory '_ncbi_downloads/annotation' to store
-#' the genome of interest as fasta file for future processing.
-#' In case the corresponding fasta file already exists within the
-#' '_ncbi_downloads/annotation' folder and is accessible within the workspace,
-#' no download process will be performed.
-#' @return File path to downloaded annotation file.
+#' \code{path = file.path("_ncbi_downloads","annotation")}.
 #' @examples \dontrun{
 #' # download the annotation of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome file in '_ncbi_downloads/annotation'
@@ -50,9 +36,8 @@
 #'
 #' }
 #'
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}},
-#' \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-#' \code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}
+#' @family getBio
+#' @family gff
 #' @export
 
 getGFF <- function(db = "refseq", organism, reference = FALSE,
@@ -92,27 +77,13 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
     }
 }
 
+#' @inherit getGFF
 #' @title Genome Annotation Retrieval (GTF)
 #' @description  Main retrieval function for GTF files of an
 #' organism of interest. By specifying the scientific name of an organism of
 #' interest the corresponding GTF file storing the annotation  for the organism
 #' of interest can be downloaded and stored locally. GTF files can be retrieved
 #' from several databases.
-#' @inheritParams getGFF
-#' @param db a character string specifying the database from which the genome
-#' shall be retrieved:
-#' \itemize{
-#' \item \code{db = "ensembl"}
-#' }
-#' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from ENSEMBL:
-#' and creates a directory 'ensembl/annotation' to store
-#' the genome of interest as fasta file for future processing.
-#' In case the corresponding fasta file already exists within the
-#' 'ensembl/annotation' folder and is accessible within the workspace,
-#' no download process will be performed.
-#' @inheritParams getENSEMBL.Seq
-#' @return File path to downloaded annotation file.
 #' @examples \dontrun{
 #' # download the annotation of Homo sapiens from ensembl
 #' # and store the corresponding genome file in 'ensembl/annotation'
@@ -127,10 +98,6 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
 #'
 #' }
 #'
-#' @seealso \code{\link{getProteome}}, \code{\link{getCDS}},
-#' \code{\link{getGenome}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-#' \code{\link{getAssemblyStats}}, \code{\link{meta.retrieval}},
-#' \code{\link{getGFF}}
 #' @export
 getGTF <-
   function(db = "ensembl",
@@ -148,5 +115,5 @@ getGTF <-
            release = release,
            mute_citation = mute_citation,
            format = "gtf")
-  }
+}
 

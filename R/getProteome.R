@@ -8,6 +8,10 @@
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding proteome shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
+#' @param update logical, default TRUE. (Uniprot only for now!)
+#' If species info file exists already,
+#' do not re download, makes it faster but the file can be old, i.e. no longer
+#' as complete as it could be.
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -34,7 +38,7 @@
 #'              path     = file.path("_ncbi_downloads","genbank","proteomes") )
 #' # import proteome into R session
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
-#' 
+#'
 #  # download the proteome of Arabidopsis thaliana from UniProt
 #' # and store the corresponding proteome file in '_downloads/uniprot/proteomes'
 #' file_path <- getProteome( db       = "uniprot",
@@ -42,19 +46,17 @@
 #'              path     = file.path("_downloads","uniprot","proteomes") )
 #'# import proteome into R session
 #'Ath_proteome <- read_proteome(file_path, format = "fasta")
-#' 
+#'
 #' # download the proteome of Arabidopsis thaliana from ENSEMBL
 #' # and store the corresponding proteome file in '_downloads/ensembl/proteomes'
 #' file_path <- getProteome( db       = "ensembl",
 #'              organism = "Arabidopsis thaliana",
 #'              path     = file.path("_downloads","ensembl","proteomes") )
-#' # import proteome into R session             
+#' # import proteome into R session
 #' Ath_proteome <- read_proteome(file_path, format = "fasta")
 #' }
-#' @seealso \code{\link{getProteomeSet}}, \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}},
-#' \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-#' \code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
-#' \code{\link{read_proteome}}
+#' @family getBio
+#' @family proteome
 #' @export
 
 getProteome <-
@@ -64,6 +66,7 @@ getProteome <-
              skip_bacteria = TRUE,
              release = NULL,
              gunzip = FALSE,
+             update = TRUE,
              path = file.path("_ncbi_downloads", "proteomes"),
              mute_citation = FALSE) {
   if (!is.element(db, c("refseq", "genbank",
@@ -114,14 +117,8 @@ getProteome <-
 
 
     } else if (db == "uniprot") {
-      proteome_storage_path <- getUniProtSeq(
-        organism = organism,
-        path = path,
-        update = TRUE,
-        gunzip = gunzip
-      )
-        please_cite_biomartr(mute_citation = mute_citation)
-        return(proteome_storage_path)
+        getUniProtSeq(organism = organism, path = path, update = update,
+                      gunzip = gunzip, mute_citation = mute_citation)
     }
 }
 

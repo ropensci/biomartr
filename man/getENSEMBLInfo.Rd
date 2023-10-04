@@ -4,7 +4,11 @@
 \alias{getENSEMBLInfo}
 \title{Retrieve ENSEMBL info file}
 \usage{
-getENSEMBLInfo()
+getENSEMBLInfo(update = TRUE)
+}
+\arguments{
+\item{update}{logical, default TRUE. Update cached list, if FALSE use existing
+(if it exists)}
 }
 \value{
 a tibble table storing info for all available ENSEMBL divisions.

@@ -1,24 +1,24 @@
 #' @title Genomic Data Retrieval
 #'
-#' @description This package interacts with a suite of web Application 
-#' Programming Interfaces and FTP sites to perform automated genomic data 
+#' @description This package interacts with a suite of web Application
+#' Programming Interfaces and FTP sites to perform automated genomic data
 #' retieval and annotation information retrieval.
 #'
 #' @section About:
 #' To automate the retrieval process on a meta-genomic scale, this package
-#'  provides useful interface functions for genomic sequence retrieval and 
-#'  functional annotation retrieval. 
-#'  The major aim of \code{biomartr} is to facilitate computational 
-#'  reproducibility and large-scale handling of genomic data for 
-#'  (meta-)genomic analyses. 
-#'   
-#' In detail, \code{biomartr} aims to provide users with an easy to use 
-#' framework to obtain genome, proteome, CDS, GFF (annotation), genome 
-#' assembly quality, and metagenome project data. Furthermore, an interface to 
-#' the Ensembl Biomart database allows users to retrieve functional annotation 
+#'  provides useful interface functions for genomic sequence retrieval and
+#'  functional annotation retrieval.
+#'  The major aim of \code{biomartr} is to facilitate computational
+#'  reproducibility and large-scale handling of genomic data for
+#'  (meta-)genomic analyses.
+#'
+#' In detail, \code{biomartr} aims to provide users with an easy to use
+#' framework to obtain genome, proteome, CDS, GFF (annotation), genome
+#' assembly quality, and metagenome project data. Furthermore, an interface to
+#' the Ensembl Biomart database allows users to retrieve functional annotation
 #' for genomic loci.
 #' Users can download entire databases
-#' such as 
+#' such as
 #' \itemize{
 #' \item \code{NCBI RefSeq}
 #' \item \code{NCBI nr}
@@ -44,5 +44,6 @@
 #' @importFrom data.table .GRP
 #' @importFrom data.table .NGRP
 #' @importFrom data.table .EACHI
+#' @importFrom data.table fread fwrite rbindlist data.table chmatch
 ## usethis namespace: end
 NULL

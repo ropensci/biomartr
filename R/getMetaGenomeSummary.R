@@ -2,6 +2,8 @@
 #' @description Retrieval function of the assembly_summary.txt file
 #' from NCBI genbank metagenomes.
 #' This files stores all available metagenome projects on NCBI Genbank.
+#' @param local_file where to store this backend file, default:
+#' file.path(cachedir(), "assembly_summary_metagenomes_genbank.txt")
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
