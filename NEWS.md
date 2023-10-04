@@ -13,6 +13,11 @@ It is adviced to use only "ensembl" as db from now on, but "ensemblgenomes" will
 - Added in new kingdom for ensembl: protists supportwith correct collection getters
 - The retrieval from the `UniProt` database is now updated to the new API/FTP path system. Now users
 can retrieve proteomes using the functions `getProteome(db = "uniprot", ...)` and `getProteomeSet(db = "uniprot", ...)` (see #82)
+- new function `getBioSet`: Generic Bio data set extractor
+- new function `getBio`: A wrapper to all bio getters, selected with 'type' argument
+- a new function `getUniProtSTATS()`: Retrieve UniProt Database Information File (STATS)
+
+
 
 ### Power user cache
 
@@ -27,7 +32,7 @@ This make it easy for power users who want higher speed. For more info, see the 
 # [biomartr 1.0.4](https://github.com/ropensci/biomartr/releases/tag/v1.0.4)
 
 ### New Features
-- in `getSummaryFile()` all columns of the `assembly_summary.txt` are now specified with names and correct data types (#92)\
+- in `getSummaryFile()` all columns of the `assembly_summary.txt` are now specified with names and correct data types (#92)
 - all `get*()` functions, the `getKingdomAssemblySummary()`, and `is.genome.available.refseq.genbank()` all receive a new argument `skip_bacteria` which is set to `TRUE` by default. This ensures that the huge dataset file for `bacteria` is not downloaded by default when retrieving summary files from `GenBank`. Users who wish to retrieved data from particular bacteria can actively set `skip_bacteria = TRUE` in all `get*()` functions. 
 
 ### Bug Fixes
