@@ -32,6 +32,17 @@ shall be retrieved:
 \item{organisms}{a character vector storing the names of the organisms than shall be retrieved.
 There are three available options to characterize an organism:}
 
+\item{set_type}{the biological sequence type that shall be retrieved. 
+Available options are
+\itemize{
+\item \code{set_type = "genome"}
+\item \code{set_type = "proteome"}
+\item \code{set_type = "cds"}
+\item \code{set_type = "gff"}
+\item \code{set_type = "rna"}
+\item \code{set_type = "collection"} (all the others)
+}}
+
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
@@ -87,10 +98,13 @@ no download process will be performed.
 \dontrun{
 getBioSet("refseq", organisms = c("Arabidopsis thaliana",
                                   "Arabidopsis lyrata",
-                                  "Capsella rubella"), set_type = "cds")
+                                  "Capsella rubella"), 
+                                  set_type = "cds")
 }
 }
 \seealso{
+\code{\link{getBio}}
+
 Other getBioSet: 
 \code{\link{getCDSSet}()},
 \code{\link{getCollectionSet}()},

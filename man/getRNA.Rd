@@ -10,6 +10,7 @@ getRNA(
   reference = FALSE,
   skip_bacteria = TRUE,
   release = NULL,
+  assembly_type = "toplevel",
   path = file.path("_ncbi_downloads", "RNA"),
   gunzip = FALSE,
   mute_citation = FALSE
@@ -43,6 +44,8 @@ bacterial summary file will be downloaded.}
 that the most recent database version is used. \code{release = 75} would for human would give the stable
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
+
+\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding

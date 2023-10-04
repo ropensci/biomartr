@@ -49,6 +49,12 @@
     <loc>/reference/biomartr-package.html</loc>
   </url>
   <url>
+    <loc>/reference/cachedir.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cachedir_set.html</loc>
+  </url>
+  <url>
     <loc>/reference/check_annotation_biomartr.html</loc>
   </url>
   <url>
@@ -73,6 +79,12 @@
     <loc>/reference/getAttributes.html</loc>
   </url>
   <url>
+    <loc>/reference/getBio.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getBioSet.html</loc>
+  </url>
+  <url>
     <loc>/reference/getCDS.html</loc>
   </url>
   <url>
@@ -92,6 +104,9 @@
   </url>
   <url>
     <loc>/reference/getENSEMBL.gtf.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getENSEMBL.html</loc>
   </url>
   <url>
     <loc>/reference/getENSEMBLGENOMESInfo.html</loc>
@@ -164,6 +179,12 @@
   </url>
   <url>
     <loc>/reference/getSummaryFile.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getUniProtInfo.html</loc>
+  </url>
+  <url>
+    <loc>/reference/getUniProtSTATS.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>

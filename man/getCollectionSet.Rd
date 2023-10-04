@@ -87,7 +87,8 @@ no download process will be performed.
 \dontrun{
 getBioSet("refseq", organisms = c("Arabidopsis thaliana",
                                   "Arabidopsis lyrata",
-                                  "Capsella rubella"), set_type = "cds")
+                                  "Capsella rubella"), 
+                                  set_type = "cds")
 }
 }
 \seealso{

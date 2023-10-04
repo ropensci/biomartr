@@ -18,7 +18,7 @@ http://rest.ensembl.org/info/species?content-type=application/json/."><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -77,9 +77,16 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getENSEMBLInfo</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getENSEMBLInfo</span><span class="op">(</span>update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>update</dt>
+<dd><p>logical, default TRUE. Update cached list, if FALSE use existing
+(if it exists)</p></dd>
+
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     
@@ -117,7 +124,7 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Hajk-Georg Drost.</p>
+  <p></p><p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

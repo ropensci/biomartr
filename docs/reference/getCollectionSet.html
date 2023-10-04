@@ -22,7 +22,7 @@ several databases."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ several databases."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aj
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Retrieve a Collection: Genome, Proteome, CDS, RNA, GFF, Repeat Masker, AssemblyStats of multiple species</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/R/getCollectionSet.R" class="external-link"><code>R/getCollectionSet.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/R/getSet.R" class="external-link"><code>R/getSet.R</code></a></small>
     <div class="hidden name"><code>getCollectionSet.Rd</code></div>
     </div>
 
@@ -90,18 +90,19 @@ several databases.</p>
 <span>  <span class="va">organisms</span>,</span>
 <span>  reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  release <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  clean_retrieval <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  skip_bacteria <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  gunzip <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  update <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  remove_annotation_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  path <span class="op">=</span> <span class="st">"set_collections"</span></span>
+<span>  path <span class="op">=</span> <span class="st">"set_collections"</span>,</span>
+<span>  mute_citation <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>db</dt>
-<dd><p>a character string specifying the database from which the collection
+<dd><p>a character string specifying the database from which the genome
 shall be retrieved:</p><ul><li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
 <li><p><code>db = "ensembl"</code></p></li>
@@ -109,39 +110,42 @@ shall be retrieved:</p><ul><li><p><code>db = "refseq"</code></p></li>
 
 
 <dt>organisms</dt>
-<dd><p>a character vector storing the scientific names of the organisms for
-which collections shall be retrieved. There are three options to characterize an organism:</p><ul><li><p>by <code>scientific name</code>: e.g. <code>organism = "Homo sapiens"</code></p></li>
-<li><p>by <code>database specific accession identifier</code>: e.g. <code>organism = "GCF_000001405.37"</code> (= NCBI RefSeq identifier for <code>Homo sapiens</code>)</p></li>
-<li><p>by <code>taxonomic identifier from NCBI Taxonomy</code>: e.g. <code>organism = "9606"</code> (= taxid of <code>Homo sapiens</code>)</p></li>
-</ul></dd>
+<dd><p>a character vector storing the names of the organisms than shall be retrieved.
+There are three available options to characterize an organism:</p></dd>
 
 
 <dt>reference</dt>
-<dd><p>a logical value indicating whether or not a collection shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.</p></dd>
+<dd><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.</p></dd>
 
 
 <dt>release</dt>
-<dd><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning that the most recent database version is used.</p></dd>
+<dd><p>a numeric, the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning
+that the most recent database version is used. <code>release = 75</code> would for human would give the stable
+GRCh37 release in ensembl. Value must be &gt; 46, since ensembl did not structure their data
+if the standard format before that.</p></dd>
 
 
-<dt>clean_retrieval, </dt>
-<dd><p>a logical, default FALSE. Cleaning file names for more convenient
-downstream processing.</p></dd>
+<dt>skip_bacteria</dt>
+<dd><p>Due to its enormous dataset size (&gt; 700MB as of July 2023),
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify <code>skip_bacteria = FALSE</code>. When <code>skip_bacteria = FALSE</code> is set then the
+bacterial summary file will be downloaded.</p></dd>
 
 
 <dt>gunzip</dt>
-<dd><p>a logical value indicating whether or not files should be unzipped.</p></dd>
+<dd><p>a logical, indicating whether or not files should be unzipped.</p></dd>
 
 
 <dt>update</dt>
-<dd><p>a logical, default FALSE. The existing file will be retained if existing.
-If TRUE, will download and overwrite the file.</p></dd>
+<dd><p>logical, default FALSE. Updated backend cached files needed.
+Usually keep this false, to make ut run much faster. Only set to TRUE, if you
+believe you cache is outdated (Species only exist in newest release etc)</p></dd>
 
 
 <dt>remove_annotation_outliers</dt>
-<dd><p>shall outlier lines be removed from the input annotation_file?
-If yes, then the initial annotation_file will be overwritten and the removed outlier lines
-will be stored at <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></code> for further exploration.</p></dd>
+<dd><p>shall outlier lines be removed from the input <code>annotation_file</code>?
+If yes, then the initial <code>annotation_file</code> will be overwritten and the removed outlier lines will be stored at <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></code>
+for further exploration.</p></dd>
 
 
 <dt>path</dt>
@@ -149,30 +153,41 @@ will be stored at <code><a href="https://rdrr.io/r/base/tempfile.html" class="ex
 the corresponding collection shall be stored. Default is
 <code>path</code> = <code>file.path("_db_downloads","collections")</code>.</p></dd>
 
+
+<dt>mute_citation</dt>
+<dd><p>logical, default FALSE, indicating whether citation message should be muted.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>File path to downloaded genome.</p>
+<p>File path to downloaded genomes
+(names are identifiers: 'new' (file was downloaded now),
+'old' files did already exist)</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>Internally this function loads the the overview.txt file from NCBI:</p>
 <p>refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/</p>
 <p>genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/</p>
-<p>and creates a directory '_ncbi_downloads/collection' to store
-the genome of interest as fasta file for future processing.
+<p>and creates a directory 'set_CDSs' to store
+the CDSs of interest as fasta files for future processing.
 In case the corresponding fasta file already exists within the
-'_ncbi_downloads/collection' folder and is accessible within the workspace,
+'set_CDSs' folder and is accessible within the workspace,
 no download process will be performed.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="getCollection.html">getCollection</a></code>, <code><a href="getGenomeSet.html">getGenomeSet</a></code>, <code><a href="getProteomeSet.html">getProteomeSet</a></code>, <code><a href="getCDSSet.html">getCDSSet</a></code>,
-<code><a href="getGenome.html">getGenome</a></code>, <code><a href="getProteome.html">getProteome</a></code>, <code><a href="getCDS.html">getCDS</a></code>,
-<code><a href="getGFF.html">getGFF</a></code>, <code><a href="getRNA.html">getRNA</a></code>, <code><a href="meta.retrieval.html">meta.retrieval</a></code>,
-<code><a href="read_genome.html">read_genome</a></code></p></div>
+    <div class="dont-index"><p>Other getBioSet: 
+<code><a href="getBioSet.html">getBioSet</a>()</code>,
+<code><a href="getCDSSet.html">getCDSSet</a>()</code>,
+<code><a href="getGFFSet.html">getGFFSet</a>()</code>,
+<code><a href="getGenomeSet.html">getGenomeSet</a>()</code>,
+<code><a href="getProteomeSet.html">getProteomeSet</a>()</code>,
+<code><a href="getRNASet.html">getRNASet</a>()</code></p>
+<p>Other collection: 
+<code><a href="getCollection.html">getCollection</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -182,18 +197,11 @@ no download process will be performed.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># define scientific names of species for which</span></span></span>
-<span class="r-in"><span><span class="co"># collections shall be retrieved</span></span></span>
-<span class="r-in"><span><span class="va">organism_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>,</span></span>
-<span class="r-in"><span>                   <span class="st">"Arabidopsis lyrata"</span>,</span></span>
-<span class="r-in"><span>                   <span class="st">"Capsella rubella"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># download the collection of Arabidopsis thaliana from refseq</span></span></span>
-<span class="r-in"><span><span class="co"># and store the corresponding genome file in '_ncbi_downloads/collection'</span></span></span>
-<span class="r-in"><span> <span class="fu">getCollectionSet</span><span class="op">(</span> db       <span class="op">=</span> <span class="st">"refseq"</span>,</span></span>
-<span class="r-in"><span>             organism <span class="op">=</span> <span class="va">organism_list</span>,</span></span>
-<span class="r-in"><span>             path <span class="op">=</span> <span class="st">"set_collections"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="getBioSet.html">getBioSet</a></span><span class="op">(</span><span class="st">"refseq"</span>, organisms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>,</span></span>
+<span class="r-in"><span>                                  <span class="st">"Arabidopsis lyrata"</span>,</span></span>
+<span class="r-in"><span>                                  <span class="st">"Capsella rubella"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                                  set_type <span class="op">=</span> <span class="st">"cds"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -204,7 +212,7 @@ no download process will be performed.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Hajk-Georg Drost.</p>
+  <p></p><p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

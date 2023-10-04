@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Meta-Genome Retrieval</h1>
             
-            <h4 data-toc-skip class="date">2023-09-15</h4>
+            <h4 data-toc-skip class="date">2023-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/vignettes/MetaGenome_Retrieval.Rmd" class="external-link"><code>vignettes/MetaGenome_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>MetaGenome_Retrieval.Rmd</code></div>
@@ -249,7 +249,7 @@ used with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a><
 <code><a href="../reference/meta.retrieval.all.html">meta.retrieval.all()</a></code> as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># download all vertebrate genomes, then apply ...</span></span>
-<span><span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">...</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, db <span class="op">=</span> <span class="st">"refseq"</span>, type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">...</span></span></code></pre></div>
 <p>Here <code>...</code> denotes any subsequent meta-genomics analysis.
 Hence, <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> enables the pipeline methodology
 for meta-genomics.</p>
@@ -414,7 +414,7 @@ function will start downloading all remaining organisms.</li>
 renaming them for more convenient downstream data analysis (e.g. from
 <code>Saccharomyces_cerevisiae_cds_from_genomic_refseq.fna.gz</code> to
 <code>Scerevisiae.fa</code>).</p>
-<p>The easiest way to use <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code> in combination
+<p>The easiest way to use <code>clean.retrieval()</code> in combination
 with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> is to use the pipe operator from the
 <code>magrittr</code> package:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -422,10 +422,10 @@ with <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code
 <span><span class="fu"><a href="../reference/meta.retrieval.html">meta.retrieval</a></span><span class="op">(</span>kingdom <span class="op">=</span> <span class="st">"vertebrate_mammalian"</span>, </span>
 <span>               db <span class="op">=</span> <span class="st">"refseq"</span>, </span>
 <span>               type <span class="op">=</span> <span class="st">"genome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="../reference/clean.retrieval.html">clean.retrieval</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">clean.retrieval</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>In the first step, genome assembly files are downloaded with
 <code>meta.retrieval</code> and subsequently (<code>%&gt;%</code>)
-un-zipped and re-named using <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code>.</p>
+un-zipped and re-named using <code>clean.retrieval()</code>.</p>
 <p>Example <code>Bacteria</code></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># download all bacteria genomes</span></span>
@@ -1000,7 +1000,7 @@ GFF files instead of proteomes.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Hajk-Georg Drost.</p>
+<p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

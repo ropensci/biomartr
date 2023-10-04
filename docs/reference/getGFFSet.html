@@ -19,7 +19,7 @@ will be downloaded and stored locally. GFF files can be retrieved from several d
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ will be downloaded and stored locally. GFF files can be retrieved from several d
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>GFF retrieval of multiple species</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/R/getGFFSet.R" class="external-link"><code>R/getGFFSet.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/R/getSet.R" class="external-link"><code>R/getSet.R</code></a></small>
     <div class="hidden name"><code>getGFFSet.Rd</code></div>
     </div>
 
@@ -84,18 +84,20 @@ will be downloaded and stored locally. GFF files can be retrieved from several d
 <span>  <span class="va">organisms</span>,</span>
 <span>  reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  release <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  clean_retrieval <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  skip_bacteria <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  gunzip <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  remove_annotation_outliers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  update <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  path <span class="op">=</span> <span class="st">"set_GFF"</span></span>
+<span>  format <span class="op">=</span> <span class="st">"gff3"</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"set_GFF"</span>,</span>
+<span>  mute_citation <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>db</dt>
-<dd><p>a character string specifying the database from which the GFF
+<dd><p>a character string specifying the database from which the genome
 shall be retrieved:</p><ul><li><p><code>db = "refseq"</code></p></li>
 <li><p><code>db = "genbank"</code></p></li>
 <li><p><code>db = "ensembl"</code></p></li>
@@ -104,52 +106,62 @@ shall be retrieved:</p><ul><li><p><code>db = "refseq"</code></p></li>
 
 <dt>organisms</dt>
 <dd><p>a character vector storing the names of the organisms than shall be retrieved.
-There are three available options to characterize an organism:</p><ul><li><p>by <code>scientific name</code>: e.g. <code>organism = "Homo sapiens"</code></p></li>
-<li><p>by <code>database specific accession identifier</code>: e.g. <code>organism = "GCF_000001405.37"</code> (= NCBI RefSeq identifier for <code>Homo sapiens</code>)</p></li>
-<li><p>by <code>taxonomic identifier from NCBI Taxonomy</code>: e.g. <code>organism = "9606"</code> (= taxid of <code>Homo sapiens</code>)</p></li>
-</ul></dd>
+There are three available options to characterize an organism:</p></dd>
 
 
 <dt>reference</dt>
-<dd><p>a logical value indicating whether or not a GFF shall be downloaded if it isn't marked
-in the database as either a reference GFF or a representative GFF</p></dd>
+<dd><p>a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.</p></dd>
 
 
 <dt>release</dt>
-<dd><p>the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning
-that the most recent database version is used.</p></dd>
+<dd><p>a numeric, the database release version of ENSEMBL (<code>db = "ensembl"</code>). Default is <code>release = NULL</code> meaning
+that the most recent database version is used. <code>release = 75</code> would for human would give the stable
+GRCh37 release in ensembl. Value must be &gt; 46, since ensembl did not structure their data
+if the standard format before that.</p></dd>
 
 
-<dt>clean_retrieval</dt>
-<dd><p>logical value indicating whether or not downloaded files shall be renamed for more convenient downstream data analysis.</p></dd>
+<dt>skip_bacteria</dt>
+<dd><p>Due to its enormous dataset size (&gt; 700MB as of July 2023),
+the bacterial summary file will not be loaded by default anymore. If users
+wish to gain insights for the bacterial kingdom they needs to actively specify <code>skip_bacteria = FALSE</code>. When <code>skip_bacteria = FALSE</code> is set then the
+bacterial summary file will be downloaded.</p></dd>
 
 
 <dt>gunzip</dt>
-<dd><p>a logical value indicating whether or not files should be unzipped.</p></dd>
+<dd><p>a logical, indicating whether or not files should be unzipped.</p></dd>
 
 
 <dt>remove_annotation_outliers</dt>
-<dd><p>shall outlier lines be removed from the input <code>annotation_file</code>? 
+<dd><p>shall outlier lines be removed from the input <code>annotation_file</code>?
 If yes, then the initial <code>annotation_file</code> will be overwritten and the removed outlier lines will be stored at <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></code>
 for further exploration.</p></dd>
 
 
 <dt>update</dt>
-<dd><p>a logical value indicating whether or not files that were already downloaded and are still present in the 
-output folder shall be updated and re-loaded (<code>update = TRUE</code> or whether the existing file shall be retained <code>update = FALSE</code> (Default)).</p></dd>
+<dd><p>logical, default FALSE. Updated backend cached files needed.
+Usually keep this false, to make ut run much faster. Only set to TRUE, if you
+believe you cache is outdated (Species only exist in newest release etc)</p></dd>
+
+
+<dt>format</dt>
+<dd><p>"gff3", alternative "gtf" for ensembl.</p></dd>
 
 
 <dt>path</dt>
-<dd><p>a character string specifying the location (a folder) in which
-the corresponding CDSs shall be stored. Default is
-<code>path</code> = <code>"set_CDS"</code>.</p></dd>
+<dd><p>character, default location is paste0("set_", toupper(set_type))</p></dd>
+
+
+<dt>mute_citation</dt>
+<dd><p>logical, default FALSE, indicating whether citation message should be muted.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>File path to downloaded CDSs.</p>
+<p>File path to downloaded genomes
+(names are identifiers: 'new' (file was downloaded now),
+'old' files did already exist)</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -164,9 +176,16 @@ no download process will be performed.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="getGenomeSet.html">getGenomeSet</a></code>, <code><a href="getProteomeSet.html">getProteomeSet</a></code>, <code><a href="getCDSSet.html">getCDSSet</a></code>, <code><a href="getRNASet.html">getRNASet</a></code>,
-<code><a href="getGFF.html">getGFF</a></code>, <code><a href="getRNA.html">getRNA</a></code>, <code><a href="meta.retrieval.html">meta.retrieval</a></code>,
-<code><a href="read_cds.html">read_cds</a></code></p></div>
+    <div class="dont-index"><p>Other getBioSet: 
+<code><a href="getBioSet.html">getBioSet</a>()</code>,
+<code><a href="getCDSSet.html">getCDSSet</a>()</code>,
+<code><a href="getCollectionSet.html">getCollectionSet</a>()</code>,
+<code><a href="getGenomeSet.html">getGenomeSet</a>()</code>,
+<code><a href="getProteomeSet.html">getProteomeSet</a>()</code>,
+<code><a href="getRNASet.html">getRNASet</a>()</code></p>
+<p>Other gff: 
+<code><a href="getGFF.html">getGFF</a>()</code>,
+<code><a href="read_gff.html">read_gff</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -176,11 +195,11 @@ no download process will be performed.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">getGFFSet</span><span class="op">(</span><span class="st">"refseq"</span>, organisms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>, </span></span>
-<span class="r-in"><span>                                  <span class="st">"Arabidopsis lyrata"</span>, </span></span>
-<span class="r-in"><span>                                  <span class="st">"Capsella rubella"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="getBioSet.html">getBioSet</a></span><span class="op">(</span><span class="st">"refseq"</span>, organisms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>,</span></span>
+<span class="r-in"><span>                                  <span class="st">"Arabidopsis lyrata"</span>,</span></span>
+<span class="r-in"><span>                                  <span class="st">"Capsella rubella"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                                  set_type <span class="op">=</span> <span class="st">"cds"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -191,7 +210,7 @@ no download process will be performed.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Hajk-Georg Drost.</p>
+  <p></p><p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

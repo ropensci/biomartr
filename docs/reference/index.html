@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -81,13 +81,17 @@
         </td>
         <td><p>Genomic Data Retrieval</p></td>
       </tr><tr><td>
+          <p><code><a href="cachedir.html">cachedir()</a></code> </p>
+        </td>
+        <td><p>Get directory to store back end files like kingdom summaries etc</p></td>
+      </tr><tr><td>
+          <p><code><a href="cachedir_set.html">cachedir_set()</a></code> </p>
+        </td>
+        <td><p>Set directory to store back end files like kingdom summaries etc</p></td>
+      </tr><tr><td>
           <p><code><a href="check_annotation_biomartr.html">check_annotation_biomartr()</a></code> </p>
         </td>
         <td><p>Check whether an annotation file contains outlier lines</p></td>
-      </tr><tr><td>
-          <p><code><a href="clean.retrieval.html">clean.retrieval()</a></code> </p>
-        </td>
-        <td><p>Format <code>meta.retrieval</code> output</p></td>
       </tr><tr><td>
           <p><code><a href="download.database.html">download.database()</a></code> </p>
         </td>
@@ -113,6 +117,14 @@
         </td>
         <td><p>Retrieve All Available Attributes for a Specific Dataset</p></td>
       </tr><tr><td>
+          <p><code><a href="getBio.html">getBio()</a></code> </p>
+        </td>
+        <td><p>A wrapper to all bio getters, selected with 'type' argument</p></td>
+      </tr><tr><td>
+          <p><code><a href="getBioSet.html">getBioSet()</a></code> </p>
+        </td>
+        <td><p>Generic Bio data set extractor</p></td>
+      </tr><tr><td>
           <p><code><a href="getCDS.html">getCDS()</a></code> </p>
         </td>
         <td><p>Coding Sequence Retrieval</p></td>
@@ -133,13 +145,17 @@
         </td>
         <td><p>Retrieve All Available Datasets for a BioMart Database</p></td>
       </tr><tr><td>
+          <p><code><a href="getENSEMBL.html">getENSEMBL()</a></code> </p>
+        </td>
+        <td><p>Download sequence or annotation from ENSEMBL</p></td>
+      </tr><tr><td>
           <p><code><a href="getENSEMBL.Seq.html">getENSEMBL.Seq()</a></code> </p>
         </td>
         <td><p>Helper function for retrieving biological sequence files from ENSEMBL</p></td>
       </tr><tr><td>
           <p><code><a href="getENSEMBL.gtf.html">getENSEMBL.gtf()</a></code> </p>
         </td>
-        <td><p>Helper function for retrieving gff files from ENSEMBL</p></td>
+        <td><p>Helper function for retrieving gtf files from ENSEMBL</p></td>
       </tr><tr><td>
           <p><code><a href="getENSEMBLGENOMESInfo.html">getENSEMBLGENOMESInfo()</a></code> </p>
         </td>
@@ -187,7 +203,7 @@
       </tr><tr><td>
           <p><code><a href="getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code> </p>
         </td>
-        <td><p>Retrieve and summarise the assembly_summary.txt files from 
+        <td><p>Retrieve and summarise the assembly_summary.txt files from
 NCBI for all kingdoms</p></td>
       </tr><tr><td>
           <p><code><a href="getKingdoms.html">getKingdoms()</a></code> </p>
@@ -238,6 +254,14 @@ of ENSEMBL</p></td>
           <p><code><a href="getSummaryFile.html">getSummaryFile()</a></code> </p>
         </td>
         <td><p>Helper function to retrieve the assembly_summary.txt file from NCBI</p></td>
+      </tr><tr><td>
+          <p><code><a href="getUniProtInfo.html">getUniProtInfo()</a></code> </p>
+        </td>
+        <td><p>Get uniprot info from organism</p></td>
+      </tr><tr><td>
+          <p><code><a href="getUniProtSTATS.html">getUniProtSTATS()</a></code> </p>
+        </td>
+        <td><p>Retrieve UniProt Database Information File (STATS)</p></td>
       </tr><tr><td>
           <p><code><a href="is.genome.available.html">is.genome.available()</a></code> </p>
         </td>
@@ -331,7 +355,7 @@ of ENSEMBL</p></td>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Hajk-Georg Drost.</p>
+  <p></p><p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

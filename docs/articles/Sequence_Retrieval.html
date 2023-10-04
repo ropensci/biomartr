@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sequence Retrieval</h1>
             
-            <h4 data-toc-skip class="date">2023-09-15</h4>
+            <h4 data-toc-skip class="date">2023-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/biomartr/blob/HEAD/vignettes/Sequence_Retrieval.Rmd" class="external-link"><code>vignettes/Sequence_Retrieval.Rmd</code></a></small>
       <div class="hidden name"><code>Sequence_Retrieval.Rmd</code></div>
@@ -620,19 +620,27 @@ for each kingdom of life:</p>
 <code class="sourceCode R"><span><span class="co"># the number of genomes available for each kingdom</span></span>
 <span><span class="fu"><a href="../reference/listKingdoms.html">listKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"refseq"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>    Archaea  Bacteria Eukaryota   Viruses 
-      330     11797      1002     10637 </code></pre>
+      479     16255      1383     12916</code></pre>
 <p>Example <code>genbank</code>:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the number of genomes available for each kingdom</span></span>
 <span><span class="fu"><a href="../reference/listKingdoms.html">listKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"genbank"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>  Archaea  Bacteria Eukaryota 
-     1651     25904      7742</code></pre>
+     1902     32532     12404 </code></pre>
 <p>Example <code>ENSEMBL</code>:</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the number of genomes available for each kingdom</span></span>
 <span><span class="fu"><a href="../reference/listKingdoms.html">listKingdoms</a></span><span class="op">(</span>db <span class="op">=</span> <span class="st">"ensembl"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="va">EnsemblVertebrates</span> </span>
-<span>               <span class="fl">310</span></span></code></pre>
+<pre><code>Starting information retrieval for: EnsemblVertebrates
+Starting information retrieval for: EnsemblPlants                 
+Starting information retrieval for: EnsemblFungi                  
+Starting information retrieval for: EnsemblMetazoa                
+Starting information retrieval for: EnsemblBacteria               
+                                                                  
+   EnsemblBacteria       EnsemblFungi     EnsemblMetazoa 
+             31332               1504                251 
+     EnsemblPlants EnsemblVertebrates 
+               150                317 </code></pre>
 </div>
 <div class="section level3">
 <h3 id="analogous-computations-can-be-performed-for-groups-and-subgroups">Analogous computations can be performed for <code>groups</code> and
@@ -2428,7 +2436,7 @@ annotation version.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Hajk-Georg Drost.</p>
+<p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

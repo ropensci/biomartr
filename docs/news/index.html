@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -70,15 +70,42 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.5" id="biomartr-105"><a href="https://github.com/ropensci/biomartr/releases/tag/v1.0.5" class="external-link">biomartr 1.0.5</a><a class="anchor" aria-label="anchor" href="#biomartr-105"></a></h2>
+<div class="section level4">
+<h4 id="package-generalization-1-0-5">Package generalization<a class="anchor" aria-label="anchor" href="#package-generalization-1-0-5"></a></h4>
+<p>Over 5000 lines have been edited, most of them removed (<a href="https://github.com/ropensci/biomartr/issues/100" class="external-link">#100</a>), to generalize the package to make it more safe for future development. This progress is still ongoing.</p>
+</div>
+<div class="section level4">
+<h4 id="new-features-1-0-5">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-5"></a></h4>
+<ul><li>Ensembl genomes is no longer a different database compared to ensembl in biomaRt, since this split is artifical. It is adviced to use only “ensembl” as db from now on, but “ensemblgenomes” will still work.</li>
+<li>Annotation did mean gff, but it should be both gff and gtf getter, with format specification, this is now fixed and generalized.</li>
+<li>Added in new kingdom for ensembl: protists supportwith correct collection getters</li>
+<li>The retrieval from the <code>UniProt</code> database is now updated to the new API/FTP path system. Now users can retrieve proteomes using the functions <code>getProteome(db = "uniprot", ...)</code> and <code>getProteomeSet(db = "uniprot", ...)</code> (see <a href="https://github.com/ropensci/biomartr/issues/82" class="external-link">#82</a>)</li>
+<li>new function <code>getBioSet</code>: Generic Bio data set extractor</li>
+<li>new function <code>getBio</code>: A wrapper to all bio getters, selected with ‘type’ argument</li>
+<li>a new function <code><a href="../reference/getUniProtSTATS.html">getUniProtSTATS()</a></code>: Retrieve UniProt Database Information File (STATS)</li>
+</ul></div>
+<div class="section level4">
+<h4 id="power-user-cache-1-0-5">Power user cache<a class="anchor" aria-label="anchor" href="#power-user-cache-1-0-5"></a></h4>
+<p>The package now supports caching of back end files which used to be saved to /tmp folder (i.e. lost on computer restart). This make it easy for power users who want higher speed. For more info, see the function ?cachedir_set</p>
+</div>
+<div class="section level4">
+<h4 id="bug-fixes-1-0-5">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-5"></a></h4>
+<ul><li>Fixed many wrong urls and non working functions, more tests are added to make sure they work.</li>
+<li>Fixed fungi collection accessor for ensembl</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4" id="biomartr-104"><a href="https://github.com/ropensci/biomartr/releases/tag/v1.0.4" class="external-link">biomartr 1.0.4</a><small>2023-06-20</small><a class="anchor" aria-label="anchor" href="#biomartr-104"></a></h2>
 <div class="section level4">
 <h4 id="new-features-1-0-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-0-4"></a></h4>
-<ul><li>in <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code> all columns of the <code>assembly_summary.txt</code> are now specified with names and correct data types (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)<br></li>
+<ul><li>in <code><a href="../reference/getSummaryFile.html">getSummaryFile()</a></code> all columns of the <code>assembly_summary.txt</code> are now specified with names and correct data types (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)</li>
 <li>all <code>get*()</code> functions, the <code><a href="../reference/getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code>, and <code>is.genome.available.refseq.genbank()</code> all receive a new argument <code>skip_bacteria</code> which is set to <code>TRUE</code> by default. This ensures that the huge dataset file for <code>bacteria</code> is not downloaded by default when retrieving summary files from <code>GenBank</code>. Users who wish to retrieved data from particular bacteria can actively set <code>skip_bacteria = TRUE</code> in all <code>get*()</code> functions.</li>
 </ul></div>
 <div class="section level4">
 <h4 id="bug-fixes-1-0-4">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-4"></a></h4>
 <ul><li>whenever the low-level function <code><a href="../reference/getKingdomAssemblySummary.html">getKingdomAssemblySummary()</a></code> was called by all get*() functions, due to an error in the <code>assembly_summary.txt</code> file for viruses where the total gene count was stored as character and not as integer (as is the case for all other <code>assembly_summary.txt</code> files), an error occurred stating that <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> cannot join column $X35 due to differences in data types. This has now been resolved by parsing the correct data types with <code>readr</code>. Many thanks to … for pointing this out to me. (<a href="https://github.com/ropensci/biomartr/issues/92" class="external-link">#92</a>)</li>
+<li>fixing md5checks in all <code>get*()</code> functions</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -126,7 +153,7 @@
 <ul><li><p>Fixing bug where genome availability check in <code><a href="../reference/getCollection.html">getCollection()</a></code> was only performed in <code>NCBI RefSeq</code> and not in other databases due to a constant used in <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> rather than a variable (Many thanks to Takahiro Yamada for catching the bug) <a href="https://github.com/ropensci/biomartr/issues/53" class="external-link">#53</a></p></li>
 <li><p>fixing an issue that caused the <code><a href="../reference/read_cds.html">read_cds()</a></code> function to fail in <code>data.table</code> mode (Many thanks to Clement Kent) <a href="https://github.com/ropensci/biomartr/issues/57" class="external-link">#57</a></p></li>
 <li><p>fixing an <code>SSL</code> bug that was found on <code>Ubuntu 20.04</code> systems <a href="https://github.com/ropensci/biomartr/issues/66" class="external-link">#66</a> (Many thanks to Håkon Tjeldnes)</p></li>
-<li><p>fixing global variable issue that caused <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code> to fail when no documentation file was in a <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> folder</p></li>
+<li><p>fixing global variable issue that caused <code>clean.retrieval()</code> to fail when no documentation file was in a <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> folder</p></li>
 <li><p>The NCBI recently started adding <code>NA</code> values as FTP file paths in their <code>species summary files</code> for species without reference genomes. As a result <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> stopped working, because no FTP paths were found for some species. This issue was now fixed by adding the filter rule <code>!is.na(ftp_path)</code> into all <code>get*()</code> functions (Many thanks for making me aware of this issue Ashok Kumar Sharma <a href="https://github.com/ropensci/biomartr/issues/34" class="external-link">#34</a> and Dominik Merges <a href="https://github.com/ropensci/biomartr/issues/72" class="external-link">#72</a>)</p></li>
 <li><p>Fixing an issue in <code>custom_download()</code> where the <code>method</code> argument was causing issues when downloading from <code>https</code> directed <code>ftp</code> sites (Many thanks to <a href="https://github.com/cmatKhan" class="external-link">@cmatKhan</a>) <a href="https://github.com/ropensci/biomartr/issues/76" class="external-link">#76</a></p></li>
 <li><p>Fixing issue when trying to combine multiple summary-stats files where NA’s were present in the list item that was passed along for combination in <code><a href="../reference/meta.retrieval.html">meta.retrieval()</a></code> <a href="https://github.com/ropensci/biomartr/issues/73" class="external-link">#73</a> (Many thanks to Dominik Merges)</p></li>
@@ -139,7 +166,7 @@
 <p><strong>Please be aware that as of April 2019, ENSEMBLGENOMES was retired (<a href="https://www.ensembl.info/2019/03/08/joint-rest-server-for-ensembl-and-ensembl-genomes-in-ensembl-96/" class="external-link">see details here</a>). Hence, all <code>biomartr</code> functions were updated and won’t support data retrieval from <code>ENSEMBLGENOMES</code> servers anymore.</strong></p>
 <div class="section level4">
 <h4 id="new-functions-0-9-0">New Functions<a class="anchor" aria-label="anchor" href="#new-functions-0-9-0"></a></h4>
-<ul><li>New function <code><a href="../reference/clean.retrieval.html">clean.retrieval()</a></code> enables formatting and automatic unzipping of meta.retrieval output (find out more here: <a href="https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files" class="external-link uri">https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files</a>)</li>
+<ul><li>New function <code>clean.retrieval()</code> enables formatting and automatic unzipping of meta.retrieval output (find out more here: <a href="https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files" class="external-link uri">https://docs.ropensci.org/biomartr/articles/MetaGenome_Retrieval.html#un-zipping-downloaded-files</a>)</li>
 <li>New function <code><a href="../reference/getGenomeSet.html">getGenomeSet()</a></code> allows users to easily retrieve genomes of multiple specified species. In addition, the genome summary statistics for all retrieved species will be stored as well to provide users with insights regarding the genome assembly quality of each species. This file can be used as Supplementary Information file in publications to facilitate reproducible research.</li>
 <li>New function <code><a href="../reference/getProteomeSet.html">getProteomeSet()</a></code> allows users to easily retrieve proteomes of multiple specified species</li>
 <li>New function <code><a href="../reference/getCDSSet.html">getCDSSet()</a></code> allows users to easily retrieve coding sequences of multiple specified species</li>
@@ -386,7 +413,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Hajk-Georg Drost.</p>
+  <p></p><p>Developed by Hajk-Georg Drost, Haakon Tjeldnes.</p>
 </div>
 
 <div class="pkgdown">

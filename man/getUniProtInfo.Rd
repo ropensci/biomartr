@@ -8,6 +8,11 @@ getUniProtInfo(organism, path = cachedir(), update = TRUE)
 }
 \arguments{
 \item{organism}{character, name of organism}
+
+\item{path}{path at which the info file shall be stored locally.}
+
+\item{update}{shall the internal \code{\link{cachedir}} file be deleted and the info
+file freshly downloaded from the UniProt API?}
 }
 \description{
 Get uniprot info from organism
