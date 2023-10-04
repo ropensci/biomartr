@@ -1,16 +1,10 @@
 #' @title Download sequence or annotation from ENSEMBL
 #' @description Backend function for retrieving files sequence and annotation
 #' files from the ENSEMBL ftp server
-#' @param organism scientific name of the organism of interest.
-#' @param type biological sequence type.
+#' @inheritParams getBio
+#' @param type character, biological sequence type (e.g. "dna", "cds")
 #' @param id.type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
-#' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
-#' that the most recent database version is used. \code{release = 75} would for human would give the stable
-#' GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
-#' if the standard format before that.
 #' @param path location where file shall be stored.
-#' @param format character, which format of data to get, either "fasta" for Fasta
-#'  Sequence data, or one of c("gff3", "gtf") for annotation data.
 #' @author Hajk-Georg Drost
 #' @return either a character path to downloaded file, or a logical FALSE, specifying failure.
 getENSEMBL <- function(organism, type = "dna", id.type = "toplevel", release = NULL, path, format) {

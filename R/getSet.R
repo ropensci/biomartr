@@ -3,6 +3,8 @@
 #' @description Main CDS retrieval function for a set of organism of interest.
 #' By specifying the scientific names of the organisms of interest the corresponding fasta-files storing the CDS of the organisms of interest
 #' will be downloaded and stored locally. CDS files can be retrieved from several databases.
+#' @family getBioSet
+#' @family cds
 #' @export
 getCDSSet <-
   function(db = "refseq",
@@ -58,7 +60,8 @@ getCDSSet <-
 #' file_paths
 #' }
 #'
-#' @seealso \code{\link{read_proteome}}
+#' @family getBioSet
+#' @family proteome
 #' @export
 getProteomeSet <-
   function(db = "refseq",
@@ -87,12 +90,15 @@ getProteomeSet <-
 #' @description Main GFF retrieval function for a set of organism of interest.
 #' By specifying the scientific names of the organisms of interest the corresponding fasta-files storing the GFF of the organisms of interest
 #' will be downloaded and stored locally. GFF files can be retrieved from several databases.
+#' @family getBioSet
+#' @family gff
 #' @export
 getGFFSet <-
   function(db = "refseq",
            organisms,
            reference = FALSE,
            release = NULL,
+           skip_bacteria = TRUE,
            gunzip = TRUE,
            remove_annotation_outliers = FALSE,
            update = FALSE,
@@ -121,6 +127,8 @@ getGFFSet <-
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding genomes shall be stored. Default is
 #' \code{path} = \code{"set_genomes"}.
+#' @family getBioSet
+#' @family genome
 #' @export
 getGenomeSet <-
   function(db = "refseq",
@@ -154,6 +162,8 @@ getGenomeSet <-
 #' will be downloaded and stored locally. RNA files can be retrieved from several databases.
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding RNAs shall be stored. Default is \code{path} = \code{"set_RNAs"}.
+#' @family getBioSet
+#' @family rna
 #' @export
 getRNASet <-
   function(db = "refseq",
@@ -188,6 +198,8 @@ getRNASet <-
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding collection shall be stored. Default is
 #' \code{path} = \code{file.path("_db_downloads","collections")}.
+#' @family getBioSet
+#' @family collection
 #' @export
 getCollectionSet <-
   function(db = "refseq",

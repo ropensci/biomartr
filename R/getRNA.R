@@ -1,3 +1,4 @@
+#' @inherit getBio
 #' @title RNA Sequence Retrieval
 #' @description Main retrieval function for RNA sequences of an organism
 #' of interest. By specifying the scientific name of an organism of interest the
@@ -5,13 +6,10 @@
 #' of interest can be downloaded and stored locally.
 #' RNA files can be retrieved from several databases.
 #'
-#' @inheritParams getGenome
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding
 #' CDS file shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","RNA")}.
-#' @author Hajk-Georg Drost
-#' @return File path to downloaded RNA file.
 #' @examples
 #' \dontrun{
 #' # download the RNA of Arabidopsis thaliana from refseq
@@ -22,10 +20,8 @@
 #'
 #' Ath_RNA <- read_rna(file_path, format = "fasta")
 #' }
-#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}},
-#' \code{\link{getGTF}}, \code{\link{getGFF}}, \code{\link{getRepeatMasker}},
-#' \code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
-#' \code{\link{read_cds}}, \code{\link{getCDS}}
+#' @family getBio
+#' @family rna
 #' @export
 getRNA <-
     function(db = "refseq",

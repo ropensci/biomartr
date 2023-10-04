@@ -25,7 +25,8 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism:
+\item{organism}{Organism selector id,
+there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -44,7 +45,7 @@ that the most recent database version is used. \code{release = 75} would for hum
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
 
 \item{update}{logical, default TRUE. (Uniprot only for now!)
 If species info file exists already,
@@ -55,7 +56,7 @@ as complete as it could be.}
 the corresponding proteome shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded proteome.
@@ -112,11 +113,20 @@ Ath_proteome <- read_proteome(file_path, format = "fasta")
 }
 }
 \seealso{
-\code{\link{getProteomeSet}}, \code{\link{getGenome}}, \code{\link{getCDS}}, \code{\link{getGFF}},
-\code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
-\code{\link{read_proteome}}
+Other getBio: 
+\code{\link{getBio}()},
+\code{\link{getCDS}()},
+\code{\link{getCollection}()},
+\code{\link{getGFF}()},
+\code{\link{getGenome}()},
+\code{\link{getRNA}()}
+
+Other proteome: 
+\code{\link{getProteomeSet}()},
+\code{\link{read_proteome}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{getBio}
+\concept{proteome}

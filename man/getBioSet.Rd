@@ -29,6 +29,9 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
+\item{organisms}{a character vector storing the names of the organisms than shall be retrieved.
+There are three available options to characterize an organism:}
+
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
@@ -36,16 +39,18 @@ that the most recent database version is used. \code{release = 75} would for hum
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
+
+\item{update}{logical, default FALSE. Updated backend cached files needed.
+Usually keep this false, to make ut run much faster. Only set to TRUE, if you
+believe you cache is outdated (Species only exist in newest release etc)}
 
 \item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
 wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{path}{a character string specifying the location (a folder) in which
-the corresponding annotation file shall be stored. Default is
-\code{path = file.path("_ncbi_downloads","genomes")}.}
+\item{path}{character, default location is paste0("set_", toupper(set_type))}
 
 \item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
 If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
@@ -55,7 +60,7 @@ for further exploration.}
 
 \item{format}{"gff3", alternative "gtf" for ensembl.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded genomes
@@ -84,6 +89,15 @@ getBioSet("refseq", organisms = c("Arabidopsis thaliana",
                                   "Arabidopsis lyrata",
                                   "Capsella rubella"), set_type = "cds")
 }
+}
+\seealso{
+Other getBioSet: 
+\code{\link{getCDSSet}()},
+\code{\link{getCollectionSet}()},
+\code{\link{getGFFSet}()},
+\code{\link{getGenomeSet}()},
+\code{\link{getProteomeSet}()},
+\code{\link{getRNASet}()}
 }
 \author{
 Hajk-Georg Drost

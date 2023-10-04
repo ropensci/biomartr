@@ -70,8 +70,8 @@ custom_download_check_local <- function(url, local_file, rest_api_status, db = "
         )
       } else {
         message(
-          "The download session seems to have timed out at the FTP site '",
-          download_url, "'. This could be due to an overload of queries to the databases.",
+          "The download session seems to have timed out at the FTP site '", url,
+          "'. This could be due to an overload of queries to the databases.",
           " Please restart this function to continue the data retrieval process or wait ",
           "for a while before restarting this function in case your IP address was logged due to an query overload on the server side."
         )

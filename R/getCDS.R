@@ -1,3 +1,4 @@
+#' @inherit getBio
 #' @title Coding Sequence Retrieval
 #' @description Main retrieval function for coding sequences (CDS)
 #' of an organism of interest.
@@ -5,13 +6,9 @@
 #' corresponding fasta-file storing the CDS information for the organism
 #' of interest can be downloaded and stored locally. CDS files can be retrieved
 #' from several databases.
-#' @inheritParams getGenome
 #' @param path a character string specifying the location (a folder)
 #' in which the corresponding CDS file shall be stored.
 #' Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.
-#' @param mute_citation logical value indicating whether citation message should be muted.
-#' @author Hajk-Georg Drost
-#' @return File path to downloaded CDS file.
 #' @examples
 #' \dontrun{
 #' # download the genome of Arabidopsis thaliana from refseq
@@ -23,12 +20,9 @@
 #' Ath_CDS <- read_cds(file_path, format = "fasta")
 #'
 #' }
-#' @seealso \code{\link{getGenome}}, \code{\link{getProteome}},
-#' \code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-#' \code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
-#' \code{\link{read_cds}}
+#' @family getBio
+#' @family cds
 #' @export
-
 getCDS <-
     function(db = "refseq",
              organism,
@@ -60,7 +54,7 @@ getCDS <-
                                       release, gunzip, path, type = "cds")
       refseq_genbank_download_post_processing(info, organism, db, path,
                                               gunzip,
-                                              remove_annotation_outliers,
+                                              remove_annotation_outliers = FALSE,
                                               format = "cds",
                                               mute_citation = mute_citation)
     } else if (db %in% c("ensembl", "ensemblgenomes")) {

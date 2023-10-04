@@ -1,8 +1,10 @@
 #' Generic Bio data set extractor
 #'
 #' Usually you want to use one of the specific set extractors
-#' @inheritParams getGFF
-#' @inheritParams getGenome
+#' @inheritParams getBio
+#' @param organisms a character vector storing the names of the organisms than shall be retrieved.
+#' There are three available options to characterize an organism:
+#' @param path character, default location is paste0("set_", toupper(set_type))
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -23,8 +25,8 @@
 #'                                   "Arabidopsis lyrata",
 #'                                   "Capsella rubella"), set_type = "cds")
 #' }
-#' @export
 #' @family getBioSet
+#' @export
 getBioSet <- function(db = "refseq",
                       organisms,
                       set_type,
@@ -82,17 +84,71 @@ getBioSet <- function(db = "refseq",
   return(paths)
 }
 
-# A wrapper to all bio getters, selected with 'type' argument
+#' A wrapper to all bio getters, selected with 'type' argument
+#'
+#' @param db a character string specifying the database from which the genome
+#' shall be retrieved:
+#' \itemize{
+#' \item \code{db = "refseq"}
+#' \item \code{db = "genbank"}
+#' \item \code{db = "ensembl"}
+#' }
+#' @param organism Organism selector id,
+#' there are three options to characterize an organism:
+#' \itemize{
+#' \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
+#' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
+#' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
+#' }
+#' @param type biological sequence type. (alternatives are: genome, gff, cds, rna, proteome, collection (all the others))
+#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
+#' that the most recent database version is used. \code{release = 75} would for human would give the stable
+#' GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
+#' if the standard format before that.
+#' @param gunzip a logical, indicating whether or not files should be unzipped.
+#' @param update logical, default FALSE. Updated backend cached files needed.
+#' Usually keep this false, to make ut run much faster. Only set to TRUE, if you
+#' believe you cache is outdated (Species only exist in newest release etc)
+#' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023),
+#' the bacterial summary file will not be loaded by default anymore. If users
+#' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
+#' bacterial summary file will be downloaded.
+#' @param path character, default location is paste0("set_", toupper(type))
+#' @param remove_annotation_outliers shall outlier lines be removed from the input \code{annotation_file}?
+#' If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
+#' for further exploration.
+#' @param analyse_genome logical, default FALSE. If TRUE, get general genome statistics like
+#' gc content etc. For more details, see ?summary_genome
+#' @param assembly_type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
+#' @param format "gff3", alternative "gtf" for ensembl.
+#' @param mute_citation logical, default FALSE, indicating whether citation message should be muted.
+#' @author Hajk-Georg Drost
+#' @details Internally this function loads the the overview.txt file from NCBI:
+#'
+#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+#'
+#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+#'
+#' and creates a directory relative to file type, if you get fasta genomes it will be
+#' _ncbi_downloads/genomes'.
+#' In case the corresponding fasta file already exists within the
+#' '_ncbi_downloads/genomes' folder and is accessible within the workspace,
+#' no download process will be performed.
+#' For other file types the same rule applies.
+#' @family getBio
+#' @return File path to downloaded genome.
 getBio <- function(db = "refseq",
                    organism,
                    type,
                    reference = FALSE,
                    release = NULL,
-                   gunzip = TRUE,
+                   gunzip = FALSE,
                    update = FALSE,
                    skip_bacteria = TRUE,
-                   path = paste0("set_", toupper(set_type)),
+                   path = paste0("set_", toupper(type)),
                    remove_annotation_outliers = FALSE,
+                   analyse_genome = FALSE,
                    assembly_type = "toplevel",
                    format = "gff3",
                    mute_citation = FALSE) {

@@ -7,11 +7,11 @@
 meta.retrieval.all(db = "refseq", type = "genome", reference = FALSE)
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
-shall be retrieved: 
+\item{db}{a character string specifying the database from which the genome
+shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
-\item \code{db = "genbank"} 
+\item \code{db = "genbank"}
 \item \code{db = "emsembl"}
 \item \code{db = "ensemblgenomes"}
 }}
@@ -19,7 +19,7 @@ shall be retrieved:
 \item{type}{type of sequences that shall be retrieved. Options are:
 \itemize{
  \item \code{type = "genome"} :
- for genome assembly retrieval; see also \code{\link{getGenome}}), 
+ for genome assembly retrieval; see also \code{\link{getGenome}}),
  \item \code{type = "proteome"} :
  (for proteome retrieval; see also \code{\link{getProteome}}),
  \item \code{type = "cds"} :
@@ -27,18 +27,18 @@ shall be retrieved:
  \item \code{type = "gff"} :
 (for annotation file retrieval in gff format; see also \code{\link{getGFF}}),
 \item \code{type = "gtf"} :
-(for annotation file retrieval in gtf format 
+(for annotation file retrieval in gtf format
 (only for ensembl and ensemblgenomes); see also \code{\link{getGTF}}),
  \item \code{type = "rna"} :
  (for RNA file retrieval in fasta format; see also \code{\link{getRNA}}),
  \item \code{type = "rm"} :
- (for Repeat Masker output file retrieval; see also 
+ (for Repeat Masker output file retrieval; see also
  \code{\link{getRepeatMasker}}),
- \item \code{type = "assemblystats"} (for genome assembly quality stats 
+ \item \code{type = "assemblystats"} (for genome assembly quality stats
  file retrieval; see also \code{\link{getAssemblyStats}}).
  }}
 
-\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database 
+\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database
 as either a reference genome or a representative genome. Options are:
 \itemize{
 \item \code{reference = FALSE} (Default): all organisms (reference, representative, and non-representative genomes) are downloaded.
@@ -50,11 +50,11 @@ will not be downloaded.
 a character vector storing the file paths of the retrieved files.
 }
 \description{
-Download genomes, proteomes, cds, gff, rna, or assembly stats 
+Download genomes, proteomes, cds, gff, rna, or assembly stats
 files of individual species of all kingdoms of life.
 }
 \details{
-This function aims to perform bulk retrieval of all genomes 
+This function aims to perform bulk retrieval of all genomes
 of species for all kingdoms of life.
 }
 \examples{
@@ -68,8 +68,10 @@ meta.retrieval.all(db = "genbank", type = "ensemblgenomes")
 }
 }
 \seealso{
-\code{\link{meta.retrieval}}
+Other meta_retrival: 
+\code{\link{meta.retrieval}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{meta_retrival}

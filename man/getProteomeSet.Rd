@@ -25,6 +25,9 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
+\item{organisms}{a character vector storing the names of the organisms than shall be retrieved.
+There are three available options to characterize an organism:}
+
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
@@ -37,12 +40,16 @@ the bacterial summary file will not be loaded by default anymore. If users
 wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
+
+\item{update}{logical, default FALSE. Updated backend cached files needed.
+Usually keep this false, to make ut run much faster. Only set to TRUE, if you
+believe you cache is outdated (Species only exist in newest release etc)}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding proteomes shall be stored. Default is \code{path} = \code{"set_proteomes"}.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 }
 \value{
 File path to downloaded genomes
@@ -103,8 +110,20 @@ file_paths
 
 }
 \seealso{
-\code{\link{read_proteome}}
+Other getBioSet: 
+\code{\link{getBioSet}()},
+\code{\link{getCDSSet}()},
+\code{\link{getCollectionSet}()},
+\code{\link{getGFFSet}()},
+\code{\link{getGenomeSet}()},
+\code{\link{getRNASet}()}
+
+Other proteome: 
+\code{\link{getProteome}()},
+\code{\link{read_proteome}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{getBioSet}
+\concept{proteome}

@@ -24,7 +24,8 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism:
+\item{organism}{Organism selector id,
+there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -43,16 +44,16 @@ that the most recent database version is used. \code{release = 75} would for hum
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
 
 \item{path}{a character string specifying the location (a folder)
 in which the corresponding CDS file shall be stored.
 Default is \code{path} = \code{file.path("_ncbi_downloads","CDS")}.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 }
 \value{
-File path to downloaded CDS file.
+File path to downloaded genome.
 }
 \description{
 Main retrieval function for coding sequences (CDS)
@@ -61,6 +62,20 @@ By specifying the scientific name of an organism of interest the
 corresponding fasta-file storing the CDS information for the organism
 of interest can be downloaded and stored locally. CDS files can be retrieved
 from several databases.
+}
+\details{
+Internally this function loads the the overview.txt file from NCBI:
+
+ refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+
+ genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+
+and creates a directory relative to file type, if you get fasta genomes it will be
+_ncbi_downloads/genomes'.
+In case the corresponding fasta file already exists within the
+'_ncbi_downloads/genomes' folder and is accessible within the workspace,
+no download process will be performed.
+For other file types the same rule applies.
 }
 \examples{
 \dontrun{
@@ -75,11 +90,20 @@ Ath_CDS <- read_cds(file_path, format = "fasta")
 }
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{getProteome}},
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
-\code{\link{read_cds}}
+Other getBio: 
+\code{\link{getBio}()},
+\code{\link{getCollection}()},
+\code{\link{getGFF}()},
+\code{\link{getGenome}()},
+\code{\link{getProteome}()},
+\code{\link{getRNA}()}
+
+Other cds: 
+\code{\link{getCDSSet}()},
+\code{\link{read_cds}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{cds}
+\concept{getBio}

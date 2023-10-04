@@ -24,7 +24,8 @@ shall be retrieved:
 \item \code{db = "ensembl"}
 }}
 
-\item{organism}{there are three options to characterize an organism:
+\item{organism}{Organism selector id,
+there are three options to characterize an organism:
 \itemize{
 \item by \code{scientific name}: e.g. \code{organism = "Homo sapiens"}
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
@@ -48,12 +49,12 @@ the corresponding
 CDS file shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","RNA")}.}
 
-\item{gunzip}{a logical value indicating whether or not files should be unzipped.}
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
 
-\item{mute_citation}{logical value indicating whether citation message should be muted.}
+\item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 }
 \value{
-File path to downloaded RNA file.
+File path to downloaded genome.
 }
 \description{
 Main retrieval function for RNA sequences of an organism
@@ -61,6 +62,20 @@ of interest. By specifying the scientific name of an organism of interest the
 corresponding fasta-file storing the RNA information for the organism
 of interest can be downloaded and stored locally.
 RNA files can be retrieved from several databases.
+}
+\details{
+Internally this function loads the the overview.txt file from NCBI:
+
+ refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+
+ genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+
+and creates a directory relative to file type, if you get fasta genomes it will be
+_ncbi_downloads/genomes'.
+In case the corresponding fasta file already exists within the
+'_ncbi_downloads/genomes' folder and is accessible within the workspace,
+no download process will be performed.
+For other file types the same rule applies.
 }
 \examples{
 \dontrun{
@@ -74,11 +89,20 @@ Ath_RNA <- read_rna(file_path, format = "fasta")
 }
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{getProteome}},
-\code{\link{getGTF}}, \code{\link{getGFF}}, \code{\link{getRepeatMasker}},
-\code{\link{getAssemblyStats}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
-\code{\link{read_cds}}, \code{\link{getCDS}}
+Other getBio: 
+\code{\link{getBio}()},
+\code{\link{getCDS}()},
+\code{\link{getCollection}()},
+\code{\link{getGFF}()},
+\code{\link{getGenome}()},
+\code{\link{getProteome}()}
+
+Other rna: 
+\code{\link{getRNASet}()},
+\code{\link{read_rna}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{getBio}
+\concept{rna}
