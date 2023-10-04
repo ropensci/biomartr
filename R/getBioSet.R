@@ -143,6 +143,7 @@ getBio <- function(db = "refseq",
 make_summary_doc_set <- function(path, out = file.path(path, "documentation", paste0(basename(path), "_summary.csv"))) {
   meta_files <- list.files(path)
   meta_files <- meta_files[stringr::str_detect(meta_files, "doc_")]
+  if (length(meta_files) == 0) return(invisible(NULL))
 
   file.rename(from = file.path(path, meta_files), to = file.path(path, "documentation", meta_files))
 
