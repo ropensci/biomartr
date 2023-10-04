@@ -7,6 +7,8 @@ biomartr
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/biomartr)](https://github.com/r-hub/cranlogs.app)
 [![Paper link](https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg)](https://academic.oup.com/bioinformatics/article/33/8/1216/2931816)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://bioconda.github.io/recipes/r-biomartr/README.html)
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fropensci%2Fbiomartr&label=VISITORS&countColor=%23263759&style=flat)
+
 <!-- badges: end -->
  
 ## Genomic Data Retrieval with R
@@ -91,7 +93,7 @@ BiocManager::install("biomaRt")
 Now users can install `biomartr` from CRAN:
 
 ```r
-# install biomartr 1.0.4 from CRAN
+# install biomartr 1.0.5 from CRAN
 install.packages("biomartr", dependencies = TRUE)
 
 # install the developer version containing the newest features
