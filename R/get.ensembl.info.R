@@ -71,6 +71,9 @@ get.ensembl.info <- function(update = FALSE, division) {
 }
 
 
+uniprot_stats_url <- function(){
+  return("https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/STATS")
+}
 
 
 ensembl_rest_url <- function() {
