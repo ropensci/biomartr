@@ -5,6 +5,16 @@
 #' @param organisms a character vector storing the names of the organisms than shall be retrieved.
 #' There are three available options to characterize an organism:
 #' @param path character, default location is paste0("set_", toupper(set_type))
+#' @param set_type the biological sequence type that shall be retrieved. 
+#' Available options are
+#' \itemize{
+#' \item \code{set_type = "genome"}
+#' \item \code{set_type = "proteome"}
+#' \item \code{set_type = "cds"}
+#' \item \code{set_type = "gff"}
+#' \item \code{set_type = "rna"}
+#' \item \code{set_type = "collection"} (all the others)
+#' }
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
@@ -23,9 +33,11 @@
 #' @examples \dontrun{
 #' getBioSet("refseq", organisms = c("Arabidopsis thaliana",
 #'                                   "Arabidopsis lyrata",
-#'                                   "Capsella rubella"), set_type = "cds")
+#'                                   "Capsella rubella"), 
+#'                                   set_type = "cds")
 #' }
 #' @family getBioSet
+#' @seealso \code{\link{getBio}}
 #' @export
 getBioSet <- function(db = "refseq",
                       organisms,

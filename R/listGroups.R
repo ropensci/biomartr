@@ -63,6 +63,7 @@ listGroups <-
                            ))) {
                 if (kingdom == "vertebrate_mammalian") {
                     # filter for kingdom before groups are determined
+                    group.y <- NULL
                     listgenomes.data <-
                         dplyr::filter(
                             listgenomes.data,
@@ -73,6 +74,7 @@ listGroups <-
                 }
                 
                 if (kingdom == "invertebrate") {
+                    group.y <- NULL
                     # filter for kingdom before groups are determined
                     listgenomes.data <-
                         dplyr::filter(
@@ -89,7 +91,8 @@ listGroups <-
                 }
                 
                 if (kingdom == "vertebrate_other") {
-                    # filter for kingdom before groups are determined
+                  group.y <- NULL  
+                  # filter for kingdom before groups are determined
                     listgenomes.data <-
                         dplyr::filter(
                             listgenomes.data,
@@ -102,7 +105,8 @@ listGroups <-
             }
             # case Plants
             if (is.element(kingdom, c("plant"))) {
-                # filter for kingdom before groups are determined
+              group.y <- NULL  
+              # filter for kingdom before groups are determined
                 listgenomes.data <-
                     dplyr::filter(listgenomes.data,
                                   kingdoms == "Eukaryota",
@@ -110,7 +114,8 @@ listGroups <-
             }
             # case Fungi
             if (is.element(kingdom, c("fungi"))) {
-                # filter for kingdom before groups are determined
+              group.y <- NULL  
+              # filter for kingdom before groups are determined
                 listgenomes.data <-
                     dplyr::filter(listgenomes.data,
                                   kingdoms == "Eukaryota",
@@ -118,7 +123,8 @@ listGroups <-
             }
             # case Protozoa
             if (is.element(kingdom, c("protozoa"))) {
-                # filter for kingdom before groups are determined
+              group.y <- NULL  
+              # filter for kingdom before groups are determined
                 listgenomes.data <-
                     dplyr::filter(listgenomes.data,
                                   kingdoms == "Eukaryota",

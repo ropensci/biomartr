@@ -80,8 +80,13 @@ getUniProtSeq <-
       )
 
 
-      gunzip_and_check(local_file, gunzip, format = "proteome",
-                       mute_citation = mute_citation)
+      final_path <-
+        gunzip_and_check(local_file,
+                         gunzip,
+                         format = "proteome",
+                         mute_citation = mute_citation)
+      
+      return(final_path)
     } else {
       warning(
         "Unfortunately, no entry for '",
@@ -90,5 +95,5 @@ getUniProtSeq <-
         call. = FALSE
       )
       return(NA)
-  }
+    }
 }

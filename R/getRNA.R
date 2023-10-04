@@ -29,6 +29,7 @@ getRNA <-
              reference = FALSE,
              skip_bacteria = TRUE,
              release = NULL,
+             assembly_type = "toplevel",
              path = file.path("_ncbi_downloads", "RNA"),
              gunzip = FALSE,
              mute_citation = FALSE) {

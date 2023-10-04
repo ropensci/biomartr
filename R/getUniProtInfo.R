@@ -1,6 +1,9 @@
 #' Get uniprot info from organism
 #'
 #' @param organism character, name of organism
+#' @param path path at which the info file shall be stored locally.
+#' @param update shall the internal \code{\link{cachedir}} file be deleted and the info
+#' file freshly downloaded from the UniProt API?
 #' @export
 getUniProtInfo <- function(organism, path = cachedir(), update = TRUE) {
   organism_new <- stringr::str_replace_all(organism, " ", "%20")
@@ -22,7 +25,7 @@ getUniProtInfo <- function(organism, path = cachedir(), update = TRUE) {
                                                  organism)
     }, error = function(e)
       message(
-        "Something went wrong when trying to access the API '", ebi_url_proteome, "'",
+        "Something went wrong when trying to access the API '", paste0(ebi_url_proteome, "?offset=0&size=-1&name=", organism_new), "'",
         " Sometimes the internet connection isn't stable and re-running the function might help. Is it possible to access the homepage '",
         ebi_url, "' through your browser?"
       ))}
@@ -46,7 +49,7 @@ read_uniprot_info <- function(file) {
 
 write_uniprot_info <- function(file, uniprot_species_info, organism) {
   name <- upid <- taxonomy <- isReferenceProteome <-
-    isRepresentativeProteome <- NULL
+    isRepresentativeProteome <- superregnum <- NULL
 
   uniprot_species_info <-
     dplyr::filter(uniprot_species_info, stringr::str_detect(name, organism))
