@@ -32,7 +32,7 @@ shall be retrieved:
 \item{organisms}{a character vector storing the names of the organisms than shall be retrieved.
 There are three available options to characterize an organism:}
 
-\item{set_type}{the biological sequence type that shall be retrieved. 
+\item{set_type}{the biological sequence type that shall be retrieved.
 Available options are
 \itemize{
 \item \code{set_type = "genome"}
@@ -98,7 +98,7 @@ no download process will be performed.
 \dontrun{
 getBioSet("refseq", organisms = c("Arabidopsis thaliana",
                                   "Arabidopsis lyrata",
-                                  "Capsella rubella"), 
+                                  "Capsella rubella"),
                                   set_type = "cds")
 }
 }

@@ -12,29 +12,14 @@
 #' @export
 
 getGENOMEREPORT <- function(local_file = file.path(cachedir(), "_ncbi_downloads", "overview.txt")) {
-  withr::local_options(timeout = max(30000000, getOption("timeout")))
 
     if (!dir.exists(dirname(local_file))) {
         dir.create(dirname(local_file), recursive = TRUE, showWarnings = FALSE)
     }
 
-    if (!file.exists(local_file)) {
-        tryCatch({
-            downloader::download(
-               "ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
-                local_file,
-                mode = "wb"
-            )
-        }, error = function(e)
-            message(
-                "Unfortunately, the FTP site
-                'ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt'
-                does not seem to be reachable. Is your current internet connection stable? Can you reach the
-                FTP site 'ftp://ftp.ncbi.nlm.nih.gov'?"
-            ))
-
-        # NCBI limits requests to three per second
-    }
+    custom_download_check_local("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+                                local_file, rest_api_status = NULL, db = "refgen",
+                                notify_exist = FALSE)
 
     suppressWarnings(
         ncbi_overview <-

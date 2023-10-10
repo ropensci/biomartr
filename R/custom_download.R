@@ -45,12 +45,12 @@ custom_download <- function(url, ...) {
 
 #' An wrapper to custom_download which checks if local files exists
 #' @noRd
-custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl", ...) {
-  withr::local_options(timeout = max(30000000, getOption("timeout")))
+custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl",
+                                        notify_exist = TRUE, ...) {
 
   if (file.exists(local_file)) {
-    message("File ", local_file,
-            " exists already. Thus, download has been skipped.")
+    if (notify_exist) message("File ", local_file,
+                              " exists already. Thus, download has been skipped.")
   } else {
     if (!is.null(rest_api_status) && rest_api_status$release_coord_system_version == "not_found") {
       message("Found organism but given release number did not specify existing file

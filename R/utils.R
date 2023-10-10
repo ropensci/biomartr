@@ -191,3 +191,26 @@ cachedir_set <- function(path) {
   dir.create(path, showWarnings = FALSE, recursive = TRUE)
   saveRDS(path, file = "~/.biomartr_cache_dir.rds")
 }
+
+db_hosts <- function() {
+  c(
+    "refseq",
+    "genbank",
+    "ensembl",
+    "ensemblgenomes",
+    "uniprot"
+  )
+}
+
+supported_biotypes <- function(db) {
+  # TODO: maybe implement for uniprot ?
+  bioTypes <- c("genome", "proteome", "cds", "rna")
+  names(bioTypes) <- rep("fasta", length(bioTypes))
+  bioTypes <- c(bioTypes, "gff3" = "gff")
+  if (is.element(db, c("refseq", "genbank"))) {
+    bioTypes <- c(bioTypes, c(fasta = "repeat_masker", txt = "assembly_stats"))
+  } else if (is.element(db, c("ensembl", "ensemblgenomes"))) {
+    bioTypes <- c(bioTypes, c(gtf = "gff"))
+  }
+  return(bioTypes)
+}

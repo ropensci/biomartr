@@ -9,30 +9,32 @@ getRepeatMasker(
   organism,
   reference = FALSE,
   skip_bacteria = TRUE,
+  release = NULL,
+  gunzip = FALSE,
   path = file.path("_ncbi_downloads", "repeatmasker"),
   mute_citation = FALSE
 )
 }
 \arguments{
-\item{db}{a character string specifying the database from which the genome 
+\item{db}{a character string specifying the database from which the genome
 shall be retrieved:
 \itemize{
 \item \code{db = "refseq"}
 \item \code{db = "genbank"}
 }}
 
-\item{organism}{a character string specifying the scientific name of the 
+\item{organism}{a character string specifying the scientific name of the
 organism of interest, e.g. \code{organism = "Homo sapiens"}.}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 
-\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023), 
+\item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users
-wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the 
+wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
-\item{path}{a character string specifying the location (a folder) in which 
-the corresponding file shall be stored. Default is 
+\item{path}{a character string specifying the location (a folder) in which
+the corresponding file shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","repeatmasker")}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -41,11 +43,11 @@ the corresponding file shall be stored. Default is
 File path to downloaded Repeat Masker output file.
 }
 \description{
-Main Repeat Masker output retrieval function for an 
+Main Repeat Masker output retrieval function for an
 organism of interest.
-By specifying the scientific name of an organism of interest the 
-corresponding Repeat Masker file storing the genome of the organism of 
-interest can be downloaded and stored locally. 
+By specifying the scientific name of an organism of interest the
+corresponding Repeat Masker file storing the genome of the organism of
+interest can be downloaded and stored locally.
 Repeat Masker files can be retrieved from several databases.
 }
 \details{
@@ -54,7 +56,7 @@ Internally this function loads the the overview.txt file from NCBI:
  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
- 
+
 and creates a directory '_ncbi_downloads/repeatmasker' to store
 the files of interest as fasta file for future processing.
 In case the corresponding fasta file already exists within the
@@ -66,8 +68,8 @@ no download process will be performed.
 
 # download the Repeat Masker output file of Homo sapiens from refseq
 # and store the corresponding genome file in '_ncbi_downloads/genomes'
-file_path <- getRepeatMasker( db       = "refseq", 
-             organism = "Homo sapiens", 
+file_path <- getRepeatMasker( db       = "refseq",
+             organism = "Homo sapiens",
              path = file.path("_ncbi_downloads","repeatmasker"))
 
 Hsap_repeatmasker <- read_rm(file_path)
@@ -76,8 +78,8 @@ Hsap_repeatmasker <- read_rm(file_path)
 
 }
 \seealso{
-\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}}, 
-\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}}, 
+\code{\link{getGenome}}, \code{\link{getProteome}}, \code{\link{getCDS}},
+\code{\link{getGFF}}, \code{\link{getRNA}}, \code{\link{getCollection}}, \code{\link{meta.retrieval}},
 \code{\link{read_rm}}
 }
 \author{
