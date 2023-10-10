@@ -1,3 +1,12 @@
+# biomartr 1.0.6.9000
+
+### New features
+
+- Some cool new generalization, and check out function `biomartr:::supported_biotypes(db = "refseq")`.
+This function will simplify a lot of stuff downstream. (#104)
+
+- Tests are now much quicker to run, because `biomartr::is.genome.available` (which is used basically everywhere) now reads files with data.table instead of reader. (#104)
+
 # [biomartr 1.0.5](https://github.com/ropensci/biomartr/releases/tag/v1.0.5)
 
 ### Package generalization
