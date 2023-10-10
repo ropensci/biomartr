@@ -36,14 +36,17 @@ getCollection <-
                  reference = TRUE,
                  skip_bacteria = TRUE,
                  release = NULL,
-                 gunzip = FALSE,
+                 assembly_type  = "toplevel",
+                 analyse_genome = FALSE,
                  remove_annotation_outliers = FALSE,
+                 gunzip = FALSE,
                  path = file.path("_db_downloads","collections"),
                  mute_citation = FALSE
         ) {
 
     new_name <- stringr::str_replace_all(organism," ","_")
-    message("-> Starting collection retrieval (genome, proteome, cds, gff/gtf, rna, repeat masker, assembly stats) for ", new_name, " ...")
+    all_biotypes <- supported_biotypes(db)
+    message("-> Starting collection retrieval (", paste(all_biotypes, collapse = ", "),") for ", new_name, " ...")
 
     org_exists <- is.genome.available(db = db, organism, details = TRUE)
 
@@ -55,168 +58,37 @@ getCollection <-
 
 
 
-    # retrieve genome assembly
-    species_genome <-
-            getGenome(
-                    db = db,
-                    organism = organism,
-                    reference = reference,
-                    skip_bacteria = skip_bacteria,
-                    release = release,
-                    gunzip = gunzip,
-                    path = path,
-                    mute_citation = TRUE
-            )
-    message("\n")
-    # retrieve proteome
-    species_proteome <-
-            getProteome(
-                    db = db,
-                    organism = organism,
-                    reference = reference,
-                    skip_bacteria = skip_bacteria,
-                    release = release,
-                    gunzip = gunzip,
-                    path = path,
-                    mute_citation = TRUE
-            )
-
-    message("\n")
-    # retrieve coding sequences
-    species_cds <-
-            getCDS(
-                    db = db,
-                    organism = organism,
-                    reference = reference,
-                    skip_bacteria = skip_bacteria,
-                    release = release,
-                    gunzip = gunzip,
-                    path = path,
-                    mute_citation = TRUE
-            )
-    message("\n")
-    # retrieve corresponding gff file
-    species_gff <-
-            getGFF(
-                    db = db,
-                    organism = organism,
-                    reference = reference,
-                    skip_bacteria = skip_bacteria,
-                    release = release,
-                    gunzip = gunzip,
-                    remove_annotation_outliers = remove_annotation_outliers,
-                    path = path,
-                    mute_citation = TRUE
-            )
-    message("\n")
-    if (is.element(db, c("ensembl"))) {
-            species_gtf <-
-                    getGTF(
-                            db = db,
-                            organism = organism,
-                            remove_annotation_outliers = remove_annotation_outliers,
-                            path = path
-                    )
-            message("\n")
+    for (type in all_biotypes) {
+      getBio(db, organism, type,
+             reference = reference, release = release, gunzip = gunzip,
+             update = FALSE, skip_bacteria = skip_bacteria,
+             path = path,
+             remove_annotation_outliers = remove_annotation_outliers,
+             analyse_genome = analyse_genome, assembly_type = assembly_type,
+             format = names(all_biotypes[all_biotypes == type]), mute_citation = TRUE)
+      message("\n")
     }
+    browser()
+    output_files <- list.files(path)
+    # Remove md5 files
+    md5_files <- output_files[stringr::str_detect(output_files, "md5checksums.txt")]
+    file.remove(file.path(path, md5_files))
 
-    # retrieve RNA
-    species_rna <-
-            getRNA(
-                    db = db,
-                    organism = organism,
-                    reference = reference,
-                    skip_bacteria = skip_bacteria,
-                    path = path,
-                    mute_citation = TRUE
-            )
-    message("\n")
-
-    if (is.element(db, c("refseq", "genbank"))) {
-            # retrieve RepeatMasker output
-            species_rm <-
-                    getRepeatMasker(
-                            db = db,
-                            organism = organism,
-                            reference = reference,
-                            skip_bacteria = skip_bacteria,
-                            path = path,
-                            mute_citation = TRUE
-                    )
-            message("\n")
-
-            # retrieve assembly stats
-            species_stats <-
-                    getAssemblyStats(
-                            db = db,
-                            organism = organism,
-                            reference = reference,
-                            skip_bacteria = skip_bacteria,
-                            path = path,
-                            mute_citation = TRUE
-                    )
+    # Move doc files
+    doc_folder <- file.path(path, "doc")
+    if (!file.exists(doc_folder)) {
+      dir.create(doc_folder)
     }
-    # TODO: WHAT IS THIS ? getwd() ? This looks very dangerous
-    if (!file.exists(file.path(getwd(), path, "doc"))) {
-            dir.create(file.path(getwd(), path, "doc"))
-    }
+    doc_files <- output_files[stringr::str_detect(output_files, "doc_")]
+    file.rename(file.path(path, doc_files),
+                file.path(doc_folder, doc_files))
+    # Verify assembly doc is now valid
+    readAssemblyDoc(doc_folder, db)
 
-    doc_files <- list.files(file.path(getwd(), path))
-    file.remove(file.path(getwd(), path, doc_files[stringr::str_detect(doc_files, "md5checksums.txt")]))
-    doc_files <- doc_files[stringr::str_detect(doc_files, "doc_")]
-    file.rename(file.path(getwd(), path, doc_files),
-                file.path(getwd(), path, "doc", doc_files))
-
-    doc_tsv <- doc_files[stringr::str_detect(doc_files, paste0(db, "[.]tsv"))]
-
-    if (is.element(db, c("refseq", "genbank"))) {
-            tsv_file <-
-                    readr::read_tsv(
-                            file.path(getwd(), path, "doc", doc_tsv),
-                            col_types = readr::cols(
-                                    file_name = readr::col_character(),
-                                    organism = readr::col_character(),
-                                    url = readr::col_character(),
-                                    database = readr::col_character(),
-                                    path = readr::col_character(),
-                                    refseq_category = readr::col_character(),
-                                    assembly_accession = readr::col_character(),
-                                    bioproject = readr::col_character(),
-                                    biosample = readr::col_character(),
-                                    taxid = readr::col_integer(),
-                                    infraspecific_name = readr::col_character(),
-                                    version_status = readr::col_character(),
-                                    release_type = readr::col_character(),
-                                    genome_rep = readr::col_character(),
-                                    seq_rel_date = readr::col_date(format = ""),
-                                    submitter = readr::col_character()
-                            ),
-                            col_names = TRUE
-                    )
-    }
-
-    if (is.element(db, c("ensembl"))) {
-            tsv_file <-
-                    readr::read_tsv(
-                            file.path(getwd(), path, "doc", doc_tsv),
-                            col_types = readr::cols(
-                                    file_name = readr::col_character(),
-                                    organism = readr::col_character(),
-                                    database = readr::col_character(),
-                                    download_data = readr::col_character(),
-                                    assembly_name = readr::col_character(),
-                                    assembly_date = readr::col_character(),
-                                    genebuild_last_geneset_update = readr::col_character(),
-                                    assembly_accession = readr::col_character(),
-                                    genebuild_initial_release_date = readr::col_character()
-                            ),
-                            col_names = TRUE
-                    )
-    }
     message("-> Collection retrieval finished successfully!")
     message("\n")
     please_cite_biomartr(mute_citation = mute_citation)
-    return(file.path(getwd(), path))
+    return(path)
 }
 
 

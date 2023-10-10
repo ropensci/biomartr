@@ -38,7 +38,8 @@ there are three options to characterize an organism:
 \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 }}
 
-\item{type}{biological sequence type. (alternatives are: genome, gff, cds, rna, proteome, collection (all the others))}
+\item{type}{biological sequence type. (alternatives are: genome, gff, cds,
+rna, proteome, assembly_stats, repeat_masker, collection (all the others))}
 
 \item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
 

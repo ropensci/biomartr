@@ -10,8 +10,10 @@ getCollection(
   reference = TRUE,
   skip_bacteria = TRUE,
   release = NULL,
-  gunzip = FALSE,
+  assembly_type = "toplevel",
+  analyse_genome = FALSE,
   remove_annotation_outliers = FALSE,
+  gunzip = FALSE,
   path = file.path("_db_downloads", "collections"),
   mute_citation = FALSE
 )
@@ -45,11 +47,16 @@ that the most recent database version is used. \code{release = 75} would for hum
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
 
-\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
+\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
+
+\item{analyse_genome}{logical, default FALSE. If TRUE, get general genome statistics like
+gc content etc. For more details, see ?summary_genome}
 
 \item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
 If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}
 for further exploration.}
+
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
 
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding collection shall be stored. Default is

@@ -5,7 +5,7 @@
 #' @param organisms a character vector storing the names of the organisms than shall be retrieved.
 #' There are three available options to characterize an organism:
 #' @param path character, default location is paste0("set_", toupper(set_type))
-#' @param set_type the biological sequence type that shall be retrieved. 
+#' @param set_type the biological sequence type that shall be retrieved.
 #' Available options are
 #' \itemize{
 #' \item \code{set_type = "genome"}
@@ -13,6 +13,8 @@
 #' \item \code{set_type = "cds"}
 #' \item \code{set_type = "gff"}
 #' \item \code{set_type = "rna"}
+#' \item \code{set_type = "assembly_stats"}
+#' \item \code{set_type = "repeat_masker"}
 #' \item \code{set_type = "collection"} (all the others)
 #' }
 #' @author Hajk-Georg Drost
@@ -33,7 +35,7 @@
 #' @examples \dontrun{
 #' getBioSet("refseq", organisms = c("Arabidopsis thaliana",
 #'                                   "Arabidopsis lyrata",
-#'                                   "Capsella rubella"), 
+#'                                   "Capsella rubella"),
 #'                                   set_type = "cds")
 #' }
 #' @family getBioSet
@@ -112,7 +114,8 @@ getBioSet <- function(db = "refseq",
 #' \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
 #' \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 #' }
-#' @param type biological sequence type. (alternatives are: genome, gff, cds, rna, proteome, collection (all the others))
+#' @param type biological sequence type. (alternatives are: genome, gff, cds,
+#' rna, proteome, assembly_stats, repeat_masker, collection (all the others))
 #' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
 #' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used. \code{release = 75} would for human would give the stable
@@ -197,6 +200,19 @@ getBio <- function(db = "refseq",
                 gunzip = gunzip,
                 path = path,
                 mute_citation = mute_citation)
+  } else if (type == "assembly_stats") {
+    getAssemblyStats(db, organism, reference = reference,
+                skip_bacteria = skip_bacteria,
+                release = release,
+                path = path,
+                mute_citation = mute_citation)
+  } else if (type == "repeat_masker") {
+    getRepeatMasker(db, organism, reference = reference,
+                     skip_bacteria = skip_bacteria,
+                     release = release,
+                     gunzip = gunzip,
+                     path = path,
+                     mute_citation = mute_citation)
   } else if (type == "collection") {
     getCollection(db, organism, reference = reference,
                   skip_bacteria = skip_bacteria,

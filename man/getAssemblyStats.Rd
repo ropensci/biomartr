@@ -9,6 +9,7 @@ getAssemblyStats(
   organism,
   reference = FALSE,
   skip_bacteria = TRUE,
+  release = NULL,
   type = "download",
   path = file.path("_ncbi_downloads", "genomeassembly_stats"),
   mute_citation = FALSE

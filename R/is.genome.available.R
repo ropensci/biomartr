@@ -49,13 +49,7 @@
 
 is.genome.available <- function(db = "refseq", organism,
                                 skip_bacteria = "TRUE", details = FALSE) {
-        all_db <- c(
-          "refseq",
-          "genbank",
-          "ensembl",
-          "ensemblgenomes",
-          "uniprot"
-        )
+        all_db <- db_hosts()
 
         if (!is.element(db, all_db))
             stop(
@@ -65,106 +59,11 @@ is.genome.available <- function(db = "refseq", organism,
             )
 
         if (is.element(db, c("refseq", "genbank"))) {
-          return(is.genome.available.refseq.genbank(db = db, organism = organism, details = details))
-        }
-
-        if (db %in% c("ensembl", "ensemblgenomes")) {
-          return(is.genome.available.ensembl(db, organism, details))
-        }
-
-        if (db == "uniprot") {
-
-            if (is.taxid(organism)) {
-                uniprot_rest_url <- paste0(
-                    "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&taxid=",
-                    as.integer(organism)
-                )
-
-                rest_status_test <- curl_fetch_memory(uniprot_rest_url)
-
-                if (rest_status_test$status_code != 200) {
-                    message(
-                        "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
-                        " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
-                    )
-                }
-                uniprot_species_info <-
-                    tibble::as_tibble(jsonlite::fromJSON(
-                        uniprot_rest_url
-                    ))
-
-            } else {
-
-                organism_new <- stringr::str_replace_all(organism, " ", "%20")
-
-                uniprot_rest_url_name <- paste0(
-                    "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&name=",
-                    organism_new
-                )
-
-                rest_status_test_name <- curl_fetch_memory(uniprot_rest_url_name)
-
-                if ((rest_status_test_name$status_code != 200)) {
-                    message(
-                        "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
-                        " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
-                    )
-                }
-
-                if (rest_status_test_name$status_code == 200) {
-                    uniprot_species_info <-
-                        tibble::as_tibble(jsonlite::fromJSON(
-                            uniprot_rest_url_name
-                        ))
-                }
-            }
-
-            if (!details) {
-                if (nrow(uniprot_species_info) == 0) {
-                    message(
-                        "Unfortunatey, no entry for '",
-                        organism,
-                        "' was found in the '",
-                        db,
-                        "' database. ",
-                        "Please consider specifying ",
-                        paste0("'db = ", dplyr::setdiff(
-                            all_db,
-                            db
-                        ), collapse = "' or "),
-                        "' to check whether '",
-                        organism,
-                        "' is available in these databases."
-                    )
-                    return(FALSE)
-                }
-
-                if (nrow(uniprot_species_info) > 0) {
-                    message(
-                        "A reference or representative genome assembly is available for '",
-                        organism,
-                        "'."
-                    )
-                    if (nrow(uniprot_species_info) > 1) {
-                        message(
-                            "More than one entry was found for '",
-                            organism,
-                            "'.",
-                            " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = ",
-                            organism,
-                            ", db = ",
-                            db,
-                            ", details = TRUE)'.",
-                            " This will allow you to select the 'assembly_accession' identifier that can then be ",
-                            "specified in all get*() functions."
-                        )
-                    }
-                    return(TRUE)
-                }
-
-            }
-          if (details)
-            return(uniprot_species_info)
+          is.genome.available.refseq.genbank(db = db, organism = organism, details = details)
+        } else if (db %in% c("ensembl", "ensemblgenomes")) {
+          is.genome.available.ensembl(db, organism, details)
+        } else if (db == "uniprot") {
+          is.genome.available.uniprot(db, organism, details)
         }
 }
 
@@ -286,27 +185,78 @@ is.genome.available.ensembl <- function(db = "ensembl", organism,
     return(selected.organism)
 }
 
-organism_no_hit_message_zero <- function(organism, db) {
-  message(
-    "Unfortunatey, no entry for '",
-    organism,
-    "' was found in the '",
-    db,
-    "' database. ",
-    "Please consider specifying ",
-    paste0("'db = ", dplyr::setdiff(
-      c("refseq", "genbank", "ensembl", "ensemblgenomes", "uniprot"), db
-    ), collapse = "' or "),
-    "' to check whether '",organism,"' is available in these databases."
-  )
+is.genome.available.uniprot <- function(db = "uniprot",
+                                        organism,
+                                        details = FALSE) {
+
+  if (is.taxid(organism)) {
+    uniprot_rest_url <- paste0(
+      "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&taxid=",
+      as.integer(organism)
+    )
+
+    rest_status_test <- curl_fetch_memory(uniprot_rest_url)
+
+    if (rest_status_test$status_code != 200) {
+      message(
+        "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
+        " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
+      )
+    }
+    uniprot_species_info <-
+      tibble::as_tibble(jsonlite::fromJSON(
+        uniprot_rest_url
+      ))
+
+  } else {
+
+    organism_new <- stringr::str_replace_all(organism, " ", "%20")
+
+    uniprot_rest_url_name <- paste0(
+      "https://www.ebi.ac.uk/proteins/api/proteomes?offset=0&size=-1&name=",
+      organism_new
+    )
+
+    rest_status_test_name <- curl_fetch_memory(uniprot_rest_url_name)
+
+    if ((rest_status_test_name$status_code != 200)) {
+      message(
+        "Something went wrong when trying to access the API 'https://www.ebi.ac.uk/proteins/api/proteomes'.",
+        " Sometimes the internet connection isn't stable and re-running the function might help. Otherwise, could there be an issue with the firewall? ", "Is it possbile to access the homepage 'https://www.ebi.ac.uk/' through your browser?"
+      )
+    }
+
+    if (rest_status_test_name$status_code == 200) {
+      uniprot_species_info <-
+        tibble::as_tibble(jsonlite::fromJSON(
+          uniprot_rest_url_name
+        ))
+    }
+  }
+
+  if (!details) {
+    if (nrow(uniprot_species_info) == 0) {
+      organism_no_hit_message_zero(organism, db)
+      return(FALSE)
+    }
+
+    if (nrow(uniprot_species_info) > 0) {
+      message(
+        "A reference or representative genome assembly is available for '",
+        organism,
+        "'."
+      )
+      if (nrow(uniprot_species_info) > 1) {
+        organism_no_hit_message_more_than_one(organism, db)
+      }
+      return(TRUE)
+    }
+
+  }
+  # If details
+  return(uniprot_species_info)
 }
 
-organism_no_hit_message_more_than_one <- function(organism, db) {
-  message("More than one entry was found for '", organism, "'.",
-          " Please consider to run the function 'is.genome.available()' and specify 'is.genome.available(organism = ",
-          organism, ", db = ",db, ", details = TRUE)'.",
-          " This will allow you to select the 'assembly_accession' identifier that can then be ",
-          "specified in all get*() functions.")
-}
+
 
 

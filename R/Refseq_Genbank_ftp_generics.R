@@ -90,10 +90,16 @@ ftp_url_refseq_genbank <- function(assembly, type) {
     url <- paste0(stem_url, "_rna_from_genomic.fna.gz")
   } else if (type == "protein") {
     url <- paste0(stem_url, "_protein.faa.gz")
+  } else if (type == "assembly_stats") {
+    url <- paste0(stem_url, "_assembly_stats.txt")
+  } else if (type == "repeat_masker") {
+    url <- paste0(stem_url, "_rm.out.gz")
   } else stop("invalid refseq/genbank file type selected")
 
   return(url)
 }
+
+
 
 local_path_refseq_genbank <- function(path, local.org, db, type) {
   local_file <- file.path(path, local.org)
@@ -108,6 +114,10 @@ local_path_refseq_genbank <- function(path, local.org, db, type) {
     local_file <- paste0(local_file, "_rna_from_genomic_", db, ".fna.gz")
   } else if (type == "protein") {
     local_file <- paste0(local_file, "_protein_", db, ".faa.gz")
+  } else if (type == "assembly_stats") {
+    local_file <- paste0(local_file, "_assembly_stats_", db, ".txt")
+  }  else if (type == "repeat_masker") {
+    local_file <- paste0(local_file, "_rm_", db, ".out.gz")
   } else stop("invalid refseq/genbank file type selected")
 
   return(local_file)
@@ -149,11 +159,14 @@ get_file_refseq_genbank <- function(db = "refseq",
   local_file <- local_path_refseq_genbank(path, local.org, db, type)
 
   custom_download_check_local(download_url, local_file, NULL, "refgen")
-  message("-> ", toupper(type)," download of ", organism, " is completed!")
 
-  md5_sum_test(md5_local = file.path(path, paste0(local.org, "_md5checksums.txt")),
-               md5_url = paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
-               local_file = local_file, file_url = download_url)
+  if (file.exists(local_file)) {
+    message("-> ", toupper(type)," download of ", organism, " is completed!")
+    md5_sum_test(md5_local = file.path(path, paste0(local.org, "_md5checksums.txt")),
+                 md5_url = paste0(FoundOrganism$ftp_path,"/md5checksums.txt"),
+                 local_file = local_file, file_url = download_url)
+  } else local_file <- "Not available"
+
 
   return(list(local_file = local_file, download_url = download_url,
               local.org = local.org, FoundOrganism = FoundOrganism))

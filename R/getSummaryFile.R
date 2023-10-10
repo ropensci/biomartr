@@ -136,3 +136,7 @@ read_all_kingdoms_assemblies_info <- function(file) {
     )
   )
 }
+
+read_all_kingdoms_assemblies_info_fast <- function(file) {
+  data.table::fread(file)
+}

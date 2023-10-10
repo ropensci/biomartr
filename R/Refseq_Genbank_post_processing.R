@@ -31,17 +31,14 @@ refseq_genbank_download_post_processing <- function(info, organism, db, path,
     submitter = FoundOrganism$submitter
   )
   docFile(doc = doc)
+  doc_file_path <- file.path(path, paste0("doc_", local.org, "_db_", db, ".tsv"))
+  readr::write_tsv(doc, file = doc_file_path)
 
   if (analyse_genome) {
     genome_summary_stats <- summary_genome(file = local_file, organism = organism)
     genome_analysis_path <- file.path(path, paste0("doc_",local.org,"_db_",db,"_summary_statistics.tsv"))
     readr::write_tsv(genome_summary_stats, file = genome_analysis_path)
   }
-
-
-  doc_file_path <- file.path(path,
-                             paste0("doc_", local.org, "_db_", db, ".tsv"))
-  readr::write_tsv(doc, file = doc_file_path)
   gunzip_and_check(local_file, gunzip, remove_annotation_outliers, format,
                    mute_citation = mute_citation)
 }
