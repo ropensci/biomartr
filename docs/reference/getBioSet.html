@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.6.9000</span>
       </span>
     </div>
 
@@ -108,12 +108,14 @@ There are three available options to characterize an organism:</p></dd>
 
 
 <dt>set_type</dt>
-<dd><p>the biological sequence type that shall be retrieved. 
+<dd><p>the biological sequence type that shall be retrieved.
 Available options are</p><ul><li><p><code>set_type = "genome"</code></p></li>
 <li><p><code>set_type = "proteome"</code></p></li>
 <li><p><code>set_type = "cds"</code></p></li>
 <li><p><code>set_type = "gff"</code></p></li>
 <li><p><code>set_type = "rna"</code></p></li>
+<li><p><code>set_type = "assembly_stats"</code></p></li>
+<li><p><code>set_type = "repeat_masker"</code></p></li>
 <li><p><code>set_type = "collection"</code> (all the others)</p></li>
 </ul></dd>
 
@@ -208,7 +210,7 @@ no download process will be performed.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">getBioSet</span><span class="op">(</span><span class="st">"refseq"</span>, organisms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arabidopsis thaliana"</span>,</span></span>
 <span class="r-in"><span>                                  <span class="st">"Arabidopsis lyrata"</span>,</span></span>
-<span class="r-in"><span>                                  <span class="st">"Capsella rubella"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                                  <span class="st">"Capsella rubella"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                  set_type <span class="op">=</span> <span class="st">"cds"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>

@@ -22,7 +22,7 @@ several databases."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.6.9000</span>
       </span>
     </div>
 
@@ -91,8 +91,10 @@ several databases.</p>
 <span>  reference <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  skip_bacteria <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  release <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  gunzip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  assembly_type <span class="op">=</span> <span class="st">"toplevel"</span>,</span>
+<span>  analyse_genome <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  remove_annotation_outliers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  gunzip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"_db_downloads"</span>, <span class="st">"collections"</span><span class="op">)</span>,</span>
 <span>  mute_citation <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -134,14 +136,23 @@ GRCh37 release in ensembl. Value must be &gt; 46, since ensembl did not structur
 if the standard format before that.</p></dd>
 
 
-<dt>gunzip</dt>
-<dd><p>a logical, indicating whether or not files should be unzipped.</p></dd>
+<dt>assembly_type</dt>
+<dd><p>a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.</p></dd>
+
+
+<dt>analyse_genome</dt>
+<dd><p>logical, default FALSE. If TRUE, get general genome statistics like
+gc content etc. For more details, see ?summary_genome</p></dd>
 
 
 <dt>remove_annotation_outliers</dt>
 <dd><p>shall outlier lines be removed from the input <code>annotation_file</code>?
 If yes, then the initial <code>annotation_file</code> will be overwritten and the removed outlier lines will be stored at <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></code>
 for further exploration.</p></dd>
+
+
+<dt>gunzip</dt>
+<dd><p>a logical, indicating whether or not files should be unzipped.</p></dd>
 
 
 <dt>path</dt>

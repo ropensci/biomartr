@@ -40,6 +40,8 @@ Available options are
 \item \code{set_type = "cds"}
 \item \code{set_type = "gff"}
 \item \code{set_type = "rna"}
+\item \code{set_type = "assembly_stats"}
+\item \code{set_type = "repeat_masker"}
 \item \code{set_type = "collection"} (all the others)
 }}
 
