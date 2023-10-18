@@ -48,7 +48,7 @@
 #' @export
 
 is.genome.available <- function(db = "refseq", organism,
-                                skip_bacteria = "TRUE", details = FALSE) {
+                                skip_bacteria = TRUE, details = FALSE) {
         all_db <- db_hosts()
 
         if (!is.element(db, all_db))
@@ -59,7 +59,7 @@ is.genome.available <- function(db = "refseq", organism,
             )
 
         if (is.element(db, c("refseq", "genbank"))) {
-          is.genome.available.refseq.genbank(db = db, organism = organism, details = details)
+          is.genome.available.refseq.genbank(db = db, organism = organism, details = details, skip_bacteria = skip_bacteria)
         } else if (db %in% c("ensembl", "ensemblgenomes")) {
           is.genome.available.ensembl(db, organism, details)
         } else if (db == "uniprot") {
