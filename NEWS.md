@@ -9,7 +9,7 @@ This function will simplify a lot of stuff downstream. (#104)
 
 ### Bug fixes
 
-- Fixing bug in `is.genome.available()` where the skip_bacteria argument was not passed on internally to `is.genome.available.refseq.genbank()` #105
+- Fixing bug in `is.genome.available()` where the skip_bacteria argument was not passed on internally to `is.genome.available.refseq.genbank()` (#105)
 
 # [biomartr 1.0.5](https://github.com/ropensci/biomartr/releases/tag/v1.0.5)
 
