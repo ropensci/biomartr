@@ -34,6 +34,9 @@ the bacterial summary file will not be loaded by default anymore. If users
 wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
+\item{release}{most recent database version is used. release = 75 would for human would give the stable GRCh37 release in ensembl. 
+Value must be > 46, since ensembl did not structure their data if the standard format before that.}
+
 \item{type}{shall only the file be retrieved (default)
 \code{type = "download"} or should the corresponding file be downloaded and
 subsequently be imported \code{type = "import"}.}

@@ -33,6 +33,11 @@ the bacterial summary file will not be loaded by default anymore. If users
 wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 bacterial summary file will be downloaded.}
 
+\item{release}{most recent database version is used. release = 75 would for human would give the stable GRCh37 release in ensembl. 
+Value must be > 46, since ensembl did not structure their data if the standard format before that.}
+
+\item{gunzip}{a logical, indicating whether or not files should be unzipped.}
+
 \item{path}{a character string specifying the location (a folder) in which
 the corresponding file shall be stored. Default is
 \code{path} = \code{file.path("_ncbi_downloads","repeatmasker")}.}
