@@ -1,4 +1,4 @@
-# biomartr 1.0.6.9000
+# biomartr 1.0.6
 
 ### New features
 

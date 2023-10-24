@@ -7,7 +7,7 @@
 is.genome.available(
   db = "refseq",
   organism,
-  skip_bacteria = "TRUE",
+  skip_bacteria = TRUE,
   details = FALSE
 )
 }

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.6</span>
       </span>
     </div>
 
@@ -70,11 +70,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.6.9000" id="biomartr-1069000">biomartr 1.0.6.9000<a class="anchor" aria-label="anchor" href="#biomartr-1069000"></a></h2>
+<h2 class="page-header" data-toc-text="1.0.6" id="biomartr-106">biomartr 1.0.6<a class="anchor" aria-label="anchor" href="#biomartr-106"></a></h2>
 <div class="section level4">
-<h4 id="new-features-1-0-6-9000">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-6-9000"></a></h4>
+<h4 id="new-features-1-0-6">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-6"></a></h4>
 <ul><li><p>Some cool new generalization, and check out function <code>biomartr:::supported_biotypes(db = "refseq")</code>. This function will simplify a lot of stuff downstream. (<a href="https://github.com/ropensci/biomartr/issues/104" class="external-link">#104</a>)</p></li>
 <li><p>Tests are now much quicker to run, because <code><a href="../reference/is.genome.available.html">biomartr::is.genome.available</a></code> (which is used basically everywhere) now reads files with data.table instead of reader. (<a href="https://github.com/ropensci/biomartr/issues/104" class="external-link">#104</a>)</p></li>
+</ul></div>
+<div class="section level4">
+<h4 id="bug-fixes-1-0-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-6"></a></h4>
+<ul><li>Fixing bug in <code><a href="../reference/is.genome.available.html">is.genome.available()</a></code> where the skip_bacteria argument was not passed on internally to <code>is.genome.available.refseq.genbank()</code> (<a href="https://github.com/ropensci/biomartr/issues/105" class="external-link">#105</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
