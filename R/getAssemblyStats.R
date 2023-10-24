@@ -21,6 +21,8 @@
 #' the bacterial summary file will not be loaded by default anymore. If users
 #' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 #' bacterial summary file will be downloaded.
+#' @param release most recent database version is used. release = 75 would for human would give the stable GRCh37 release in ensembl. 
+#' Value must be > 46, since ensembl did not structure their data if the standard format before that.
 #' @param path a character string specifying the location (a folder) in
 #' which the corresponding file shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","genomeassembly_stats")}.
@@ -101,7 +103,7 @@ getAssemblyStats <-
       )
 
     info <- get_file_refseq_genbank(db, organism, reference, skip_bacteria,
-                                    release, gunzip, path, type = "assembly_stats")
+                                    release, gunzip = FALSE, path, type = "assembly_stats")
     assembly_file <-
     refseq_genbank_download_post_processing(info, organism, db, path,
                                             gunzip = FALSE,
