@@ -145,7 +145,7 @@ ensembl_ftp_server_url <- function(division = "EnsemblVertebrates") {
   if (division == "EnsemblVertebrates") {
     "https://ftp.ensembl.org"
   } else {
-    "http://ftp.ensemblgenomes.org"
+    "https://ftp.ensemblgenomes.ebi.ac.uk" # old: http://ftp.ensemblgenomes.org
   }
 }
 
