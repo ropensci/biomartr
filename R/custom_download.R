@@ -48,14 +48,13 @@ custom_download <- function(url, ...) {
 custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl",
                                         notify_exist = TRUE, ...) {
 
-  if (file.exists(local_file)) {
+  if (!is.logical(local_file) && file.exists(local_file)) {
     if (notify_exist) message("File ", local_file,
                               " exists already. Thus, download has been skipped.")
   } else {
     if (!is.null(rest_api_status) && rest_api_status$release_coord_system_version == "not_found") {
-      message("Found organism but given release number did not specify existing file
-                     in ensembl, maybe it is too old? Check that it exists on ensembl
-                     first at all.")
+      message("Found organism but given assembly type (toplevel/primary) or release number did not specify existing file
+                     in ensembl, did you specify primary for toplevel only? Check that it exists on ensembl through your browser")
       return(FALSE)
     }
 

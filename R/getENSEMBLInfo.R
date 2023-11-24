@@ -382,7 +382,7 @@ ensembl_download_post_processing <- function(genome.path, organism, format,
                                              remove_annotation_outliers = FALSE,
                                              gunzip = FALSE, db = "ensembl",
                                              mute_citation = FALSE) {
-  if (is.logical(genome.path[1]) && !genome.path) {
+  if (genome.path[1] == "FALSE") {
     return(FALSE)
   } else {
     # Format specific behaviors

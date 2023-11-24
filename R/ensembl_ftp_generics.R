@@ -39,7 +39,7 @@ getENSEMBL <- function(organism, type = "dna", id.type = "toplevel", release = N
   # construct retrieval query
   kingdom <- ensembl_summary$division[1]
   core_path <- ensembl_ftp_server_url_format_full(kingdom, release, format)
-  # Go through all possible assemblies, from newest to oldest, only 1 will match!
+  # Validate that final URL exists, if not, "not_found" is kept.
   rest_api_status$release_coord_system_version <- "not_found"
   for (assembly_option in all_possible_assemblies) {
     ensembl.qry <- ftp_url_ensembl(core_path, new.organism, assembly_option,
@@ -64,6 +64,8 @@ getENSEMBL <- function(organism, type = "dna", id.type = "toplevel", release = N
 local_path_ensembl <- function(path, new.organism, rest_api_status,
                                format, type, release, id.type) {
   assembly <- rest_api_status$release_coord_system_version
+  if (assembly == "not_found") return(FALSE)
+
   if (format == "fasta") {
     ensembl_seq_local_path(path, new.organism, assembly,
                            type, id.type)

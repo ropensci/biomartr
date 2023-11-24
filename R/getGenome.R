@@ -32,7 +32,7 @@ getGenome <- function(db = "refseq",
         if (!(assembly_type %in% c("toplevel", "primary_assembly")))
             stop("Please select one the available assembly types: \ntoplevel, primary_assembly")
         if ((db != "ensembl") && (assembly_type != "toplevel"))
-            stop( "The assembly_type argument is not default value.",
+            stop( "The assembly_type argument is not default value. ",
             "Don't change this argument when not using db = 'ensembl'.", call. = FALSE)
 
         if (!is.logical(reference))
