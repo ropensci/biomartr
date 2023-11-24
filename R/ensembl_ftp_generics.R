@@ -3,7 +3,9 @@
 #' files from the ENSEMBL ftp server
 #' @inheritParams getBio
 #' @param type character, biological sequence type (e.g. "dna", "cds")
-#' @param id.type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
+#' @param id.type a character, default "toplevel".
+#' id type of assembly, either "toplevel" or "primary_assembly" for genomes.
+#' Can be other strings, for non genome objects.
 #' @param path location where file shall be stored.
 #' @author Hajk-Georg Drost
 #' @return either a character path to downloaded file, or a logical FALSE, specifying failure.
@@ -47,7 +49,12 @@ getENSEMBL <- function(organism, type = "dna", id.type = "toplevel", release = N
                                    release)
     if (!isFALSE(ensembl.qry)) {
       assembly_is_correct <- exists.ftp.file.new(ensembl.qry, ensembl.qry)
-      if (assembly_is_correct) {
+      if (any(assembly_is_correct)) {
+        if (length(assembly_is_correct) > 1) {
+          id.type <- id.type[assembly_is_correct][1]
+          message("Auto detected assembly type: ", id.type)
+          ensembl.qry <- ensembl.qry[assembly_is_correct][1]
+        }
         rest_api_status$release_coord_system_version <- assembly_option
         break
       }
@@ -88,7 +95,7 @@ ftp_url_ensembl <- function(core_path, new.organism, assembly,
   url_stem <- file.path(dir, ensembl_assembly_stem(new.organism, assembly))
 
   if (!is.null(type)) type <- paste0(type, ".")
-  if (!is.null(id.type) && id.type == "none") id.type <- NULL
+  if (!is.null(id.type) && all(id.type == "none")) id.type <- NULL
   if (!is.null(id.type)) id.type <- paste0(id.type, ".")
   release. <- release
   is_fasta <- format == "fasta"

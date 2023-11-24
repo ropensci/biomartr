@@ -24,7 +24,9 @@ there are three options to characterize an organism:
 
 \item{type}{character, biological sequence type (e.g. "dna", "cds")}
 
-\item{id.type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
+\item{id.type}{a character, default "toplevel".
+id type of assembly, either "toplevel" or "primary_assembly" for genomes.
+Can be other strings, for non genome objects.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used. \code{release = 75} would for human would give the stable

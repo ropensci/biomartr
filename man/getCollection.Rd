@@ -47,7 +47,18 @@ that the most recent database version is used. \code{release = 75} would for hum
 GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data
 if the standard format before that.}
 
-\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
+\item{assembly_type}{character, default c("primary_assembly", "toplevel"). Used for ensembl only,
+specifies the genome assembly type. Searches for both primary and toplevel, and if both are found, uses the
+first by order (so primary is prioritized by default).
+The Primary assembly should usually be used if it exists.
+The "primary assembly" contains all the top-level sequence regions,
+excluding alternative haplotypes and patches.
+If the primary assembly file is not present for a species
+(only defined for standard model organisms),
+that indicates that there were no haplotype/patch regions,
+and in such cases, the 'toplevel file is used.
+For more details see:
+\link{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}}
 
 \item{analyse_genome}{logical, default FALSE. If TRUE, get general genome statistics like
 gc content etc. For more details, see ?summary_genome}

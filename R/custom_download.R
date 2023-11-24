@@ -112,14 +112,12 @@ test_url_status <- function(url, organism) {
 #' @import curl
 exists.ftp.file.new <- function(url, file.path) {
 
-  url_dir_safe <- gsub("//$", "/", paste0(dirname(url), "/"))
-  if (!RCurl::url.exists(url_dir_safe))
-    return(FALSE)
+  url_dir_safe <- unique(gsub("//$", "/", paste0(dirname(url), "/")))
+  url_dir_exists <- RCurl::url.exists(url_dir_safe)
+  if (!url_dir_exists) return(url_dir_exists)
 
   con <- RCurl::getURL(url_dir_safe, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-
   dir_files <- XML::getHTMLLinks(con)
-
   return(is.element(as.character(basename(file.path)),
                     dir_files))
 }
