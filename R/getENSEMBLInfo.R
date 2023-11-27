@@ -289,15 +289,15 @@ get_collection_id <- function(ensembl_summary) {
     )
     return(FALSE)
   }
-
-  if (is.na(collection_info$core_db[1]) || collection_info$core_db[1] == "N") {
-    # TODO make sure this is safe
+  collection <- collection_info$core_db[1]
+  split <- unlist(stringr::str_split(collection, "_"))[1:3]
+  is_not_collection <- (is.na(collection) || collection == "N") || split[3] != "collection"
+  if (is_not_collection) {
+    # TODO make sure this is safe (Currently that split[3] is collection might change!)
     # In theory this should mean that the file exist outside collection folders
     return("")
   }
-  collection <- paste0(paste0(unlist(
-    stringr::str_split(collection_info$core_db[1], "_")
-  )[1:3], collapse = "_"), "/")
+  collection <- paste0(paste0(split, collapse = "_"), "/")
 
   return(collection)
 }
