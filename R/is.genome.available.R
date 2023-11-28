@@ -137,7 +137,8 @@ is.genome.available.refseq.genbank <- function(db = "refseq",
 
 #' Check if genome is available in ensembl
 #'
-#' @param division "EnsemblVertebrates", alternatives: "EnsemblPlants", "EnsemblFungi"
+#' @param divisions character, default is all from ensembl_divisions(),
+#'  alternatives: see \code{ensembl_divisions}
 #' @noRd
 is.genome.available.ensembl <- function(db = "ensembl", organism,
                                         details = FALSE, divisions = ensembl_divisions()) {
@@ -145,7 +146,7 @@ is.genome.available.ensembl <- function(db = "ensembl", organism,
   new.organism <- stringr::str_replace_all(organism, " ", "_")
 
   # For each ensembl division, check if it exists
-  for (division in ensembl_divisions()) {
+  for (division in divisions) {
     ensembl.available.organisms <- get.ensembl.info(division = division)
     ensembl.available.organisms <- dplyr::filter(ensembl.available.organisms, !is.na(assembly))
 

@@ -12,10 +12,10 @@
 #' @param type a character string specifying a potential filter of available
 #' genomes. Available options are:
 #' \itemize{
-#' \item \code{type = "all"}
-#' \item \code{type = "kingdom"}
-#' \item \code{type = "group"}
-#' \item \code{type = "subgroup"}
+#' \item \code{type = "all", no subset}
+#' \item \code{type = "kingdom", subset on kingdom}
+#' \item \code{type = "group", subset on group}
+#' \item \code{type = "subgroup", subset on subgroup}
 #' }
 #' @param subset a character string or character vector specifying a subset of
 #' \code{type}. E.g. if users are interested in retrieving all
@@ -31,6 +31,7 @@
 #' \item \code{subgroup}
 #' \item \code{file_size_MB}, etc.
 #' }
+#' @inheritParams getENSEMBLInfo
 #' @param skip_bacteria Due to its enormous dataset size (> 700MB as of July 2023),
 #' the bacterial summary file will not be loaded by default anymore. If users
 #' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
@@ -58,274 +59,110 @@
 #' listGenomes(db = "ensembl", type = "kingdom", subset = "EnsemblVertebrates")
 #' }
 #' @export
+listGenomes <- function(db = "refseq", type = "all", subset = NULL,
+                        details = FALSE, update = FALSE, skip_bacteria = FALSE) {
 
-listGenomes <-
-    function(db = "refseq",
-             type = "all",
-             subset = NULL,
-             details = FALSE,
-             skip_bacteria = FALSE) {
-    if (!is.element(db, c("refseq", "genbank",
-                          "ensembl")))
-        stop(
-            "Please specify a database that is supported by this function.
-            E.g. 'refseq', 'genbank', or 'ensembl'.",
+  if (!is.element(db, c("refseq", "genbank", "ensembl")))
+    stop(
+      "Please specify a database that is supported by this function.
+              E.g. 'refseq', 'genbank', or 'ensembl'.",
+      call. = FALSE
+    )
+
+  if (!is.element(type, c("all", "kingdom", "group", "subgroup")))
+    stop(
+      "Please specify a type that is supported by this function.
+              E.g. 'all', kingdom', 'group', or 'subgroup'.",
+      call. = FALSE
+    )
+  stopifnot(is.logical(details))
+  subgroup <- division <- NULL
+
+  if (is.element(db, c("refseq", "genbank"))) {
+    # retrieve genome report overview file
+    ncbi_overview <- getGENOMEREPORT()
+
+    # get Kingdom Assembly Summary file
+    AssemblyFilesAllKingdoms <-
+      getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
+
+    # join tables to retrieve kingdom, group, subgroup information for
+    # refseq/genbank organisms
+    genomes_info <-
+      dplyr::inner_join(AssemblyFilesAllKingdoms, ncbi_overview,
+                        by = "organism_name")
+
+    kingdoms <- group <-  NULL
+
+    if (type == "all") {
+      if (details) {
+        if (!is.null(subset)) {
+          warning(
+            "For option type = 'all' no subset can be specified.",
+            " Please select another type and then specify subset = '",
+            subset,
+            "'.",
             call. = FALSE
-        )
+          )
+        }
 
-    if (!is.element(type, c("all", "kingdom", "group", "subgroup")))
-        stop(
-            "Please specify a type that is supported by this function.
-            E.g. 'all', kingdom', 'group', or 'subgroup'.",
+        return(tibble::as_tibble(genomes_info))
+      }
+
+      if (!details) {
+        if (!is.null(subset)) {
+          warning(
+            "For option type = 'all' no subset can be specified.",
+            " Please select another type and then specify subset = '",
+            subset,
+            "'.",
             call. = FALSE
-        )
-
-    subgroup <- division <- NULL
-
-    if (is.element(db, c("refseq", "genbank"))) {
-        # retrieve genome report overview file
-        ncbi_overview <- getGENOMEREPORT()
-
-        # get Kingdom Assembly Summary file
-        AssemblyFilesAllKingdoms <-
-            getKingdomAssemblySummary(db = db, skip_bacteria = skip_bacteria)
-
-        # join tables to retrieve kingdom, group, subgroup information for
-        # refseq/genbank organisms
-        joined.df <-
-            dplyr::inner_join(AssemblyFilesAllKingdoms, ncbi_overview,
-                              by = "organism_name")
-
-        kingdoms <- group <-  NULL
-
-        if (type == "all") {
-            if (details) {
-                if (!is.null(subset)) {
-                    warning(
-                        "For option type = 'all' no subset can be specified.",
-                        " Please select another type and then specify subset = '",
-                        subset,
-                        "'.",
-                        call. = FALSE
-                    )
-                }
-
-                return(tibble::as_tibble(joined.df))
-            }
-
-            if (!details) {
-                if (!is.null(subset)) {
-                    warning(
-                        "For option type = 'all' no subset can be specified.",
-                        " Please select another type and then specify subset = '",
-                        subset,
-                        "'.",
-                        call. = FALSE
-                    )
-                }
-
-                return(unique(joined.df$organism_name))
-            }
+          )
         }
 
-        if (type == "kingdom") {
-            if (details) {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(joined.df$kingdoms)
-                    ))))
-                        stop(
-                            "Unfortunately, not all members of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'Eukaryota' instead of 'eukaryota'.",
-                            call. = FALSE
-                        )
-
-                    return(dplyr::filter(joined.df,
-                                         is.element(kingdoms, subset)))
-                } else {
-                    return(tibble::as_tibble(joined.df))
-                }
-            }
-
-            if (!details) {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(joined.df$kingdoms)
-                    ))))
-                        stop(
-                            "Unfortunately, not all members of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'Eukaryota' instead of 'eukaryota'.",
-                            call. = FALSE
-                        )
-                    return(unique(
-                        dplyr::filter(joined.df,
-                        is.element(kingdoms, subset))$organism_name
-                    ))
-                } else {
-                    return(unique(joined.df$organism_name))
-                }
-            }
-        }
-
-        if (type == "group") {
-            if (details) {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(joined.df$group)
-                    ))))
-                        stop(
-                            "Unfortunately, not all memebrs of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'Eukaryota' instead of 'eukaryota'.",
-                            call. = FALSE
-                        )
-                    return(dplyr::filter(joined.df,
-                                         is.element(group, subset)))
-                } else {
-                    return(tibble::as_tibble(joined.df))
-                }
-            }
-
-            if (!details) {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(joined.df$group)
-                    ))))
-                        stop(
-                            "Unfortunately, not all memebrs of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'Eukaryota' instead of 'eukaryota'.",
-                            call. = FALSE
-                        )
-                    return(unique(
-                        dplyr::filter(joined.df,
-                        is.element(group, subset))$organism_name
-                    ))
-                } else {
-                    return(unique(joined.df$organism_name))
-                }
-            }
-        }
-
-        if (type == "subgroup") {
-            if (details) {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(joined.df$subgroup)
-                    ))))
-                        stop(
-                            "Unfortunately, not all memebrs of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'Eukaryota' instead of 'eukaryota'.",
-                            call. = FALSE
-                        )
-                    return(dplyr::filter(joined.df,
-                                         is.element(subgroup, subset)))
-                } else {
-                    return(tibble::as_tibble(joined.df))
-                }
-            }
-
-            if (!details) {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(joined.df$subgroup)
-                    ))))
-                        stop(
-                            "Unfortunately, not all memebrs of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'Eukaryota' instead of 'eukaryota'.",
-                            call. = FALSE
-                        )
-                    return(unique(
-                        dplyr::filter(joined.df,
-                        is.element(subgroup, subset))$organism_name
-                    ))
-                } else {
-                    return(unique(joined.df$organism_name))
-                }
-            }
-        }
+        return(unique(genomes_info$organism_name))
+      }
     }
+    set <-
+      if (type == "kingdom") {
+        genomes_info$kingdoms
+      } else if (type == "group") {
+        genomes_info$group
+      } else if (type == "subgroup") {
+        genomes_info$subgroup
+      }
+    names <- genomes_info$organism_name
+  }
 
-    if (db %in% c("ensembl", "ensemblgenomes")) {
-        if (!is.element(type, c("all", "kingdom")))
-            stop(
-                "Unfortunately, ENSEMBL only provides kingdom information and no group or subgroup information.",
-                call. = FALSE
-            )
+  if (db %in% c("ensembl", "ensemblgenomes")) {
+    if (!is.element(type, c("all", "kingdom")))
+      stop(
+        "Unfortunately, ENSEMBL only provides kingdom information and no group or subgroup information.",
+        call. = FALSE
+      )
 
-        ensemblinfo <- getENSEMBLInfo()
+    genomes_info <- getENSEMBLInfo(update, subset)
+    set <- genomes_info$division
+    names <- genomes_info$name
+  }
 
-        if (details) {
-            if (type == "all")
-                return(ensemblinfo)
-            if (type == "kingdom") {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(ensemblinfo$division)
-                    ))))
-                        stop(
-                            "Unfortunately, not all memebrs of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'EnsemblMetazoa' instead of 'ensemblmetazoa'.",
-                            call. = FALSE
-                        )
-                    return(dplyr::filter(
-                        ensemblinfo,
-                        is.element(division, subset)
-                    ))
+  if (!is.null(subset) && !all(subset %in% set))
+    stop(genomes_wrong_subset_message(subset, set),
+         call. = FALSE)
 
-                } else {
-                    return(tibble::as_tibble(ensemblinfo))
-                }
-            }
-        }
-
-        if (!details) {
-            if (type == "all")
-                return(unique(ensemblinfo$name))
-            if (type == "kingdom") {
-                if (!is.null(subset)) {
-                    if (!all(is.element(subset, names(
-                        table(ensemblinfo$division)
-                    ))))
-                        stop(
-                            "Unfortunately, not all memebrs of your specified subset '",
-                            paste0(subset, ", '"),
-                            " could be found. Search terms are case sensitive, so you could try to type:",
-                            " 'EnsemblMetazoa' instead of 'ensemblmetazoa'.",
-                            call. = FALSE
-                        )
-                    return(unique(
-                        dplyr::filter(
-                            ensemblinfo,
-                            is.element(division, subset)
-                        )$name
-                    ))
-
-                } else {
-                    return(unique(ensemblinfo$name))
-                }
-            }
-        }
+  if (details) {
+    if (!is.null(subset)) {
+      return(genomes_info[set %in% subset,])
+    } else {
+      return(tibble::as_tibble(genomes_info))
     }
+  }
+
+  if (!details) {
+    if (!is.null(subset)) {
+      return(unique(names[set %in% subset]))
+    } else {
+      return(unique(names))
+    }
+  }
 }
-
-
-
-
-
-
-
-
-

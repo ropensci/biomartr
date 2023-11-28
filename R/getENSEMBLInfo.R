@@ -1,8 +1,11 @@
 #' @title Retrieve ENSEMBL info file
 #' @description Retrieve species and genome information from
 #' http://rest.ensembl.org/info/species?content-type=application/json/.
-#' @param update logical, default TRUE. Update cached list, if FALSE use existing
-#' (if it exists)
+#' @param update logical, default FALSE. If TRUE, update cached list,
+#' if FALSE use existing cache (if it exists). For cache location see
+#' \code{cachedir()}
+#' @param divisions character, name of divisions to check, default is all from
+#' \code{ensembl_divisions()}. If NULL, also all is used.
 #' @author Hajk-Georg Drost
 #' @return a tibble table storing info for all available ENSEMBL divisions.
 #' @examples
@@ -18,15 +21,19 @@
 #' }
 #' @seealso \code{\link{ensembl_divisions}}, \code{\link{get.ensembl.info}}, \code{\link{getKingdomAssemblySummary}}
 #' @export
-getENSEMBLInfo <- function(update = TRUE) {
+getENSEMBLInfo <- function(update = FALSE, divisions = ensembl_divisions()) {
   all_divisions <- ensembl_divisions()
-  ENSEMBLInfoTable <- vector("list", length(all_divisions))
+  if (is.null(divisions)) divisions <- all_divisions
+  if (!all(divisions %in% all_divisions))
+    stop("Specified Ensembl divisions must be subset of:\n",
+         paste(all_divisions, collapse = " "))
+  ENSEMBLInfoTable <- vector("list", length(divisions))
 
-  for (i in seq_len(length(all_divisions))) {
-    cat("Starting information retrieval for:", all_divisions[i])
+  for (i in seq_len(length(divisions))) {
+    cat("Starting information retrieval for:", divisions[i])
     cat("\n")
     ENSEMBLInfoTable[[i]] <-
-      get.ensembl.info(update, division = all_divisions[i])
+      get.ensembl.info(update, division = divisions[i])
   }
 
   return(dplyr::bind_rows(ENSEMBLInfoTable))

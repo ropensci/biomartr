@@ -21,9 +21,9 @@
 #' @seealso \code{\link{ensembl_divisions}}, \code{\link{getKingdomAssemblySummary}}, \code{\link{getENSEMBLInfo}}
 #' @export
 get.ensembl.info <- function(update = FALSE, division) {
+  stopifnot(is.logical(update))
   tmp_file <- file.path(cachedir(), paste0(division, "_info.tsv"))
-  if (file.exists(tmp_file) &&
-        !update) {
+  if (file.exists(tmp_file) && !update) {
         suppressWarnings(
             ensembl.info <-
                 readr::read_tsv(

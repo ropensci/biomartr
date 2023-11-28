@@ -29,3 +29,10 @@ organism_no_hit_message_more_than_one <- function(organism, db) {
           " This will allow you to select the 'assembly_accession' identifier that can then be ",
           "specified in all get*() functions.")
 }
+
+genomes_wrong_subset_message <- function(subset, set) {
+  paste0("Unfortunately, not all members of your specified subset '",
+         paste0(subset, collapse = ", '"),
+         "' could be found. Must be subset of:\n",
+        paste0(unique(set), collapse = ", "))
+}
