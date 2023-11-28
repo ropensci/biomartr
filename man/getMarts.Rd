@@ -17,10 +17,13 @@ getMarts()
  }
 }
 \seealso{
-\code{\link{getDatasets}}, \code{\link{getAttributes}},
-\code{\link{getFilters}}, \code{\link{organismBM}},
-\code{\link{organismFilters}}, \code{\link{organismAttributes}}
+Other biomaRt: 
+\code{\link{getAttributes}()},
+\code{\link{getDatasets}()},
+\code{\link{organismBM}()},
+\code{\link{organismFilters}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{biomaRt}

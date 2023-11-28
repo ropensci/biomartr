@@ -36,3 +36,11 @@ genomes_wrong_subset_message <- function(subset, set) {
          "' could be found. Must be subset of:\n",
         paste0(unique(set), collapse = ", "))
 }
+
+wrong_mart_message <- function(mart, dataset) {
+  dataset <- ifelse(!is.null(dataset), paste0("or dataset '", dataset,"'"), "")
+  paste(
+    "Your input mart '", mart, "'", dataset,
+    "could not be found. Please use getMarts() to choose from available marts."
+  )
+}

@@ -7,7 +7,7 @@
 getDatasets(mart, mute_citation = FALSE)
 }
 \arguments{
-\item{mart}{a character string specifying the database (mart) for 
+\item{mart}{a character string specifying the database (mart) for
 which datasets shall be listed.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -25,10 +25,13 @@ head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
 }
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{getAttributes}}, 
-\code{\link{getFilters}}, \code{\link{organismBM}}, 
-\code{\link{organismFilters}}, \code{\link{organismAttributes}}
+Other biomaRt: 
+\code{\link{getAttributes}()},
+\code{\link{getMarts}()},
+\code{\link{organismBM}()},
+\code{\link{organismFilters}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{biomaRt}

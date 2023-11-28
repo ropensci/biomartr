@@ -80,7 +80,7 @@ If the primary assembly file is not present for a species
 that indicates that there were no haplotype/patch regions,
 and in such cases, the 'toplevel file is used.
 For more details see:
-\link{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}}
+\\href{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}{ensembl tutorial}}
 
 \item{format}{"gff3", alternative "gtf" for ensembl.}
 

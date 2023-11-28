@@ -7,11 +7,9 @@
 #' # get a table of all available databases from Ensembl Biomart
 #' getMarts()
 #'  }
-#' @seealso \code{\link{getDatasets}}, \code{\link{getAttributes}},
-#' \code{\link{getFilters}}, \code{\link{organismBM}},
-#' \code{\link{organismFilters}}, \code{\link{organismAttributes}}
+#' @family biomaRt
 #' @export
-getMarts <- function(){
+getMarts <- function() {
 
     submarts <- ensembl_divisions_short(FALSE, bacteria = FALSE)
     submarts.df <- vector("list", length(submarts))
@@ -20,7 +18,6 @@ getMarts <- function(){
     for (i in seq_along(submarts)) {
       tryCatch({
         submarts.df[i] <- list(getSubMarts(submarts[i]))
-
         }, error = function(e) {
         message(
             "It seems like the BioMart server could not be reached for mart: ", submarts[i],

@@ -76,7 +76,6 @@ listGenomes <- function(db = "refseq", type = "all", subset = NULL,
       call. = FALSE
     )
   stopifnot(is.logical(details))
-  subgroup <- division <- NULL
 
   if (is.element(db, c("refseq", "genbank"))) {
     # retrieve genome report overview file
@@ -92,37 +91,25 @@ listGenomes <- function(db = "refseq", type = "all", subset = NULL,
       dplyr::inner_join(AssemblyFilesAllKingdoms, ncbi_overview,
                         by = "organism_name")
 
-    kingdoms <- group <-  NULL
-
     if (type == "all") {
-      if (details) {
-        if (!is.null(subset)) {
-          warning(
-            "For option type = 'all' no subset can be specified.",
-            " Please select another type and then specify subset = '",
-            subset,
-            "'.",
-            call. = FALSE
-          )
-        }
-
-        return(tibble::as_tibble(genomes_info))
+      if (!is.null(subset)) {
+        warning(
+          "For option type = 'all' no subset can be specified.",
+          " Please select another type and then specify subset = '",
+          subset,
+          "'.",
+          call. = FALSE
+        )
       }
 
+      if (details) {
+        return(tibble::as_tibble(genomes_info))
+      }
       if (!details) {
-        if (!is.null(subset)) {
-          warning(
-            "For option type = 'all' no subset can be specified.",
-            " Please select another type and then specify subset = '",
-            subset,
-            "'.",
-            call. = FALSE
-          )
-        }
-
         return(unique(genomes_info$organism_name))
       }
     }
+
     set <-
       if (type == "kingdom") {
         genomes_info$kingdoms

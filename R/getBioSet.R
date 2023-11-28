@@ -146,7 +146,7 @@ getBioSet <- function(db = "refseq",
 #' that indicates that there were no haplotype/patch regions,
 #' and in such cases, the 'toplevel file is used.
 #' For more details see:
-#' \link{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}
+#' \\href{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}{ensembl tutorial}
 #' @param format "gff3", alternative "gtf" for ensembl.
 #' @param mute_citation logical, default FALSE, indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
