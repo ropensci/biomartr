@@ -67,6 +67,7 @@ Davis, Bart De Moor, Alvis Brazma and Wolfgang Huber, Bioinformatics 21,
 }
 \seealso{
 Other biomaRt: 
+\code{\link{biomart}()},
 \code{\link{getAttributes}()},
 \code{\link{getDatasets}()},
 \code{\link{getMarts}()},

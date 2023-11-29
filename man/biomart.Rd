@@ -17,10 +17,10 @@ can obtain available marts using \code{\link{getMarts}}.}
 be used, e.g. \code{dataset} = \code{"hsapiens_gene_ensembl"}.}
 
 \item{attributes}{a character vector specifying the attributes that shall be
-used, e.g. \code{attributes} = 
+used, e.g. \code{attributes} =
 \code{c("start_position","end_position","description")}.}
 
-\item{filters}{a character vector specifying the filter (query key) for the 
+\item{filters}{a character vector specifying the filter (query key) for the
 BioMart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -29,7 +29,7 @@ BioMart query, e.g. \code{filter} = \code{"ensembl_gene_id"}.}
 \code{\link[biomaRt]{getBM}} function.}
 }
 \value{
-A data.table storing the initial query gene vector in 
+A data.table storing the initial query gene vector in
 the first column, the output
 gene vector in the second column, and all attributes in
 the following columns.
@@ -41,7 +41,7 @@ specifications and performs a biomart query for the given set of gene ids.
 \details{
 This function is the main query function of the biomartr package.
 
-It enables to fastly access annotations of a given gene set based 
+It enables to fastly access annotations of a given gene set based
 on the \pkg{biomaRt} package
 implemented by Steffen Durinck et al.
 }
@@ -71,9 +71,14 @@ biomart(genes      = c("AT1G06090", "AT1G06100",
 
 }
 \seealso{
-\code{\link{organismFilters}}, \code{\link{organismBM}},
-\code{\link[biomaRt]{listAttributes}}, \code{\link[biomaRt]{getBM}}
+Other biomaRt: 
+\code{\link{getAttributes}()},
+\code{\link{getDatasets}()},
+\code{\link{getMarts}()},
+\code{\link{organismBM}()},
+\code{\link{organismFilters}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{biomaRt}

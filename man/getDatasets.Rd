@@ -26,6 +26,7 @@ head(getDatasets("ENSEMBL_MART_ENSEMBL"), 10)
 }
 \seealso{
 Other biomaRt: 
+\code{\link{biomart}()},
 \code{\link{getAttributes}()},
 \code{\link{getMarts}()},
 \code{\link{organismBM}()},
