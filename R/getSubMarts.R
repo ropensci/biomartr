@@ -62,16 +62,21 @@ biomart_base_urls <- function() {
   return(marts)
 }
 
+biomart_base_urls_select <- function(mart, dataset = NULL) {
+  all_ensembl_url <- biomart_base_urls()
+  index <- which(lengths(lapply(names(all_ensembl_url), function(x) grep(x, mart, ignore.case = TRUE))) > 0)
+  if (length(index) != 1) stop(wrong_mart_message(mart, dataset))
+  ensembl_url <- all_ensembl_url[index]
+  return(ensembl_url)
+}
+
 #' Get full url for biomart WEB API call
 #'
 #' Example url:
 #' "https://fungi.ensembl.org:443/biomart/martservice?type=registry&requestid=biomart"
 #' @noRd
 biomart_full_url <- function(mart, dataset, type, port = NULL) {
-  all_ensembl_url <- biomart_base_urls()
-  index <- which(lengths(lapply(names(all_ensembl_url), function(x) grep(x, mart, ignore.case = TRUE))) > 0)
-  if (length(index) != 1) stop(wrong_mart_message(mart, dataset))
-  ensembl_url <- all_ensembl_url[index]
+  ensembl_url <- biomart_base_urls_select(mart, dataset)
   if (!is.null(port)) {
     stopifnot(is.numeric(port))
     ensembl_url <- paste0(ensembl_url, ":", port)

@@ -25,12 +25,9 @@
 #' @export
 getAttributes <- function(mart, dataset, mute_citation = FALSE){
 
-    if ((!is.character(mart)) || (!is.character(dataset)))
-        stop("Please use a character string as mart or dataset.",
-             call. = FALSE)
-
-    if (!is.element(mart, getMarts()$mart))
-        stop("Please select a valid mart with getMarts().", call. = FALSE)
+  if ((!is.character(mart)) || (!is.character(dataset)))
+      stop("Please use a character string as mart or dataset.",
+           call. = FALSE)
 
   type <- "attributes"
   message("Starting retrieval of ", type, " information from mart ", mart, " and dataset ", dataset, " ...")
@@ -65,7 +62,6 @@ getAttributes <- function(mart, dataset, mute_citation = FALSE){
                              unlist(strsplit(x, "\t")))))
 
     colnames(rawDF) <- paste0("V", seq_len(ncol(rawDF)))
-
     attrBioMart <-
         as.data.frame(rawDF[, c("V1", "V2")],
                       stringsAsFactors = FALSE,
