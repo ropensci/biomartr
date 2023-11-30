@@ -4,7 +4,11 @@
 \alias{getMarts}
 \title{Retrieve information about available Ensembl Biomart databases}
 \usage{
-getMarts()
+getMarts(update = FALSE)
+}
+\arguments{
+\item{update}{logical, default FALSE. If FALSE, use cached file if it exists.
+Set to TRUE to force new update}
 }
 \description{
 This funcion queries the Ensembl Biomart API and returns a table
@@ -17,10 +21,14 @@ getMarts()
  }
 }
 \seealso{
-\code{\link{getDatasets}}, \code{\link{getAttributes}},
-\code{\link{getFilters}}, \code{\link{organismBM}},
-\code{\link{organismFilters}}, \code{\link{organismAttributes}}
+Other biomaRt: 
+\code{\link{biomart}()},
+\code{\link{getAttributes}()},
+\code{\link{getDatasets}()},
+\code{\link{organismBM}()},
+\code{\link{organismFilters}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{biomaRt}

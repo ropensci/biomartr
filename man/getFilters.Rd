@@ -7,10 +7,10 @@
 getFilters(mart, dataset, mute_citation = FALSE)
 }
 \arguments{
-\item{mart}{a character string specifying the database (mart) for which 
+\item{mart}{a character string specifying the database (mart) for which
 datasets shall be listed.}
 
-\item{dataset}{a character string specifying the dataset for which filters 
+\item{dataset}{a character string specifying the dataset for which filters
 shall be listed.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -26,13 +26,13 @@ storing all available filters for a specific dataset.
 # choose database (mart): "ENSEMBL_MART_ENSEMBL"
 # head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
 # choose dataset: "hsapiens_gene_ensembl"
-head(getFilters(mart = "ENSEMBL_MART_ENSEMBL", 
+head(getFilters(mart = "ENSEMBL_MART_ENSEMBL",
                 dataset = "hsapiens_gene_ensembl") , 5)
 }
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{getDatasets}}, 
-\code{\link{getAttributes}}, \code{\link{organismBM}}, 
+\code{\link{getMarts}}, \code{\link{getDatasets}},
+\code{\link{getAttributes}}, \code{\link{organismBM}},
 \code{\link{organismFilters}}, \code{\link{organismAttributes}}
 }
 \author{

@@ -29,3 +29,18 @@ organism_no_hit_message_more_than_one <- function(organism, db) {
           " This will allow you to select the 'assembly_accession' identifier that can then be ",
           "specified in all get*() functions.")
 }
+
+genomes_wrong_subset_message <- function(subset, set) {
+  paste0("Unfortunately, not all members of your specified subset '",
+         paste0(subset, collapse = ", '"),
+         "' could be found. Must be subset of:\n",
+        paste0(unique(set), collapse = ", "))
+}
+
+wrong_mart_message <- function(mart, dataset) {
+  dataset <- ifelse(!is.null(dataset), paste0("or dataset '", dataset,"'"), "")
+  paste(
+    "Your input mart '", mart, "'", dataset,
+    "could not be found. Please use getMarts() to choose from available marts."
+  )
+}

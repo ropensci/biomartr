@@ -135,7 +135,18 @@ getBioSet <- function(db = "refseq",
 #' for further exploration.
 #' @param analyse_genome logical, default FALSE. If TRUE, get general genome statistics like
 #' gc content etc. For more details, see ?summary_genome
-#' @param assembly_type a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.
+#' @param assembly_type character, default c("primary_assembly", "toplevel"). Used for ensembl only,
+#' specifies the genome assembly type. Searches for both primary and toplevel, and if both are found, uses the
+#' first by order (so primary is prioritized by default).
+#' The Primary assembly should usually be used if it exists.
+#' The "primary assembly" contains all the top-level sequence regions,
+#' excluding alternative haplotypes and patches.
+#' If the primary assembly file is not present for a species
+#' (only defined for standard model organisms),
+#' that indicates that there were no haplotype/patch regions,
+#' and in such cases, the 'toplevel file is used.
+#' For more details see:
+#' \\href{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}{ensembl tutorial}
 #' @param format "gff3", alternative "gtf" for ensembl.
 #' @param mute_citation logical, default FALSE, indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost

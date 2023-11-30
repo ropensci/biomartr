@@ -48,14 +48,13 @@ custom_download <- function(url, ...) {
 custom_download_check_local <- function(url, local_file, rest_api_status, db = "ensembl",
                                         notify_exist = TRUE, ...) {
 
-  if (file.exists(local_file)) {
+  if (!is.logical(local_file) && file.exists(local_file)) {
     if (notify_exist) message("File ", local_file,
                               " exists already. Thus, download has been skipped.")
   } else {
     if (!is.null(rest_api_status) && rest_api_status$release_coord_system_version == "not_found") {
-      message("Found organism but given release number did not specify existing file
-                     in ensembl, maybe it is too old? Check that it exists on ensembl
-                     first at all.")
+      message("Found organism but given assembly type (toplevel/primary) or release number did not specify existing file
+                     in ensembl, did you specify primary for toplevel only? Check that it exists on ensembl through your browser")
       return(FALSE)
     }
 
@@ -113,14 +112,12 @@ test_url_status <- function(url, organism) {
 #' @import curl
 exists.ftp.file.new <- function(url, file.path) {
 
-  url_dir_safe <- gsub("//$", "/", paste0(dirname(url), "/"))
-  if (!RCurl::url.exists(url_dir_safe))
-    return(FALSE)
+  url_dir_safe <- unique(gsub("//$", "/", paste0(dirname(url), "/")))
+  url_dir_exists <- RCurl::url.exists(url_dir_safe)
+  if (!url_dir_exists) return(url_dir_exists)
 
   con <- RCurl::getURL(url_dir_safe, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-
   dir_files <- XML::getHTMLLinks(con)
-
   return(is.element(as.character(basename(file.path)),
                     dir_files))
 }

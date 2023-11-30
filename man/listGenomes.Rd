@@ -9,6 +9,7 @@ listGenomes(
   type = "all",
   subset = NULL,
   details = FALSE,
+  update = FALSE,
   skip_bacteria = FALSE
 )
 }
@@ -24,10 +25,10 @@ availability shall be checked. Available options are:
 \item{type}{a character string specifying a potential filter of available
 genomes. Available options are:
 \itemize{
-\item \code{type = "all"}
-\item \code{type = "kingdom"}
-\item \code{type = "group"}
-\item \code{type = "subgroup"}
+\item \code{type = "all", no subset}
+\item \code{type = "kingdom", subset on kingdom}
+\item \code{type = "group", subset on group}
+\item \code{type = "subgroup", subset on subgroup}
 }}
 
 \item{subset}{a character string or character vector specifying a subset of
@@ -45,6 +46,10 @@ as
 \item \code{subgroup}
 \item \code{file_size_MB}, etc.
 }}
+
+\item{update}{logical, default FALSE. If TRUE, update cached list,
+if FALSE use existing cache (if it exists). For cache location see
+\code{cachedir()}}
 
 \item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users

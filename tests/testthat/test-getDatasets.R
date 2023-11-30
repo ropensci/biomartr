@@ -1,11 +1,5 @@
 context("Test: getDatasets()")
 
-
-equal_lists <- function(df1, df2) {
-        isTRUE(all.equal(df1, df2))
-}
-
-
 test_that("The getDatasets() interface works properly..",{
 
     skip_on_cran()

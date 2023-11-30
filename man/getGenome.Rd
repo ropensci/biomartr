@@ -50,7 +50,18 @@ if the standard format before that.}
 
 \item{path}{character, default location is paste0("set_", toupper(type))}
 
-\item{assembly_type}{a character, default "toplevel". id type of assembly, either "toplevel" or "primary_assembly" usually.}
+\item{assembly_type}{character, default c("primary_assembly", "toplevel"). Used for ensembl only,
+specifies the genome assembly type. Searches for both primary and toplevel, and if both are found, uses the
+first by order (so primary is prioritized by default).
+The Primary assembly should usually be used if it exists.
+The "primary assembly" contains all the top-level sequence regions,
+excluding alternative haplotypes and patches.
+If the primary assembly file is not present for a species
+(only defined for standard model organisms),
+that indicates that there were no haplotype/patch regions,
+and in such cases, the 'toplevel file is used.
+For more details see:
+\\href{https://grch37.ensembl.org/info/genome/genebuild/assembly.html}{ensembl tutorial}}
 
 \item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 

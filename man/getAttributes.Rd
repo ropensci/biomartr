@@ -7,10 +7,10 @@
 getAttributes(mart, dataset, mute_citation = FALSE)
 }
 \arguments{
-\item{mart}{a character string specifying the database (mart) 
+\item{mart}{a character string specifying the database (mart)
 for which datasets shall be listed.}
 
-\item{dataset}{a character string specifying the dataset for which 
+\item{dataset}{a character string specifying the dataset for which
 attributes shall be listed.}
 
 \item{mute_citation}{logical value indicating whether citation message should be muted.}
@@ -29,15 +29,19 @@ getMarts()
 head(getDatasets(mart = "ENSEMBL_MART_ENSEMBL"), 10)
 
 # choose dataset: "hsapiens_gene_ensembl"
-head(getAttributes(mart = "ENSEMBL_MART_ENSEMBL", 
+head(getAttributes(mart = "ENSEMBL_MART_ENSEMBL",
                    dataset = "hsapiens_gene_ensembl") , 5)
 }
 }
 \seealso{
-\code{\link{getMarts}}, \code{\link{getDatasets}},
-\code{\link{getFilters}}, \code{\link{organismBM}}, 
-\code{\link{organismFilters}}, \code{\link{organismAttributes}}
+Other biomaRt: 
+\code{\link{biomart}()},
+\code{\link{getDatasets}()},
+\code{\link{getMarts}()},
+\code{\link{organismBM}()},
+\code{\link{organismFilters}()}
 }
 \author{
 Hajk-Georg Drost
 }
+\concept{biomaRt}

@@ -5,32 +5,18 @@
 #' @noRd
 getSubMarts <- function(submart = "ensembl") {
 
-    mart_names <- as.character(ensembl_divisions_short(FALSE))
-    # TODO: Is there no way to get bacteria in?
-    mart_names <- mart_names[!(mart_names %in% "bacteria")]
-
-    if (!is.element(submart, mart_names))
-        stop(
-            "Please select a submart that is supported by ensembl:\n",
-            paste(mart_names, collapse = ", "),
-            call. = FALSE
-        )
-    # Create URLs
-    marts <- paste0("http://", mart_names, ".ensembl",".org")
-    marts[1] <- "http://www.ensembl.org"
-    port_id <- ":80/biomart/martservice?"
-    request_url <- "type=registry&requestid=biomart"
-    marts <- paste0(marts, port_id, request_url)
-    names(marts) <- mart_names
-    # Example: "http://fungi.ensembl.org:80/biomart/martservice?type=registry&requestid=biomart"
-
-    biomartPage <- httr::handle(marts[submart])
+    url <- biomart_full_url(mart = submart, NULL, "registry", port = 443)
+    # Example: "https://fungi.ensembl.org:443/biomart/martservice?type=registry&requestid=biomart"
+    biomartPage <- httr::handle(url)
 
     xmlContentMarts <- httr::GET(handle = biomartPage)
 
     # test whether or not a connection could be established
     httr::stop_for_status(xmlContentMarts)
-
+    service_unavailable <- length(grep("Service unavailable",
+                                       httr::content(xmlContentMarts, as = "text", encoding = "UTF-8"))) > 0
+    if (service_unavailable) stop("Ensembl could be reached, but biomart service was unavailable.",
+                                  " Most likely heavy traffic, wait 10 seconds and try again.")
     # parse Mart information
     doc <- suppressMessages(XML::xmlTreeParse(
         xmlContentMarts,
@@ -63,4 +49,46 @@ getSubMarts <- function(submart = "ensembl") {
                                mart, version)
 
     return(dbBioMart)
+}
+
+biomart_base_urls <- function() {
+  mart_names <- as.character(ensembl_divisions_short(FALSE))
+  # TODO: Is there no way to get bacteria in?
+  mart_names <- mart_names[!(mart_names %in% "bacteria")]
+  # Create URLs
+  marts <- paste0("https://", mart_names, ".ensembl",".org")
+  marts[1] <- "https://www.ensembl.org"
+  names(marts) <- mart_names
+  return(marts)
+}
+
+biomart_base_urls_select <- function(mart, dataset = NULL) {
+  all_ensembl_url <- biomart_base_urls()
+  index <- which(lengths(lapply(names(all_ensembl_url), function(x) grep(x, mart, ignore.case = TRUE))) > 0)
+  if (length(index) != 1) stop(wrong_mart_message(mart, dataset))
+  ensembl_url <- all_ensembl_url[index]
+  return(ensembl_url)
+}
+
+#' Get full url for biomart WEB API call
+#'
+#' Example url:
+#' "https://fungi.ensembl.org:443/biomart/martservice?type=registry&requestid=biomart"
+#' @noRd
+biomart_full_url <- function(mart, dataset, type, port = NULL) {
+  ensembl_url <- biomart_base_urls_select(mart, dataset)
+  if (!is.null(port)) {
+    stopifnot(is.numeric(port))
+    ensembl_url <- paste0(ensembl_url, ":", port)
+  }
+  service_url <- "/biomart/martservice?"
+  type_param <- paste0("type=", type)
+  dataset_param <- ifelse(!is.null(dataset), paste0("dataset=", dataset), "")
+  request_id_param <- "requestid=biomart"
+  mart_param <- ifelse(type != "registry", paste0("mart=", mart), "")
+  url_parameters <- paste(type_param, dataset_param, request_id_param, mart_param, sep = "&")
+  url_parameters <- gsub("&&", "&", url_parameters)
+  url_parameters <- gsub("&$", "", url_parameters)
+  url <- paste0(ensembl_url, service_url, url_parameters)
+  return(url)
 }
