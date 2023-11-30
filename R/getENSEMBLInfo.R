@@ -252,7 +252,7 @@ get_collection_id <- function(ensembl_summary) {
 
   get.org.info <- ensembl_summary[1,]
   collection_info_full <- collection_table(division)
-  assembly <- NULL
+  assembly <- assembly_accession <- NULL
   collection_info <-
     dplyr::filter(collection_info_full,
                   assembly == gsub("_$", "", get.org.info$assembly))
