@@ -205,6 +205,10 @@ organism_no_hit_message_more_than_one <- function(organism, db) {
   )
 }
 
+#' Get ensembl collection info table
+#'
+#' @references https://ftp.ensemblgenomes.ebi.ac.uk/pub/README_metadata
+#' @noRd
 collection_table <- function(division = "EnsemblBacteria") {
   base_name_file <- paste0(division, ".txt")
   local_file <- file.path(tempdir(), base_name_file)
@@ -228,50 +232,16 @@ collection_table <- function(division = "EnsemblBacteria") {
       )
     })
   }
-  suppressWarnings(
-    collection <-
-      readr::read_delim(
-        local_file,
-        delim = "\t",
-        quote = "\"",
-        escape_backslash = FALSE,
-        col_names = c(
-          "name",
-          "species",
-          "division",
-          "taxonomy_id",
-          "assembly",
-          "assembly_accession",
-          "genebuild",
-          "variation",
-          "microarray",
-          "pan_compara",
-          "peptide_compara",
-          "genome_alignments",
-          "other_alignments",
-          "core_db",
-          "species_id"
-        ),
-        col_types = readr::cols(
-          name = readr::col_character(),
-          species = readr::col_character(),
-          division = readr::col_character(),
-          taxonomy_id = readr::col_integer(),
-          assembly = readr::col_character(),
-          assembly_accession = readr::col_character(),
-          genebuild = readr::col_character(),
-          variation = readr::col_character(),
-          microarray = readr::col_character(),
-          pan_compara = readr::col_character(),
-          peptide_compara = readr::col_character(),
-          genome_alignments = readr::col_character(),
-          other_alignments = readr::col_character(),
-          core_db = readr::col_character(),
-          species_id = readr::col_integer()
-        ),
-        comment = "#"
-      )
-  )
+  collection <- suppressWarnings(data.table::fread(local_file))
+  colnames <- colnames(collection)[-1] # Remove false column
+  colnames[1] <- "name"
+  collection$species_id <- NULL
+  colnames(collection) <- colnames
+
+  if (!("core_db" %in% colnames)) stop("Loaded ensembl summary file is invalid,",
+                                      "is there changes we have not propogated to biomartr?",
+                                      "Please post an issue on github with species information")
+  return(collection)
 }
 
 get_collection_id <- function(ensembl_summary) {
@@ -281,20 +251,26 @@ get_collection_id <- function(ensembl_summary) {
     return("") # Only these have collection folder structure
 
   get.org.info <- ensembl_summary[1,]
-  collection_info <- collection_table(division)
+  collection_info_full <- collection_table(division)
   assembly <- NULL
   collection_info <-
-    dplyr::filter(collection_info,
+    dplyr::filter(collection_info_full,
                   assembly == gsub("_$", "", get.org.info$assembly))
 
   if (nrow(collection_info) == 0) {
-    message(
-      "Unfortunately organism '",
-      ensembl_summary$display_name,
-      "' could not be found. Have you tried another database yet? ",
-      "E.g. db = 'ensembl'? Thus, download for this species is omitted."
-    )
-    return(FALSE)
+    # Special case for bacteria
+    collection_info <-
+      dplyr::filter(collection_info_full,
+                    assembly_accession == get.org.info$accession)
+    if (nrow(collection_info) == 0) {
+      message(
+        "Unfortunately organism '",
+        ensembl_summary$display_name,
+        "' could not be found. Have you tried another database yet? ",
+        "E.g. db = 'ensembl'? Thus, download for this species is omitted."
+      )
+      return(FALSE)
+    }
   }
   collection <- collection_info$core_db[1]
   split <- unlist(stringr::str_split(collection, "_"))[1:3]
