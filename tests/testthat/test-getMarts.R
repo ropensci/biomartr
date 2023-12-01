@@ -7,7 +7,7 @@ test_that("The getMarts() interface works properly..",{
 
         marts <- getMarts()
         expect_false(nrow(marts) == 0)
-        expect_false(length(marts$mart) == length(unique(marts$mart)))
+        expect_false(length(marts$mart) != length(unique(marts$mart)))
 })
 
 
