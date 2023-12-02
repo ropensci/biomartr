@@ -93,7 +93,7 @@ BiocManager::install("biomaRt")
 Now users can install `biomartr` from CRAN:
 
 ```r
-# install biomartr 1.0.6 from CRAN
+# install biomartr 1.0.7 from CRAN
 install.packages("biomartr", dependencies = TRUE)
 
 # install the developer version containing the newest features
