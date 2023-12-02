@@ -1,8 +1,16 @@
-# biomartr 1.0.7.9000
+# [biomartr 1.0.7](https://github.com/ropensci/biomartr/releases/tag/v1.0.7)
 
 ### New features
 
+#### Generalization of Biomart database access #108
+- Generalized biomart database interface (now uses https and port 433) 
+- added cache for biomart database overview
+- added more unit tests for `listGenomes()` and `biomart()`
+
 ### Bug fixes
+
+- fixed `listGenomes()` filter error #107
+- Bacteria collection corner case bug fixed #109
 
 # [biomartr 1.0.6](https://github.com/ropensci/biomartr/releases/tag/v1.0.6)
 
