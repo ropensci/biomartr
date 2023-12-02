@@ -18,7 +18,7 @@ storing all available attributes for a specific dataset."><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
       </span>
     </div>
 
@@ -83,12 +83,12 @@ storing all available attributes for a specific dataset.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mart</dt>
-<dd><p>a character string specifying the database (mart) 
+<dd><p>a character string specifying the database (mart)
 for which datasets shall be listed.</p></dd>
 
 
 <dt>dataset</dt>
-<dd><p>a character string specifying the dataset for which 
+<dd><p>a character string specifying the dataset for which
 attributes shall be listed.</p></dd>
 
 
@@ -98,9 +98,12 @@ attributes shall be listed.</p></dd>
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="getMarts.html">getMarts</a></code>, <code><a href="getDatasets.html">getDatasets</a></code>,
-<code><a href="getFilters.html">getFilters</a></code>, <code><a href="organismBM.html">organismBM</a></code>, 
-<code><a href="organismFilters.html">organismFilters</a></code>, <code><a href="organismAttributes.html">organismAttributes</a></code></p></div>
+    <div class="dont-index"><p>Other biomaRt: 
+<code><a href="biomart.html">biomart</a>()</code>,
+<code><a href="getDatasets.html">getDatasets</a>()</code>,
+<code><a href="getMarts.html">getMarts</a>()</code>,
+<code><a href="organismBM.html">organismBM</a>()</code>,
+<code><a href="organismFilters.html">organismFilters</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -118,7 +121,7 @@ attributes shall be listed.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="getDatasets.html">getDatasets</a></span><span class="op">(</span>mart <span class="op">=</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># choose dataset: "hsapiens_gene_ensembl"</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">getAttributes</span><span class="op">(</span>mart <span class="op">=</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>, </span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">getAttributes</span><span class="op">(</span>mart <span class="op">=</span> <span class="st">"ENSEMBL_MART_ENSEMBL"</span>,</span></span>
 <span class="r-in"><span>                   dataset <span class="op">=</span> <span class="st">"hsapiens_gene_ensembl"</span><span class="op">)</span> , <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>

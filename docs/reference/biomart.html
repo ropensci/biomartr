@@ -18,7 +18,7 @@ specifications and performs a biomart query for the given set of gene ids."><!--
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
       </span>
     </div>
 
@@ -99,12 +99,12 @@ be used, e.g. <code>dataset</code> = <code>"hsapiens_gene_ensembl"</code>.</p></
 
 <dt>attributes</dt>
 <dd><p>a character vector specifying the attributes that shall be
-used, e.g. <code>attributes</code> = 
+used, e.g. <code>attributes</code> =
 <code>c("start_position","end_position","description")</code>.</p></dd>
 
 
 <dt>filters</dt>
-<dd><p>a character vector specifying the filter (query key) for the 
+<dd><p>a character vector specifying the filter (query key) for the
 BioMart query, e.g. <code>filter</code> = <code>"ensembl_gene_id"</code>.</p></dd>
 
 
@@ -121,7 +121,7 @@ BioMart query, e.g. <code>filter</code> = <code>"ensembl_gene_id"</code>.</p></d
     <h2>Value</h2>
     
 
-<p>A data.table storing the initial query gene vector in 
+<p>A data.table storing the initial query gene vector in
 the first column, the output
 gene vector in the second column, and all attributes in
 the following columns.</p>
@@ -129,14 +129,18 @@ the following columns.</p>
     <div id="details">
     <h2>Details</h2>
     <p>This function is the main query function of the biomartr package.</p>
-<p>It enables to fastly access annotations of a given gene set based 
+<p>It enables to fastly access annotations of a given gene set based
 on the <span class="pkg">biomaRt</span> package
 implemented by Steffen Durinck et al.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="organismFilters.html">organismFilters</a></code>, <code><a href="organismBM.html">organismBM</a></code>,
-<code><a href="https://rdrr.io/pkg/biomaRt/man/listAttributes.html" class="external-link">listAttributes</a></code>, <code><a href="https://rdrr.io/pkg/biomaRt/man/getBM.html" class="external-link">getBM</a></code></p></div>
+    <div class="dont-index"><p>Other biomaRt: 
+<code><a href="getAttributes.html">getAttributes</a>()</code>,
+<code><a href="getDatasets.html">getDatasets</a>()</code>,
+<code><a href="getMarts.html">getMarts</a>()</code>,
+<code><a href="organismBM.html">organismBM</a>()</code>,
+<code><a href="organismFilters.html">organismFilters</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

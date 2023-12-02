@@ -18,7 +18,7 @@ http://rest.ensembl.org/info/species?content-type=application/json/."><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
       </span>
     </div>
 
@@ -77,14 +77,20 @@ http://rest.ensembl.org/info/species?content-type=application/json/.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getENSEMBLInfo</span><span class="op">(</span>update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getENSEMBLInfo</span><span class="op">(</span>update <span class="op">=</span> <span class="cn">FALSE</span>, divisions <span class="op">=</span> <span class="fu"><a href="ensembl_divisions.html">ensembl_divisions</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>update</dt>
-<dd><p>logical, default TRUE. Update cached list, if FALSE use existing
-(if it exists)</p></dd>
+<dd><p>logical, default FALSE. If TRUE, update cached list,
+if FALSE use existing cache (if it exists). For cache location see
+<code><a href="cachedir.html">cachedir()</a></code></p></dd>
+
+
+<dt>divisions</dt>
+<dd><p>character, name of divisions to check, default is all from
+<code><a href="ensembl_divisions.html">ensembl_divisions()</a></code>. If NULL, also all is used.</p></dd>
 
 </dl></div>
     <div id="value">

@@ -18,7 +18,7 @@ storing information about all available Ensembl Biomart databases."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
       </span>
     </div>
 
@@ -77,14 +77,24 @@ storing information about all available Ensembl Biomart databases.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getMarts</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getMarts</span><span class="op">(</span>update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>update</dt>
+<dd><p>logical, default FALSE. If FALSE, use cached file if it exists.
+Set to TRUE to force new update</p></dd>
+
+</dl></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="getDatasets.html">getDatasets</a></code>, <code><a href="getAttributes.html">getAttributes</a></code>,
-<code><a href="getFilters.html">getFilters</a></code>, <code><a href="organismBM.html">organismBM</a></code>,
-<code><a href="organismFilters.html">organismFilters</a></code>, <code><a href="organismAttributes.html">organismAttributes</a></code></p></div>
+    <div class="dont-index"><p>Other biomaRt: 
+<code><a href="biomart.html">biomart</a>()</code>,
+<code><a href="getAttributes.html">getAttributes</a>()</code>,
+<code><a href="getDatasets.html">getDatasets</a>()</code>,
+<code><a href="organismBM.html">organismBM</a>()</code>,
+<code><a href="organismFilters.html">organismFilters</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

@@ -19,7 +19,7 @@ inside the directory _ncbi_downloads' that is built inside the workspace."><!-- 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biomartr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7</span>
       </span>
     </div>
 
@@ -84,6 +84,7 @@ inside the directory _ncbi_downloads' that is built inside the workspace.</p>
 <span>  type <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  subset <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  details <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  update <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  skip_bacteria <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,10 +101,10 @@ availability shall be checked. Available options are:</p><ul><li><p><code>db = "
 
 <dt>type</dt>
 <dd><p>a character string specifying a potential filter of available
-genomes. Available options are:</p><ul><li><p><code>type = "all"</code></p></li>
-<li><p><code>type = "kingdom"</code></p></li>
-<li><p><code>type = "group"</code></p></li>
-<li><p><code>type = "subgroup"</code></p></li>
+genomes. Available options are:</p><ul><li><p><code>type = "all", no subset</code></p></li>
+<li><p><code>type = "kingdom", subset on kingdom</code></p></li>
+<li><p><code>type = "group", subset on group</code></p></li>
+<li><p><code>type = "subgroup", subset on subgroup</code></p></li>
 </ul></dd>
 
 
@@ -123,6 +124,12 @@ as</p><ul><li><p><code>organism_name</code></p></li>
 <li><p><code>subgroup</code></p></li>
 <li><p><code>file_size_MB</code>, etc.</p></li>
 </ul></dd>
+
+
+<dt>update</dt>
+<dd><p>logical, default FALSE. If TRUE, update cached list,
+if FALSE use existing cache (if it exists). For cache location see
+<code><a href="cachedir.html">cachedir()</a></code></p></dd>
 
 
 <dt>skip_bacteria</dt>
