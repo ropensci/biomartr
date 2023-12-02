@@ -1,3 +1,7 @@
+# biomartr 1.0.8
+
+### New features
+
 # [biomartr 1.0.7](https://github.com/ropensci/biomartr/releases/tag/v1.0.7)
 
 ### New features
