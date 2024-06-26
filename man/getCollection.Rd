@@ -84,7 +84,8 @@ By specifying the scientific name of an organism of interest a collection consis
 the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats
 file of the organism of interest
 can be downloaded and stored locally. Collections can be retrieved from
-several databases.
+several databases. For full set of collection elements, see:
+biomartr:::supported_biotypes(db)
 }
 \details{
 Internally this function loads the the overview.txt file from NCBI:

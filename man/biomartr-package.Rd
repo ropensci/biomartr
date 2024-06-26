@@ -38,6 +38,15 @@ such as
 }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://docs.ropensci.org/biomartr/}
+  \item \url{https://github.com/ropensci/biomartr}
+  \item Report bugs at \url{https://github.com/ropensci/biomartr/issues}
+}
+
+}
 \author{
 Hajk-Georg Drost \email{hajk-georg.drost@tuebingen.mpg.de}
 }

@@ -35,8 +35,8 @@ of interest as first argument (e.g. the path returned by
 }
 \seealso{
 Other genome: 
-\code{\link{getGenomeSet}()},
-\code{\link{getGenome}()}
+\code{\link{getGenome}()},
+\code{\link{getGenomeSet}()}
 
 Other readers: 
 \code{\link{read_cds}()},

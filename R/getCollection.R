@@ -5,7 +5,8 @@
 #' the genome file, proteome file, CDS file, RNA file, GFF file, Repeat Masker file, AssemblyStats
 #' file of the organism of interest
 #' can be downloaded and stored locally. Collections can be retrieved from
-#' several databases.
+#' several databases. For full set of collection elements, see:
+#' biomartr:::supported_biotypes(db)
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding collection shall be stored. Default is
 #' \code{path} = \code{file.path("_db_downloads","collections")}.
@@ -48,7 +49,7 @@ getCollection <-
     all_biotypes <- supported_biotypes(db)
     message("-> Starting collection retrieval (", paste(all_biotypes, collapse = ", "),") for ", new_name, " ...")
 
-    org_exists <- is.genome.available(db = db, organism, details = TRUE)
+    org_exists <- is.genome.available(db, organism, skip_bacteria, details = TRUE)
 
     if (isFALSE(org_exists) || length(org_exists) == 0)
         stop("-> No entry was found for organism ",organism,". Could the name be misspelled?",  call. = FALSE)
@@ -68,7 +69,7 @@ getCollection <-
              format = names(all_biotypes[all_biotypes == type]), mute_citation = TRUE)
       message("\n")
     }
-    browser()
+
     output_files <- list.files(path)
     # Remove md5 files
     md5_files <- output_files[stringr::str_detect(output_files, "md5checksums.txt")]
