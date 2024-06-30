@@ -23,8 +23,8 @@ of interest (e.g. the path returned by \code{\link{getGFF}}).
 }
 \seealso{
 Other gff: 
-\code{\link{getGFFSet}()},
-\code{\link{getGFF}()}
+\code{\link{getGFF}()},
+\code{\link{getGFFSet}()}
 
 Other readers: 
 \code{\link{read_cds}()},

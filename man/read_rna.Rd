@@ -36,8 +36,8 @@ file standards such as \emph{fasta} or \emph{genebank}.
 }
 \seealso{
 Other rna: 
-\code{\link{getRNASet}()},
-\code{\link{getRNA}()}
+\code{\link{getRNA}()},
+\code{\link{getRNASet}()}
 
 Other readers: 
 \code{\link{read_cds}()},

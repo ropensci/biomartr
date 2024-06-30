@@ -51,8 +51,8 @@ http://www.ensembl.org/info/data/ftp/index.html.
 }
 \seealso{
 Other cds: 
-\code{\link{getCDSSet}()},
-\code{\link{getCDS}()}
+\code{\link{getCDS}()},
+\code{\link{getCDSSet}()}
 
 Other readers: 
 \code{\link{read_genome}()},

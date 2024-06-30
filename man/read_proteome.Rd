@@ -43,8 +43,8 @@ Other readers:
 \code{\link{read_rna}()}
 
 Other proteome: 
-\code{\link{getProteomeSet}()},
-\code{\link{getProteome}()}
+\code{\link{getProteome}()},
+\code{\link{getProteomeSet}()}
 }
 \author{
 Hajk-Georg Drost
