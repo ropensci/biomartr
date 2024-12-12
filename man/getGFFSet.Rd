@@ -59,9 +59,10 @@ believe you cache is outdated (Species only exist in newest release etc)}
 \item{mute_citation}{logical, default FALSE, indicating whether citation message should be muted.}
 }
 \value{
-File path to downloaded genomes
-(names are identifiers: 'new' (file was downloaded now),
-'old' files did already exist)
+character vector, the file path to the downloaded genomes,\cr
+The returned character vector has names as either:\cr
+- 'new' (file was downloaded now)\cr
+- 'old' files did already exist)
 }
 \description{
 Main GFF retrieval function for a set of organism of interest.
@@ -69,17 +70,26 @@ By specifying the scientific names of the organisms of interest the correspondin
 will be downloaded and stored locally. GFF files can be retrieved from several databases.
 }
 \details{
+Fetching of assembly / sequence data is done by fetching an overview file
+from metadata of given database:\cr
+For NCBI (refseq/genbank): \cr
 Internally this function loads the the overview.txt file from NCBI:
 
- refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+ refseq: ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
- genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+ genbank: ftp.ncbi.nlm.nih.gov/genomes/genbank/
 
-and creates a directory 'set_CDSs' to store
-the CDSs of interest as fasta files for future processing.
+It will then create a directory relative to file type wanted,
+if you get fasta genomes it will be
+_ncbi_downloads/genomes' etc.
 In case the corresponding fasta file already exists within the
-'set_CDSs' folder and is accessible within the workspace,
+'_ncbi_downloads/genomes' folder and is accessible within the workspace,
 no download process will be performed.
+For other file types the same rule applies.\cr
+
+For ensembl it fetches overview per type from the rest API:
+
+ ensembl: https://rest.ensembl.org
 }
 \examples{
 \dontrun{

@@ -22,17 +22,11 @@ getKingdoms <- function(db = "refseq") {
         stop("Please select one of the available data bases: 'refseq',
              'genbank', 'ensembl', or 'ensemblgenomes'.", call. = FALSE)
 
-    if (db == "refseq") {
-        return(getKingdomRefseq())
-    }
+  if (db %in% c("refseq", "genbank")) {
+    return(getKingdomsNCBI(db))
+  }
 
-    if (db == "genbank") {
-        return(getKingdomGenbank())
-    }
-
-    if (db %in% c("ensembl", "ensemblgenomes")) {
-        return(getKingdomEnsembl())
-    }
+  return(getKingdomEnsembl())
 }
 
 getKingdomGenbank <- function() {
@@ -50,6 +44,16 @@ getKingdomGenbank <- function() {
 
 getKingdomRefseq <- function() {
   c(getKingdomGenbank(), "viral")
+}
+
+getKingdomsNCBI <- function (db) {
+  if (db == "refseq") {
+    return(getKingdomRefseq())
+  } else if (db == "genbank") {
+    return(getKingdomGenbank())
+  } else {
+    stop("NCBI kingdoms only support 'db' as 'refseq' or 'genbank'.")
+  }
 }
 
 getKingdomEnsembl <- function() {

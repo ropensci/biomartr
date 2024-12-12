@@ -151,7 +151,7 @@ Internally, a text file named `doc_Saccharomyces_cerevisiae_db_refseq.txt` is ge
 File Name: Saccharomyces_cerevisiae_assembly_stats_refseq.txt
 Organism Name: Saccharomyces_cerevisiae
 Database: NCBI refseq
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt
+URL: ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt
 Download_Date: Wed Jun 27 15:21:51 2018
 refseq_category: reference genome
 assembly_accession: GCF_000146045.2

@@ -1,14 +1,18 @@
 #' @title Retrieve annotation *.gff files for metagenomes from NCBI Genbank
-#' @description Retrieve available annotation *.gff files for metagenomes 
+#' @description Retrieve available annotation *.gff files for metagenomes
 #' from NCBI Genbank. NCBI Genbank allows users
-#' to download entire metagenomes and their annotations of several metagenome 
-#' projects. This function downloads available metagenomes that can then be 
+#' to download entire metagenomes and their annotations of several metagenome
+#' projects. This function downloads available metagenomes that can then be
 #' downloaded via \code{\link{getMetaGenomes}}.
-#' @param name metagenome name retrieved by \code{\link{listMetaGenomes}}.
-#' @param path a character string specifying the location (a folder) 
-#' in which the corresponding metagenome annotations shall be stored. 
+#' @inheritParams getMetaGenomes
+#' @param path a character string specifying the location (a folder)
+#' in which the corresponding metagenome annotations shall be stored.
 #' Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","metagenome","annotations")}.
+#' @param metagenomes.members a tibble with selected assemblies,
+#' default: dplyr::filter(getMetaGenomeSummary(), organism_name == name & total_gene_count > 0)).
+#' This is different to getMetaGenome since it requires a gff to exist, most genbank
+#' assemblies are .gbff files only, which are usually not useful.
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
@@ -18,96 +22,50 @@
 #' # Now, retrieve the 'human gut metagenome'
 #' getMetaGenomeAnnotations(name = "human gut metagenome")
 #' }
-#' @seealso \code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}}, 
-#' \code{\link{getGFF}}  
+#' @seealso \code{\link{getMetaGenomes}}, \code{\link{listMetaGenomes}},
+#' \code{\link{getGFF}}
 #' @export
-
-getMetaGenomeAnnotations <-
-    function(name,
-             path = file.path("_ncbi_downloads", "metagenome", "annotations")) {
-        if (!is.element(name, listMetaGenomes(details = FALSE)))
-            stop(
-                paste0("Unfortunately, the metagenome '",
-                name,
-                "' is not available. Please consult the listMetaGenomes() ",
-                "function for available metagenomes.")
-            )
-        
-        if (!file.exists(path)) {
-            dir.create(path, recursive = TRUE)
-        }
-        
-        organism_name <- NULL
-        
-        # retrieve metagenomes assembly_summary.txt file
-        mgs <- getMetaGenomeSummary()
-        
-        metagenomes.members <-
-            dplyr::filter(mgs, organism_name == name)
-        file.names <- metagenomes.members$ftp_path
-        
-        for (i in seq_len(length(file.names))) {
-            download_url <-
-                paste0(
-                    file.names[i],
-                    "/",
-                    paste0(
-                        metagenomes.members$assembly_accession[i],
-                        "_",
-                        metagenomes.members$asm_name[i],
-                        "_genomic.gff.gz"
-                    )
-                )
-            
-            tryCatch({
-                utils::capture.output(downloader::download(
-                    download_url,
-                    destfile = file.path(path, paste0(
-                        basename(file.names[i]), "_genomic.gff.gz"
-                    )),
-                    mode = "wb"
-                ))
-            }, error = function(e)
-                message(
-                    "Unfortunately, the FTP site 'ftp://ftp.ncbi.nlm.nih.gov/' cannot be 
-                    reached. This might be due to an instable internet connection or some issues with the firewall.  
-                     Are you able to reach the FTP site '",
-                    download_url,
-                    "' from your browser?"
-                ))
-            
-            docFile(
-                file.name = paste0(basename(file.names[i]), "_genomic.gff.gz"),
-                organism  = basename(file.names[i]),
-                url       = download_url,
-                database  = "Genbank metagenomes",
-                path      = path,
-                refseq_category = metagenomes.members$refseq_category[i],
-                assembly_accession = metagenomes.members$assembly_accession[i],
-                bioproject = metagenomes.members$bioproject[i],
-                biosample = metagenomes.members$biosample[i],
-                taxid = metagenomes.members$taxid[i],
-                infraspecific_name = metagenomes.members$infraspecific_name[i],
-                version_status = metagenomes.members$version_status[i],
-                release_type = metagenomes.members$release_type[i],
-                genome_rep = metagenomes.members$genome_rep[i],
-                seq_rel_date = metagenomes.members$seq_rel_date[i],
-                submitter = metagenomes.members$submitter[i]
-            )
-        }
-        
-        print(
-            paste0(
-                "The annotations of metagenome '",
-                name,
-                "' have been downloaded and stored at '",
-                path,
-                "'."
-            )
+getMetaGenomeAnnotations <- function(name,
+             path = file.path("_ncbi_downloads", "metagenome", "annotations"),
+             metagenomes.members = dplyr::filter(getMetaGenomeSummary(), organism_name == name & total_gene_count > 0)) {
+    if (!is.element(name, listMetaGenomes(details = FALSE)))
+        stop(
+            paste0("Unfortunately, the metagenome '",
+            name,
+            "' is not available. Please consult the listMetaGenomes() ",
+            "function for available metagenomes.")
         )
-        
-        file.paths <- file.path(path, list.files(path = path))
-        # return only file paths without "*.txt"
-        return(file.paths[!unlist(lapply(file.paths, function(x)
-            stringr::str_detect(x, "[.]txt")))])
+
+    if (!file.exists(path)) {
+        dir.create(path, recursive = TRUE)
+    }
+    if (!is(metagenomes.members, "tbl_df") | nrow(metagenomes.members) == 0) {
+      stop("Argument 'metagenomes.members' must be a tibble of nrow > 0")
+    }
+
+    file.names <- metagenomes.members$ftp_path
+    destfiles <- file.path(path, paste0(
+      basename(file.names), "_genomic.gff.gz"))
+    download_urls <- paste0(
+      file.names,
+      "/",
+      paste0(
+        metagenomes.members$assembly_accession,
+        "_",
+        metagenomes.members$asm_name,
+        "_genomic.gff.gz"
+      )
+    )
+    for (i in seq_len(length(file.names))) {
+      custom_download_check_local(download_urls[i], destfiles[i], NULL, db = "genbank")
+      docFile_ncbi_metagenome(basename(destfiles[i]), basename(file.names[i]),
+                              download_urls[i], path, metagenomes.members[i,])
+    }
+    message("The annotations of metagenome '", name, "' has been downloaded to '",
+            path, "'.")
+
+    file.paths <- file.path(path, list.files(path = path))
+    # return only file paths without "*.txt"
+    return(file.paths[!unlist(lapply(file.paths, function(x)
+        stringr::str_detect(x, "[.]txt")))])
 }

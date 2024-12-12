@@ -6,9 +6,12 @@
 \usage{
 refseqOrganisms()
 }
+\value{
+a character vector of html from kingdom URLs
+}
 \description{
 This function extracts all organism names (scientific names)
-for which genomes, proteomes, and CDS files are stored on 
+for which genomes, proteomes, and CDS files are stored on
 the NCBI refseq server.
 }
 \author{

@@ -15,20 +15,11 @@
 
 getSummaryFile <- function(db, kingdom,
                            file = assemblies_info_path(db, kingdom)){
-
-
-
   if (!is.element(db, c("refseq", "genbank")))
       stop("Please select one of the available data bases: 'refseq'
            or 'genbank'")
 
-  if (!is.element(kingdom, getKingdoms(db = db)))
-      stop(paste0(
-          "Please select a valid kingdom: ",
-          paste0(getKingdoms(db = db), collapse = ", ")
-        ))
-  url <- paste0("ftp://ftp.ncbi.nlm.nih.gov/genomes/",db, "/",
-                kingdom, "/assembly_summary.txt")
+  url <- refseq_genbank_ftp_server_url_genome_specific_summary(kingdom, db)
   custom_download_check_local(url, file, rest_api_status = NULL, db = db)
 
   summary.file <- suppressWarnings(read_all_kingdoms_assemblies_info(file))

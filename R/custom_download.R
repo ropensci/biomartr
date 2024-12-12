@@ -63,7 +63,7 @@ custom_download_check_local <- function(url, local_file, rest_api_status, db = "
     }, error = function(e)
       if (db == "ensembl") {
         message(
-          "Something went wrong while trying to reach the file '",url,
+          "Something went wrong while trying to reach the file '", url,
           "'. This could be due to an instable internet connection or incorrect file path on the ENSEMBL ftp server. Please check if you are able to reach '",url, "' in your web browser.",
           " In some cases ENSEMBL released a new database version and path names or the API weren't updated yet. Please give it a few days time or contact the ENSEMBL helpdesk."
         )

@@ -69,14 +69,26 @@ can be downloaded and stored locally. Proteome files can be retrieved from
 several databases.
 }
 \details{
+Fetching of assembly / sequence data is done by fetching an overview file
+from metadata of given database:\cr
+For NCBI (refseq/genbank): \cr
 Internally this function loads the the overview.txt file from NCBI:
 
- refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+ refseq: ftp.ncbi.nlm.nih.gov/genomes/refseq/
 
- genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+ genbank: ftp.ncbi.nlm.nih.gov/genomes/genbank/
 
-and creates a directory '_ncbi_downloads/proteomes' to store
-the proteome of interest as fasta file for future processing.
+It will then create a directory relative to file type wanted,
+if you get fasta genomes it will be
+_ncbi_downloads/genomes' etc.
+In case the corresponding fasta file already exists within the
+'_ncbi_downloads/genomes' folder and is accessible within the workspace,
+no download process will be performed.
+For other file types the same rule applies.\cr
+
+For ensembl it fetches overview per type from the rest API:
+
+ ensembl: https://rest.ensembl.org
 }
 \examples{
 \dontrun{
