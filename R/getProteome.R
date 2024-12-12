@@ -1,10 +1,10 @@
+#' @inherit getBio
 #' @title Proteome Retrieval
 #' @description Main proteome retrieval function for an organism of interest.
 #' By specifying the scientific name of an organism of interest the
 #' corresponding fasta-file storing the proteome of the organism of interest
 #' can be downloaded and stored locally. Proteome files can be retrieved from
 #' several databases.
-#' @inheritParams getGenome
 #' @param path a character string specifying the location (a folder) in which
 #' the corresponding proteome shall be stored. Default is
 #' \code{path} = \code{file.path("_ncbi_downloads","proteomes")}.
@@ -12,15 +12,6 @@
 #' If species info file exists already,
 #' do not re download, makes it faster but the file can be old, i.e. no longer
 #' as complete as it could be.
-#' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from NCBI:
-#'
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
-#'
-#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
-#'
-#' and creates a directory '_ncbi_downloads/proteomes' to store
-#' the proteome of interest as fasta file for future processing.
 #' @return File path to downloaded proteome.
 #' @examples \dontrun{
 #' # download the proteome of Arabidopsis thaliana from NCBI RefSeq

@@ -4,19 +4,26 @@
 \alias{getMetaGenomes}
 \title{Retrieve metagenomes from NCBI Genbank}
 \usage{
-getMetaGenomes(name, path = file.path("_ncbi_downloads", "metagenome"))
+getMetaGenomes(
+  name,
+  path = file.path("_ncbi_downloads", "metagenome"),
+  metagenomes.members = dplyr::filter(getMetaGenomeSummary(), organism_name == name)
+)
 }
 \arguments{
 \item{name}{metagenome name retrieved by \code{\link{listMetaGenomes}}.}
 
-\item{path}{a character string specifying the location (a folder) in 
-which the corresponding metagenome shall be stored. 
+\item{path}{a character string specifying the location (a folder) in
+which the corresponding metagenome shall be stored.
 Default is \code{path} = \code{file.path("_ncbi_downloads","metagenome")}.}
+
+\item{metagenomes.members}{a tibble of metagenome assemblies,
+default: dplyr::filter(getMetaGenomeSummary(), organism_name == name)}
 }
 \description{
-Retrieve available metagenomes from NCBI Genbank. 
-NCBI Genbank allows users to download entire metagenomes of several 
-metagenome projects. This function downloads available metagenomes that can 
+Retrieve available metagenomes from NCBI Genbank.
+NCBI Genbank allows users to download entire metagenomes of several
+metagenome projects. This function downloads available metagenomes that can
 then be downloaded via \code{\link{getMetaGenomes}}.
 }
 \examples{
@@ -29,7 +36,7 @@ getMetaGenomes(name = "human gut metagenome")
 }
 }
 \seealso{
-\code{\link{getMetaGenomeAnnotations}}, 
+\code{\link{getMetaGenomeAnnotations}},
 \code{\link{listMetaGenomes}}
 }
 \author{

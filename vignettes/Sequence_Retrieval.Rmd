@@ -880,7 +880,7 @@ Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The
 File Name: Homo_sapiens_genomic_refseq.fna.gz
 Organism Name: Homo_sapiens
 Database: NCBI refseq
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+URL: ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
 GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_genomic.fna.gz
 Download_Date: Sat Oct 22 12:41:07 2016
 refseq_category: reference genome
@@ -1633,7 +1633,7 @@ Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The
 File Name: Homo_sapiens_cds_from_genomic_refseq.fna.gz
 Organism Name: Homo_sapiens
 Database: NCBI refseq
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
+URL: ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/
 GCF_000001405.35_GRCh38.p9/GCF_000001405.35_GRCh38.p9_cds_from_genomic.fna.gz
 Download_Date: Sun Oct 23 17:19:05 2016
 refseq_category: reference genome
@@ -1855,7 +1855,7 @@ Internally, a text file named `doc_Homo_sapiens_db_refseq.txt` is generated. The
 File Name: Homo_sapiens_rna_from_genomic_refseq.fna.gz
 Organism Name: Homo_sapiens
 Database: NCBI refseq
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_rna_from_genomic.fna.gz
+URL: ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_rna_from_genomic.fna.gz
 Download_Date: Wed Mar 15 16:46:45 2017
 refseq_category: reference genome
 assembly_accession: GCF_000001405.36
@@ -2408,7 +2408,7 @@ The assembly statistics file of 'Saccharomyces_cerevisiae' has been downloaded t
 Collection retrieval finished successfully!
 
 
-We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
+We retrieved the genome assembly and checked the annotation for 'Saccharomyces cerevisiae' (taxid: 559292, strain=S288C) from 'ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_assembly_stats.txt' (accession: GCF_000146045.2, bioproject: PRJNA128, biosample: NA) using the biomartr R package (Drost and Paszkowski, 2017).
 ```
 
 > Users can now simply attach the output folder as supplementary data in their study and state in the materials sections. This way, computational and biological reproducibility can be standardized and indeed will become trivial in the context of genome version and annotation version.

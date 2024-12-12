@@ -156,7 +156,7 @@ An example documentation file of an individual organism looks like this:
 File Name: Mus_musculus_genomic_genbank.gff.gz
 Organism Name: Mus_musculus
 Database: NCBI genbank
-URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/635/GCA_000001635.7_GRCm38.p5/GCA_000001635.7_GRCm38.p5_genomic.gff.gz
+URL: ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/635/GCA_000001635.7_GRCm38.p5/GCA_000001635.7_GRCm38.p5_genomic.gff.gz
 Download_Date: Mon Nov 14 12:43:45 2016
 refseq_category: reference genome
 assembly_accession: GCA_000001635.7
@@ -178,16 +178,16 @@ An example `summary file` of all organism looks like this (here we use 105 Plant
 # A tibble: 105 x 16
    file_name     organism   url             database path  refseq_category
    <chr>         <chr>      <chr>           <chr>    <chr> <chr>          
- 1 Aegilops_tau Aegilops_ ftp://ftp.ncbi refseq   Prot representative
- 2 Amborella_tr Amborella ftp://ftp.ncbi refseq   Prot representative
- 3 Ananas_comos Ananas_co ftp://ftp.ncbi refseq   Prot representative
- 4 Arabidopsis_ Arabidops ftp://ftp.ncbi refseq   Prot representative
- 5 Arabidopsis_ Arabidops ftp://ftp.ncbi refseq   Prot reference geno
- 6 Arachis_dura Arachis_d ftp://ftp.ncbi refseq   Prot representative
- 7 Arachis_ipae Arachis_i ftp://ftp.ncbi refseq   Prot representative
- 8 Asparagus_of Asparagus ftp://ftp.ncbi refseq   Prot representative
- 9 Auxenochlore Auxenochl ftp://ftp.ncbi refseq   Prot representative
-10 Bathycoccus_ Bathycocc ftp://ftp.ncbi refseq   Prot representative
+ 1 Aegilops_tau Aegilops_ ftp.ncbi.nlm.nih refseq   Prot representative
+ 2 Amborella_tr Amborella ftp.ncbi.nlm.nih refseq   Prot representative
+ 3 Ananas_comos Ananas_co ftp.ncbi.nlm.nih refseq   Prot representative
+ 4 Arabidopsis_ Arabidops ftp.ncbi.nlm.nih refseq   Prot representative
+ 5 Arabidopsis_ Arabidops ftp.ncbi.nlm.nih refseq   Prot reference geno
+ 6 Arachis_dura Arachis_d ftp.ncbi.nlm.nih refseq   Prot representative
+ 7 Arachis_ipae Arachis_i ftp.ncbi.nlm.nih refseq   Prot representative
+ 8 Asparagus_of Asparagus ftp.ncbi.nlm.nih refseq   Prot representative
+ 9 Auxenochlore Auxenochl ftp.ncbi.nlm.nih refseq   Prot representative
+10 Bathycoccus_ Bathycocc ftp.ncbi.nlm.nih refseq   Prot representative
 # ... with 95 more rows, and 10 more variables: assembly_accession <chr>,
 #   bioproject <chr>, biosample <chr>, taxid <int>,
 #   infraspecific_name <chr>, version_status <chr>, release_type <chr>,
@@ -477,7 +477,7 @@ In most metagenomics studies, however, the influence or bias of genome assembly 
 outcome of the analysis (e.g. comparative genomics, annotation, etc.) is neglected. To better 
 grasp the genome assembly quality, the NCBI databases store genome assembly statistics of some
 species for which genome assemblies are available. An example assembly statistics report can
-be found at: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt. 
+be found at: ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.36_GRCh38.p10/GCF_000001405.36_GRCh38.p10_assembly_stats.txt. 
 
 The `biomartr` package allows users to retrieve these genome assembly stats file in an automated way by specifying the argument `type = "assemblystats"` and `combine = TRUE`.
 Please make sure that `combine = TRUE` when selecting `type = "assemblystats"`.
@@ -517,7 +517,7 @@ Analogously, this information can be retrieved for each kingdom other than `king
 
 ### Metagenome project retrieval from NCBI Genbank
 
-NCBI Genbank stores [metagenome projects](ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/) in addition to species specific genome, proteome or CDS sequences. To retrieve these metagenomes users can perform the following combination of commands:
+NCBI Genbank stores [metagenome projects](ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/) in addition to species specific genome, proteome or CDS sequences. To retrieve these metagenomes users can perform the following combination of commands:
 
 First, users can list the project names of available metagenomes by typing
 
@@ -546,7 +546,7 @@ listMetaGenomes()
 [49] "scorpion gut metagenome"        "soda lake metagenome"           "glacier metagenome"
 ```
 
-Internally the `listMetaGenomes()` function downloads the assembly_summary.txt file from ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/ to retrieve
+Internally the `listMetaGenomes()` function downloads the assembly_summary.txt file from ftp.ncbi.nlm.nih.gov/genomes/genbank/metagenomes/ to retrieve
 available metagenome information. This procedure might take a few seconds during the first run of `listMetaGenomes()`. Subsequently, the assembly_summary.txt file will be stored in the `tempdir()` directory to
 achieve a much faster access of this information during following uses of `listMetaGenomes()`.
 

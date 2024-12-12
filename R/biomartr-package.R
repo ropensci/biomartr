@@ -31,7 +31,6 @@
 #' }
 #' @name biomartr-package
 #' @aliases biomartr
-#' @docType package
 #' @author Hajk-Georg Drost \email{hajk-georg.drost@tuebingen.mpg.de}
 #' @keywords package
 ## usethis namespace: start
@@ -46,4 +45,4 @@
 #' @importFrom data.table .EACHI
 #' @importFrom data.table fread fwrite rbindlist data.table chmatch
 ## usethis namespace: end
-NULL
+"_PACKAGE"

@@ -18,7 +18,7 @@
 #' the bacterial summary file will not be loaded by default anymore. If users
 #' wish to gain insights for the bacterial kingdom they needs to actively specify \code{skip_bacteria = FALSE}. When \code{skip_bacteria = FALSE} is set then the
 #' bacterial summary file will be downloaded.
-#' @param release most recent database version is used. release = 75 would for human would give the stable GRCh37 release in ensembl. 
+#' @param release most recent database version is used. release = 75 would for human would give the stable GRCh37 release in ensembl.
 #' Value must be > 46, since ensembl did not structure their data if the standard format before that.
 #' @param gunzip a logical, indicating whether or not files should be unzipped.
 #' @param path a character string specifying the location (a folder) in which
@@ -28,9 +28,9 @@
 #' @author Hajk-Georg Drost
 #' @details Internally this function loads the the overview.txt file from NCBI:
 #'
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+#'  refseq: \code{refseq_genbank_ftp_server_url_genome_specific("refseq")}
 #'
-#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+#'  genbank: \code{refseq_genbank_ftp_server_url_genome_specific("genbank")}
 #'
 #' and creates a directory '_ncbi_downloads/repeatmasker' to store
 #' the files of interest as fasta file for future processing.

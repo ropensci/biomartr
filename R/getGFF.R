@@ -9,6 +9,9 @@
 #' the corresponding annotation file shall be stored. Default is
 #' \code{path = file.path("_ncbi_downloads","annotation")}.
 #' @examples \dontrun{
+#' # Simple and small yeast download from refseq
+#'  getGFF( db       = "refseq", organism = "Saccharomyces cerevisiae",
+#'   path = tempdir(), mute_citation = TRUE)
 #' # download the annotation of Arabidopsis thaliana from refseq
 #' # and store the corresponding genome file in '_ncbi_downloads/annotation'
 #' Athal_gff <- getGFF( db       = "refseq",
@@ -39,7 +42,6 @@
 #' @family getBio
 #' @family gff
 #' @export
-
 getGFF <- function(db = "refseq", organism, reference = FALSE,
                    skip_bacteria = TRUE, release = NULL, gunzip = FALSE,
                    remove_annotation_outliers = FALSE,

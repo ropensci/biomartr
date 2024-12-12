@@ -1,7 +1,7 @@
-#' Generic Bio data set extractor
-#'
-#' Usually you want to use one of the specific set extractors
-#' @inheritParams getBio
+#' @inherit getBio
+#' @title Generic Bio data set extractor
+#' @description
+#'  Usually you want to use one of the specific set extractors
 #' @param organisms a character vector storing the names of the organisms than shall be retrieved.
 #' There are three available options to characterize an organism:
 #' @param path character, default location is paste0("set_", toupper(set_type))
@@ -17,21 +17,10 @@
 #' \item \code{set_type = "repeat_masker"}
 #' \item \code{set_type = "collection"} (all the others)
 #' }
-#' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from NCBI:
-#'
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
-#'
-#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
-#'
-#' and creates a directory 'set_CDSs' to store
-#' the CDSs of interest as fasta files for future processing.
-#' In case the corresponding fasta file already exists within the
-#' 'set_CDSs' folder and is accessible within the workspace,
-#' no download process will be performed.
-#' @return File path to downloaded genomes
-#' (names are identifiers: 'new' (file was downloaded now),
-#' 'old' files did already exist)
+#' @return character vector, the file path to the downloaded genomes,\cr
+#' The returned character vector has names as either:\cr
+#' - 'new' (file was downloaded now)\cr
+#' - 'old' files did already exist)
 #' @examples \dontrun{
 #' getBioSet("refseq", organisms = c("Arabidopsis thaliana",
 #'                                   "Arabidopsis lyrata",
@@ -150,18 +139,27 @@ getBioSet <- function(db = "refseq",
 #' @param format "gff3", alternative "gtf" for ensembl.
 #' @param mute_citation logical, default FALSE, indicating whether citation message should be muted.
 #' @author Hajk-Georg Drost
-#' @details Internally this function loads the the overview.txt file from NCBI:
+#' @details
+#' Fetching of assembly / sequence data is done by fetching an overview file
+#' from metadata of given database:\cr
+#' For NCBI (refseq/genbank): \cr
+#' Internally this function loads the the overview.txt file from NCBI:
 #'
-#'  refseq: ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/
+#'  refseq: ftp.ncbi.nlm.nih.gov/genomes/refseq/
 #'
-#'  genbank: ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/
+#'  genbank: ftp.ncbi.nlm.nih.gov/genomes/genbank/
 #'
-#' and creates a directory relative to file type, if you get fasta genomes it will be
-#' _ncbi_downloads/genomes'.
+#' It will then create a directory relative to file type wanted,
+#' if you get fasta genomes it will be
+#' _ncbi_downloads/genomes' etc.
 #' In case the corresponding fasta file already exists within the
 #' '_ncbi_downloads/genomes' folder and is accessible within the workspace,
 #' no download process will be performed.
-#' For other file types the same rule applies.
+#' For other file types the same rule applies.\cr
+#'
+#' For ensembl it fetches overview per type from the rest API:
+#'
+#'  ensembl: https://rest.ensembl.org
 #' @family getBio
 #' @return File path to downloaded genome.
 getBio <- function(db = "refseq",

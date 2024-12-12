@@ -17,7 +17,7 @@ getGENOMEREPORT <- function(local_file = file.path(cachedir(), "_ncbi_downloads"
         dir.create(dirname(local_file), recursive = TRUE, showWarnings = FALSE)
     }
 
-    custom_download_check_local("ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/overview.txt",
+    custom_download_check_local(refseq_genbank_genome_report_url(),
                                 local_file, rest_api_status = NULL, db = "refgen",
                                 notify_exist = FALSE)
 
