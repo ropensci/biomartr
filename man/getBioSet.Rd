@@ -45,7 +45,9 @@ Available options are
 \item \code{set_type = "collection"} (all the others)
 }}
 
-\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+\item{reference}{a logical value indicating whether or not a genome shall be a candidate for downloaded
+if it isn't marked in the database as either a reference genome or a representative genome.
+This is helpful if you don't want to allow "partial genomes" etc.}
 
 \item{release}{a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 that the most recent database version is used. \code{release = 75} would for human would give the stable

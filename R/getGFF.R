@@ -62,7 +62,7 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
 
     if (is.element(db, c("refseq", "genbank"))) {
       info <- get_file_refseq_genbank(db, organism, reference, skip_bacteria,
-                                      release, gunzip, path, type = "gff")
+                                      release, gunzip, path, type = format)
       return(refseq_genbank_download_post_processing(info, organism, db, path,
                                                      gunzip,
                                                      remove_annotation_outliers,
@@ -103,15 +103,17 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
 #' @export
 getGTF <-
   function(db = "ensembl",
-           organism,
+           organism, reference = FALSE,
            remove_annotation_outliers = FALSE,
            path = file.path("ensembl", "annotation"),
            release = NULL,
            mute_citation = FALSE) {
-    if (!is.element(db, c("ensembl")))
-      stop( "Please select one of the available data bases: db = 'ensembl'.", call. = FALSE)
-    getGFF(db = "ensembl",
+    if (!is.element(db, c("ensembl", "refseq", "genbank")))
+      stop( "Please select one of the available data bases: db = 'ensembl',",
+            "'refseq', 'genbank'.", call. = FALSE)
+    getGFF(db = db,
            organism,
+           reference = reference,
            remove_annotation_outliers = remove_annotation_outliers,
            path = path,
            release = release,

@@ -105,7 +105,9 @@ getBioSet <- function(db = "refseq",
 #' }
 #' @param type biological sequence type. (alternatives are: genome, gff, cds,
 #' rna, proteome, assembly_stats, repeat_masker, collection (all the others))
-#' @param reference a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.
+#' @param reference a logical value indicating whether or not a genome shall be a candidate for downloaded
+#'  if it isn't marked in the database as either a reference genome or a representative genome.
+#'  This is helpful if you don't want to allow "partial genomes" etc.
 #' @param release a numeric, the database release version of ENSEMBL (\code{db = "ensembl"}). Default is \code{release = NULL} meaning
 #' that the most recent database version is used. \code{release = 75} would for human would give the stable
 #' GRCh37 release in ensembl. Value must be > 46, since ensembl did not structure their data

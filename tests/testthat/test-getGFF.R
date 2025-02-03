@@ -44,6 +44,22 @@ test_that("The getGFF() interface works properly for NCBI Genbank (repeating com
     expect_equal(out1, out2)
 })
 
+test_that("The getGFF() interface works properly for NCBI RefSeq (GTF format)",{
+
+  skip_on_cran()
+  skip_on_travis()
+  # test proper download from refseq
+  out1 <- getGFF( db       = "refseq",
+                  organism = "Saccharomyces cerevisiae",
+                  path = tempdir(), mute_citation = TRUE, format = "gtf")
+
+  out2 <- getGFF( db       = "refseq",
+                  organism = "Saccharomyces cerevisiae",
+                  path = tempdir(), mute_citation = TRUE, format = "gtf")
+  expect_equal(out1, out2)
+})
+
+
 
 test_that("The getGFF() interface works properly for Ensembl (repeating command)",{
         skip_on_cran()

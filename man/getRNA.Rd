@@ -33,7 +33,9 @@ there are three options to characterize an organism:
 \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 }}
 
-\item{reference}{a logical value indicating whether or not a genome shall be downloaded if it isn't marked in the database as either a reference genome or a representative genome.}
+\item{reference}{a logical value indicating whether or not a genome shall be a candidate for downloaded
+if it isn't marked in the database as either a reference genome or a representative genome.
+This is helpful if you don't want to allow "partial genomes" etc.}
 
 \item{skip_bacteria}{Due to its enormous dataset size (> 700MB as of July 2023),
 the bacterial summary file will not be loaded by default anymore. If users

@@ -82,9 +82,11 @@ ftp_url_refseq_genbank <- function(assembly, type) {
 
   if (type == "genome") {
     url <- paste0(stem_url, "_genomic.fna.gz")
-  } else if (type == "gff") {
+  } else if (type %in% c("gff", "gff3")) {
     url <- paste0(stem_url, "_genomic.gff.gz")
-  } else if (type == "cds") {
+  } else if (type == "gtf") {
+    url <- paste0(stem_url, "_genomic.gtf.gz")
+  }else if (type == "cds") {
     url <- paste0(stem_url, "_cds_from_genomic.fna.gz")
   } else if (type == "rna") {
     url <- paste0(stem_url, "_rna_from_genomic.fna.gz")
@@ -106,9 +108,11 @@ local_path_refseq_genbank <- function(path, local.org, db, type) {
 
   if (type == "genome") {
     local_file <- paste0(local_file, "_genomic_", db, ".fna.gz")
-  } else if (type == "gff") {
+  } else if (type %in% c("gff", "gff3")) {
     local_file <- paste0(local_file, "_genomic_", db, ".gff.gz")
-  } else if (type == "cds") {
+  } else if (type == "gtf") {
+    local_file <- paste0(local_file, "_genomic_", db, ".gtf.gz")
+  }else if (type == "cds") {
     local_file <- paste0(local_file, "_cds_from_genomic_", db, ".fna.gz")
   } else if (type == "rna") {
     local_file <- paste0(local_file, "_rna_from_genomic_", db, ".fna.gz")

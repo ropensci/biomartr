@@ -1,3 +1,10 @@
+# [biomartr 1.0.10](https://github.com/ropensci/biomartr/releases/tag/v1.0.10)
+
+### New features
+
+#### GTF support for refseq and genbank
+- Since refseq and genbank now supports gtf, we allow it in getGFF/getFFF
+
 # [biomartr 1.0.9](https://github.com/ropensci/biomartr/releases/tag/v1.0.9)
 
 ### New features
