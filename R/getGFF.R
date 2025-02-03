@@ -109,7 +109,8 @@ getGTF <-
            release = NULL,
            mute_citation = FALSE) {
     if (!is.element(db, c("ensembl", "refseq", "genbank")))
-      stop( "Please select one of the available data bases: db = 'ensembl'.", call. = FALSE)
+      stop( "Please select one of the available data bases: db = 'ensembl',",
+            "'refseq', 'genbank'.", call. = FALSE)
     getGFF(db = db,
            organism,
            reference = reference,
