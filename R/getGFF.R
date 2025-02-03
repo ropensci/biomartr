@@ -108,9 +108,9 @@ getGTF <-
            path = file.path("ensembl", "annotation"),
            release = NULL,
            mute_citation = FALSE) {
-    if (!is.element(db, c("ensembl")))
+    if (!is.element(db, c("ensembl", "refseq", "genbank")))
       stop( "Please select one of the available data bases: db = 'ensembl'.", call. = FALSE)
-    getGFF(db = "ensembl",
+    getGFF(db = db,
            organism,
            reference = reference,
            remove_annotation_outliers = remove_annotation_outliers,
