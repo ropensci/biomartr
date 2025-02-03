@@ -62,7 +62,7 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
 
     if (is.element(db, c("refseq", "genbank"))) {
       info <- get_file_refseq_genbank(db, organism, reference, skip_bacteria,
-                                      release, gunzip, path, type = "gff")
+                                      release, gunzip, path, type = format)
       return(refseq_genbank_download_post_processing(info, organism, db, path,
                                                      gunzip,
                                                      remove_annotation_outliers,

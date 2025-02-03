@@ -94,6 +94,9 @@ For ensembl it fetches overview per type from the rest API:
 }
 \examples{
 \dontrun{
+# Simple and small yeast download from refseq
+ getGFF( db       = "refseq", organism = "Saccharomyces cerevisiae",
+  path = tempdir(), mute_citation = TRUE)
 # download the annotation of Arabidopsis thaliana from refseq
 # and store the corresponding genome file in '_ncbi_downloads/annotation'
 Athal_gff <- getGFF( db       = "refseq",
