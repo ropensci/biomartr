@@ -7,6 +7,7 @@
 getGTF(
   db = "ensembl",
   organism,
+  reference = FALSE,
   remove_annotation_outliers = FALSE,
   path = file.path("ensembl", "annotation"),
   release = NULL,
@@ -29,6 +30,10 @@ there are three options to characterize an organism:
 \item by \code{database specific accession identifier}: e.g. \code{organism = "GCF_000001405.37"} (= NCBI RefSeq identifier for \code{Homo sapiens})
 \item by \code{taxonomic identifier from NCBI Taxonomy}: e.g. \code{organism = "9606"} (= taxid of \code{Homo sapiens})
 }}
+
+\item{reference}{a logical value indicating whether or not a genome shall be a candidate for downloaded
+if it isn't marked in the database as either a reference genome or a representative genome.
+This is helpful if you don't want to allow "partial genomes" etc.}
 
 \item{remove_annotation_outliers}{shall outlier lines be removed from the input \code{annotation_file}?
 If yes, then the initial \code{annotation_file} will be overwritten and the removed outlier lines will be stored at \code{\link{tempdir}}

@@ -103,7 +103,7 @@ getGFF <- function(db = "refseq", organism, reference = FALSE,
 #' @export
 getGTF <-
   function(db = "ensembl",
-           organism,
+           organism, reference = FALSE,
            remove_annotation_outliers = FALSE,
            path = file.path("ensembl", "annotation"),
            release = NULL,
@@ -112,6 +112,7 @@ getGTF <-
       stop( "Please select one of the available data bases: db = 'ensembl'.", call. = FALSE)
     getGFF(db = "ensembl",
            organism,
+           reference = reference,
            remove_annotation_outliers = remove_annotation_outliers,
            path = path,
            release = release,
