@@ -18,7 +18,6 @@ Description: Perform large scale genomic data retrieval and functional annotatio
                 as 'NCBI RefSeq' (Pruitt et al. (2007) <doi:10.1093/nar/gkl842>), 'NCBI nr',
                 'NCBI nt', 'NCBI Genbank' (Benson et al. (2013) <doi:10.1093/nar/gks1195>), etc. with only one command.
 VignetteBuilder: knitr
-NeedsCompilation: yes
 Depends:
     R (>= 3.1.1)
 Imports:
@@ -27,7 +26,6 @@ Imports:
     curl,
     tibble,
     jsonlite,
-    data.table (>= 1.9.4),
     dplyr (>= 0.3.0),
     readr (>= 1.4.0),
     downloader (>= 0.3),
@@ -46,12 +44,13 @@ Suggests:
     devtools (>= 1.6.1),
     testthat,
     seqinr,
-    magrittr
+    magrittr,
+    data.table (>= 1.9.4)
 License: GPL-2
 LazyData: true
 URL: https://docs.ropensci.org/biomartr/, https://github.com/ropensci/biomartr
 BugReports: https://github.com/ropensci/biomartr/issues
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 X-schema.org-keywords: BioMart, genomic-data-retrieval, annotation-retrieval, database-retrieval, NCBI, ENSEMBL, biological-data-retrieval 
 X-schema.org-applicationCategory: Data Access 
