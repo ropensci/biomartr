@@ -15,6 +15,10 @@
 #' @author Hajk-Georg Drost
 #' @examples
 #' \dontrun{
+#' # retrieve a list of available kingdoms
+#' getKingdoms()
+#' # [1] "archaea"              "bacteria"             "fungi"                "invertebrate"         "plant"               
+#' # [6] "protozoa"             "vertebrate_mammalian" "vertebrate_other"     "viral"  
 #' # example for refseq
 #' listGroups(db = "refseq")
 #' # example for genbank
@@ -39,6 +43,8 @@ listGroups <-
             stop("Unfortunately, only db = 'refseq' and db = 'genbank' 
                  provide group information.")
         
+      kingdom <- tolower(kingdom)
+      
         if (!is.element(kingdom, c(getKingdoms(), "all")))
             stop(
                 "Please choose a kingdom that is supported by NCBI RefSeq or 
@@ -52,7 +58,7 @@ listGroups <-
             listGenomes(db = db,
                         type = "group",
                         details = TRUE)
-        
+    
         if (kingdom != "all") {
             # case Animals
             if (is.element(kingdom,
