@@ -16,7 +16,7 @@ refseq_genbank_ftp_server_url_genome_specific <- function(id = "refseq") {
 }
 
 refseq_kingdoms_url <- function(kingdoms = getKingdomsNCBI("refseq"), all_refseq_kingdoms_vector = getKingdomsNCBI("refseq")) {
-  refseq_genbank_ftp_server_kingdoms_url(kingdoms, "refseq", all_refseq_kingdoms_vector)
+  refseq_genbank_ftp_server_kingdoms_url(kingdoms = kingdoms, db = all_refseq_kingdoms_vector)
 }
 
 refseq_genbank_ftp_server_kingdoms_url <- function(kingdoms, db = "refseq") {
