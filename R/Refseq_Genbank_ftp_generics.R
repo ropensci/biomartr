@@ -78,27 +78,34 @@ select_assembly_refseq_genbank <- function(organism, AssemblyFilesAllKingdoms,
 }
 
 ftp_url_refseq_genbank <- function(assembly, type) {
-  stem_url <- paste0(assembly$ftp_path, "/", basename(assembly$ftp_path))
 
-  if (type == "genome") {
-    url <- paste0(stem_url, "_genomic.fna.gz")
-  } else if (type %in% c("gff", "gff3")) {
-    url <- paste0(stem_url, "_genomic.gff.gz")
-  } else if (type == "gtf") {
-    url <- paste0(stem_url, "_genomic.gtf.gz")
-  }else if (type == "cds") {
-    url <- paste0(stem_url, "_cds_from_genomic.fna.gz")
-  } else if (type == "rna") {
-    url <- paste0(stem_url, "_rna_from_genomic.fna.gz")
-  } else if (type == "protein") {
-    url <- paste0(stem_url, "_protein.faa.gz")
-  } else if (type == "assembly_stats") {
-    url <- paste0(stem_url, "_assembly_stats.txt")
-  } else if (type == "repeat_masker") {
-    url <- paste0(stem_url, "_rm.out.gz")
-  } else stop("invalid refseq/genbank file type selected")
-
-  return(url)
+  if (is.na(assembly) || is.na(assembly$ftp_path) || assembly$ftp_path == "") {
+    warning("No ftp path available for the selected organism. Please check with 'is.genome.available()' whether '$ftp_path' has a value.")
+    return("Not available")
+  } else {
+    
+    stem_url <- paste0(assembly$ftp_path, "/", basename(assembly$ftp_path))
+    
+    if (type == "genome") {
+      url <- paste0(stem_url, "_genomic.fna.gz")
+    } else if (type %in% c("gff", "gff3")) {
+      url <- paste0(stem_url, "_genomic.gff.gz")
+    } else if (type == "gtf") {
+      url <- paste0(stem_url, "_genomic.gtf.gz")
+    }else if (type == "cds") {
+      url <- paste0(stem_url, "_cds_from_genomic.fna.gz")
+    } else if (type == "rna") {
+      url <- paste0(stem_url, "_rna_from_genomic.fna.gz")
+    } else if (type == "protein") {
+      url <- paste0(stem_url, "_protein.faa.gz")
+    } else if (type == "assembly_stats") {
+      url <- paste0(stem_url, "_assembly_stats.txt")
+    } else if (type == "repeat_masker") {
+      url <- paste0(stem_url, "_rm.out.gz")
+    } else stop("invalid refseq/genbank file type selected")
+    
+    return(url)
+  }
 }
 
 
@@ -155,6 +162,9 @@ get_file_refseq_genbank <- function(db = "refseq",
 
   FoundOrganism <- select_assembly_refseq_genbank(organism, AssemblyFilesAllKingdoms,
                                                   reference, db)
+  if (is.character(FoundOrganism) && FoundOrganism == "Not available") {
+    return(FoundOrganism)
+  }
   download_url <- ftp_url_refseq_genbank(FoundOrganism, type)
 
   organism <- stringr::str_replace_all(organism, " ", "_")

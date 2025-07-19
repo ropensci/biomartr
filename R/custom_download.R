@@ -8,6 +8,15 @@
 #' @noRd
 custom_download <- function(url, ...) {
 
+  if (url == "not_found" || url == "Not available") {
+    message("The FTP url waas 'NA' and thus does not exist. Thus, download has been omitted.")
+    return(FALSE)
+  }
+
+    # test if internet connection is available
+    connected.to.internet()
+
+    # set timeout to 30 minutes
   withr::local_options(timeout = max(30000000, getOption("timeout")))
 
     if (RCurl::url.exists(url)) {
