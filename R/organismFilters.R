@@ -37,7 +37,7 @@
 #' head(organismFilters("Homo sapiens", topic = "id"), 20)
 #' }
 #' @references
-#' \url{http://biomart.org/}
+#' \url{https://biomart.org/}
 #'
 #' Mapping identifiers for the integration of genomic datasets with the
 #' R/Bioconductor package biomaRt. Steffen Durinck, Paul T. Spellman, Ewan
