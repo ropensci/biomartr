@@ -44,7 +44,7 @@ Download the `Phylostratigraphic Map` of _D. rerio_:
 # from Sestak and Domazet-Loso, 2015
 ```
 
-The dataset comes from `Supplementary file 3` of this publication: https://academic.oup.com/mbe/article/32/2/299/1058654#77837069
+The dataset comes from `Supplementary file 3` of this publication: https://doi.org/10.1093/molbev/msu319
 
 After downloading `Supplementary file 3`, you will find the file `TableS3-2.xlsx` which can be used in the following `biomartr` functions.
 
