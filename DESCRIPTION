@@ -1,6 +1,6 @@
 Package: biomartr
 Title: Genomic Data Retrieval
-Version: 1.0.10
+Version: 1.0.11
 Authors@R: c(person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hajk-georg.drost@tuebingen.mpg.de",
@@ -33,6 +33,7 @@ Imports:
     XML (>= 3.98-1.1),
     httr (>= 0.6.1),
     stringr (>= 0.6.2),
+    data.table (>= 1.9.4),
     purrr,
     R.utils,
     philentropy,
@@ -44,8 +45,7 @@ Suggests:
     devtools (>= 1.6.1),
     testthat,
     seqinr,
-    magrittr,
-    data.table (>= 1.9.4)
+    magrittr
 License: GPL-2
 LazyData: true
 URL: https://docs.ropensci.org/biomartr/, https://github.com/ropensci/biomartr
