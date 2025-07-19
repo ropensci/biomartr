@@ -1,3 +1,9 @@
+# [biomartr 1.0.10]()
+
+### Bug fixes
+- fixing linking issue in `refseq_genbank_ftp_server_kingdoms_url()`
+- remove `NeedsCompilation` flag from DESCRIPTION
+
 # [biomartr 1.0.10](https://github.com/ropensci/biomartr/releases/tag/v1.0.10)
 
 ### New features
@@ -5,18 +11,11 @@
 #### GTF support for refseq and genbank
 - Since refseq and genbank now supports gtf, we allow it in getGFF/getFFF
 
-# [biomartr 1.0.9](https://github.com/ropensci/biomartr/releases/tag/v1.0.9)
-
-### New features
-
 #### Generalize and fix paths for NCBI gencode ftp server #116
 - Generalized paths to single point functions, for easier fixes in the future.
 - Fixed from ftp:// to https:// for NCBI ftp server
 
-# [biomartr 1.0.8](https://github.com/ropensci/biomartr/releases/tag/v1.0.8)
-
-### New features
-- Skip bacteria now propogates also for collections
+- Skip bacteria now propagates also for collections
 
 # [biomartr 1.0.7](https://github.com/ropensci/biomartr/releases/tag/v1.0.7)
 
