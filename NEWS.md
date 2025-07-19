@@ -2,6 +2,7 @@
 
 ### Bug fixes
 - fixing linking issue in `refseq_genbank_ftp_server_kingdoms_url()`
+- fixed a bug that caused bulk download crash when ftp path from API call was `NA` #120
 - remove `NeedsCompilation` flag from DESCRIPTION
 
 # [biomartr 1.0.10](https://github.com/ropensci/biomartr/releases/tag/v1.0.10)
